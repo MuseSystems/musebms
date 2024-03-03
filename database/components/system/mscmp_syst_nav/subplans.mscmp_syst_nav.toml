@@ -29,11 +29,23 @@ load_files = [
 
     "components/system/mscmp_syst_nav/ms_syst_data/syst_menu_items/syst_menu_items.eex.sql",
 
+    "components/system/mscmp_syst_nav/ms_syst/api_views/syst_nav_action_groups/trig_i_i_syst_nav_action_groups.eex.sql",
+    "components/system/mscmp_syst_nav/ms_syst/api_views/syst_nav_action_groups/trig_i_u_syst_nav_action_groups.eex.sql",
+    "components/system/mscmp_syst_nav/ms_syst/api_views/syst_nav_action_groups/trig_i_d_syst_nav_action_groups.eex.sql",
     "components/system/mscmp_syst_nav/ms_syst/api_views/syst_nav_action_groups/syst_nav_action_groups.eex.sql",
 
+    "components/system/mscmp_syst_nav/ms_syst/api_views/syst_nav_actions/trig_i_i_syst_nav_actions.eex.sql",
+    "components/system/mscmp_syst_nav/ms_syst/api_views/syst_nav_actions/trig_i_u_syst_nav_actions.eex.sql",
+    "components/system/mscmp_syst_nav/ms_syst/api_views/syst_nav_actions/trig_i_d_syst_nav_actions.eex.sql",
     "components/system/mscmp_syst_nav/ms_syst/api_views/syst_nav_actions/syst_nav_actions.eex.sql",
 
+    "components/system/mscmp_syst_nav/ms_syst/api_views/syst_menus/trig_i_i_syst_menus.eex.sql",
+    "components/system/mscmp_syst_nav/ms_syst/api_views/syst_menus/trig_i_u_syst_menus.eex.sql",
+    "components/system/mscmp_syst_nav/ms_syst/api_views/syst_menus/trig_i_d_syst_menus.eex.sql",
     "components/system/mscmp_syst_nav/ms_syst/api_views/syst_menus/syst_menus.eex.sql",
 
+    "components/system/mscmp_syst_nav/ms_syst/api_views/syst_menu_items/trig_i_i_syst_menu_items.eex.sql",
+    "components/system/mscmp_syst_nav/ms_syst/api_views/syst_menu_items/trig_i_u_syst_menu_items.eex.sql",
+    "components/system/mscmp_syst_nav/ms_syst/api_views/syst_menu_items/trig_i_d_syst_menu_items.eex.sql",
     "components/system/mscmp_syst_nav/ms_syst/api_views/syst_menu_items/syst_menu_items.eex.sql",
 ]
