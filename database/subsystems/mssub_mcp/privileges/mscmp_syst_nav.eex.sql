@@ -10,5 +10,30 @@
 --
 -- muse.information@musesystems.com :: https://muse.systems
 
--- TODO: Actually put some perms here once we have objects to receive them.
-PERFORM 1;
+--syst_nav_action_groups
+
+GRANT SELECT, UPDATE ON TABLE ms_syst.syst_nav_action_groups TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_nav_action_groups() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_nav_action_groups() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_nav_action_groups() TO <%= ms_appusr %>;
+
+--syst_nav_actions
+
+GRANT SELECT, UPDATE ON TABLE ms_syst.syst_nav_actions TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_nav_actions() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_nav_actions() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_nav_actions() TO <%= ms_appusr %>;
+
+--syst_menus
+
+GRANT SELECT, UPDATE ON TABLE ms_syst.syst_menus TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_menus() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_menus() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_menus() TO <%= ms_appusr %>;
+
+--syst_menu_items
+
+GRANT SELECT, UPDATE ON TABLE ms_syst.syst_menu_items TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_menu_items() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_menu_items() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_menu_items() TO <%= ms_appusr %>;
