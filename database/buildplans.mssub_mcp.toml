@@ -84,6 +84,13 @@ load_files = [
     "subsystems/mssub_mcp/privileges/mscmp_syst_hierarchy.eex.sql",
 
     #
+    # MscmpSystInteraction
+    #
+
+    {type = "plan", file = "components/system/mscmp_syst_interaction/subplans.mscmp_syst_interaction.toml"},
+    "subsystems/mssub_mcp/privileges/mscmp_syst_interaction.eex.sql",
+
+    #
     # MscmpSystNav
     #
 
