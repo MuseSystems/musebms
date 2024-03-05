@@ -9,3 +9,23 @@
 -- See the NOTICE file in the project root for copyright ownership information.
 --
 -- muse.information@musesystems.com :: https://muse.systems
+
+GRANT INSERT, SELECT, DELETE ON TABLE ms_syst.syst_interaction_contexts TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_interaction_contexts() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_interaction_contexts() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_interaction_contexts() TO <%= ms_appusr %>;
+
+GRANT INSERT, SELECT, DELETE ON TABLE ms_syst.syst_interaction_categories TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_interaction_categories() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_interaction_categories() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_interaction_categories() TO <%= ms_appusr %>;
+
+GRANT INSERT, SELECT, DELETE ON TABLE ms_syst.syst_interaction_fields TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_interaction_fields() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_interaction_fields() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_interaction_fields() TO <%= ms_appusr %>;
+
+GRANT INSERT, SELECT, DELETE ON TABLE ms_syst.syst_interaction_actions TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_interaction_actions() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_interaction_actions() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_interaction_actions() TO <%= ms_appusr %>;
