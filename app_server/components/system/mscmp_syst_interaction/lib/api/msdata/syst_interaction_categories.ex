@@ -50,8 +50,22 @@ defmodule Msdata.SystInteractionCategories do
 
     belongs_to(:perm, Msdata.SystPerms)
 
-    has_many(:interaction_contexts, Msdata.SystInteractionContexts)
-    has_many(:interaction_fields, Msdata.SystInteractionFields)
-    has_many(:interaction_actions, Msdata.SystInteractionActions)
+    has_many(
+      :interaction_contexts,
+      Msdata.SystInteractionContexts,
+      foreign_key: :interaction_category_id
+    )
+
+    has_many(
+      :interaction_fields,
+      Msdata.SystInteractionFields,
+      foreign_key: :interaction_category_id
+    )
+
+    has_many(
+      :interaction_actions,
+      Msdata.SystInteractionActions,
+      foreign_key: :interaction_category_id
+    )
   end
 end
