@@ -20,6 +20,7 @@ defmodule MscmpSystInteraction.MixProject do
     {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
     {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
     {:ex_doc, "~> 0.20", only: :dev, runtime: false},
+    {:phoenix_pubsub, "~> 2.0"},
 
     # Muse Systems Business Management System Components
     {:mscmp_syst_utils, path: "../mscmp_syst_utils"},
@@ -73,7 +74,10 @@ defmodule MscmpSystInteraction.MixProject do
     [
       extra_applications: [
         :logger,
-        :crypto
+        :crypto,
+        :observer,
+        :wx,
+        :runtime_tools
       ]
     ]
   end
