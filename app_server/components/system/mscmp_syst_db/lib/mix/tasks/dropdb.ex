@@ -129,7 +129,7 @@ defmodule Mix.Tasks.Dropdb do
 
     datastore_options = get_datastore_options(opts_cli)
 
-    :ok = DevSupport.drop_database(datastore_options)
+    :ok = DevSupport.drop_database(datastore_options, [])
   end
 
   defp get_datastore_options(opts_cli) do

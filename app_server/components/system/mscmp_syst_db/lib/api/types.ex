@@ -10,33 +10,59 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
+# TODO:  Add the context_service_name and datastore_service_name types to the
+#        appropriate typespecs.
+
 defmodule MscmpSystDb.Types do
   @moduledoc """
   Defines public types for use with the MscmpSystDb module.
   """
 
   @typedoc """
-  An application wide designation for application defined datastore access
-  accounts.
+  The value type for names which describe a specific instance of an
+  Application's Datastore Context.
+
+  A Context Name provides a reference to a specific Instance's database access
+  in a way that decouples the application reference name from the database role
+  which that name represents.
+
+  This name will commonly be used as the registered name for the Datastore
+  Context when registering the associated database repository `pid` value.
   """
-  @type context_name() :: atom() | nil
+  @type context_name() :: String.t() | atom()
+
+  @typedoc """
+  The extended naming value of a Datastore Context for use when starting a
+  Datastore Context.
+
+  This name can include process registry information and takes the same for as
+  that allowed for `GenServer` naming.
+  """
+  @type context_service_name() :: GenServer.name() | nil
+
+  @typedoc """
+  The allowable Datastore Context name registration options.
+
+  Values of this type describe the available options for registering a Datastore
+  Context name.  The options are:
+
+    * `:global` - the Datastore Context name is registered globally and can be
+      using the Erlang `:global` registry.
+
+    * `{:via, module()}` - the Datastore Context name is registered
+      using the identified module which must implement the Registry behaviour.
+
+    * `nil` - the Datastore Context name will be registered locally using the
+      VM's built-in registration mechanisms.  In this case the Datastore Context
+      name must be represented as an atom.
+  """
+  @type context_registry :: :global | :atom
 
   @typedoc """
   The database role name for the specific access context defined by the
   `context_name()`.
   """
   @type context_role :: String.t()
-
-  @typedoc """
-  Values indicating the state of the database which backs a given Datastore.
-
-    * `:not_found` - The database for the Datastore does not exist on the
-      database server.
-
-    * `:ready` - The database is ready for further processing by the migrations
-      subsystem.
-  """
-  @type database_state_values :: :not_found | :ready
 
   @typedoc """
   Defines the available states in which a context may exist.
@@ -60,6 +86,30 @@ defmodule MscmpSystDb.Types do
       context have already been started.
   """
   @type context_state_values :: :not_found | :not_ready | :ready | :not_started | :started
+
+  @typedoc """
+  Values indicating the state of the database which backs a given Datastore.
+
+    * `:not_found` - The database for the Datastore does not exist on the
+      database server.
+
+    * `:ready` - The database is ready for further processing by the migrations
+      subsystem.
+  """
+  @type database_state_values :: :not_found | :ready
+
+  @typedoc """
+  A type describing the allowed values for use in datastore_naming.
+  """
+  @type datastore_name :: String.t() | atom()
+
+  @typedoc """
+  The extended naming value of a Datastore for use when starting a Datastore.
+
+  This name can include process registry information and takes the same for as
+  that allowed for `GenServer` naming.
+  """
+  @type datastore_service_name() :: GenServer.name() | nil
 
   @typedoc """
   Defines the available states in which a Datastore might exist in relation to

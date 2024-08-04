@@ -10,6 +10,11 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
+# TODO: Look at converting uses of DbTypes.Interval to the new Elixir Duration
+#       type.  Right now we're getting a spurious Dialyzer warning from Postgrex
+#       about type matching, though all tests are still passing.  Still, we'd
+#       be better off using the Elixir type over the Postgrex type ultimately.
+
 defmodule MscmpSystDb.DbTypes.Interval do
   @moduledoc """
   An Elixir representation of the PostgreSQL `interval` data type.

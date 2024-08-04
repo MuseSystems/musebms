@@ -1,5 +1,5 @@
-# Source File: test_helper.exs
-# Location:    musebms/components/system/mscmp_syst_db/test/test_helper.exs
+# Source File: macros.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_db/lib/impl/macros.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,8 +10,14 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-Mix.shell(Mix.Shell.Process)
+defmodule MscmpSystDb.Impl.Macros do
+  @moduledoc false
 
-{:ok, _} = Registry.start_link(keys: :unique, name: MscmpSystDb.TestRegistry)
-
-ExUnit.start()
+  defmacro migration_constants do
+    quote do
+      @migrations_schema "ms_syst_db"
+      @migrations_table "migrations"
+      @migrations_root_dir "priv/database"
+    end
+  end
+end

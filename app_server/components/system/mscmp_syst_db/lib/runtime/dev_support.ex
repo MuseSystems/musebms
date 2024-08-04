@@ -15,30 +15,224 @@ defmodule MscmpSystDb.Runtime.DevSupport do
 
   alias MscmpSystDb.Types.{DatastoreContext, DatastoreOptions, DbServer}
 
-  @spec get_devsupport_context_name() :: atom()
-  def get_devsupport_context_name, do: :ms_devsupport_context
+  @devsupport_context "0000mt.devspt.MscmpSystDb.ContextRole"
+  @testsupport_context "0000mt.tstspt.MscmpSystDb.ContextRole"
 
-  @spec get_testsupport_context_name() :: atom()
-  def get_testsupport_context_name, do: :ms_testsupport_context
+  ##############################################################################
+  #
+  # Options Definition
+  #
+
+  common_opts = [
+    starting_pool_size: [
+      type: :integer,
+      default: 5,
+      doc: """
+      The number of database connections the login Context will establish from
+      the application.
+      """
+    ],
+    db_host: [
+      type: :string,
+      default: "127.0.0.1",
+      doc: """
+      A string indicating the host address of the database server.  This can be
+      an IP address or resolvable DNS entry.
+      """
+    ],
+    db_port: [
+      type: :integer,
+      default: 5432,
+      doc: """
+      An integer indicating the TCP port on which to contact the database
+      server.
+      """
+    ],
+    dbadmin_pool_size: [
+      type: :integer,
+      default: 1,
+      doc: """
+      The number of database connections which will be opened to support DBA or
+      Privileged operations.
+      """
+    ],
+    dbadmin_password: [
+      type: :string,
+      default: "musesystems.publicly.known.insecure.devsupport.password",
+      doc: """
+      A string value for the standard `ms_syst_privileged` database role account
+      created via the database bootstrapping script.
+      """
+    ],
+    server_salt: [
+      type: :string,
+      default: "musesystems.publicly.known.insecure.devsupport.salt",
+      doc: """
+      A binary value providing a Datastore level salting value used in different
+      hashing operations.
+      """
+    ]
+  ]
+
+  get_datastore_options_opts =
+    [
+      database_name: [
+        type: :string,
+        default: "ms_devsupport_database",
+        doc: """
+        The name of the database on the database server.
+        """
+      ],
+      datastore_code: [
+        type: :string,
+        default: "musesystems.publicly.known.insecure.devsupport.code",
+        doc: """
+        A binary value providing a Datastore level salting value used in
+        different hashing operations.
+        """
+      ],
+      datastore_name: [
+        type: :string,
+        default: "ms_devsupport_database",
+        doc: """
+        A name for use by the application to identify a given Datastore.
+        This value will often time be the same as the `database_name` value.
+        """
+      ],
+      description_prefix: [
+        type: :string,
+        default: "Muse Systems DevSupport",
+        doc: """
+        A string value which is prefixed to the descriptions of the created
+        database contexts and which appear in the database role descriptions.
+        """
+      ],
+      database_role_prefix: [
+        type: :string,
+        default: "ms_devsupport",
+        doc: """
+        A string value which is prefixed to the names of the database roles
+        created to back the Datastore Contexts.
+        """
+      ],
+      context_name: [
+        type: :string,
+        default: @devsupport_context,
+        doc: """
+        A string value which provides a unique context name for the login
+        Context identified by this function.
+        """
+      ],
+      database_password: [
+        type: :string,
+        default: "musesystems.publicly.known.insecure.devsupport.apppassword",
+        doc: """
+        A string value which is the database password that the login Datastore
+        Context uses to log into the database.
+        """
+      ]
+    ] ++ common_opts
+
+  get_testsupport_datastore_options_opts =
+    [
+      database_name: [
+        type: :string,
+        default: "ms_testsupport_database",
+        doc: """
+        The name of the database on the database server.
+        """
+      ],
+      datastore_code: [
+        type: :string,
+        default: "musesystems.publicly.known.insecure.testsupport.code",
+        doc: """
+        A binary value providing a Datastore level salting value used in
+        different hashing operations.
+        """
+      ],
+      datastore_name: [
+        type: :string,
+        default: "ms_testsupport_database",
+        doc: """
+        A name for use by the application to identify a given Datastore. This
+        value will often time be the same as the `database_name` value.
+        """
+      ],
+      description_prefix: [
+        type: :string,
+        default: "Muse Systems TestSupport",
+        doc: """
+        A string value which is prefixed to the descriptions of the created
+        database contexts and which appear in the database role descriptions.
+        """
+      ],
+      database_role_prefix: [
+        type: :string,
+        default: "ms_testsupport",
+        doc: """
+        A string value which is prefixed to the names of the database roles
+        created to back the Datastore Contexts.
+        """
+      ],
+      context_name: [
+        type: :string,
+        default: @testsupport_context,
+        doc: """
+        A string value which provides a unique context name for the login
+        Context identified by this function.
+        """
+      ],
+      database_password: [
+        type: :string,
+        default: "musesystems.publicly.known.insecure.testsupport.apppassword",
+        doc: """
+        A string value which is the database password that the login Datastore
+        Context uses to log into the database.
+        """
+      ]
+    ] ++ common_opts
+
+  drop_database_opts = [
+    context_registry: [
+      type: {:or, [{:in, [:global]}, :atom]},
+      doc: """
+      Identifies a process registry which will be used to register Datastore
+      Context (`Ecto.Repo`) instances. A valid value for this option can be
+      either `:global` to use the Erlang `:global` module or any other module
+      which implements a :global compatible API.
+      """
+    ]
+  ]
+
+  ##############################################################################
+  # :
+  # get_devsupport_context_name
+  #
+
+  @spec get_devsupport_context_name() :: String.t()
+  def get_devsupport_context_name, do: @devsupport_context
+
+  ##############################################################################
+  #
+  # get_testsupport_context_name
+  #
+
+  @spec get_testsupport_context_name() :: String.t()
+  def get_testsupport_context_name, do: @testsupport_context
+
+  ##############################################################################
+  #
+  # get_datastore_options
+  #
+
+  @get_datastore_options_opts NimbleOptions.new!(get_datastore_options_opts)
+
+  @spec get_get_datastore_options_opts_docs() :: String.t()
+  def get_get_datastore_options_opts_docs, do: NimbleOptions.docs(@get_datastore_options_opts)
 
   @spec get_datastore_options(Keyword.t()) :: DatastoreOptions.t()
   def get_datastore_options(opts) do
-    opts =
-      MscmpSystUtils.resolve_options(opts,
-        database_name: "ms_devsupport_database",
-        datastore_code: "musesystems.publicly.known.insecure.devsupport.code",
-        datastore_name: :ms_devsupport_database,
-        description_prefix: "Muse Systems DevSupport",
-        database_role_prefix: "ms_devsupport",
-        context_name: get_devsupport_context_name(),
-        database_password: "musesystems.publicly.known.insecure.devsupport.apppassword",
-        starting_pool_size: 5,
-        db_host: "127.0.0.1",
-        db_port: 5432,
-        server_salt: "musesystems.publicly.known.insecure.devsupport.salt",
-        dbadmin_password: "musesystems.publicly.known.insecure.devsupport.password",
-        dbadmin_pool_size: 1
-      )
+    opts = NimbleOptions.validate!(opts, @get_datastore_options_opts)
 
     %DatastoreOptions{
       database_name: opts[:database_name],
@@ -80,23 +274,30 @@ defmodule MscmpSystDb.Runtime.DevSupport do
     }
   end
 
+  ##############################################################################
+  #
+  # get_testsupport_datastore_options
+  #
+
+  @get_testsupport_datastore_options_opts NimbleOptions.new!(
+                                            get_testsupport_datastore_options_opts
+                                          )
+
+  @spec get_get_testsupport_datastore_options_opts_docs() :: String.t()
+  def get_get_testsupport_datastore_options_opts_docs,
+    do: NimbleOptions.docs(@get_testsupport_datastore_options_opts)
+
   @spec get_testsupport_datastore_options(Keyword.t()) :: DatastoreOptions.t()
   def get_testsupport_datastore_options(opts) do
-    opts =
-      MscmpSystUtils.resolve_options(opts,
-        database_name: "ms_testsupport_database",
-        datastore_code: "musesystems.publicly.known.insecure.testsupport.code",
-        datastore_name: :ms_testsupport_database,
-        description_prefix: "Muse Systems TestSupport",
-        database_role_prefix: "ms_testsupport",
-        context_name: get_testsupport_context_name(),
-        database_password: "musesystems.publicly.known.insecure.testsupport.apppassword",
-        server_salt: "musesystems.publicly.known.insecure.testsupport.salt",
-        dbadmin_password: "musesystems.publicly.known.insecure.devsupport.password"
-      )
+    opts = NimbleOptions.validate!(opts, @get_testsupport_datastore_options_opts)
 
     _ = get_datastore_options(opts)
   end
+
+  ##############################################################################
+  #
+  # load_database
+  #
 
   @spec load_database(DatastoreOptions.t(), String.t()) ::
           {:ok, [String.t()]} | {:error, MscmpSystError.t()}
@@ -119,9 +320,21 @@ defmodule MscmpSystDb.Runtime.DevSupport do
       )
   end
 
-  @spec drop_database(DatastoreOptions.t()) :: :ok
-  def drop_database(datastore_options) do
-    :ok = MscmpSystDb.stop_datastore(datastore_options)
+  ##############################################################################
+  #
+  # drop_database
+  #
+
+  @drop_database_opts NimbleOptions.new!(drop_database_opts)
+
+  @spec get_drop_database_opts_docs() :: String.t()
+  def get_drop_database_opts_docs, do: NimbleOptions.docs(@drop_database_opts)
+
+  @spec drop_database(DatastoreOptions.t(), Keyword.t()) :: :ok
+  def drop_database(datastore_options, opts) do
+    opts = NimbleOptions.validate!(opts, @drop_database_opts)
+
+    :ok = MscmpSystDb.stop_datastore(datastore_options, opts)
     :ok = MscmpSystDb.drop_datastore(datastore_options)
   end
 end

@@ -16,7 +16,7 @@ defmodule MscmpSystDb.Types.ContextState do
   """
 
   @enforce_keys [:context, :state]
-  defstruct [:context, :state]
+  defstruct [:context, :state, :pid]
 
   @typedoc """
   A struct for reporting the runtime state of Datastore Contexts.
@@ -28,10 +28,14 @@ defmodule MscmpSystDb.Types.ContextState do
 
     * `:state` - indicates the current runtime state of the named Datastore
     Context.  See `t:MscmpSystDb.Types.context_state_values/0` for more.
+
+    * `:pid` - the process identifier of the Datastore Context supervisor
+    process.  Suitable for use with `MscmpSystDb.put_datastore_context/1`.
   """
 
   @type t :: %__MODULE__{
           context: MscmpSystDb.Types.context_name(),
-          state: MscmpSystDb.Types.context_state_values()
+          state: MscmpSystDb.Types.context_state_values(),
+          pid: pid() | nil
         }
 end

@@ -7,7 +7,7 @@ defmodule MscmpSystDbTest do
   @datastore_options_type_one %DatastoreOptions{
     database_name: "ms_test_type_one",
     datastore_code: "datastore_code_test_type_one",
-    datastore_name: :ms_type_one_datastore,
+    datastore_name: "ms_type_one_datastore",
     contexts: [
       %DatastoreContext{
         context_name: nil,
@@ -20,7 +20,7 @@ defmodule MscmpSystDbTest do
         database_owner_context: true
       },
       %DatastoreContext{
-        context_name: :ms_type_one_role_01,
+        context_name: "ms_type_one_role_01",
         description: "Type One Role 01 ",
         database_role: "ms_type_one_role_01",
         database_password: "type_one_role_01",
@@ -29,7 +29,7 @@ defmodule MscmpSystDbTest do
         login_context: true
       },
       %DatastoreContext{
-        context_name: :ms_type_one_role_02,
+        context_name: "ms_type_one_role_02",
         description: "Type One Role 02 ",
         database_role: "ms_type_one_role_02",
         database_password: "type_one_role_02",
@@ -55,7 +55,7 @@ defmodule MscmpSystDbTest do
 
   @context_type_one_group_two [
     %DatastoreContext{
-      context_name: :ms_type_one_role_03,
+      context_name: "ms_type_one_role_03",
       description: "Type One Role 03 ",
       database_role: "ms_type_one_role_03",
       database_password: "type_one_role_03",
@@ -64,7 +64,7 @@ defmodule MscmpSystDbTest do
       login_context: true
     },
     %DatastoreContext{
-      context_name: :ms_type_one_role_04,
+      context_name: "ms_type_one_role_04",
       description: "Type One Role 04 ",
       database_role: "ms_type_one_role_04",
       database_password: "type_one_role_04",
@@ -83,7 +83,7 @@ defmodule MscmpSystDbTest do
   @migration_test_datastore_options %DatastoreOptions{
     database_name: "ms_test_type_four",
     datastore_code: "datastore_code_test_type_four",
-    datastore_name: :ms_type_four_datastore,
+    datastore_name: "ms_type_four_datastore",
     contexts: [
       %DatastoreContext{
         context_name: nil,
@@ -96,7 +96,7 @@ defmodule MscmpSystDbTest do
         database_owner_context: true
       },
       %DatastoreContext{
-        context_name: :ms_type_four_role_01,
+        context_name: "ms_type_four_role_01",
         description: "Type Four Role 01 ",
         database_role: "ms_type_four_role_01",
         database_password: "type_four_role_01",
@@ -215,7 +215,10 @@ defmodule MscmpSystDbTest do
       DynamicSupervisor.start_link(strategy: :one_for_one, name: :migration_test_supervisor)
 
     datastore_child_spec =
-      MscmpSystDb.Datastore.child_spec(datastore_options, name: :test_datastore)
+      MscmpSystDb.Datastore.child_spec(datastore_options,
+        datastore_name: {:via, Registry, {MscmpSystDb.TestRegistry, "test_datastore"}},
+        context_registry: MscmpSystDb.TestRegistry
+      )
 
     assert {:ok, _datastore_pid, {:all_started, _context_states}} =
              DynamicSupervisor.start_child(:migration_test_supervisor, datastore_child_spec)
@@ -228,7 +231,7 @@ defmodule MscmpSystDbTest do
                @migration_test_opts
              )
 
-    MscmpSystDb.put_datastore_context(:ms_type_four_role_01)
+    MscmpSystDb.put_datastore_context(MscmpSystDb.TestRegistry, "ms_type_four_role_01")
 
     assert 3 = length(first_stage_migrations_applied)
 
@@ -254,7 +257,7 @@ defmodule MscmpSystDbTest do
 
     assert 8 = length(second_stage_migrations_applied)
 
-    MscmpSystDb.put_datastore_context(:ms_type_four_role_01)
+    MscmpSystDb.put_datastore_context(MscmpSystDb.TestRegistry, "ms_type_four_role_01")
 
     assert {:ok, 10} =
              MscmpSystDb.query_for_value(
@@ -264,7 +267,10 @@ defmodule MscmpSystDbTest do
     assert {:ok, %{num_rows: 10}} =
              MscmpSystDb.query_for_many("SELECT * FROM ms_test.test_type_four;")
 
-    assert :ok = MscmpSystDb.stop_datastore(datastore_options)
+    assert :ok =
+             MscmpSystDb.stop_datastore(datastore_options,
+               context_registry: MscmpSystDb.TestRegistry
+             )
 
     assert :ok = MscmpSystDb.drop_datastore(datastore_options)
   end

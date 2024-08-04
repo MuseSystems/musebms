@@ -27,14 +27,14 @@ defmodule MscmpSystDb.Types.DatastoreOptions do
 
     * `:database_name` - The name of the database in the database server to
       which the connection will be made.  Often times this value will be the
-      same as the String.t() form of the `:datastore_name` value.
+      same as the `:datastore_name` value, though they are permitted to differ.
 
     * `:datastore_code` - Defines a Datastore specific salting value for use in
       certain security and cryptographic related functions.
 
     * `:datastore_name` - A name for use by the application to identify a given
       Datastore.  This value will often time be the same as the `:database_name`
-      value, except as an atom() rather than a String.t().
+      value, but allows for decoupling from that value.
 
     * `:contexts` - A list of available Datastore Context values defining which
       contexts are available for this Datastore.  See
@@ -49,7 +49,7 @@ defmodule MscmpSystDb.Types.DatastoreOptions do
   @type t :: %__MODULE__{
           database_name: String.t(),
           datastore_code: String.t() | nil,
-          datastore_name: atom() | nil,
+          datastore_name: MscmpSystDb.Types.datastore_name() | nil,
           contexts: [MscmpSystDb.Types.DatastoreContext.t()] | [],
           db_server: MscmpSystDb.Types.DbServer.t()
         }

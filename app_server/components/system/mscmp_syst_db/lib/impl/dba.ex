@@ -38,13 +38,53 @@ defmodule MscmpSystDb.Impl.Dba do
   @dba_database_name "postgres"
   @dba_application_name "MscmpSystDb System DBA Access"
 
-  @default_db_shutdown_timeout 60_000
+  ##############################################################################
+  #
+  # Options Definition
+  #
+  #
 
+  option_defs = [
+    db_shutdown_timeout: [
+      type: :pos_integer,
+      default: 60_000,
+      doc: """
+      The timeout in milliseconds to wait for the database to shutdown prior to
+      raising an error.
+      """
+    ],
+    context_registry: [
+      type: {:or, [{:in, [:global]}, :atom]},
+      type_doc: "`:global` or `t:module/0`",
+      doc: """
+      Identifies a process registry which is used to register Datastore
+      Context (`Ecto.Repo`) instances. A valid value for this option can be
+      either `:global` to use the Erlang `:global` module or any other module
+      which implements a :global compatible API.
+      """
+    ]
+  ]
+
+  ##############################################################################
+  #
+  # get_datastore_state
+  #
+
+  @get_datastore_state_opts NimbleOptions.new!(
+                              Keyword.take(option_defs, [:db_shutdown_timeout, :context_registry])
+                            )
+
+  @spec get_get_datastore_state_opts_docs() :: String.t()
+  def get_get_datastore_state_opts_docs, do: NimbleOptions.docs(@get_datastore_state_opts)
+
+  @spec get_datastore_state(DatastoreOptions.t()) ::
+          {:ok, Types.database_state_values(), list(ContextState.t())}
+          | {:error, MscmpSystError.t()}
   @spec get_datastore_state(DatastoreOptions.t(), Keyword.t()) ::
           {:ok, Types.database_state_values(), list(ContextState.t())}
           | {:error, MscmpSystError.t()}
   def get_datastore_state(datastore_options, opts \\ []) do
-    opts = MscmpSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
+    opts = NimbleOptions.validate!(opts, @get_datastore_state_opts)
 
     starting_datastore_context = Datastore.get_dynamic_repo()
 
@@ -53,7 +93,8 @@ defmodule MscmpSystDb.Impl.Dba do
     _ = Datastore.put_datastore_context(dba_pid)
 
     database_state = get_database_state(datastore_options)
-    context_states = get_context_states(datastore_options.contexts)
+
+    context_states = get_context_states(datastore_options.contexts, opts[:context_registry])
 
     stop_dba_connection(opts[:db_shutdown_timeout])
 
@@ -74,11 +115,24 @@ defmodule MscmpSystDb.Impl.Dba do
       }
   end
 
+  ##############################################################################
+  #
+  # create_datastore
+  #
+
+  @create_datastore_opts NimbleOptions.new!(Keyword.take(option_defs, [:db_shutdown_timeout]))
+
+  @spec get_create_datastore_opts_docs() :: String.t()
+  def get_create_datastore_opts_docs, do: NimbleOptions.docs(@create_datastore_opts)
+
+  @spec create_datastore(DatastoreOptions.t()) ::
+          {:ok, Types.database_state_values(), list(ContextState.t())}
+          | {:error, MscmpSystError.t()}
   @spec create_datastore(DatastoreOptions.t(), Keyword.t()) ::
           {:ok, Types.database_state_values(), list(ContextState.t())}
           | {:error, MscmpSystError.t()}
   def create_datastore(datastore_options, opts \\ []) do
-    opts = MscmpSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
+    opts = NimbleOptions.validate!(opts, @create_datastore_opts)
 
     starting_datastore_context = Datastore.current_datastore_context()
 
@@ -114,9 +168,20 @@ defmodule MscmpSystDb.Impl.Dba do
       }
   end
 
+  ##############################################################################
+  #
+  # drop_datastore
+  #
+
+  @drop_datastore_opts NimbleOptions.new!(Keyword.take(option_defs, [:db_shutdown_timeout]))
+
+  @spec get_drop_datastore_opts_docs() :: String.t()
+  def get_drop_datastore_opts_docs, do: NimbleOptions.docs(@drop_datastore_opts)
+
+  @spec drop_datastore(DatastoreOptions.t()) :: :ok | {:error, MscmpSystError.t()}
   @spec drop_datastore(DatastoreOptions.t(), Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
   def drop_datastore(datastore_options, opts \\ []) do
-    opts = MscmpSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
+    opts = NimbleOptions.validate!(opts, @drop_datastore_opts)
 
     starting_datastore_context = Datastore.get_dynamic_repo()
 
@@ -147,10 +212,28 @@ defmodule MscmpSystDb.Impl.Dba do
       }
   end
 
+  ##############################################################################
+  #
+  # get_datastore_context_states
+  #
+
+  @get_datastore_context_states_opts NimbleOptions.new!(
+                                       Keyword.take(option_defs, [
+                                         :db_shutdown_timeout,
+                                         :context_registry
+                                       ])
+                                     )
+
+  @spec get_get_datastore_context_states_opts_docs() :: String.t()
+  def get_get_datastore_context_states_opts_docs,
+    do: NimbleOptions.docs(@get_datastore_context_states_opts)
+
+  @spec get_datastore_context_states(DatastoreOptions.t()) ::
+          {:ok, nonempty_list(ContextState.t())} | {:error, MscmpSystError.t()}
   @spec get_datastore_context_states(DatastoreOptions.t(), Keyword.t()) ::
           {:ok, nonempty_list(ContextState.t())} | {:error, MscmpSystError.t()}
   def get_datastore_context_states(datastore_options, opts \\ []) do
-    opts = MscmpSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
+    opts = NimbleOptions.validate!(opts, @get_datastore_context_states_opts)
 
     starting_datastore_context = Datastore.get_dynamic_repo()
 
@@ -158,7 +241,7 @@ defmodule MscmpSystDb.Impl.Dba do
 
     _ = Datastore.put_datastore_context(dba_pid)
 
-    state_result = get_context_states(datastore_options.contexts)
+    state_result = get_context_states(datastore_options.contexts, opts[:context_registry])
 
     stop_dba_connection(opts[:db_shutdown_timeout])
 
@@ -177,13 +260,30 @@ defmodule MscmpSystDb.Impl.Dba do
       }
   end
 
+  ##############################################################################
+  #
+  # create_datastore_contexts
+  #
+
+  @create_datastore_contexts_opts NimbleOptions.new!(
+                                    Keyword.take(option_defs, [:db_shutdown_timeout])
+                                  )
+
+  @spec get_create_datastore_contexts_opts_docs() :: String.t()
+  def get_create_datastore_contexts_opts_docs,
+    do: NimbleOptions.docs(@create_datastore_contexts_opts)
+
+  @spec create_datastore_contexts(
+          DatastoreOptions.t(),
+          nonempty_list(DatastoreContext.t())
+        ) :: {:ok, nonempty_list(ContextState.t())} | {:error, MscmpSystError.t()}
   @spec create_datastore_contexts(
           DatastoreOptions.t(),
           nonempty_list(DatastoreContext.t()),
           Keyword.t()
         ) :: {:ok, nonempty_list(ContextState.t())} | {:error, MscmpSystError.t()}
   def create_datastore_contexts(datastore_options, new_contexts, opts \\ []) do
-    opts = MscmpSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
+    opts = NimbleOptions.validate!(opts, @get_datastore_state_opts)
 
     {:ok, dba_pid} = start_dba_connection(datastore_options)
     _ = Datastore.put_datastore_context(dba_pid)
@@ -207,13 +307,30 @@ defmodule MscmpSystDb.Impl.Dba do
       }
   end
 
+  ##############################################################################
+  #
+  # drop_datastore_contexts
+  #
+
+  @drop_datastore_contexts_opts NimbleOptions.new!(
+                                  Keyword.take(option_defs, [:db_shutdown_timeout])
+                                )
+
+  @spec get_drop_datastore_contexts_opts_docs() :: String.t()
+  def get_drop_datastore_contexts_opts_docs,
+    do: NimbleOptions.docs(@drop_datastore_contexts_opts)
+
+  @spec drop_datastore_contexts(
+          DatastoreOptions.t(),
+          nonempty_list(DatastoreContext.t())
+        ) :: :ok | {:error, MscmpSystError.t()}
   @spec drop_datastore_contexts(
           DatastoreOptions.t(),
           nonempty_list(DatastoreContext.t()),
           Keyword.t()
         ) :: :ok | {:error, MscmpSystError.t()}
   def drop_datastore_contexts(datastore_options, delete_contexts, opts \\ []) do
-    opts = MscmpSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
+    opts = NimbleOptions.validate!(opts, @get_datastore_state_opts)
 
     {:ok, dba_pid} = start_dba_connection(datastore_options)
 
@@ -270,7 +387,7 @@ defmodule MscmpSystDb.Impl.Dba do
     dba_options = get_dba_connection_options(datastore_options.db_server)
     dba_context = hd(dba_options.contexts)
 
-    case Datastore.start_datastore_context(dba_options, dba_context) do
+    case Datastore.start_datastore_context(dba_options, dba_context, []) do
       {:ok, dba_pid} ->
         _ = Datastore.put_datastore_context(dba_pid)
         Datastore.query_for_none!("SET application_name = '#{dba_context.description}';")
@@ -291,7 +408,9 @@ defmodule MscmpSystDb.Impl.Dba do
 
   defp stop_dba_connection(db_shutdown_timeout) do
     _context_action_result =
-      Datastore.stop_datastore_context(Datastore.current_datastore_context(), db_shutdown_timeout)
+      Datastore.stop_datastore_context(Datastore.current_datastore_context(),
+        db_shutdown_timeout: db_shutdown_timeout
+      )
 
     :ok
   end
@@ -307,11 +426,11 @@ defmodule MscmpSystDb.Impl.Dba do
     if query_result, do: :ready, else: :not_found
   end
 
-  defp get_context_states(datastore_contexts) do
+  defp get_context_states(datastore_contexts, context_registry) do
     query_db_roles_exist(datastore_contexts)
     |> parse_db_roles_exist_results()
     |> convert_roles_to_contexts(datastore_contexts)
-    |> check_contexts_started()
+    |> check_contexts_started(context_registry)
   end
 
   defp query_db_roles_exist(context_states) do
@@ -364,19 +483,28 @@ defmodule MscmpSystDb.Impl.Dba do
     |> Enum.map(&map_func.(&1))
   end
 
-  defp check_contexts_started(curr_context_states) when is_list(curr_context_states) do
+  defp check_contexts_started(curr_context_states, context_registry)
+       when is_list(curr_context_states) do
     map_func = fn
       context_state = %ContextState{state: :not_found} ->
         context_state
 
-      %ContextState{context: context_id, state: :ready} ->
+      %ContextState{context: context_name, state: :ready} ->
+        resolved_context = lookup_context_pid(context_registry, context_name)
+
+        resolved_pid =
+          case resolved_context do
+            pid when is_pid(pid) -> pid
+            _ -> nil
+          end
+
         state_running =
           Ecto.Repo.all_running()
-          |> Enum.member?(context_id)
+          |> Enum.member?(resolved_context)
 
         case state_running do
-          true -> %ContextState{context: context_id, state: :started}
-          false -> %ContextState{context: context_id, state: :ready}
+          true -> %ContextState{context: context_name, pid: resolved_pid, state: :started}
+          false -> %ContextState{context: context_name, state: :ready}
         end
     end
 
@@ -435,14 +563,12 @@ defmodule MscmpSystDb.Impl.Dba do
     database_owner = Enum.find(datastore_options.contexts, &(&1.database_owner_context == true))
 
     :ok =
-      Datastore.query_for_none!(
-        "CREATE DATABASE #{datastore_options.database_name} OWNER #{database_owner.database_role};"
-      )
+      ~s(CREATE DATABASE #{datastore_options.database_name} OWNER #{database_owner.database_role};)
+      |> Datastore.query_for_none!()
 
     :ok =
-      Datastore.query_for_none!(
-        "REVOKE ALL ON DATABASE #{datastore_options.database_name} FROM public;"
-      )
+      ~s(REVOKE ALL ON DATABASE #{datastore_options.database_name} FROM public;)
+      |> Datastore.query_for_none!()
   end
 
   defp apply_db_connect_privs(contexts, database_name) do
@@ -463,7 +589,7 @@ defmodule MscmpSystDb.Impl.Dba do
          %DatastoreContext{login_context: true, database_role: role_name},
          database_name
        ) do
-    Datastore.query_for_none("GRANT CONNECT ON DATABASE #{database_name} TO #{role_name};")
+    ~s(GRANT CONNECT ON DATABASE #{database_name} TO #{role_name};) |> Datastore.query_for_none()
   end
 
   defp maybe_apply_context_connect_priv(%DatastoreContext{login_context: false}, _database_name),
@@ -481,9 +607,9 @@ defmodule MscmpSystDb.Impl.Dba do
   defp drop_database(datastore_options) do
     database_owner = Enum.find(datastore_options.contexts, &(&1.database_owner_context == true))
 
-    with {:ok, _} <- Datastore.query("SET ROLE #{database_owner.database_role};"),
+    with {:ok, _} <- Datastore.query("SET ROLE \"#{database_owner.database_role}\";"),
          {:ok, _} <-
-           Datastore.query("DROP DATABASE IF EXISTS #{datastore_options.database_name};"),
+           Datastore.query("DROP DATABASE IF EXISTS \"#{datastore_options.database_name}\";"),
          {:ok, _} <- Datastore.query("RESET ROLE;") do
       :ok
     else
@@ -492,12 +618,6 @@ defmodule MscmpSystDb.Impl.Dba do
           code: :database_error,
           message: "Failure dropping Datastore database.",
           cause: exception
-
-      other ->
-        raise MscmpSystError,
-          code: :database_error,
-          message: "Failure dropping Datastore database.",
-          cause: other
     end
   end
 
@@ -542,7 +662,8 @@ defmodule MscmpSystDb.Impl.Dba do
          %DatastoreContext{login_context: true, database_role: role_name},
          database_name
        ) do
-    Datastore.query_for_none("REVOKE CONNECT ON DATABASE #{database_name} FROM #{role_name};")
+    ~s(REVOKE CONNECT ON DATABASE #{database_name} FROM #{role_name};)
+    |> Datastore.query_for_none()
   end
 
   defp maybe_revoke_context_connect_priv(%DatastoreContext{login_context: false}, _database_name),
@@ -555,5 +676,23 @@ defmodule MscmpSystDb.Impl.Dba do
       code: :database_error,
       message: "Failed to revoke CONNECT privilege to database role.",
       cause: reason
+  end
+
+  defp lookup_context_pid(nil, context_name) when is_atom(context_name),
+    do: Process.whereis(context_name)
+
+  defp lookup_context_pid(nil, context_name), do: context_name
+
+  defp lookup_context_pid(context_registry, context_name) when is_atom(context_registry) do
+    case Registry.lookup(context_registry, context_name) do
+      [{pid, _}] ->
+        pid
+
+      _ ->
+        raise MscmpSystError,
+          code: :context_not_found,
+          message: "Datastore Context not found in identified Registry.",
+          cause: %{parameters: %{context_registry: context_registry, context_name: context_name}}
+    end
   end
 end

@@ -36,12 +36,14 @@ defmodule MscmpSystDb.Datastore do
     Datastore and Datastore Context related connection options.  See
     `t:MscmpSystDb.Types.DatastoreOptions.t/0` for more.
 
-    * `opts` - a Keyword list of various options accepted or required by the
-    `DynamicSupervisor.start_link/1` function.  Note that we provide some
-    default values: `strategy: :one_for_one`, `restart: :transient`,
-    `timeout: 60_000`, and the `:name` option is defaulted to the
-    `datastore_options.datastore_name` value.
+    * `opts` - a Keyword list of options.  See the "Options" section for
+      details.
+
+  ## Options
+
+    #{Runtime.Datastore.get_get_context_child_spec_opts_docs()}
   """
+  @spec child_spec(DatastoreOptions.t()) :: Supervisor.child_spec()
   @spec child_spec(DatastoreOptions.t(), Keyword.t()) :: Supervisor.child_spec()
   defdelegate child_spec(datastore_options, opts \\ []),
     to: Runtime.Datastore,
@@ -55,17 +57,23 @@ defmodule MscmpSystDb.Datastore do
   `datastore_options` are also started and places under the Datastore
   Supervisor.
 
-  ## Options
-
-    * `name` - establishes the name of the Datastore Supervisor and accepts any
-    name which is valid according to the documentation for `GenServer`.  The
-    default value for this parameter is the `datastore_name` value found in the
-    `datastore_options` attribute which configures the Datastore.
+  ## Parameters
 
     * `datastore_options` - a required Map of values which describe the
     Datastore and Datastore Context related connection options.  See
     `t:MscmpSystDb.Types.DatastoreOptions.t/0` for more.
+
+    * `opts` - See the "Options" section for
+      details.
+
+  ## Options
+
+    #{Runtime.Datastore.get_start_link_datastore_opts_docs()}
+
   """
-  @spec start_link(Keyword.t()) :: Supervisor.on_start()
-  defdelegate start_link(opts \\ []), to: Runtime.Datastore, as: :start_link_datastore
+  @spec start_link(DatastoreOptions.t()) :: Supervisor.on_start()
+  @spec start_link(DatastoreOptions.t(), Keyword.t()) :: Supervisor.on_start()
+  defdelegate start_link(datastore_options, opts \\ []),
+    to: Runtime.Datastore,
+    as: :start_link_datastore
 end

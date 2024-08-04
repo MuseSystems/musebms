@@ -18,14 +18,15 @@ defmodule MscmpSystDb.MixProject do
 
   @deps [
     # Third Party Dependencies
-    {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
-    {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
-    {:ecto_sql, "~> 3.0"},
-    {:ecto, "~> 3.0"},
-    {:ex_doc, "~> 0.20", only: :dev, runtime: false},
-    {:jason, "~> 1.0"},
-    {:postgrex, "~> 0.10"},
+    {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+    {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
+    {:ex_doc, "~> 0.31", only: :dev, runtime: false},
+    {:ecto_sql, "~> 3.11"},
+    {:ecto, "~> 3.11"},
+    {:jason, "~> 1.4"},
+    {:postgrex, "~> 0.19"},
     {:toml, "~> 0.7"},
+    {:nimble_options, "~> 1.0"},
 
     # Muse Systems Business Management System Components
     {:mscmp_syst_error, path: "../mscmp_syst_error"},
@@ -48,7 +49,7 @@ defmodule MscmpSystDb.MixProject do
     [
       app: @name,
       version: @version,
-      elixir: "~> 1.15",
+      elixir: "~> 1.17",
       deps: @deps,
       build_embedded: in_production,
       start_permanent: in_production,
@@ -99,7 +100,10 @@ defmodule MscmpSystDb.MixProject do
   def application do
     [
       extra_applications: [
-        :logger
+        :logger,
+        :debugger,
+        :runtime_tools,
+        :wx
       ]
     ]
   end

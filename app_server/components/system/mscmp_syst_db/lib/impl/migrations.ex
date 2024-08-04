@@ -13,9 +13,11 @@
 defmodule MscmpSystDb.Impl.Migrations do
   @moduledoc false
 
+  alias MscmpSystDb.Impl.Macros
   alias MscmpSystDb.Runtime.Datastore
 
   require Logger
+  require Macros
 
   ######
   #
@@ -25,13 +27,57 @@ defmodule MscmpSystDb.Impl.Migrations do
   #
   ######
 
-  @default_source_root_dir "database"
+  ##############################################################################
+  #
+  # Options Definition
+  #
 
-  @default_migrations_schema "ms_syst_db"
-  @default_migrations_table "migrations"
-  @default_migrations_root_dir "priv/database"
+  Macros.migration_constants()
 
   @migration_schema_sql_file "migrations_schema/migration_schema_initialization.eex.sql"
+
+  option_defs = [
+    migrations_schema: [
+      type: :string,
+      default: @migrations_schema,
+      doc: """
+      The database maintenance schema used to host the migrations state table.
+      """
+    ],
+    migrations_table: [
+      type: :string,
+      default: @migrations_table,
+      doc: """
+      The name of the table used to store database migration state data.
+      """
+    ],
+    migrations_root_dir: [
+      type: :string,
+      default: @migrations_root_dir,
+      doc: """
+      The directory relative to the project directory where the database
+      migration files are located.
+      """
+    ],
+    source_root_dir: [
+      type: :string,
+      default: "database",
+      doc: """
+      The directory where the EEx/SQL migration source files are located.  By
+      default this is the "database" directory relative to where the migration
+      build command is run.
+      """
+    ],
+    clean_migrations: [
+      type: :boolean,
+      default: false,
+      doc: """
+      If set to true, any previously created migrations will be rebuilt.  When
+      false, any previously built migrations will be retained and only new
+      migrations will be built, if there are any.
+      """
+    ]
+  ]
 
   ##########################
   #
@@ -39,15 +85,27 @@ defmodule MscmpSystDb.Impl.Migrations do
   #
   ##########################
 
+  ##############################################################################
+  #
+  # build_migrations
+  #
+
+  @build_migrations_opts NimbleOptions.new!(
+                           Keyword.take(option_defs, [
+                             :clean_migrations,
+                             :source_root_dir,
+                             :migrations_root_dir
+                           ])
+                         )
+
+  @spec get_build_migrations_opts_docs() :: String.t()
+  def get_build_migrations_opts_docs, do: NimbleOptions.docs(@build_migrations_opts)
+
+  @spec build_migrations(String.t()) :: {:ok, list(Path.t())} | {:error, MscmpSystError.t()}
   @spec build_migrations(String.t(), Keyword.t()) ::
           {:ok, list(Path.t())} | {:error, MscmpSystError.t()}
   def build_migrations(datastore_type, opts \\ []) do
-    opts =
-      MscmpSystUtils.resolve_options(opts,
-        source_root_dir: @default_source_root_dir,
-        migrations_root_dir: @default_migrations_root_dir,
-        clean_migrations: false
-      )
+    opts = NimbleOptions.validate!(opts, @build_migrations_opts)
 
     migrations_path = Path.join([opts[:migrations_root_dir], datastore_type])
 
@@ -210,9 +268,24 @@ defmodule MscmpSystDb.Impl.Migrations do
     |> Enum.reduce("", &(&2 <> process_load_file_item(&1, source_root, version)))
   end
 
-  @spec(clean_existing_migrations(String.t(), Keyword.t()) :: :ok, {:error, MscmpSystError.t()})
-  def clean_existing_migrations(datastore_type, opts \\ []) do
-    opts = MscmpSystUtils.resolve_options(opts, migrations_root_dir: @default_migrations_root_dir)
+  ##############################################################################
+  #
+  # clean_existing_migrations
+  #
+
+  @clean_existing_migration_opts NimbleOptions.new!(
+                                   Keyword.take(option_defs, [:migrations_root_dir])
+                                 )
+
+  @spec get_clean_existing_migration_opts_docs() :: String.t()
+  def get_clean_existing_migration_opts_docs,
+    do: NimbleOptions.docs(@clean_existing_migration_opts)
+
+  @spec clean_existing_migrations(String.t()) :: :ok | {:error, MscmpSystError.t()}
+  @spec clean_existing_migrations(String.t(), Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
+  def clean_existing_migrations(datastore_type, opts \\ [])
+      when is_binary(datastore_type) and is_list(opts) do
+    opts = NimbleOptions.validate!(opts, @clean_existing_migration_opts)
 
     :ok =
       [opts[:migrations_root_dir], datastore_type]
@@ -244,14 +317,22 @@ defmodule MscmpSystDb.Impl.Migrations do
   #
   ################################
 
-  @spec get_datastore_version(Keyword.t()) ::
-          {:ok, String.t()} | {:error, MscmpSystError.t()}
+  ##############################################################################
+  #
+  # get_datastore_version
+  #
+
+  @get_datastore_version_opts NimbleOptions.new!(
+                                Keyword.take(option_defs, [:migrations_schema, :migrations_table])
+                              )
+
+  @spec get_datastore_version_opts_docs() :: String.t()
+  def get_datastore_version_opts_docs, do: NimbleOptions.docs(@get_datastore_version_opts)
+
+  @spec get_datastore_version() :: {:ok, String.t()} | {:error, MscmpSystError.t()}
+  @spec get_datastore_version(Keyword.t()) :: {:ok, String.t()} | {:error, MscmpSystError.t()}
   def get_datastore_version(opts \\ []) do
-    opts =
-      MscmpSystUtils.resolve_options(opts,
-        migrations_schema: @default_migrations_schema,
-        migrations_table: @default_migrations_table
-      )
+    opts = NimbleOptions.validate!(opts, @get_datastore_version_opts)
 
     migration_table_exists? =
       query_table_exists(
@@ -309,14 +390,22 @@ defmodule MscmpSystDb.Impl.Migrations do
     |> Enum.sort()
   end
 
-  @spec initialize_datastore(String.t(), Keyword.t()) ::
-          :ok | {:error, MscmpSystError.t()}
+  ##############################################################################
+  #
+  # initialize_datastore
+  #
+
+  @initialize_datastore_opts NimbleOptions.new!(
+                               Keyword.take(option_defs, [:migrations_schema, :migrations_table])
+                             )
+
+  @spec initialize_datastore_opts_docs() :: String.t()
+  def initialize_datastore_opts_docs, do: NimbleOptions.docs(@initialize_datastore_opts)
+
+  @spec initialize_datastore(String.t()) :: :ok | {:error, MscmpSystError.t()}
+  @spec initialize_datastore(String.t(), Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
   def initialize_datastore(datastore_owner, opts \\ []) do
-    opts =
-      MscmpSystUtils.resolve_options(opts,
-        migrations_schema: @default_migrations_schema,
-        migrations_table: @default_migrations_table
-      )
+    opts = NimbleOptions.validate!(opts, @initialize_datastore_opts)
 
     bindings = [
       ms_owner: datastore_owner,
@@ -347,15 +436,29 @@ defmodule MscmpSystDb.Impl.Migrations do
       }
   end
 
+  ##############################################################################
+  #
+  # apply_outstanding_migrations
+  #
+
+  @apply_outstanding_migration_opts NimbleOptions.new!(
+                                      Keyword.take(option_defs, [
+                                        :migrations_root_dir,
+                                        :migrations_schema,
+                                        :migrations_table
+                                      ])
+                                    )
+
+  @spec apply_outstanding_migrations_opts_docs() :: String.t()
+  def apply_outstanding_migrations_opts_docs,
+    do: NimbleOptions.docs(@apply_outstanding_migration_opts)
+
+  @spec apply_outstanding_migrations(String.t(), Keyword.t()) ::
+          {:error, MscmpSystError.t()} | {:ok, list}
   @spec apply_outstanding_migrations(String.t(), Keyword.t(), Keyword.t()) ::
           {:error, MscmpSystError.t()} | {:ok, list}
   def apply_outstanding_migrations(datastore_type, migration_bindings, opts \\ []) do
-    opts =
-      MscmpSystUtils.resolve_options(opts,
-        migrations_root_dir: @default_migrations_root_dir,
-        migrations_schema: @default_migrations_schema,
-        migrations_table: @default_migrations_table
-      )
+    opts = NimbleOptions.validate!(opts, @apply_outstanding_migration_opts)
 
     available_migrations =
       [opts[:migrations_root_dir], datastore_type]

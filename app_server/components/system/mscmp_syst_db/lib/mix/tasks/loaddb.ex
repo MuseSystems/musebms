@@ -153,10 +153,10 @@ defmodule Mix.Tasks.Loaddb do
     opts = [
       database_name: opts_cli[:db_name],
       datastore_code: opts_cli[:ds_code],
-      datastore_name: string_to_atom(opts_cli[:ds_name]),
+      datastore_name: opts_cli[:ds_name],
       description_prefix: opts_cli[:desc_prefix],
       database_role_prefix: opts_cli[:db_role_prefix],
-      context_name: string_to_atom(opts_cli[:context_name]),
+      context_name: opts_cli[:context_name],
       database_password: opts_cli[:context_pwd],
       starting_pool_size: opts_cli[:context_pool],
       db_host: opts_cli[:db_host],
@@ -168,7 +168,4 @@ defmodule Mix.Tasks.Loaddb do
 
     DevSupport.get_datastore_options(opts)
   end
-
-  defp string_to_atom(nil), do: nil
-  defp string_to_atom(value) when is_binary(value), do: String.to_atom(value)
 end

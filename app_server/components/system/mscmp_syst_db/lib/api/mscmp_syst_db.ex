@@ -26,9 +26,48 @@ defmodule MscmpSystDb do
 
   @doc section: :datastore_management
   @doc """
-  Returns the state of the database and database roles which back the Datastore
-  and contexts, respectively, of the provided Datastore options definition.
+  Returns the state of the Datastore and its contexts based on the provided
+  Datastore Options.
+
+  This function performs the following checks:
+
+    1. Verifies the existence of the database backing the Datastore.
+    2. Checks the state of each database role representing the Datastore
+       Contexts.
+    3. Determines if database connections for the Datastore Contexts have been
+      started.
+
+  ## Parameters
+
+    * `datastore_options` - A `DatastoreOptions` struct defining the Datastore
+      and its contexts.
+
+    * `opts` - a Keyword List of additional key/value call configurations.  See
+      the "Options" section for details.
+
+  ## Options
+
+  #{Dba.get_get_datastore_state_opts_docs()}
+
+  ## Returns
+
+    * `{:ok, database_state, context_states}` - if successful, where:
+      - `database_state` is the state of the Datastore database (`:ready` or
+        `:not_found`)
+      - `context_states` is a list of `ContextState` structs for each context
+
+    * `{:error, MscmpSystError.t()}` - if there's an error retrieving the
+      Datastore state.
+
+  ## Errors
+
+  The function may return an error with code `:database_error` if there's a failure
+  in retrieving the Datastore state.
+
   """
+  @spec get_datastore_state(DatastoreOptions.t()) ::
+          {:ok, Types.database_state_values(), list(ContextState.t())}
+          | {:error, MscmpSystError.t()}
   @spec get_datastore_state(DatastoreOptions.t(), Keyword.t()) ::
           {:ok, Types.database_state_values(), list(ContextState.t())}
           | {:error, MscmpSystError.t()}
@@ -38,9 +77,41 @@ defmodule MscmpSystDb do
   @doc """
   Creates a new Datastore along with its contexts.
 
-  The creation of a new Datastore includes creating new database to back the
-  Datastore and database roles representing each of the Datastore contexts.
+  The creation of a new Datastore includes the following steps:
+
+    1. Creating database roles representing each of the Datastore contexts.
+    2. Creating a new database to back the Datastore.
+    3. Applying database connection privileges to the context roles.
+    4. Initializing the Datastore with necessary structures and data.
+
+  ## Parameters
+
+    * `datastore_options` - A `DatastoreOptions` struct defining the Datastore
+      and its contexts.
+
+    * `opts` - a Keyword List of additional key/value call configurations.  See
+      the "Options" section for details.
+
+  ## Options
+
+  #{Dba.get_create_datastore_opts_docs()}
+
+  ## Returns
+
+    * `{:ok, :ready, list(ContextState.t())}` - if the Datastore is successfully
+      created.
+
+    * `{:error, MscmpSystError.t()}` - if there's an error during the creation
+      process.
+
+  ## Errors
+
+  The function may return an error with code `:database_error` if there's a
+  failure in any step of the Datastore creation process.
   """
+  @spec create_datastore(DatastoreOptions.t()) ::
+          {:ok, Types.database_state_values(), list(ContextState.t())}
+          | {:error, MscmpSystError.t()}
   @spec create_datastore(DatastoreOptions.t(), Keyword.t()) ::
           {:ok, Types.database_state_values(), list(ContextState.t())}
           | {:error, MscmpSystError.t()}
@@ -51,33 +122,88 @@ defmodule MscmpSystDb do
   Drops a Datastore along with its contexts.
 
   Dropping a Datastore will drop the database backing the Datastore from the
-  database server as well as all of the database roles associated defined by the
-  provided database options.
+  database server as well as all of the database roles associated with the
+  Datastore as defined by the provided database options.
 
   Prior to dropping the Datastore, all active connections to the Datastore
-  should be terminated or the function call could fail.
+  should be terminated, or the function call could fail.
 
-  __Note that this is am irreversible, destructive action.  Any successful call
-  will result in data loss.__
+  > #### Warning! {: .warning}
+  >
+  > This is an irreversible, destructive action. Any successful call will result
+  > in permanent data loss.
+
+  ## Parameters
+
+    * `datastore_options` - A `DatastoreOptions` struct defining the Datastore
+      and its contexts.
+
+    * `opts` - a Keyword List of additional key/value call configurations.  See
+      the "Options" section for details.
+
+  ## Options
+
+  #{Dba.get_drop_datastore_opts_docs()}
+
+  ## Returns
+
+    * `:ok` if the Datastore is successfully dropped.
+    * `{:error, MscmpSystError.t()}` if there's an error during the drop process.
+
+  ## Errors
+
+  The function may return an error with code `:database_error` if there's a failure
+  in any step of the Datastore drop process, such as being unable to drop the
+  database or roles due to active connections.
+
   """
+  @spec drop_datastore(DatastoreOptions.t()) :: :ok | {:error, MscmpSystError.t()}
   @spec drop_datastore(DatastoreOptions.t(), Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
   defdelegate drop_datastore(datastore_options, opts \\ []), to: Dba
 
   @doc section: :datastore_management
   @doc """
-  Returns the state of the requested contexts.
+  Returns the state of the requested Datastore contexts.
 
-  This function will check for each given context that: it exist, whether or not
+  This function will check for each given context that: it exists, whether or not
   database connections may be started for it, and whether or not database
   connections have been started.
 
   Note that only startable contexts are included in this list.  If the context
   is not startable or has `id: nil`, the context will be excluded from the
   results of this function.
+
+  ## Parameters
+
+    * `datastore_options` - A `DatastoreOptions` struct defining the Datastore
+      and its contexts.
+
+    * `opts` - a Keyword List of additional key/value call configurations.  See
+      the "Options" section for details..
+
+  ## Options
+
+  #{Dba.get_get_datastore_context_states_opts_docs()}
+
+  ## Returns
+
+    * `{:ok, list(ContextState.t())}` if successful, where
+      `list(ContextState.t())` is a list of `ContextState` structs for each
+      context.
+
+    * `{:error, MscmpSystError.t()}` if there's an error retrieving the context
+      states.
+
+  ## Errors
+
+    The function may return an error with code `:database_error` if there's a
+    failure in retrieving the context states.
   """
+  @spec get_datastore_context_states(DatastoreOptions.t()) ::
+          {:ok, nonempty_list(ContextState.t())} | {:error, MscmpSystError.t()}
   @spec get_datastore_context_states(DatastoreOptions.t(), Keyword.t()) ::
           {:ok, nonempty_list(ContextState.t())} | {:error, MscmpSystError.t()}
-  defdelegate get_datastore_context_states(datastore_contexts, opts \\ []), to: Dba
+  defdelegate get_datastore_context_states(datastore_options, opts \\ []), to: Dba
 
   @doc section: :datastore_management
   @doc """
@@ -87,13 +213,37 @@ defmodule MscmpSystDb do
   over the course of time it is expected that applications may define new
   contexts as needs change.  This function allows applications to add new
   contexts to existing Datastores.
+
+  ## Parameters
+
+    * `datastore_options` - The Datastore configuration struct to use for the
+      operation.
+
+    * `datastore_contexts` - A nonempty list of Datastore contexts to create.
+
+    * `opts` - a Keyword List of additional key/value call configurations.  See
+      the "Options" section for details..
+
+  ## Options
+
+  #{Dba.get_create_datastore_contexts_opts_docs()}
+
+  ## Returns
+
+    * `{:ok, nonempty_list(ContextState.t())}` if successful, where
+      `nonempty_list(ContextState.t())` is a list of `ContextState` structs
+      representing the state of each created context.
+
+    * `{:error, MscmpSystError.t()}` if there is an error creating the contexts.
+
   """
+  @spec create_datastore_contexts(DatastoreOptions.t(), nonempty_list(DatastoreContext.t())) ::
+          {:ok, nonempty_list(ContextState.t())} | {:error, MscmpSystError.t()}
   @spec create_datastore_contexts(
           DatastoreOptions.t(),
           nonempty_list(DatastoreContext.t()),
           Keyword.t()
-        ) ::
-          {:ok, nonempty_list(ContextState.t())} | {:error, MscmpSystError.t()}
+        ) :: {:ok, nonempty_list(ContextState.t())} | {:error, MscmpSystError.t()}
   defdelegate create_datastore_contexts(datastore_options, datastore_contexts, opts \\ []),
     to: Dba
 
@@ -106,7 +256,30 @@ defmodule MscmpSystDb do
   requested Datastore contexts do not have active database connections when
   calling this function as active connections are likely to result in an
   error condition.
+
+  ## Parameters
+
+    * `datastore_options` - The Datastore configuration struct to use for the
+      operation.
+
+    * `datastore_contexts` - A nonempty list of Datastore contexts to drop.
+
+    * `opts` - a Keyword List of additional key/value call configurations.  See
+      the "Options" section for details..
+
+  ## Options
+
+  #{Dba.get_drop_datastore_contexts_opts_docs()}
+
+
+  ## Returns
+
+    * `:ok` on success
+
+    * `{:error, reason}` on failure.
   """
+  @spec drop_datastore_contexts(DatastoreOptions.t(), nonempty_list(DatastoreContext.t())) ::
+          :ok | {:error, MscmpSystError.t()}
   @spec drop_datastore_contexts(
           DatastoreOptions.t(),
           nonempty_list(DatastoreContext.t()),
@@ -138,7 +311,27 @@ defmodule MscmpSystDb do
 
   See `mix builddb` for further explanation version number segment meanings.
 
+  ## Parameters
+
+    * `datastore_options` - The Datastore configuration struct to use for the
+      operation.
+
+    * `opts` - a Keyword List of additional key/value call configurations.  See
+      the "Options" section for details..
+
+  ## Options
+
+    #{Privileged.get_get_datastore_version_opts_docs()}
+
+  ## Returns
+
+    * `{:ok, version}` - The current version of the Datastore as a string.
+
+    * `{:error, reason}` - An error occurred.
+
   """
+  @spec get_datastore_version(DatastoreOptions.t()) ::
+          {:ok, String.t()} | {:error, MscmpSystError.t()}
   @spec get_datastore_version(DatastoreOptions.t(), Keyword.t()) ::
           {:ok, String.t()} | {:error, MscmpSystError.t()}
   defdelegate get_datastore_version(datastore_options, opts \\ []), to: Privileged
@@ -151,7 +344,35 @@ defmodule MscmpSystDb do
   that returns the current version.  Otherwise, database migrations for the
   Datastore type are applied until the Datastore is fully upgraded to the most
   recent schema version.
+
+  ## Parameters:
+    * `datastore_options` - The `DatastoreOptions` struct containing the
+      Datastore configuration.
+
+    * `datastore_type` - A string representing the type of the Datastore which
+      determines which migrations are applied.
+
+    * `migration_bindings` - A keyword list of bindings to be used in the
+      migration scripts.
+
+    * `opts` - a Keyword List of additional key/value call configurations.  See
+      the "Options" section for details.
+
+  ## Options:
+
+    #{Privileged.get_upgrade_datastore_opts_docs()}
+
+  ## Returns:
+
+    * `{:ok, [String.t()]}` - A tuple containing `:ok` and a list of migration
+      scripts that were applied.
+
+    * `{:error, MscmpSystError.t()}` - A tuple containing `:error` and an
+      `MscmpSystError` struct representing the error that occurred.
+
   """
+  @spec upgrade_datastore(DatastoreOptions.t(), String.t(), Keyword.t()) ::
+          {:error, MscmpSystError.t()} | {:ok, [binary()]}
   @spec upgrade_datastore(
           DatastoreOptions.t(),
           String.t(),
@@ -170,46 +391,149 @@ defmodule MscmpSystDb do
   @doc section: :service_management
   @doc """
   Starts database connections for all of login contexts in the Datastore options.
+
+  ## Parameters:
+
+    * `datastore_options` - A `DatastoreOptions` struct containing the login
+      contexts.
+
+    * `opts` - a Keyword List of additional key/value call configurations.  See
+      the "Options" section for details.
+
+  ## Options:
+
+    #{Datastore.get_start_datastore_opts_docs()}
+
+  ## Returns:
+
+    * `{:ok, :all_started | :some_started, list(Types.ContextState.t())}` -
+      Returns `:ok` with either `:all_started` or `:some_started` atom
+      indicating if all or some of the contexts were started successfully, along
+      with a list of `Types.ContextState` structs representing the state of each
+      context.
+
+    * `{:error, MscmpSystError.t()}` - Returns an error tuple with a
+      `MscmpSystError` struct if there was an error starting the database
+      connections.
   """
-  @spec start_datastore(DatastoreOptions.t(), Supervisor.supervisor() | nil) ::
-          {:ok, :all_started | :some_started, list(Types.context_state_values())}
+  @spec start_datastore(DatastoreOptions.t()) ::
+          {:ok, :all_started | :some_started, list(Types.ContextState.t())}
           | {:error, MscmpSystError.t()}
-  defdelegate start_datastore(datastore_options, supervisor_name \\ nil), to: Datastore
+  @spec start_datastore(DatastoreOptions.t(), Keyword.t()) ::
+          {:ok, :all_started | :some_started, list(Types.ContextState.t())}
+          | {:error, MscmpSystError.t()}
+  defdelegate start_datastore(datastore_options, opts \\ []), to: Datastore
 
   @doc section: :service_management
   @doc """
   Starts a database connection for the specific Datastore context provided.
+
+  ## Parameters:
+    * `datastore_options` - The `t:MscmpSystDb.DatastoreOptions.t/0` struct
+      containing the Datastore options.
+
+    * `context` - The `t:MscmpSystDb.Types.context_name/0` atom or
+      `t:DatastoreContext.t/0` struct representing the Datastore
+      context.
+
+    * `opts` - a Keyword List of additional key/value call configurations.  See
+      the "Options" section for details.
+
+  ## Options:
+
+    #{Datastore.get_start_datastore_opts_docs()}
+
+  ## Returns:
+
+    * `{:ok, pid()}` on success, where `pid()` is the process ID of the
+      Datastore context.
+
+    * `{:error, reason}` on failure, where `reason` is a
+      `t:MscmpSystDb.MscmpSystError.t/0` struct.
+
   """
-  @spec start_datastore_context(DatastoreOptions.t(), atom() | DatastoreContext.t()) ::
+  @spec start_datastore_context(
+          DatastoreOptions.t(),
+          Types.context_name() | DatastoreContext.t()
+        ) :: {:ok, pid()} | {:error, MscmpSystError.t()}
+  @spec start_datastore_context(
+          DatastoreOptions.t(),
+          Types.context_name() | DatastoreContext.t(),
+          Keyword.t()
+        ) ::
           {:ok, pid()} | {:error, MscmpSystError.t()}
-  defdelegate start_datastore_context(datastore_options, context), to: Datastore
+  defdelegate start_datastore_context(datastore_options, context, opts \\ []), to: Datastore
 
   @doc section: :service_management
   @doc """
-  Disconnects the database connections for all of the login Datastore option contexts.
+  Disconnects the database connections for all of the login Datastore option
+  contexts.
+
+  ## Parameters
+
+    * `datastore_options_or_contexts` - A `DatastoreOptions` struct, a list of
+      `DatastoreContext` structs, or a list of maps with `:context_name` keys.
+
+    * `opts` - a Keyword List of additional key/value call configurations.  See
+      the "Options" section for details.
+
+  ## Options
+
+    #{Datastore.get_stop_datastore_opts_docs()}
+
+  ## Returns
+
+    * `:ok` if the connections were successfully stopped.
+
+    * `{:error, reason}` if there was an error stopping the connections.
   """
   @spec stop_datastore(
           DatastoreOptions.t()
           | list(DatastoreContext.t())
-          | list(%{context_name: Types.context_name()}),
-          non_neg_integer()
+          | list(%{context_name: Types.context_name()})
         ) ::
           :ok | {:error, MscmpSystError.t()}
-  defdelegate stop_datastore(datastore_options_or_contexts, db_shutdown_timeout \\ 60_000),
+  @spec stop_datastore(
+          DatastoreOptions.t()
+          | list(DatastoreContext.t())
+          | list(%{context_name: Types.context_name()}),
+          Keyword.t()
+        ) ::
+          :ok | {:error, MscmpSystError.t()}
+  defdelegate stop_datastore(datastore_options_or_contexts, opts \\ []),
     to: Datastore
 
   @doc section: :service_management
   @doc """
   Disconnects the database connection for the specific Datastore context provided.
+
+  ## Parameters
+
+    * `context` - The Datastore context to disconnect. This can be a `pid()`,
+      `atom()`, or `DatastoreContext` struct.
+
+    * `opts` - a Keyword List of additional key/value call configurations.  See
+      the "Options" section for details.
+
+  ## Options
+
+    #{Datastore.get_stop_datastore_opts_docs()}
+
+  ## Returns
+
+    * `:ok` - On successful stopping of the requested Datastore Context.
   """
-  @spec stop_datastore_context(pid() | atom() | DatastoreContext.t(), non_neg_integer()) :: :ok
-  defdelegate stop_datastore_context(context, db_shutdown_timeout \\ 60_000),
+  @spec stop_datastore_context(pid() | atom() | DatastoreContext.t()) :: :ok
+  @spec stop_datastore_context(pid() | atom() | DatastoreContext.t(), Keyword.t()) :: :ok
+  defdelegate stop_datastore_context(context, opts \\ []),
     to: Datastore
 
   @doc section: :query
   @doc """
   Executes a database query but returns no results.
   """
+  @spec query_for_none(iodata()) :: :ok | {:error, MscmpSystError.t()}
+  @spec query_for_none(iodata(), [term()]) :: :ok | {:error, MscmpSystError.t()}
   @spec query_for_none(iodata(), [term()], Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
   defdelegate query_for_none(query, query_params \\ [], opts \\ []), to: Datastore
 
@@ -218,6 +542,8 @@ defmodule MscmpSystDb do
   Executes a database query but returns no results.  Raises on error.
 
   """
+  @spec query_for_none!(iodata()) :: :ok
+  @spec query_for_none!(iodata(), [term()]) :: :ok
   @spec query_for_none!(iodata(), [term()], Keyword.t()) :: :ok
   defdelegate query_for_none!(query, query_params \\ [], opts \\ []), to: Datastore
 
@@ -225,6 +551,10 @@ defmodule MscmpSystDb do
   @doc """
   Executes a database query returning a single value.
   """
+  @spec query_for_value(iodata()) ::
+          {:ok, any()} | {:error, MscmpSystError.t()}
+  @spec query_for_value(iodata(), [term()]) ::
+          {:ok, any()} | {:error, MscmpSystError.t()}
   @spec query_for_value(iodata(), [term()], Keyword.t()) ::
           {:ok, any()} | {:error, MscmpSystError.t()}
   defdelegate query_for_value(query, query_params \\ [], opts \\ []), to: Datastore
@@ -233,6 +563,8 @@ defmodule MscmpSystDb do
   @doc """
   Executes a database query returning a single value.  Raises on error.
   """
+  @spec query_for_value!(iodata()) :: any()
+  @spec query_for_value!(iodata(), [term()]) :: any()
   @spec query_for_value!(iodata(), [term()], Keyword.t()) :: any()
   defdelegate query_for_value!(query, query_params \\ [], opts \\ []), to: Datastore
 
@@ -240,6 +572,10 @@ defmodule MscmpSystDb do
   @doc """
   Executes a database query and returns a single row.
   """
+  @spec query_for_one(iodata()) ::
+          {:ok, [any()]} | {:error, MscmpSystError.t()}
+  @spec query_for_one(iodata(), [term()]) ::
+          {:ok, [any()]} | {:error, MscmpSystError.t()}
   @spec query_for_one(iodata(), [term()], Keyword.t()) ::
           {:ok, [any()]} | {:error, MscmpSystError.t()}
   defdelegate query_for_one(query, query_params \\ [], opts \\ []), to: Datastore
@@ -248,6 +584,8 @@ defmodule MscmpSystDb do
   @doc """
   Executes a database query and returns a single row.  Raises on error.
   """
+  @spec query_for_one!(iodata()) :: [any()]
+  @spec query_for_one!(iodata(), [term()]) :: [any()]
   @spec query_for_one!(iodata(), [term()], Keyword.t()) :: [any()]
   defdelegate query_for_one!(query, query_params \\ [], opts \\ []), to: Datastore
 
@@ -255,6 +593,22 @@ defmodule MscmpSystDb do
   @doc """
   Executes a database query and returns all rows.
   """
+  @spec query_for_many(iodata()) ::
+          {:ok,
+           %{
+             :rows => nil | [[term()] | binary()],
+             :num_rows => non_neg_integer(),
+             optional(atom()) => any()
+           }}
+          | {:error, MscmpSystError.t()}
+  @spec query_for_many(iodata(), [term()]) ::
+          {:ok,
+           %{
+             :rows => nil | [[term()] | binary()],
+             :num_rows => non_neg_integer(),
+             optional(atom()) => any()
+           }}
+          | {:error, MscmpSystError.t()}
   @spec query_for_many(iodata(), [term()], Keyword.t()) ::
           {:ok,
            %{
@@ -269,6 +623,16 @@ defmodule MscmpSystDb do
   @doc """
   Executes a database query and returns all rows.  Raises on error.
   """
+  @spec query_for_many!(iodata()) :: %{
+          :rows => nil | [[term()] | binary()],
+          :num_rows => non_neg_integer(),
+          optional(atom()) => any()
+        }
+  @spec query_for_many!(iodata(), [term()]) :: %{
+          :rows => nil | [[term()] | binary()],
+          :num_rows => non_neg_integer(),
+          optional(atom()) => any()
+        }
   @spec query_for_many!(iodata(), [term()], Keyword.t()) :: %{
           :rows => nil | [[term()] | binary()],
           :num_rows => non_neg_integer(),
@@ -288,24 +652,86 @@ defmodule MscmpSystDb do
 
   Using this function will set the given Datastore Context in the Process
   Dictionary of the process from which the function call is made.
+
+  This version of the function uses normal Ecto dynamic repository naming
+  conventions.
+
+  ## Parameters
+
+    * `context` - The Datastore Context to use for Datastore interactions in the
+      Elixir process where this function is called.
+
+  ## Returns
+
+    * `atom()` - The previously set Datastore Context value, if one was
+      previously set.
+
+    * `nil` - If no Datastore Context was previously set.
   """
-  @spec put_datastore_context(pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta()) ::
+  @spec put_datastore_context(
+          pid()
+          | Ecto.Repo.t()
+          | Ecto.Adapter.adapter_meta()
+          | GenServer.name()
+        ) ::
           atom() | pid()
   defdelegate put_datastore_context(context), to: Datastore
 
   @doc section: :service_management
   @doc """
+  Establishes the Datastore Context to use for Datastore interactions in the
+  Elixir process where this function is called.
+
+  Using this function will set the given Datastore Context in the Process
+  Dictionary of the process from which the function call is made.
+
+  This version of the function allows you identify a Datastore Context using a
+  string based name registered in the provided registry.  Naturally, the
+  Datastore Context must have been started using a string based name for this
+  method to be applicable.
+
+  ## Parameters
+
+    * `context` - The Datastore Context to use for Datastore interactions in the
+      Elixir process where this function is called.
+
+  ## Returns
+
+    * `atom()` - The previously set Datastore Context value, if one was
+      previously set.
+
+    * `nil` - If no Datastore Context was previously set.
+  """
+  @spec put_datastore_context(Types.context_registry(), Types.context_name()) ::
+          atom() | pid()
+  defdelegate put_datastore_context(context_registry, context), to: Datastore
+
+  @doc section: :service_management
+  @doc """
   Retrieves either atom name or `t:pid/0` of the currently established Datastore
   context, unless no context has been established.
+
+  ## Returns
+
+    * `atom()` - The currently established Datastore Context atom name, if the
+      Datastore Context was named and established for the session using the
+      standard Ecto dynamic repository naming conventions.
+
+    * `pid()` - The currently established Datastore Context pid, if the current
+      Datastore Context was set using a pid.  This will be the case when string
+      based Datastore Context names were used.
+
+    * `nil` - If no Datastore Context was established for the session.
+
   """
-  @spec current_datastore_context :: atom() | pid()
+  @spec current_datastore_context :: atom() | pid() | nil
   defdelegate current_datastore_context(), to: Datastore
 
   # Ideally the `:development_support` functions wouldn't be compiled when the
   # `Mix.env()` environment isn't `:dev` or `:test`., but because dependencies
   # are always compiled as `:prod` we can't achieve that at present.
   #
-  # While having `:develoment_support` functions compiled in production doesn't
+  # While having `:development_support` functions compiled in production doesn't
   # specifically hurt our designed functionality, it does arguably increase the
   # attack surface of the Component... something we should strive to minimize.
   #
@@ -335,64 +761,19 @@ defmodule MscmpSystDb do
 
   ## Parameters
 
-    * `opts` - an optional parameter consisting of type `t:Keyword.t/0`
-      containing values which will override the function supplied defaults.  The
-      available options are:
+    * `opts` - a Keyword List of additional key/value call configurations.  See
+      the "Options" section for details.
 
-      * `database_name` - a binary value indicating a name for the database to
-        use.  The default database name is `ms_devsupport_database`.
+  ## Options
 
-      * `datastore_code` - a binary value providing a Datastore level salting
-        value used in different hashing operations.  The default value is
-        "musesystems.publicly.known.insecure.devsupport.code"
+    #{DevSupport.get_get_datastore_options_opts_docs()}
 
-      * `datastore_name` - a name for use by the application to identify a given
-        Datastore.  This value will often time be the same as the
-        `database_name` value.  This value is converted to an atom.  The default
-        value is `ms_devsupport_database`.
+  ## Returns
 
-      * `description_prefix` - a binary value which is prefixed to the
-        descriptions of the created database contexts and which appear in the
-        database role descriptions.  The default value is "Muse Systems
-        DevSupport".
-
-      * `database_role_prefix` - a binary value which is prefixed to the
-        names of the database roles created to back the Datastore Contexts.
-        The default value is `ms_devsupport`.
-
-      * `context_name` - a binary value which provides a unique context name for
-        the login Context identified by this function.  This value is converted
-        to an atom by this function.  The default value is
-        `ms_devsupport_context`.
-
-      * `database_password` - a binary value which is the database password that
-        the login Datastore Context uses to log into the database.  The default
-        value is "musesystems.publicly.known.insecure.devsupport.apppassword".
-
-      * `starting_pool_size` - the number of database connections the login
-        Context will establish from the application.  The default value is 5.
-
-      * `db_host` - a string indicating the host address of the database server.
-        This can be an IP address or resolvable DNS entry.  The default value is
-        `127.0.0.1`.
-
-      * `db_port` - an integer indicating the TCP port on which to contact the
-        database server.  The default value is the standard PostgreSQL port
-        number `5432`.
-
-      * `server_salt` - a binary value providing a Datastore level salting
-        value used in different hashing operations.  The default value is
-        "musesystems.publicly.known.insecure.devsupport.salt"
-
-      * `dbadmin_password` - a binary value for the standard
-        `ms_syst_privileged` database role account created via the database
-        bootstrapping script.  The default value is
-        "musesystems.publicly.known.insecure.devsupport.password".
-
-      * `dbadmin_pool_size` - the number of database connections which will be
-        opened to support DBA or Privileged operations.  The default value is
-        `1`.
+    * `t:MscmpSystDb.Types.DatastoreOptions.t/0` - A populated DatastoreOptions
+      struct configured for development support.
   """
+  @spec get_datastore_options() :: DatastoreOptions.t()
   @spec get_datastore_options(Keyword.t()) :: DatastoreOptions.t()
   defdelegate get_datastore_options(opts \\ []), to: DevSupport
 
@@ -406,10 +787,19 @@ defmodule MscmpSystDb do
 
   ## Parameters
 
-    * `opts` - an optional parameter consisting of type `t:Keyword.t/0`
-      containing values which will override the function supplied defaults.  The
-      available options are the same as those for `get_datastore_options/1`
+    * `opts` - a Keyword List of additional key/value call configurations.  See
+      the "Options" section for details.
+
+  ## Options
+
+    #{DevSupport.get_get_datastore_options_opts_docs()}
+
+  ## Returns
+
+    * `t:MscmpSystDb.Types.DatastoreOptions.t/0` - A populated DatastoreOptions
+      struct configured for development support.
   """
+  @spec get_devsupport_datastore_options() :: DatastoreOptions.t()
   @spec get_devsupport_datastore_options(Keyword.t()) :: DatastoreOptions.t()
   defdelegate get_devsupport_datastore_options(opts \\ []),
     to: DevSupport,
@@ -427,64 +817,19 @@ defmodule MscmpSystDb do
 
   ## Parameters
 
-    * `opts` - an optional parameter consisting of type `t:Keyword.t/0`
-      containing values which will override the function supplied defaults.  The
-      available options are:
+    * `opts` - a Keyword List of additional key/value call configurations.  See
+      the "Options" section for details.
 
-      * `database_name` - a binary value indicating a name for the database to
-        use.  The default database name is `ms_testsupport_database`.
+  ## Options
 
-      * `datastore_code` - a binary value providing a Datastore level salting
-        value used in different hashing operations.  The default value is
-        "musesystems.publicly.known.insecure.testsupport.code"
+    #{DevSupport.get_get_testsupport_datastore_options_opts_docs()}
 
-      * `datastore_name` - a name for use by the application to identify a given
-        Datastore.  This value will often time be the same as the
-        `database_name` value.  This value is converted to an atom.  The default
-        value is `ms_testsupport_database`.
+  ## Returns
 
-      * `description_prefix` - a binary value which is prefixed to the
-        descriptions of the created database contexts and which appear in the
-        database role descriptions.  The default value is "Muse Systems
-        TestSupport".
-
-      * `database_role_prefix` - a binary value which is prefixed to the
-        names of the database roles created to back the Datastore Contexts.
-        The default value is `ms_testsupport`.
-
-      * `context_name` - a binary value which provides a unique context name for
-        the login Context identified by this function.  This value is converted
-        to an atom by this function.  The default value is
-        `ms_testsupport_context`.
-
-      * `database_password` - a binary value which is the database password that
-        the login Datastore Context uses to log into the database.  The default
-        value is "musesystems.publicly.known.insecure.testsupport.apppassword".
-
-      * `starting_pool_size` - the number of database connections the login
-        Context will establish from the application.  The default value is 5.
-
-      * `db_host` - a string indicating the host address of the database server.
-        This can be an IP address or resolvable DNS entry.  The default value is
-        `127.0.0.1`.
-
-      * `db_port` - an integer indicating the TCP port on which to contact the
-        database server.  The default value is the standard PostgreSQL port
-        number `5432`.
-
-      * `server_salt` - a binary value providing a Datastore level salting
-        value used in different hashing operations.  The default value is
-        "musesystems.publicly.known.insecure.testsupport.salt"
-
-      * `dbadmin_password` - a binary value for the standard
-        `ms_syst_privileged` database role account created via the database
-        bootstrapping script.  The default value is
-        "musesystems.publicly.known.insecure.devsupport.password".
-
-      * `dbadmin_pool_size` - the number of database connections which will be
-        opened to support DBA or Privileged operations.  The default value is
-        `1`.
+    * `t:MscmpSystDb.Types.DatastoreOptions.t/0` - A populated DatastoreOptions
+      struct configured for testing support.
   """
+  @spec get_testsupport_datastore_options() :: DatastoreOptions.t()
   @spec get_testsupport_datastore_options(Keyword.t()) :: DatastoreOptions.t()
   defdelegate get_testsupport_datastore_options(opts \\ []), to: DevSupport
 
@@ -536,7 +881,8 @@ defmodule MscmpSystDb do
       value which defines the Datastore and Datastore Contexts to drop.
   """
   @spec drop_database(DatastoreOptions.t()) :: :ok
-  defdelegate drop_database(datastore_options), to: DevSupport
+  @spec drop_database(DatastoreOptions.t(), Keyword.t()) :: :ok
+  defdelegate drop_database(datastore_options, opts \\ []), to: DevSupport
 
   @doc section: :development_support
   @doc """
@@ -546,8 +892,8 @@ defmodule MscmpSystDb do
   This is a way to retrieve the standard development support name for use with
   functions such as `put_datastore_context/1`
   """
-  @spec get_devsupport_context_name() :: atom()
-  defdelegate get_devsupport_context_name, to: DevSupport
+  @spec get_devsupport_context_name() :: String.t()
+  defdelegate get_devsupport_context_name(), to: DevSupport
 
   @doc section: :development_support
   @doc """
@@ -557,15 +903,17 @@ defmodule MscmpSystDb do
   This is a way to retrieve the standard testing support name for use with
   functions such as `put_datastore_context/1`
   """
-  @spec get_testsupport_context_name() :: atom()
-  defdelegate get_testsupport_context_name, to: DevSupport
+  @spec get_testsupport_context_name() :: String.t()
+  defdelegate get_testsupport_context_name(), to: DevSupport
 
   @doc section: :query
   @doc """
   A convenience function that currently wraps the `c:Ecto.Repo.transaction/2`
   function.
   """
-  @spec transaction(fun | Ecto.Multi.t(), keyword) :: {:error, MscmpSystError.t()} | {:ok, any}
+  @spec transaction(fun | Ecto.Multi.t()) :: {:error, MscmpSystError.t()} | {:ok, any}
+  @spec transaction(fun | Ecto.Multi.t(), Keyword.t()) ::
+          {:error, MscmpSystError.t()} | {:ok, any}
   defdelegate transaction(job, opts \\ []), to: Datastore, as: :ecto_transaction
 
   @doc section: :query
