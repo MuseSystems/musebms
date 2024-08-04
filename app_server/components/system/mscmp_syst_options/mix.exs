@@ -18,9 +18,9 @@ defmodule MscmpSystOptions.MixProject do
 
   @deps [
     # Third Party Dependencies
-    {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
-    {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
-    {:ex_doc, "~> 0.20", only: :dev, runtime: false},
+    {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+    {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
+    {:ex_doc, "~> 0.31", only: :dev, runtime: false},
     {:toml, "~> 0.7"},
 
     # Muse Systems Business Management System Components
@@ -43,7 +43,7 @@ defmodule MscmpSystOptions.MixProject do
     [
       app: @name,
       version: @version,
-      elixir: "~> 1.15",
+      elixir: "~> 1.17",
       deps: @deps,
       build_embedded: in_production,
       start_permanent: in_production,
