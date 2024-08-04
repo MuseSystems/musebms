@@ -19,41 +19,11 @@ defmodule MscmpSystUtils do
 
   alias MscmpSystUtils.Impl
 
-  @doc section: :options_management
-  @doc """
-  Resolves function options provided as a Keyword List to either the value
-  provided or a default from a Keyword List of default values.
-
-  In many cases, we want to have optional functional parameters.  This small
-  function will merge the user given options with a preset defined list of
-  option defaults, always preferring the user given options.
-
-  Note that for keys in the `opts_given` argument that have `nil` values, the
-  default value of the argument is used instead; the default value may itself
-  may be `nil`, but one should be aware that `nil` is not always respected as a
-  given value.
-
-  The result is a Keyword List of the merged lists.
-
-  ## Parameters
-
-    * `opts_given` - a Keyword List of options provided by the caller.  This
-    list may include all options, any subset of options, be an empty list, or be
-    nil.
-
-    * `opts_default` - a Keyword List of options with their default values. This
-    list defines the expected optional values and their default value should the
-    user not provide a value.
-
-  ## Examples
-
-      iex> given_options = [test_value_one: 1]
-      iex> default_options = [test_value_one: 0, test_value_two: 2]
-      iex> MscmpSystUtils.resolve_options(given_options, default_options)
-      [test_value_one: 1, test_value_two: 2]
-  """
-  @spec resolve_options(Keyword.t(), Keyword.t()) :: Keyword.t()
-  defdelegate resolve_options(opts_given, opts_default), to: Impl.Utils
+  ##############################################################################
+  #
+  # String Utilities
+  #
+  ##############################################################################
 
   @doc section: :string_utilities
   @doc """
@@ -82,7 +52,7 @@ defmodule MscmpSystUtils do
       `0123456789ABCDEFGHJKMNPQRSTVWXYZ`.  This is the Base32 character set
       compatible with Douglas Crockford's Base 32 (https://www.crockford.com/base32.html).
   """
-  @spec get_random_string(pos_integer(), charlist() | atom()) :: String.t()
+
   defdelegate get_random_string(string_length, tokens \\ :alphanum),
-    to: Impl.Utils
+    to: Impl.StringUtils
 end

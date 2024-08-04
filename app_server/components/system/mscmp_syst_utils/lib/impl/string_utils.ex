@@ -1,5 +1,5 @@
-# Source File: utils.ex
-# Location:    musebms/components/system/mscmp_syst_utils/lib/impl/utils.ex
+# Source File: string_utils.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_utils/lib/impl/string_utils.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,15 +10,8 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MscmpSystUtils.Impl.Utils do
+defmodule MscmpSystUtils.Impl.StringUtils do
   @moduledoc false
-
-  @spec resolve_options(Keyword.t(), Keyword.t()) :: Keyword.t()
-  def resolve_options(opts_given, opts_default) do
-    Keyword.merge(opts_given || [], opts_default, fn _k, given, default ->
-      if given != nil, do: given, else: default
-    end)
-  end
 
   @spec get_random_string(pos_integer(), charlist() | atom()) :: String.t()
   def get_random_string(string_length, tokens) when is_list(tokens) do
@@ -34,18 +27,18 @@ defmodule MscmpSystUtils.Impl.Utils do
   end
 
   def get_random_string(string_length, :alphanum),
-    do: get_random_string(string_length, '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+    do: get_random_string(string_length, ~c"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
   def get_random_string(string_length, :b32e),
-    do: get_random_string(string_length, '0123456789ABCDEFGHIJKLMNOPQRSTUV')
+    do: get_random_string(string_length, ~c"0123456789ABCDEFGHIJKLMNOPQRSTUV")
 
   def get_random_string(string_length, :b32c),
-    do: get_random_string(string_length, '0123456789ABCDEFGHJKMNPQRSTVWXYZ')
+    do: get_random_string(string_length, ~c"0123456789ABCDEFGHJKMNPQRSTVWXYZ")
 
-  def get_random_string(string_length, :mixed_alphanum),
-    do:
-      get_random_string(
-        string_length,
-        '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-      )
+  def get_random_string(string_length, :mixed_alphanum) do
+    get_random_string(
+      string_length,
+      ~c"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    )
+  end
 end
