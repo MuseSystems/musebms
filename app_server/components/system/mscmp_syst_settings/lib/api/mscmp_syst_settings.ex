@@ -17,9 +17,9 @@ defmodule MscmpSystSettings do
              |> String.split("<!-- MDOC !-->")
              |> Enum.fetch!(1)
 
-  alias MscmpSystSettings.Impl.Settings
-  alias MscmpSystSettings.Runtime.DevSupport
-  alias MscmpSystSettings.Runtime.ProcessUtils
+  alias MscmpSystSettings.Impl
+  alias MscmpSystSettings.Runtime
+  alias MscmpSystSettings.Types
 
   @doc section: :service_management
   @doc """
@@ -30,63 +30,25 @@ defmodule MscmpSystSettings do
   module require that the service is started prior to use and will fail if the
   service is not started.
 
-  The `service_name` argument provides a unique name under which the service can
-  be found.  This argument is a subset of those that allowed for registering
-  GenServers; the allowed forms for service name are simple atoms for basic
-  local name registry or a "via tuple", such as might be used with the
-  `Registry` module.
-
-  The `datastore_context_name` is an atom which represents a started
-  `MscmpSystDb` context.  This context will be used for accessing and
-  modifying database data.
-  """
-  @spec start_link({MscmpSystSettings.Types.service_name(), MscmpSystDb.Types.context_name()}) ::
-          {:ok, pid()} | {:error, MscmpSystError.t()}
-  defdelegate start_link(params), to: MscmpSystSettings.Runtime.Server
-
-  @doc section: :service_management
-  @doc """
-  Establishes the current Settings Service instance for the process.
-
-  A running system is likely to have more than one instance of the Settings
-  Service running.  For example, in multi-tenant applications each tenant may
-  have its own instance of the Setting Service, caching data unique to the
-  tenant.
-
-  Calling `MscmpSystSettings.put_settings_service/1` will set the reference to
-  the desired Settings Service instance for any subsequent MscmpSystSettings
-  calls.  The service name is set in the Process Dictionary of the process from
-  which the calls are being made.  As such, you must call put_settings_service
-  at least once for any process from which you wish to access the Settings
-  Service.
-
-  Because we're just thinly wrapping `Process.put/2` here, the return value will
-  be the previous value set here, or nil if no previous value was set.
-
   ## Parameters
-    * `service_name` - The name of the service which is to be set as servicing
-      the process.
 
-  ## Examples
+    * `service_name` - The name of the Settings Service.
 
-      iex> MscmpSystSettings.put_settings_service(:settings_test_service)
+    * `datastore_context_name` - The name of the Datastore Context to be used by
+      the Settings Service.
+
+    * `opts` - Options for the Settings Service. See the Options section below
+      for more information.
+
+  ## Options
+
+  #{Runtime.Service.get_start_link_opts_docs()}
   """
-  @spec put_settings_service(MscmpSystSettings.Types.service_name() | nil) ::
-          MscmpSystSettings.Types.service_name() | nil
-  defdelegate put_settings_service(service_name), to: ProcessUtils
-
-  @doc section: :service_management
-  @doc """
-  Retrieves the currently set Settings Service name or `nil` if none has been
-  set.
-
-  ## Examples
-
-      iex> MscmpSystSettings.get_settings_service()
-      :settings_test_service
-  """
-  @spec get_settings_service() :: MscmpSystSettings.Types.service_name() | nil
-  defdelegate get_settings_service(), to: ProcessUtils
+  @spec start_link(Types.service_name(), MscmpSystDb.Types.context_service_name()) ::
+          {:ok, pid()} | {:error, MscmpSystError.t()}
+  @spec start_link(Types.service_name(), MscmpSystDb.Types.context_service_name(), Keyword.t()) ::
+          {:ok, pid()} | {:error, MscmpSystError.t()}
+  defdelegate start_link(service_name, datastore_context_name, opts \\ []), to: Runtime.Service
 
   @doc section: :service_management
   @doc """
@@ -103,9 +65,86 @@ defmodule MscmpSystSettings do
 
   """
   @spec refresh_from_database() :: :ok
-  def refresh_from_database do
-    GenServer.call(ProcessUtils.get_settings_service(), :refresh)
-  end
+  def refresh_from_database,
+    do: Runtime.ProcessUtils.get_settings_service() |> GenServer.call(:refresh)
+
+  @doc section: :service_management
+  @doc """
+  An optional method for establishing a specific, named Settings Service to
+  access by the current process.
+
+  In some cases it may be desirable to establish an instance of the Settings
+  Service outside of the constraints the "Instance Name" as defined by
+  `MscmpSystUtils`. In such cases, this function can be used to set a current
+  Settings Service instance for the current process which will access the named
+  Settings Service directly rather than the Settings Service associated with the
+  prevailing named Instance.  See `MscmpSystUtils` for more about establishing
+  an instance identity with a given process.
+
+  > #### Limited Use Cases {: .tip}
+  >
+  > Under most circumstances the correct Settings Service instance to access
+  > will be determined by the prevailing Instance Name as managed by calls to
+  > `MscmpSystUtils.put_instance_name/1` and `MscmpSystUtils.get_instance_name/0`,
+  > meaning that typically calls to `put_settings_service/1` are not necessary.
+  >
+  > The only time this function is required is when an alternative Settings
+  > Service should be accessed or there is no Instance Name to set for the
+  > process using `MscmpSystUtils.put_instance_name/1`.
+
+  ## Parameters
+
+    * `settings_service_name` - the canonical name of the specific Settings
+    Service to access.  When this function is called with a non-nil argument,
+    calls to Settings related functions will make use of the Settings Service
+    specified here, overriding any Settings Service which may be started derived
+    from the Instance Name.  Setting this value to `nil` will clear the special
+    Settings Service name and revert to using the Settings Service associated
+    with the Instance Name, if one has been set.
+
+  ## Examples
+
+    Setting a specific Settings Service name:
+
+      iex> MscmpSystSettings.put_settings_service(:"MscmpSystSettings.TestSupportService")
+      ...> MscmpSystSettings.get_settings_service()
+      :"MscmpSystSettings.TestSupportService"
+
+    Clearing a previously set specific Service Name:
+
+      iex> MscmpSystSettings.put_settings_service(nil)
+      ...> MscmpSystSettings.get_settings_service()
+      nil
+  """
+  @spec put_settings_service(GenServer.name() | nil) :: GenServer.name() | nil
+  defdelegate put_settings_service(settings_service_name), to: Runtime.ProcessUtils
+
+  @doc section: :service_management
+  @doc """
+  Retrieve the current specific Settings Service name in effect for the process.
+
+  This function returns the name of the Settings Service that has been using the
+  `put_settings_service/1` function to override the default Settings Service
+  associated with the Instance Name. If no specific Settings Service name has
+  been set, this function will return `nil`.
+
+  ## Examples
+
+    Retrieving a specific Settings Service name:
+
+      iex> MscmpSystSettings.put_settings_service(:"MscmpSystSettings.TestSupportService")
+      ...> MscmpSystSettings.get_settings_service()
+      :"MscmpSystSettings.TestSupportService"
+
+    Retrieving a specific Settings Service name when no value is currently set
+    for the process:
+
+      iex> MscmpSystSettings.put_settings_service(nil)
+      ...> MscmpSystSettings.get_settings_service()
+      nil
+  """
+  @spec get_settings_service() :: atom() | nil
+  defdelegate get_settings_service(), to: Runtime.ProcessUtils
 
   @doc section: :settings_data
   @doc """
@@ -147,9 +186,8 @@ defmodule MscmpSystSettings do
   """
   @spec create_setting(MscmpSystSettings.Types.setting_params()) ::
           :ok | {:error, MscmpSystError.t()}
-  def create_setting(creation_params) do
-    GenServer.call(ProcessUtils.get_settings_service(), {:create, creation_params})
-  end
+  def create_setting(creation_params),
+    do: Runtime.ProcessUtils.get_settings_service() |> GenServer.call({:create, creation_params})
 
   @doc section: :settings_data
   @doc """
@@ -181,7 +219,9 @@ defmodule MscmpSystSettings do
         ) :: :ok | {:error, MscmpSystError.t()}
   def set_setting_value(setting_name, setting_type, setting_value) do
     update_params = Map.put_new(%{}, setting_type, setting_value)
-    GenServer.call(ProcessUtils.get_settings_service(), {:update, setting_name, update_params})
+
+    Runtime.ProcessUtils.get_settings_service()
+    |> GenServer.call({:update, setting_name, update_params})
   end
 
   @doc section: :settings_data
@@ -198,7 +238,7 @@ defmodule MscmpSystSettings do
     * `setting_name` - the name of the setting to update with the new values.
 
     * `update_params` - is a map that complies with the
-      `MscmpSystSettings.Types.setting_service_params()` type specification and
+      `t:MscmpSystSettings.Types.setting_params/0` type specification and
       includes the updates to setting type values, updates to the `display_name`
       value, and/or updates to the `user_description` value.
 
@@ -221,10 +261,11 @@ defmodule MscmpSystSettings do
   """
   @spec set_setting_values(
           MscmpSystSettings.Types.setting_name(),
-          MscmpSystSettings.Types.setting_service_params()
+          MscmpSystSettings.Types.setting_params()
         ) :: :ok | {:error, MscmpSystError.t()}
   def set_setting_values(setting_name, update_params) do
-    GenServer.call(ProcessUtils.get_settings_service(), {:update, setting_name, update_params})
+    Runtime.ProcessUtils.get_settings_service()
+    |> GenServer.call({:update, setting_name, update_params})
   end
 
   @doc section: :settings_data
@@ -253,7 +294,7 @@ defmodule MscmpSystSettings do
           MscmpSystSettings.Types.setting_types()
         ) :: any()
   defdelegate get_setting_value(setting_name, setting_type),
-    to: Settings
+    to: Impl.Settings
 
   @doc section: :settings_data
   @doc """
@@ -271,7 +312,7 @@ defmodule MscmpSystSettings do
       iex> MscmpSystSettings.get_setting_values("get_example_setting")
   """
   @spec get_setting_values(MscmpSystSettings.Types.setting_name()) :: Msdata.SystSettings.t()
-  defdelegate get_setting_values(setting_name), to: Settings
+  defdelegate get_setting_values(setting_name), to: Impl.Settings
 
   @doc section: :settings_data
   @doc """
@@ -285,7 +326,7 @@ defmodule MscmpSystSettings do
       iex> MscmpSystSettings.list_all_settings()
   """
   @spec list_all_settings() :: list(Msdata.SystSettings)
-  defdelegate list_all_settings(), to: Settings
+  defdelegate list_all_settings(), to: Impl.Settings
 
   @doc section: :settings_data
   @doc """
@@ -305,9 +346,8 @@ defmodule MscmpSystSettings do
   """
   @spec delete_setting(MscmpSystSettings.Types.setting_name()) ::
           :ok | {:error, MscmpSystError.t()}
-  def delete_setting(setting_name) do
-    GenServer.call(ProcessUtils.get_settings_service(), {:delete, setting_name})
-  end
+  def delete_setting(setting_name),
+    do: Runtime.ProcessUtils.get_settings_service() |> GenServer.call({:delete, setting_name})
 
   @doc section: :service_management
   @doc """
@@ -319,9 +359,8 @@ defmodule MscmpSystSettings do
       :ok
   """
   @spec terminate_settings_service() :: :ok
-  def terminate_settings_service do
-    GenServer.stop(ProcessUtils.get_settings_service(), :normal)
-  end
+  def terminate_settings_service,
+    do: Runtime.ProcessUtils.get_settings_service() |> GenServer.stop(:normal)
 
   @doc section: :development_support
   @doc """
@@ -337,29 +376,15 @@ defmodule MscmpSystSettings do
   ## Parameters
 
     * `opts` - a `t:Keyword.t/0` list of optional parameters which can override
-      default values for service parameters.  The available options are:
+      default values for service parameters.
 
-      * `childspec_id` - the ID value used in defining a Child Specification for
-        the service. This is an atom value which defaults to
-        `MscmpSystSettings`.
+  ## Options
 
-      * `supervisor_name` - the name of the `DynamicSupervisor` which will
-        will supervise the Settings Service.  This is an atom value which
-        defaults to `MscmpSystSettings.DevSupportSupervisor`.
-
-      * `service_name` - the name of the Settings Service instance.  This is the
-        value by which the specific Settings Service may be set using functions
-        such as `put_settings_service/1`.  This is an atom value which defaults
-        to the value returned by `get_devsupport_service_name/0`.
-
-      * `datastore_context` - the name of the login Datastore Context which can
-        access the database storage backing the Settings Service.  This is an
-        atom value which defaults to the value returned by
-        `MscmpSystDb.get_devsupport_context_name/0`.
+    #{Runtime.DevSupport.get_devsupport_opts_docs()}
   """
-  @spec start_support_services(keyword()) ::
-          :ignore | {:error, any()} | {:ok, pid()} | {:ok, pid(), any()}
-  defdelegate start_support_services(opts \\ []), to: DevSupport
+  @spec start_support_services() :: :ok
+  @spec start_support_services(keyword()) :: :ok
+  defdelegate start_support_services(opts \\ []), to: Runtime.DevSupport
 
   @doc section: :development_support
   @doc """
@@ -376,12 +401,17 @@ defmodule MscmpSystSettings do
   ## Parameters
 
     * `opts` - a `t:Keyword.t/0` list of optional parameters which can override
-      default values for service parameters.  The available options and their
-      defaults are the same as `start_support_services/1`.
+      default values for service parameters.
+
+  ## Options
+
+    #{Runtime.DevSupport.get_devsupport_opts_docs()}
   """
-  @spec start_devsupport_services(keyword()) ::
-          :ignore | {:error, any()} | {:ok, pid()} | {:ok, pid(), any()}
-  defdelegate start_devsupport_services(opts \\ []), to: DevSupport, as: :start_support_services
+  @spec start_devsupport_services() :: :ok
+  @spec start_devsupport_services(keyword()) :: :ok
+  defdelegate start_devsupport_services(opts \\ []),
+    to: Runtime.DevSupport,
+    as: :start_support_services
 
   @doc section: :development_support
   @doc """
@@ -396,47 +426,79 @@ defmodule MscmpSystSettings do
   ## Parameters
 
     * `opts` - a `t:Keyword.t/0` list of optional parameters which can override
-      default values for service parameters.  The available options are:
+      default values for service parameters.
 
-      * `childspec_id` - the ID value used in defining a Child Specification for
-        the service. This is an atom value which defaults to
-        `MscmpSystSettings`.
+  ## Options
 
-      * `supervisor_name` - the name of the `DynamicSupervisor` which will
-        will supervise the Settings Service.  This is an atom value which
-        defaults to `MscmpSystSettings.TestSupportSupervisor`.
-
-      * `service_name` - the name of the Settings Service instance.  This is the
-        value by which the specific Settings Service may be set using functions
-        such as `put_settings_service/1`.  This is an atom value which defaults
-        to the value returned by `get_testsupport_service_name/0`.
-
-      * `datastore_context` - the name of the login Datastore Context which can
-        access the database storage backing the Settings Service.  This is an
-        atom value which defaults to the value returned by
-        `MscmpSystDb.get_testsupport_context_name/0`.
+    #{Runtime.DevSupport.get_testsupport_opts_docs()}
   """
-  @spec start_testsupport_services(keyword()) ::
-          :ignore | {:error, any()} | {:ok, pid()} | {:ok, pid(), any()}
-  defdelegate start_testsupport_services(opts \\ []), to: DevSupport
+  @spec start_testsupport_services() :: :ok
+  @spec start_testsupport_services(keyword()) :: :ok
+  defdelegate start_testsupport_services(opts \\ []), to: Runtime.DevSupport
 
   @doc section: :development_support
   @doc """
-  Retrieves the Settings Service Name typically used to support development.
+  Stops previously started Settings support services.
 
-  This is a way to retrieve the standard development support name for use with
-  functions such as `put_settings_service/1`
+  ## Parameters
+
+    * `opts` - a `t:Keyword.t/0` list of optional parameters.
+
+  ## Options
+
+    #{Runtime.DevSupport.get_devsupport_stop_opts_docs()}
+  """
+  @spec stop_support_services() :: :ok
+  @spec stop_support_services(keyword()) :: :ok
+  defdelegate stop_support_services(opts \\ []), to: Runtime.DevSupport
+
+  @doc section: :development_support
+  @doc """
+  Stops previously started Settings development support services.
+
+  ## Parameters
+
+    * `opts` - a `t:Keyword.t/0` list of optional parameters.  See `Options` for
+      details.
+
+  ## Options
+
+    #{Runtime.DevSupport.get_devsupport_stop_opts_docs()}
+  """
+  @spec stop_devsupport_services() :: :ok
+  @spec stop_devsupport_services(keyword()) :: :ok
+  defdelegate stop_devsupport_services(opts \\ []),
+    to: Runtime.DevSupport,
+    as: :stop_support_services
+
+  @doc section: :development_support
+  @doc """
+  Stops previously started Settings testing support services.
+
+  ## Parameters
+
+    * `opts` - a `t:Keyword.t/0` list of optional parameters.
+
+  ## Options
+
+    #{Runtime.DevSupport.get_testsupport_stop_opts_docs()}
+  """
+  @spec stop_testsupport_services() :: :ok
+  @spec stop_testsupport_services(keyword()) :: :ok
+  defdelegate stop_testsupport_services(opts \\ []),
+    to: Runtime.DevSupport
+
+  @doc section: :development_support
+  @doc """
+  Returns the name of the development support service.
   """
   @spec get_devsupport_service_name() :: atom()
-  defdelegate get_devsupport_service_name, to: DevSupport
+  defdelegate get_devsupport_service_name, to: Runtime.DevSupport
 
   @doc section: :development_support
   @doc """
-  Retrieves the Settings Service Name typically used to support testing.
-
-  This is a way to retrieve the standard testing support name for use with
-  functions such as `put_settings_service/1`
+  Returns the name of the test support service.
   """
   @spec get_testsupport_service_name() :: atom()
-  defdelegate get_testsupport_service_name, to: DevSupport
+  defdelegate get_testsupport_service_name, to: Runtime.DevSupport
 end

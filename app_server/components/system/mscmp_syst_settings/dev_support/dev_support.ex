@@ -18,17 +18,30 @@ defmodule DevSupport do
   @migration_test_source_root_dir "../../../../database"
   @migration_unit_test_ds_type "mscmp_syst_settings_unit_test"
 
+  @registry :"MscmpSystSettings.DevSupportRegistry"
+
   def start_dev_environment(db_kind \\ :unit_testing) do
-    _ = setup_database(db_kind)
 
-    _ = MscmpSystDb.put_datastore_context(MscmpSystDb.get_devsupport_context_name())
+    _ = Registry.start_link(name: @registry, keys: :unique) |> dbg()
 
-    _ = MscmpSystSettings.start_devsupport_services()
+    _ = setup_database(db_kind) |> dbg()
 
-    _ = MscmpSystSettings.put_settings_service(MscmpSystSettings.get_devsupport_service_name())
+    datastore_context_name = {:via, Registry, {@registry, MscmpSystDb.get_devsupport_context_name()}}
+
+    _ = MscmpSystDb.put_datastore_context(datastore_context_name) |> dbg()
+
+    _ = MscmpSystSettings.start_devsupport_services(datastore_context_name: datastore_context_name)
+
+    _ = MscmpSystSettings.put_settings_service(MscmpSystSettings.get_devsupport_service_name)
   end
 
-  def stop_dev_environment(), do: cleanup_database()
+  def stop_dev_environment do
+    datastore_context_name = {:via, Registry, {@registry, MscmpSystDb.get_devsupport_context_name()}}
+
+    _ = MscmpSystSettings.stop_devsupport_services(datastore_context_name: datastore_context_name)
+
+    cleanup_database()
+  end
 
   defp setup_database(db_kind) do
     datastore_options = MscmpSystDb.get_devsupport_datastore_options()
@@ -37,13 +50,14 @@ defmodule DevSupport do
 
     {:ok, _} = MscmpSystDb.load_database(datastore_options, get_datastore_type(db_kind))
 
-    {:ok, _, _} = MscmpSystDb.start_datastore(datastore_options)
+    {:ok, _, _} = MscmpSystDb.start_datastore(datastore_options, context_registry: @registry)
+
   end
 
   defp cleanup_database() do
     datastore_options = MscmpSystDb.get_devsupport_datastore_options()
 
-    :ok = MscmpSystDb.drop_database(datastore_options)
+    :ok = MscmpSystDb.drop_database(datastore_options, context_registry: @registry)
 
     _ = File.rm_rf!(Path.join(["priv", "database", @migration_unit_test_ds_type]))
   end

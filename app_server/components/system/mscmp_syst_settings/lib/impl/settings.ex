@@ -33,21 +33,20 @@ defmodule MscmpSystSettings.Impl.Settings do
   # GenServer and are in "protected" mode.
 
   @spec refresh_from_database() :: :ok
-  def refresh_from_database do
-    ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_settings_service())
+  def refresh_from_database, do: ProcessUtils.get_settings_table() |> refresh_from_database()
 
-    :ets.delete_all_objects(ets_table_name)
+  @spec refresh_from_database(:ets.table()) :: :ok
+  def refresh_from_database(settings_table)
+      when is_atom(settings_table) or is_reference(settings_table) do
+    :ets.delete_all_objects(settings_table)
 
     MscmpSystDb.all(Msdata.SystSettings)
-    |> Enum.each(&:ets.insert(ets_table_name, {&1.internal_name, &1}))
+    |> Enum.each(&:ets.insert(settings_table, {&1.internal_name, &1}))
   end
 
   @spec get_setting_values(Types.setting_name()) :: Msdata.SystSettings.t()
-  def get_setting_values(setting_name) do
-    ProcessUtils.get_settings_service()
-    |> get_ets_table_from_service_name()
-    |> :ets.lookup_element(setting_name, 2)
-  end
+  def get_setting_values(setting_name),
+    do: ProcessUtils.get_settings_table() |> :ets.lookup_element(setting_name, 2)
 
   @spec get_setting_value(Types.setting_name(), Types.setting_types()) :: any()
   def get_setting_value(setting_name, setting_type)
@@ -75,19 +74,20 @@ defmodule MscmpSystSettings.Impl.Settings do
   @spec list_all_settings() :: list(Msdata.SystSettings)
   def list_all_settings do
     # Select query :ets.fun2ms(fn {_, setting_values} -> setting_values end)
-    ProcessUtils.get_settings_service()
-    |> get_ets_table_from_service_name()
-    |> :ets.select([{{:_, :"$1"}, [], [:"$1"]}])
+    ProcessUtils.get_settings_table() |> :ets.select([{{:_, :"$1"}, [], [:"$1"]}])
   end
 
   @spec create_setting(Types.setting_params()) :: :ok | {:error, MscmpSystError.t()}
-  def create_setting(creation_params) when is_map(creation_params) do
-    ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_settings_service())
+  def create_setting(creation_params) when is_map(creation_params),
+    do: ProcessUtils.get_settings_table() |> create_setting(creation_params)
 
+  @spec create_setting(:ets.table(), Types.setting_params()) :: :ok | {:error, MscmpSystError.t()}
+  def create_setting(settings_table, creation_params)
+      when (is_atom(settings_table) or is_reference(settings_table)) and is_map(creation_params) do
     creation_params
     |> then(&Msdata.SystSettings.changeset(%Msdata.SystSettings{}, &1))
     |> MscmpSystDb.insert!(returning: true)
-    |> then(&:ets.insert(ets_table_name, {&1.internal_name, &1}))
+    |> then(&:ets.insert(settings_table, {&1.internal_name, &1}))
 
     :ok
   rescue
@@ -106,14 +106,19 @@ defmodule MscmpSystSettings.Impl.Settings do
 
   @spec update_setting(Types.setting_name(), Types.setting_params()) ::
           :ok | {:error, MscmpSystError.t()}
-  def update_setting(setting_name, update_params)
-      when is_binary(setting_name) and is_map(update_params) do
-    ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_settings_service())
+  def update_setting(setting_name, update_params),
+    do: ProcessUtils.get_settings_table() |> update_setting(setting_name, update_params)
 
-    :ets.lookup_element(ets_table_name, setting_name, 2)
+  @spec update_setting(:ets.table(), Types.setting_name(), Types.setting_params()) ::
+          :ok | {:error, MscmpSystError.t()}
+  def update_setting(settings_table, setting_name, update_params)
+      when (is_atom(settings_table) or is_reference(settings_table)) and
+             is_binary(setting_name) and
+             is_map(update_params) do
+    :ets.lookup_element(settings_table, setting_name, 2)
     |> Msdata.SystSettings.changeset(update_params)
     |> MscmpSystDb.update!(returning: true)
-    |> then(&:ets.update_element(ets_table_name, setting_name, {2, &1}))
+    |> then(&:ets.update_element(settings_table, setting_name, {2, &1}))
 
     :ok
   rescue
@@ -131,14 +136,17 @@ defmodule MscmpSystSettings.Impl.Settings do
   end
 
   @spec delete_setting(Types.setting_name()) :: :ok | {:error, MscmpSystError.t()}
-  def delete_setting(setting_name) when is_binary(setting_name) do
-    ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_settings_service())
+  def delete_setting(setting_name),
+    do: ProcessUtils.get_settings_table() |> delete_setting(setting_name)
 
+  @spec delete_setting(:ets.table(), Types.setting_name()) :: :ok | {:error, MscmpSystError.t()}
+  def delete_setting(settings_table, setting_name)
+      when (is_atom(settings_table) or is_reference(settings_table)) and is_binary(setting_name) do
     delete_qry = from(s in Msdata.SystSettings, where: s.internal_name == ^setting_name)
 
     {1, _rows} = MscmpSystDb.delete_all(delete_qry)
 
-    true = :ets.delete(ets_table_name, setting_name)
+    true = :ets.delete(settings_table, setting_name)
 
     :ok
   rescue
@@ -154,15 +162,4 @@ defmodule MscmpSystSettings.Impl.Settings do
         }
       }
   end
-
-  @spec get_ets_table_from_service_name(Types.service_name()) :: atom()
-  def get_ets_table_from_service_name(service_name) when is_atom(service_name), do: service_name
-
-  def get_ets_table_from_service_name({:via, _module, service_name})
-      when is_atom(service_name),
-      do: service_name
-
-  def get_ets_table_from_service_name({:via, _module, {_reg, service_name}})
-      when is_atom(service_name),
-      do: service_name
 end

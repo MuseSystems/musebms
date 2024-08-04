@@ -107,24 +107,10 @@ defmodule Msdata.SystSettings do
   The options define other attributes which can guide validation of
   `change_param` values:
 
-    * `min_internal_name_length` - Sets a minimum length for `internal_name`
-      values.  The default value is 6 Unicode graphemes.
-
-    * `max_internal_name_length` - The maximum length allowed for the
-      `internal_name` value.  The default is 64 Unicode graphemes.
-
-    * `min_display_name_length` - Sets a minimum length for `display_name`
-      values.  The default value is 6 Unicode graphemes.
-
-    * `max_display_name_length` - The maximum length allowed for the
-      `display_name` value.  The default is 64 Unicode graphemes.
-
-    * `min_user_description_length` - Sets a minimum length for
-      `user_description` values.  The default value is 6 Unicode graphemes.
-
-    * `max_user_description_length` - The maximum length allowed for the
-      `user_description` value.  The default is 1000 Unicode graphemes.
+  #{Validators.get_validation_opts_docs()}
   """
+  @spec changeset(t()) :: Ecto.Changeset.t()
+  @spec changeset(t(), map()) :: Ecto.Changeset.t()
   @spec changeset(t(), map(), Keyword.t()) :: Ecto.Changeset.t()
   defdelegate changeset(syst_settings, change_params \\ %{}, opts \\ []), to: Validators
 end

@@ -18,12 +18,14 @@ defmodule SettingsTestCase do
   setup do
     [
       datastore_context:
-        MscmpSystDb.put_datastore_context(MscmpSystDb.get_testsupport_context_name())
+        MscmpSystDb.put_datastore_context(
+          {:via, Registry,
+           {MscmpSystSettings.TestRegistry, MscmpSystDb.get_testsupport_context_name()}}
+        ),
+      settings_service:
+        MscmpSystSettings.put_settings_service(
+          MscmpSystSettings.Runtime.DevSupport.get_testsupport_service_name()
+        )
     ]
-  end
-
-  setup do
-    _ = MscmpSystSettings.put_settings_service(MscmpSystSettings.get_testsupport_service_name())
-    :ok
   end
 end

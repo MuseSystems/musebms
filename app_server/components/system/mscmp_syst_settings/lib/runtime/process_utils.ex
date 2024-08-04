@@ -1,5 +1,5 @@
 # Source File: process_utils.ex
-# Location:    musebms/components/system/mscmp_syst_settings/lib/runtime/process_utils.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_settings/lib/runtime/process_utils.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -13,23 +13,21 @@
 defmodule MscmpSystSettings.Runtime.ProcessUtils do
   @moduledoc false
 
-  ######
-  #
-  # Small utility functions to deal with the Process dependent state.
-  #
-  ######
+  @spec get_settings_table() :: :ets.table() | nil
+  def get_settings_table, do: Process.get(:"MscmpSystSettings.table_name")
 
-  # Greatly inspired by what Ecto.Repo is doing to make dynamic repos work.
-  # Our use case is similar in that our service naming is typically static for
-  # the life of the process where it is set and may be called on frequently for
-  # the life of the process.  This feels like the appropriate use of the Process
-  # Dictionary and it doesn't feel like abusive of use of process global state.
+  @spec put_settings_service(GenServer.name() | nil) :: GenServer.name() | nil
+  def put_settings_service(nil) do
+    _ = Process.put(:"MscmpSystSettings.table_name", nil)
+    Process.put(:"MscmpSystSettings.service_name", nil)
+  end
 
-  @spec put_settings_service(MscmpSystSettings.Types.service_name() | nil) ::
-          MscmpSystSettings.Types.service_name() | nil
-  def put_settings_service(service_name),
-    do: Process.put({__MODULE__, :service_name}, service_name)
+  def put_settings_service(settings_service_name) do
+    settings_table = GenServer.call(settings_service_name, :get_settings_table)
+    Process.put(:"MscmpSystSettings.table_name", settings_table)
+    Process.put(:"MscmpSystSettings.service_name", settings_service_name)
+  end
 
-  @spec get_settings_service() :: MscmpSystSettings.Types.service_name() | nil
-  def get_settings_service, do: Process.get({__MODULE__, :service_name})
+  @spec get_settings_service() :: GenServer.name() | nil
+  def get_settings_service, do: Process.get(:"MscmpSystSettings.service_name")
 end

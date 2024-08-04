@@ -15,18 +15,58 @@ defmodule MscmpSystSettings.Impl.Msdata.SystSettings.Validators do
 
   import Ecto.Changeset
 
-  @default_min_internal_name_length 6
-  @default_max_internal_name_length 64
+  validation_opts = [
+    min_internal_name_length: [
+      type: :integer,
+      default: 6,
+      doc: """
+      Sets the minimum grapheme length of internal_name values.
+      """
+    ],
+    max_internal_name_length: [
+      type: :integer,
+      default: 64,
+      doc: """
+      Sets the maximum grapheme length of internal_name values.
+      """
+    ],
+    min_display_name_length: [
+      type: :integer,
+      default: 6,
+      doc: """
+      Sets the minimum grapheme length of display_name values.
+      """
+    ],
+    max_display_name_length: [
+      type: :integer,
+      default: 64,
+      doc: """
+      Sets the maximum grapheme length of display_name values.
+      """
+    ],
+    min_user_description_length: [
+      type: :integer,
+      default: 6,
+      doc: """
+      Sets the minimum grapheme length of user_description values.
+      """
+    ],
+    max_user_description_length: [
+      type: :integer,
+      default: 1_000,
+      doc: """
+      Sets the maximum grapheme length of user_description values.
+      """
+    ]
+  ]
 
-  @default_min_display_name_length 6
-  @default_max_display_name_length 64
+  @validation_opts NimbleOptions.new!(validation_opts)
 
-  @default_min_user_description_length 6
-  @default_max_user_description_length 1_000
+  def get_validation_opts_docs(opts \\ []), do: NimbleOptions.docs(@validation_opts, opts)
 
   @spec changeset(Msdata.SystSettings.t(), map(), Keyword.t()) :: Ecto.Changeset.t()
   def changeset(syst_settings, change_params, opts) do
-    opts = resolve_options(opts)
+    opts = NimbleOptions.validate!(opts, @validation_opts)
 
     syst_settings
     |> cast(change_params, [
@@ -58,37 +98,7 @@ defmodule MscmpSystSettings.Impl.Msdata.SystSettings.Validators do
     |> unique_constraint(:display_name, name: :syst_settings_display_name_udx)
   end
 
-  # Resolve user provided options to a complete set of options by filling gaps
-  # with pre-defined defaults.
-  #
-  # Allows the changeset function to resolve defaults that are used to
-  # parameterize other validations.   We do that resolution in the changeset
-  # function directly so we're only doing the user/default resolution once for
-  # a changeset.
-  @spec resolve_options(Keyword.t()) :: Keyword.t()
-  defp resolve_options(opts_given) do
-    MscmpSystUtils.resolve_options(opts_given,
-      min_internal_name_length: @default_min_internal_name_length,
-      max_internal_name_length: @default_max_internal_name_length,
-      min_display_name_length: @default_min_display_name_length,
-      max_display_name_length: @default_max_display_name_length,
-      min_user_description_length: @default_min_user_description_length,
-      max_user_description_length: @default_max_user_description_length
-    )
-  end
-
-  # Validate the internal_name key for the changeset.
-  #
-  # Options:
-  # min_internal_name_length - Sets the minimum grapheme length of internal_name
-  #                            values.
-  #
-  # max_internal_name_length - Sets the maximum grapheme length of internal_name
-  #                            values.
-
   defp validate_internal_name(changeset, opts) do
-    opts = resolve_options(opts)
-
     validation_func = fn :internal_name, _internal_name ->
       if get_field(changeset, :syst_defined, false) do
         [:internal_name, "System defined settings may not have their internal names changed."]
@@ -107,15 +117,6 @@ defmodule MscmpSystSettings.Impl.Msdata.SystSettings.Validators do
     |> unique_constraint(:internal_name)
   end
 
-  # Validate the display_name key for the changeset.
-  #
-  # Options:
-  # min_display_name_length - Sets the minimum grapheme length of display_name
-  #                           values.
-  #
-  # max_display_name_length - Sets the maximum grapheme length of display_name
-  #                           values.
-
   defp validate_display_name(changeset, opts) do
     changeset
     |> validate_required(:display_name)
@@ -125,18 +126,6 @@ defmodule MscmpSystSettings.Impl.Msdata.SystSettings.Validators do
     )
     |> unique_constraint(:display_name)
   end
-
-  # Validate the user_description field for the changeset
-  #
-  # System defined settings are allowed to have a nil user descriptions, but all
-  # other user description values must meet min/max length requirements.
-  #
-  # Options:
-  # min_user_description_length - Sets the minimum grapheme length of
-  #                               user_description values.
-  #
-  # max_user_description_length - Sets the maximum grapheme length of
-  #                               user_description values.
 
   defp validate_user_description(changeset, opts) do
     (!get_field(changeset, :syst_defined) or !is_nil(get_field(changeset, :user_description, nil)))

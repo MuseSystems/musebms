@@ -18,9 +18,11 @@ defmodule MscmpSystSettings.MixProject do
 
   @deps [
     # Third Party Dependencies
-    {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
-    {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
-    {:ex_doc, "~> 0.20", only: :dev, runtime: false},
+    {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+    {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
+    {:ex_doc, "~> 0.31", only: :dev, runtime: false},
+    {:nimble_options, "~> 1.0"},
+    {:extrace, "~> 0.5.0", only: [:dev, :test], runtime: false},
 
     # Muse Systems Business Management System Components
     {:mscmp_syst_error, path: "../mscmp_syst_error"},
@@ -76,7 +78,10 @@ defmodule MscmpSystSettings.MixProject do
   def application do
     [
       extra_applications: [
-        :logger
+        :logger,
+        :debugger,
+        :runtime_tools,
+        :wx
       ]
     ]
   end
