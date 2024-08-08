@@ -145,8 +145,6 @@ defmodule MscmpSystSettings.Runtime.DevSupport do
 
     Logger.configure(level: :info)
     ExUnit.start()
-
-    :ok
   end
 
   @spec start_testsupport_services(keyword()) :: :ok
