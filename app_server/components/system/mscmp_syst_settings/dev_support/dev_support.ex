@@ -36,10 +36,7 @@ defmodule DevSupport do
   end
 
   def stop_dev_environment do
-    datastore_context_name = {:via, Registry, {@registry, MscmpSystDb.get_devsupport_context_name()}}
-
-    _ = MscmpSystSettings.stop_devsupport_services(datastore_context_name: datastore_context_name)
-
+    _ = MscmpSystSettings.stop_devsupport_services()
     cleanup_database()
   end
 
