@@ -54,7 +54,7 @@ defmodule TestSupport do
 
     :ok = MscmpSystDb.drop_database(datastore_options, context_registry: opts[:context_registry])
 
-    _ = File.rm_rf!(Path.join(["priv", "database", get_datastore_type(test_kind)]))
+    File.rm_rf!(Path.join(["priv", "database", get_datastore_type(test_kind)]))
   end
 
   defp get_datastore_type(:unit_testing), do: @migration_unit_test_ds_type
