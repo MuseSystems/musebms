@@ -16,19 +16,17 @@ defmodule MscmpSystEnums.Types do
   """
 
   @typedoc """
-  The valid forms of service name acceptable to identify the Enums service.
+  The valid forms of service name acceptable to identify the Enumerations
+  service.
 
-  Currently we expect the service name to be an atom, though we expect that any
-  of a simple local name, the :global registry, or the Registry module to be
-  used for service registration.  Any registry compatible with those options
-  should also work.
+  When the service name is an atom, it is assumed to be a registered name using
+  the default Elixir name registration process.  When the service name is a
+  String, you must also identify a valid registry with which the name will be
+  registered.  Finally, if the value is `nil`, the service will be started
+  without a name and you are responsible for using the returned PID for later
+  accesses of the service.
   """
-  @type service_name() :: atom() | {:via, module(), atom() | {atom(), atom()}}
-
-  @typedoc """
-  The expected form of the parameters used to start the Enums service.
-  """
-  @type enum_service_params() :: {service_name(), MscmpSystDb.Types.context_name()}
+  @type service_name() :: GenServer.name() | nil
 
   @typedoc """
   Identification of each unique Enum managed by the Enums Service instance.

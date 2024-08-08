@@ -18,12 +18,14 @@ defmodule EnumsTestCase do
   setup do
     [
       datastore_context:
-        MscmpSystDb.put_datastore_context(MscmpSystDb.get_testsupport_context_name())
+        MscmpSystDb.put_datastore_context(
+          {:via, Registry,
+           {MscmpSystEnums.TestRegistry, MscmpSystDb.get_testsupport_context_name()}}
+        ),
+      enums_service:
+        MscmpSystEnums.put_enums_service(
+          MscmpSystEnums.Runtime.DevSupport.get_testsupport_service_name()
+        )
     ]
-  end
-
-  setup do
-    _ = MscmpSystEnums.put_enums_service(MscmpSystEnums.get_testsupport_service_name())
-    :ok
   end
 end

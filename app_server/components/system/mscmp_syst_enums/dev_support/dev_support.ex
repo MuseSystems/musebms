@@ -15,20 +15,28 @@ defmodule DevSupport do
 
   @migration_test_source_root_dir "../../../../database"
   @migration_unit_test_ds_type "mscmp_syst_enums_unit_test"
-  @migration_integration_test_ds_type "mscmp_syst_enums_integration_test"
-  @migration_doc_test_ds_type "mscmp_syst_enums_doc_test"
+
+  @registry :"MscmpSystEnums.DevSupportRegistry"
 
   def start_dev_environment(db_kind \\ :unit_testing) do
+
+    _ = Registry.start_link(name: @registry, keys: :unique)
+
     _ = setup_database(db_kind)
 
-    _ = MscmpSystDb.put_datastore_context(MscmpSystDb.get_devsupport_context_name())
+    datastore_context_name = {:via, Registry, {@registry, MscmpSystDb.get_devsupport_context_name()}}
 
-    _ = MscmpSystEnums.start_devsupport_services()
+    _ = MscmpSystDb.put_datastore_context(datastore_context_name)
 
-    _ = MscmpSystEnums.put_enums_service(MscmpSystEnums.get_devsupport_service_name())
+    _ = MscmpSystEnums.start_devsupport_services(datastore_context_name: datastore_context_name)
+
+    _ = MscmpSystEnums.put_enums_service(MscmpSystEnums.get_devsupport_service_name)
   end
 
-  def stop_dev_environment(), do: cleanup_database()
+  def stop_dev_environment do
+    _ = MscmpSystEnums.stop_devsupport_services()
+    cleanup_database()
+  end
 
   defp setup_database(db_kind) do
     datastore_options = MscmpSystDb.get_devsupport_datastore_options()
@@ -37,15 +45,16 @@ defmodule DevSupport do
 
     {:ok, _} = MscmpSystDb.load_database(datastore_options, get_datastore_type(db_kind))
 
-    {:ok, _, _} = MscmpSystDb.start_datastore(datastore_options)
+    {:ok, _, _} = MscmpSystDb.start_datastore(datastore_options, context_registry: @registry)
+
   end
 
-  defp cleanup_database(db_kind \\ :unit_testing) do
+  defp cleanup_database() do
     datastore_options = MscmpSystDb.get_devsupport_datastore_options()
 
-    :ok = MscmpSystDb.drop_database(datastore_options)
+    :ok = MscmpSystDb.drop_database(datastore_options, context_registry: @registry)
 
-    _ = File.rm_rf!(Path.join(["priv", "database", get_datastore_type(db_kind)]))
+    _ = File.rm_rf!(Path.join(["priv", "database", @migration_unit_test_ds_type]))
   end
 
   defp get_datastore_type(:unit_testing), do: @migration_unit_test_ds_type

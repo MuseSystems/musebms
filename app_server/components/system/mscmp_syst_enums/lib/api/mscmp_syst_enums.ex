@@ -20,6 +20,7 @@ defmodule MscmpSystEnums do
   alias MscmpSystEnums.Impl
   alias MscmpSystEnums.Runtime
   alias MscmpSystEnums.Runtime.DevSupport
+  alias MscmpSystEnums.Runtime.ProcessUtils
   alias MscmpSystEnums.Types
 
   @doc section: :service_management
@@ -31,73 +32,104 @@ defmodule MscmpSystEnums do
   module require that the service is started prior to use and will fail if the
   service is not started.
 
-  The `service_name` argument provides a unique name under which the service can
-  be found.  This argument is a subset of those that allowed for registering
-  GenServers; the allowed forms for service name are simple atoms for basic
-  local name registry or a "via tuple", such as might be used with the
-  `Registry` module.
+  ## Parameters
 
-  The `datastore_context_name` is an atom which represents a started
-  `MscmpSystDb` context.  This context will be used for accessing and
-  modifying database data.
+  #{Runtime.Service.get_start_link_opts_docs()}
   """
-  @spec start_link({Types.service_name(), MscmpSystDb.Types.context_name()}) ::
+  @spec start_link(Types.service_name(), MscmpSystDb.Types.context_service_name()) ::
           {:ok, pid()} | {:error, MscmpSystError.t()}
-  defdelegate start_link(params), to: Runtime.Server
+  @spec start_link(Types.service_name(), MscmpSystDb.Types.context_service_name(), Keyword.t()) ::
+          {:ok, pid()} | {:error, MscmpSystError.t()}
+  defdelegate start_link(service_name, datastore_context_name, opts \\ []), to: Runtime.Service
 
   @doc section: :service_management
   @doc """
-  Establishes the current Enumerations Service instance for the process.
+  An optional method for establishing a specific, named Enumerations Service to
+  access by the current process.
 
-  A running system is likely to have more than one instance of the Enums
-  Service running.  For example, in multi-tenant applications each tenant may
-  have its own instance of the Enumerations Service, caching data unique to the
-  tenant.
+  In some cases it may be desirable to establish an instance of the Enumerations
+  Service outside of the constraints the "Instance Name" as defined by
+  `MscmpSystUtils`. In such cases, this function can be used to set a current
+  Enumerations Service instance for the current process which will access the named
+  Enumerations Service directly rather than the Enumerations Service associated with the
+  prevailing named Instance.  See `MscmpSystUtils` for more about establishing
+  an instance identity with a given process.
 
-  Calling `MscmpSystEnums.put_enums_service/1` will set the reference to
-  the desired Enumerations Service instance for any subsequent MscmpSystEnums
-  calls.  The service name is set in the Process Dictionary of the process from
-  which the calls are being made.  As such, you must call put_enums_service at
-  least once for any process from which you wish to access the Enumerations
-  Service.
-
-  Because we're just thinly wrapping `Process.put/2` here, the return value will
-  be the previous value set here, or nil if no previous value was set.
+  > #### Limited Use Cases {: .tip}
+  >
+  > Under most circumstances the correct Enumerations Service instance to access
+  > will be determined by the prevailing Instance Name as managed by calls to
+  > `MscmpSystUtils.put_instance_name/1` and `MscmpSystUtils.get_instance_name/0`,
+  > meaning that typically calls to `put_enums_service/1` are not necessary.
+  >
+  > The only time this function is required is when an alternative Enumerations
+  > Service should be accessed or there is no Instance Name to set for the
+  > process using `MscmpSystUtils.put_instance_name/1`.
 
   ## Parameters
-    * `service_name` - The name of the service which is to be set as servicing
-      the process.
+
+    * `enums_service_name` - the canonical name of the specific Enumerations
+    Service to access.  When this function is called with a non-nil argument,
+    calls to Enumerations related functions will make use of the Enumerations Service
+    specified here, overriding any Enumerations Service which may be started derived
+    from the Instance Name.  Setting this value to `nil` will clear the special
+    Enumerations Service name and revert to using the Enumerations Service associated
+    with the Instance Name, if one has been set.
 
   ## Examples
 
-      iex> MscmpSystEnums.put_enums_service(:enums_test_service)
+    Setting a specific Enumerations Service name:
+
+      iex> MscmpSystEnums.put_enums_service(:"MscmpSystEnums.TestSupportService")
+      ...> MscmpSystEnums.get_enums_service()
+      :"MscmpSystEnums.TestSupportService"
+
+    Clearing a previously set specific Service Name:
+
+      iex> MscmpSystEnums.put_enums_service(nil)
+      ...> MscmpSystEnums.get_enums_service()
+      nil
   """
-  @spec put_enums_service(Types.service_name() | nil) :: Types.service_name() | nil
-  defdelegate put_enums_service(service_name), to: Runtime.ProcessUtils
+  @spec put_enums_service(Types.service_name()) :: Types.service_name()
+  defdelegate put_enums_service(enums_service_name), to: ProcessUtils
 
   @doc section: :service_management
   @doc """
-  Retrieves the currently set Enumerations Service name or `nil` if none has
-  been set.
+  Retrieve the current specific Enumerations Service name in effect for the process.
+
+  This function returns the name of the Enumerations Service that has been using the
+  `put_enums_service/1` function to override the default Enumerations Service
+  associated with the Instance Name. If no specific Enumerations Service name has
+  been set, this function will return `nil`.
 
   ## Examples
-      iex> MscmpSystEnums.get_enums_service()
-      :enums_test_service
+
+    Retrieving a specific Enumerations Service name:
+
+      iex> MscmpSystEnums.put_enums_service(:"MscmpSystEnums.TestSupportService")
+      ...> MscmpSystEnums.get_enums_service()
+      :"MscmpSystEnums.TestSupportService"
+
+    Retrieving a specific Enumerations Service name when no value is currently set
+    for the process:
+
+      iex> MscmpSystEnums.put_enums_service(nil)
+      ...> MscmpSystEnums.get_enums_service()
+      nil
   """
-  @spec get_enums_service() :: Types.service_name() | nil
-  defdelegate get_enums_service(), to: Runtime.ProcessUtils
+  @spec get_enums_service() :: Types.service_name()
+  defdelegate get_enums_service(), to: ProcessUtils
 
   @doc section: :enum_data
   @doc """
   Retrieves all values associated with the requested enumeration.
 
   ## Parameters
-    * `enum_name` - indicates the name of the enumeration for which to retrieve values.
+
+    * `enum_name` - the name of the enumeration for which to retrieve values.
 
   The successful return of this function is an instance of the
-  `Msdata.SystEnums` struct containing the values requested,
-  including the `enum_items` association populated as well as each item's
-  `functional_type` association populated.
+  `Msdata.SystEnums` struct containing the values requested.
 
   ## Examples
 
@@ -347,9 +379,8 @@ defmodule MscmpSystEnums do
       :ok
   """
   @spec create_enum(Types.enum_params()) :: :ok | {:error, MscmpSystError.t()}
-  def create_enum(enum_params) do
-    GenServer.call(Runtime.ProcessUtils.get_enums_service(), {:create_enum, enum_params})
-  end
+  def create_enum(enum_params),
+    do: ProcessUtils.get_enums_service() |> GenServer.call({:create_enum, enum_params})
 
   @doc section: :enum_functional_type_data
   @doc """
@@ -369,10 +400,8 @@ defmodule MscmpSystEnums do
   @spec create_enum_functional_type(Types.enum_name(), Types.enum_functional_type_params()) ::
           :ok | {:error, MscmpSystError.t()}
   def create_enum_functional_type(enum_name, functional_type_params) do
-    GenServer.call(
-      Runtime.ProcessUtils.get_enums_service(),
-      {:create_enum_functional_type, enum_name, functional_type_params}
-    )
+    ProcessUtils.get_enums_service()
+    |> GenServer.call({:create_enum_functional_type, enum_name, functional_type_params})
   end
 
   @doc section: :enum_item_data
@@ -395,10 +424,8 @@ defmodule MscmpSystEnums do
   @spec create_enum_item(Types.enum_name(), Types.enum_item_params()) ::
           :ok | {:error, MscmpSystError.t()}
   def create_enum_item(enum_name, enum_item_params) do
-    GenServer.call(
-      Runtime.ProcessUtils.get_enums_service(),
-      {:create_enum_item, enum_name, enum_item_params}
-    )
+    ProcessUtils.get_enums_service()
+    |> GenServer.call({:create_enum_item, enum_name, enum_item_params})
   end
 
   @doc section: :enum_data
@@ -432,10 +459,8 @@ defmodule MscmpSystEnums do
   @spec set_enum_values(Types.enum_name(), Types.enum_params()) ::
           :ok | {:error, MscmpSystError.t()}
   def set_enum_values(enum_name, enum_params) do
-    GenServer.call(
-      Runtime.ProcessUtils.get_enums_service(),
-      {:set_enum_values, enum_name, enum_params}
-    )
+    ProcessUtils.get_enums_service()
+    |> GenServer.call({:set_enum_values, enum_name, enum_params})
   end
 
   @doc section: :enum_functional_type_data
@@ -479,8 +504,8 @@ defmodule MscmpSystEnums do
         functional_type_name,
         functional_type_params
       ) do
-    GenServer.call(
-      Runtime.ProcessUtils.get_enums_service(),
+    ProcessUtils.get_enums_service()
+    |> GenServer.call(
       {:set_enum_functional_type_values, enum_name, functional_type_name, functional_type_params}
     )
   end
@@ -528,10 +553,8 @@ defmodule MscmpSystEnums do
         enum_item_name,
         enum_item_params
       ) do
-    GenServer.call(
-      Runtime.ProcessUtils.get_enums_service(),
-      {:set_enum_item_values, enum_name, enum_item_name, enum_item_params}
-    )
+    ProcessUtils.get_enums_service()
+    |> GenServer.call({:set_enum_item_values, enum_name, enum_item_name, enum_item_params})
   end
 
   @doc section: :enum_data
@@ -548,7 +571,8 @@ defmodule MscmpSystEnums do
   """
   @spec delete_enum(Types.enum_name()) :: :ok | {:error, MscmpSystError.t()}
   def delete_enum(enum_name) do
-    GenServer.call(Runtime.ProcessUtils.get_enums_service(), {:delete_enum, enum_name})
+    ProcessUtils.get_enums_service()
+    |> GenServer.call({:delete_enum, enum_name})
   end
 
   @doc section: :enum_functional_type_data
@@ -569,10 +593,8 @@ defmodule MscmpSystEnums do
   @spec delete_enum_functional_type(Types.enum_name(), Types.enum_functional_type_name()) ::
           :ok | {:error, MscmpSystError.t()}
   def delete_enum_functional_type(enum_name, functional_type_name) do
-    GenServer.call(
-      Runtime.ProcessUtils.get_enums_service(),
-      {:delete_enum_functional_type, enum_name, functional_type_name}
-    )
+    ProcessUtils.get_enums_service()
+    |> GenServer.call({:delete_enum_functional_type, enum_name, functional_type_name})
   end
 
   @doc section: :enum_item_data
@@ -592,10 +614,8 @@ defmodule MscmpSystEnums do
   @spec delete_enum_item(Types.enum_name(), Types.enum_item_name()) ::
           :ok | {:error, MscmpSystError.t()}
   def delete_enum_item(enum_name, enum_item_name) do
-    GenServer.call(
-      Runtime.ProcessUtils.get_enums_service(),
-      {:delete_enum_item, enum_name, enum_item_name}
-    )
+    ProcessUtils.get_enums_service()
+    |> GenServer.call({:delete_enum_item, enum_name, enum_item_name})
   end
 
   @doc section: :development_support
@@ -612,28 +632,14 @@ defmodule MscmpSystEnums do
   ## Parameters
 
     * `opts` - a `t:Keyword.t/0` list of optional parameters which can override
-      default values for service parameters.  The available options are:
+      default values for service parameters.
 
-      * `childspec_id` - the ID value used in defining a Child Specification for
-        the service. This is an atom value which defaults to
-        `MscmpSystEnums`.
+  ## Options
 
-      * `supervisor_name` - the name of the `DynamicSupervisor` which will
-        will supervise the Enumerations Service.  This is an atom value which
-        defaults to `MscmpSystEnums.DevSupportSupervisor`.
-
-      * `service_name` - the name of the Enumerations Service instance.  This is the
-        value by which the specific Enumerations Service may be set using functions
-        such as `put_enums_service/1`.  This is an atom value which defaults
-        to the value returned by `get_devsupport_service_name/0`.
-
-      * `datastore_context` - the name of the login Datastore Context which can
-        access the database storage backing the Enumerations Service.  This is an
-        atom value which defaults to the value returned by
-        `MscmpSystDb.get_devsupport_context_name/0`.
+    #{Runtime.DevSupport.get_devsupport_opts_docs()}
   """
-  @spec start_support_services(keyword()) ::
-          :ignore | {:error, any()} | {:ok, pid()} | {:ok, pid(), any()}
+  @spec start_support_services() :: :ok
+  @spec start_support_services(keyword()) :: :ok
   defdelegate start_support_services(opts \\ []), to: DevSupport
 
   @doc section: :development_support
@@ -651,11 +657,14 @@ defmodule MscmpSystEnums do
   ## Parameters
 
     * `opts` - a `t:Keyword.t/0` list of optional parameters which can override
-      default values for service parameters.  The available options and their
-      defaults are the same as `start_support_services/1`.
+      default values for service parameters.
+
+  ## Options
+
+    #{Runtime.DevSupport.get_devsupport_opts_docs()}
   """
-  @spec start_devsupport_services(keyword()) ::
-          :ignore | {:error, any()} | {:ok, pid()} | {:ok, pid(), any()}
+  @spec start_devsupport_services() :: :ok
+  @spec start_devsupport_services(keyword()) :: :ok
   defdelegate start_devsupport_services(opts \\ []), to: DevSupport, as: :start_support_services
 
   @doc section: :development_support
@@ -671,47 +680,79 @@ defmodule MscmpSystEnums do
   ## Parameters
 
     * `opts` - a `t:Keyword.t/0` list of optional parameters which can override
-      default values for service parameters.  The available options are:
+      default values for service parameters.
 
-      * `childspec_id` - the ID value used in defining a Child Specification for
-        the service. This is an atom value which defaults to
-        `MscmpSystEnums`.
+  ## Options
 
-      * `supervisor_name` - the name of the `DynamicSupervisor` which will
-        will supervise the Enumerations Service.  This is an atom value which
-        defaults to `MscmpSystEnums.TestSupportSupervisor`.
-
-      * `service_name` - the name of the Enumerations Service instance.  This is
-        the value by which the specific Enumerations Service may be set using
-        functions such as `put_enums_service/1`.  This is an atom value which
-        defaults to the value returned by `get_testsupport_service_name/0`.
-
-      * `datastore_context` - the name of the login Datastore Context which can
-        access the database storage backing the Enumerations Service.  This is
-        an atom value which defaults to the value returned by
-        `MscmpSystDb.get_testsupport_context_name/0`.
+    #{Runtime.DevSupport.get_testsupport_opts_docs()}
   """
-  @spec start_testsupport_services(keyword()) ::
-          :ignore | {:error, any()} | {:ok, pid()} | {:ok, pid(), any()}
+  @spec start_testsupport_services() :: :ok
+  @spec start_testsupport_services(keyword()) :: :ok
   defdelegate start_testsupport_services(opts \\ []), to: DevSupport
 
   @doc section: :development_support
   @doc """
-  Retrieves the Enumerations Service Name typically used to support development.
+  Stops previously started Enumerations support services.
 
-  This is a way to retrieve the standard development support name for use with
-  functions such as `put_enums_service/1`
+  ## Parameters
+
+    * `opts` - a `t:Keyword.t/0` list of optional parameters.
+
+  ## Options
+
+    #{Runtime.DevSupport.get_devsupport_stop_opts_docs()}
   """
-  @spec get_devsupport_service_name() :: atom()
-  defdelegate get_devsupport_service_name, to: DevSupport
+  @spec stop_support_services() :: :ok
+  @spec stop_support_services(keyword()) :: :ok
+  defdelegate stop_support_services(opts \\ []), to: Runtime.DevSupport
 
   @doc section: :development_support
   @doc """
-  Retrieves the Enumerations Service Name typically used to support testing.
+  Stops previously started Enumerations development support services.
 
-  This is a way to retrieve the standard testing support name for use with
-  functions such as `put_enums_service/1`
+  ## Parameters
+
+    * `opts` - a `t:Keyword.t/0` list of optional parameters.  See `Options` for
+      details.
+
+  ## Options
+
+    #{Runtime.DevSupport.get_devsupport_stop_opts_docs()}
+  """
+  @spec stop_devsupport_services() :: :ok
+  @spec stop_devsupport_services(keyword()) :: :ok
+  defdelegate stop_devsupport_services(opts \\ []),
+    to: Runtime.DevSupport,
+    as: :stop_support_services
+
+  @doc section: :development_support
+  @doc """
+  Stops previously started Enumerations testing support services.
+
+  ## Parameters
+
+    * `opts` - a `t:Keyword.t/0` list of optional parameters.
+
+  ## Options
+
+    #{Runtime.DevSupport.get_testsupport_stop_opts_docs()}
+  """
+  @spec stop_testsupport_services() :: :ok
+  @spec stop_testsupport_services(keyword()) :: :ok
+  defdelegate stop_testsupport_services(opts \\ []),
+    to: Runtime.DevSupport
+
+  @doc section: :development_support
+  @doc """
+  Returns the name of the development support service.
+  """
+  @spec get_devsupport_service_name() :: atom()
+  defdelegate get_devsupport_service_name, to: Runtime.DevSupport
+
+  @doc section: :development_support
+  @doc """
+  Returns the name of the test support service.
   """
   @spec get_testsupport_service_name() :: atom()
-  defdelegate get_testsupport_service_name, to: DevSupport
+  defdelegate get_testsupport_service_name, to: Runtime.DevSupport
 end

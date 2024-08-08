@@ -1,5 +1,5 @@
 # Source File: process_utils.ex
-# Location:    musebms/components/system/mscmp_syst_enums/lib/runtime/process_utils.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_enums/lib/runtime/process_utils.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -13,23 +13,23 @@
 defmodule MscmpSystEnums.Runtime.ProcessUtils do
   @moduledoc false
 
-  ######
-  #
-  # Small utility functions to deal with the Process dependent state.
-  #
-  ######
+  alias MscmpSystEnums.Types
 
-  # Greatly inspired by what Ecto.Repo is doing to make dynamic repos work.
-  # Our use case is similar in that our service naming is typically static for
-  # the life of the process where it is set and may be called on frequently for
-  # the life of the process.  This feels like the appropriate use of the Process
-  # Dictionary and it doesn't feel like abusive of use of process global state.
+  @spec get_enums_table() :: :ets.table() | nil
+  def get_enums_table, do: Process.get(:"MscmpSystEnums.table_name")
 
-  @spec put_enums_service(MscmpSystEnums.Types.service_name() | nil) ::
-          MscmpSystEnums.Types.service_name() | nil
-  def put_enums_service(service_name),
-    do: Process.put({__MODULE__, :service_name}, service_name)
+  @spec put_enums_service(Types.service_name()) :: Types.service_name()
+  def put_enums_service(nil) do
+    _ = Process.put(:"MscmpSystEnums.table_name", nil)
+    Process.put(:"MscmpSystEnums.service_name", nil)
+  end
 
-  @spec get_enums_service() :: MscmpSystEnums.Types.service_name() | nil
-  def get_enums_service, do: Process.get({__MODULE__, :service_name})
+  def put_enums_service(enums_service_name) do
+    enums_table = GenServer.call(enums_service_name, :get_enums_table)
+    Process.put(:"MscmpSystEnums.table_name", enums_table)
+    Process.put(:"MscmpSystEnums.service_name", enums_service_name)
+  end
+
+  @spec get_enums_service() :: Types.service_name()
+  def get_enums_service, do: Process.get(:"MscmpSystEnums.service_name")
 end

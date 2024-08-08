@@ -33,14 +33,15 @@ defmodule MscmpSystEnums.Impl.Enums do
   # GenServer and are in "protected" mode.
 
   @spec refresh_from_database() :: :ok
-  def refresh_from_database do
-    ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_enums_service())
+  def refresh_from_database, do: ProcessUtils.get_enums_table() |> refresh_from_database()
 
-    :ets.delete_all_objects(ets_table_name)
+  @spec refresh_from_database(:ets.table()) :: :ok
+  def refresh_from_database(enums_table) when is_atom(enums_table) or is_reference(enums_table) do
+    :ets.delete_all_objects(enums_table)
 
     from(e in Msdata.SystEnums, preload: [enum_items: [:functional_type], functional_types: []])
     |> MscmpSystDb.all()
-    |> Enum.each(&:ets.insert(ets_table_name, {&1.internal_name, &1}))
+    |> Enum.each(&:ets.insert(enums_table, {&1.internal_name, &1}))
   end
 
   # refresh_enum_from_database/2 is often called after changes to enum data is
@@ -53,15 +54,19 @@ defmodule MscmpSystEnums.Impl.Enums do
   # invalid and perhaps not regularly recoverable.
 
   @spec refresh_enum_from_database(Types.enum_name()) :: :ok | {:error, MscmpSystError.t()}
-  def refresh_enum_from_database(enum_name) do
-    ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_enums_service())
+  def refresh_enum_from_database(enum_name),
+    do: ProcessUtils.get_enums_table() |> refresh_enum_from_database(enum_name)
 
+  @spec refresh_enum_from_database(:ets.table(), Types.enum_name()) ::
+          :ok | {:error, MscmpSystError.t()}
+  def refresh_enum_from_database(enums_table, enum_name)
+      when is_atom(enums_table) or is_reference(enums_table) do
     from(e in Msdata.SystEnums,
       preload: [enum_items: [:functional_type], functional_types: []],
       where: e.internal_name == ^enum_name
     )
     |> MscmpSystDb.one!()
-    |> then(&:ets.insert(ets_table_name, {&1.internal_name, &1}))
+    |> then(&:ets.insert(enums_table, {&1.internal_name, &1}))
 
     :ok
   rescue
@@ -79,75 +84,114 @@ defmodule MscmpSystEnums.Impl.Enums do
   end
 
   @spec get_enum_values(Types.enum_name()) :: Msdata.SystEnums.t()
-  def get_enum_values(enum_name) do
-    ProcessUtils.get_enums_service()
-    |> get_ets_table_from_service_name()
-    |> :ets.lookup_element(enum_name, 2)
+  def get_enum_values(enum_name),
+    do: ProcessUtils.get_enums_table() |> get_enum_values(enum_name)
+
+  @spec get_enum_values(:ets.table(), Types.enum_name()) :: Msdata.SystEnums.t()
+  def get_enum_values(enums_table, enum_name)
+      when is_atom(enums_table) or is_reference(enums_table) do
+    :ets.lookup_element(enums_table, enum_name, 2)
   end
 
   @spec list_all_enums() :: list(Msdata.SystEnums.t())
-  def list_all_enums do
+  def list_all_enums, do: ProcessUtils.get_enums_table() |> list_all_enums()
+
+  @spec list_all_enums(:ets.table()) :: list(Msdata.SystEnums.t())
+  def list_all_enums(enums_table) when is_atom(enums_table) or is_reference(enums_table) do
     # Select query :ets.fun2ms(fn {_, enum_values} -> enum_values end)
-    ProcessUtils.get_enums_service()
-    |> get_ets_table_from_service_name()
-    |> :ets.select([{{:_, :"$1"}, [], [:"$1"]}])
+    :ets.select(enums_table, [{{:_, :"$1"}, [], [:"$1"]}])
   end
 
   @spec get_enum_syst_defined(Types.enum_name()) :: boolean()
-  def get_enum_syst_defined(enum_name) do
-    ProcessUtils.get_enums_service()
-    |> get_ets_table_from_service_name()
-    |> :ets.select([{{enum_name, %{syst_defined: :"$1"}}, [], [:"$1"]}])
+  def get_enum_syst_defined(enum_name),
+    do: ProcessUtils.get_enums_table() |> get_enum_syst_defined(enum_name)
+
+  @spec get_enum_syst_defined(:ets.table(), Types.enum_name()) :: boolean()
+  def get_enum_syst_defined(enums_table, enum_name)
+      when is_atom(enums_table) or is_reference(enums_table) do
+    :ets.select(enums_table, [{{enum_name, %{syst_defined: :"$1"}}, [], [:"$1"]}])
     |> hd()
   end
 
   @spec get_enum_user_maintainable(Types.enum_name()) :: boolean()
-  def get_enum_user_maintainable(enum_name) do
-    ProcessUtils.get_enums_service()
-    |> get_ets_table_from_service_name()
-    |> :ets.select([{{enum_name, %{user_maintainable: :"$1"}}, [], [:"$1"]}])
+  def get_enum_user_maintainable(enum_name),
+    do: ProcessUtils.get_enums_table() |> get_enum_user_maintainable(enum_name)
+
+  @spec get_enum_user_maintainable(:ets.table(), Types.enum_name()) :: boolean()
+  def get_enum_user_maintainable(enums_table, enum_name)
+      when is_atom(enums_table) or is_reference(enums_table) do
+    :ets.select(enums_table, [{{enum_name, %{user_maintainable: :"$1"}}, [], [:"$1"]}])
     |> hd()
   end
 
   @spec list_enum_items(Types.enum_name()) :: list(Msdata.SystEnumItems.t())
-  def list_enum_items(enum_name) do
-    ProcessUtils.get_enums_service()
-    |> get_ets_table_from_service_name()
-    |> :ets.select([{{enum_name, %{enum_items: :"$1"}}, [], [:"$1"]}])
+  def list_enum_items(enum_name),
+    do: ProcessUtils.get_enums_table() |> list_enum_items(enum_name)
+
+  @spec list_enum_items(:ets.table(), Types.enum_name()) :: list(Msdata.SystEnumItems.t())
+  def list_enum_items(enums_table, enum_name)
+      when is_atom(enums_table) or is_reference(enums_table) do
+    :ets.select(enums_table, [{{enum_name, %{enum_items: :"$1"}}, [], [:"$1"]}])
     |> hd()
   end
 
   @spec list_sorted_enum_items(Types.enum_name()) :: list(Msdata.SystEnumItems.t())
-  def list_sorted_enum_items(enum_name) do
-    Enum.sort(list_enum_items(enum_name), &(&1.sort_order < &2.sort_order))
+  def list_sorted_enum_items(enum_name),
+    do: ProcessUtils.get_enums_table() |> list_sorted_enum_items(enum_name)
+
+  @spec list_sorted_enum_items(:ets.table(), Types.enum_name()) :: list(Msdata.SystEnumItems.t())
+  def list_sorted_enum_items(enums_table, enum_name)
+      when is_atom(enums_table) or is_reference(enums_table) do
+    Enum.sort(list_enum_items(enums_table, enum_name), &(&1.sort_order < &2.sort_order))
   end
 
   @spec list_enum_functional_types(Types.enum_name()) :: list(Msdata.SystEnumFunctionalTypes.t())
-  def list_enum_functional_types(enum_name) do
-    ProcessUtils.get_enums_service()
-    |> get_ets_table_from_service_name()
-    |> :ets.select([{{enum_name, %{functional_types: :"$1"}}, [], [:"$1"]}])
+  def list_enum_functional_types(enum_name),
+    do: ProcessUtils.get_enums_table() |> list_enum_functional_types(enum_name)
+
+  @spec list_enum_functional_types(:ets.table(), Types.enum_name()) ::
+          list(Msdata.SystEnumFunctionalTypes.t())
+  def list_enum_functional_types(enums_table, enum_name)
+      when is_atom(enums_table) or is_reference(enums_table) do
+    :ets.select(enums_table, [{{enum_name, %{functional_types: :"$1"}}, [], [:"$1"]}])
     |> hd()
   end
 
   @spec get_enum_item_by_name(Types.enum_name(), Types.enum_item_name()) ::
           Msdata.SystEnumItems.t() | nil
-  def get_enum_item_by_name(enum_name, enum_item_name) do
-    list_enum_items(enum_name)
+  def get_enum_item_by_name(enum_name, enum_item_name),
+    do: ProcessUtils.get_enums_table() |> get_enum_item_by_name(enum_name, enum_item_name)
+
+  @spec get_enum_item_by_name(:ets.table(), Types.enum_name(), Types.enum_item_name()) ::
+          Msdata.SystEnumItems.t() | nil
+  def get_enum_item_by_name(enums_table, enum_name, enum_item_name)
+      when is_atom(enums_table) or is_reference(enums_table) do
+    list_enum_items(enums_table, enum_name)
     |> Enum.find(&(&1.internal_name == enum_item_name))
   end
 
   @spec get_enum_item_by_id(Types.enum_name(), Types.enum_item_id()) ::
           Msdata.SystEnumItems.t() | nil
-  def get_enum_item_by_id(enum_name, enum_item_id) do
-    list_enum_items(enum_name)
+  def get_enum_item_by_id(enum_name, enum_item_id),
+    do: ProcessUtils.get_enums_table() |> get_enum_item_by_id(enum_name, enum_item_id)
+
+  @spec get_enum_item_by_id(:ets.table(), Types.enum_name(), Types.enum_item_id()) ::
+          Msdata.SystEnumItems.t() | nil
+  def get_enum_item_by_id(enums_table, enum_name, enum_item_id)
+      when is_atom(enums_table) or is_reference(enums_table) do
+    list_enum_items(enums_table, enum_name)
     |> Enum.find(&(&1.id == enum_item_id))
   end
 
   @spec get_default_enum_item(Types.enum_name(), Keyword.t() | []) :: Msdata.SystEnumItems.t()
-  def get_default_enum_item(enum_name, opts) do
-    ProcessUtils.get_enums_service()
-    |> get_ets_table_from_service_name()
+  def get_default_enum_item(enum_name, opts),
+    do: ProcessUtils.get_enums_table() |> get_default_enum_item(enum_name, opts)
+
+  @spec get_default_enum_item(:ets.table(), Types.enum_name(), Keyword.t() | []) ::
+          Msdata.SystEnumItems.t()
+  def get_default_enum_item(enums_table, enum_name, opts)
+      when is_atom(enums_table) or is_reference(enums_table) do
+    enums_table
     |> :ets.select([{{enum_name, %{enum_items: :"$1"}}, [], [:"$1"]}])
     |> hd()
     |> Enum.find(fn enum_item ->
@@ -166,7 +210,12 @@ defmodule MscmpSystEnums.Impl.Enums do
   end
 
   @spec create_enum(Types.enum_params()) :: :ok | {:error, MscmpSystError.t()}
-  def create_enum(enum_params) do
+  def create_enum(enum_params),
+    do: ProcessUtils.get_enums_table() |> create_enum(enum_params)
+
+  @spec create_enum(:ets.table(), Types.enum_params()) :: :ok | {:error, MscmpSystError.t()}
+  def create_enum(enums_table, enum_params)
+      when is_atom(enums_table) or is_reference(enums_table) do
     {:ok, _} =
       Ecto.Multi.new()
       |> Ecto.Multi.insert(:enum, Msdata.SystEnums.changeset(%Msdata.SystEnums{}, enum_params),
@@ -182,7 +231,7 @@ defmodule MscmpSystEnums.Impl.Enums do
       end)
       |> MscmpSystDb.transaction()
 
-    refresh_enum_from_database(enum_params.internal_name)
+    refresh_enum_from_database(enums_table, enum_params.internal_name)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -236,10 +285,25 @@ defmodule MscmpSystEnums.Impl.Enums do
 
   defp create_enum_items_for_enum(multi, _changes, _enum_params), do: multi
 
-  @spec create_enum_functional_type(Types.enum_name(), Types.enum_functional_type_params()) ::
+  @spec create_enum_functional_type(
+          Types.enum_name(),
+          Types.enum_functional_type_params()
+        ) ::
           :ok | {:error, MscmpSystError.t()}
-  def create_enum_functional_type(enum_name, functional_type_params) do
-    %Msdata.SystEnums{id: enum_id} = get_enum_values(enum_name)
+  def create_enum_functional_type(enum_name, functional_type_params),
+    do:
+      ProcessUtils.get_enums_table()
+      |> create_enum_functional_type(enum_name, functional_type_params)
+
+  @spec create_enum_functional_type(
+          :ets.table(),
+          Types.enum_name(),
+          Types.enum_functional_type_params()
+        ) ::
+          :ok | {:error, MscmpSystError.t()}
+  def create_enum_functional_type(enums_table, enum_name, functional_type_params)
+      when is_atom(enums_table) or is_reference(enums_table) do
+    %Msdata.SystEnums{id: enum_id} = get_enum_values(enums_table, enum_name)
 
     resolved_functional_type = Map.put(functional_type_params, :enum_id, enum_id)
 
@@ -247,7 +311,7 @@ defmodule MscmpSystEnums.Impl.Enums do
     |> Msdata.SystEnumFunctionalTypes.changeset(resolved_functional_type)
     |> MscmpSystDb.insert!()
 
-    refresh_enum_from_database(enum_name)
+    refresh_enum_from_database(enums_table, enum_name)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -264,9 +328,15 @@ defmodule MscmpSystEnums.Impl.Enums do
 
   @spec create_enum_item(Types.enum_name(), Types.enum_item_params()) ::
           :ok | {:error, MscmpSystError.t()}
-  def create_enum_item(enum_name, enum_item_params) do
+  def create_enum_item(enum_name, enum_item_params),
+    do: ProcessUtils.get_enums_table() |> create_enum_item(enum_name, enum_item_params)
+
+  @spec create_enum_item(:ets.table(), Types.enum_name(), Types.enum_item_params()) ::
+          :ok | {:error, MscmpSystError.t()}
+  def create_enum_item(enums_table, enum_name, enum_item_params)
+      when is_atom(enums_table) or is_reference(enums_table) do
     %Msdata.SystEnums{id: enum_id, functional_types: functional_types} =
-      get_enum_values(enum_name)
+      get_enum_values(enums_table, enum_name)
 
     functional_type_id =
       maybe_get_functional_type_id(
@@ -281,7 +351,7 @@ defmodule MscmpSystEnums.Impl.Enums do
     |> Msdata.SystEnumItems.changeset(resolved_enum_item_params)
     |> MscmpSystDb.insert!()
 
-    refresh_enum_from_database(enum_name)
+    refresh_enum_from_database(enums_table, enum_name)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -344,18 +414,22 @@ defmodule MscmpSystEnums.Impl.Enums do
 
   @spec set_enum_values(Types.enum_name(), Types.enum_params()) ::
           :ok | {:error, MscmpSystError.t()}
-  def set_enum_values(enum_name, enum_params) do
-    ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_enums_service())
+  def set_enum_values(enum_name, enum_params),
+    do: ProcessUtils.get_enums_table() |> set_enum_values(enum_name, enum_params)
 
+  @spec set_enum_values(:ets.table(), Types.enum_name(), Types.enum_params()) ::
+          :ok | {:error, MscmpSystError.t()}
+  def set_enum_values(enums_table, enum_name, enum_params)
+      when is_atom(enums_table) or is_reference(enums_table) do
     resolved_internal_name = Map.get(enum_params, :internal_name, enum_name)
 
-    :ets.lookup_element(ets_table_name, enum_name, 2)
+    :ets.lookup_element(enums_table, enum_name, 2)
     |> Msdata.SystEnums.changeset(enum_params)
     |> MscmpSystDb.update!()
 
-    if enum_name != resolved_internal_name, do: :ets.delete(ets_table_name, enum_name)
+    if enum_name != resolved_internal_name, do: :ets.delete(enums_table, enum_name)
 
-    refresh_enum_from_database(resolved_internal_name)
+    refresh_enum_from_database(enums_table, resolved_internal_name)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -376,20 +450,32 @@ defmodule MscmpSystEnums.Impl.Enums do
           Types.enum_functional_type_params()
         ) ::
           :ok | {:error, MscmpSystError.t()}
+  def set_enum_functional_type_values(enum_name, functional_type_name, functional_type_params) do
+    ProcessUtils.get_enums_table()
+    |> set_enum_functional_type_values(enum_name, functional_type_name, functional_type_params)
+  end
+
+  @spec set_enum_functional_type_values(
+          :ets.table(),
+          Types.enum_name(),
+          Types.enum_functional_type_name(),
+          Types.enum_functional_type_params()
+        ) ::
+          :ok | {:error, MscmpSystError.t()}
   def set_enum_functional_type_values(
+        enums_table,
         enum_name,
         functional_type_name,
         functional_type_params
-      ) do
-    ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_enums_service())
-
-    %{functional_types: functional_types} = :ets.lookup_element(ets_table_name, enum_name, 2)
+      )
+      when is_atom(enums_table) or is_reference(enums_table) do
+    %{functional_types: functional_types} = :ets.lookup_element(enums_table, enum_name, 2)
 
     Enum.find(functional_types, &(&1.internal_name == functional_type_name))
     |> Msdata.SystEnumFunctionalTypes.changeset(functional_type_params)
     |> MscmpSystDb.update!()
 
-    refresh_enum_from_database(enum_name)
+    refresh_enum_from_database(enums_table, enum_name)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -407,15 +493,26 @@ defmodule MscmpSystEnums.Impl.Enums do
   @spec set_enum_item_values(Types.enum_name(), Types.enum_item_name(), Types.enum_item_params()) ::
           :ok | {:error, MscmpSystError.t()}
   def set_enum_item_values(enum_name, enum_item_name, enum_item_params) do
-    ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_enums_service())
+    ProcessUtils.get_enums_table()
+    |> set_enum_item_values(enum_name, enum_item_name, enum_item_params)
+  end
 
-    %{enum_items: enum_items} = :ets.lookup_element(ets_table_name, enum_name, 2)
+  @spec set_enum_item_values(
+          :ets.table(),
+          Types.enum_name(),
+          Types.enum_item_name(),
+          Types.enum_item_params()
+        ) ::
+          :ok | {:error, MscmpSystError.t()}
+  def set_enum_item_values(enums_table, enum_name, enum_item_name, enum_item_params)
+      when is_atom(enums_table) or is_reference(enums_table) do
+    %{enum_items: enum_items} = :ets.lookup_element(enums_table, enum_name, 2)
 
     Enum.find(enum_items, &(&1.internal_name == enum_item_name))
     |> Msdata.SystEnumItems.changeset(enum_item_params)
     |> MscmpSystDb.update!()
 
-    refresh_enum_from_database(enum_name)
+    refresh_enum_from_database(enums_table, enum_name)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -431,14 +528,16 @@ defmodule MscmpSystEnums.Impl.Enums do
   end
 
   @spec delete_enum(Types.enum_name()) :: :ok | {:error, MscmpSystError.t()}
-  def delete_enum(enum_name) do
-    ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_enums_service())
+  def delete_enum(enum_name), do: ProcessUtils.get_enums_table() |> delete_enum(enum_name)
 
+  @spec delete_enum(:ets.table(), Types.enum_name()) :: :ok | {:error, MscmpSystError.t()}
+  def delete_enum(enums_table, enum_name)
+      when is_atom(enums_table) or is_reference(enums_table) do
     delete_qry = from(e in Msdata.SystEnums, where: e.internal_name == ^enum_name)
 
     {1, _rows} = MscmpSystDb.delete_all(delete_qry)
 
-    true = :ets.delete(ets_table_name, enum_name)
+    true = :ets.delete(enums_table, enum_name)
 
     :ok
   rescue
@@ -457,13 +556,25 @@ defmodule MscmpSystEnums.Impl.Enums do
 
   @spec delete_enum_functional_type(Types.enum_name(), Types.enum_functional_type_name()) ::
           :ok | {:error, MscmpSystError.t()}
-  def delete_enum_functional_type(enum_name, functional_type_name) do
+  def delete_enum_functional_type(enum_name, functional_type_name),
+    do:
+      ProcessUtils.get_enums_table()
+      |> delete_enum_functional_type(enum_name, functional_type_name)
+
+  @spec delete_enum_functional_type(
+          :ets.table(),
+          Types.enum_name(),
+          Types.enum_functional_type_name()
+        ) ::
+          :ok | {:error, MscmpSystError.t()}
+  def delete_enum_functional_type(enums_table, enum_name, functional_type_name)
+      when is_atom(enums_table) or is_reference(enums_table) do
     delete_qry =
       from(f in Msdata.SystEnumFunctionalTypes, where: f.internal_name == ^functional_type_name)
 
     {1, _rows} = MscmpSystDb.delete_all(delete_qry)
 
-    refresh_enum_from_database(enum_name)
+    refresh_enum_from_database(enums_table, enum_name)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -480,12 +591,18 @@ defmodule MscmpSystEnums.Impl.Enums do
 
   @spec delete_enum_item(Types.enum_name(), Types.enum_item_name()) ::
           :ok | {:error, MscmpSystError.t()}
-  def delete_enum_item(enum_name, enum_item_name) do
+  def delete_enum_item(enum_name, enum_item_name),
+    do: ProcessUtils.get_enums_table() |> delete_enum_item(enum_name, enum_item_name)
+
+  @spec delete_enum_item(:ets.table(), Types.enum_name(), Types.enum_item_name()) ::
+          :ok | {:error, MscmpSystError.t()}
+  def delete_enum_item(enums_table, enum_name, enum_item_name)
+      when is_atom(enums_table) or is_reference(enums_table) do
     delete_qry = from(f in Msdata.SystEnumItems, where: f.internal_name == ^enum_item_name)
 
     {1, _rows} = MscmpSystDb.delete_all(delete_qry)
 
-    refresh_enum_from_database(enum_name)
+    refresh_enum_from_database(enums_table, enum_name)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -506,15 +623,4 @@ defmodule MscmpSystEnums.Impl.Enums do
     enum_item = get_enum_item_by_id(enum_name, enum_item_id)
     enum_item.functional_type.internal_name
   end
-
-  @spec get_ets_table_from_service_name(Types.service_name()) :: atom()
-  def get_ets_table_from_service_name(service_name) when is_atom(service_name), do: service_name
-
-  def get_ets_table_from_service_name({:via, _module, service_name})
-      when is_atom(service_name),
-      do: service_name
-
-  def get_ets_table_from_service_name({:via, _module, {_reg, service_name}})
-      when is_atom(service_name),
-      do: service_name
 end

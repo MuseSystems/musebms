@@ -30,20 +30,29 @@ defmodule TestSupport do
   @migration_integration_test_ds_type "mscmp_syst_enums_integration_test"
   @migration_doc_test_ds_type "mscmp_syst_enums_doc_test"
 
-  def setup_testing_database(test_kind) do
+  def setup_testing_database(test_kind, opts) do
     datastore_options = MscmpSystDb.get_testsupport_datastore_options()
 
     :ok = build_migrations(test_kind)
 
     {:ok, _} = MscmpSystDb.load_database(datastore_options, get_datastore_type(test_kind))
 
-    {:ok, _, _} = MscmpSystDb.start_datastore(datastore_options)
+    MscmpSystDb.Datastore.child_spec(datastore_options,
+      context_registry: opts[:context_registry] || MscmpSystEnums.TestDbRegistry
+    )
   end
 
-  def cleanup_testing_database(test_kind) do
+  @spec cleanup_testing_database(:doc_testing | :integration_testing | :unit_testing) :: [
+          binary()
+        ]
+  @spec cleanup_testing_database(:doc_testing | :integration_testing | :unit_testing, Keyword.t()) ::
+          [
+            binary()
+          ]
+  def cleanup_testing_database(test_kind, opts \\ []) do
     datastore_options = MscmpSystDb.get_testsupport_datastore_options()
 
-    :ok = MscmpSystDb.drop_database(datastore_options)
+    :ok = MscmpSystDb.drop_database(datastore_options, context_registry: opts[:context_registry])
 
     _ = File.rm_rf!(Path.join(["priv", "database", get_datastore_type(test_kind)]))
   end
