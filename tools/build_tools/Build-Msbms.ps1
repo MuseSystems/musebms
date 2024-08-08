@@ -12,35 +12,103 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
+<#
+.SYNOPSIS
+Builds and manages components of the Muse Systems Business Management System.
+
+.DESCRIPTION
+This script provides various options for building, cleaning, updating dependencies, and generating documentation for the Muse Systems Business Management System project.
+
+.PARAMETER Help
+Display this help message.
+
+.PARAMETER DocsElixir
+Generate Elixir documentation.
+
+.PARAMETER DocsDb
+Generate database documentation.
+
+.PARAMETER DocsAll
+Generate all documentation (Elixir and database).
+
+.PARAMETER CleanLs
+Clean language server files.
+
+.PARAMETER CleanPlt
+Clean Persistent Lookup Table (PLT) files.
+
+.PARAMETER CleanBuild
+Clean build files.
+
+.PARAMETER CleanDeps
+Clean dependencies.
+
+.PARAMETER CleanAll
+Clean all (language server, PLT, build files, and dependencies).
+
+.PARAMETER DepsGet
+Get dependencies.
+
+.PARAMETER DepsUpdate
+Update dependencies.
+
+.PARAMETER All
+Perform all actions (clean, get dependencies, and generate documentation).
+
+.PARAMETER AllUpdate
+Perform all actions including updating dependencies.
+
+.PARAMETER Components
+Specify components to act upon. If not provided, actions will be performed on all components.
+
+.EXAMPLE
+.\Build-Msbms.ps1 -DocsElixir -Components "component1", "component2"
+
+.EXAMPLE
+.\Build-Msbms.ps1 -CleanAll -DepsGet
+
+.EXAMPLE
+.\Build-Msbms.ps1 -All
+
+.NOTES
+This script must be run from the root path of the project.
+#>
+
 param (
-  [switch]$DocsElixir = $false,
-  [switch]$DocsDb = $false,
-  [switch]$DocsAll = $false,
-  [switch]$CleanLs = $false,
-  [switch]$CleanPlt = $false,
-  [switch]$CleanBuild = $false,
-  [switch]$CleanDeps = $false,
-  [switch]$CleanAll = $false,
-  [switch]$DepsGet = $false,
-  [switch]$DepsUpdate = $false,
-  [switch]$All = $false,
-  [switch]$AllUpdate = $false,
-  [string[]]$Components = @()
+    [switch]$Help = $false,
+    [switch]$DocsElixir = $false,
+    [switch]$DocsDb = $false,
+    [switch]$DocsAll = $false,
+    [switch]$CleanLs = $false,
+    [switch]$CleanPlt = $false,
+    [switch]$CleanBuild = $false,
+    [switch]$CleanDeps = $false,
+    [switch]$CleanAll = $false,
+    [switch]$DepsGet = $false,
+    [switch]$DepsUpdate = $false,
+    [switch]$All = $false,
+    [switch]$AllUpdate = $false,
+    [string[]]$Components = @()
 )
+
+if ($Help) {
+    Get-Help $MyInvocation.MyCommand.Path -Full
+    exit 0
+}
 
 
 # Just a sanity check.  This probably can be more robust and correct.
 
 if (
-  !(Test-Path -Path "database") -or
-  !(Test-Path -Path "app_server") -or
-  !(Test-Path -Path "documentation") -or
+    !(Test-Path -Path "database") -or
+    !(Test-Path -Path "app_server") -or
+    !(Test-Path -Path "documentation") -or
   (Get-Content LICENSE.md -First 1) -notlike
-  "*Muse Systems Business Management System License Agreement*"
+    "*Muse Systems Business Management System License Agreement*"
 ) {
 
-  Write-Error "This script must be run from the root path of the project."
-  Exit 1
+    Write-Error "This script must be run from the root path of the project."
+    Exit 1
 
 }
 
