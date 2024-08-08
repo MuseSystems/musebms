@@ -22,13 +22,13 @@ defmodule DevSupport do
 
   def start_dev_environment(db_kind \\ :unit_testing) do
 
-    _ = Registry.start_link(name: @registry, keys: :unique) |> dbg()
+    _ = Registry.start_link(name: @registry, keys: :unique)
 
-    _ = setup_database(db_kind) |> dbg()
+    _ = setup_database(db_kind)
 
     datastore_context_name = {:via, Registry, {@registry, MscmpSystDb.get_devsupport_context_name()}}
 
-    _ = MscmpSystDb.put_datastore_context(datastore_context_name) |> dbg()
+    _ = MscmpSystDb.put_datastore_context(datastore_context_name)
 
     _ = MscmpSystSettings.start_devsupport_services(datastore_context_name: datastore_context_name)
 
