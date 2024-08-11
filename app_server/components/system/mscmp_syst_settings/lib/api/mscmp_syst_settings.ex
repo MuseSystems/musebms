@@ -23,6 +23,36 @@ defmodule MscmpSystSettings do
 
   @doc section: :service_management
   @doc """
+  Returns a child specification for the Settings Service.
+
+  ## Parameters
+
+    * `opts` - A keyword list of options.  See the `Options` section for
+      details.
+
+  ## Options
+
+  #{Runtime.Service.get_child_spec_opts_docs()}
+
+  ## Examples
+
+      iex> MscmpSystSettings.child_spec(
+      ...>   service_name: MyApp.SettingsService,
+      ...>   datastore_context_name: MyApp.DatastoreContext)
+      %{
+        id: MscmpSystSettings.Runtime.Service,
+        start:
+          {MscmpSystSettings,
+           :start_link,
+           [MyApp.SettingsService, MyApp.DatastoreContext, [timeout: :infinity]]},
+      }
+
+  """
+  @spec child_spec(Keyword.t()) :: Supervisor.child_spec()
+  defdelegate child_spec(opts), to: Runtime.Service
+
+  @doc section: :service_management
+  @doc """
   Starts an instance of the Settings Service.
 
   Starting the service establishes the required processes and pre-populates the

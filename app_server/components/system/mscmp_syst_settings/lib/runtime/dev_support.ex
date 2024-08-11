@@ -65,16 +65,11 @@ defmodule MscmpSystSettings.Runtime.DevSupport do
   def get_devsupport_stop_opts_docs, do: NimbleOptions.docs(@devsupport_stop_opts)
 
   testsupport_opts = [
-    childspec_id: [
-      type: :atom,
-      default: __MODULE__,
-      doc: """
-      Provides the means to override the default childspec id, though typically
-      this is not necessary.
-      """
-    ],
     service_name: [
-      type: :atom,
+      type:
+        {:or,
+         [nil, :atom, {:tuple, [{:in, [:via]}, :atom, :any]}, {:tuple, [{:in, [:global]}, :any]}]},
+      type_doc: "`t:GenServer.name/0 or `nil`",
       default: @default_test_service_name,
       doc: """
       The name to use for the GenServer backing this specific Settings Service
@@ -123,13 +118,10 @@ defmodule MscmpSystSettings.Runtime.DevSupport do
     opts =
       NimbleOptions.validate!(opts, @devsupport_opts)
 
+    service_opts = Keyword.take(opts, [:service_name, :datastore_context_name])
+
     settings_service_spec =
-      %{
-        id: opts[:childspec_id],
-        start:
-          {MscmpSystSettings, :start_link,
-           [opts[:service_name], opts[:datastore_context_name], []]}
-      }
+      MscmpSystSettings.child_spec(service_opts)
 
     _ =
       case Process.whereis(opts[:supervisor_name]) do
