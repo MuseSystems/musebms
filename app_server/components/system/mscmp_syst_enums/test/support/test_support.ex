@@ -30,6 +30,8 @@ defmodule TestSupport do
   @migration_integration_test_ds_type "mscmp_syst_enums_integration_test"
   @migration_doc_test_ds_type "mscmp_syst_enums_doc_test"
 
+  @spec setup_testing_database(:doc_testing | :integration_testing | :unit_testing, Keyword.t()) ::
+          Supervisor.child_spec()
   def setup_testing_database(test_kind, opts) do
     datastore_options = MscmpSystDb.get_testsupport_datastore_options()
 
@@ -38,7 +40,7 @@ defmodule TestSupport do
     {:ok, _} = MscmpSystDb.load_database(datastore_options, get_datastore_type(test_kind))
 
     MscmpSystDb.Datastore.child_spec(datastore_options,
-      context_registry: opts[:context_registry] || MscmpSystEnums.TestDbRegistry
+      context_registry: opts[:context_registry] || MscmpSystEnums.TestRegistry
     )
   end
 
@@ -54,7 +56,7 @@ defmodule TestSupport do
 
     :ok = MscmpSystDb.drop_database(datastore_options, context_registry: opts[:context_registry])
 
-    _ = File.rm_rf!(Path.join(["priv", "database", get_datastore_type(test_kind)]))
+    File.rm_rf!(Path.join(["priv", "database", get_datastore_type(test_kind)]))
   end
 
   defp get_datastore_type(:unit_testing), do: @migration_unit_test_ds_type
