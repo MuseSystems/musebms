@@ -25,6 +25,36 @@ defmodule MscmpSystEnums do
 
   @doc section: :service_management
   @doc """
+  Returns a child specification for the Enumerations Service.
+
+  ## Parameters
+
+    * `opts` - A keyword list of options.  See the `Options` section for
+      details.
+
+  ## Options
+
+  #{Runtime.Service.get_child_spec_opts_docs()}
+
+  ## Examples
+
+      iex> MscmpSystEnums.child_spec(
+      ...>   service_name: MyApp.EnumsService,
+      ...>   datastore_context_name: MyApp.DatastoreContext)
+      %{
+        id: MscmpSystEnums.Runtime.Service,
+        start:
+          {MscmpSystEnums,
+           :start_link,
+           [MyApp.EnumsService, MyApp.DatastoreContext, [timeout: :infinity]]},
+      }
+
+  """
+  @spec child_spec(Keyword.t()) :: Supervisor.child_spec()
+  defdelegate child_spec(opts), to: Runtime.Service
+
+  @doc section: :service_management
+  @doc """
   Starts an instance of the Enumerations Service.
 
   Starting the service establishes the required processes and pre-populates the

@@ -49,6 +49,16 @@ defmodule MscmpSystEnums.Runtime.Service do
       Specifies the name of the Datastore Context to be used by the Settings
       Service.
       """
+    ],
+    service_name: [
+      type:
+        {:or,
+         [nil, :atom, {:tuple, [{:in, [:via]}, :atom, :any]}, {:tuple, [{:in, [:global]}, :any]}]},
+      type_doc: "`t:GenServer.name/0 or `nil`",
+      doc: """
+      The name to use for the GenServer backing this specific Enumerations
+      Service instance.
+      """
     ]
   ]
 
@@ -62,6 +72,38 @@ defmodule MscmpSystEnums.Runtime.Service do
   ##
   ## Client
   ##
+
+  ##############################################################################
+  #
+  # child_spec
+  #
+
+  @child_spec_opts NimbleOptions.new!(
+                     Keyword.take(option_defs, [
+                       :service_name,
+                       :datastore_context_name,
+                       :debug,
+                       :timeout,
+                       :hibernate_after
+                     ])
+                   )
+
+  @spec get_child_spec_opts_docs() :: String.t()
+  def get_child_spec_opts_docs, do: NimbleOptions.docs(@child_spec_opts)
+
+  @spec child_spec(Keyword.t()) :: Supervisor.child_spec()
+  def child_spec(opts) do
+    opts = NimbleOptions.validate!(opts, @child_spec_opts)
+
+    genserver_opts = Keyword.take(opts, [:debug, :timeout, :hibernate_after])
+
+    %{
+      id: __MODULE__,
+      start:
+        {MscmpSystEnums, :start_link,
+         [opts[:service_name], opts[:datastore_context_name], genserver_opts]}
+    }
+  end
 
   ##############################################################################
   #
