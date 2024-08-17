@@ -30,11 +30,15 @@ test_kind =
 test_registry = MscmpSystSettings.TestRegistry
 
 datastore_context_name =
-  {:via, Registry, {test_registry, MscmpSystDb.get_testsupport_context_name()}}
+  {:via, Registry, {test_registry, TestSupport.get_datastore_context_name()}}
 
 children = [
   Registry.child_spec(keys: :unique, name: test_registry),
-  TestSupport.setup_testing_database(test_kind, context_registry: test_registry)
+  TestSupport.setup_testing_database(test_kind, context_registry: test_registry),
+  MscmpSystSettings.child_spec(
+    service_name: TestSupport.get_settings_service_name(),
+    datastore_context_name: datastore_context_name
+  )
 ]
 
 {:ok, _pid} =
@@ -42,10 +46,6 @@ children = [
     strategy: :one_for_one,
     name: :"MscmpSystSettings.TestSupportSupervisor"
   )
-
-MscmpSystDb.put_datastore_context(datastore_context_name)
-
-MscmpSystSettings.start_testsupport_services(datastore_context_name: datastore_context_name)
 
 ExUnit.after_suite(fn _suite_result ->
   TestSupport.cleanup_testing_database(test_kind, context_registry: test_registry)

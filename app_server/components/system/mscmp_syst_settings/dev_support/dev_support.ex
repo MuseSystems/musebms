@@ -11,55 +11,67 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule DevSupport do
-  @moduledoc false
-
   alias Mix.Tasks.Builddb
+
+  use MscmpSystDb.Macros
+  use MscmpSystSettings.Macros
+
+  db_devsupport(:dev)
+  settings_devsupport()
 
   @migration_test_source_root_dir "../../../../database"
   @migration_unit_test_ds_type "mscmp_syst_settings_unit_test"
+  @migration_integration_test_ds_type "mscmp_syst_settings_integration_test"
+  @migration_doc_test_ds_type "mscmp_syst_settings_doc_test"
 
   @registry :"MscmpSystSettings.DevSupportRegistry"
+  @datastore_context_name {:via, Registry, {@registry, @db_support_context_name}}
 
   def start_dev_environment(db_kind \\ :unit_testing) do
+     children =
+      [
+        Registry.child_spec(keys: :unique, name: @registry),
+        setup_database(db_kind),
+        MscmpSystSettings.child_spec(
+          service_name: @settings_service_name_dev, datastore_context_name: @datastore_context_name )
+      ]
 
-    _ = Registry.start_link(name: @registry, keys: :unique)
+      {:ok, _pid} =
+        Supervisor.start_link(
+          children, strategy: :one_for_one, name: :"MscmpSystSettings.DevSupportSupervisor")
 
-    _ = setup_database(db_kind)
+    _ = MscmpSystDb.put_datastore_context(@datastore_context_name)
+    _ = MscmpSystSettings.put_settings_service(@settings_service_name_dev)
 
-    datastore_context_name = {:via, Registry, {@registry, MscmpSystDb.get_devsupport_context_name()}}
-
-    _ = MscmpSystDb.put_datastore_context(datastore_context_name)
-
-    _ = MscmpSystSettings.start_devsupport_services(datastore_context_name: datastore_context_name)
-
-    _ = MscmpSystSettings.put_settings_service(MscmpSystSettings.get_devsupport_service_name)
+    :ok
   end
 
   def stop_dev_environment do
-    _ = MscmpSystSettings.stop_devsupport_services()
-    cleanup_database()
+    _ = cleanup_database()
+    Supervisor.stop(:"MscmpSystSettings.DevSupportSupervisor")
   end
 
   defp setup_database(db_kind) do
-    datastore_options = MscmpSystDb.get_devsupport_datastore_options()
+    datastore_options = get_datastore_options()
 
     :ok = build_migrations(db_kind)
 
-    {:ok, _} = MscmpSystDb.load_database(datastore_options, get_datastore_type(db_kind))
+    {:ok, _} = load_database(datastore_options, get_datastore_type(db_kind))
 
-    {:ok, _, _} = MscmpSystDb.start_datastore(datastore_options, context_registry: @registry)
-
+    MscmpSystDb.Datastore.child_spec(datastore_options, context_registry: @registry )
   end
 
-  defp cleanup_database() do
-    datastore_options = MscmpSystDb.get_devsupport_datastore_options()
+  defp cleanup_database(db_kind \\ :unit_testing) do
+    datastore_options = get_datastore_options()
 
-    :ok = MscmpSystDb.drop_database(datastore_options, context_registry: @registry)
+    :ok = drop_database(datastore_options, context_registry: @registry)
 
-    _ = File.rm_rf!(Path.join(["priv", "database", @migration_unit_test_ds_type]))
+    File.rm_rf!(Path.join(["priv", "database", get_datastore_type(db_kind)]))
   end
 
   defp get_datastore_type(:unit_testing), do: @migration_unit_test_ds_type
+  defp get_datastore_type(:integration_testing), do: @migration_integration_test_ds_type
+  defp get_datastore_type(:doc_testing), do: @migration_doc_test_ds_type
 
   defp build_migrations(db_kind) do
     Builddb.run([
