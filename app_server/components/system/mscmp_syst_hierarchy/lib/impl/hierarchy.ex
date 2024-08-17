@@ -19,13 +19,41 @@ defmodule MscmpSystHierarchy.Impl.Hierarchy do
 
   require Logger
 
+  ##############################################################################
+  #
+  # Options Definition
+  #
+  #
+
+  option_defs = [
+    sorted: [
+      type: :boolean,
+      default: true,
+      doc: """
+      When true, the hierarchy types will be returned in sorted order.
+      """
+    ]
+  ]
+
   #
   # Hierarchy Type
+  #
+
+  ##############################################################################
+  #
+  # get_hierarchy_type_by_name
+  #
   #
 
   @spec get_hierarchy_type_by_name(Types.hierarchy_type_name()) :: Msdata.SystEnumItems.t() | nil
   def get_hierarchy_type_by_name(type_name) when is_binary(type_name),
     do: MscmpSystEnums.get_enum_item_by_name("hierarchy_types", type_name)
+
+  ##############################################################################
+  #
+  # get_hierarchy_type_id_by_name
+  #
+  #
 
   @spec get_hierarchy_type_id_by_name(Types.hierarchy_type_name()) ::
           Types.hierarchy_type_id() | nil
@@ -36,9 +64,20 @@ defmodule MscmpSystHierarchy.Impl.Hierarchy do
     end
   end
 
+  ##############################################################################
+  #
+  # list_hierarchy_types
+  #
+  #
+
+  @list_hierarchy_types_opts NimbleOptions.new!(Keyword.take(option_defs, [:sorted]))
+
+  @spec get_list_hierarchy_types_opts_docs() :: String.t()
+  def get_list_hierarchy_types_opts_docs, do: NimbleOptions.docs(@list_hierarchy_types_opts)
+
   @spec list_hierarchy_types!(Keyword.t()) :: [Msdata.SystEnumItems.t()]
   def list_hierarchy_types!(opts) do
-    opts = MscmpSystUtils.resolve_options(opts, sorted: true)
+    opts = NimbleOptions.validate!(opts, @list_hierarchy_types_opts)
 
     if opts[:sorted],
       do: MscmpSystEnums.list_sorted_enum_items("hierarchy_types"),
@@ -65,6 +104,12 @@ defmodule MscmpSystHierarchy.Impl.Hierarchy do
   # Hierarchy State
   #
 
+  ##############################################################################
+  #
+  # get_hierarchy_state_by_name
+  #
+  #
+
   @spec get_hierarchy_state_by_name(Types.hierarchy_state_name()) ::
           Msdata.SystEnumItems.t() | nil
   def get_hierarchy_state_by_name(state_name) when is_binary(state_name),
@@ -79,6 +124,12 @@ defmodule MscmpSystHierarchy.Impl.Hierarchy do
     end
   end
 
+  ##############################################################################
+  #
+  # get_hierarchy_state_default
+  #
+  #
+
   @spec get_hierarchy_state_default(Types.hierarchy_state_functional_types() | nil) ::
           Msdata.SystEnumItems.t()
   def get_hierarchy_state_default(nil),
@@ -90,6 +141,12 @@ defmodule MscmpSystHierarchy.Impl.Hierarchy do
     )
   end
 
+  ##############################################################################
+  #
+  # get_hierarchy_state_default_id
+  #
+  #
+
   @spec get_hierarchy_state_default_id(Types.hierarchy_state_functional_types() | nil) ::
           Types.hierarchy_state_id()
   def get_hierarchy_state_default_id(functional_type)
@@ -100,6 +157,12 @@ defmodule MscmpSystHierarchy.Impl.Hierarchy do
 
   #
   # Hierarchy
+  #
+
+  ##############################################################################
+  #
+  # get_hierarchy_id_by_name
+  #
   #
 
   @spec get_hierarchy_id_by_name!(Types.hierarchy_name()) :: Types.hierarchy_id()

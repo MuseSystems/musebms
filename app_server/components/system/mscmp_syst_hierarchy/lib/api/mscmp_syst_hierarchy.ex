@@ -101,12 +101,11 @@ defmodule MscmpSystHierarchy do
 
   ## Parameters
 
-    * `opts` - A Keyword List of optional parameters.  The available options
-    are:
+    * `opts` - A Keyword List of optional parameters.
 
-      * `sorted` - a boolean value indicating whether or not the list should be
-      sorted according to the predefined `sort_order` values of the individual
-      Hierarchy Type records.  The default value of this option is `true`.
+  ## Options
+
+    #{Impl.Hierarchy.get_list_hierarchy_types_opts_docs()}
 
   ## Examples
 
@@ -132,12 +131,11 @@ defmodule MscmpSystHierarchy do
 
   ## Parameters
 
-    * `opts` - A Keyword List of optional parameters.  The available options
-    are:
+    * `opts` - A Keyword List of optional parameters.
 
-      * `sorted` - a boolean value indicating whether or not the list should be
-      sorted according to the predefined `sort_order` values of the individual
-      Hierarchy Type records.  The default value of this option is `true`.
+  ## Options
+
+    #{Impl.Hierarchy.get_list_hierarchy_types_opts_docs()}
 
   ## Examples
 
