@@ -23,7 +23,13 @@ defmodule TestSupport do
   #
   ########################
 
+  use MscmpSystDb.Macros
+  use MscmpSystEnums.Macros
+
   alias Mix.Tasks.Builddb
+
+  db_devsupport(:test)
+  enums_devsupport()
 
   @migration_test_source_root_dir "../../../../database"
   @migration_unit_test_ds_type "mscmp_syst_enums_unit_test"
@@ -33,16 +39,19 @@ defmodule TestSupport do
   @spec setup_testing_database(:doc_testing | :integration_testing | :unit_testing, Keyword.t()) ::
           Supervisor.child_spec()
   def setup_testing_database(test_kind, opts) do
-    datastore_options = MscmpSystDb.get_testsupport_datastore_options()
+    datastore_options = get_datastore_options()
 
     :ok = build_migrations(test_kind)
 
-    {:ok, _} = MscmpSystDb.load_database(datastore_options, get_datastore_type(test_kind))
+    {:ok, _} = load_database(datastore_options, get_datastore_type(test_kind))
 
     MscmpSystDb.Datastore.child_spec(datastore_options,
       context_registry: opts[:context_registry] || MscmpSystEnums.TestRegistry
     )
   end
+
+  def get_datastore_context_name, do: @db_support_context_name
+  def get_enums_service_name, do: @enums_service_name_test
 
   @spec cleanup_testing_database(:doc_testing | :integration_testing | :unit_testing) :: [
           binary()
@@ -52,9 +61,9 @@ defmodule TestSupport do
             binary()
           ]
   def cleanup_testing_database(test_kind, opts \\ []) do
-    datastore_options = MscmpSystDb.get_testsupport_datastore_options()
+    datastore_options = get_datastore_options()
 
-    :ok = MscmpSystDb.drop_database(datastore_options, context_registry: opts[:context_registry])
+    :ok = drop_database(datastore_options, context_registry: opts[:context_registry])
 
     File.rm_rf!(Path.join(["priv", "database", get_datastore_type(test_kind)]))
   end
