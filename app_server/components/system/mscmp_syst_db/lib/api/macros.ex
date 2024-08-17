@@ -1,5 +1,5 @@
-# Source File: dev_support.ex
-# Location:    musebms/app_server/components/system/mscmp_syst_db/lib/runtime/dev_support.ex
+# Source File: macros.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_db/lib/api/macros.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,13 +10,8 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MscmpSystDb.Runtime.DevSupport do
+defmodule MscmpSystDb.Macros do
   @moduledoc false
-
-  alias MscmpSystDb.Types.{DatastoreContext, DatastoreOptions, DbServer}
-
-  @devsupport_context "0000mt.devspt.MscmpSystDb.ContextRole"
-  @testsupport_context "0000mt.tstspt.MscmpSystDb.ContextRole"
 
   ##############################################################################
   #
@@ -74,7 +69,7 @@ defmodule MscmpSystDb.Runtime.DevSupport do
     ]
   ]
 
-  get_datastore_options_opts =
+  dev_datastore_options_opts =
     [
       database_name: [
         type: :string,
@@ -117,7 +112,7 @@ defmodule MscmpSystDb.Runtime.DevSupport do
       ],
       context_name: [
         type: :string,
-        default: @devsupport_context,
+        default: "0000mt.devspt.MscmpSystDb.ContextRole",
         doc: """
         A string value which provides a unique context name for the login
         Context identified by this function.
@@ -133,7 +128,7 @@ defmodule MscmpSystDb.Runtime.DevSupport do
       ]
     ] ++ common_opts
 
-  get_testsupport_datastore_options_opts =
+  test_datastore_options_opts =
     [
       database_name: [
         type: :string,
@@ -176,7 +171,7 @@ defmodule MscmpSystDb.Runtime.DevSupport do
       ],
       context_name: [
         type: :string,
-        default: @testsupport_context,
+        default: "0000mt.tstspt.MscmpSystDb.ContextRole",
         doc: """
         A string value which provides a unique context name for the login
         Context identified by this function.
@@ -204,137 +199,104 @@ defmodule MscmpSystDb.Runtime.DevSupport do
     ]
   ]
 
-  ##############################################################################
-  # :
-  # get_devsupport_context_name
-  #
+  @dev_options NimbleOptions.new!(dev_datastore_options_opts)
+  @test_options NimbleOptions.new!(test_datastore_options_opts)
+  @drop_options NimbleOptions.new!(drop_database_opts)
 
-  @spec get_devsupport_context_name() :: String.t()
-  def get_devsupport_context_name, do: @devsupport_context
+  @spec __using__(term()) :: Macro.t()
+  defmacro __using__(_opts) do
+    quote do
+      import MscmpSystDb.Macros
+    end
+  end
 
-  ##############################################################################
-  #
-  # get_testsupport_context_name
-  #
+  @spec db_devsupport(:dev | :test) :: Macro.t()
+  defmacro db_devsupport(support_type) do
+    datastore_option_opts =
+      case support_type do
+        :dev -> @dev_options
+        :test -> @test_options
+      end
 
-  @spec get_testsupport_context_name() :: String.t()
-  def get_testsupport_context_name, do: @testsupport_context
+    default_opts = NimbleOptions.validate!([], datastore_option_opts)
 
-  ##############################################################################
-  #
-  # get_datastore_options
-  #
+    quote do
+      @db_support_context_name unquote(default_opts[:context_name])
 
-  @get_datastore_options_opts NimbleOptions.new!(get_datastore_options_opts)
+      @spec get_datastore_options() :: MscmpSystDb.Types.DatastoreOptions.t()
+      @spec get_datastore_options(Keyword.t()) :: MscmpSystDb.Types.DatastoreOptions.t()
+      def get_datastore_options(opts \\ []) do
+        opts = NimbleOptions.validate!(opts, unquote(Macro.escape(datastore_option_opts)))
 
-  @spec get_get_datastore_options_opts_docs() :: String.t()
-  def get_get_datastore_options_opts_docs, do: NimbleOptions.docs(@get_datastore_options_opts)
-
-  @spec get_datastore_options(Keyword.t()) :: DatastoreOptions.t()
-  def get_datastore_options(opts) do
-    opts = NimbleOptions.validate!(opts, @get_datastore_options_opts)
-
-    %DatastoreOptions{
-      database_name: opts[:database_name],
-      datastore_code: opts[:database_code],
-      datastore_name: opts[:datastore_name],
-      contexts: [
-        %DatastoreContext{
-          context_name: nil,
-          description: opts[:description_prefix] <> " Owner",
-          database_role: opts[:database_role_prefix] <> "_owner",
-          database_password: nil,
-          starting_pool_size: 0,
-          start_context: false,
-          login_context: false,
-          database_owner_context: true
-        },
-        %DatastoreContext{
-          context_name: opts[:context_name],
-          description: opts[:description_prefix] <> " Context Role",
-          database_role: opts[:database_role_prefix] <> "_context",
-          database_password: opts[:database_password],
-          starting_pool_size: opts[:starting_pool_size],
-          start_context: true,
-          login_context: true
+        %MscmpSystDb.Types.DatastoreOptions{
+          database_name: opts[:database_name],
+          datastore_code: opts[:datastore_code],
+          datastore_name: opts[:datastore_name],
+          contexts: [
+            %MscmpSystDb.Types.DatastoreContext{
+              context_name: nil,
+              description: opts[:description_prefix] <> " Owner",
+              database_role: opts[:database_role_prefix] <> "_owner",
+              database_password: nil,
+              starting_pool_size: 0,
+              start_context: false,
+              login_context: false,
+              database_owner_context: true
+            },
+            %MscmpSystDb.Types.DatastoreContext{
+              context_name: opts[:context_name],
+              description: opts[:description_prefix] <> " Context Role",
+              database_role: opts[:database_role_prefix] <> "_context",
+              database_password: opts[:database_password],
+              starting_pool_size: opts[:starting_pool_size],
+              start_context: true,
+              login_context: true
+            }
+          ],
+          db_server: %MscmpSystDb.Types.DbServer{
+            server_name: "devsupport_server",
+            start_server_instances: true,
+            db_host: opts[:db_host],
+            db_port: opts[:db_port],
+            db_show_sensitive: true,
+            db_max_instances: 1,
+            server_pools: [],
+            server_salt: opts[:server_salt],
+            dbadmin_password: opts[:dbadmin_password],
+            dbadmin_pool_size: opts[:dbadmin_pool_size]
+          }
         }
-      ],
-      db_server: %DbServer{
-        server_name: "devsupport_server",
-        start_server_instances: true,
-        db_host: opts[:db_host],
-        db_port: opts[:db_port],
-        db_show_sensitive: true,
-        db_max_instances: 1,
-        server_pools: [],
-        server_salt: opts[:server_salt],
-        dbadmin_password: opts[:dbadmin_password],
-        dbadmin_pool_size: opts[:dbadmin_pool_size]
-      }
-    }
-  end
+      end
 
-  ##############################################################################
-  #
-  # get_testsupport_datastore_options
-  #
+      @spec load_database(MscmpSystDb.Types.DatastoreOptions.t(), String.t()) ::
+              {:ok, [String.t()]} | {:error, MscmpSystError.t()}
+      def load_database(datastore_options, datastore_type) do
+        database_owner =
+          Enum.find(datastore_options.contexts, &(&1.database_owner_context == true))
 
-  @get_testsupport_datastore_options_opts NimbleOptions.new!(
-                                            get_testsupport_datastore_options_opts
-                                          )
+        database_context =
+          Enum.find(
+            datastore_options.contexts,
+            &((&1.database_owner_context == false or &1.database_owner_context == nil) and
+                &1.login_context == true)
+          )
 
-  @spec get_get_testsupport_datastore_options_opts_docs() :: String.t()
-  def get_get_testsupport_datastore_options_opts_docs,
-    do: NimbleOptions.docs(@get_testsupport_datastore_options_opts)
+        {:ok, :ready, _} = MscmpSystDb.create_datastore(datastore_options)
 
-  @spec get_testsupport_datastore_options(Keyword.t()) :: DatastoreOptions.t()
-  def get_testsupport_datastore_options(opts) do
-    opts = NimbleOptions.validate!(opts, @get_testsupport_datastore_options_opts)
+        {:ok, _} =
+          MscmpSystDb.upgrade_datastore(datastore_options, datastore_type,
+            ms_owner: database_owner.database_role,
+            ms_appusr: database_context.database_role
+          )
+      end
 
-    _ = get_datastore_options(opts)
-  end
+      @spec drop_database(MscmpSystDb.Types.DatastoreOptions.t(), Keyword.t()) :: :ok
+      def drop_database(datastore_options, opts) do
+        opts = NimbleOptions.validate!(opts, unquote(Macro.escape(@drop_options)))
 
-  ##############################################################################
-  #
-  # load_database
-  #
-
-  @spec load_database(DatastoreOptions.t(), String.t()) ::
-          {:ok, [String.t()]} | {:error, MscmpSystError.t()}
-  def load_database(datastore_options, datastore_type) do
-    database_owner = Enum.find(datastore_options.contexts, &(&1.database_owner_context == true))
-
-    database_context =
-      Enum.find(
-        datastore_options.contexts,
-        &((&1.database_owner_context == false or &1.database_owner_context == nil) and
-            &1.login_context == true)
-      )
-
-    {:ok, :ready, _} = MscmpSystDb.create_datastore(datastore_options)
-
-    {:ok, _} =
-      MscmpSystDb.upgrade_datastore(datastore_options, datastore_type,
-        ms_owner: database_owner.database_role,
-        ms_appusr: database_context.database_role
-      )
-  end
-
-  ##############################################################################
-  #
-  # drop_database
-  #
-
-  @drop_database_opts NimbleOptions.new!(drop_database_opts)
-
-  @spec get_drop_database_opts_docs() :: String.t()
-  def get_drop_database_opts_docs, do: NimbleOptions.docs(@drop_database_opts)
-
-  @spec drop_database(DatastoreOptions.t(), Keyword.t()) :: :ok
-  def drop_database(datastore_options, opts) do
-    opts = NimbleOptions.validate!(opts, @drop_database_opts)
-
-    :ok = MscmpSystDb.stop_datastore(datastore_options, opts)
-    :ok = MscmpSystDb.drop_datastore(datastore_options)
+        :ok = MscmpSystDb.stop_datastore(datastore_options, opts)
+        :ok = MscmpSystDb.drop_datastore(datastore_options)
+      end
+    end
   end
 end

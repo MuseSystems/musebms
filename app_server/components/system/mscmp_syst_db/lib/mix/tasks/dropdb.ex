@@ -87,8 +87,9 @@ defmodule Mix.Tasks.Dropdb do
   """
 
   use Mix.Task
+  use MscmpSystDb.Macros
 
-  alias MscmpSystDb.Runtime.DevSupport
+  db_devsupport(:dev)
 
   @requirements ["app.start"]
 
@@ -127,12 +128,12 @@ defmodule Mix.Tasks.Dropdb do
           |> File.rm_rf!()
       end
 
-    datastore_options = get_datastore_options(opts_cli)
+    datastore_options = get_drop_datastore_options(opts_cli)
 
-    :ok = DevSupport.drop_database(datastore_options, [])
+    :ok = drop_database(datastore_options, [])
   end
 
-  defp get_datastore_options(opts_cli) do
+  defp get_drop_datastore_options(opts_cli) do
     opts = [
       database_name: opts_cli[:db_name],
       datastore_name: opts_cli[:ds_name],
@@ -143,6 +144,6 @@ defmodule Mix.Tasks.Dropdb do
       dbadmin_password: opts_cli[:dbadmin_pwd]
     ]
 
-    DevSupport.get_datastore_options(opts)
+    get_datastore_options(opts)
   end
 end

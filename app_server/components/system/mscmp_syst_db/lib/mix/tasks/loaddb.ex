@@ -103,8 +103,9 @@ defmodule Mix.Tasks.Loaddb do
   """
 
   use Mix.Task
+  use MscmpSystDb.Macros
 
-  alias MscmpSystDb.Runtime.DevSupport
+  db_devsupport(:dev)
 
   @requirements ["app.start"]
 
@@ -142,14 +143,14 @@ defmodule Mix.Tasks.Loaddb do
 
     if Keyword.get(opts_cli, :build, false) === true, do: :ok = Mix.Tasks.Builddb.run(args)
 
-    datastore_options = get_datastore_options(opts_cli)
+    datastore_options = get_load_datastore_options(opts_cli)
 
-    {:ok, _} = DevSupport.load_database(datastore_options, opts_cli[:type])
+    {:ok, _} = load_database(datastore_options, opts_cli[:type])
 
     :ok
   end
 
-  defp get_datastore_options(opts_cli) do
+  defp get_load_datastore_options(opts_cli) do
     opts = [
       database_name: opts_cli[:db_name],
       datastore_code: opts_cli[:ds_code],
@@ -166,6 +167,6 @@ defmodule Mix.Tasks.Loaddb do
       dbadmin_pool_size: opts_cli[:dbadmin_pool]
     ]
 
-    DevSupport.get_datastore_options(opts)
+    get_datastore_options(opts)
   end
 end
