@@ -24,12 +24,30 @@ test_kind =
       :unit_testing
   end
 
-TestSupport.setup_testing_database(test_kind)
+test_registry = MscmpSystHierarchy.TestRegistry
 
-MscmpSystDb.put_datastore_context(MscmpSystDb.get_testsupport_context_name())
+datastore_context_name =
+  {:via, Registry, {test_registry, TestSupport.get_datastore_context_name()}}
 
-MscmpSystEnums.start_testsupport_services()
+children =
+  [
+    Registry.child_spec(keys: :unique, name: test_registry),
+    TestSupport.setup_testing_database(test_kind, context_registry: test_registry),
+    MscmpSystEnums.child_spec(
+      service_name: TestSupport.get_enums_service_name(),
+      datastore_context_name: datastore_context_name
+    )
+  ]
+
+{:ok, _pid} =
+  Supervisor.start_link(children,
+    strategy: :one_for_one,
+    name: :"MscmpSystHierarchy.TestSupportSupervisor"
+  )
+
+MscmpSystDb.put_datastore_context(datastore_context_name)
+MscmpSystEnums.put_enums_service(TestSupport.get_enums_service_name())
 
 ExUnit.after_suite(fn _suite_result ->
-  TestSupport.cleanup_testing_database(test_kind)
+  TestSupport.cleanup_testing_database(test_kind, context_registry: test_registry)
 end)
