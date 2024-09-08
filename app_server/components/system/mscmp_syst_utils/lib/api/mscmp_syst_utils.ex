@@ -18,6 +18,7 @@ defmodule MscmpSystUtils do
              |> Enum.fetch!(1)
 
   alias MscmpSystUtils.Impl
+  alias MscmpSystUtils.Types
 
   ##############################################################################
   #
@@ -52,7 +53,8 @@ defmodule MscmpSystUtils do
       `0123456789ABCDEFGHJKMNPQRSTVWXYZ`.  This is the Base32 character set
       compatible with Douglas Crockford's Base 32 (https://www.crockford.com/base32.html).
   """
-
+  @spec get_random_string(pos_integer()) :: String.t()
+  @spec get_random_string(pos_integer(), Types.tokens()) :: String.t()
   defdelegate get_random_string(string_length, tokens \\ :alphanum),
     to: Impl.StringUtils
 end

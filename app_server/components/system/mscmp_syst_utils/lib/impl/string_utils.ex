@@ -13,7 +13,9 @@
 defmodule MscmpSystUtils.Impl.StringUtils do
   @moduledoc false
 
-  @spec get_random_string(pos_integer(), charlist() | atom()) :: String.t()
+  alias MscmpSystUtils.Types
+
+  @spec get_random_string(pos_integer(), Types.tokens()) :: String.t()
   def get_random_string(string_length, tokens) when is_list(tokens) do
     <<i1::unsigned-integer-32, i2::unsigned-integer-32, i3::unsigned-integer-32>> =
       :crypto.strong_rand_bytes(12)
