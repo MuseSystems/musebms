@@ -25,7 +25,7 @@ defmodule MscmpSystLimiter.MixProject do
 
     # Muse Systems Business Management System Components
     {:mscmp_syst_error, path: "../mscmp_syst_error"},
-    {:mscmp_syst_utils, path: "../mscmp_syst_utils"}
+    {:mscmp_syst_utils_string, path: "../mscmp_syst_utils_string"}
   ]
 
   @dialyzer_opts [
@@ -55,9 +55,10 @@ defmodule MscmpSystLimiter.MixProject do
         output: "../../../../documentation/technical/app_server/mscmp_syst_limiter",
         deps: [
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
-          mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils"
+          mscmp_syst_utils_string:
+            "../../../../documentation/technical/app_server/mscmp_syst_utils_string"
         ],
-        groups_for_functions: [
+        groups_for_docs: [
           "Rate Limiter": &(&1[:section] == :rate_limiter_data),
           Runtime: &(&1[:section] == :service_management)
         ],

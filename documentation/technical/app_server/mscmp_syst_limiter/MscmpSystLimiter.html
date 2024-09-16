@@ -4,22 +4,19 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.31.1">
+    <meta name="generator" content="ExDoc v0.34.2">
     <meta name="project" content="mscmp_syst_limiter v0.1.0">
 
 
     <title>MscmpSystLimiter — mscmp_syst_limiter v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-FM2CSD74.css" />
+    <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-43PMFBC7.js"></script>
+    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
     <script src="dist/sidebar_items-674F9519.js"></script>
-
-      <script src="docs_config.js"></script>
-
-    <script async src="dist/html-L4O5OK2K.js"></script>
-
+    <script src="docs_config.js"></script>
+    <script async src="dist/html-YIPIRHGU.js"></script>
 
   </head>
   <body data-type="modules" class="page-module">
@@ -37,13 +34,11 @@
       } catch (error) { }
     </script>
 
-<div class="main">
+<div class="body-wrapper">
 
 <button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
   <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
 </button>
-
-<div class="background-layer"></div>
 
 <nav id="sidebar" class="sidebar">
 
@@ -89,41 +84,41 @@ Pages
 
 <main class="content">
   <output role="status" id="toast"></output>
-  <div class="content-outer">
-    <div id="content" class="content-inner">
-      <div class="top-search">
-        <div class="search-settings">
-          <form class="search-bar" action="search.html">
-            <label class="search-label">
-              <span class="sr-only">Search documentation of mscmp_syst_limiter</span>
-              <input name="q" type="text" class="search-input" placeholder="Search Documentation (press /)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-            </label>
-            <button type="submit" class="search-button" aria-label="Submit Search">
-              <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
-            </button>
-            <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
-              <i class="ri-close-line ri-lg" title="Cancel search"></i>
-            </button>
-          </form>
-          <div class="autocomplete">
-          </div>
-          <button class="icon-settings display-settings">
-            <i class="ri-settings-3-line"></i>
-            <span class="sr-only">Settings</span>
+
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of mscmp_syst_limiter</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
           </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
         </div>
-
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
       </div>
+    </div>
 
-<h1>
+<div id="top-content">
+  <h1>
 
-  <span translate="no">MscmpSystLimiter</span> 
-  <small class="app-vsn" translate="no">(mscmp_syst_limiter v0.1.0)</small>
+    <span translate="no">MscmpSystLimiter</span> 
+    <small class="app-vsn" translate="no">(mscmp_syst_limiter v0.1.0)</small>
 
-</h1>
+  </h1>
 
 
-  <section id="moduledoc">
+    <section id="moduledoc">
 <p>API for establishing rate limits for usage of finite system resources.</p><p>Online, multi-user systems can be unintentionally overwhelmed by aggressive
 service calls from external applications and systems or intentionally
 exploited by hostile actors seeking to defeat system protections though such
@@ -139,9 +134,9 @@ prohibitively time intensive to would be attackers of the system.</p><h2 id="mod
   </a>
   <span class="text">Third Party Functionality</span>
 </h2>
-<p>This version of the <a href="MscmpSystLimiter.html#content"><code class="inline">MscmpSystLimiter</code></a> component is primarily a wrapper
+<p>This version of the <a href="MscmpSystLimiter.html"><code class="inline">MscmpSystLimiter</code></a> component is primarily a wrapper
 around the third party <a href="https://github.com/ExHammer/hammer"><code class="inline">Hammer</code></a> library.
-<a href="MscmpSystLimiter.html#content"><code class="inline">MscmpSystLimiter</code></a> offers a slightly different API to the wrapped library and
+<a href="MscmpSystLimiter.html"><code class="inline">MscmpSystLimiter</code></a> offers a slightly different API to the wrapped library and
 changes some return values to be more consistent with the Muse Systems Business
 Management System standards and practices.  We also reuse and incorporate some
 of the documentation from these projects into our own documentation as
@@ -159,8 +154,9 @@ see if all the tokens are consumed and if not the request is allowed and a
 token consumed.  If there are no tokens available at request time, then the
 request is denied until the Counter expires.</p><p>Over time, expired Counters are periodically deleted by the system.  Both the
 expiry time and the cleanup schedule are configurable.</p>
-  </section>
+    </section>
 
+</div>
 
   <section id="summary" class="details-list">
     <h1 class="section-heading">
@@ -176,7 +172,7 @@ expiry time and the cleanup schedule are configurable.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#check_rate/4" translate="no">check_rate(counter_type, counter_id, scale_ms, limit)</a>
+        <a href="#check_rate/4" data-no-tooltip translate="no">check_rate(counter_type, counter_id, scale_ms, limit)</a>
 
       </div>
 
@@ -187,7 +183,7 @@ if it is within it's permissible rate.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#check_rate_with_increment/5" translate="no">check_rate_with_increment(counter_type, counter_id, scale_ms, limit, increment)</a>
+        <a href="#check_rate_with_increment/5" data-no-tooltip translate="no">check_rate_with_increment(counter_type, counter_id, scale_ms, limit, increment)</a>
 
       </div>
 
@@ -198,7 +194,7 @@ variable increment to be set for the call.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#delete_counters/2" translate="no">delete_counters(counter_type, counter_id)</a>
+        <a href="#delete_counters/2" data-no-tooltip translate="no">delete_counters(counter_type, counter_id)</a>
 
       </div>
 
@@ -208,7 +204,7 @@ variable increment to be set for the call.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_check_rate_function/3" translate="no">get_check_rate_function(counter_type, scale_ms, limit)</a>
+        <a href="#get_check_rate_function/3" data-no-tooltip translate="no">get_check_rate_function(counter_type, scale_ms, limit)</a>
 
       </div>
 
@@ -219,7 +215,7 @@ specific counter type.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_counter_name/2" translate="no">get_counter_name(counter_type, counter_id)</a>
+        <a href="#get_counter_name/2" data-no-tooltip translate="no">get_counter_name(counter_type, counter_id)</a>
 
       </div>
 
@@ -229,7 +225,7 @@ specific counter type.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#inspect_counter/4" translate="no">inspect_counter(counter_type, counter_id, scale_ms, limit)</a>
+        <a href="#inspect_counter/4" data-no-tooltip translate="no">inspect_counter(counter_type, counter_id, scale_ms, limit)</a>
 
       </div>
 
@@ -253,7 +249,7 @@ specific counter type.</p></div>
 <section class="detail" id="check_rate/4">
 
   <div class="detail-header">
-    <a href="#check_rate/4" class="detail-link" title="Link to this function">
+    <a href="#check_rate/4" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -297,20 +293,20 @@ the example of 3 tries in one minute, the <code class="inline">limit</code> valu
   </a>
   <span class="text">Example</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="5090010834-1">(</span><span class="ss">:check_rate_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="5090010834-1">)</span><span class="w">
-</span><span class="p" data-group-id="5090010834-2">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="5090010834-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="5090010834-3">(</span><span class="ss">:check_rate_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="5090010834-3">)</span><span class="w">
-</span><span class="p" data-group-id="5090010834-4">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="5090010834-4">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="5090010834-5">(</span><span class="ss">:check_rate_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="5090010834-5">)</span><span class="w">
-</span><span class="p" data-group-id="5090010834-6">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="5090010834-6">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="5090010834-7">(</span><span class="ss">:check_rate_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="5090010834-7">)</span><span class="w">
-</span><span class="p" data-group-id="5090010834-8">{</span><span class="ss">:deny</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="5090010834-8">}</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="0472560291-1">(</span><span class="ss">:check_rate_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="0472560291-1">)</span><span class="w">
+</span><span class="p" data-group-id="0472560291-2">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="0472560291-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="0472560291-3">(</span><span class="ss">:check_rate_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="0472560291-3">)</span><span class="w">
+</span><span class="p" data-group-id="0472560291-4">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="0472560291-4">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="0472560291-5">(</span><span class="ss">:check_rate_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="0472560291-5">)</span><span class="w">
+</span><span class="p" data-group-id="0472560291-6">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="0472560291-6">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="0472560291-7">(</span><span class="ss">:check_rate_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="0472560291-7">)</span><span class="w">
+</span><span class="p" data-group-id="0472560291-8">{</span><span class="ss">:deny</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="0472560291-8">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="check_rate_with_increment/5">
 
   <div class="detail-header">
-    <a href="#check_rate_with_increment/5" class="detail-link" title="Link to this function">
+    <a href="#check_rate_with_increment/5" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -355,28 +351,28 @@ the example of 3 tries in one minute, the <code class="inline">limit</code> valu
   </a>
   <span class="text">Example</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate_with_increment</span><span class="p" data-group-id="3523289780-1">(</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate_with_increment</span><span class="p" data-group-id="8530942683-1">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:check_with_increment</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">60_000</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">10</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">7</span><span class="p" data-group-id="3523289780-1">)</span><span class="w">
-</span><span class="p" data-group-id="3523289780-2">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p" data-group-id="3523289780-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate_with_increment</span><span class="p" data-group-id="3523289780-3">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">7</span><span class="p" data-group-id="8530942683-1">)</span><span class="w">
+</span><span class="p" data-group-id="8530942683-2">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p" data-group-id="8530942683-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate_with_increment</span><span class="p" data-group-id="8530942683-3">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:check_with_increment</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">60_000</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">10</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">2</span><span class="p" data-group-id="3523289780-3">)</span><span class="w">
-</span><span class="p" data-group-id="3523289780-4">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p" data-group-id="3523289780-4">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="3523289780-5">(</span><span class="ss">:check_with_increment</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="3523289780-5">)</span><span class="w">
-</span><span class="p" data-group-id="3523289780-6">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="3523289780-6">}</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">2</span><span class="p" data-group-id="8530942683-3">)</span><span class="w">
+</span><span class="p" data-group-id="8530942683-4">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p" data-group-id="8530942683-4">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="8530942683-5">(</span><span class="ss">:check_with_increment</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="8530942683-5">)</span><span class="w">
+</span><span class="p" data-group-id="8530942683-6">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="8530942683-6">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="delete_counters/2">
 
   <div class="detail-header">
-    <a href="#delete_counters/2" class="detail-link" title="Link to this function">
+    <a href="#delete_counters/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -412,16 +408,16 @@ deleted.</p></li><li><p><code class="inline">counter_id</code> - the specific Co
   </a>
   <span class="text">Example</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="9279072161-1">(</span><span class="ss">:delete_test_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="9279072161-1">)</span><span class="w">
-</span><span class="p" data-group-id="9279072161-2">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="9279072161-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">delete_counters</span><span class="p" data-group-id="9279072161-3">(</span><span class="ss">:delete_test_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p" data-group-id="9279072161-3">)</span><span class="w">
-</span><span class="p" data-group-id="9279072161-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="9279072161-4">}</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="2791255327-1">(</span><span class="ss">:delete_test_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="2791255327-1">)</span><span class="w">
+</span><span class="p" data-group-id="2791255327-2">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="2791255327-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">delete_counters</span><span class="p" data-group-id="2791255327-3">(</span><span class="ss">:delete_test_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p" data-group-id="2791255327-3">)</span><span class="w">
+</span><span class="p" data-group-id="2791255327-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="2791255327-4">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_check_rate_function/3">
 
   <div class="detail-header">
-    <a href="#get_check_rate_function/3" class="detail-link" title="Link to this function">
+    <a href="#get_check_rate_function/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -469,26 +465,26 @@ the example of 3 tries in one minute, the <code class="inline">limit</code> valu
 </h2>
 <p>Note that The returned anonymous function is equivalent to making a call to
 the more verbose <a href="#check_rate/4"><code class="inline">MscmpSystLimiter.check_rate/4</code></a>:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">my_check_rate_function</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">get_check_rate_function</span><span class="p" data-group-id="8550860020-1">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">get_check_rate_function</span><span class="p" data-group-id="0380417911-1">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">:example_counter_get_func</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="mi">60_000</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="mi">3</span><span class="p" data-group-id="8550860020-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">my_check_rate_function</span><span class="o">.</span><span class="p" data-group-id="8550860020-2">(</span><span class="s">&quot;id1&quot;</span><span class="p" data-group-id="8550860020-2">)</span><span class="w">
-</span><span class="p" data-group-id="8550860020-3">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="8550860020-3">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="8550860020-4">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="mi">3</span><span class="p" data-group-id="0380417911-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">my_check_rate_function</span><span class="o">.</span><span class="p" data-group-id="0380417911-2">(</span><span class="s">&quot;id1&quot;</span><span class="p" data-group-id="0380417911-2">)</span><span class="w">
+</span><span class="p" data-group-id="0380417911-3">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="0380417911-3">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="0380417911-4">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:example_counter_get_func</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">60_000</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">3</span><span class="p" data-group-id="8550860020-4">)</span><span class="w">
-</span><span class="p" data-group-id="8550860020-5">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="8550860020-5">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">my_check_rate_function</span><span class="o">.</span><span class="p" data-group-id="8550860020-6">(</span><span class="s">&quot;id1&quot;</span><span class="p" data-group-id="8550860020-6">)</span><span class="w">
-</span><span class="p" data-group-id="8550860020-7">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="8550860020-7">}</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">3</span><span class="p" data-group-id="0380417911-4">)</span><span class="w">
+</span><span class="p" data-group-id="0380417911-5">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="0380417911-5">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">my_check_rate_function</span><span class="o">.</span><span class="p" data-group-id="0380417911-6">(</span><span class="s">&quot;id1&quot;</span><span class="p" data-group-id="0380417911-6">)</span><span class="w">
+</span><span class="p" data-group-id="0380417911-7">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="0380417911-7">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_counter_name/2">
 
   <div class="detail-header">
-    <a href="#get_counter_name/2" class="detail-link" title="Link to this function">
+    <a href="#get_counter_name/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -522,14 +518,14 @@ specific counter.</p></li></ul><h2 id="get_counter_name/2-example" class="sectio
   </a>
   <span class="text">Example</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">get_counter_name</span><span class="p" data-group-id="3475898633-1">(</span><span class="ss">:example_counter_name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;123&quot;</span><span class="p" data-group-id="3475898633-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">get_counter_name</span><span class="p" data-group-id="7337357506-1">(</span><span class="ss">:example_counter_name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;123&quot;</span><span class="p" data-group-id="7337357506-1">)</span><span class="w">
 </span><span class="s">&quot;example_counter_name_123&quot;</span></code></pre>
   </section>
 </section>
 <section class="detail" id="inspect_counter/4">
 
   <div class="detail-header">
-    <a href="#inspect_counter/4" class="detail-link" title="Link to this function">
+    <a href="#inspect_counter/4" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -574,34 +570,33 @@ the example of 3 tries in one minute, the <code class="inline">limit</code> valu
     </div>
   </section>
 
-      <footer class="footer">
-        <p>
+    <footer class="footer">
+      <p>
 
-          <span class="line">
-            <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
-              Search HexDocs
-            </button>
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
 
-              <a href="mscmp_syst_limiter.epub" title="ePub version">
-                Download ePub version
-              </a>
+            <a href="mscmp_syst_limiter.epub" title="ePub version">
+              Download ePub version
+            </a>
 
-          </span>
-        </p>
+        </span>
+      </p>
 
-        <p class="built-using">
-          Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.31.1) for the
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.34.2) for the
 
-            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
-        </p>
-      </footer>
-    </div>
+      </p>
+
+    </footer>
   </div>
 </main>
 </div>
-
 
   </body>
 </html>

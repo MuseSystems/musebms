@@ -20,6 +20,12 @@ defmodule MscmpSystLimiter do
   alias MscmpSystLimiter.Impl
   alias MscmpSystLimiter.Types
 
+  ##############################################################################
+  #
+  # get_counter_name
+  #
+  #
+
   @doc section: :rate_limiter_data
   @doc """
   Creates a canonical name for each unique counter.
@@ -39,6 +45,12 @@ defmodule MscmpSystLimiter do
 
   @spec get_counter_name(Types.counter_type(), Types.counter_id()) :: Types.counter_name()
   defdelegate get_counter_name(counter_type, counter_id), to: Impl.RateLimiter
+
+  ##############################################################################
+  #
+  # get_check_rate_function
+  #
+  #
 
   @doc section: :rate_limiter_data
   @doc """
@@ -92,6 +104,12 @@ defmodule MscmpSystLimiter do
              | {:error, MscmpSystError.t()})
   defdelegate get_check_rate_function(counter_type, scale_ms, limit), to: Impl.RateLimiter
 
+  ##############################################################################
+  #
+  # check_rate
+  #
+  #
+
   @doc section: :rate_limiter_data
   @doc """
   Checks if a Counter is within it's permissible rate and increments the Counter
@@ -131,6 +149,12 @@ defmodule MscmpSystLimiter do
           | {:deny, limit :: integer()}
           | {:error, MscmpSystError.t()}
   defdelegate check_rate(counter_type, counter_id, scale_ms, limit), to: Impl.RateLimiter
+
+  ##############################################################################
+  #
+  # check_rate_with_increment
+  #
+  #
 
   @doc section: :rate_limiter_data
   @doc """
@@ -186,6 +210,12 @@ defmodule MscmpSystLimiter do
   defdelegate check_rate_with_increment(counter_type, counter_id, scale_ms, limit, increment),
     to: Impl.RateLimiter
 
+  ##############################################################################
+  #
+  # inspect_counter
+  #
+  #
+
   @doc section: :rate_limiter_data
   @doc """
   Retrieves data about a currently used counter without counting towards the limit.
@@ -217,6 +247,12 @@ defmodule MscmpSystLimiter do
            }}
           | {:error, MscmpSystError.t()}
   defdelegate inspect_counter(counter_type, counter_id, scale_ms, limit), to: Impl.RateLimiter
+
+  ##############################################################################
+  #
+  # delete_counters
+  #
+  #
 
   @doc section: :rate_limiter_data
   @doc """
