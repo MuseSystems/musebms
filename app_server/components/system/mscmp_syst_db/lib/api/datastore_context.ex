@@ -25,6 +25,29 @@ defmodule MscmpSystDb.DatastoreContext do
   alias MscmpSystDb.Types.DatastoreContext
   alias MscmpSystDb.Types.DatastoreOptions
 
+  ##############################################################################
+  #
+  # Options Definition
+  #
+
+  option_defs = [
+    context_registry: [
+      type: {:or, [:atom, nil]},
+      type_doc: "`t:module/0` or `nil`",
+      doc: """
+      Specifies the name of a registry to use for registering named Datastore
+      Contexts.
+      """
+    ]
+  ]
+
+  ##############################################################################
+  #
+  # child_spec
+  #
+
+  @child_spec_opts NimbleOptions.new!(Keyword.take(option_defs, [:context_registry]))
+
   @doc """
   Returns the Child Specification used to start the DatastoreContext service.
 
@@ -45,7 +68,7 @@ defmodule MscmpSystDb.DatastoreContext do
 
   ## Options
 
-    #{Runtime.Datastore.get_get_context_child_spec_opts_docs()}
+    #{NimbleOptions.docs(option_defs)}
 
   ## Returns
 
@@ -56,9 +79,18 @@ defmodule MscmpSystDb.DatastoreContext do
           Supervisor.child_spec()
   @spec child_spec(DatastoreOptions.t(), Types.context_name() | DatastoreContext.t(), Keyword.t()) ::
           Supervisor.child_spec()
-  defdelegate child_spec(datastore_options, context, opts \\ []),
-    to: Runtime.Datastore,
-    as: :get_context_child_spec
+  def child_spec(datastore_options, context, opts \\ []) do
+    opts = NimbleOptions.validate!(opts, @child_spec_opts)
+    Runtime.Datastore.get_context_child_spec(datastore_options, context, opts)
+  end
+
+  ##############################################################################
+  #
+  # start_link
+  #
+  #
+
+  @start_link_opts NimbleOptions.new!(Keyword.take(option_defs, [:context_registry]))
 
   @doc """
   Starts a Datastore Context as a linked process to the caller.
@@ -83,13 +115,14 @@ defmodule MscmpSystDb.DatastoreContext do
 
   ## Options
 
-    #{Runtime.Datastore.get_start_link_context_opts_docs()}
+    #{NimbleOptions.docs(option_defs)}
   """
   @spec start_link(DatastoreOptions.t(), DatastoreContext.t()) ::
           Supervisor.on_start()
   @spec start_link(DatastoreOptions.t(), DatastoreContext.t(), Keyword.t()) ::
           Supervisor.on_start()
-  defdelegate start_link(datastore_options, datastore_context, opts \\ []),
-    to: Runtime.Datastore,
-    as: :start_link_context
+  def start_link(datastore_options, datastore_context, opts \\ []) do
+    opts = NimbleOptions.validate!(opts, @start_link_opts)
+    Runtime.Datastore.start_link_context(datastore_options, datastore_context, opts)
+  end
 end

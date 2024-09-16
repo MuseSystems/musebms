@@ -22,6 +22,73 @@ defmodule MscmpSystDb.Datastore do
   alias MscmpSystDb.Runtime
   alias MscmpSystDb.Types.DatastoreOptions
 
+  ##############################################################################
+  #
+  # Options Definition
+  #
+
+  option_defs = [
+    datastore_name: [
+      type:
+        {:or,
+         [nil, :atom, {:tuple, [{:in, [:via]}, :atom, :any]}, {:tuple, [{:in, [:global]}, :any]}]},
+      type_doc: "`t:GenServer.name/0` or `nil`",
+      doc: """
+      Specifies the name for the Datastore Supervisor. If this option is not
+      provided, the `datastore_options.datastore_name` value will be used as
+      the default name for the Datastore Supervisor.  If this value identifies a
+      process registry (e.g. `{:via, Registry, {MyApp.Registry, :my_registry}}`),
+      this registry will become the default registry for all Datastore Contexts;
+      a valid `context_registry` value overrides this default.
+      """
+    ],
+    context_registry: [
+      type: {:or, [:atom, nil]},
+      type_doc: "`t:module/0` or `nil`",
+      doc: """
+      Specifies the name of a registry to use for registering named Datastore
+      Contexts.
+      """
+    ],
+    strategy: [
+      type: :atom,
+      default: :one_for_one,
+      doc: """
+      Specifies the restart strategy for the Datastore Supervisor.
+      """
+    ],
+    restart: [
+      type: :atom,
+      default: :transient,
+      doc: """
+      Specifies the restart strategy for the Datastore Supervisor.
+      """
+    ],
+    timeout: [
+      type: :timeout,
+      default: 60_000,
+      doc: """
+      Specifies the timeout value for the Datastore Supervisor.
+      """
+    ]
+  ]
+
+  ##############################################################################
+  #
+  # child_spec
+  #
+  #
+
+  @child_spec_opts NimbleOptions.new!(
+                     Keyword.take(option_defs, [
+                       :datastore_name,
+                       :strategy,
+                       :restart,
+                       :timeout,
+                       :context_registry
+                     ])
+                   )
+
   @doc """
   Provides a Datastore child specification for use with supervisors.
 
@@ -41,13 +108,30 @@ defmodule MscmpSystDb.Datastore do
 
   ## Options
 
-    #{Runtime.Datastore.get_get_context_child_spec_opts_docs()}
+    #{NimbleOptions.docs(@child_spec_opts)}
   """
   @spec child_spec(DatastoreOptions.t()) :: Supervisor.child_spec()
   @spec child_spec(DatastoreOptions.t(), Keyword.t()) :: Supervisor.child_spec()
-  defdelegate child_spec(datastore_options, opts \\ []),
-    to: Runtime.Datastore,
-    as: :get_datastore_child_spec
+  def child_spec(datastore_options, opts \\ []) do
+    opts = NimbleOptions.validate!(opts, @child_spec_opts)
+    Runtime.Datastore.get_datastore_child_spec(datastore_options, opts)
+  end
+
+  ##############################################################################
+  #
+  # start_link
+  #
+  #
+
+  @start_link_opts NimbleOptions.new!(
+                     Keyword.take(option_defs, [
+                       :datastore_name,
+                       :strategy,
+                       :restart,
+                       :timeout,
+                       :context_registry
+                     ])
+                   )
 
   @doc """
   Starts the Datastore Supervisor and its requested child Datastore Contexts.
@@ -68,12 +152,13 @@ defmodule MscmpSystDb.Datastore do
 
   ## Options
 
-    #{Runtime.Datastore.get_start_link_datastore_opts_docs()}
+    #{NimbleOptions.docs(@start_link_opts)}
 
   """
   @spec start_link(DatastoreOptions.t()) :: Supervisor.on_start()
   @spec start_link(DatastoreOptions.t(), Keyword.t()) :: Supervisor.on_start()
-  defdelegate start_link(datastore_options, opts \\ []),
-    to: Runtime.Datastore,
-    as: :start_link_datastore
+  def start_link(datastore_options, opts \\ []) do
+    opts = NimbleOptions.validate!(opts, @start_link_opts)
+    Runtime.Datastore.start_link_datastore(datastore_options, opts)
+  end
 end

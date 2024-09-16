@@ -30,7 +30,7 @@ defmodule MscmpSystDb.MixProject do
 
     # Muse Systems Business Management System Components
     {:mscmp_syst_error, path: "../mscmp_syst_error"},
-    {:mscmp_syst_utils, path: "../mscmp_syst_utils"},
+    {:mscmp_syst_utils_string, path: "../mscmp_syst_utils_string"},
     {:mscmp_syst_network, path: "../mscmp_syst_network"}
   ]
 
@@ -60,11 +60,12 @@ defmodule MscmpSystDb.MixProject do
         output: "../../../../documentation/technical/app_server/mscmp_syst_db",
         deps: [
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
-          mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils",
+          mscmp_syst_utils_string:
+            "../../../../documentation/technical/app_server/mscmp_syst_utils_string",
           mscmp_syst_network: "../../../../documentation/technical/app_server/mscmp_syst_network"
         ],
         nest_modules_by_prefix: [MscmpSystDb.DbTypes, MscmpSystDb.Types],
-        groups_for_functions: [
+        groups_for_docs: [
           Query: &(&1[:section] == :query),
           "Datastore Management": &(&1[:section] == :datastore_management),
           "Datastore Migrations": &(&1[:section] == :datastore_migrations),

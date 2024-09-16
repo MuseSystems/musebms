@@ -4,22 +4,19 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.31.1">
+    <meta name="generator" content="ExDoc v0.34.2">
     <meta name="project" content="mscmp_syst_db v0.1.0">
 
 
     <title>MscmpSystDb — mscmp_syst_db v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-FM2CSD74.css" />
+    <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-43PMFBC7.js"></script>
-    <script src="dist/sidebar_items-EC351D17.js"></script>
-
-      <script src="docs_config.js"></script>
-
-    <script async src="dist/html-L4O5OK2K.js"></script>
-
+    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
+    <script src="dist/sidebar_items-F9E8FB46.js"></script>
+    <script src="docs_config.js"></script>
+    <script async src="dist/html-YIPIRHGU.js"></script>
 
   </head>
   <body data-type="modules" class="page-module">
@@ -37,13 +34,11 @@
       } catch (error) { }
     </script>
 
-<div class="main">
+<div class="body-wrapper">
 
 <button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
   <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
 </button>
-
-<div class="background-layer"></div>
 
 <nav id="sidebar" class="sidebar">
 
@@ -99,43 +94,43 @@ Pages
 
 <main class="content">
   <output role="status" id="toast"></output>
-  <div class="content-outer">
-    <div id="content" class="content-inner">
-      <div class="top-search">
-        <div class="search-settings">
-          <form class="search-bar" action="search.html">
-            <label class="search-label">
-              <span class="sr-only">Search documentation of mscmp_syst_db</span>
-              <input name="q" type="text" class="search-input" placeholder="Search Documentation (press /)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-            </label>
-            <button type="submit" class="search-button" aria-label="Submit Search">
-              <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
-            </button>
-            <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
-              <i class="ri-close-line ri-lg" title="Cancel search"></i>
-            </button>
-          </form>
-          <div class="autocomplete">
-          </div>
-          <button class="icon-settings display-settings">
-            <i class="ri-settings-3-line"></i>
-            <span class="sr-only">Settings</span>
+
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of mscmp_syst_db</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
           </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
         </div>
-
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
       </div>
+    </div>
 
-<h1>
+<div id="top-content">
+  <h1>
 
-  <span translate="no">MscmpSystDb</span> 
-  <small class="app-vsn" translate="no">(mscmp_syst_db v0.1.0)</small>
+    <span translate="no">MscmpSystDb</span> 
+    <small class="app-vsn" translate="no">(mscmp_syst_db v0.1.0)</small>
 
-</h1>
+  </h1>
 
 
-  <section id="moduledoc">
+    <section id="moduledoc">
 <p>A database management Component for developing and managing database-per-tenant
-oriented systems.  To achieve this we wrap and extend the popular <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.html"><code class="inline">Ecto</code></a> and
+oriented systems.  To achieve this we wrap and extend the popular <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.html"><code class="inline">Ecto</code></a> and
 <code class="inline">EctoSql</code> libraries with a specialized templated (<a href="https://hexdocs.pm/eex/EEx.html"><code class="inline">EEx</code></a>) migrations system and add
 additional, opinionated abstractions encapsulating the tenant model as it
 relates to development, data access, and runtime concerns.</p><blockquote><h4 class="warning">Important</h4><p>&quot;Database-per-tenant&quot; is not the typical tenancy implementation pattern for
@@ -191,7 +186,7 @@ their use will be rare.  Naturally, there is no requirement for Non-Login
 Datastore Contexts to be defined for any Datastore.</p></li></ul><p>Finally, when we access the database from the application we'll always be doing
 so identifying one of our Login Datastore Contexts.  This is done using
 <a href="#put_datastore_context/1"><code class="inline">MscmpSystDb.put_datastore_context/1</code></a> which behind the scenes is using the
-<a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html"><code class="inline">Ecto.Repo</code></a> dynamic repository features (<a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:put_dynamic_repo/1"><code class="inline">Ecto.Repo.put_dynamic_repo/1</code></a>).
+<a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html"><code class="inline">Ecto.Repo</code></a> dynamic repository features (<a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:put_dynamic_repo/1"><code class="inline">Ecto.Repo.put_dynamic_repo/1</code></a>).
 Note that there is no default Ecto Repo, dynamic or otherwise, defined in the
 system.  Any attempts to access a Datastore Context without having established
 the current Datastore Context for the process will cause the process to crash.</p><blockquote><h4 class="warning">Warning!</h4><p>Datastore Contexts are created and destroyed by the application using the API
@@ -280,7 +275,7 @@ means that if part of a migration fails to apply to the database successfully,
 the entire migration is rolled back and the database will be in the state of the
 last fully successful migration application.  A migration application failure
 will abort the migration process, cancelling the attempted application of
-migrations after the failed migration.</p><p>Unlike the <code class="inline">EctoSql</code> based migration process, migrations in <a href="MscmpSystDb.html#content"><code class="inline">MscmpSystDb</code></a> are
+migrations after the failed migration.</p><p>Unlike the <code class="inline">EctoSql</code> based migration process, migrations in <a href="MscmpSystDb.html"><code class="inline">MscmpSystDb</code></a> are
 expected to be managed at runtime by the application.  There is no external
 <code class="inline">mix</code> oriented migration deployment process.  Migration processes are started
 for each tenant database individually allowing for selective application of
@@ -300,7 +295,7 @@ types in a single database is not allowed.</p><h2 id="module-custom-database-typ
   </a>
   <span class="text">Custom Database Types</span>
 </h2>
-<p><a href="https://hexdocs.pm/ecto/3.11.1/Ecto.html"><code class="inline">Ecto</code></a>, <code class="inline">EctoSql</code>, and the underlying PostgreSQL library <a href="https://hexdocs.pm/postgrex/0.17.4/Postgrex.html"><code class="inline">Postgrex</code></a> offer decent
+<p><a href="https://hexdocs.pm/ecto/3.12.3/Ecto.html"><code class="inline">Ecto</code></a>, <code class="inline">EctoSql</code>, and the underlying PostgreSQL library <a href="https://hexdocs.pm/postgrex/0.19.1/Postgrex.html"><code class="inline">Postgrex</code></a> offer decent
 PostgreSQL data type support out of box, but they don't directly map some of the
 database types that can be helpful in business software such as PostgreSQL range
 types, internet address types, and interval types.  To this end we add some
@@ -311,16 +306,17 @@ namespace.</p><h2 id="module-data-access-interface" class="section-heading">
   </a>
   <span class="text">Data Access Interface</span>
 </h2>
-<p>The <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.html"><code class="inline">Ecto</code></a> library offers a data access and manipulation API via the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html"><code class="inline">Ecto.Repo</code></a>
+<p>The <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.html"><code class="inline">Ecto</code></a> library offers a data access and manipulation API via the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html"><code class="inline">Ecto.Repo</code></a>
 module.  We wrap and in some cases extend the majority of that functionality in
 this Component as documented in the <a href="#query">Query section</a>.  As a rule of
 thumb, you want to call on this module for such needs even if the same can be
-achieved with the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.html"><code class="inline">Ecto</code></a> library.  This recommendation is not meant to suggest
-that you shouldn't use the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Query.html"><code class="inline">Ecto.Query</code></a> related DSL or methods for constructing
+achieved with the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.html"><code class="inline">Ecto</code></a> library.  This recommendation is not meant to suggest
+that you shouldn't use the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Query.html"><code class="inline">Ecto.Query</code></a> related DSL or methods for constructing
 queries; using the Ecto Query DSL is, in fact, recommended absent compelling
 reason to do otherwise.</p>
-  </section>
+    </section>
 
+</div>
 
   <section id="summary" class="details-list">
     <h1 class="section-heading">
@@ -336,237 +332,237 @@ reason to do otherwise.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#aggregate/4" translate="no">aggregate(queryable, aggregate, field, opts \\ [])</a>
+        <a href="#aggregate/4" data-no-tooltip translate="no">aggregate(queryable, aggregate, field, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:aggregate/4"><code class="inline">Ecto.Repo.aggregate/4</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:aggregate/4"><code class="inline">Ecto.Repo.aggregate/4</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#all/2" translate="no">all(queryable, opts \\ [])</a>
+        <a href="#all/2" data-no-tooltip translate="no">all(queryable, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:all/2"><code class="inline">Ecto.Repo.all/2</code></a> function.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:all/2"><code class="inline">Ecto.Repo.all/2</code></a> function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#delete/2" translate="no">delete(struct_or_changeset, opts \\ [])</a>
+        <a href="#delete/2" data-no-tooltip translate="no">delete(struct_or_changeset, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:delete/2"><code class="inline">Ecto.Repo.delete/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:delete/2"><code class="inline">Ecto.Repo.delete/2</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#delete!/2" translate="no">delete!(struct_or_changeset, opts \\ [])</a>
+        <a href="#delete!/2" data-no-tooltip translate="no">delete!(struct_or_changeset, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:delete!/2"><code class="inline">Ecto.Repo.delete!/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:delete!/2"><code class="inline">Ecto.Repo.delete!/2</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#delete_all/2" translate="no">delete_all(queryable, opts \\ [])</a>
+        <a href="#delete_all/2" data-no-tooltip translate="no">delete_all(queryable, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:delete_all/2"><code class="inline">Ecto.Repo.delete_all/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:delete_all/2"><code class="inline">Ecto.Repo.delete_all/2</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#exists?/2" translate="no">exists?(queryable, opts \\ [])</a>
+        <a href="#exists?/2" data-no-tooltip translate="no">exists?(queryable, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:exists?/2"><code class="inline">Ecto.Repo.exists?/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:exists?/2"><code class="inline">Ecto.Repo.exists?/2</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get/3" translate="no">get(queryable, id, opts \\ [])</a>
+        <a href="#get/3" data-no-tooltip translate="no">get(queryable, id, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:get/3"><code class="inline">Ecto.Repo.get/3</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:get/3"><code class="inline">Ecto.Repo.get/3</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get!/3" translate="no">get!(queryable, id, opts \\ [])</a>
+        <a href="#get!/3" data-no-tooltip translate="no">get!(queryable, id, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:get!/3"><code class="inline">Ecto.Repo.get!/3</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:get!/3"><code class="inline">Ecto.Repo.get!/3</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_by/3" translate="no">get_by(queryable, clauses, opts \\ [])</a>
+        <a href="#get_by/3" data-no-tooltip translate="no">get_by(queryable, clauses, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:get_by/3"><code class="inline">Ecto.Repo.get_by/3</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:get_by/3"><code class="inline">Ecto.Repo.get_by/3</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_by!/3" translate="no">get_by!(queryable, clauses, opts \\ [])</a>
+        <a href="#get_by!/3" data-no-tooltip translate="no">get_by!(queryable, clauses, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:get_by!/3"><code class="inline">Ecto.Repo.get_by!/3</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:get_by!/3"><code class="inline">Ecto.Repo.get_by!/3</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#in_transaction?/0" translate="no">in_transaction?()</a>
+        <a href="#in_transaction?/0" data-no-tooltip translate="no">in_transaction?()</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:in_transaction?/0"><code class="inline">Ecto.Repo.in_transaction?/0</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:in_transaction?/0"><code class="inline">Ecto.Repo.in_transaction?/0</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#insert/2" translate="no">insert(struct_or_changeset, opts \\ [])</a>
+        <a href="#insert/2" data-no-tooltip translate="no">insert(struct_or_changeset, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:insert/2"><code class="inline">Ecto.Repo.insert/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:insert/2"><code class="inline">Ecto.Repo.insert/2</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#insert!/2" translate="no">insert!(struct_or_changeset, opts \\ [])</a>
+        <a href="#insert!/2" data-no-tooltip translate="no">insert!(struct_or_changeset, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:insert!/2"><code class="inline">Ecto.Repo.insert!/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:insert!/2"><code class="inline">Ecto.Repo.insert!/2</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#insert_all/3" translate="no">insert_all(schema_or_source, entries_or_query, opts \\ [])</a>
+        <a href="#insert_all/3" data-no-tooltip translate="no">insert_all(schema_or_source, entries_or_query, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:insert_all/3"><code class="inline">Ecto.Repo.insert_all/3</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:insert_all/3"><code class="inline">Ecto.Repo.insert_all/3</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#insert_or_update/2" translate="no">insert_or_update(changeset, opts \\ [])</a>
+        <a href="#insert_or_update/2" data-no-tooltip translate="no">insert_or_update(changeset, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:insert_or_update/2"><code class="inline">Ecto.Repo.insert_or_update/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:insert_or_update/2"><code class="inline">Ecto.Repo.insert_or_update/2</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#insert_or_update!/2" translate="no">insert_or_update!(changeset, opts \\ [])</a>
+        <a href="#insert_or_update!/2" data-no-tooltip translate="no">insert_or_update!(changeset, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:insert_or_update!/2"><code class="inline">Ecto.Repo.insert_or_update!/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:insert_or_update!/2"><code class="inline">Ecto.Repo.insert_or_update!/2</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#load/2" translate="no">load(module_or_map, data)</a>
+        <a href="#load/2" data-no-tooltip translate="no">load(module_or_map, data)</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:load/2"><code class="inline">Ecto.Repo.load/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:load/2"><code class="inline">Ecto.Repo.load/2</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#one/2" translate="no">one(queryable, opts \\ [])</a>
+        <a href="#one/2" data-no-tooltip translate="no">one(queryable, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:one/2"><code class="inline">Ecto.Repo.one/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:one/2"><code class="inline">Ecto.Repo.one/2</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#one!/2" translate="no">one!(queryable, opts \\ [])</a>
+        <a href="#one!/2" data-no-tooltip translate="no">one!(queryable, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:one!/2"><code class="inline">Ecto.Repo.one!/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:one!/2"><code class="inline">Ecto.Repo.one!/2</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#preload/3" translate="no">preload(structs_or_struct_or_nil, preloads, opts \\ [])</a>
+        <a href="#preload/3" data-no-tooltip translate="no">preload(structs_or_struct_or_nil, preloads, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:preload/3"><code class="inline">Ecto.Repo.preload/3</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:preload/3"><code class="inline">Ecto.Repo.preload/3</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#prepare_query/3" translate="no">prepare_query(operation, query, opts \\ [])</a>
+        <a href="#prepare_query/3" data-no-tooltip translate="no">prepare_query(operation, query, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:prepare_query/3"><code class="inline">Ecto.Repo.prepare_query/3</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:prepare_query/3"><code class="inline">Ecto.Repo.prepare_query/3</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#query_for_many/3" translate="no">query_for_many(query, query_params \\ [], opts \\ [])</a>
+        <a href="#query_for_many/3" data-no-tooltip translate="no">query_for_many(query, query_params \\ [], opts \\ [])</a>
 
       </div>
 
@@ -576,7 +572,7 @@ function.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#query_for_many!/3" translate="no">query_for_many!(query, query_params \\ [], opts \\ [])</a>
+        <a href="#query_for_many!/3" data-no-tooltip translate="no">query_for_many!(query, query_params \\ [], opts \\ [])</a>
 
       </div>
 
@@ -586,7 +582,7 @@ function.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#query_for_none/3" translate="no">query_for_none(query, query_params \\ [], opts \\ [])</a>
+        <a href="#query_for_none/3" data-no-tooltip translate="no">query_for_none(query, query_params \\ [], opts \\ [])</a>
 
       </div>
 
@@ -596,7 +592,7 @@ function.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#query_for_none!/3" translate="no">query_for_none!(query, query_params \\ [], opts \\ [])</a>
+        <a href="#query_for_none!/3" data-no-tooltip translate="no">query_for_none!(query, query_params \\ [], opts \\ [])</a>
 
       </div>
 
@@ -606,7 +602,7 @@ function.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#query_for_one/3" translate="no">query_for_one(query, query_params \\ [], opts \\ [])</a>
+        <a href="#query_for_one/3" data-no-tooltip translate="no">query_for_one(query, query_params \\ [], opts \\ [])</a>
 
       </div>
 
@@ -616,7 +612,7 @@ function.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#query_for_one!/3" translate="no">query_for_one!(query, query_params \\ [], opts \\ [])</a>
+        <a href="#query_for_one!/3" data-no-tooltip translate="no">query_for_one!(query, query_params \\ [], opts \\ [])</a>
 
       </div>
 
@@ -626,7 +622,7 @@ function.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#query_for_value/3" translate="no">query_for_value(query, query_params \\ [], opts \\ [])</a>
+        <a href="#query_for_value/3" data-no-tooltip translate="no">query_for_value(query, query_params \\ [], opts \\ [])</a>
 
       </div>
 
@@ -636,7 +632,7 @@ function.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#query_for_value!/3" translate="no">query_for_value!(query, query_params \\ [], opts \\ [])</a>
+        <a href="#query_for_value!/3" data-no-tooltip translate="no">query_for_value!(query, query_params \\ [], opts \\ [])</a>
 
       </div>
 
@@ -646,7 +642,7 @@ function.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#record_count/2" translate="no">record_count(queryable, opts)</a>
+        <a href="#record_count/2" data-no-tooltip translate="no">record_count(queryable, opts)</a>
 
       </div>
 
@@ -656,88 +652,88 @@ function.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#reload/2" translate="no">reload(struct_or_structs, opts \\ [])</a>
+        <a href="#reload/2" data-no-tooltip translate="no">reload(struct_or_structs, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:reload/2"><code class="inline">Ecto.Repo.reload/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:reload/2"><code class="inline">Ecto.Repo.reload/2</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#reload!/2" translate="no">reload!(struct_or_structs, opts \\ [])</a>
+        <a href="#reload!/2" data-no-tooltip translate="no">reload!(struct_or_structs, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:reload!/2"><code class="inline">Ecto.Repo.reload!/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:reload!/2"><code class="inline">Ecto.Repo.reload!/2</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#rollback/1" translate="no">rollback(value)</a>
+        <a href="#rollback/1" data-no-tooltip translate="no">rollback(value)</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:rollback/1"><code class="inline">Ecto.Repo.rollback/1</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:rollback/1"><code class="inline">Ecto.Repo.rollback/1</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#stream/2" translate="no">stream(queryable, opts \\ [])</a>
+        <a href="#stream/2" data-no-tooltip translate="no">stream(queryable, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:stream/2"><code class="inline">Ecto.Repo.stream/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:stream/2"><code class="inline">Ecto.Repo.stream/2</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#transaction/2" translate="no">transaction(job, opts \\ [])</a>
+        <a href="#transaction/2" data-no-tooltip translate="no">transaction(job, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:transaction/2"><code class="inline">Ecto.Repo.transaction/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:transaction/2"><code class="inline">Ecto.Repo.transaction/2</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#update/2" translate="no">update(changeset, opts \\ [])</a>
+        <a href="#update/2" data-no-tooltip translate="no">update(changeset, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:update/2"><code class="inline">Ecto.Repo.update/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:update/2"><code class="inline">Ecto.Repo.update/2</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#update!/2" translate="no">update!(changeset, opts \\ [])</a>
+        <a href="#update!/2" data-no-tooltip translate="no">update!(changeset, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:update!/2"><code class="inline">Ecto.Repo.update!/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:update!/2"><code class="inline">Ecto.Repo.update!/2</code></a>
 function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#update_all/3" translate="no">update_all(queryable, updates, opts \\ [])</a>
+        <a href="#update_all/3" data-no-tooltip translate="no">update_all(queryable, updates, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:update_all/3"><code class="inline">Ecto.Repo.update_all/3</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:update_all/3"><code class="inline">Ecto.Repo.update_all/3</code></a>
 function.</p></div>
 
     </div>
@@ -750,7 +746,7 @@ function.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#create_datastore/2" translate="no">create_datastore(datastore_options, opts \\ [])</a>
+        <a href="#create_datastore/2" data-no-tooltip translate="no">create_datastore(datastore_options, opts \\ [])</a>
 
       </div>
 
@@ -760,7 +756,7 @@ function.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#create_datastore_contexts/3" translate="no">create_datastore_contexts(datastore_options, datastore_contexts, opts \\ [])</a>
+        <a href="#create_datastore_contexts/3" data-no-tooltip translate="no">create_datastore_contexts(datastore_options, datastore_contexts, opts \\ [])</a>
 
       </div>
 
@@ -770,7 +766,7 @@ function.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#drop_datastore/2" translate="no">drop_datastore(datastore_options, opts \\ [])</a>
+        <a href="#drop_datastore/2" data-no-tooltip translate="no">drop_datastore(datastore_options, opts \\ [])</a>
 
       </div>
 
@@ -780,7 +776,7 @@ function.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#drop_datastore_contexts/3" translate="no">drop_datastore_contexts(datastore_options, datastore_contexts, opts \\ [])</a>
+        <a href="#drop_datastore_contexts/3" data-no-tooltip translate="no">drop_datastore_contexts(datastore_options, datastore_contexts, opts \\ [])</a>
 
       </div>
 
@@ -790,22 +786,22 @@ function.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_datastore_context_states/2" translate="no">get_datastore_context_states(datastore_contexts, opts \\ [])</a>
+        <a href="#get_datastore_context_states/2" data-no-tooltip translate="no">get_datastore_context_states(datastore_options, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>Returns the state of the requested contexts.</p></div>
+        <div class="summary-synopsis"><p>Returns the state of the requested Datastore contexts.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_datastore_state/2" translate="no">get_datastore_state(datastore_options, opts \\ [])</a>
+        <a href="#get_datastore_state/2" data-no-tooltip translate="no">get_datastore_state(datastore_options, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>Returns the state of the database and database roles which back the Datastore
-and contexts, respectively, of the provided Datastore options definition.</p></div>
+        <div class="summary-synopsis"><p>Returns the state of the Datastore and its contexts based on the provided
+Datastore Options.</p></div>
 
     </div>
 
@@ -817,7 +813,7 @@ and contexts, respectively, of the provided Datastore options definition.</p></d
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_datastore_version/2" translate="no">get_datastore_version(datastore_options, opts \\ [])</a>
+        <a href="#get_datastore_version/2" data-no-tooltip translate="no">get_datastore_version(datastore_options, opts \\ [])</a>
 
       </div>
 
@@ -827,7 +823,7 @@ and contexts, respectively, of the provided Datastore options definition.</p></d
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#upgrade_datastore/4" translate="no">upgrade_datastore(datastore_options, datastore_type, migration_bindings, opts \\ [])</a>
+        <a href="#upgrade_datastore/4" data-no-tooltip translate="no">upgrade_datastore(datastore_options, datastore_type, migration_bindings, opts \\ [])</a>
 
       </div>
 
@@ -843,7 +839,7 @@ and contexts, respectively, of the provided Datastore options definition.</p></d
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#current_datastore_context/0" translate="no">current_datastore_context()</a>
+        <a href="#current_datastore_context/0" data-no-tooltip translate="no">current_datastore_context()</a>
 
       </div>
 
@@ -854,7 +850,7 @@ context, unless no context has been established.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#put_datastore_context/1" translate="no">put_datastore_context(context)</a>
+        <a href="#put_datastore_context/1" data-no-tooltip translate="no">put_datastore_context(context)</a>
 
       </div>
 
@@ -865,7 +861,18 @@ Elixir process where this function is called.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#start_datastore/2" translate="no">start_datastore(datastore_options, supervisor_name \\ nil)</a>
+        <a href="#put_datastore_context/2" data-no-tooltip translate="no">put_datastore_context(context_registry, context)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Establishes the Datastore Context to use for Datastore interactions in the
+Elixir process where this function is called.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#start_datastore/2" data-no-tooltip translate="no">start_datastore(datastore_options, opts \\ [])</a>
 
       </div>
 
@@ -875,7 +882,7 @@ Elixir process where this function is called.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#start_datastore_context/2" translate="no">start_datastore_context(datastore_options, context)</a>
+        <a href="#start_datastore_context/3" data-no-tooltip translate="no">start_datastore_context(datastore_options, context, opts \\ [])</a>
 
       </div>
 
@@ -885,104 +892,22 @@ Elixir process where this function is called.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#stop_datastore/2" translate="no">stop_datastore(datastore_options_or_contexts, db_shutdown_timeout \\ 60000)</a>
+        <a href="#stop_datastore/2" data-no-tooltip translate="no">stop_datastore(datastore_options_or_contexts, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>Disconnects the database connections for all of the login Datastore option contexts.</p></div>
+        <div class="summary-synopsis"><p>Disconnects the database connections for all of the login Datastore option
+contexts.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#stop_datastore_context/2" translate="no">stop_datastore_context(context, db_shutdown_timeout \\ 60000)</a>
+        <a href="#stop_datastore_context/2" data-no-tooltip translate="no">stop_datastore_context(context, opts \\ [])</a>
 
       </div>
 
         <div class="summary-synopsis"><p>Disconnects the database connection for the specific Datastore context provided.</p></div>
-
-    </div>
-
-</div>
-<div class="summary-development-support summary">
-  <h2>
-    <a href="#development-support">Development Support</a>
-  </h2>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#drop_database/1" translate="no">drop_database(datastore_options)</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>Drops a Datastore previously created by the <a href="#load_database/2"><code class="inline">load_database/2</code></a> function in
-support of development related activities.</p></div>
-
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#get_datastore_options/1" translate="no">get_datastore_options(opts \\ [])</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>Retrieves a populated <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a> struct which
-can be used to facilitate database involving development activities.</p></div>
-
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#get_devsupport_context_name/0" translate="no">get_devsupport_context_name()</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>Retrieves the name of the login Datastore Context typically used in
-development support.</p></div>
-
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#get_devsupport_datastore_options/1" translate="no">get_devsupport_datastore_options(opts \\ [])</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>Retrieves a populated <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a> struct with
-defaults appropriate for interactive development support.</p></div>
-
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#get_testsupport_context_name/0" translate="no">get_testsupport_context_name()</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>Retrieves the name of the login Datastore Context typically used in
-testing support.</p></div>
-
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#get_testsupport_datastore_options/1" translate="no">get_testsupport_datastore_options(opts \\ [])</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>Retrieves a populated <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a> struct with
-defaults appropriate for setting up test script database services.</p></div>
-
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#load_database/2" translate="no">load_database(datastore_options, datastore_type)</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>Creates a Datastore, related Datastore Contexts, and processes migrations for
-the identified type in support of development related activities.</p></div>
 
     </div>
 
@@ -1004,7 +929,7 @@ the identified type in support of development related activities.</p></div>
     <span id="aggregate/3"></span>
 
   <div class="detail-header">
-    <a href="#aggregate/4" class="detail-link" title="Link to this function">
+    <a href="#aggregate/4" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1015,7 +940,7 @@ the identified type in support of development related activities.</p></div>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:aggregate/4"><code class="inline">Ecto.Repo.aggregate/4</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:aggregate/4"><code class="inline">Ecto.Repo.aggregate/4</code></a>
 function.</p>
   </section>
 </section>
@@ -1024,7 +949,7 @@ function.</p>
     <span id="all/1"></span>
 
   <div class="detail-header">
-    <a href="#all/2" class="detail-link" title="Link to this function">
+    <a href="#all/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1037,11 +962,11 @@ function.</p>
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> all(<a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Queryable.html#t:t/0">Ecto.Queryable.t</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: [<a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Schema.html#t:t/0">Ecto.Schema.t</a>()]</pre>
+          <pre translate="no"><span class="attribute">@spec</span> all(<a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Queryable.html#t:t/0">Ecto.Queryable.t</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: [<a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Schema.html#t:t/0">Ecto.Schema.t</a>()]</pre>
 
       </div>
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:all/2"><code class="inline">Ecto.Repo.all/2</code></a> function.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:all/2"><code class="inline">Ecto.Repo.all/2</code></a> function.</p>
   </section>
 </section>
 <section class="detail" id="delete/2">
@@ -1049,7 +974,7 @@ function.</p>
     <span id="delete/1"></span>
 
   <div class="detail-header">
-    <a href="#delete/2" class="detail-link" title="Link to this function">
+    <a href="#delete/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1060,7 +985,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:delete/2"><code class="inline">Ecto.Repo.delete/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:delete/2"><code class="inline">Ecto.Repo.delete/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1069,7 +994,7 @@ function.</p>
     <span id="delete!/1"></span>
 
   <div class="detail-header">
-    <a href="#delete!/2" class="detail-link" title="Link to this function">
+    <a href="#delete!/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1080,7 +1005,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:delete!/2"><code class="inline">Ecto.Repo.delete!/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:delete!/2"><code class="inline">Ecto.Repo.delete!/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1089,7 +1014,7 @@ function.</p>
     <span id="delete_all/1"></span>
 
   <div class="detail-header">
-    <a href="#delete_all/2" class="detail-link" title="Link to this function">
+    <a href="#delete_all/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1100,7 +1025,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:delete_all/2"><code class="inline">Ecto.Repo.delete_all/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:delete_all/2"><code class="inline">Ecto.Repo.delete_all/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1109,7 +1034,7 @@ function.</p>
     <span id="exists?/1"></span>
 
   <div class="detail-header">
-    <a href="#exists?/2" class="detail-link" title="Link to this function">
+    <a href="#exists?/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1120,7 +1045,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:exists?/2"><code class="inline">Ecto.Repo.exists?/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:exists?/2"><code class="inline">Ecto.Repo.exists?/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1129,7 +1054,7 @@ function.</p>
     <span id="get/2"></span>
 
   <div class="detail-header">
-    <a href="#get/3" class="detail-link" title="Link to this function">
+    <a href="#get/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1140,7 +1065,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:get/3"><code class="inline">Ecto.Repo.get/3</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:get/3"><code class="inline">Ecto.Repo.get/3</code></a>
 function.</p>
   </section>
 </section>
@@ -1149,7 +1074,7 @@ function.</p>
     <span id="get!/2"></span>
 
   <div class="detail-header">
-    <a href="#get!/3" class="detail-link" title="Link to this function">
+    <a href="#get!/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1160,7 +1085,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:get!/3"><code class="inline">Ecto.Repo.get!/3</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:get!/3"><code class="inline">Ecto.Repo.get!/3</code></a>
 function.</p>
   </section>
 </section>
@@ -1169,7 +1094,7 @@ function.</p>
     <span id="get_by/2"></span>
 
   <div class="detail-header">
-    <a href="#get_by/3" class="detail-link" title="Link to this function">
+    <a href="#get_by/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1180,7 +1105,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:get_by/3"><code class="inline">Ecto.Repo.get_by/3</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:get_by/3"><code class="inline">Ecto.Repo.get_by/3</code></a>
 function.</p>
   </section>
 </section>
@@ -1189,7 +1114,7 @@ function.</p>
     <span id="get_by!/2"></span>
 
   <div class="detail-header">
-    <a href="#get_by!/3" class="detail-link" title="Link to this function">
+    <a href="#get_by!/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1200,14 +1125,14 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:get_by!/3"><code class="inline">Ecto.Repo.get_by!/3</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:get_by!/3"><code class="inline">Ecto.Repo.get_by!/3</code></a>
 function.</p>
   </section>
 </section>
 <section class="detail" id="in_transaction?/0">
 
   <div class="detail-header">
-    <a href="#in_transaction?/0" class="detail-link" title="Link to this function">
+    <a href="#in_transaction?/0" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1218,7 +1143,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:in_transaction?/0"><code class="inline">Ecto.Repo.in_transaction?/0</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:in_transaction?/0"><code class="inline">Ecto.Repo.in_transaction?/0</code></a>
 function.</p>
   </section>
 </section>
@@ -1227,7 +1152,7 @@ function.</p>
     <span id="insert/1"></span>
 
   <div class="detail-header">
-    <a href="#insert/2" class="detail-link" title="Link to this function">
+    <a href="#insert/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1238,7 +1163,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:insert/2"><code class="inline">Ecto.Repo.insert/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:insert/2"><code class="inline">Ecto.Repo.insert/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1247,7 +1172,7 @@ function.</p>
     <span id="insert!/1"></span>
 
   <div class="detail-header">
-    <a href="#insert!/2" class="detail-link" title="Link to this function">
+    <a href="#insert!/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1258,7 +1183,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:insert!/2"><code class="inline">Ecto.Repo.insert!/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:insert!/2"><code class="inline">Ecto.Repo.insert!/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1267,7 +1192,7 @@ function.</p>
     <span id="insert_all/2"></span>
 
   <div class="detail-header">
-    <a href="#insert_all/3" class="detail-link" title="Link to this function">
+    <a href="#insert_all/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1278,7 +1203,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:insert_all/3"><code class="inline">Ecto.Repo.insert_all/3</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:insert_all/3"><code class="inline">Ecto.Repo.insert_all/3</code></a>
 function.</p>
   </section>
 </section>
@@ -1287,7 +1212,7 @@ function.</p>
     <span id="insert_or_update/1"></span>
 
   <div class="detail-header">
-    <a href="#insert_or_update/2" class="detail-link" title="Link to this function">
+    <a href="#insert_or_update/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1298,7 +1223,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:insert_or_update/2"><code class="inline">Ecto.Repo.insert_or_update/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:insert_or_update/2"><code class="inline">Ecto.Repo.insert_or_update/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1307,7 +1232,7 @@ function.</p>
     <span id="insert_or_update!/1"></span>
 
   <div class="detail-header">
-    <a href="#insert_or_update!/2" class="detail-link" title="Link to this function">
+    <a href="#insert_or_update!/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1318,14 +1243,14 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:insert_or_update!/2"><code class="inline">Ecto.Repo.insert_or_update!/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:insert_or_update!/2"><code class="inline">Ecto.Repo.insert_or_update!/2</code></a>
 function.</p>
   </section>
 </section>
 <section class="detail" id="load/2">
 
   <div class="detail-header">
-    <a href="#load/2" class="detail-link" title="Link to this function">
+    <a href="#load/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1336,7 +1261,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:load/2"><code class="inline">Ecto.Repo.load/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:load/2"><code class="inline">Ecto.Repo.load/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1345,7 +1270,7 @@ function.</p>
     <span id="one/1"></span>
 
   <div class="detail-header">
-    <a href="#one/2" class="detail-link" title="Link to this function">
+    <a href="#one/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1356,7 +1281,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:one/2"><code class="inline">Ecto.Repo.one/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:one/2"><code class="inline">Ecto.Repo.one/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1365,7 +1290,7 @@ function.</p>
     <span id="one!/1"></span>
 
   <div class="detail-header">
-    <a href="#one!/2" class="detail-link" title="Link to this function">
+    <a href="#one!/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1376,7 +1301,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:one!/2"><code class="inline">Ecto.Repo.one!/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:one!/2"><code class="inline">Ecto.Repo.one!/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1385,7 +1310,7 @@ function.</p>
     <span id="preload/2"></span>
 
   <div class="detail-header">
-    <a href="#preload/3" class="detail-link" title="Link to this function">
+    <a href="#preload/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1396,7 +1321,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:preload/3"><code class="inline">Ecto.Repo.preload/3</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:preload/3"><code class="inline">Ecto.Repo.preload/3</code></a>
 function.</p>
   </section>
 </section>
@@ -1405,7 +1330,7 @@ function.</p>
     <span id="prepare_query/2"></span>
 
   <div class="detail-header">
-    <a href="#prepare_query/3" class="detail-link" title="Link to this function">
+    <a href="#prepare_query/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1416,7 +1341,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:prepare_query/3"><code class="inline">Ecto.Repo.prepare_query/3</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:prepare_query/3"><code class="inline">Ecto.Repo.prepare_query/3</code></a>
 function.</p>
   </section>
 </section>
@@ -1427,7 +1352,7 @@ function.</p>
     <span id="query_for_many/2"></span>
 
   <div class="detail-header">
-    <a href="#query_for_many/3" class="detail-link" title="Link to this function">
+    <a href="#query_for_many/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1461,7 +1386,7 @@ function.</p>
     <span id="query_for_many!/2"></span>
 
   <div class="detail-header">
-    <a href="#query_for_many!/3" class="detail-link" title="Link to this function">
+    <a href="#query_for_many!/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1492,7 +1417,7 @@ function.</p>
     <span id="query_for_none/2"></span>
 
   <div class="detail-header">
-    <a href="#query_for_none/3" class="detail-link" title="Link to this function">
+    <a href="#query_for_none/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1520,7 +1445,7 @@ function.</p>
     <span id="query_for_none!/2"></span>
 
   <div class="detail-header">
-    <a href="#query_for_none!/3" class="detail-link" title="Link to this function">
+    <a href="#query_for_none!/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1547,7 +1472,7 @@ function.</p>
     <span id="query_for_one/2"></span>
 
   <div class="detail-header">
-    <a href="#query_for_one/3" class="detail-link" title="Link to this function">
+    <a href="#query_for_one/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1575,7 +1500,7 @@ function.</p>
     <span id="query_for_one!/2"></span>
 
   <div class="detail-header">
-    <a href="#query_for_one!/3" class="detail-link" title="Link to this function">
+    <a href="#query_for_one!/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1602,7 +1527,7 @@ function.</p>
     <span id="query_for_value/2"></span>
 
   <div class="detail-header">
-    <a href="#query_for_value/3" class="detail-link" title="Link to this function">
+    <a href="#query_for_value/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1630,7 +1555,7 @@ function.</p>
     <span id="query_for_value!/2"></span>
 
   <div class="detail-header">
-    <a href="#query_for_value!/3" class="detail-link" title="Link to this function">
+    <a href="#query_for_value!/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1653,7 +1578,7 @@ function.</p>
 <section class="detail" id="record_count/2">
 
   <div class="detail-header">
-    <a href="#record_count/2" class="detail-link" title="Link to this function">
+    <a href="#record_count/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1672,7 +1597,7 @@ function.</p>
     <span id="reload/1"></span>
 
   <div class="detail-header">
-    <a href="#reload/2" class="detail-link" title="Link to this function">
+    <a href="#reload/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1683,7 +1608,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:reload/2"><code class="inline">Ecto.Repo.reload/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:reload/2"><code class="inline">Ecto.Repo.reload/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1692,7 +1617,7 @@ function.</p>
     <span id="reload!/1"></span>
 
   <div class="detail-header">
-    <a href="#reload!/2" class="detail-link" title="Link to this function">
+    <a href="#reload!/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1703,14 +1628,14 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:reload!/2"><code class="inline">Ecto.Repo.reload!/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:reload!/2"><code class="inline">Ecto.Repo.reload!/2</code></a>
 function.</p>
   </section>
 </section>
 <section class="detail" id="rollback/1">
 
   <div class="detail-header">
-    <a href="#rollback/1" class="detail-link" title="Link to this function">
+    <a href="#rollback/1" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1721,7 +1646,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:rollback/1"><code class="inline">Ecto.Repo.rollback/1</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:rollback/1"><code class="inline">Ecto.Repo.rollback/1</code></a>
 function.</p>
   </section>
 </section>
@@ -1730,7 +1655,7 @@ function.</p>
     <span id="stream/1"></span>
 
   <div class="detail-header">
-    <a href="#stream/2" class="detail-link" title="Link to this function">
+    <a href="#stream/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1741,7 +1666,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:stream/2"><code class="inline">Ecto.Repo.stream/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:stream/2"><code class="inline">Ecto.Repo.stream/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1750,7 +1675,7 @@ function.</p>
     <span id="transaction/1"></span>
 
   <div class="detail-header">
-    <a href="#transaction/2" class="detail-link" title="Link to this function">
+    <a href="#transaction/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1763,14 +1688,12 @@ function.</p>
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> transaction(
-  (... -&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) | <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Multi.html#t:t/0">Ecto.Multi.t</a>(),
-  <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()
-) :: {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+          <pre translate="no"><span class="attribute">@spec</span> transaction((... -&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) | <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Multi.html#t:t/0">Ecto.Multi.t</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
+  {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
 
       </div>
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:transaction/2"><code class="inline">Ecto.Repo.transaction/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:transaction/2"><code class="inline">Ecto.Repo.transaction/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1779,7 +1702,7 @@ function.</p>
     <span id="update/1"></span>
 
   <div class="detail-header">
-    <a href="#update/2" class="detail-link" title="Link to this function">
+    <a href="#update/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1790,7 +1713,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:update/2"><code class="inline">Ecto.Repo.update/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:update/2"><code class="inline">Ecto.Repo.update/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1799,7 +1722,7 @@ function.</p>
     <span id="update!/1"></span>
 
   <div class="detail-header">
-    <a href="#update!/2" class="detail-link" title="Link to this function">
+    <a href="#update!/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1810,7 +1733,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:update!/2"><code class="inline">Ecto.Repo.update!/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:update!/2"><code class="inline">Ecto.Repo.update!/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1819,7 +1742,7 @@ function.</p>
     <span id="update_all/2"></span>
 
   <div class="detail-header">
-    <a href="#update_all/3" class="detail-link" title="Link to this function">
+    <a href="#update_all/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1830,7 +1753,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:update_all/3"><code class="inline">Ecto.Repo.update_all/3</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#c:update_all/3"><code class="inline">Ecto.Repo.update_all/3</code></a>
 function.</p>
   </section>
 </section>
@@ -1851,7 +1774,7 @@ function.</p>
     <span id="create_datastore/1"></span>
 
   <div class="detail-header">
-    <a href="#create_datastore/2" class="detail-link" title="Link to this function">
+    <a href="#create_datastore/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1871,8 +1794,37 @@ function.</p>
 
       </div>
 
-<p>Creates a new Datastore along with its contexts.</p><p>The creation of a new Datastore includes creating new database to back the
-Datastore and database roles representing each of the Datastore contexts.</p>
+<p>Creates a new Datastore along with its contexts.</p><p>The creation of a new Datastore includes the following steps:</p><ol><li>Creating database roles representing each of the Datastore contexts.</li><li>Creating a new database to back the Datastore.</li><li>Applying database connection privileges to the context roles.</li><li>Initializing the Datastore with necessary structures and data.</li></ol><h2 id="create_datastore/2-parameters" class="section-heading">
+  <a href="#create_datastore/2-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><p><code class="inline">datastore_options</code> - A <code class="inline">DatastoreOptions</code> struct defining the Datastore
+and its contexts.</p></li><li><p><code class="inline">opts</code> - a Keyword List of additional key/value call configurations.  See
+the &quot;Options&quot; section for details.</p></li></ul><h2 id="create_datastore/2-options" class="section-heading">
+  <a href="#create_datastore/2-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options</span>
+</h2>
+<ul><li><p><code class="inline">:db_shutdown_timeout</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - The timeout in milliseconds to wait for the database to shutdown prior to
+raising an error. The default value is <code class="inline">60000</code>.</p></li><li><p><code class="inline">:migrations_schema</code> (<a href="https://hexdocs.pm/elixir/String.html#t:t/0"><code class="inline">String.t/0</code></a>) - The database maintenance schema used to host the migrations state table. The default value is <code class="inline">&quot;ms_syst_db&quot;</code>.</p></li><li><p><code class="inline">:migrations_table</code> (<a href="https://hexdocs.pm/elixir/String.html#t:t/0"><code class="inline">String.t/0</code></a>) - The name of the table used to store database migration state data. The default value is <code class="inline">&quot;migrations&quot;</code>.</p></li></ul><h2 id="create_datastore/2-returns" class="section-heading">
+  <a href="#create_datastore/2-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><p><code class="inline">{:ok, :ready, list(ContextState.t())}</code> - if the Datastore is successfully
+created.</p></li><li><p><code class="inline">{:error, MscmpSystError.t()}</code> - if there's an error during the creation
+process.</p></li></ul><h2 id="create_datastore/2-errors" class="section-heading">
+  <a href="#create_datastore/2-errors" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Errors</span>
+</h2>
+<p>The function may return an error with code <code class="inline">:database_error</code> if there's a
+failure in any step of the Datastore creation process.</p>
   </section>
 </section>
 <section class="detail" id="create_datastore_contexts/3">
@@ -1880,7 +1832,7 @@ Datastore and database roles representing each of the Datastore contexts.</p>
     <span id="create_datastore_contexts/2"></span>
 
   <div class="detail-header">
-    <a href="#create_datastore_contexts/3" class="detail-link" title="Link to this function">
+    <a href="#create_datastore_contexts/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1906,7 +1858,30 @@ Datastore and database roles representing each of the Datastore contexts.</p>
 <p>Creates database roles to back all requested Datastore contexts.</p><p>Usually Datastore contexts are created in the <a href="#create_datastore/1"><code class="inline">create_datastore/1</code></a> call, but
 over the course of time it is expected that applications may define new
 contexts as needs change.  This function allows applications to add new
-contexts to existing Datastores.</p>
+contexts to existing Datastores.</p><h2 id="create_datastore_contexts/3-parameters" class="section-heading">
+  <a href="#create_datastore_contexts/3-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><p><code class="inline">datastore_options</code> - The Datastore configuration struct to use for the
+operation.</p></li><li><p><code class="inline">datastore_contexts</code> - A nonempty list of Datastore contexts to create.</p></li><li><p><code class="inline">opts</code> - a Keyword List of additional key/value call configurations.  See
+the &quot;Options&quot; section for details..</p></li></ul><h2 id="create_datastore_contexts/3-options" class="section-heading">
+  <a href="#create_datastore_contexts/3-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options</span>
+</h2>
+<ul><li><code class="inline">:db_shutdown_timeout</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - The timeout in milliseconds to wait for the database to shutdown prior to
+raising an error. The default value is <code class="inline">60000</code>.</li></ul><h2 id="create_datastore_contexts/3-returns" class="section-heading">
+  <a href="#create_datastore_contexts/3-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><p><code class="inline">{:ok, nonempty_list(ContextState.t())}</code> if successful, where
+<code class="inline">nonempty_list(ContextState.t())</code> is a list of <code class="inline">ContextState</code> structs
+representing the state of each created context.</p></li><li><p><code class="inline">{:error, MscmpSystError.t()}</code> if there is an error creating the contexts.</p></li></ul>
   </section>
 </section>
 <section class="detail" id="drop_datastore/2">
@@ -1914,7 +1889,7 @@ contexts to existing Datastores.</p>
     <span id="drop_datastore/1"></span>
 
   <div class="detail-header">
-    <a href="#drop_datastore/2" class="detail-link" title="Link to this function">
+    <a href="#drop_datastore/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1933,10 +1908,39 @@ contexts to existing Datastores.</p>
       </div>
 
 <p>Drops a Datastore along with its contexts.</p><p>Dropping a Datastore will drop the database backing the Datastore from the
-database server as well as all of the database roles associated defined by the
-provided database options.</p><p>Prior to dropping the Datastore, all active connections to the Datastore
-should be terminated or the function call could fail.</p><p><strong>Note that this is am irreversible, destructive action.  Any successful call
-will result in data loss.</strong></p>
+database server as well as all of the database roles associated with the
+Datastore as defined by the provided database options.</p><p>Prior to dropping the Datastore, all active connections to the Datastore
+should be terminated, or the function call could fail.</p><blockquote><h4 class="warning">Warning!</h4><p>This is an irreversible, destructive action. Any successful call will result
+in permanent data loss.</p></blockquote><h2 id="drop_datastore/2-parameters" class="section-heading">
+  <a href="#drop_datastore/2-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><p><code class="inline">datastore_options</code> - A <code class="inline">DatastoreOptions</code> struct defining the Datastore
+and its contexts.</p></li><li><p><code class="inline">opts</code> - a Keyword List of additional key/value call configurations.  See
+the &quot;Options&quot; section for details.</p></li></ul><h2 id="drop_datastore/2-options" class="section-heading">
+  <a href="#drop_datastore/2-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options</span>
+</h2>
+<ul><li><code class="inline">:db_shutdown_timeout</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - The timeout in milliseconds to wait for the database to shutdown prior to
+raising an error. The default value is <code class="inline">60000</code>.</li></ul><h2 id="drop_datastore/2-returns" class="section-heading">
+  <a href="#drop_datastore/2-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><code class="inline">:ok</code> if the Datastore is successfully dropped.</li><li><code class="inline">{:error, MscmpSystError.t()}</code> if there's an error during the drop process.</li></ul><h2 id="drop_datastore/2-errors" class="section-heading">
+  <a href="#drop_datastore/2-errors" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Errors</span>
+</h2>
+<p>The function may return an error with code <code class="inline">:database_error</code> if there's a failure
+in any step of the Datastore drop process, such as being unable to drop the
+database or roles due to active connections.</p>
   </section>
 </section>
 <section class="detail" id="drop_datastore_contexts/3">
@@ -1944,7 +1948,7 @@ will result in data loss.</strong></p>
     <span id="drop_datastore_contexts/2"></span>
 
   <div class="detail-header">
-    <a href="#drop_datastore_contexts/3" class="detail-link" title="Link to this function">
+    <a href="#drop_datastore_contexts/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1969,7 +1973,28 @@ will result in data loss.</strong></p>
 correspond to the requested Datastore contexts.  You should be sure that the
 requested Datastore contexts do not have active database connections when
 calling this function as active connections are likely to result in an
-error condition.</p>
+error condition.</p><h2 id="drop_datastore_contexts/3-parameters" class="section-heading">
+  <a href="#drop_datastore_contexts/3-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><p><code class="inline">datastore_options</code> - The Datastore configuration struct to use for the
+operation.</p></li><li><p><code class="inline">datastore_contexts</code> - A nonempty list of Datastore contexts to drop.</p></li><li><p><code class="inline">opts</code> - a Keyword List of additional key/value call configurations.  See
+the &quot;Options&quot; section for details..</p></li></ul><h2 id="drop_datastore_contexts/3-options" class="section-heading">
+  <a href="#drop_datastore_contexts/3-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options</span>
+</h2>
+<ul><li><code class="inline">:db_shutdown_timeout</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - The timeout in milliseconds to wait for the database to shutdown prior to
+raising an error. The default value is <code class="inline">60000</code>.</li></ul><h2 id="drop_datastore_contexts/3-returns" class="section-heading">
+  <a href="#drop_datastore_contexts/3-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><p><code class="inline">:ok</code> on success</p></li><li><p><code class="inline">{:error, reason}</code> on failure.</p></li></ul>
   </section>
 </section>
 <section class="detail" id="get_datastore_context_states/2">
@@ -1977,11 +2002,11 @@ error condition.</p>
     <span id="get_datastore_context_states/1"></span>
 
   <div class="detail-header">
-    <a href="#get_datastore_context_states/2" class="detail-link" title="Link to this function">
+    <a href="#get_datastore_context_states/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">get_datastore_context_states(datastore_contexts, opts \\ [])</h1>
+    <h1 class="signature" translate="no">get_datastore_context_states(datastore_options, opts \\ [])</h1>
 
 
   </div>
@@ -1999,11 +2024,45 @@ error condition.</p>
 
       </div>
 
-<p>Returns the state of the requested contexts.</p><p>This function will check for each given context that: it exist, whether or not
+<p>Returns the state of the requested Datastore contexts.</p><p>This function will check for each given context that: it exists, whether or not
 database connections may be started for it, and whether or not database
 connections have been started.</p><p>Note that only startable contexts are included in this list.  If the context
 is not startable or has <code class="inline">id: nil</code>, the context will be excluded from the
-results of this function.</p>
+results of this function.</p><h2 id="get_datastore_context_states/2-parameters" class="section-heading">
+  <a href="#get_datastore_context_states/2-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><p><code class="inline">datastore_options</code> - A <code class="inline">DatastoreOptions</code> struct defining the Datastore
+and its contexts.</p></li><li><p><code class="inline">opts</code> - a Keyword List of additional key/value call configurations.  See
+the &quot;Options&quot; section for details..</p></li></ul><h2 id="get_datastore_context_states/2-options" class="section-heading">
+  <a href="#get_datastore_context_states/2-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options</span>
+</h2>
+<ul><li><p><code class="inline">:db_shutdown_timeout</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - The timeout in milliseconds to wait for the database to shutdown prior to
+raising an error. The default value is <code class="inline">60000</code>.</p></li><li><p><code class="inline">:context_registry</code> (<code class="inline">:global</code> or <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">module/0</code></a>) - Identifies a process registry which is used to register Datastore
+Context (<a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html"><code class="inline">Ecto.Repo</code></a>) instances. A valid value for this option can be
+either <code class="inline">:global</code> to use the Erlang <code class="inline">:global</code> module or any other module
+which implements a :global compatible API.</p></li></ul><h2 id="get_datastore_context_states/2-returns" class="section-heading">
+  <a href="#get_datastore_context_states/2-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><p><code class="inline">{:ok, list(ContextState.t())}</code> if successful, where
+<code class="inline">list(ContextState.t())</code> is a list of <code class="inline">ContextState</code> structs for each
+context.</p></li><li><p><code class="inline">{:error, MscmpSystError.t()}</code> if there's an error retrieving the context
+states.</p></li></ul><h2 id="get_datastore_context_states/2-errors" class="section-heading">
+  <a href="#get_datastore_context_states/2-errors" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Errors</span>
+</h2>
+<p>  The function may return an error with code <code class="inline">:database_error</code> if there's a
+  failure in retrieving the context states.</p>
   </section>
 </section>
 <section class="detail" id="get_datastore_state/2">
@@ -2011,7 +2070,7 @@ results of this function.</p>
     <span id="get_datastore_state/1"></span>
 
   <div class="detail-header">
-    <a href="#get_datastore_state/2" class="detail-link" title="Link to this function">
+    <a href="#get_datastore_state/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -2031,8 +2090,43 @@ results of this function.</p>
 
       </div>
 
-<p>Returns the state of the database and database roles which back the Datastore
-and contexts, respectively, of the provided Datastore options definition.</p>
+<p>Returns the state of the Datastore and its contexts based on the provided
+Datastore Options.</p><p>This function performs the following checks:</p><ol><li>Verifies the existence of the database backing the Datastore.</li><li>Checks the state of each database role representing the Datastore
+Contexts.</li><li>Determines if database connections for the Datastore Contexts have been
+started.</li></ol><h2 id="get_datastore_state/2-parameters" class="section-heading">
+  <a href="#get_datastore_state/2-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><p><code class="inline">datastore_options</code> - A <code class="inline">DatastoreOptions</code> struct defining the Datastore
+and its contexts.</p></li><li><p><code class="inline">opts</code> - a Keyword List of additional key/value call configurations.  See
+the &quot;Options&quot; section for details.</p></li></ul><h2 id="get_datastore_state/2-options" class="section-heading">
+  <a href="#get_datastore_state/2-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options</span>
+</h2>
+<ul><li><p><code class="inline">:db_shutdown_timeout</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - The timeout in milliseconds to wait for the database to shutdown prior to
+raising an error. The default value is <code class="inline">60000</code>.</p></li><li><p><code class="inline">:context_registry</code> (<code class="inline">:global</code> or <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">module/0</code></a>) - Identifies a process registry which is used to register Datastore
+Context (<a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html"><code class="inline">Ecto.Repo</code></a>) instances. A valid value for this option can be
+either <code class="inline">:global</code> to use the Erlang <code class="inline">:global</code> module or any other module
+which implements a :global compatible API.</p></li></ul><h2 id="get_datastore_state/2-returns" class="section-heading">
+  <a href="#get_datastore_state/2-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><p><code class="inline">{:ok, database_state, context_states}</code> - if successful, where:</p><ul><li><code class="inline">database_state</code> is the state of the Datastore database (<code class="inline">:ready</code> or
+<code class="inline">:not_found</code>)</li><li><code class="inline">context_states</code> is a list of <code class="inline">ContextState</code> structs for each context</li></ul></li><li><p><code class="inline">{:error, MscmpSystError.t()}</code> - if there's an error retrieving the
+Datastore state.</p></li></ul><h2 id="get_datastore_state/2-errors" class="section-heading">
+  <a href="#get_datastore_state/2-errors" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Errors</span>
+</h2>
+<p>The function may return an error with code <code class="inline">:database_error</code> if there's a failure
+in retrieving the Datastore state.</p>
   </section>
 </section>
 
@@ -2052,7 +2146,7 @@ and contexts, respectively, of the provided Datastore options definition.</p>
     <span id="get_datastore_version/1"></span>
 
   <div class="detail-header">
-    <a href="#get_datastore_version/2" class="detail-link" title="Link to this function">
+    <a href="#get_datastore_version/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -2075,7 +2169,28 @@ number in the format <code class="inline">RR.VV.UUU.SSSSSS.MMM</code> where each
 Base 36 number for specific versioning purposes.  The segments are defined as:</p><ul><li><p><code class="inline">RR</code> - The major feature release number in the decimal range of 0 - 1,295.</p></li><li><p><code class="inline">VV</code> - The minor feature version within the release in the decimal range
 of 0 - 1,295.</p></li><li><p><code class="inline">UUU</code> - The update patch number of the specified release/version in the
 decimal range of 0 - 46,655.</p></li><li><p><code class="inline">SSSSSS</code> - Sponsor or client number for whom the specific migration or
-version is being produced for in the decimal range of 0 - 2,176,782,335.</p></li><li><p><code class="inline">MMM</code> - Sponsor modification number in the decimal range of 0 - 46,655.</p></li></ul><p>See <a href="Mix.Tasks.Builddb.html"><code class="inline">mix builddb</code></a> for further explanation version number segment meanings.</p>
+version is being produced for in the decimal range of 0 - 2,176,782,335.</p></li><li><p><code class="inline">MMM</code> - Sponsor modification number in the decimal range of 0 - 46,655.</p></li></ul><p>See <a href="Mix.Tasks.Builddb.html"><code class="inline">mix builddb</code></a> for further explanation version number segment meanings.</p><h2 id="get_datastore_version/2-parameters" class="section-heading">
+  <a href="#get_datastore_version/2-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><p><code class="inline">datastore_options</code> - The Datastore configuration struct to use for the
+operation.</p></li><li><p><code class="inline">opts</code> - a Keyword List of additional key/value call configurations.  See
+the &quot;Options&quot; section for details..</p></li></ul><h2 id="get_datastore_version/2-options" class="section-heading">
+  <a href="#get_datastore_version/2-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options</span>
+</h2>
+<ul><li><code class="inline">:db_shutdown_timeout</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - The timeout in milliseconds to wait for the database to shutdown prior to
+raising an error. The default value is <code class="inline">60000</code>.</li></ul><h2 id="get_datastore_version/2-returns" class="section-heading">
+  <a href="#get_datastore_version/2-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><p><code class="inline">{:ok, version}</code> - The current version of the Datastore as a string.</p></li><li><p><code class="inline">{:error, reason}</code> - An error occurred.</p></li></ul>
   </section>
 </section>
 <section class="detail" id="upgrade_datastore/4">
@@ -2083,7 +2198,7 @@ version is being produced for in the decimal range of 0 - 2,176,782,335.</p></li
     <span id="upgrade_datastore/3"></span>
 
   <div class="detail-header">
-    <a href="#upgrade_datastore/4" class="detail-link" title="Link to this function">
+    <a href="#upgrade_datastore/4" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -2101,14 +2216,41 @@ version is being produced for in the decimal range of 0 - 2,176,782,335.</p></li
   <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>(),
   <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
-) :: {:ok, [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()]} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+) ::
+  {:ok, [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()]} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
 
 <p>Updates a Datastore to the most current version of the given type of Datastore.</p><p>If a Datastore is already up-to-date, this function is basically a &quot;no-op&quot;
 that returns the current version.  Otherwise, database migrations for the
 Datastore type are applied until the Datastore is fully upgraded to the most
-recent schema version.</p>
+recent schema version.</p><h2 id="upgrade_datastore/4-parameters" class="section-heading">
+  <a href="#upgrade_datastore/4-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters:</span>
+</h2>
+<ul><li><p><code class="inline">datastore_options</code> - The <code class="inline">DatastoreOptions</code> struct containing the
+Datastore configuration.</p></li><li><p><code class="inline">datastore_type</code> - A string representing the type of the Datastore which
+determines which migrations are applied.</p></li><li><p><code class="inline">migration_bindings</code> - A keyword list of bindings to be used in the
+migration scripts.</p></li><li><p><code class="inline">opts</code> - a Keyword List of additional key/value call configurations.  See
+the &quot;Options&quot; section for details.</p></li></ul><h2 id="upgrade_datastore/4-options" class="section-heading">
+  <a href="#upgrade_datastore/4-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options:</span>
+</h2>
+<ul><li><p><code class="inline">:db_shutdown_timeout</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - The timeout in milliseconds to wait for the database to shutdown prior to
+raising an error. The default value is <code class="inline">60000</code>.</p></li><li><p><code class="inline">:migrations_schema</code> (<a href="https://hexdocs.pm/elixir/String.html#t:t/0"><code class="inline">String.t/0</code></a>) - The database maintenance schema used to host the migrations state table. The default value is <code class="inline">&quot;ms_syst_db&quot;</code>.</p></li><li><p><code class="inline">:migrations_table</code> (<a href="https://hexdocs.pm/elixir/String.html#t:t/0"><code class="inline">String.t/0</code></a>) - The name of the table used to store database migration state data. The default value is <code class="inline">&quot;migrations&quot;</code>.</p></li><li><p><code class="inline">:migrations_root_dir</code> (<a href="https://hexdocs.pm/elixir/String.html#t:t/0"><code class="inline">String.t/0</code></a>) - The directory relative to the project directory where the database
+migration files are located. The default value is <code class="inline">&quot;priv/database&quot;</code>.</p></li></ul><h2 id="upgrade_datastore/4-returns" class="section-heading">
+  <a href="#upgrade_datastore/4-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns:</span>
+</h2>
+<ul><li><p><code class="inline">{:ok, [String.t()]}</code> - A tuple containing <code class="inline">:ok</code> and a list of migration
+scripts that were applied.</p></li><li><p><code class="inline">{:error, MscmpSystError.t()}</code> - A tuple containing <code class="inline">:error</code> and an
+<a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html"><code class="inline">MscmpSystError</code></a> struct representing the error that occurred.</p></li></ul>
   </section>
 </section>
 
@@ -2126,7 +2268,7 @@ recent schema version.</p>
 <section class="detail" id="current_datastore_context/0">
 
   <div class="detail-header">
-    <a href="#current_datastore_context/0" class="detail-link" title="Link to this function">
+    <a href="#current_datastore_context/0" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -2139,18 +2281,28 @@ recent schema version.</p>
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> current_datastore_context() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()</pre>
+          <pre translate="no"><span class="attribute">@spec</span> current_datastore_context() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>() | nil</pre>
 
       </div>
 
 <p>Retrieves either atom name or <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pid/0</code></a> of the currently established Datastore
-context, unless no context has been established.</p>
+context, unless no context has been established.</p><h2 id="current_datastore_context/0-returns" class="section-heading">
+  <a href="#current_datastore_context/0-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><p><code class="inline">atom()</code> - The currently established Datastore Context atom name, if the
+Datastore Context was named and established for the session using the
+standard Ecto dynamic repository naming conventions.</p></li><li><p><code class="inline">pid()</code> - The currently established Datastore Context pid, if the current
+Datastore Context was set using a pid.  This will be the case when string
+based Datastore Context names were used.</p></li><li><p><code class="inline">nil</code> - If no Datastore Context was established for the session.</p></li></ul>
   </section>
 </section>
 <section class="detail" id="put_datastore_context/1">
 
   <div class="detail-header">
-    <a href="#put_datastore_context/1" class="detail-link" title="Link to this function">
+    <a href="#put_datastore_context/1" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -2163,26 +2315,44 @@ context, unless no context has been established.</p>
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> put_datastore_context(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>() | <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#t:t/0">Ecto.Repo.t</a>() | <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Adapter.html#t:adapter_meta/0">Ecto.Adapter.adapter_meta</a>()) ::
+          <pre translate="no"><span class="attribute">@spec</span> put_datastore_context(
+  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()
+  | <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html#t:t/0">Ecto.Repo.t</a>()
+  | <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Adapter.html#t:adapter_meta/0">Ecto.Adapter.adapter_meta</a>()
+  | <a href="https://hexdocs.pm/elixir/GenServer.html#t:name/0">GenServer.name</a>()
+) ::
   <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()</pre>
 
       </div>
 
 <p>Establishes the Datastore Context to use for Datastore interactions in the
 Elixir process where this function is called.</p><p>Using this function will set the given Datastore Context in the Process
-Dictionary of the process from which the function call is made.</p>
+Dictionary of the process from which the function call is made.</p><p>This version of the function uses normal Ecto dynamic repository naming
+conventions.</p><h2 id="put_datastore_context/1-parameters" class="section-heading">
+  <a href="#put_datastore_context/1-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">context</code> - The Datastore Context to use for Datastore interactions in the
+Elixir process where this function is called.</li></ul><h2 id="put_datastore_context/1-returns" class="section-heading">
+  <a href="#put_datastore_context/1-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><p><code class="inline">atom()</code> - The previously set Datastore Context value, if one was
+previously set.</p></li><li><p><code class="inline">nil</code> - If no Datastore Context was previously set.</p></li></ul>
   </section>
 </section>
-<section class="detail" id="start_datastore/2">
-
-    <span id="start_datastore/1"></span>
+<section class="detail" id="put_datastore_context/2">
 
   <div class="detail-header">
-    <a href="#start_datastore/2" class="detail-link" title="Link to this function">
+    <a href="#put_datastore_context/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">start_datastore(datastore_options, supervisor_name \\ nil)</h1>
+    <h1 class="signature" translate="no">put_datastore_context(context_registry, context)</h1>
 
 
   </div>
@@ -2191,27 +2361,107 @@ Dictionary of the process from which the function call is made.</p>
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> start_datastore(
-  <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0">MscmpSystDb.Types.DatastoreOptions.t</a>(),
-  <a href="https://hexdocs.pm/elixir/Supervisor.html#t:supervisor/0">Supervisor.supervisor</a>() | nil
+          <pre translate="no"><span class="attribute">@spec</span> put_datastore_context(
+  <a href="MscmpSystDb.Types.html#t:context_registry/0">MscmpSystDb.Types.context_registry</a>(),
+  <a href="MscmpSystDb.Types.html#t:context_name/0">MscmpSystDb.Types.context_name</a>()
 ) ::
-  {:ok, :all_started | :some_started,
-   [<a href="MscmpSystDb.Types.html#t:context_state_values/0">MscmpSystDb.Types.context_state_values</a>()]}
+  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()</pre>
+
+      </div>
+
+<p>Establishes the Datastore Context to use for Datastore interactions in the
+Elixir process where this function is called.</p><p>Using this function will set the given Datastore Context in the Process
+Dictionary of the process from which the function call is made.</p><p>This version of the function allows you identify a Datastore Context using a
+string based name registered in the provided registry.  Naturally, the
+Datastore Context must have been started using a string based name for this
+method to be applicable.</p><h2 id="put_datastore_context/2-parameters" class="section-heading">
+  <a href="#put_datastore_context/2-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">context</code> - The Datastore Context to use for Datastore interactions in the
+Elixir process where this function is called.</li></ul><h2 id="put_datastore_context/2-returns" class="section-heading">
+  <a href="#put_datastore_context/2-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><p><code class="inline">atom()</code> - The previously set Datastore Context value, if one was
+previously set.</p></li><li><p><code class="inline">nil</code> - If no Datastore Context was previously set.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="start_datastore/2">
+
+    <span id="start_datastore/1"></span>
+
+  <div class="detail-header">
+    <a href="#start_datastore/2" class="detail-link" data-no-tooltip title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">start_datastore(datastore_options, opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> start_datastore(<a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0">MscmpSystDb.Types.DatastoreOptions.t</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
+  {:ok, :all_started | :some_started, [<a href="MscmpSystDb.Types.ContextState.html#t:t/0">MscmpSystDb.Types.ContextState.t</a>()]}
   | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
 
-<p>Starts database connections for all of login contexts in the Datastore options.</p>
+<p>Starts database connections for all of login contexts in the Datastore options.</p><h2 id="start_datastore/2-parameters" class="section-heading">
+  <a href="#start_datastore/2-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters:</span>
+</h2>
+<ul><li><p><code class="inline">datastore_options</code> - A <code class="inline">DatastoreOptions</code> struct containing the login
+contexts.</p></li><li><p><code class="inline">opts</code> - a Keyword List of additional key/value call configurations.  See
+the &quot;Options&quot; section for details.</p></li></ul><h2 id="start_datastore/2-options" class="section-heading">
+  <a href="#start_datastore/2-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options:</span>
+</h2>
+<ul><li><p><code class="inline">:context_registry</code> (<code class="inline">:global</code> or <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">module/0</code></a>) - Identifies a process registry which is used to register Datastore
+Context (<a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html"><code class="inline">Ecto.Repo</code></a>) instances. A valid value for this option can be
+either <code class="inline">:global</code> to use the Erlang <code class="inline">:global</code> module or any other module
+which implements a :global compatible API.</p></li><li><p><code class="inline">:datastore_name</code> (<a href="https://hexdocs.pm/elixir/GenServer.html#t:name/0"><code class="inline">GenServer.name/0</code></a> or <code class="inline">nil</code>) - Specifies the name for the Datastore Supervisor. If this option is not
+provided, the <code class="inline">datastore_options.datastore_name</code> value will be used as
+the default name for the Datastore Supervisor.  If this value identifies a
+process registry (e.g. <code class="inline">{:via, Registry, {MyApp.Registry, :my_registry}}</code>),
+this registry will become the default registry for all Datastore Contexts;
+a valid <code class="inline">context_registry</code> value overrides this default.</p></li></ul><h2 id="start_datastore/2-returns" class="section-heading">
+  <a href="#start_datastore/2-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns:</span>
+</h2>
+<ul><li><p><code class="inline">{:ok, :all_started | :some_started, list(Types.ContextState.t())}</code> -
+Returns <code class="inline">:ok</code> with either <code class="inline">:all_started</code> or <code class="inline">:some_started</code> atom
+indicating if all or some of the contexts were started successfully, along
+with a list of <code class="inline">Types.ContextState</code> structs representing the state of each
+context.</p></li><li><p><code class="inline">{:error, MscmpSystError.t()}</code> - Returns an error tuple with a
+<a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html"><code class="inline">MscmpSystError</code></a> struct if there was an error starting the database
+connections.</p></li></ul>
   </section>
 </section>
-<section class="detail" id="start_datastore_context/2">
+<section class="detail" id="start_datastore_context/3">
+
+    <span id="start_datastore_context/2"></span>
 
   <div class="detail-header">
-    <a href="#start_datastore_context/2" class="detail-link" title="Link to this function">
+    <a href="#start_datastore_context/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">start_datastore_context(datastore_options, context)</h1>
+    <h1 class="signature" translate="no">start_datastore_context(datastore_options, context, opts \\ [])</h1>
 
 
   </div>
@@ -2222,12 +2472,40 @@ Dictionary of the process from which the function call is made.</p>
 
           <pre translate="no"><span class="attribute">@spec</span> start_datastore_context(
   <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0">MscmpSystDb.Types.DatastoreOptions.t</a>(),
-  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>() | <a href="MscmpSystDb.Types.DatastoreContext.html#t:t/0">MscmpSystDb.Types.DatastoreContext.t</a>()
+  <a href="MscmpSystDb.Types.html#t:context_name/0">MscmpSystDb.Types.context_name</a>() | <a href="MscmpSystDb.Types.DatastoreContext.html#t:t/0">MscmpSystDb.Types.DatastoreContext.t</a>(),
+  <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
 ) :: {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
 
-<p>Starts a database connection for the specific Datastore context provided.</p>
+<p>Starts a database connection for the specific Datastore context provided.</p><h2 id="start_datastore_context/3-parameters" class="section-heading">
+  <a href="#start_datastore_context/3-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters:</span>
+</h2>
+<ul><li><p><code class="inline">datastore_options</code> - The <code class="inline">t:MscmpSystDb.DatastoreOptions.t/0</code> struct
+containing the Datastore options.</p></li><li><p><code class="inline">context</code> - The <a href="MscmpSystDb.Types.html#t:context_name/0"><code class="inline">MscmpSystDb.Types.context_name/0</code></a> atom or
+<code class="inline">t:DatastoreContext.t/0</code> struct representing the Datastore
+context.</p></li><li><p><code class="inline">opts</code> - a Keyword List of additional key/value call configurations.  See
+the &quot;Options&quot; section for details.</p></li></ul><h2 id="start_datastore_context/3-options" class="section-heading">
+  <a href="#start_datastore_context/3-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options:</span>
+</h2>
+<ul><li><code class="inline">:context_registry</code> (<code class="inline">:global</code> or <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">module/0</code></a>) - Identifies a process registry which is used to register Datastore
+Context (<a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html"><code class="inline">Ecto.Repo</code></a>) instances. A valid value for this option can be
+either <code class="inline">:global</code> to use the Erlang <code class="inline">:global</code> module or any other module
+which implements a :global compatible API.</li></ul><h2 id="start_datastore_context/3-returns" class="section-heading">
+  <a href="#start_datastore_context/3-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns:</span>
+</h2>
+<ul><li><p><code class="inline">{:ok, pid()}</code> on success, where <code class="inline">pid()</code> is the process ID of the
+Datastore context.</p></li><li><p><code class="inline">{:error, reason}</code> on failure, where <code class="inline">reason</code> is a
+<code class="inline">t:MscmpSystDb.MscmpSystError.t/0</code> struct.</p></li></ul>
   </section>
 </section>
 <section class="detail" id="stop_datastore/2">
@@ -2235,11 +2513,11 @@ Dictionary of the process from which the function call is made.</p>
     <span id="stop_datastore/1"></span>
 
   <div class="detail-header">
-    <a href="#stop_datastore/2" class="detail-link" title="Link to this function">
+    <a href="#stop_datastore/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">stop_datastore(datastore_options_or_contexts, db_shutdown_timeout \\ 60000)</h1>
+    <h1 class="signature" translate="no">stop_datastore(datastore_options_or_contexts, opts \\ [])</h1>
 
 
   </div>
@@ -2252,12 +2530,37 @@ Dictionary of the process from which the function call is made.</p>
   <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0">MscmpSystDb.Types.DatastoreOptions.t</a>()
   | [<a href="MscmpSystDb.Types.DatastoreContext.html#t:t/0">MscmpSystDb.Types.DatastoreContext.t</a>()]
   | [%{context_name: <a href="MscmpSystDb.Types.html#t:context_name/0">MscmpSystDb.Types.context_name</a>()}],
-  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>()
+  <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
 ) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
 
-<p>Disconnects the database connections for all of the login Datastore option contexts.</p>
+<p>Disconnects the database connections for all of the login Datastore option
+contexts.</p><h2 id="stop_datastore/2-parameters" class="section-heading">
+  <a href="#stop_datastore/2-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><p><code class="inline">datastore_options_or_contexts</code> - A <code class="inline">DatastoreOptions</code> struct, a list of
+<code class="inline">DatastoreContext</code> structs, or a list of maps with <code class="inline">:context_name</code> keys.</p></li><li><p><code class="inline">opts</code> - a Keyword List of additional key/value call configurations.  See
+the &quot;Options&quot; section for details.</p></li></ul><h2 id="stop_datastore/2-options" class="section-heading">
+  <a href="#stop_datastore/2-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options</span>
+</h2>
+<ul><li><p><code class="inline">:db_shutdown_timeout</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - The timeout in milliseconds to wait for the database to shutdown prior to
+raising an error. The default value is <code class="inline">60000</code>.</p></li><li><p><code class="inline">:context_registry</code> (<code class="inline">:global</code> or <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">module/0</code></a>) - Identifies a process registry which is used to register Datastore
+Context (<a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html"><code class="inline">Ecto.Repo</code></a>) instances. A valid value for this option can be
+either <code class="inline">:global</code> to use the Erlang <code class="inline">:global</code> module or any other module
+which implements a :global compatible API.</p></li></ul><h2 id="stop_datastore/2-returns" class="section-heading">
+  <a href="#stop_datastore/2-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><p><code class="inline">:ok</code> if the connections were successfully stopped.</p></li><li><p><code class="inline">{:error, reason}</code> if there was an error stopping the connections.</p></li></ul>
   </section>
 </section>
 <section class="detail" id="stop_datastore_context/2">
@@ -2265,11 +2568,11 @@ Dictionary of the process from which the function call is made.</p>
     <span id="stop_datastore_context/1"></span>
 
   <div class="detail-header">
-    <a href="#stop_datastore_context/2" class="detail-link" title="Link to this function">
+    <a href="#stop_datastore_context/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">stop_datastore_context(context, db_shutdown_timeout \\ 60000)</h1>
+    <h1 class="signature" translate="no">stop_datastore_context(context, opts \\ [])</h1>
 
 
   </div>
@@ -2280,353 +2583,70 @@ Dictionary of the process from which the function call is made.</p>
 
           <pre translate="no"><span class="attribute">@spec</span> stop_datastore_context(
   <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>() | <a href="MscmpSystDb.Types.DatastoreContext.html#t:t/0">MscmpSystDb.Types.DatastoreContext.t</a>(),
-  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>()
+  <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
 ) ::
   :ok</pre>
 
       </div>
 
-<p>Disconnects the database connection for the specific Datastore context provided.</p>
+<p>Disconnects the database connection for the specific Datastore context provided.</p><h2 id="stop_datastore_context/2-parameters" class="section-heading">
+  <a href="#stop_datastore_context/2-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><p><code class="inline">context</code> - The Datastore context to disconnect. This can be a <code class="inline">pid()</code>,
+<code class="inline">atom()</code>, or <code class="inline">DatastoreContext</code> struct.</p></li><li><p><code class="inline">opts</code> - a Keyword List of additional key/value call configurations.  See
+the &quot;Options&quot; section for details.</p></li></ul><h2 id="stop_datastore_context/2-options" class="section-heading">
+  <a href="#stop_datastore_context/2-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options</span>
+</h2>
+<ul><li><p><code class="inline">:db_shutdown_timeout</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - The timeout in milliseconds to wait for the database to shutdown prior to
+raising an error. The default value is <code class="inline">60000</code>.</p></li><li><p><code class="inline">:context_registry</code> (<code class="inline">:global</code> or <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">module/0</code></a>) - Identifies a process registry which is used to register Datastore
+Context (<a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Repo.html"><code class="inline">Ecto.Repo</code></a>) instances. A valid value for this option can be
+either <code class="inline">:global</code> to use the Erlang <code class="inline">:global</code> module or any other module
+which implements a :global compatible API.</p></li></ul><h2 id="stop_datastore_context/2-returns" class="section-heading">
+  <a href="#stop_datastore_context/2-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><code class="inline">:ok</code> - On successful stopping of the requested Datastore Context.</li></ul>
   </section>
 </section>
 
     </div>
   </section>
 
-  <section id="development-support" class="details-list">
-    <h1 class="section-heading">
-      <a class="hover-link" href="#development-support">
-        <i class="ri-link-m" aria-hidden="true"></i>
-      </a>
-      <span class="text">Development Support</span>
-    </h1>
-    <div class="development-support-list">
-<section class="detail" id="drop_database/1">
+    <footer class="footer">
+      <p>
 
-  <div class="detail-header">
-    <a href="#drop_database/1" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">drop_database(datastore_options)</h1>
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
 
+            <a href="mscmp_syst_db.epub" title="ePub version">
+              Download ePub version
+            </a>
 
-  </div>
+        </span>
+      </p>
 
-  <section class="docstring">
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.34.2) for the
 
-      <div class="specs">
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
-          <pre translate="no"><span class="attribute">@spec</span> drop_database(<a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0">MscmpSystDb.Types.DatastoreOptions.t</a>()) :: :ok</pre>
+      </p>
 
-      </div>
-
-<p>Drops a Datastore previously created by the <a href="#load_database/2"><code class="inline">load_database/2</code></a> function in
-support of development related activities.</p><blockquote><h4 class="warning">Security Note</h4><p>This operation is specifically intended to support development and testing
-activities and should not be used in code which runs in production
-environments.</p></blockquote><p>This function ensures that the Datastore is stopped and then drops it.</p><h2 id="drop_database/1-parameters" class="section-heading">
-  <a href="#drop_database/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">datastore_options</code> - a required <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a>
-value which defines the Datastore and Datastore Contexts to drop.</li></ul>
-  </section>
-</section>
-<section class="detail" id="get_datastore_options/1">
-
-    <span id="get_datastore_options/0"></span>
-
-  <div class="detail-header">
-    <a href="#get_datastore_options/1" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">get_datastore_options(opts \\ [])</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@spec</span> get_datastore_options(<a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0">MscmpSystDb.Types.DatastoreOptions.t</a>()</pre>
-
-      </div>
-
-<p>Retrieves a populated <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a> struct which
-can be used to facilitate database involving development activities.</p><p>The DatastoreOptions will set all important values and identify two Datastore
-Contexts: the standard non-login, &quot;owner&quot; Context which will own the database
-objects and a single login Context which would be typically of an application
-context for accessing the database.</p><blockquote><h4 class="warning">Security Note</h4><p>The DatastoreOptions produced by this function are intended for use only in
-support of software development activities in highly controlled environments
-where real, user data is not at risk of being compromised.  The values
-included in function effectively bypass a number of the security measures
-and assumptions in order to facilitate developer convenience.</p></blockquote><p>Currently this function does not support scenarios where more login Contexts
-may be useful.</p><h2 id="get_datastore_options/1-parameters" class="section-heading">
-  <a href="#get_datastore_options/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">opts</code> - an optional parameter consisting of type <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0"><code class="inline">Keyword.t/0</code></a>
-containing values which will override the function supplied defaults.  The
-available options are:</p><ul><li><p><code class="inline">database_name</code> - a binary value indicating a name for the database to
-use.  The default database name is <code class="inline">ms_devsupport_database</code>.</p></li><li><p><code class="inline">datastore_code</code> - a binary value providing a Datastore level salting
-value used in different hashing operations.  The default value is
-&quot;musesystems.publicly.known.insecure.devsupport.code&quot;</p></li><li><p><code class="inline">datastore_name</code> - a name for use by the application to identify a given
-Datastore.  This value will often time be the same as the
-<code class="inline">database_name</code> value.  This value is converted to an atom.  The default
-value is <code class="inline">ms_devsupport_database</code>.</p></li><li><p><code class="inline">description_prefix</code> - a binary value which is prefixed to the
-descriptions of the created database contexts and which appear in the
-database role descriptions.  The default value is &quot;Muse Systems
-DevSupport&quot;.</p></li><li><p><code class="inline">database_role_prefix</code> - a binary value which is prefixed to the
-names of the database roles created to back the Datastore Contexts.
-The default value is <code class="inline">ms_devsupport</code>.</p></li><li><p><code class="inline">context_name</code> - a binary value which provides a unique context name for
-the login Context identified by this function.  This value is converted
-to an atom by this function.  The default value is
-<code class="inline">ms_devsupport_context</code>.</p></li><li><p><code class="inline">database_password</code> - a binary value which is the database password that
-the login Datastore Context uses to log into the database.  The default
-value is &quot;musesystems.publicly.known.insecure.devsupport.apppassword&quot;.</p></li><li><p><code class="inline">starting_pool_size</code> - the number of database connections the login
-Context will establish from the application.  The default value is 5.</p></li><li><p><code class="inline">db_host</code> - a string indicating the host address of the database server.
-This can be an IP address or resolvable DNS entry.  The default value is
-<code class="inline">127.0.0.1</code>.</p></li><li><p><code class="inline">db_port</code> - an integer indicating the TCP port on which to contact the
-database server.  The default value is the standard PostgreSQL port
-number <code class="inline">5432</code>.</p></li><li><p><code class="inline">server_salt</code> - a binary value providing a Datastore level salting
-value used in different hashing operations.  The default value is
-&quot;musesystems.publicly.known.insecure.devsupport.salt&quot;</p></li><li><p><code class="inline">dbadmin_password</code> - a binary value for the standard
-<code class="inline">ms_syst_privileged</code> database role account created via the database
-bootstrapping script.  The default value is
-&quot;musesystems.publicly.known.insecure.devsupport.password&quot;.</p></li><li><p><code class="inline">dbadmin_pool_size</code> - the number of database connections which will be
-opened to support DBA or Privileged operations.  The default value is
-<code class="inline">1</code>.</p></li></ul></li></ul>
-  </section>
-</section>
-<section class="detail" id="get_devsupport_context_name/0">
-
-  <div class="detail-header">
-    <a href="#get_devsupport_context_name/0" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">get_devsupport_context_name()</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@spec</span> get_devsupport_context_name() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()</pre>
-
-      </div>
-
-<p>Retrieves the name of the login Datastore Context typically used in
-development support.</p><p>This is a way to retrieve the standard development support name for use with
-functions such as <a href="#put_datastore_context/1"><code class="inline">put_datastore_context/1</code></a></p>
-  </section>
-</section>
-<section class="detail" id="get_devsupport_datastore_options/1">
-
-    <span id="get_devsupport_datastore_options/0"></span>
-
-  <div class="detail-header">
-    <a href="#get_devsupport_datastore_options/1" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">get_devsupport_datastore_options(opts \\ [])</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@spec</span> get_devsupport_datastore_options(<a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
-  <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0">MscmpSystDb.Types.DatastoreOptions.t</a>()</pre>
-
-      </div>
-
-<p>Retrieves a populated <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a> struct with
-defaults appropriate for interactive development support.</p><p>Currently this function is simply an alias for <a href="#get_datastore_options/1"><code class="inline">get_datastore_options/1</code></a>.  All
-documentation for that function applies to this function.</p><h2 id="get_devsupport_datastore_options/1-parameters" class="section-heading">
-  <a href="#get_devsupport_datastore_options/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">opts</code> - an optional parameter consisting of type <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0"><code class="inline">Keyword.t/0</code></a>
-containing values which will override the function supplied defaults.  The
-available options are the same as those for <a href="#get_datastore_options/1"><code class="inline">get_datastore_options/1</code></a></li></ul>
-  </section>
-</section>
-<section class="detail" id="get_testsupport_context_name/0">
-
-  <div class="detail-header">
-    <a href="#get_testsupport_context_name/0" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">get_testsupport_context_name()</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@spec</span> get_testsupport_context_name() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()</pre>
-
-      </div>
-
-<p>Retrieves the name of the login Datastore Context typically used in
-testing support.</p><p>This is a way to retrieve the standard testing support name for use with
-functions such as <a href="#put_datastore_context/1"><code class="inline">put_datastore_context/1</code></a></p>
-  </section>
-</section>
-<section class="detail" id="get_testsupport_datastore_options/1">
-
-    <span id="get_testsupport_datastore_options/0"></span>
-
-  <div class="detail-header">
-    <a href="#get_testsupport_datastore_options/1" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">get_testsupport_datastore_options(opts \\ [])</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@spec</span> get_testsupport_datastore_options(<a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
-  <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0">MscmpSystDb.Types.DatastoreOptions.t</a>()</pre>
-
-      </div>
-
-<p>Retrieves a populated <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a> struct with
-defaults appropriate for setting up test script database services.</p><p>This function calls <a href="#get_datastore_options/1"><code class="inline">get_datastore_options/1</code></a> with alternate defaults suitable
-for running test scripts independently from database environments targeted to
-interactive development.  Documentation for that function will largely apply
-for this function, except as specifically contradicted here.</p><h2 id="get_testsupport_datastore_options/1-parameters" class="section-heading">
-  <a href="#get_testsupport_datastore_options/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">opts</code> - an optional parameter consisting of type <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0"><code class="inline">Keyword.t/0</code></a>
-containing values which will override the function supplied defaults.  The
-available options are:</p><ul><li><p><code class="inline">database_name</code> - a binary value indicating a name for the database to
-use.  The default database name is <code class="inline">ms_testsupport_database</code>.</p></li><li><p><code class="inline">datastore_code</code> - a binary value providing a Datastore level salting
-value used in different hashing operations.  The default value is
-&quot;musesystems.publicly.known.insecure.testsupport.code&quot;</p></li><li><p><code class="inline">datastore_name</code> - a name for use by the application to identify a given
-Datastore.  This value will often time be the same as the
-<code class="inline">database_name</code> value.  This value is converted to an atom.  The default
-value is <code class="inline">ms_testsupport_database</code>.</p></li><li><p><code class="inline">description_prefix</code> - a binary value which is prefixed to the
-descriptions of the created database contexts and which appear in the
-database role descriptions.  The default value is &quot;Muse Systems
-TestSupport&quot;.</p></li><li><p><code class="inline">database_role_prefix</code> - a binary value which is prefixed to the
-names of the database roles created to back the Datastore Contexts.
-The default value is <code class="inline">ms_testsupport</code>.</p></li><li><p><code class="inline">context_name</code> - a binary value which provides a unique context name for
-the login Context identified by this function.  This value is converted
-to an atom by this function.  The default value is
-<code class="inline">ms_testsupport_context</code>.</p></li><li><p><code class="inline">database_password</code> - a binary value which is the database password that
-the login Datastore Context uses to log into the database.  The default
-value is &quot;musesystems.publicly.known.insecure.testsupport.apppassword&quot;.</p></li><li><p><code class="inline">starting_pool_size</code> - the number of database connections the login
-Context will establish from the application.  The default value is 5.</p></li><li><p><code class="inline">db_host</code> - a string indicating the host address of the database server.
-This can be an IP address or resolvable DNS entry.  The default value is
-<code class="inline">127.0.0.1</code>.</p></li><li><p><code class="inline">db_port</code> - an integer indicating the TCP port on which to contact the
-database server.  The default value is the standard PostgreSQL port
-number <code class="inline">5432</code>.</p></li><li><p><code class="inline">server_salt</code> - a binary value providing a Datastore level salting
-value used in different hashing operations.  The default value is
-&quot;musesystems.publicly.known.insecure.testsupport.salt&quot;</p></li><li><p><code class="inline">dbadmin_password</code> - a binary value for the standard
-<code class="inline">ms_syst_privileged</code> database role account created via the database
-bootstrapping script.  The default value is
-&quot;musesystems.publicly.known.insecure.devsupport.password&quot;.</p></li><li><p><code class="inline">dbadmin_pool_size</code> - the number of database connections which will be
-opened to support DBA or Privileged operations.  The default value is
-<code class="inline">1</code>.</p></li></ul></li></ul>
-  </section>
-</section>
-<section class="detail" id="load_database/2">
-
-  <div class="detail-header">
-    <a href="#load_database/2" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">load_database(datastore_options, datastore_type)</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@spec</span> load_database(<a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0">MscmpSystDb.Types.DatastoreOptions.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) ::
-  {:ok, [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()]} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
-
-      </div>
-
-<p>Creates a Datastore, related Datastore Contexts, and processes migrations for
-the identified type in support of development related activities.</p><blockquote><h4 class="warning">Security Note</h4><p>This operation is specifically intended to support development and testing
-activities and should not be used in code which runs in production
-environments.</p></blockquote><p>This is a simplified and condensed version of the full process of database
-creation.</p><h2 id="load_database/2-parameters" class="section-heading">
-  <a href="#load_database/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">datastore_options</code> - a required <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a>
-value which defines the Datastore and Datastore Contexts to use when
-creating the database.  Typically this will be generated by
-<a href="#get_datastore_options/1"><code class="inline">get_datastore_options/1</code></a>, but any valid
-<a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a> value will work.</p></li><li><p><code class="inline">datastore_type</code> - a required string value which indicates the Datastore
-Type to load.</p></li></ul>
-  </section>
-</section>
-
-    </div>
-  </section>
-
-      <footer class="footer">
-        <p>
-
-          <span class="line">
-            <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
-              Search HexDocs
-            </button>
-
-              <a href="mscmp_syst_db.epub" title="ePub version">
-                Download ePub version
-              </a>
-
-          </span>
-        </p>
-
-        <p class="built-using">
-          Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.31.1) for the
-
-            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
-
-        </p>
-      </footer>
-    </div>
+    </footer>
   </div>
 </main>
 </div>
-
 
   </body>
 </html>

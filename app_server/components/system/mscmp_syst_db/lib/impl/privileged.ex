@@ -13,13 +13,11 @@
 defmodule MscmpSystDb.Impl.Privileged do
   @moduledoc false
 
-  alias MscmpSystDb.Impl.Macros
   alias MscmpSystDb.Impl.Migrations
   alias MscmpSystDb.Runtime.Datastore
   alias MscmpSystDb.Types.{DatastoreContext, DatastoreOptions, DbServer}
 
   require Logger
-  require Macros
 
   ######
   #
@@ -43,62 +41,15 @@ defmodule MscmpSystDb.Impl.Privileged do
   @priv_connection_role "ms_syst_privileged"
   @priv_application_name "MscmpSystDb Datastore Privileged Access"
 
-  Macros.migration_constants()
-
-  ##############################################################################
-  #
-  # Options Definition
-  #
-
-  option_defs = [
-    db_shutdown_timeout: [
-      type: :pos_integer,
-      default: 60_000,
-      doc: """
-      The timeout in milliseconds to wait for the database to shutdown prior to
-      raising an error.
-      """
-    ],
-    migrations_schema: [
-      type: :string,
-      default: @migrations_schema,
-      doc: """
-      The database maintenance schema used to host the migrations state table.
-      """
-    ],
-    migrations_table: [
-      type: :string,
-      default: @migrations_table,
-      doc: """
-      The name of the table used to store database migration state data.
-      """
-    ],
-    migrations_root_dir: [
-      type: :string,
-      default: @migrations_root_dir,
-      doc: """
-      The directory relative to the project directory where the database
-      migration files are located.
-      """
-    ]
-  ]
-
   ##############################################################################
   #
   # get_datastore_version
   #
-
-  @get_datastore_version_opts NimbleOptions.new!(
-                                Keyword.take(option_defs, [:db_shutdown_timeout])
-                              )
-
-  def get_get_datastore_version_opts_docs, do: NimbleOptions.docs(@get_datastore_version_opts)
+  #
 
   @spec get_datastore_version(DatastoreOptions.t(), Keyword.t()) ::
           {:ok, String.t()} | {:error, MscmpSystError.t()}
   def get_datastore_version(datastore_options, opts) do
-    opts = NimbleOptions.validate!(opts, @get_datastore_version_opts)
-
     starting_datastore_context = Datastore.get_dynamic_repo()
 
     :ok = start_priv_connection(datastore_options)
@@ -128,24 +79,11 @@ defmodule MscmpSystDb.Impl.Privileged do
   #
   # initialize_datastore
   #
+  #
 
-  @initialize_datastore_opts NimbleOptions.new!(
-                               Keyword.take(option_defs, [
-                                 :db_shutdown_timeout,
-                                 :migrations_schema,
-                                 :migrations_table
-                               ])
-                             )
-
-  @spec get_initialize_datastore_opts_docs() :: String.t()
-  def get_initialize_datastore_opts_docs, do: NimbleOptions.docs(@initialize_datastore_opts)
-
-  @spec initialize_datastore(DatastoreOptions.t()) :: :ok | {:error, MscmpSystError.t()}
   @spec initialize_datastore(DatastoreOptions.t(), Keyword.t()) ::
           :ok | {:error, MscmpSystError.t()}
-  def initialize_datastore(datastore_options, opts \\ []) do
-    opts = NimbleOptions.validate!(opts, @initialize_datastore_opts)
-
+  def initialize_datastore(datastore_options, opts) do
     database_owner = Enum.find(datastore_options.contexts, &(&1.database_owner_context == true))
 
     :ok = start_priv_connection(datastore_options)
@@ -174,30 +112,15 @@ defmodule MscmpSystDb.Impl.Privileged do
   # upgrade_datastore
   #
 
-  @upgrade_datastore_opts NimbleOptions.new!(
-                            Keyword.take(option_defs, [
-                              :db_shutdown_timeout,
-                              :migrations_root_dir,
-                              :migrations_schema,
-                              :migrations_table
-                            ])
-                          )
-
-  @spec get_upgrade_datastore_opts_docs() :: String.t()
-  def get_upgrade_datastore_opts_docs, do: NimbleOptions.docs(@upgrade_datastore_opts)
-
-  @spec upgrade_datastore(DatastoreOptions.t(), String.t(), Keyword.t()) ::
-          {:ok, [String.t()]} | {:error, MscmpSystError.t()}
   @spec upgrade_datastore(DatastoreOptions.t(), String.t(), Keyword.t(), Keyword.t()) ::
           {:ok, [String.t()]} | {:error, MscmpSystError.t()}
-  def upgrade_datastore(datastore_options, datastore_type, migration_bindings, opts \\ []) do
-    opts = NimbleOptions.validate!(opts, @upgrade_datastore_opts)
-
+  def upgrade_datastore(datastore_options, datastore_type, migration_bindings, opts) do
     starting_datastore_context = Datastore.current_datastore_context()
 
     :ok = start_priv_connection(datastore_options)
 
-    upgrade_opts = Keyword.take(opts, [:migrations_root_dir])
+    upgrade_opts =
+      Keyword.take(opts, [:migrations_root_dir, :migrations_schema, :migrations_table])
 
     apply_migrations_result =
       Migrations.apply_outstanding_migrations(
@@ -266,9 +189,9 @@ defmodule MscmpSystDb.Impl.Privileged do
       {:ok, priv_pid} ->
         _ = Datastore.put_datastore_context(priv_pid)
 
-        Datastore.query_for_none!("SET ROLE #{database_owner.database_role};")
+        Datastore.query_for_none!("SET ROLE #{database_owner.database_role};", [], [])
 
-        Datastore.query_for_none!("SET application_name = '#{priv_context.description}';")
+        Datastore.query_for_none!("SET application_name = '#{priv_context.description}';", [], [])
 
         :ok
 

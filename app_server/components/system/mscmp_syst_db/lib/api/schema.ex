@@ -19,6 +19,7 @@ defmodule MscmpSystDb.Schema do
   To use this module, simply add `use MscmpSystDb.Schema` in place of
   `use Ecto.Schema`.
   """
+  @spec __using__(term()) :: Macro.t()
   defmacro __using__(_) do
     quote do
       use Ecto.Schema

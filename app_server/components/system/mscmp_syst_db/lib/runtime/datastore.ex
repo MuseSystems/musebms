@@ -26,97 +26,13 @@ defmodule MscmpSystDb.Runtime.Datastore do
 
   ##############################################################################
   #
-  # Options Definition
-  #
-
-  option_defs = [
-    datastore_name: [
-      type:
-        {:or,
-         [nil, :atom, {:tuple, [{:in, [:via]}, :atom, :any]}, {:tuple, [{:in, [:global]}, :any]}]},
-      type_doc: "`t:GenServer.name/0 or `nil`",
-      doc: """
-      Specifies the name for the Datastore Supervisor. If this option is not
-      provided, the `datastore_options.datastore_name` value will be used as
-      the default name for the Datastore Supervisor.  If this value identifies a
-      process registry (e.g. `{:via, Registry, {MyApp.Registry, :my_registry}}`),
-      this registry will become the default registry for all Datastore Contexts;
-      a valid `context_registry value overrides this default.
-      """
-    ],
-    context_registry: [
-      type: {:or, [:atom, nil]},
-      type_doc: "`t:module/0` or `nil`",
-      doc: """
-      Specifies the name of a registry to use for registering named Datastore
-      Contexts.
-      """
-    ],
-    db_shutdown_timeout: [
-      type: :pos_integer,
-      default: 60_000,
-      doc: """
-      Specifies the timeout value for the Datastore Context. The default
-      timeout is 60,000 milliseconds (60 seconds).
-      """
-    ],
-    strategy: [
-      type: :atom,
-      default: :one_for_one,
-      doc: """
-      Specifies the restart strategy for the Datastore Supervisor. The default
-      strategy is `:one_for_one`.
-      """
-    ],
-    restart: [
-      type: :atom,
-      default: :transient,
-      doc: """
-      Specifies the restart strategy for the Datastore Supervisor. The default
-      restart strategy is `:transient`.
-      """
-    ],
-    timeout: [
-      type: :pos_integer,
-      default: 60_000,
-      doc: """
-      Specifies the timeout value for the Datastore Supervisor. The default
-      timeout is 60,000 milliseconds (60 seconds).
-      """
-    ],
-    context_name: [
-      type: :string,
-      doc: """
-      Specifies the name for the Datastore Context. This name is used to look up
-      a specific context from the Datastore Options.
-      """
-    ]
-  ]
-
-  ##############################################################################
-  #
   # get_datastore_child_spec
   #
-
-  @get_datastore_child_spec_opts NimbleOptions.new!(
-                                   Keyword.take(option_defs, [
-                                     :datastore_name,
-                                     :strategy,
-                                     :restart,
-                                     :timeout,
-                                     :context_registry
-                                   ])
-                                 )
-
-  @spec get_get_datastore_child_spec_opts_docs() :: String.t()
-  def get_get_datastore_child_spec_opts_docs,
-    do: NimbleOptions.docs(@get_datastore_child_spec_opts)
+  #
 
   @spec get_datastore_child_spec(DatastoreOptions.t(), Keyword.t()) :: Supervisor.child_spec()
   def get_datastore_child_spec(datastore_options, opts)
       when is_map(datastore_options) and is_list(opts) do
-    opts = NimbleOptions.validate!(opts, @get_datastore_child_spec_opts)
-
     %{
       id: __MODULE__,
       start: {MscmpSystDb.Datastore, :start_link, [datastore_options, opts]},
@@ -129,25 +45,10 @@ defmodule MscmpSystDb.Runtime.Datastore do
   #
   # start_link_datastore
   #
-
-  @start_link_datastore_opts NimbleOptions.new!(
-                               Keyword.take(option_defs, [
-                                 :datastore_name,
-                                 :strategy,
-                                 :restart,
-                                 :timeout,
-                                 :context_registry
-                               ])
-                             )
-
-  @spec get_start_link_datastore_opts_docs() :: String.t()
-  def get_start_link_datastore_opts_docs,
-    do: NimbleOptions.docs(@start_link_datastore_opts)
+  #
 
   @spec start_link_datastore(DatastoreOptions.t(), Keyword.t()) :: Supervisor.on_start()
   def start_link_datastore(%DatastoreOptions{} = datastore_options, opts) when is_list(opts) do
-    opts = NimbleOptions.validate!(opts, @start_link_datastore_opts)
-
     supervisor_opts = Keyword.merge(opts, name: opts[:datastore_name])
 
     {:ok, datastore_supervisor_pid} =
@@ -171,21 +72,12 @@ defmodule MscmpSystDb.Runtime.Datastore do
   #
   # start_datastore
   #
-
-  @start_datastore_opts NimbleOptions.new!(
-                          Keyword.take(option_defs, [:datastore_name, :context_registry])
-                        )
-
-  @spec get_start_datastore_opts_docs() :: String.t()
-  def get_start_datastore_opts_docs,
-    do: NimbleOptions.docs(@start_datastore_opts)
+  #
 
   @spec start_datastore(DatastoreOptions.t(), Keyword.t()) ::
           {:ok, :all_started | :some_started, list(Types.context_state_values())}
           | {:error, MscmpSystError.t()}
   def start_datastore(%DatastoreOptions{} = datastore_options, opts) when is_list(opts) do
-    opts = NimbleOptions.validate!(opts, @start_datastore_opts)
-
     resolved_context_registry =
       opts[:context_registry] || extract_registry_from_name(opts[:datastore_name])
 
@@ -280,12 +172,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
   #
   # get_context_child_spec
   #
-
-  @get_context_child_spec_opts NimbleOptions.new!(Keyword.take(option_defs, [:context_registry]))
-
-  @spec get_get_context_child_spec_opts_docs() :: String.t()
-  def get_get_context_child_spec_opts_docs,
-    do: NimbleOptions.docs(@get_context_child_spec_opts)
+  #
 
   @spec get_context_child_spec(
           DatastoreOptions.t(),
@@ -295,8 +182,6 @@ defmodule MscmpSystDb.Runtime.Datastore do
           Supervisor.child_spec()
   def get_context_child_spec(datastore_options, context_name, opts)
       when is_binary(context_name) and is_list(opts) do
-    opts = NimbleOptions.validate!(opts, @get_context_child_spec_opts)
-
     context = Enum.find(datastore_options.contexts, &(&1.context_name == context_name))
 
     get_context_child_spec(datastore_options, context, opts)
@@ -304,8 +189,6 @@ defmodule MscmpSystDb.Runtime.Datastore do
 
   def get_context_child_spec(datastore_options, %DatastoreContext{} = context, opts)
       when is_list(opts) do
-    opts = NimbleOptions.validate!(opts, @get_context_child_spec_opts)
-
     %{
       id: context.context_name,
       start: {MscmpSystDb.DatastoreContext, :start_link, [datastore_options, context, opts]},
@@ -318,12 +201,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
   #
   # start_link_context
   #
-
-  @start_link_context_opts NimbleOptions.new!(Keyword.take(option_defs, [:context_registry]))
-
-  @spec get_start_link_context_opts_docs() :: String.t()
-  def get_start_link_context_opts_docs,
-    do: NimbleOptions.docs(@start_link_context_opts)
+  #
 
   @spec start_link_context(DatastoreOptions.t(), DatastoreContext.t(), Keyword.t()) ::
           Supervisor.on_start()
@@ -333,8 +211,6 @@ defmodule MscmpSystDb.Runtime.Datastore do
         opts
       )
       when is_list(opts) do
-    opts = NimbleOptions.validate!(opts, @start_link_context_opts)
-
     {:ok, context} = validate_datastore_context(datastore_context)
 
     start_datastore_context(datastore_options, context, opts)
@@ -369,26 +245,18 @@ defmodule MscmpSystDb.Runtime.Datastore do
   #
   # start_datastore_context
   #
-
-  @start_datastore_context_opts NimbleOptions.new!(Keyword.take(option_defs, [:context_registry]))
-
-  @spec get_start_datastore_context_opts_docs() :: String.t()
-  def get_start_datastore_context_opts_docs,
-    do: NimbleOptions.docs(@start_datastore_context_opts)
+  #
 
   @spec start_datastore_context(
           DatastoreOptions.t(),
           DatastoreContext.t() | Types.context_name(),
           Keyword.t()
-        ) ::
-          {:ok, pid()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, pid()} | {:error, MscmpSystError.t()}
   def start_datastore_context(
         %DatastoreOptions{} = datastore_options,
         %DatastoreContext{} = context,
         opts
       ) do
-    opts = NimbleOptions.validate!(opts, @start_datastore_context_opts)
-
     [
       name: nil,
       database: datastore_options.database_name,
@@ -472,14 +340,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
   #
   # stop_datastore
   #
-
-  @stop_datastore_opts NimbleOptions.new!(
-                         Keyword.take(option_defs, [:context_registry, :db_shutdown_timeout])
-                       )
-
-  @spec get_stop_datastore_opts_docs() :: String.t()
-  def get_stop_datastore_opts_docs,
-    do: NimbleOptions.docs(@stop_datastore_opts)
+  #
 
   @spec stop_datastore(
           DatastoreOptions.t()
@@ -492,8 +353,6 @@ defmodule MscmpSystDb.Runtime.Datastore do
     do: stop_datastore(contexts, opts)
 
   def stop_datastore(contexts, opts) when is_list(contexts) and is_list(opts) do
-    opts = NimbleOptions.validate!(opts, @stop_datastore_opts)
-
     filter_fn = fn context ->
       resolved_context = lookup_context_pid(opts[:context_registry], context.context_name)
       running_repos = Ecto.Repo.all_running()
@@ -519,17 +378,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
   #
   # stop_datastore_context
   #
-
-  @stop_datastore_context_opts NimbleOptions.new!(
-                                 Keyword.take(option_defs, [
-                                   :context_registry,
-                                   :db_shutdown_timeout
-                                 ])
-                               )
-
-  @spec get_stop_datastore_context_opts_docs() :: String.t()
-  def get_stop_datastore_context_opts_docs,
-    do: NimbleOptions.docs(@stop_datastore_context_opts)
+  #
 
   @spec stop_datastore_context(pid() | atom() | String.t() | DatastoreContext.t(), Keyword.t()) ::
           :ok
@@ -544,7 +393,6 @@ defmodule MscmpSystDb.Runtime.Datastore do
   end
 
   def stop_datastore_context(context, opts) when is_pid(context) or is_atom(context) do
-    opts = NimbleOptions.validate!(opts, @stop_datastore_context_opts)
     Supervisor.stop(context, :normal, opts[:db_shutdown_timeout])
   end
 
@@ -554,10 +402,14 @@ defmodule MscmpSystDb.Runtime.Datastore do
   #
   ##############################################################################
 
-  @spec query_for_none(iodata()) :: :ok | {:error, MscmpSystError.t()}
-  @spec query_for_none(iodata(), [term()]) :: :ok | {:error, MscmpSystError.t()}
+  ##############################################################################
+  #
+  # query_for_none
+  #
+  #
+
   @spec query_for_none(iodata(), [term()], Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
-  def query_for_none(query, query_params \\ [], opts \\ []) do
+  def query_for_none(query, query_params, opts) do
     case query(query, query_params, opts) do
       {:ok, _query_result} ->
         :ok
@@ -572,10 +424,8 @@ defmodule MscmpSystDb.Runtime.Datastore do
     end
   end
 
-  @spec query_for_none!(iodata()) :: :ok
-  @spec query_for_none!(iodata(), [term()]) :: :ok
   @spec query_for_none!(iodata(), [term()], Keyword.t()) :: :ok
-  def query_for_none!(query, query_params \\ [], opts \\ []) do
+  def query_for_none!(query, query_params, opts) do
     case query_for_none(query, query_params, opts) do
       :ok ->
         :ok
@@ -588,11 +438,15 @@ defmodule MscmpSystDb.Runtime.Datastore do
     end
   end
 
-  @spec query_for_value(iodata()) :: {:ok, any()} | {:error, MscmpSystError.t()}
-  @spec query_for_value(iodata(), [term()]) :: {:ok, any()} | {:error, MscmpSystError.t()}
+  ##############################################################################
+  #
+  # query_for_value
+  #
+  #
+
   @spec query_for_value(iodata(), [term()], Keyword.t()) ::
           {:ok, any()} | {:error, MscmpSystError.t()}
-  def query_for_value(query, query_params \\ [], opts \\ []) do
+  def query_for_value(query, query_params, opts) do
     case query(query, query_params, opts) do
       {:ok, %{num_rows: 1, rows: [[result_value | _] | _]}} ->
         {:ok, result_value}
@@ -607,10 +461,8 @@ defmodule MscmpSystDb.Runtime.Datastore do
     end
   end
 
-  @spec query_for_value!(iodata()) :: any()
-  @spec query_for_value!(iodata(), [term()]) :: any()
   @spec query_for_value!(iodata(), [term()], Keyword.t()) :: any()
-  def query_for_value!(query, query_params \\ [], opts \\ []) do
+  def query_for_value!(query, query_params, opts) do
     case query_for_value(query, query_params, opts) do
       {:ok, result_value} ->
         result_value
@@ -623,11 +475,15 @@ defmodule MscmpSystDb.Runtime.Datastore do
     end
   end
 
-  @spec query_for_one(iodata()) :: {:ok, [any()]} | {:error, MscmpSystError.t()}
-  @spec query_for_one(iodata(), [term()]) :: {:ok, [any()]} | {:error, MscmpSystError.t()}
+  ##############################################################################
+  #
+  # query_for_one
+  #
+  #
+
   @spec query_for_one(iodata(), [term()], Keyword.t()) ::
           {:ok, [any()]} | {:error, MscmpSystError.t()}
-  def query_for_one(query, query_params \\ [], opts \\ []) do
+  def query_for_one(query, query_params, opts) do
     case query(query, query_params, opts) do
       {:ok, %{num_rows: 1, rows: [result_row | _]}} ->
         {:ok, result_row}
@@ -642,10 +498,8 @@ defmodule MscmpSystDb.Runtime.Datastore do
     end
   end
 
-  @spec query_for_one!(iodata()) :: [any()]
-  @spec query_for_one!(iodata(), [term()]) :: [any()]
   @spec query_for_one!(iodata(), [term()], Keyword.t()) :: [any()]
-  def query_for_one!(query, query_params \\ [], opts \\ []) do
+  def query_for_one!(query, query_params, opts) do
     case query_for_one(query, query_params, opts) do
       {:ok, result_value} ->
         result_value
@@ -658,22 +512,12 @@ defmodule MscmpSystDb.Runtime.Datastore do
     end
   end
 
-  @spec query_for_many(iodata()) ::
-          {:ok,
-           %{
-             :rows => nil | [[term()] | binary()],
-             :num_rows => non_neg_integer(),
-             optional(atom()) => any()
-           }}
-          | {:error, MscmpSystError.t()}
-  @spec query_for_many(iodata(), [term()]) ::
-          {:ok,
-           %{
-             :rows => nil | [[term()] | binary()],
-             :num_rows => non_neg_integer(),
-             optional(atom()) => any()
-           }}
-          | {:error, MscmpSystError.t()}
+  ##############################################################################
+  #
+  # query_for_many
+  #
+  #
+
   @spec query_for_many(iodata(), [term()], Keyword.t()) ::
           {:ok,
            %{
@@ -682,7 +526,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
              optional(atom()) => any()
            }}
           | {:error, MscmpSystError.t()}
-  def query_for_many(query, query_params \\ [], opts \\ []) do
+  def query_for_many(query, query_params, opts) do
     case query(query, query_params, opts) do
       query_result = {:ok, _result} ->
         query_result
@@ -697,22 +541,12 @@ defmodule MscmpSystDb.Runtime.Datastore do
     end
   end
 
-  @spec query_for_many!(iodata()) :: %{
-          :rows => nil | [[term()] | binary()],
-          :num_rows => non_neg_integer(),
-          optional(atom()) => any()
-        }
-  @spec query_for_many!(iodata(), [term()]) :: %{
-          :rows => nil | [[term()] | binary()],
-          :num_rows => non_neg_integer(),
-          optional(atom()) => any()
-        }
   @spec query_for_many!(iodata(), [term()], Keyword.t()) :: %{
           :rows => nil | [[term()] | binary()],
           :num_rows => non_neg_integer(),
           optional(atom()) => any()
         }
-  def query_for_many!(query, query_params \\ [], opts \\ []) do
+  def query_for_many!(query, query_params, opts) do
     case query_for_many(query, query_params, opts) do
       {:ok, result_value} ->
         result_value
@@ -725,13 +559,15 @@ defmodule MscmpSystDb.Runtime.Datastore do
     end
   end
 
-  @spec ecto_transaction(
-          fun_or_multi :: (... -> any()) | Ecto.Multi.t(),
-          opts :: Keyword.t()
-        ) :: {:ok, any()} | {:error, MscmpSystError.t()}
-  @spec ecto_transaction(fun_or_multi :: (... -> any()) | Ecto.Multi.t()) ::
+  ##############################################################################
+  #
+  # ecto_transaction
+  #
+  #
+
+  @spec ecto_transaction(fun_or_multi :: (... -> any()) | Ecto.Multi.t(), opts :: Keyword.t()) ::
           {:ok, any()} | {:error, MscmpSystError.t()}
-  def ecto_transaction(job, opts \\ []) do
+  def ecto_transaction(job, opts) do
     case transaction(job, opts) do
       transaction_result = {:ok, _result} ->
         transaction_result
@@ -748,6 +584,12 @@ defmodule MscmpSystDb.Runtime.Datastore do
     end
   end
 
+  ##############################################################################
+  #
+  # record_count
+  #
+  #
+
   @spec record_count(any(), atom() | keyword()) :: any()
   def record_count(queryable, opts), do: aggregate(queryable, :count, opts)
 
@@ -760,6 +602,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
   ##############################################################################
   #
   # put_datastore_context
+  #
   #
 
   @spec put_datastore_context(Types.context_registry(), Types.context_name()) ::
@@ -784,6 +627,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
   ##############################################################################
   #
   # current_datastore_context
+  #
   #
 
   @spec current_datastore_context :: atom() | pid() | nil

@@ -4,22 +4,19 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.31.1">
+    <meta name="generator" content="ExDoc v0.34.2">
     <meta name="project" content="mscmp_syst_db v0.1.0">
 
 
     <title>MscmpSystDb.Datastore — mscmp_syst_db v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-FM2CSD74.css" />
+    <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-43PMFBC7.js"></script>
-    <script src="dist/sidebar_items-EC351D17.js"></script>
-
-      <script src="docs_config.js"></script>
-
-    <script async src="dist/html-L4O5OK2K.js"></script>
-
+    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
+    <script src="dist/sidebar_items-F9E8FB46.js"></script>
+    <script src="docs_config.js"></script>
+    <script async src="dist/html-YIPIRHGU.js"></script>
 
   </head>
   <body data-type="modules" class="page-module">
@@ -37,13 +34,11 @@
       } catch (error) { }
     </script>
 
-<div class="main">
+<div class="body-wrapper">
 
 <button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
   <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
 </button>
-
-<div class="background-layer"></div>
 
 <nav id="sidebar" class="sidebar">
 
@@ -99,46 +94,47 @@ Pages
 
 <main class="content">
   <output role="status" id="toast"></output>
-  <div class="content-outer">
-    <div id="content" class="content-inner">
-      <div class="top-search">
-        <div class="search-settings">
-          <form class="search-bar" action="search.html">
-            <label class="search-label">
-              <span class="sr-only">Search documentation of mscmp_syst_db</span>
-              <input name="q" type="text" class="search-input" placeholder="Search Documentation (press /)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-            </label>
-            <button type="submit" class="search-button" aria-label="Submit Search">
-              <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
-            </button>
-            <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
-              <i class="ri-close-line ri-lg" title="Cancel search"></i>
-            </button>
-          </form>
-          <div class="autocomplete">
-          </div>
-          <button class="icon-settings display-settings">
-            <i class="ri-settings-3-line"></i>
-            <span class="sr-only">Settings</span>
+
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of mscmp_syst_db</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
           </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
         </div>
-
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
       </div>
+    </div>
 
-<h1>
+<div id="top-content">
+  <h1>
 
-  <span translate="no">MscmpSystDb.Datastore</span> 
-  <small class="app-vsn" translate="no">(mscmp_syst_db v0.1.0)</small>
+    <span translate="no">MscmpSystDb.Datastore</span> 
+    <small class="app-vsn" translate="no">(mscmp_syst_db v0.1.0)</small>
 
-</h1>
+  </h1>
 
 
-  <section id="moduledoc">
+    <section id="moduledoc">
 <p>Provides basic OTP related features for Datastores.</p><p>Functions in this module support running Datastores under supervision and
 creates a Datastore supervisor for managing Datastore Context worker
 processes.</p>
-  </section>
+    </section>
 
+</div>
 
   <section id="summary" class="details-list">
     <h1 class="section-heading">
@@ -154,7 +150,7 @@ processes.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#child_spec/2" translate="no">child_spec(datastore_options, opts \\ [])</a>
+        <a href="#child_spec/2" data-no-tooltip translate="no">child_spec(datastore_options, opts \\ [])</a>
 
       </div>
 
@@ -164,7 +160,7 @@ processes.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#start_link/1" translate="no">start_link(opts \\ [])</a>
+        <a href="#start_link/2" data-no-tooltip translate="no">start_link(datastore_options, opts \\ [])</a>
 
       </div>
 
@@ -190,7 +186,7 @@ processes.</p>
     <span id="child_spec/1"></span>
 
   <div class="detail-header">
-    <a href="#child_spec/2" class="detail-link" title="Link to this function">
+    <a href="#child_spec/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -219,23 +215,32 @@ invalid as there's no default value for the parameter (<code class="inline">data
 </h2>
 <ul><li><p><code class="inline">datastore_options</code> - a required Map of values which describe the
 Datastore and Datastore Context related connection options.  See
-<a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a> for more.</p></li><li><p><code class="inline">opts</code> - a Keyword list of various options accepted or required by the
-<a href="https://hexdocs.pm/elixir/DynamicSupervisor.html#start_link/1"><code class="inline">DynamicSupervisor.start_link/1</code></a> function.  Note that we provide some
-default values: <code class="inline">strategy: :one_for_one</code>, <code class="inline">restart: :transient</code>,
-<code class="inline">timeout: 60_000</code>, and the <code class="inline">:name</code> option is defaulted to the
-<code class="inline">datastore_options.datastore_name</code> value.</p></li></ul>
+<a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a> for more.</p></li><li><p><code class="inline">opts</code> - a Keyword list of options.  See the &quot;Options&quot; section for
+details.</p></li></ul><h2 id="child_spec/2-options" class="section-heading">
+  <a href="#child_spec/2-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options</span>
+</h2>
+<ul><li><p><code class="inline">:datastore_name</code> (<a href="https://hexdocs.pm/elixir/GenServer.html#t:name/0"><code class="inline">GenServer.name/0</code></a> or <code class="inline">nil</code>) - Specifies the name for the Datastore Supervisor. If this option is not
+provided, the <code class="inline">datastore_options.datastore_name</code> value will be used as
+the default name for the Datastore Supervisor.  If this value identifies a
+process registry (e.g. <code class="inline">{:via, Registry, {MyApp.Registry, :my_registry}}</code>),
+this registry will become the default registry for all Datastore Contexts;
+a valid <code class="inline">context_registry</code> value overrides this default.</p></li><li><p><code class="inline">:context_registry</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">module/0</code></a> or <code class="inline">nil</code>) - Specifies the name of a registry to use for registering named Datastore
+Contexts.</p></li><li><p><code class="inline">:strategy</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">atom/0</code></a>) - Specifies the restart strategy for the Datastore Supervisor. The default value is <code class="inline">:one_for_one</code>.</p></li><li><p><code class="inline">:restart</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">atom/0</code></a>) - Specifies the restart strategy for the Datastore Supervisor. The default value is <code class="inline">:transient</code>.</p></li><li><p><code class="inline">:timeout</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - Specifies the timeout value for the Datastore Supervisor. The default value is <code class="inline">60000</code>.</p></li></ul>
   </section>
 </section>
-<section class="detail" id="start_link/1">
+<section class="detail" id="start_link/2">
 
-    <span id="start_link/0"></span>
+    <span id="start_link/1"></span>
 
   <div class="detail-header">
-    <a href="#start_link/1" class="detail-link" title="Link to this function">
+    <a href="#start_link/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">start_link(opts \\ [])</h1>
+    <h1 class="signature" translate="no">start_link(datastore_options, opts \\ [])</h1>
 
 
   </div>
@@ -244,59 +249,69 @@ default values: <code class="inline">strategy: :one_for_one</code>, <code class=
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> start_link(<a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/elixir/Supervisor.html#t:on_start/0">Supervisor.on_start</a>()</pre>
+          <pre translate="no"><span class="attribute">@spec</span> start_link(<a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0">MscmpSystDb.Types.DatastoreOptions.t</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
+  <a href="https://hexdocs.pm/elixir/Supervisor.html#t:on_start/0">Supervisor.on_start</a>()</pre>
 
       </div>
 
 <p>Starts the Datastore Supervisor and its requested child Datastore Contexts.</p><p>When this function is called, a new <a href="https://hexdocs.pm/elixir/DynamicSupervisor.html"><code class="inline">DynamicSupervisor</code></a> for the datastore is
 started and any Datastore Contexts which are identified in the
 <code class="inline">datastore_options</code> are also started and places under the Datastore
-Supervisor.</p><h2 id="start_link/1-options" class="section-heading">
-  <a href="#start_link/1-options" class="hover-link">
+Supervisor.</p><h2 id="start_link/2-parameters" class="section-heading">
+  <a href="#start_link/2-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><p><code class="inline">datastore_options</code> - a required Map of values which describe the
+Datastore and Datastore Context related connection options.  See
+<a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a> for more.</p></li><li><p><code class="inline">opts</code> - See the &quot;Options&quot; section for
+details.</p></li></ul><h2 id="start_link/2-options" class="section-heading">
+  <a href="#start_link/2-options" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
   </a>
   <span class="text">Options</span>
 </h2>
-<ul><li><p><code class="inline">name</code> - establishes the name of the Datastore Supervisor and accepts any
-name which is valid according to the documentation for <a href="https://hexdocs.pm/elixir/GenServer.html"><code class="inline">GenServer</code></a>.  The
-default value for this parameter is the <code class="inline">datastore_name</code> value found in the
-<code class="inline">datastore_options</code> attribute which configures the Datastore.</p></li><li><p><code class="inline">datastore_options</code> - a required Map of values which describe the
-Datastore and Datastore Context related connection options.  See
-<a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a> for more.</p></li></ul>
+<ul><li><p><code class="inline">:datastore_name</code> (<a href="https://hexdocs.pm/elixir/GenServer.html#t:name/0"><code class="inline">GenServer.name/0</code></a> or <code class="inline">nil</code>) - Specifies the name for the Datastore Supervisor. If this option is not
+provided, the <code class="inline">datastore_options.datastore_name</code> value will be used as
+the default name for the Datastore Supervisor.  If this value identifies a
+process registry (e.g. <code class="inline">{:via, Registry, {MyApp.Registry, :my_registry}}</code>),
+this registry will become the default registry for all Datastore Contexts;
+a valid <code class="inline">context_registry</code> value overrides this default.</p></li><li><p><code class="inline">:context_registry</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">module/0</code></a> or <code class="inline">nil</code>) - Specifies the name of a registry to use for registering named Datastore
+Contexts.</p></li><li><p><code class="inline">:strategy</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">atom/0</code></a>) - Specifies the restart strategy for the Datastore Supervisor. The default value is <code class="inline">:one_for_one</code>.</p></li><li><p><code class="inline">:restart</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">atom/0</code></a>) - Specifies the restart strategy for the Datastore Supervisor. The default value is <code class="inline">:transient</code>.</p></li><li><p><code class="inline">:timeout</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - Specifies the timeout value for the Datastore Supervisor. The default value is <code class="inline">60000</code>.</p></li></ul>
   </section>
 </section>
 
     </div>
   </section>
 
-      <footer class="footer">
-        <p>
+    <footer class="footer">
+      <p>
 
-          <span class="line">
-            <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
-              Search HexDocs
-            </button>
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
 
-              <a href="mscmp_syst_db.epub" title="ePub version">
-                Download ePub version
-              </a>
+            <a href="mscmp_syst_db.epub" title="ePub version">
+              Download ePub version
+            </a>
 
-          </span>
-        </p>
+        </span>
+      </p>
 
-        <p class="built-using">
-          Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.31.1) for the
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.34.2) for the
 
-            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
-        </p>
-      </footer>
-    </div>
+      </p>
+
+    </footer>
   </div>
 </main>
 </div>
-
 
   </body>
 </html>

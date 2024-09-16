@@ -1,4 +1,6 @@
 defmodule MscmpSystDbTest do
+  @moduledoc false
+
   use ExUnit.Case, async: false
 
   alias Mix.Tasks.Builddb

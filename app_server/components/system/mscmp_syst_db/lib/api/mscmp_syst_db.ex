@@ -23,6 +23,79 @@ defmodule MscmpSystDb do
   alias MscmpSystDb.Types
   alias MscmpSystDb.Types.{ContextState, DatastoreContext, DatastoreOptions}
 
+  ##############################################################################
+  #
+  # Options Definition
+  #
+  #
+
+  option_defs = [
+    db_shutdown_timeout: [
+      type: :timeout,
+      default: 60_000,
+      doc: """
+      The timeout in milliseconds to wait for the database to shutdown prior to
+      raising an error.
+      """
+    ],
+    context_registry: [
+      type: {:or, [{:in, [:global]}, :atom]},
+      type_doc: "`:global` or `t:module/0`",
+      doc: """
+      Identifies a process registry which is used to register Datastore
+      Context (`Ecto.Repo`) instances. A valid value for this option can be
+      either `:global` to use the Erlang `:global` module or any other module
+      which implements a :global compatible API.
+      """
+    ],
+    migrations_schema: [
+      type: :string,
+      default: "ms_syst_db",
+      doc: """
+      The database maintenance schema used to host the migrations state table.
+      """
+    ],
+    migrations_table: [
+      type: :string,
+      default: "migrations",
+      doc: """
+      The name of the table used to store database migration state data.
+      """
+    ],
+    migrations_root_dir: [
+      type: :string,
+      default: "priv/database",
+      doc: """
+      The directory relative to the project directory where the database
+      migration files are located.
+      """
+    ],
+    datastore_name: [
+      type:
+        {:or,
+         [nil, :atom, {:tuple, [{:in, [:via]}, :atom, :any]}, {:tuple, [{:in, [:global]}, :any]}]},
+      type_doc: "`t:GenServer.name/0` or `nil`",
+      doc: """
+      Specifies the name for the Datastore Supervisor. If this option is not
+      provided, the `datastore_options.datastore_name` value will be used as
+      the default name for the Datastore Supervisor.  If this value identifies a
+      process registry (e.g. `{:via, Registry, {MyApp.Registry, :my_registry}}`),
+      this registry will become the default registry for all Datastore Contexts;
+      a valid `context_registry` value overrides this default.
+      """
+    ]
+  ]
+
+  ##############################################################################
+  #
+  # get_datastore_state
+  #
+  #
+
+  @get_datastore_state_opts NimbleOptions.new!(
+                              Keyword.take(option_defs, [:db_shutdown_timeout, :context_registry])
+                            )
+
   @doc section: :datastore_management
   @doc """
   Returns the state of the Datastore and its contexts based on the provided
@@ -46,7 +119,7 @@ defmodule MscmpSystDb do
 
   ## Options
 
-  #{Dba.get_get_datastore_state_opts_docs()}
+  #{NimbleOptions.docs(@get_datastore_state_opts)}
 
   ## Returns
 
@@ -70,7 +143,34 @@ defmodule MscmpSystDb do
   @spec get_datastore_state(DatastoreOptions.t(), Keyword.t()) ::
           {:ok, Types.database_state_values(), list(ContextState.t())}
           | {:error, MscmpSystError.t()}
-  defdelegate get_datastore_state(datastore_options, opts \\ []), to: Dba
+  def get_datastore_state(datastore_options, opts \\ []) do
+    case NimbleOptions.validate(opts, @get_datastore_state_opts) do
+      {:ok, validated_opts} ->
+        Dba.get_datastore_state(datastore_options, validated_opts)
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :parameter_error,
+           message: "Option validation error",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # create_datastore
+  #
+  #
+
+  @create_datastore_opts NimbleOptions.new!(
+                           Keyword.take(option_defs, [
+                             :db_shutdown_timeout,
+                             :migrations_schema,
+                             :migrations_table
+                           ])
+                         )
 
   @doc section: :datastore_management
   @doc """
@@ -93,7 +193,7 @@ defmodule MscmpSystDb do
 
   ## Options
 
-  #{Dba.get_create_datastore_opts_docs()}
+  #{NimbleOptions.docs(@create_datastore_opts)}
 
   ## Returns
 
@@ -114,7 +214,28 @@ defmodule MscmpSystDb do
   @spec create_datastore(DatastoreOptions.t(), Keyword.t()) ::
           {:ok, Types.database_state_values(), list(ContextState.t())}
           | {:error, MscmpSystError.t()}
-  defdelegate create_datastore(datastore_options, opts \\ []), to: Dba
+  def create_datastore(datastore_options, opts \\ []) do
+    case NimbleOptions.validate(opts, @create_datastore_opts) do
+      {:ok, validated_opts} ->
+        Dba.create_datastore(datastore_options, validated_opts)
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :parameter_error,
+           message: "Option validation error",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # drop_datastore
+  #
+  #
+
+  @drop_datastore_opts NimbleOptions.new!(Keyword.take(option_defs, [:db_shutdown_timeout]))
 
   @doc section: :datastore_management
   @doc """
@@ -142,7 +263,7 @@ defmodule MscmpSystDb do
 
   ## Options
 
-  #{Dba.get_drop_datastore_opts_docs()}
+  #{NimbleOptions.docs(@drop_datastore_opts)}
 
   ## Returns
 
@@ -158,7 +279,33 @@ defmodule MscmpSystDb do
   """
   @spec drop_datastore(DatastoreOptions.t()) :: :ok | {:error, MscmpSystError.t()}
   @spec drop_datastore(DatastoreOptions.t(), Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
-  defdelegate drop_datastore(datastore_options, opts \\ []), to: Dba
+  def drop_datastore(datastore_options, opts \\ []) do
+    case NimbleOptions.validate(opts, @drop_datastore_opts) do
+      {:ok, validated_opts} ->
+        Dba.drop_datastore(datastore_options, validated_opts)
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :parameter_error,
+           message: "Option validation error",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # get_datastore_context_states
+  #
+  #
+
+  @get_datastore_context_states_opts NimbleOptions.new!(
+                                       Keyword.take(option_defs, [
+                                         :db_shutdown_timeout,
+                                         :context_registry
+                                       ])
+                                     )
 
   @doc section: :datastore_management
   @doc """
@@ -182,7 +329,7 @@ defmodule MscmpSystDb do
 
   ## Options
 
-  #{Dba.get_get_datastore_context_states_opts_docs()}
+  #{NimbleOptions.docs(@get_datastore_context_states_opts)}
 
   ## Returns
 
@@ -202,7 +349,30 @@ defmodule MscmpSystDb do
           {:ok, nonempty_list(ContextState.t())} | {:error, MscmpSystError.t()}
   @spec get_datastore_context_states(DatastoreOptions.t(), Keyword.t()) ::
           {:ok, nonempty_list(ContextState.t())} | {:error, MscmpSystError.t()}
-  defdelegate get_datastore_context_states(datastore_options, opts \\ []), to: Dba
+  def get_datastore_context_states(datastore_options, opts \\ []) do
+    case NimbleOptions.validate(opts, @get_datastore_context_states_opts) do
+      {:ok, validated_opts} ->
+        Dba.get_datastore_context_states(datastore_options, validated_opts)
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :parameter_error,
+           message: "Option validation error",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # create_datastore_contexts
+  #
+  #
+
+  @create_datastore_contexts_opts NimbleOptions.new!(
+                                    Keyword.take(option_defs, [:db_shutdown_timeout])
+                                  )
 
   @doc section: :datastore_management
   @doc """
@@ -225,7 +395,7 @@ defmodule MscmpSystDb do
 
   ## Options
 
-  #{Dba.get_create_datastore_contexts_opts_docs()}
+  #{NimbleOptions.docs(@create_datastore_contexts_opts)}
 
   ## Returns
 
@@ -243,8 +413,30 @@ defmodule MscmpSystDb do
           nonempty_list(DatastoreContext.t()),
           Keyword.t()
         ) :: {:ok, nonempty_list(ContextState.t())} | {:error, MscmpSystError.t()}
-  defdelegate create_datastore_contexts(datastore_options, datastore_contexts, opts \\ []),
-    to: Dba
+  def create_datastore_contexts(datastore_options, datastore_contexts, opts \\ []) do
+    case NimbleOptions.validate(opts, @create_datastore_contexts_opts) do
+      {:ok, validated_opts} ->
+        Dba.create_datastore_contexts(datastore_options, datastore_contexts, validated_opts)
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :parameter_error,
+           message: "Option validation error",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # drop_datastore_contexts
+  #
+  #
+
+  @drop_datastore_contexts_opts NimbleOptions.new!(
+                                  Keyword.take(option_defs, [:db_shutdown_timeout])
+                                )
 
   @doc section: :datastore_management
   @doc """
@@ -268,7 +460,7 @@ defmodule MscmpSystDb do
 
   ## Options
 
-  #{Dba.get_drop_datastore_contexts_opts_docs()}
+  #{NimbleOptions.docs(@drop_datastore_contexts_opts)}
 
 
   ## Returns
@@ -285,7 +477,30 @@ defmodule MscmpSystDb do
           Keyword.t()
         ) ::
           :ok | {:error, MscmpSystError.t()}
-  defdelegate drop_datastore_contexts(datastore_options, datastore_contexts, opts \\ []), to: Dba
+  def drop_datastore_contexts(datastore_options, datastore_contexts, opts \\ []) do
+    case NimbleOptions.validate(opts, @drop_datastore_contexts_opts) do
+      {:ok, validated_opts} ->
+        Dba.drop_datastore_contexts(datastore_options, datastore_contexts, validated_opts)
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :parameter_error,
+           message: "Option validation error",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # get_datastore_version
+  #
+  #
+
+  @get_datastore_version_opts NimbleOptions.new!(
+                                Keyword.take(option_defs, [:db_shutdown_timeout])
+                              )
 
   @doc section: :datastore_migrations
   @doc """
@@ -320,7 +535,7 @@ defmodule MscmpSystDb do
 
   ## Options
 
-    #{Privileged.get_get_datastore_version_opts_docs()}
+    #{NimbleOptions.docs(@get_datastore_version_opts)}
 
   ## Returns
 
@@ -333,7 +548,35 @@ defmodule MscmpSystDb do
           {:ok, String.t()} | {:error, MscmpSystError.t()}
   @spec get_datastore_version(DatastoreOptions.t(), Keyword.t()) ::
           {:ok, String.t()} | {:error, MscmpSystError.t()}
-  defdelegate get_datastore_version(datastore_options, opts \\ []), to: Privileged
+  def get_datastore_version(datastore_options, opts \\ []) do
+    case NimbleOptions.validate(opts, @get_datastore_version_opts) do
+      {:ok, validated_opts} ->
+        Privileged.get_datastore_version(datastore_options, validated_opts)
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :parameter_error,
+           message: "Option validation error",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # upgrade_datastore
+  #
+  #
+
+  @upgrade_datastore_opts NimbleOptions.new!(
+                            Keyword.take(option_defs, [
+                              :db_shutdown_timeout,
+                              :migrations_root_dir,
+                              :migrations_schema,
+                              :migrations_table
+                            ])
+                          )
 
   @doc section: :datastore_migrations
   @doc """
@@ -359,7 +602,7 @@ defmodule MscmpSystDb do
 
   ## Options:
 
-    #{Privileged.get_upgrade_datastore_opts_docs()}
+    #{NimbleOptions.docs(@upgrade_datastore_opts)}
 
   ## Returns:
 
@@ -372,20 +615,37 @@ defmodule MscmpSystDb do
   """
   @spec upgrade_datastore(DatastoreOptions.t(), String.t(), Keyword.t()) ::
           {:error, MscmpSystError.t()} | {:ok, [binary()]}
-  @spec upgrade_datastore(
-          DatastoreOptions.t(),
-          String.t(),
-          Keyword.t(),
-          Keyword.t()
-        ) ::
+  @spec upgrade_datastore(DatastoreOptions.t(), String.t(), Keyword.t(), Keyword.t()) ::
           {:ok, [String.t()]} | {:error, MscmpSystError.t()}
-  defdelegate upgrade_datastore(
-                datastore_options,
-                datastore_type,
-                migration_bindings,
-                opts \\ []
-              ),
-              to: Privileged
+  def upgrade_datastore(datastore_options, datastore_type, migration_bindings, opts \\ []) do
+    case NimbleOptions.validate(opts, @upgrade_datastore_opts) do
+      {:ok, validated_opts} ->
+        Privileged.upgrade_datastore(
+          datastore_options,
+          datastore_type,
+          migration_bindings,
+          validated_opts
+        )
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :parameter_error,
+           message: "Option validation error",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # start_datastore
+  #
+  #
+
+  @start_datastore_opts NimbleOptions.new!(
+                          Keyword.take(option_defs, [:datastore_name, :context_registry])
+                        )
 
   @doc section: :service_management
   @doc """
@@ -401,7 +661,7 @@ defmodule MscmpSystDb do
 
   ## Options:
 
-    #{Datastore.get_start_datastore_opts_docs()}
+    #{NimbleOptions.docs(@start_datastore_opts)}
 
   ## Returns:
 
@@ -421,7 +681,28 @@ defmodule MscmpSystDb do
   @spec start_datastore(DatastoreOptions.t(), Keyword.t()) ::
           {:ok, :all_started | :some_started, list(Types.ContextState.t())}
           | {:error, MscmpSystError.t()}
-  defdelegate start_datastore(datastore_options, opts \\ []), to: Datastore
+  def start_datastore(datastore_options, opts \\ []) do
+    case NimbleOptions.validate(opts, @start_datastore_opts) do
+      {:ok, validated_opts} ->
+        Datastore.start_datastore(datastore_options, validated_opts)
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :parameter_error,
+           message: "Option validation error",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # start_datastore_context
+  #
+  #
+
+  @start_datastore_context_opts NimbleOptions.new!(Keyword.take(option_defs, [:context_registry]))
 
   @doc section: :service_management
   @doc """
@@ -440,7 +721,7 @@ defmodule MscmpSystDb do
 
   ## Options:
 
-    #{Datastore.get_start_datastore_opts_docs()}
+    #{NimbleOptions.docs(@start_datastore_context_opts)}
 
   ## Returns:
 
@@ -461,7 +742,30 @@ defmodule MscmpSystDb do
           Keyword.t()
         ) ::
           {:ok, pid()} | {:error, MscmpSystError.t()}
-  defdelegate start_datastore_context(datastore_options, context, opts \\ []), to: Datastore
+  def start_datastore_context(datastore_options, context, opts \\ []) do
+    case NimbleOptions.validate(opts, @start_datastore_context_opts) do
+      {:ok, validated_opts} ->
+        Datastore.start_datastore_context(datastore_options, context, validated_opts)
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :parameter_error,
+           message: "Option validation error",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # stop_datastore
+  #
+  #
+
+  @stop_datastore_opts NimbleOptions.new!(
+                         Keyword.take(option_defs, [:context_registry, :db_shutdown_timeout])
+                       )
 
   @doc section: :service_management
   @doc """
@@ -478,7 +782,7 @@ defmodule MscmpSystDb do
 
   ## Options
 
-    #{Datastore.get_stop_datastore_opts_docs()}
+    #{NimbleOptions.docs(@stop_datastore_opts)}
 
   ## Returns
 
@@ -499,8 +803,33 @@ defmodule MscmpSystDb do
           Keyword.t()
         ) ::
           :ok | {:error, MscmpSystError.t()}
-  defdelegate stop_datastore(datastore_options_or_contexts, opts \\ []),
-    to: Datastore
+  def stop_datastore(datastore_options_or_contexts, opts \\ []) do
+    case NimbleOptions.validate(opts, @stop_datastore_opts) do
+      {:ok, validated_opts} ->
+        Datastore.stop_datastore(datastore_options_or_contexts, validated_opts)
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :parameter_error,
+           message: "Option validation error",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # stop_datastore_context
+  #
+  #
+
+  @stop_datastore_context_opts NimbleOptions.new!(
+                                 Keyword.take(option_defs, [
+                                   :context_registry,
+                                   :db_shutdown_timeout
+                                 ])
+                               )
 
   @doc section: :service_management
   @doc """
@@ -516,7 +845,7 @@ defmodule MscmpSystDb do
 
   ## Options
 
-    #{Datastore.get_stop_datastore_opts_docs()}
+    #{NimbleOptions.docs(@stop_datastore_context_opts)}
 
   ## Returns
 
@@ -524,125 +853,16 @@ defmodule MscmpSystDb do
   """
   @spec stop_datastore_context(pid() | atom() | DatastoreContext.t()) :: :ok
   @spec stop_datastore_context(pid() | atom() | DatastoreContext.t(), Keyword.t()) :: :ok
-  defdelegate stop_datastore_context(context, opts \\ []),
-    to: Datastore
+  def stop_datastore_context(context, opts \\ []) do
+    opts = NimbleOptions.validate!(opts, @stop_datastore_context_opts)
+    Datastore.stop_datastore_context(context, opts)
+  end
 
-  @doc section: :query
-  @doc """
-  Executes a database query but returns no results.
-  """
-  @spec query_for_none(iodata()) :: :ok | {:error, MscmpSystError.t()}
-  @spec query_for_none(iodata(), [term()]) :: :ok | {:error, MscmpSystError.t()}
-  @spec query_for_none(iodata(), [term()], Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
-  defdelegate query_for_none(query, query_params \\ [], opts \\ []), to: Datastore
-
-  @doc section: :query
-  @doc """
-  Executes a database query but returns no results.  Raises on error.
-
-  """
-  @spec query_for_none!(iodata()) :: :ok
-  @spec query_for_none!(iodata(), [term()]) :: :ok
-  @spec query_for_none!(iodata(), [term()], Keyword.t()) :: :ok
-  defdelegate query_for_none!(query, query_params \\ [], opts \\ []), to: Datastore
-
-  @doc section: :query
-  @doc """
-  Executes a database query returning a single value.
-  """
-  @spec query_for_value(iodata()) ::
-          {:ok, any()} | {:error, MscmpSystError.t()}
-  @spec query_for_value(iodata(), [term()]) ::
-          {:ok, any()} | {:error, MscmpSystError.t()}
-  @spec query_for_value(iodata(), [term()], Keyword.t()) ::
-          {:ok, any()} | {:error, MscmpSystError.t()}
-  defdelegate query_for_value(query, query_params \\ [], opts \\ []), to: Datastore
-
-  @doc section: :query
-  @doc """
-  Executes a database query returning a single value.  Raises on error.
-  """
-  @spec query_for_value!(iodata()) :: any()
-  @spec query_for_value!(iodata(), [term()]) :: any()
-  @spec query_for_value!(iodata(), [term()], Keyword.t()) :: any()
-  defdelegate query_for_value!(query, query_params \\ [], opts \\ []), to: Datastore
-
-  @doc section: :query
-  @doc """
-  Executes a database query and returns a single row.
-  """
-  @spec query_for_one(iodata()) ::
-          {:ok, [any()]} | {:error, MscmpSystError.t()}
-  @spec query_for_one(iodata(), [term()]) ::
-          {:ok, [any()]} | {:error, MscmpSystError.t()}
-  @spec query_for_one(iodata(), [term()], Keyword.t()) ::
-          {:ok, [any()]} | {:error, MscmpSystError.t()}
-  defdelegate query_for_one(query, query_params \\ [], opts \\ []), to: Datastore
-
-  @doc section: :query
-  @doc """
-  Executes a database query and returns a single row.  Raises on error.
-  """
-  @spec query_for_one!(iodata()) :: [any()]
-  @spec query_for_one!(iodata(), [term()]) :: [any()]
-  @spec query_for_one!(iodata(), [term()], Keyword.t()) :: [any()]
-  defdelegate query_for_one!(query, query_params \\ [], opts \\ []), to: Datastore
-
-  @doc section: :query
-  @doc """
-  Executes a database query and returns all rows.
-  """
-  @spec query_for_many(iodata()) ::
-          {:ok,
-           %{
-             :rows => nil | [[term()] | binary()],
-             :num_rows => non_neg_integer(),
-             optional(atom()) => any()
-           }}
-          | {:error, MscmpSystError.t()}
-  @spec query_for_many(iodata(), [term()]) ::
-          {:ok,
-           %{
-             :rows => nil | [[term()] | binary()],
-             :num_rows => non_neg_integer(),
-             optional(atom()) => any()
-           }}
-          | {:error, MscmpSystError.t()}
-  @spec query_for_many(iodata(), [term()], Keyword.t()) ::
-          {:ok,
-           %{
-             :rows => nil | [[term()] | binary()],
-             :num_rows => non_neg_integer(),
-             optional(atom()) => any()
-           }}
-          | {:error, MscmpSystError.t()}
-  defdelegate query_for_many(query, query_params \\ [], opts \\ []), to: Datastore
-
-  @doc section: :query
-  @doc """
-  Executes a database query and returns all rows.  Raises on error.
-  """
-  @spec query_for_many!(iodata()) :: %{
-          :rows => nil | [[term()] | binary()],
-          :num_rows => non_neg_integer(),
-          optional(atom()) => any()
-        }
-  @spec query_for_many!(iodata(), [term()]) :: %{
-          :rows => nil | [[term()] | binary()],
-          :num_rows => non_neg_integer(),
-          optional(atom()) => any()
-        }
-  @spec query_for_many!(iodata(), [term()], Keyword.t()) :: %{
-          :rows => nil | [[term()] | binary()],
-          :num_rows => non_neg_integer(),
-          optional(atom()) => any()
-        }
-  defdelegate query_for_many!(query, query_params \\ [], opts \\ []), to: Datastore
-
-  # The API below largely duplicates the Ecto.Repo Queryable API and currently
-  # wraps it.  The expectation is whether or not we continue to use Ecto, we'd
-  # want our basic data access API to look really close to it since it would be
-  # reasonably familiar to other developers.
+  ##############################################################################
+  #
+  # put_datastore_context
+  #
+  #
 
   @doc section: :service_management
   @doc """
@@ -705,6 +925,12 @@ defmodule MscmpSystDb do
           atom() | pid()
   defdelegate put_datastore_context(context_registry, context), to: Datastore
 
+  ##############################################################################
+  #
+  # current_datastore_context
+  #
+  #
+
   @doc section: :service_management
   @doc """
   Retrieves either atom name or `t:pid/0` of the currently established Datastore
@@ -726,6 +952,153 @@ defmodule MscmpSystDb do
   @spec current_datastore_context :: atom() | pid() | nil
   defdelegate current_datastore_context(), to: Datastore
 
+  ##############################################################################
+  #
+  # query_for_none
+  #
+  #
+
+  @doc section: :query
+  @doc """
+  Executes a database query but returns no results.
+  """
+  @spec query_for_none(iodata()) :: :ok | {:error, MscmpSystError.t()}
+  @spec query_for_none(iodata(), [term()]) :: :ok | {:error, MscmpSystError.t()}
+  @spec query_for_none(iodata(), [term()], Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
+  defdelegate query_for_none(query, query_params \\ [], opts \\ []), to: Datastore
+
+  @doc section: :query
+  @doc """
+  Executes a database query but returns no results.  Raises on error.
+
+  """
+  @spec query_for_none!(iodata()) :: :ok
+  @spec query_for_none!(iodata(), [term()]) :: :ok
+  @spec query_for_none!(iodata(), [term()], Keyword.t()) :: :ok
+  defdelegate query_for_none!(query, query_params \\ [], opts \\ []), to: Datastore
+
+  ##############################################################################
+  #
+  # query_for_value
+  #
+  #
+
+  @doc section: :query
+  @doc """
+  Executes a database query returning a single value.
+  """
+  @spec query_for_value(iodata()) ::
+          {:ok, any()} | {:error, MscmpSystError.t()}
+  @spec query_for_value(iodata(), [term()]) ::
+          {:ok, any()} | {:error, MscmpSystError.t()}
+  @spec query_for_value(iodata(), [term()], Keyword.t()) ::
+          {:ok, any()} | {:error, MscmpSystError.t()}
+  defdelegate query_for_value(query, query_params \\ [], opts \\ []), to: Datastore
+
+  @doc section: :query
+  @doc """
+  Executes a database query returning a single value.  Raises on error.
+  """
+  @spec query_for_value!(iodata()) :: any()
+  @spec query_for_value!(iodata(), [term()]) :: any()
+  @spec query_for_value!(iodata(), [term()], Keyword.t()) :: any()
+  defdelegate query_for_value!(query, query_params \\ [], opts \\ []), to: Datastore
+
+  ##############################################################################
+  #
+  # query_for_one
+  #
+  #
+
+  @doc section: :query
+  @doc """
+  Executes a database query and returns a single row.
+  """
+  @spec query_for_one(iodata()) ::
+          {:ok, [any()]} | {:error, MscmpSystError.t()}
+  @spec query_for_one(iodata(), [term()]) ::
+          {:ok, [any()]} | {:error, MscmpSystError.t()}
+  @spec query_for_one(iodata(), [term()], Keyword.t()) ::
+          {:ok, [any()]} | {:error, MscmpSystError.t()}
+  defdelegate query_for_one(query, query_params \\ [], opts \\ []), to: Datastore
+
+  @doc section: :query
+  @doc """
+  Executes a database query and returns a single row.  Raises on error.
+  """
+  @spec query_for_one!(iodata()) :: [any()]
+  @spec query_for_one!(iodata(), [term()]) :: [any()]
+  @spec query_for_one!(iodata(), [term()], Keyword.t()) :: [any()]
+  defdelegate query_for_one!(query, query_params \\ [], opts \\ []), to: Datastore
+
+  ##############################################################################
+  #
+  # query_for_many
+  #
+  #
+
+  @doc section: :query
+  @doc """
+  Executes a database query and returns all rows.
+  """
+  @spec query_for_many(iodata()) ::
+          {:ok,
+           %{
+             :rows => nil | [[term()] | binary()],
+             :num_rows => non_neg_integer(),
+             optional(atom()) => any()
+           }}
+          | {:error, MscmpSystError.t()}
+  @spec query_for_many(iodata(), [term()]) ::
+          {:ok,
+           %{
+             :rows => nil | [[term()] | binary()],
+             :num_rows => non_neg_integer(),
+             optional(atom()) => any()
+           }}
+          | {:error, MscmpSystError.t()}
+  @spec query_for_many(iodata(), [term()], Keyword.t()) ::
+          {:ok,
+           %{
+             :rows => nil | [[term()] | binary()],
+             :num_rows => non_neg_integer(),
+             optional(atom()) => any()
+           }}
+          | {:error, MscmpSystError.t()}
+  defdelegate query_for_many(query, query_params \\ [], opts \\ []), to: Datastore
+
+  @doc section: :query
+  @doc """
+  Executes a database query and returns all rows.  Raises on error.
+  """
+  @spec query_for_many!(iodata()) :: %{
+          :rows => nil | [[term()] | binary()],
+          :num_rows => non_neg_integer(),
+          optional(atom()) => any()
+        }
+  @spec query_for_many!(iodata(), [term()]) :: %{
+          :rows => nil | [[term()] | binary()],
+          :num_rows => non_neg_integer(),
+          optional(atom()) => any()
+        }
+  @spec query_for_many!(iodata(), [term()], Keyword.t()) :: %{
+          :rows => nil | [[term()] | binary()],
+          :num_rows => non_neg_integer(),
+          optional(atom()) => any()
+        }
+  defdelegate query_for_many!(query, query_params \\ [], opts \\ []), to: Datastore
+
+  # The API below largely duplicates the Ecto.Repo Queryable API and currently
+  # wraps it.  The expectation is whether or not we continue to use Ecto, we'd
+  # want our basic data access API to look really close to it since it would be
+  # reasonably familiar to other developers.
+
+  ##############################################################################
+  #
+  # transaction
+  #
+  #
+
   @doc section: :query
   @doc """
   A convenience function that currently wraps the `c:Ecto.Repo.transaction/2`
@@ -735,6 +1108,12 @@ defmodule MscmpSystDb do
   @spec transaction(fun | Ecto.Multi.t(), Keyword.t()) ::
           {:error, MscmpSystError.t()} | {:ok, any}
   defdelegate transaction(job, opts \\ []), to: Datastore, as: :ecto_transaction
+
+  ##############################################################################
+  #
+  # record_count
+  #
+  #
 
   @doc section: :query
   @doc """

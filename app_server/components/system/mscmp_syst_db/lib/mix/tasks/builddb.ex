@@ -164,10 +164,18 @@ defmodule Mix.Tasks.Builddb do
     c: :clean
   ]
 
+  ##############################################################################
+  #
+  # build_migrations
+  #
+  #
+
   @spec run([binary()]) :: :ok
   def run(args) do
     with {opts_cli, _, _} <- OptionParser.parse(args, aliases: @aliases, strict: @switches),
-         {:ok, migrations_created} <- call_build_migrations(opts_cli) do
+         {:ok, validated_opts} <- get_migration_options(opts_cli),
+         {:ok, migrations_created} <-
+           Migrations.build_migrations(validated_opts[:datastore_type], validated_opts) do
       migrations_created
       |> Enum.sort()
       |> Enum.each(&IO.puts/1)
@@ -182,33 +190,25 @@ defmodule Mix.Tasks.Builddb do
     end
   end
 
-  defp call_build_migrations(opts_cli) do
-    source_root_dir = Keyword.get(opts_cli, :source, @default_src)
-
-    datastore_type =
-      opts_cli
-      |> Keyword.get(:type)
-      |> validate_type()
-
-    migrations_root_dir = Keyword.get(opts_cli, :destination, @default_dst)
-
-    clean = Keyword.get(opts_cli, :clean, false)
-
-    migration_options = [
-      source_root_dir: source_root_dir,
-      migrations_root_dir: migrations_root_dir,
-      clean_migrations: clean
+  defp get_migration_options(opts_cli) do
+    resolved_opts = [
+      source_root_dir: Keyword.get(opts_cli, :source, @default_src),
+      migrations_root_dir: Keyword.get(opts_cli, :destination, @default_dst),
+      clean_migrations: Keyword.get(opts_cli, :clean, false),
+      datastore_type: Keyword.get(opts_cli, :type, nil)
     ]
 
-    Migrations.build_migrations(datastore_type, migration_options)
-  end
+    case resolved_opts[:datastore_type] do
+      datastore_type when is_binary(datastore_type) ->
+        {:ok, resolved_opts}
 
-  defp validate_type(type) when is_binary(type), do: type
-
-  defp validate_type(bad_options) do
-    raise MscmpSystError,
-      code: :invalid_parameter,
-      message: "The '--type' parameter was missing or invalid but is required.",
-      cause: bad_options
+      invalid_type ->
+        {:error,
+         %MscmpSystError{
+           code: :invalid_parameter,
+           message: "The '--type' parameter was missing or invalid but is required.",
+           cause: invalid_type
+         }}
+    end
   end
 end
