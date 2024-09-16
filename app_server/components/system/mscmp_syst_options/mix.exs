@@ -56,7 +56,7 @@ defmodule MscmpSystOptions.MixProject do
           mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db",
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error"
         ],
-        groups_for_functions: [
+        groups_for_docs: [
           "File Handling": &(&1[:section] == :file_handling),
           Parsing: &(&1[:section] == :options_parsing)
         ],

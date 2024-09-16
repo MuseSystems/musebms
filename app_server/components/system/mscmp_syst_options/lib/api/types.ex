@@ -24,4 +24,9 @@ defmodule MscmpSystOptions.Types do
   under the `available_server_pools` configuration point.
   """
   @type server_pool :: String.t()
+
+  @typedoc """
+  The canonical type for the Options object.
+  """
+  @type options() :: map()
 end

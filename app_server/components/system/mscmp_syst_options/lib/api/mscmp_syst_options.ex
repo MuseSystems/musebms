@@ -21,6 +21,12 @@ defmodule MscmpSystOptions do
   alias MscmpSystOptions.Impl.OptionsParser
   alias MscmpSystOptions.Types
 
+  ##############################################################################
+  #
+  # get_options
+  #
+  #
+
   @doc section: :file_handling
   @doc """
   Parses and returns the contents of a TOML file at `options_file_path` via a
@@ -140,6 +146,12 @@ defmodule MscmpSystOptions do
   @spec get_options!(String.t()) :: map()
   defdelegate get_options!(options_file_path), to: OptionsFile
 
+  ##############################################################################
+  #
+  # get_global_dbserver_name
+  #
+  #
+
   @doc section: :options_parsing
   @doc """
   Returns the name of the database server which hosts the global database.
@@ -160,6 +172,12 @@ defmodule MscmpSystOptions do
         }) :: String.t()
   defdelegate get_global_dbserver_name(options), to: OptionsParser
 
+  ##############################################################################
+  #
+  # get_global_dbserver
+  #
+  #
+
   @doc section: :options_parsing
   @doc """
   Returns the `t:MscmpSystDb.Types.DbServer.t/0` data for the database
@@ -177,6 +195,12 @@ defmodule MscmpSystOptions do
   """
   @spec get_global_dbserver(map()) :: MscmpSystDb.Types.DbServer.t()
   defdelegate get_global_dbserver(options), to: OptionsParser
+
+  ##############################################################################
+  #
+  # get_global_db_password
+  #
+  #
 
   @doc section: :options_parsing
   @doc """
@@ -206,6 +230,12 @@ defmodule MscmpSystOptions do
         }) :: String.t()
   defdelegate get_global_db_password(options), to: OptionsParser
 
+  ##############################################################################
+  #
+  # get_global_db_pool_size
+  #
+  #
+
   @doc section: :options_parsing
   @doc """
   Returns the number of connections to the global database that should be
@@ -226,6 +256,12 @@ defmodule MscmpSystOptions do
           optional(any()) => any()
         }) :: non_neg_integer()
   defdelegate get_global_db_pool_size(options), to: OptionsParser
+
+  ##############################################################################
+  #
+  # get_global_pepper_value
+  #
+  #
 
   @doc section: :options_parsing
   @doc """
@@ -255,6 +291,12 @@ defmodule MscmpSystOptions do
         }) :: binary()
   defdelegate get_global_pepper_value(options), to: OptionsParser
 
+  ##############################################################################
+  #
+  # list_available_server_pools
+  #
+  #
+
   @doc section: :options_parsing
   @doc """
   Returns the list of available server pools configured in the options file.
@@ -270,6 +312,12 @@ defmodule MscmpSystOptions do
   """
   @spec list_available_server_pools(map()) :: list(Types.server_pool())
   defdelegate list_available_server_pools(options), to: OptionsParser
+
+  ##############################################################################
+  #
+  # list_dbservers
+  #
+  #
 
   @doc section: :options_parsing
   @doc """
@@ -340,11 +388,19 @@ defmodule MscmpSystOptions do
       ]
 
   """
+  @spec list_dbservers(%{required(:dbserver) => map(), optional(any()) => any()}) ::
+          list(MscmpSystDb.Types.DbServer.t())
   @spec list_dbservers(
           %{required(:dbserver) => map(), optional(any()) => any()},
           list(Types.server_pool())
         ) :: list(MscmpSystDb.Types.DbServer.t())
   defdelegate list_dbservers(options, filters \\ []), to: OptionsParser
+
+  ##############################################################################
+  #
+  # get_dbserver_by_name
+  #
+  #
 
   @doc section: :options_parsing
   @doc """
