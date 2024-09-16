@@ -20,6 +20,12 @@ defmodule MscmpSystNetwork do
   alias MscmpSystNetwork.Impl
   alias MscmpSystNetwork.Types
 
+  ##############################################################################
+  #
+  # parse
+  #
+  #
+
   @doc section: :parse_api
   @doc """
   Parses common IP address and subnet text expressions from a string.
@@ -172,6 +178,12 @@ defmodule MscmpSystNetwork do
   @spec parse!(String.t()) :: Types.addr_structs()
   defdelegate parse!(addr_string), to: Impl.Ip
 
+  ##############################################################################
+  #
+  # sigil_i
+  #
+  #
+
   @doc section: :parse_api
   @doc """
   Handles the ~i sigil for IP addresses.
@@ -223,6 +235,12 @@ defmodule MscmpSystNetwork do
   @spec sigil_i(String.t(), list()) :: Types.addr_structs()
   defdelegate sigil_i(addr_string, modifiers), to: Impl.Ip, as: :parse!
 
+  ##############################################################################
+  #
+  # to_struct
+  #
+  #
+
   @doc section: :parse_api
   @doc """
   Turns an Erlang `t::inet.ip_address/0` tuple into either a
@@ -268,6 +286,12 @@ defmodule MscmpSystNetwork do
   #
   # ==============================================================================================
 
+  ##############################################################################
+  #
+  # to_string
+  #
+  #
+
   @doc section: :protocol_api
   @doc """
   Converts an IP address struct implementing the `MscmpSystNetwork.Protocol` to
@@ -310,6 +334,12 @@ defmodule MscmpSystNetwork do
   @spec to_string(Types.addr_structs()) :: String.t()
   defdelegate to_string(addr_struct), to: MscmpSystNetwork.Protocol
 
+  ##############################################################################
+  #
+  # get_netmask
+  #
+  #
+
   @doc section: :protocol_api
   @doc """
   Retrieves the network masking bits (IPv4 subnet mask or IPv6 prefix).
@@ -343,6 +373,12 @@ defmodule MscmpSystNetwork do
   @spec get_netmask(Types.IpV4.t()) :: Types.ipv4_addr()
   @spec get_netmask(Types.IpV6.t()) :: Types.ipv6_addr()
   defdelegate get_netmask(addr_struct), to: MscmpSystNetwork.Protocol
+
+  ##############################################################################
+  #
+  # get_network
+  #
+  #
 
   @doc section: :protocol_api
   @doc """
@@ -378,6 +414,12 @@ defmodule MscmpSystNetwork do
   @spec get_network(Types.IpV4.t()) :: Types.ipv4_addr() | nil
   @spec get_network(Types.IpV6.t()) :: Types.ipv6_addr() | nil
   defdelegate get_network(addr_struct), to: MscmpSystNetwork.Protocol
+
+  ##############################################################################
+  #
+  # get_host
+  #
+  #
 
   @doc section: :protocol_api
   @doc """
@@ -415,6 +457,12 @@ defmodule MscmpSystNetwork do
   @spec get_host(Types.IpV4.t()) :: Types.ipv4_addr() | nil
   @spec get_host(Types.IpV6.t()) :: Types.ipv6_addr() | nil
   defdelegate get_host(addr_struct), to: MscmpSystNetwork.Protocol
+
+  ##############################################################################
+  #
+  # host?
+  #
+  #
 
   @doc section: :protocol_api
   @doc """
@@ -463,6 +511,12 @@ defmodule MscmpSystNetwork do
   @spec host?(Types.addr_structs()) :: boolean()
   defdelegate host?(addr_struct), to: MscmpSystNetwork.Protocol
 
+  ##############################################################################
+  #
+  # network?
+  #
+  #
+
   @doc section: :protocol_api
   @doc """
   Evaluates an IP address struct to see if it represents an entire network or
@@ -510,6 +564,12 @@ defmodule MscmpSystNetwork do
   """
   @spec network?(Types.addr_structs()) :: boolean()
   defdelegate network?(addr_struct), to: MscmpSystNetwork.Protocol
+
+  ##############################################################################
+  #
+  # in_network?
+  #
+  #
 
   @doc section: :protocol_api
   @doc """
@@ -564,6 +624,12 @@ defmodule MscmpSystNetwork do
   @spec in_network?(Types.IpV4.t(), Types.IpV4.t()) :: boolean()
   @spec in_network?(Types.IpV6.t(), Types.IpV6.t()) :: boolean()
   defdelegate in_network?(test_addr, network_addr), to: MscmpSystNetwork.Protocol
+
+  ##############################################################################
+  #
+  # in_range?
+  #
+  #
 
   @doc section: :protocol_api
   @doc """

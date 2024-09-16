@@ -4,22 +4,19 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.31.1">
+    <meta name="generator" content="ExDoc v0.34.2">
     <meta name="project" content="mscmp_syst_network v0.1.0">
 
 
     <title>MscmpSystNetwork — mscmp_syst_network v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-FM2CSD74.css" />
+    <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-43PMFBC7.js"></script>
+    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
     <script src="dist/sidebar_items-43DBF1A0.js"></script>
-
-      <script src="docs_config.js"></script>
-
-    <script async src="dist/html-L4O5OK2K.js"></script>
-
+    <script src="docs_config.js"></script>
+    <script async src="dist/html-YIPIRHGU.js"></script>
 
   </head>
   <body data-type="modules" class="page-module">
@@ -37,13 +34,11 @@
       } catch (error) { }
     </script>
 
-<div class="main">
+<div class="body-wrapper">
 
 <button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
   <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
 </button>
-
-<div class="background-layer"></div>
 
 <nav id="sidebar" class="sidebar">
 
@@ -89,41 +84,41 @@ Pages
 
 <main class="content">
   <output role="status" id="toast"></output>
-  <div class="content-outer">
-    <div id="content" class="content-inner">
-      <div class="top-search">
-        <div class="search-settings">
-          <form class="search-bar" action="search.html">
-            <label class="search-label">
-              <span class="sr-only">Search documentation of mscmp_syst_network</span>
-              <input name="q" type="text" class="search-input" placeholder="Search Documentation (press /)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-            </label>
-            <button type="submit" class="search-button" aria-label="Submit Search">
-              <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
-            </button>
-            <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
-              <i class="ri-close-line ri-lg" title="Cancel search"></i>
-            </button>
-          </form>
-          <div class="autocomplete">
-          </div>
-          <button class="icon-settings display-settings">
-            <i class="ri-settings-3-line"></i>
-            <span class="sr-only">Settings</span>
+
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of mscmp_syst_network</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
           </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
         </div>
-
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
       </div>
+    </div>
 
-<h1>
+<div id="top-content">
+  <h1>
 
-  <span translate="no">MscmpSystNetwork</span> 
-  <small class="app-vsn" translate="no">(mscmp_syst_network v0.1.0)</small>
+    <span translate="no">MscmpSystNetwork</span> 
+    <small class="app-vsn" translate="no">(mscmp_syst_network v0.1.0)</small>
 
-</h1>
+  </h1>
 
 
-  <section id="moduledoc">
+    <section id="moduledoc">
 <p>Simple IP address handling and convenience functionality.</p><p>IP addresses in Erlang, and by extension Elixir, are expressed as tuples with an element reserved
 for each segment of the IP address.  This works well enough, but departs from the standard CIDR
 notation used by most professionals.  In fact, the Erlang/Elixir standard library for dealing with
@@ -142,17 +137,18 @@ knowledge.</p></blockquote><h2 id="module-prior-work" class="section-heading">
   </a>
   <span class="text">Prior Work</span>
 </h2>
-<p>The <a href="MscmpSystNetwork.html#content"><code class="inline">MscmpSystNetwork</code></a> library was inspired by and is a re-working of Lambda, Inc.'s' and Isaac
+<p>The <a href="MscmpSystNetwork.html"><code class="inline">MscmpSystNetwork</code></a> library was inspired by and is a re-working of Lambda, Inc.'s' and Isaac
 Yonemoto's <a href="https://github.com/ityonemo/net_address"><code class="inline">net_address</code></a> Elixir library.  The Muse
 Systems  Business Management System originally used the <code class="inline">net_address</code> library, but the library
-appears to no longer be maintained and so is being replaced by <a href="MscmpSystNetwork.html#content"><code class="inline">MscmpSystNetwork</code></a> in the MuseBMS
-project. <a href="MscmpSystNetwork.html#content"><code class="inline">MscmpSystNetwork</code></a> does use some code from <code class="inline">net_address</code>.  <a href="MscmpSystNetwork.html#content"><code class="inline">MscmpSystNetwork</code></a> offers
+appears to be infrequently maintained and so is being replaced by <a href="MscmpSystNetwork.html"><code class="inline">MscmpSystNetwork</code></a> in the MuseBMS
+project. <a href="MscmpSystNetwork.html"><code class="inline">MscmpSystNetwork</code></a> does use some code from <code class="inline">net_address</code>.  <a href="MscmpSystNetwork.html"><code class="inline">MscmpSystNetwork</code></a> offers
 significantly less functionality than <code class="inline">net_address</code> as much of that library's functionality is not
 needed in the MuseBMS.</p><p>This library is also influenced by Bryan Weber's <a href="https://github.com/Cobenian/inet_cidr"><code class="inline">inet_cidr</code></a>
 Elixir library, though to a much lesser extent than <code class="inline">net_address</code>.</p><p>In the end, much of the heavy lifting is done by the Erlang <a href="https://www.erlang.org/doc/man/inet.html"><code class="inline">:inet</code></a>
 library.</p>
-  </section>
+    </section>
 
+</div>
 
   <section id="summary" class="details-list">
     <h1 class="section-heading">
@@ -168,7 +164,7 @@ library.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#parse/1" translate="no">parse(addr_string)</a>
+        <a href="#parse/1" data-no-tooltip translate="no">parse(addr_string)</a>
 
       </div>
 
@@ -178,7 +174,7 @@ library.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#parse!/1" translate="no">parse!(addr_string)</a>
+        <a href="#parse!/1" data-no-tooltip translate="no">parse!(addr_string)</a>
 
       </div>
 
@@ -189,7 +185,7 @@ an exception when there are errors.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#sigil_i/2" translate="no">sigil_i(addr_string, modifiers)</a>
+        <a href="#sigil_i/2" data-no-tooltip translate="no">sigil_i(addr_string, modifiers)</a>
 
       </div>
 
@@ -199,11 +195,11 @@ an exception when there are errors.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#to_struct/2" translate="no">to_struct(addr, mask \\ nil)</a>
+        <a href="#to_struct/2" data-no-tooltip translate="no">to_struct(addr, mask \\ nil)</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>Turns an Erlang <a href="https://www.erlang.org/doc/man/inet.html#type-ip_address"><code class="inline">:inet.ip_address/0</code></a> tuple into either a
+        <div class="summary-synopsis"><p>Turns an Erlang <a href="https://www.erlang.org/doc/apps/kernel/inet.html#t:ip_address/0"><code class="inline">:inet.ip_address/0</code></a> tuple into either a
 <a href="MscmpSystNetwork.Types.IpV4.html#t:t/0"><code class="inline">MscmpSystNetwork.Types.IpV4.t/0</code></a> or <a href="MscmpSystNetwork.Types.IpV6.html#t:t/0"><code class="inline">MscmpSystNetwork.Types.IpV6.t/0</code></a>
 struct.</p></div>
 
@@ -217,7 +213,7 @@ struct.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_host/1" translate="no">get_host(addr_struct)</a>
+        <a href="#get_host/1" data-no-tooltip translate="no">get_host(addr_struct)</a>
 
       </div>
 
@@ -228,7 +224,7 @@ represents a subnet/prefix.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_netmask/1" translate="no">get_netmask(addr_struct)</a>
+        <a href="#get_netmask/1" data-no-tooltip translate="no">get_netmask(addr_struct)</a>
 
       </div>
 
@@ -238,7 +234,7 @@ represents a subnet/prefix.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_network/1" translate="no">get_network(addr_struct)</a>
+        <a href="#get_network/1" data-no-tooltip translate="no">get_network(addr_struct)</a>
 
       </div>
 
@@ -248,7 +244,7 @@ represents a subnet/prefix.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#host?/1" translate="no">host?(addr_struct)</a>
+        <a href="#host?/1" data-no-tooltip translate="no">host?(addr_struct)</a>
 
       </div>
 
@@ -258,7 +254,7 @@ represents a subnet/prefix.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#in_network?/2" translate="no">in_network?(test_addr, network_addr)</a>
+        <a href="#in_network?/2" data-no-tooltip translate="no">in_network?(test_addr, network_addr)</a>
 
       </div>
 
@@ -268,7 +264,7 @@ represents a subnet/prefix.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#in_range?/3" translate="no">in_range?(test_addr, low_addr, high_addr)</a>
+        <a href="#in_range?/3" data-no-tooltip translate="no">in_range?(test_addr, low_addr, high_addr)</a>
 
       </div>
 
@@ -278,7 +274,7 @@ represents a subnet/prefix.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#network?/1" translate="no">network?(addr_struct)</a>
+        <a href="#network?/1" data-no-tooltip translate="no">network?(addr_struct)</a>
 
       </div>
 
@@ -289,7 +285,7 @@ subnet rather than a host.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#to_string/1" translate="no">to_string(addr_struct)</a>
+        <a href="#to_string/1" data-no-tooltip translate="no">to_string(addr_struct)</a>
 
       </div>
 
@@ -314,7 +310,7 @@ its common string representation using CIDR notation.</p></div>
 <section class="detail" id="parse/1">
 
   <div class="detail-header">
-    <a href="#parse/1" class="detail-link" title="Link to this function">
+    <a href="#parse/1" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -357,69 +353,69 @@ subnet in CIDR notation.  Passed as a string.</li></ul><h2 id="parse/1-examples"
   </a>
   <span class="text">Examples</span>
 </h2>
-<p>  IPv4 addresses</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse</span><span class="p" data-group-id="9587160417-1">(</span><span class="s">&quot;192.168.10.10&quot;</span><span class="p" data-group-id="9587160417-1">)</span><span class="w">
-</span><span class="p" data-group-id="9587160417-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9587160417-3">%</span><span class="nc" data-group-id="9587160417-3">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="9587160417-3">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9587160417-4">{</span><span class="mi">192</span><span class="p">,</span><span class="w"> </span><span class="mi">168</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="9587160417-4">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p" data-group-id="9587160417-3">}</span><span class="p" data-group-id="9587160417-2">}</span><span class="w">
+<p>  IPv4 addresses</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse</span><span class="p" data-group-id="0060509273-1">(</span><span class="s">&quot;192.168.10.10&quot;</span><span class="p" data-group-id="0060509273-1">)</span><span class="w">
+</span><span class="p" data-group-id="0060509273-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0060509273-3">%</span><span class="nc" data-group-id="0060509273-3">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="0060509273-3">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0060509273-4">{</span><span class="mi">192</span><span class="p">,</span><span class="w"> </span><span class="mi">168</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="0060509273-4">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p" data-group-id="0060509273-3">}</span><span class="p" data-group-id="0060509273-2">}</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse</span><span class="p" data-group-id="9587160417-5">(</span><span class="s">&quot;10.1.1.10/32&quot;</span><span class="p" data-group-id="9587160417-5">)</span><span class="w">
-</span><span class="p" data-group-id="9587160417-6">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9587160417-7">%</span><span class="nc" data-group-id="9587160417-7">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="9587160417-7">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9587160417-8">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="9587160417-8">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p" data-group-id="9587160417-7">}</span><span class="p" data-group-id="9587160417-6">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse</span><span class="p" data-group-id="0060509273-5">(</span><span class="s">&quot;10.1.1.10/32&quot;</span><span class="p" data-group-id="0060509273-5">)</span><span class="w">
+</span><span class="p" data-group-id="0060509273-6">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0060509273-7">%</span><span class="nc" data-group-id="0060509273-7">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="0060509273-7">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0060509273-8">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="0060509273-8">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p" data-group-id="0060509273-7">}</span><span class="p" data-group-id="0060509273-6">}</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse</span><span class="p" data-group-id="9587160417-9">(</span><span class="s">&quot;10.1.1.11/8&quot;</span><span class="p" data-group-id="9587160417-9">)</span><span class="w">
-</span><span class="p" data-group-id="9587160417-10">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9587160417-11">%</span><span class="nc" data-group-id="9587160417-11">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="9587160417-11">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9587160417-12">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p" data-group-id="9587160417-12">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p" data-group-id="9587160417-11">}</span><span class="p" data-group-id="9587160417-10">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse</span><span class="p" data-group-id="0060509273-9">(</span><span class="s">&quot;10.1.1.11/8&quot;</span><span class="p" data-group-id="0060509273-9">)</span><span class="w">
+</span><span class="p" data-group-id="0060509273-10">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0060509273-11">%</span><span class="nc" data-group-id="0060509273-11">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="0060509273-11">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0060509273-12">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p" data-group-id="0060509273-12">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p" data-group-id="0060509273-11">}</span><span class="p" data-group-id="0060509273-10">}</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse</span><span class="p" data-group-id="9587160417-13">(</span><span class="s">&quot;172.16.0.0/16&quot;</span><span class="p" data-group-id="9587160417-13">)</span><span class="w">
-</span><span class="p" data-group-id="9587160417-14">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9587160417-15">%</span><span class="nc" data-group-id="9587160417-15">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="9587160417-15">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9587160417-16">{</span><span class="mi">172</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="9587160417-16">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p" data-group-id="9587160417-15">}</span><span class="p" data-group-id="9587160417-14">}</span></code></pre><p>  IPv4 Error Example</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse</span><span class="p" data-group-id="5577033953-1">(</span><span class="s">&quot;192.618.10.14/32&quot;</span><span class="p" data-group-id="5577033953-1">)</span><span class="w">
-</span><span class="p" data-group-id="5577033953-2">{</span><span class="ss">:error</span><span class="p">,</span><span class="w">
- </span><span class="p" data-group-id="5577033953-3">%</span><span class="nc" data-group-id="5577033953-3">MscmpSystError</span><span class="p" data-group-id="5577033953-3">{</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse</span><span class="p" data-group-id="0060509273-13">(</span><span class="s">&quot;172.16.0.0/16&quot;</span><span class="p" data-group-id="0060509273-13">)</span><span class="w">
+</span><span class="p" data-group-id="0060509273-14">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0060509273-15">%</span><span class="nc" data-group-id="0060509273-15">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="0060509273-15">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0060509273-16">{</span><span class="mi">172</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="0060509273-16">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p" data-group-id="0060509273-15">}</span><span class="p" data-group-id="0060509273-14">}</span></code></pre><p>  IPv4 Error Example</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse</span><span class="p" data-group-id="8981064461-1">(</span><span class="s">&quot;192.618.10.14/32&quot;</span><span class="p" data-group-id="8981064461-1">)</span><span class="w">
+</span><span class="p" data-group-id="8981064461-2">{</span><span class="ss">:error</span><span class="p">,</span><span class="w">
+ </span><span class="p" data-group-id="8981064461-3">%</span><span class="nc" data-group-id="8981064461-3">MscmpSystError</span><span class="p" data-group-id="8981064461-3">{</span><span class="w">
    </span><span class="ss">code</span><span class="p">:</span><span class="w"> </span><span class="ss">:undefined_error</span><span class="p">,</span><span class="w">
    </span><span class="ss">message</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Failure parsing IP address or subnet address string.&quot;</span><span class="p">,</span><span class="w">
-   </span><span class="ss">cause</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5577033953-4">%</span><span class="nc" data-group-id="5577033953-4">MatchError</span><span class="p" data-group-id="5577033953-4">{</span><span class="ss">term</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5577033953-5">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="ss">:einval</span><span class="p" data-group-id="5577033953-5">}</span><span class="p" data-group-id="5577033953-4">}</span><span class="w">
- </span><span class="p" data-group-id="5577033953-3">}</span><span class="p" data-group-id="5577033953-2">}</span></code></pre><p>  IPv6 addresses</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse</span><span class="p" data-group-id="4580253888-1">(</span><span class="s">&quot;fd9b:77f8:714d:cabb::1&quot;</span><span class="p" data-group-id="4580253888-1">)</span><span class="w">
-</span><span class="p" data-group-id="4580253888-2">{</span><span class="w">
+   </span><span class="ss">cause</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8981064461-4">%</span><span class="nc" data-group-id="8981064461-4">MatchError</span><span class="p" data-group-id="8981064461-4">{</span><span class="ss">term</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8981064461-5">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="ss">:einval</span><span class="p" data-group-id="8981064461-5">}</span><span class="p" data-group-id="8981064461-4">}</span><span class="w">
+ </span><span class="p" data-group-id="8981064461-3">}</span><span class="p" data-group-id="8981064461-2">}</span></code></pre><p>  IPv6 addresses</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse</span><span class="p" data-group-id="1852617265-1">(</span><span class="s">&quot;fd9b:77f8:714d:cabb::1&quot;</span><span class="p" data-group-id="1852617265-1">)</span><span class="w">
+</span><span class="p" data-group-id="1852617265-2">{</span><span class="w">
   </span><span class="ss">:ok</span><span class="p">,</span><span class="w">
-  </span><span class="p" data-group-id="4580253888-3">%</span><span class="nc" data-group-id="4580253888-3">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="4580253888-3">{</span><span class="w">
-    </span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4580253888-4">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="4580253888-4">}</span><span class="p">,</span><span class="w">
+  </span><span class="p" data-group-id="1852617265-3">%</span><span class="nc" data-group-id="1852617265-3">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="1852617265-3">{</span><span class="w">
+    </span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1852617265-4">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="1852617265-4">}</span><span class="p">,</span><span class="w">
     </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">128</span><span class="w">
-  </span><span class="p" data-group-id="4580253888-3">}</span><span class="w">
-</span><span class="p" data-group-id="4580253888-2">}</span><span class="w">
+  </span><span class="p" data-group-id="1852617265-3">}</span><span class="w">
+</span><span class="p" data-group-id="1852617265-2">}</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse</span><span class="p" data-group-id="4580253888-5">(</span><span class="s">&quot;fd9b:77f8:714d:cabb::20/128&quot;</span><span class="p" data-group-id="4580253888-5">)</span><span class="w">
-</span><span class="p" data-group-id="4580253888-6">{</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse</span><span class="p" data-group-id="1852617265-5">(</span><span class="s">&quot;fd9b:77f8:714d:cabb::20/128&quot;</span><span class="p" data-group-id="1852617265-5">)</span><span class="w">
+</span><span class="p" data-group-id="1852617265-6">{</span><span class="w">
   </span><span class="ss">:ok</span><span class="p">,</span><span class="w">
-  </span><span class="p" data-group-id="4580253888-7">%</span><span class="nc" data-group-id="4580253888-7">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="4580253888-7">{</span><span class="w">
-    </span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4580253888-8">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="p" data-group-id="4580253888-8">}</span><span class="p">,</span><span class="w">
+  </span><span class="p" data-group-id="1852617265-7">%</span><span class="nc" data-group-id="1852617265-7">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="1852617265-7">{</span><span class="w">
+    </span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1852617265-8">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="p" data-group-id="1852617265-8">}</span><span class="p">,</span><span class="w">
     </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">128</span><span class="w">
-  </span><span class="p" data-group-id="4580253888-7">}</span><span class="w">
-</span><span class="p" data-group-id="4580253888-6">}</span><span class="w">
+  </span><span class="p" data-group-id="1852617265-7">}</span><span class="w">
+</span><span class="p" data-group-id="1852617265-6">}</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse</span><span class="p" data-group-id="4580253888-9">(</span><span class="s">&quot;fd9b:77f8:714d:cabb:0000:0000:ab67:12/64&quot;</span><span class="p" data-group-id="4580253888-9">)</span><span class="w">
-</span><span class="p" data-group-id="4580253888-10">{</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse</span><span class="p" data-group-id="1852617265-9">(</span><span class="s">&quot;fd9b:77f8:714d:cabb:0000:0000:ab67:12/64&quot;</span><span class="p" data-group-id="1852617265-9">)</span><span class="w">
+</span><span class="p" data-group-id="1852617265-10">{</span><span class="w">
   </span><span class="ss">:ok</span><span class="p">,</span><span class="w">
-  </span><span class="p" data-group-id="4580253888-11">%</span><span class="nc" data-group-id="4580253888-11">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="4580253888-11">{</span><span class="w">
-    </span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4580253888-12">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">43879</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p" data-group-id="4580253888-12">}</span><span class="p">,</span><span class="w">
+  </span><span class="p" data-group-id="1852617265-11">%</span><span class="nc" data-group-id="1852617265-11">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="1852617265-11">{</span><span class="w">
+    </span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1852617265-12">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">43879</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p" data-group-id="1852617265-12">}</span><span class="p">,</span><span class="w">
     </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">64</span><span class="w">
-  </span><span class="p" data-group-id="4580253888-11">}</span><span class="w">
-</span><span class="p" data-group-id="4580253888-10">}</span><span class="w">
+  </span><span class="p" data-group-id="1852617265-11">}</span><span class="w">
+</span><span class="p" data-group-id="1852617265-10">}</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse</span><span class="p" data-group-id="4580253888-13">(</span><span class="s">&quot;fd9b:77f8:714d:cabb::/64&quot;</span><span class="p" data-group-id="4580253888-13">)</span><span class="w">
-</span><span class="p" data-group-id="4580253888-14">{</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse</span><span class="p" data-group-id="1852617265-13">(</span><span class="s">&quot;fd9b:77f8:714d:cabb::/64&quot;</span><span class="p" data-group-id="1852617265-13">)</span><span class="w">
+</span><span class="p" data-group-id="1852617265-14">{</span><span class="w">
   </span><span class="ss">:ok</span><span class="p">,</span><span class="w">
-  </span><span class="p" data-group-id="4580253888-15">%</span><span class="nc" data-group-id="4580253888-15">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="4580253888-15">{</span><span class="w">
-    </span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4580253888-16">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="4580253888-16">}</span><span class="p">,</span><span class="w">
+  </span><span class="p" data-group-id="1852617265-15">%</span><span class="nc" data-group-id="1852617265-15">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="1852617265-15">{</span><span class="w">
+    </span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1852617265-16">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="1852617265-16">}</span><span class="p">,</span><span class="w">
     </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">64</span><span class="w">
-  </span><span class="p" data-group-id="4580253888-15">}</span><span class="w">
-</span><span class="p" data-group-id="4580253888-14">}</span></code></pre><p>  IPv6 Error Example</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse</span><span class="p" data-group-id="1019830594-1">(</span><span class="s">&quot;fd9b:77f8:714d:qqqq::z&quot;</span><span class="p" data-group-id="1019830594-1">)</span><span class="w">
-</span><span class="p" data-group-id="1019830594-2">{</span><span class="ss">:error</span><span class="p">,</span><span class="w">
- </span><span class="p" data-group-id="1019830594-3">%</span><span class="nc" data-group-id="1019830594-3">MscmpSystError</span><span class="p" data-group-id="1019830594-3">{</span><span class="w">
+  </span><span class="p" data-group-id="1852617265-15">}</span><span class="w">
+</span><span class="p" data-group-id="1852617265-14">}</span></code></pre><p>  IPv6 Error Example</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse</span><span class="p" data-group-id="3469062160-1">(</span><span class="s">&quot;fd9b:77f8:714d:qqqq::z&quot;</span><span class="p" data-group-id="3469062160-1">)</span><span class="w">
+</span><span class="p" data-group-id="3469062160-2">{</span><span class="ss">:error</span><span class="p">,</span><span class="w">
+ </span><span class="p" data-group-id="3469062160-3">%</span><span class="nc" data-group-id="3469062160-3">MscmpSystError</span><span class="p" data-group-id="3469062160-3">{</span><span class="w">
    </span><span class="ss">code</span><span class="p">:</span><span class="w"> </span><span class="ss">:undefined_error</span><span class="p">,</span><span class="w">
    </span><span class="ss">message</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Failure parsing IP address or subnet address string.&quot;</span><span class="p">,</span><span class="w">
-   </span><span class="ss">cause</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1019830594-4">%</span><span class="nc" data-group-id="1019830594-4">MatchError</span><span class="p" data-group-id="1019830594-4">{</span><span class="ss">term</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1019830594-5">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="ss">:einval</span><span class="p" data-group-id="1019830594-5">}</span><span class="p" data-group-id="1019830594-4">}</span><span class="w">
- </span><span class="p" data-group-id="1019830594-3">}</span><span class="p" data-group-id="1019830594-2">}</span></code></pre>
+   </span><span class="ss">cause</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3469062160-4">%</span><span class="nc" data-group-id="3469062160-4">MatchError</span><span class="p" data-group-id="3469062160-4">{</span><span class="ss">term</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3469062160-5">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="ss">:einval</span><span class="p" data-group-id="3469062160-5">}</span><span class="p" data-group-id="3469062160-4">}</span><span class="w">
+ </span><span class="p" data-group-id="3469062160-3">}</span><span class="p" data-group-id="3469062160-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="parse!/1">
 
   <div class="detail-header">
-    <a href="#parse!/1" class="detail-link" title="Link to this function">
+    <a href="#parse!/1" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -451,25 +447,25 @@ subnet in CIDR notation.  Passed as a string.</li></ul><h2 id="parse!/1-examples
   </a>
   <span class="text">Examples</span>
 </h2>
-<p>  IPv4 addresses</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3269754376-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="3269754376-1">]</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse!</span><span class="p" data-group-id="3269754376-2">(</span><span class="s">&quot;192.168.10.10&quot;</span><span class="p" data-group-id="3269754376-2">)</span><span class="w">
-</span><span class="p" data-group-id="3269754376-3">%</span><span class="nc" data-group-id="3269754376-3">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="3269754376-3">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3269754376-4">{</span><span class="mi">192</span><span class="p">,</span><span class="w"> </span><span class="mi">168</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="3269754376-4">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p" data-group-id="3269754376-3">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse!</span><span class="p" data-group-id="3269754376-5">(</span><span class="s">&quot;10.1.1.11/8&quot;</span><span class="p" data-group-id="3269754376-5">)</span><span class="w">
-</span><span class="p" data-group-id="3269754376-6">%</span><span class="nc" data-group-id="3269754376-6">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="3269754376-6">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3269754376-7">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p" data-group-id="3269754376-7">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p" data-group-id="3269754376-6">}</span></code></pre><p>  IPv4 Error Example</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4131318383-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="4131318383-1">]</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse!</span><span class="p" data-group-id="4131318383-2">(</span><span class="s">&quot;192.618.10.14/32&quot;</span><span class="p" data-group-id="4131318383-2">)</span><span class="w">
-</span><span class="gt">** (MatchError) no match of right hand side value: {:error, :einval}</span></code></pre><p>  IPv6 addresses</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6439340635-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="6439340635-1">]</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse!</span><span class="p" data-group-id="6439340635-2">(</span><span class="s">&quot;fd9b:77f8:714d:cabb::1&quot;</span><span class="p" data-group-id="6439340635-2">)</span><span class="w">
-</span><span class="p" data-group-id="6439340635-3">%</span><span class="nc" data-group-id="6439340635-3">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="6439340635-3">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6439340635-4">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="6439340635-4">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">128</span><span class="p" data-group-id="6439340635-3">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse!</span><span class="p" data-group-id="6439340635-5">(</span><span class="s">&quot;fd9b:77f8:714d:cabb:0000:0000:ab67:12/64&quot;</span><span class="p" data-group-id="6439340635-5">)</span><span class="w">
-</span><span class="p" data-group-id="6439340635-6">%</span><span class="nc" data-group-id="6439340635-6">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="6439340635-6">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6439340635-7">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">43879</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p" data-group-id="6439340635-7">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">64</span><span class="p" data-group-id="6439340635-6">}</span></code></pre><p>  IPv6 Error Example</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4405932886-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="4405932886-1">]</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse!</span><span class="p" data-group-id="4405932886-2">(</span><span class="s">&quot;fd9b:77f8:714d:qqqq::z&quot;</span><span class="p" data-group-id="4405932886-2">)</span><span class="w">
+<p>  IPv4 addresses</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5242584095-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="5242584095-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse!</span><span class="p" data-group-id="5242584095-2">(</span><span class="s">&quot;192.168.10.10&quot;</span><span class="p" data-group-id="5242584095-2">)</span><span class="w">
+</span><span class="p" data-group-id="5242584095-3">%</span><span class="nc" data-group-id="5242584095-3">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="5242584095-3">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5242584095-4">{</span><span class="mi">192</span><span class="p">,</span><span class="w"> </span><span class="mi">168</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="5242584095-4">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p" data-group-id="5242584095-3">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse!</span><span class="p" data-group-id="5242584095-5">(</span><span class="s">&quot;10.1.1.11/8&quot;</span><span class="p" data-group-id="5242584095-5">)</span><span class="w">
+</span><span class="p" data-group-id="5242584095-6">%</span><span class="nc" data-group-id="5242584095-6">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="5242584095-6">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5242584095-7">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p" data-group-id="5242584095-7">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p" data-group-id="5242584095-6">}</span></code></pre><p>  IPv4 Error Example</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8913564790-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="8913564790-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse!</span><span class="p" data-group-id="8913564790-2">(</span><span class="s">&quot;192.618.10.14/32&quot;</span><span class="p" data-group-id="8913564790-2">)</span><span class="w">
+</span><span class="gt">** (MatchError) no match of right hand side value: {:error, :einval}</span></code></pre><p>  IPv6 addresses</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2196742628-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="2196742628-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse!</span><span class="p" data-group-id="2196742628-2">(</span><span class="s">&quot;fd9b:77f8:714d:cabb::1&quot;</span><span class="p" data-group-id="2196742628-2">)</span><span class="w">
+</span><span class="p" data-group-id="2196742628-3">%</span><span class="nc" data-group-id="2196742628-3">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="2196742628-3">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2196742628-4">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="2196742628-4">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">128</span><span class="p" data-group-id="2196742628-3">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse!</span><span class="p" data-group-id="2196742628-5">(</span><span class="s">&quot;fd9b:77f8:714d:cabb:0000:0000:ab67:12/64&quot;</span><span class="p" data-group-id="2196742628-5">)</span><span class="w">
+</span><span class="p" data-group-id="2196742628-6">%</span><span class="nc" data-group-id="2196742628-6">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="2196742628-6">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2196742628-7">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">43879</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p" data-group-id="2196742628-7">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">64</span><span class="p" data-group-id="2196742628-6">}</span></code></pre><p>  IPv6 Error Example</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9123761765-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="9123761765-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">parse!</span><span class="p" data-group-id="9123761765-2">(</span><span class="s">&quot;fd9b:77f8:714d:qqqq::z&quot;</span><span class="p" data-group-id="9123761765-2">)</span><span class="w">
 </span><span class="gt">** (MatchError) no match of right hand side value: {:error, :einval}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="sigil_i/2">
 
   <div class="detail-header">
-    <a href="#sigil_i/2" class="detail-link" title="Link to this function">
+    <a href="#sigil_i/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -502,17 +498,17 @@ the sigil.  This parameter is currently ignored.</p></li></ul><h2 id="sigil_i/2-
   </a>
   <span class="text">Examples</span>
 </h2>
-<p>  IPv4 Addresses</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6381567990-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="6381567990-1">]</span><span class="w">
+<p>  IPv4 Addresses</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4432947799-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="4432947799-1">]</span><span class="w">
 </span><span class="gp unselectable">iex&gt; </span><span class="sx">~i&quot;192.168.10.10&quot;</span><span class="w">
-</span><span class="p" data-group-id="6381567990-2">%</span><span class="nc" data-group-id="6381567990-2">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="6381567990-2">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6381567990-3">{</span><span class="mi">192</span><span class="p">,</span><span class="w"> </span><span class="mi">168</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="6381567990-3">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p" data-group-id="6381567990-2">}</span><span class="w">
+</span><span class="p" data-group-id="4432947799-2">%</span><span class="nc" data-group-id="4432947799-2">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="4432947799-2">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4432947799-3">{</span><span class="mi">192</span><span class="p">,</span><span class="w"> </span><span class="mi">168</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="4432947799-3">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p" data-group-id="4432947799-2">}</span><span class="w">
 </span><span class="gp unselectable">iex&gt; </span><span class="sx">~i&quot;10.1.1.11/8&quot;</span><span class="w">
-</span><span class="p" data-group-id="6381567990-4">%</span><span class="nc" data-group-id="6381567990-4">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="6381567990-4">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6381567990-5">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p" data-group-id="6381567990-5">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p" data-group-id="6381567990-4">}</span></code></pre><p>  IPv4 Error Example</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2105718891-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="2105718891-1">]</span><span class="w">
+</span><span class="p" data-group-id="4432947799-4">%</span><span class="nc" data-group-id="4432947799-4">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="4432947799-4">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4432947799-5">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p" data-group-id="4432947799-5">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p" data-group-id="4432947799-4">}</span></code></pre><p>  IPv4 Error Example</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7790702887-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="7790702887-1">]</span><span class="w">
 </span><span class="gp unselectable">iex&gt; </span><span class="sx">~i&quot;192.618.10.14/32&quot;</span><span class="w">
-</span><span class="gt">** (MatchError) no match of right hand side value: {:error, :einval}</span></code></pre><p>  IPv6 Addresses</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9366090919-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="9366090919-1">]</span><span class="w">
+</span><span class="gt">** (MatchError) no match of right hand side value: {:error, :einval}</span></code></pre><p>  IPv6 Addresses</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3107719558-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="3107719558-1">]</span><span class="w">
 </span><span class="gp unselectable">iex&gt; </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::1&quot;</span><span class="w">
-</span><span class="p" data-group-id="9366090919-2">%</span><span class="nc" data-group-id="9366090919-2">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="9366090919-2">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9366090919-3">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="9366090919-3">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">128</span><span class="p" data-group-id="9366090919-2">}</span><span class="w">
+</span><span class="p" data-group-id="3107719558-2">%</span><span class="nc" data-group-id="3107719558-2">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="3107719558-2">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3107719558-3">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="3107719558-3">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">128</span><span class="p" data-group-id="3107719558-2">}</span><span class="w">
 </span><span class="gp unselectable">iex&gt; </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb:0000:0000:ab67:12/64&quot;</span><span class="w">
-</span><span class="p" data-group-id="9366090919-4">%</span><span class="nc" data-group-id="9366090919-4">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="9366090919-4">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9366090919-5">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">43879</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p" data-group-id="9366090919-5">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">64</span><span class="p" data-group-id="9366090919-4">}</span></code></pre><p>  IPv6 Error Example</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5800790072-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="5800790072-1">]</span><span class="w">
+</span><span class="p" data-group-id="3107719558-4">%</span><span class="nc" data-group-id="3107719558-4">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="3107719558-4">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3107719558-5">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">43879</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p" data-group-id="3107719558-5">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">64</span><span class="p" data-group-id="3107719558-4">}</span></code></pre><p>  IPv6 Error Example</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5251481863-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="5251481863-1">]</span><span class="w">
 </span><span class="gp unselectable">iex&gt; </span><span class="sx">~i&quot;fd9b:77f8:714d:qqqq::z&quot;</span><span class="w">
 </span><span class="gt">** (MatchError) no match of right hand side value: {:error, :einval}</span></code></pre>
   </section>
@@ -522,7 +518,7 @@ the sigil.  This parameter is currently ignored.</p></li></ul><h2 id="sigil_i/2-
     <span id="to_struct/1"></span>
 
   <div class="detail-header">
-    <a href="#to_struct/2" class="detail-link" title="Link to this function">
+    <a href="#to_struct/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -549,7 +545,7 @@ the sigil.  This parameter is currently ignored.</p></li></ul><h2 id="sigil_i/2-
 
       </div>
 
-<p>Turns an Erlang <a href="https://www.erlang.org/doc/man/inet.html#type-ip_address"><code class="inline">:inet.ip_address/0</code></a> tuple into either a
+<p>Turns an Erlang <a href="https://www.erlang.org/doc/apps/kernel/inet.html#t:ip_address/0"><code class="inline">:inet.ip_address/0</code></a> tuple into either a
 <a href="MscmpSystNetwork.Types.IpV4.html#t:t/0"><code class="inline">MscmpSystNetwork.Types.IpV4.t/0</code></a> or <a href="MscmpSystNetwork.Types.IpV6.html#t:t/0"><code class="inline">MscmpSystNetwork.Types.IpV6.t/0</code></a>
 struct.</p><p>Raises on error.</p><h2 id="to_struct/2-parameters" class="section-heading">
   <a href="#to_struct/2-parameters" class="hover-link">
@@ -566,13 +562,13 @@ default to the single host value as appropriate for the <code class="inline">add
   </a>
   <span class="text">Examples</span>
 </h2>
-<p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">to_struct</span><span class="p" data-group-id="9988632688-1">(</span><span class="p" data-group-id="9988632688-2">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p" data-group-id="9988632688-2">}</span><span class="p" data-group-id="9988632688-1">)</span><span class="w">
-</span><span class="p" data-group-id="9988632688-3">%</span><span class="nc" data-group-id="9988632688-3">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="9988632688-3">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9988632688-4">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p" data-group-id="9988632688-4">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p" data-group-id="9988632688-3">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">to_struct</span><span class="p" data-group-id="9988632688-5">(</span><span class="p" data-group-id="9988632688-6">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="9988632688-6">}</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p" data-group-id="9988632688-5">)</span><span class="w">
-</span><span class="p" data-group-id="9988632688-7">%</span><span class="nc" data-group-id="9988632688-7">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="9988632688-7">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9988632688-8">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="9988632688-8">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p" data-group-id="9988632688-7">}</span></code></pre><p>  IPv6 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">to_struct</span><span class="p" data-group-id="6259340741-1">(</span><span class="p" data-group-id="6259340741-2">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="6259340741-2">}</span><span class="p" data-group-id="6259340741-1">)</span><span class="w">
-</span><span class="p" data-group-id="6259340741-3">%</span><span class="nc" data-group-id="6259340741-3">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="6259340741-3">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6259340741-4">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="6259340741-4">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">128</span><span class="p" data-group-id="6259340741-3">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">to_struct</span><span class="p" data-group-id="6259340741-5">(</span><span class="p" data-group-id="6259340741-6">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="6259340741-6">}</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="p" data-group-id="6259340741-5">)</span><span class="w">
-</span><span class="p" data-group-id="6259340741-7">%</span><span class="nc" data-group-id="6259340741-7">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="6259340741-7">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6259340741-8">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="6259340741-8">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">64</span><span class="p" data-group-id="6259340741-7">}</span></code></pre>
+<p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">to_struct</span><span class="p" data-group-id="7942226074-1">(</span><span class="p" data-group-id="7942226074-2">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p" data-group-id="7942226074-2">}</span><span class="p" data-group-id="7942226074-1">)</span><span class="w">
+</span><span class="p" data-group-id="7942226074-3">%</span><span class="nc" data-group-id="7942226074-3">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="7942226074-3">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7942226074-4">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p" data-group-id="7942226074-4">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p" data-group-id="7942226074-3">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">to_struct</span><span class="p" data-group-id="7942226074-5">(</span><span class="p" data-group-id="7942226074-6">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="7942226074-6">}</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p" data-group-id="7942226074-5">)</span><span class="w">
+</span><span class="p" data-group-id="7942226074-7">%</span><span class="nc" data-group-id="7942226074-7">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="7942226074-7">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7942226074-8">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="7942226074-8">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p" data-group-id="7942226074-7">}</span></code></pre><p>  IPv6 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">to_struct</span><span class="p" data-group-id="5581541369-1">(</span><span class="p" data-group-id="5581541369-2">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="5581541369-2">}</span><span class="p" data-group-id="5581541369-1">)</span><span class="w">
+</span><span class="p" data-group-id="5581541369-3">%</span><span class="nc" data-group-id="5581541369-3">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="5581541369-3">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5581541369-4">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="5581541369-4">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">128</span><span class="p" data-group-id="5581541369-3">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">to_struct</span><span class="p" data-group-id="5581541369-5">(</span><span class="p" data-group-id="5581541369-6">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="5581541369-6">}</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="p" data-group-id="5581541369-5">)</span><span class="w">
+</span><span class="p" data-group-id="5581541369-7">%</span><span class="nc" data-group-id="5581541369-7">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="5581541369-7">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5581541369-8">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="5581541369-8">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">64</span><span class="p" data-group-id="5581541369-7">}</span></code></pre>
   </section>
 </section>
 
@@ -590,7 +586,7 @@ default to the single host value as appropriate for the <code class="inline">add
 <section class="detail" id="get_host/1">
 
   <div class="detail-header">
-    <a href="#get_host/1" class="detail-link" title="Link to this function">
+    <a href="#get_host/1" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -612,7 +608,7 @@ default to the single host value as appropriate for the <code class="inline">add
       </div>
 
 <p>Retrieves IP address from IP address structs or <code class="inline">nil</code> if the struct only
-represents a subnet/prefix.</p><p>Results are returned in the form of an Erlang <a href="https://www.erlang.org/doc/man/inet.html#type-ip_address"><code class="inline">:inet.ip_address/0</code></a> tuple or
+represents a subnet/prefix.</p><p>Results are returned in the form of an Erlang <a href="https://www.erlang.org/doc/apps/kernel/inet.html#t:ip_address/0"><code class="inline">:inet.ip_address/0</code></a> tuple or
 <code class="inline">nil</code> when the address passed to the function doesn't represent a host
 address.</p><h2 id="get_host/1-parameters" class="section-heading">
   <a href="#get_host/1-parameters" class="hover-link">
@@ -628,21 +624,21 @@ to be extracted.</li></ul><h2 id="get_host/1-examples" class="section-heading">
   </a>
   <span class="text">Examples</span>
 </h2>
-<p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4280621735-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="4280621735-1">]</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_host</span><span class="p" data-group-id="4280621735-2">(</span><span class="sx">~i&quot;192.168.20.125/24&quot;</span><span class="p" data-group-id="4280621735-2">)</span><span class="w">
-</span><span class="p" data-group-id="4280621735-3">{</span><span class="mi">192</span><span class="p">,</span><span class="w"> </span><span class="mi">168</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">125</span><span class="p" data-group-id="4280621735-3">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_host</span><span class="p" data-group-id="4280621735-4">(</span><span class="sx">~i&quot;10.0.0.0/8&quot;</span><span class="p" data-group-id="4280621735-4">)</span><span class="w">
-</span><span class="no">nil</span></code></pre><p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5135365273-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="5135365273-1">]</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_host</span><span class="p" data-group-id="5135365273-2">(</span><span class="sx">~i&quot;fd9b:77f8:714d:cabb:0000:0000:ab67:12/64&quot;</span><span class="p" data-group-id="5135365273-2">)</span><span class="w">
-</span><span class="p" data-group-id="5135365273-3">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">43879</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p" data-group-id="5135365273-3">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_host</span><span class="p" data-group-id="5135365273-4">(</span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::/64&quot;</span><span class="p" data-group-id="5135365273-4">)</span><span class="w">
+<p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3449724245-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="3449724245-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_host</span><span class="p" data-group-id="3449724245-2">(</span><span class="sx">~i&quot;192.168.20.125/24&quot;</span><span class="p" data-group-id="3449724245-2">)</span><span class="w">
+</span><span class="p" data-group-id="3449724245-3">{</span><span class="mi">192</span><span class="p">,</span><span class="w"> </span><span class="mi">168</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">125</span><span class="p" data-group-id="3449724245-3">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_host</span><span class="p" data-group-id="3449724245-4">(</span><span class="sx">~i&quot;10.0.0.0/8&quot;</span><span class="p" data-group-id="3449724245-4">)</span><span class="w">
+</span><span class="no">nil</span></code></pre><p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3879406105-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="3879406105-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_host</span><span class="p" data-group-id="3879406105-2">(</span><span class="sx">~i&quot;fd9b:77f8:714d:cabb:0000:0000:ab67:12/64&quot;</span><span class="p" data-group-id="3879406105-2">)</span><span class="w">
+</span><span class="p" data-group-id="3879406105-3">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">43879</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p" data-group-id="3879406105-3">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_host</span><span class="p" data-group-id="3879406105-4">(</span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::/64&quot;</span><span class="p" data-group-id="3879406105-4">)</span><span class="w">
 </span><span class="no">nil</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_netmask/1">
 
   <div class="detail-header">
-    <a href="#get_netmask/1" class="detail-link" title="Link to this function">
+    <a href="#get_netmask/1" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -663,7 +659,7 @@ to be extracted.</li></ul><h2 id="get_host/1-examples" class="section-heading">
 
       </div>
 
-<p>Retrieves the network masking bits (IPv4 subnet mask or IPv6 prefix).</p><p>Results are returned in the form of an Erlang <a href="https://www.erlang.org/doc/man/inet.html#type-ip_address"><code class="inline">:inet.ip_address/0</code></a> tuple.</p><h2 id="get_netmask/1-parameters" class="section-heading">
+<p>Retrieves the network masking bits (IPv4 subnet mask or IPv6 prefix).</p><p>Results are returned in the form of an Erlang <a href="https://www.erlang.org/doc/apps/kernel/inet.html#t:ip_address/0"><code class="inline">:inet.ip_address/0</code></a> tuple.</p><h2 id="get_netmask/1-parameters" class="section-heading">
   <a href="#get_netmask/1-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
   </a>
@@ -677,21 +673,21 @@ should be extracted.</li></ul><h2 id="get_netmask/1-examples" class="section-hea
   </a>
   <span class="text">Examples</span>
 </h2>
-<p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1950325681-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="1950325681-1">]</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_netmask</span><span class="p" data-group-id="1950325681-2">(</span><span class="sx">~i&quot;192.168.20.125/24&quot;</span><span class="p" data-group-id="1950325681-2">)</span><span class="w">
-</span><span class="p" data-group-id="1950325681-3">{</span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="1950325681-3">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_netmask</span><span class="p" data-group-id="1950325681-4">(</span><span class="sx">~i&quot;10.1.1.12/32&quot;</span><span class="p" data-group-id="1950325681-4">)</span><span class="w">
-</span><span class="p" data-group-id="1950325681-5">{</span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p" data-group-id="1950325681-5">}</span></code></pre><p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9898921663-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="9898921663-1">]</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_netmask</span><span class="p" data-group-id="9898921663-2">(</span><span class="sx">~i&quot;fd9b:77f8:714d:cabb:0000:0000:ab67:12/64&quot;</span><span class="p" data-group-id="9898921663-2">)</span><span class="w">
-</span><span class="p" data-group-id="9898921663-3">{</span><span class="mi">65535</span><span class="p">,</span><span class="w"> </span><span class="mi">65535</span><span class="p">,</span><span class="w"> </span><span class="mi">65535</span><span class="p">,</span><span class="w"> </span><span class="mi">65535</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="9898921663-3">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_netmask</span><span class="p" data-group-id="9898921663-4">(</span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::20/128&quot;</span><span class="p" data-group-id="9898921663-4">)</span><span class="w">
-</span><span class="p" data-group-id="9898921663-5">{</span><span class="mi">65535</span><span class="p">,</span><span class="w"> </span><span class="mi">65535</span><span class="p">,</span><span class="w"> </span><span class="mi">65535</span><span class="p">,</span><span class="w"> </span><span class="mi">65535</span><span class="p">,</span><span class="w"> </span><span class="mi">65535</span><span class="p">,</span><span class="w"> </span><span class="mi">65535</span><span class="p">,</span><span class="w"> </span><span class="mi">65535</span><span class="p">,</span><span class="w"> </span><span class="mi">65535</span><span class="p" data-group-id="9898921663-5">}</span></code></pre>
+<p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0039600449-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="0039600449-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_netmask</span><span class="p" data-group-id="0039600449-2">(</span><span class="sx">~i&quot;192.168.20.125/24&quot;</span><span class="p" data-group-id="0039600449-2">)</span><span class="w">
+</span><span class="p" data-group-id="0039600449-3">{</span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="0039600449-3">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_netmask</span><span class="p" data-group-id="0039600449-4">(</span><span class="sx">~i&quot;10.1.1.12/32&quot;</span><span class="p" data-group-id="0039600449-4">)</span><span class="w">
+</span><span class="p" data-group-id="0039600449-5">{</span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p" data-group-id="0039600449-5">}</span></code></pre><p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7100194152-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="7100194152-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_netmask</span><span class="p" data-group-id="7100194152-2">(</span><span class="sx">~i&quot;fd9b:77f8:714d:cabb:0000:0000:ab67:12/64&quot;</span><span class="p" data-group-id="7100194152-2">)</span><span class="w">
+</span><span class="p" data-group-id="7100194152-3">{</span><span class="mi">65535</span><span class="p">,</span><span class="w"> </span><span class="mi">65535</span><span class="p">,</span><span class="w"> </span><span class="mi">65535</span><span class="p">,</span><span class="w"> </span><span class="mi">65535</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="7100194152-3">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_netmask</span><span class="p" data-group-id="7100194152-4">(</span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::20/128&quot;</span><span class="p" data-group-id="7100194152-4">)</span><span class="w">
+</span><span class="p" data-group-id="7100194152-5">{</span><span class="mi">65535</span><span class="p">,</span><span class="w"> </span><span class="mi">65535</span><span class="p">,</span><span class="w"> </span><span class="mi">65535</span><span class="p">,</span><span class="w"> </span><span class="mi">65535</span><span class="p">,</span><span class="w"> </span><span class="mi">65535</span><span class="p">,</span><span class="w"> </span><span class="mi">65535</span><span class="p">,</span><span class="w"> </span><span class="mi">65535</span><span class="p">,</span><span class="w"> </span><span class="mi">65535</span><span class="p" data-group-id="7100194152-5">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_network/1">
 
   <div class="detail-header">
-    <a href="#get_network/1" class="detail-link" title="Link to this function">
+    <a href="#get_network/1" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -712,7 +708,7 @@ should be extracted.</li></ul><h2 id="get_netmask/1-examples" class="section-hea
 
       </div>
 
-<p>Retrieves the network identifying portion of an IP address.</p><p>Results are returned in the form of an Erlang <a href="https://www.erlang.org/doc/man/inet.html#type-ip_address"><code class="inline">:inet.ip_address/0</code></a> tuple or
+<p>Retrieves the network identifying portion of an IP address.</p><p>Results are returned in the form of an Erlang <a href="https://www.erlang.org/doc/apps/kernel/inet.html#t:ip_address/0"><code class="inline">:inet.ip_address/0</code></a> tuple or
 <code class="inline">nil</code> when the address passed to the function represents a single host.</p><h2 id="get_network/1-parameters" class="section-heading">
   <a href="#get_network/1-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
@@ -727,21 +723,21 @@ should extracted.</li></ul><h2 id="get_network/1-examples" class="section-headin
   </a>
   <span class="text">Examples</span>
 </h2>
-<p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4069243054-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="4069243054-1">]</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_network</span><span class="p" data-group-id="4069243054-2">(</span><span class="sx">~i&quot;192.168.20.125/24&quot;</span><span class="p" data-group-id="4069243054-2">)</span><span class="w">
-</span><span class="p" data-group-id="4069243054-3">{</span><span class="mi">192</span><span class="p">,</span><span class="w"> </span><span class="mi">168</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="4069243054-3">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_network</span><span class="p" data-group-id="4069243054-4">(</span><span class="sx">~i&quot;10.1.1.12/32&quot;</span><span class="p" data-group-id="4069243054-4">)</span><span class="w">
-</span><span class="no">nil</span></code></pre><p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3799980537-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="3799980537-1">]</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_network</span><span class="p" data-group-id="3799980537-2">(</span><span class="sx">~i&quot;fd9b:77f8:714d:cabb:0000:0000:ab67:12/64&quot;</span><span class="p" data-group-id="3799980537-2">)</span><span class="w">
-</span><span class="p" data-group-id="3799980537-3">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="3799980537-3">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_network</span><span class="p" data-group-id="3799980537-4">(</span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::20/128&quot;</span><span class="p" data-group-id="3799980537-4">)</span><span class="w">
+<p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5955566956-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="5955566956-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_network</span><span class="p" data-group-id="5955566956-2">(</span><span class="sx">~i&quot;192.168.20.125/24&quot;</span><span class="p" data-group-id="5955566956-2">)</span><span class="w">
+</span><span class="p" data-group-id="5955566956-3">{</span><span class="mi">192</span><span class="p">,</span><span class="w"> </span><span class="mi">168</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="5955566956-3">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_network</span><span class="p" data-group-id="5955566956-4">(</span><span class="sx">~i&quot;10.1.1.12/32&quot;</span><span class="p" data-group-id="5955566956-4">)</span><span class="w">
+</span><span class="no">nil</span></code></pre><p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2338604720-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="2338604720-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_network</span><span class="p" data-group-id="2338604720-2">(</span><span class="sx">~i&quot;fd9b:77f8:714d:cabb:0000:0000:ab67:12/64&quot;</span><span class="p" data-group-id="2338604720-2">)</span><span class="w">
+</span><span class="p" data-group-id="2338604720-3">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="2338604720-3">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">get_network</span><span class="p" data-group-id="2338604720-4">(</span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::20/128&quot;</span><span class="p" data-group-id="2338604720-4">)</span><span class="w">
 </span><span class="no">nil</span></code></pre>
   </section>
 </section>
 <section class="detail" id="host?/1">
 
   <div class="detail-header">
-    <a href="#host?/1" class="detail-link" title="Link to this function">
+    <a href="#host?/1" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -778,21 +774,21 @@ specific host.</li></ul><h2 id="host?/1-examples" class="section-heading">
   </a>
   <span class="text">Examples</span>
 </h2>
-<p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1565277255-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="1565277255-1">]</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">host?</span><span class="p" data-group-id="1565277255-2">(</span><span class="sx">~i&quot;192.168.20.125/24&quot;</span><span class="p" data-group-id="1565277255-2">)</span><span class="w">
+<p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0149327514-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="0149327514-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">host?</span><span class="p" data-group-id="0149327514-2">(</span><span class="sx">~i&quot;192.168.20.125/24&quot;</span><span class="p" data-group-id="0149327514-2">)</span><span class="w">
 </span><span class="no">true</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">host?</span><span class="p" data-group-id="1565277255-3">(</span><span class="sx">~i&quot;10.0.0.0/8&quot;</span><span class="p" data-group-id="1565277255-3">)</span><span class="w">
-</span><span class="no">false</span></code></pre><p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9596015993-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="9596015993-1">]</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">host?</span><span class="p" data-group-id="9596015993-2">(</span><span class="sx">~i&quot;fd9b:77f8:714d:cabb:0000:0000:ab67:12/64&quot;</span><span class="p" data-group-id="9596015993-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">host?</span><span class="p" data-group-id="0149327514-3">(</span><span class="sx">~i&quot;10.0.0.0/8&quot;</span><span class="p" data-group-id="0149327514-3">)</span><span class="w">
+</span><span class="no">false</span></code></pre><p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6755801188-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="6755801188-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">host?</span><span class="p" data-group-id="6755801188-2">(</span><span class="sx">~i&quot;fd9b:77f8:714d:cabb:0000:0000:ab67:12/64&quot;</span><span class="p" data-group-id="6755801188-2">)</span><span class="w">
 </span><span class="no">true</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">host?</span><span class="p" data-group-id="9596015993-3">(</span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::/64&quot;</span><span class="p" data-group-id="9596015993-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">host?</span><span class="p" data-group-id="6755801188-3">(</span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::/64&quot;</span><span class="p" data-group-id="6755801188-3">)</span><span class="w">
 </span><span class="no">false</span></code></pre>
   </section>
 </section>
 <section class="detail" id="in_network?/2">
 
   <div class="detail-header">
-    <a href="#in_network?/2" class="detail-link" title="Link to this function">
+    <a href="#in_network?/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -832,33 +828,33 @@ host address with an identifiable network.</p></li></ul><h2 id="in_network?/2-ex
   </a>
   <span class="text">Examples</span>
 </h2>
-<p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1335124436-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="1335124436-1">]</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_network?</span><span class="p" data-group-id="1335124436-2">(</span><span class="sx">~i&quot;10.1.1.10&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.1.0.0/16&quot;</span><span class="p" data-group-id="1335124436-2">)</span><span class="w">
+<p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2957820164-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="2957820164-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_network?</span><span class="p" data-group-id="2957820164-2">(</span><span class="sx">~i&quot;10.1.1.10&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.1.0.0/16&quot;</span><span class="p" data-group-id="2957820164-2">)</span><span class="w">
 </span><span class="no">true</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_network?</span><span class="p" data-group-id="1335124436-3">(</span><span class="sx">~i&quot;10.1.1.0/24&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.1.0.0/16&quot;</span><span class="p" data-group-id="1335124436-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_network?</span><span class="p" data-group-id="2957820164-3">(</span><span class="sx">~i&quot;10.1.1.0/24&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.1.0.0/16&quot;</span><span class="p" data-group-id="2957820164-3">)</span><span class="w">
 </span><span class="no">true</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_network?</span><span class="p" data-group-id="1335124436-4">(</span><span class="sx">~i&quot;10.1.1.0/24&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.1.1.0/24&quot;</span><span class="p" data-group-id="1335124436-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_network?</span><span class="p" data-group-id="2957820164-4">(</span><span class="sx">~i&quot;10.1.1.0/24&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.1.1.0/24&quot;</span><span class="p" data-group-id="2957820164-4">)</span><span class="w">
 </span><span class="no">true</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_network?</span><span class="p" data-group-id="1335124436-5">(</span><span class="sx">~i&quot;10.2.1.1/32&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.1.0.0/16&quot;</span><span class="p" data-group-id="1335124436-5">)</span><span class="w">
-</span><span class="no">false</span></code></pre><p>  IPv6 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3580636752-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="3580636752-1">]</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_network?</span><span class="p" data-group-id="3580636752-2">(</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::20/128&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::/64&quot;</span><span class="p" data-group-id="3580636752-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_network?</span><span class="p" data-group-id="2957820164-5">(</span><span class="sx">~i&quot;10.2.1.1/32&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.1.0.0/16&quot;</span><span class="p" data-group-id="2957820164-5">)</span><span class="w">
+</span><span class="no">false</span></code></pre><p>  IPv6 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9468552041-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="9468552041-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_network?</span><span class="p" data-group-id="9468552041-2">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::20/128&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::/64&quot;</span><span class="p" data-group-id="9468552041-2">)</span><span class="w">
 </span><span class="no">true</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_network?</span><span class="p" data-group-id="3580636752-3">(</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb:ab67::/68&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::/64&quot;</span><span class="p" data-group-id="3580636752-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_network?</span><span class="p" data-group-id="9468552041-3">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb:ab67::/68&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::/64&quot;</span><span class="p" data-group-id="9468552041-3">)</span><span class="w">
 </span><span class="no">true</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_network?</span><span class="p" data-group-id="3580636752-4">(</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::/64&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::/64&quot;</span><span class="p" data-group-id="3580636752-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_network?</span><span class="p" data-group-id="9468552041-4">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::/64&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::/64&quot;</span><span class="p" data-group-id="9468552041-4">)</span><span class="w">
 </span><span class="no">true</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_network?</span><span class="p" data-group-id="3580636752-5">(</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714d:caab::20/128&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::/64&quot;</span><span class="p" data-group-id="3580636752-5">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_network?</span><span class="p" data-group-id="9468552041-5">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714d:caab::20/128&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::/64&quot;</span><span class="p" data-group-id="9468552041-5">)</span><span class="w">
 </span><span class="no">false</span></code></pre>
   </section>
 </section>
 <section class="detail" id="in_range?/3">
 
   <div class="detail-header">
-    <a href="#in_range?/3" class="detail-link" title="Link to this function">
+    <a href="#in_range?/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -909,41 +905,41 @@ address of the range; for example <code class="inline">10.1.0.0/16</code> would 
   </a>
   <span class="text">Examples</span>
 </h2>
-<p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4778068691-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="4778068691-1">]</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_range?</span><span class="p" data-group-id="4778068691-2">(</span><span class="sx">~i&quot;10.1.1.10&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.1.1.1&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.1.1.15&quot;</span><span class="p" data-group-id="4778068691-2">)</span><span class="w">
+<p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7135208131-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="7135208131-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_range?</span><span class="p" data-group-id="7135208131-2">(</span><span class="sx">~i&quot;10.1.1.10&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.1.1.1&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.1.1.15&quot;</span><span class="p" data-group-id="7135208131-2">)</span><span class="w">
 </span><span class="no">true</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_range?</span><span class="p" data-group-id="4778068691-3">(</span><span class="sx">~i&quot;10.1.1.0/24&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.1.0.0/16&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.1.2.254&quot;</span><span class="p" data-group-id="4778068691-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_range?</span><span class="p" data-group-id="7135208131-3">(</span><span class="sx">~i&quot;10.1.1.0/24&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.1.0.0/16&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.1.2.254&quot;</span><span class="p" data-group-id="7135208131-3">)</span><span class="w">
 </span><span class="no">true</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_range?</span><span class="p" data-group-id="4778068691-4">(</span><span class="sx">~i&quot;10.1.1.0/24&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.1.1.0/24&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.1.1.0/24&quot;</span><span class="p" data-group-id="4778068691-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_range?</span><span class="p" data-group-id="7135208131-4">(</span><span class="sx">~i&quot;10.1.1.0/24&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.1.1.0/24&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.1.1.0/24&quot;</span><span class="p" data-group-id="7135208131-4">)</span><span class="w">
 </span><span class="no">true</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_range?</span><span class="p" data-group-id="4778068691-5">(</span><span class="sx">~i&quot;10.3.1.1/32&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.1.0.0/16&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.2.0.0/16&quot;</span><span class="p" data-group-id="4778068691-5">)</span><span class="w">
-</span><span class="no">false</span></code></pre><p>  IPv6 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2551705427-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="2551705427-1">]</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_range?</span><span class="p" data-group-id="2551705427-2">(</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_range?</span><span class="p" data-group-id="7135208131-5">(</span><span class="sx">~i&quot;10.3.1.1/32&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.1.0.0/16&quot;</span><span class="p">,</span><span class="w"> </span><span class="sx">~i&quot;10.2.0.0/16&quot;</span><span class="p" data-group-id="7135208131-5">)</span><span class="w">
+</span><span class="no">false</span></code></pre><p>  IPv6 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2622712227-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="2622712227-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_range?</span><span class="p" data-group-id="2622712227-2">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::20&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::10&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::30&quot;</span><span class="p" data-group-id="2551705427-2">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::30&quot;</span><span class="p" data-group-id="2622712227-2">)</span><span class="w">
 </span><span class="no">true</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_range?</span><span class="p" data-group-id="2551705427-3">(</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_range?</span><span class="p" data-group-id="2622712227-3">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb:ab67::/68&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::/64&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714d:cabd::&quot;</span><span class="p" data-group-id="2551705427-3">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714d:cabd::&quot;</span><span class="p" data-group-id="2622712227-3">)</span><span class="w">
 </span><span class="no">true</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_range?</span><span class="p" data-group-id="2551705427-4">(</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_range?</span><span class="p" data-group-id="2622712227-4">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::/64&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::/64&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::/64&quot;</span><span class="p" data-group-id="2551705427-4">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::/64&quot;</span><span class="p" data-group-id="2622712227-4">)</span><span class="w">
 </span><span class="no">true</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_range?</span><span class="p" data-group-id="2551705427-5">(</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">in_range?</span><span class="p" data-group-id="2622712227-5">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714e:caab::20/128&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714d:caba::/64&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714d:cabc::/64&quot;</span><span class="p" data-group-id="2551705427-5">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="sx">~i&quot;fd9b:77f8:714d:cabc::/64&quot;</span><span class="p" data-group-id="2622712227-5">)</span><span class="w">
 </span><span class="no">false</span></code></pre>
   </section>
 </section>
 <section class="detail" id="network?/1">
 
   <div class="detail-header">
-    <a href="#network?/1" class="detail-link" title="Link to this function">
+    <a href="#network?/1" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -983,21 +979,21 @@ network exclusively.</li></ul><h2 id="network?/1-examples" class="section-headin
   </a>
   <span class="text">Examples</span>
 </h2>
-<p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0901542874-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="0901542874-1">]</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">network?</span><span class="p" data-group-id="0901542874-2">(</span><span class="sx">~i&quot;192.168.20.125/24&quot;</span><span class="p" data-group-id="0901542874-2">)</span><span class="w">
+<p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7712876450-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="7712876450-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">network?</span><span class="p" data-group-id="7712876450-2">(</span><span class="sx">~i&quot;192.168.20.125/24&quot;</span><span class="p" data-group-id="7712876450-2">)</span><span class="w">
 </span><span class="no">false</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">network?</span><span class="p" data-group-id="0901542874-3">(</span><span class="sx">~i&quot;10.0.0.0/8&quot;</span><span class="p" data-group-id="0901542874-3">)</span><span class="w">
-</span><span class="no">true</span></code></pre><p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9987301807-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="9987301807-1">]</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">network?</span><span class="p" data-group-id="9987301807-2">(</span><span class="sx">~i&quot;fd9b:77f8:714d:cabb:0000:0000:ab67:12/64&quot;</span><span class="p" data-group-id="9987301807-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">network?</span><span class="p" data-group-id="7712876450-3">(</span><span class="sx">~i&quot;10.0.0.0/8&quot;</span><span class="p" data-group-id="7712876450-3">)</span><span class="w">
+</span><span class="no">true</span></code></pre><p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8010840699-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="8010840699-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">network?</span><span class="p" data-group-id="8010840699-2">(</span><span class="sx">~i&quot;fd9b:77f8:714d:cabb:0000:0000:ab67:12/64&quot;</span><span class="p" data-group-id="8010840699-2">)</span><span class="w">
 </span><span class="no">false</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">network?</span><span class="p" data-group-id="9987301807-3">(</span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::/64&quot;</span><span class="p" data-group-id="9987301807-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">network?</span><span class="p" data-group-id="8010840699-3">(</span><span class="sx">~i&quot;fd9b:77f8:714d:cabb::/64&quot;</span><span class="p" data-group-id="8010840699-3">)</span><span class="w">
 </span><span class="no">true</span></code></pre>
   </section>
 </section>
 <section class="detail" id="to_string/1">
 
   <div class="detail-header">
-    <a href="#to_string/1" class="detail-link" title="Link to this function">
+    <a href="#to_string/1" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1029,24 +1025,24 @@ string.</li></ul><h2 id="to_string/1-examples" class="section-heading">
   </a>
   <span class="text">Examples</span>
 </h2>
-<p>  IPv4 Addresses</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">my_host</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="9787578258-1">%</span><span class="nc" data-group-id="9787578258-1">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="9787578258-1">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9787578258-2">{</span><span class="mi">192</span><span class="p">,</span><span class="w"> </span><span class="mi">168</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="9787578258-2">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p" data-group-id="9787578258-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">to_string</span><span class="p" data-group-id="9787578258-3">(</span><span class="n">my_host</span><span class="p" data-group-id="9787578258-3">)</span><span class="w">
+<p>  IPv4 Addresses</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">my_host</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="1608645111-1">%</span><span class="nc" data-group-id="1608645111-1">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="1608645111-1">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1608645111-2">{</span><span class="mi">192</span><span class="p">,</span><span class="w"> </span><span class="mi">168</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="1608645111-2">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p" data-group-id="1608645111-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">to_string</span><span class="p" data-group-id="1608645111-3">(</span><span class="n">my_host</span><span class="p" data-group-id="1608645111-3">)</span><span class="w">
 </span><span class="s">&quot;192.168.10.10/32&quot;</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">my_subnet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="9787578258-4">%</span><span class="nc" data-group-id="9787578258-4">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="9787578258-4">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9787578258-5">{</span><span class="mi">172</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="9787578258-5">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p" data-group-id="9787578258-4">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">to_string</span><span class="p" data-group-id="9787578258-6">(</span><span class="n">my_subnet</span><span class="p" data-group-id="9787578258-6">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">my_subnet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="1608645111-4">%</span><span class="nc" data-group-id="1608645111-4">MscmpSystNetwork.Types.IpV4</span><span class="p" data-group-id="1608645111-4">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1608645111-5">{</span><span class="mi">172</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="1608645111-5">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p" data-group-id="1608645111-4">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">to_string</span><span class="p" data-group-id="1608645111-6">(</span><span class="n">my_subnet</span><span class="p" data-group-id="1608645111-6">)</span><span class="w">
 </span><span class="s">&quot;172.16.0.0/16&quot;</span></code></pre><p>  IPv6 Addresses</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">my_host</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3239211139-1">%</span><span class="nc" data-group-id="3239211139-1">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="3239211139-1">{</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3239211139-2">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="3239211139-2">}</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6358859566-1">%</span><span class="nc" data-group-id="6358859566-1">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="6358859566-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6358859566-2">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="6358859566-2">}</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">128</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3239211139-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">to_string</span><span class="p" data-group-id="3239211139-3">(</span><span class="n">my_host</span><span class="p" data-group-id="3239211139-3">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6358859566-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">to_string</span><span class="p" data-group-id="6358859566-3">(</span><span class="n">my_host</span><span class="p" data-group-id="6358859566-3">)</span><span class="w">
 </span><span class="s">&quot;fd9b:77f8:714d:cabb::1/128&quot;</span><span class="w">
 </span><span class="gp unselectable">iex&gt; </span><span class="n">my_subnet</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3239211139-4">%</span><span class="nc" data-group-id="3239211139-4">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="3239211139-4">{</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3239211139-5">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">43879</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p" data-group-id="3239211139-5">}</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6358859566-4">%</span><span class="nc" data-group-id="6358859566-4">MscmpSystNetwork.Types.IpV6</span><span class="p" data-group-id="6358859566-4">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6358859566-5">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">43879</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p" data-group-id="6358859566-5">}</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">64</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3239211139-4">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">to_string</span><span class="p" data-group-id="3239211139-6">(</span><span class="n">my_subnet</span><span class="p" data-group-id="3239211139-6">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6358859566-4">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystNetwork</span><span class="o">.</span><span class="n">to_string</span><span class="p" data-group-id="6358859566-6">(</span><span class="n">my_subnet</span><span class="p" data-group-id="6358859566-6">)</span><span class="w">
 </span><span class="s">&quot;fd9b:77f8:714d:cabb::ab67:12/64&quot;</span></code></pre>
   </section>
 </section>
@@ -1054,34 +1050,33 @@ string.</li></ul><h2 id="to_string/1-examples" class="section-heading">
     </div>
   </section>
 
-      <footer class="footer">
-        <p>
+    <footer class="footer">
+      <p>
 
-          <span class="line">
-            <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
-              Search HexDocs
-            </button>
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
 
-              <a href="mscmp_syst_network.epub" title="ePub version">
-                Download ePub version
-              </a>
+            <a href="mscmp_syst_network.epub" title="ePub version">
+              Download ePub version
+            </a>
 
-          </span>
-        </p>
+        </span>
+      </p>
 
-        <p class="built-using">
-          Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.31.1) for the
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.34.2) for the
 
-            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
-        </p>
-      </footer>
-    </div>
+      </p>
+
+    </footer>
   </div>
 </main>
 </div>
-
 
   </body>
 </html>

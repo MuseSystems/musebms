@@ -52,7 +52,7 @@ defmodule MscmpSystNetwork.MixProject do
         name: "MscmpSystNetwork",
         main: "MscmpSystNetwork",
         output: "../../../../documentation/technical/app_server/mscmp_syst_network",
-        groups_for_functions: [
+        groups_for_docs: [
           Parsing: &(&1[:section] == :parse_api),
           "Protocol Functions": &(&1[:section] == :protocol_api)
         ],

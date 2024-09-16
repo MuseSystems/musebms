@@ -33,7 +33,7 @@ parsing and for the ability to recognize subnets.
 The `MscmpSystNetwork` library was inspired by and is a re-working of Lambda, Inc.'s' and Isaac
 Yonemoto's [`net_address`](https://github.com/ityonemo/net_address) Elixir library.  The Muse
 Systems  Business Management System originally used the `net_address` library, but the library
-appears to no longer be maintained and so is being replaced by `MscmpSystNetwork` in the MuseBMS
+appears to be infrequently maintained and so is being replaced by `MscmpSystNetwork` in the MuseBMS
 project. `MscmpSystNetwork` does use some code from `net_address`.  `MscmpSystNetwork` offers
 significantly less functionality than `net_address` as much of that library's functionality is not
 needed in the MuseBMS.
