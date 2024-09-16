@@ -47,6 +47,12 @@ defmodule MscmpSystError do
           cause: any()
         }
 
+  ##############################################################################
+  #
+  # get_root_cause
+  #
+  #
+
   @doc section: :error_parsing
   @doc """
   Returns the root cause of an `MscmpSystError` exception object.
