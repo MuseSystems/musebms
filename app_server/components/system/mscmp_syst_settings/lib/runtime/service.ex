@@ -20,48 +20,6 @@ defmodule MscmpSystSettings.Runtime.Service do
 
   require Logger
 
-  option_defs = [
-    debug: [
-      type: :boolean,
-      doc: """
-      If true, the GenServer backing the Settings Service will be started in
-      debug mode.
-      """
-    ],
-    timeout: [
-      type: :timeout,
-      default: :infinity,
-      doc: "Timeout value for the start_link call."
-    ],
-    hibernate_after: [
-      type: :timeout,
-      doc: """
-      If present, the GenServer process awaits any message for the specified
-      time before hibernating.  The timeout value is expressed in Milliseconds.
-      """
-    ],
-    datastore_context_name: [
-      type:
-        {:or,
-         [nil, :atom, {:tuple, [{:in, [:via]}, :atom, :any]}, {:tuple, [{:in, [:global]}, :any]}]},
-      type_doc: "`t:GenServer.name/0 or `nil`",
-      doc: """
-      Specifies the name of the Datastore Context to be used by the Settings
-      Service.
-      """
-    ],
-    service_name: [
-      type:
-        {:or,
-         [nil, :atom, {:tuple, [{:in, [:via]}, :atom, :any]}, {:tuple, [{:in, [:global]}, :any]}]},
-      type_doc: "`t:GenServer.name/0 or `nil`",
-      doc: """
-      The name to use for the GenServer backing this specific Settings Service
-      instance.
-      """
-    ]
-  ]
-
   ######
   #
   # This module implements the mechanics of dealing with GenServer runtime
@@ -77,24 +35,10 @@ defmodule MscmpSystSettings.Runtime.Service do
   #
   # child_spec
   #
-
-  @child_spec_opts NimbleOptions.new!(
-                     Keyword.take(option_defs, [
-                       :service_name,
-                       :datastore_context_name,
-                       :debug,
-                       :timeout,
-                       :hibernate_after
-                     ])
-                   )
-
-  @spec get_child_spec_opts_docs() :: String.t()
-  def get_child_spec_opts_docs, do: NimbleOptions.docs(@child_spec_opts)
+  #
 
   @spec child_spec(Keyword.t()) :: Supervisor.child_spec()
   def child_spec(opts) do
-    opts = NimbleOptions.validate!(opts, @child_spec_opts)
-
     genserver_opts = Keyword.take(opts, [:debug, :timeout, :hibernate_after])
 
     %{
@@ -109,21 +53,12 @@ defmodule MscmpSystSettings.Runtime.Service do
   #
   # start_link
   #
-
-  @start_link_opts NimbleOptions.new!(
-                     Keyword.take(option_defs, [:debug, :timeout, :hibernate_after])
-                   )
-
-  @spec get_start_link_opts_docs() :: String.t()
-  def get_start_link_opts_docs, do: NimbleOptions.docs(@start_link_opts)
+  #
 
   @spec start_link(Types.service_name(), MscmpSystDb.Types.context_service_name(), Keyword.t()) ::
           {:ok, pid()} | {:error, MscmpSystError.t()}
   def start_link(service_name, datastore_context_name, opts) do
-    opts =
-      opts
-      |> NimbleOptions.validate!(@start_link_opts)
-      |> Keyword.put(:name, service_name)
+    opts = Keyword.put(opts, :name, service_name)
 
     init_opts = [datastore_context_name: datastore_context_name]
 
@@ -163,17 +98,11 @@ defmodule MscmpSystSettings.Runtime.Service do
   #
   # init
   #
-
-  @init_opts NimbleOptions.new!(Keyword.take(option_defs, [:datastore_context_name]))
-
-  @spec get_init_opts_docs() :: String.t()
-  def get_init_opts_docs, do: NimbleOptions.docs(@init_opts)
+  #
 
   @impl true
   @spec init(Keyword.t()) :: {:ok, map()} | {:stop, MscmpSystError.t()}
   def init(opts) do
-    opts = NimbleOptions.validate!(opts, @init_opts)
-
     settings_table = :ets.new(nil, [:set, :protected])
 
     _ = MscmpSystDb.put_datastore_context(opts[:datastore_context_name])
@@ -186,6 +115,12 @@ defmodule MscmpSystSettings.Runtime.Service do
        settings_table_tid: settings_table
      }}
   end
+
+  ##############################################################################
+  #
+  # handle_call
+  #
+  #
 
   @impl true
   def handle_call(:refresh, _from, state) do
@@ -226,6 +161,12 @@ defmodule MscmpSystSettings.Runtime.Service do
   @impl true
   def handle_call(:get_settings_table, _from, state),
     do: {:reply, state.settings_table_tid, state}
+
+  ##############################################################################
+  #
+  # terminate
+  #
+  #
 
   @impl true
   def terminate(:normal, state) do

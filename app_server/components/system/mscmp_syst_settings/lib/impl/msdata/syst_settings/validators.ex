@@ -15,59 +15,8 @@ defmodule MscmpSystSettings.Impl.Msdata.SystSettings.Validators do
 
   import Ecto.Changeset
 
-  validation_opts = [
-    min_internal_name_length: [
-      type: :integer,
-      default: 6,
-      doc: """
-      Sets the minimum grapheme length of internal_name values.
-      """
-    ],
-    max_internal_name_length: [
-      type: :integer,
-      default: 64,
-      doc: """
-      Sets the maximum grapheme length of internal_name values.
-      """
-    ],
-    min_display_name_length: [
-      type: :integer,
-      default: 6,
-      doc: """
-      Sets the minimum grapheme length of display_name values.
-      """
-    ],
-    max_display_name_length: [
-      type: :integer,
-      default: 64,
-      doc: """
-      Sets the maximum grapheme length of display_name values.
-      """
-    ],
-    min_user_description_length: [
-      type: :integer,
-      default: 6,
-      doc: """
-      Sets the minimum grapheme length of user_description values.
-      """
-    ],
-    max_user_description_length: [
-      type: :integer,
-      default: 1_000,
-      doc: """
-      Sets the maximum grapheme length of user_description values.
-      """
-    ]
-  ]
-
-  @validation_opts NimbleOptions.new!(validation_opts)
-
-  def get_validation_opts_docs(opts \\ []), do: NimbleOptions.docs(@validation_opts, opts)
-
   @spec changeset(Msdata.SystSettings.t(), map(), Keyword.t()) :: Ecto.Changeset.t()
   def changeset(syst_settings, change_params, opts) do
-    opts = NimbleOptions.validate!(opts, @validation_opts)
-
     syst_settings
     |> cast(change_params, [
       :internal_name,
@@ -89,59 +38,14 @@ defmodule MscmpSystSettings.Impl.Msdata.SystSettings.Validators do
       :setting_uuid,
       :setting_blob
     ])
-    |> validate_internal_name(opts)
-    |> validate_display_name(opts)
-    |> validate_user_description(opts)
     |> maybe_put_syst_defined()
+    |> Msutils.Data.validate_internal_name(opts)
+    |> Msutils.Data.validate_display_name(opts)
+    |> Msutils.Data.validate_user_description(opts)
     |> optimistic_lock(:diag_row_version)
     |> unique_constraint(:internal_name, name: :syst_settings_internal_name_udx)
     |> unique_constraint(:display_name, name: :syst_settings_display_name_udx)
   end
-
-  defp validate_internal_name(changeset, opts) do
-    validation_func = fn :internal_name, _internal_name ->
-      if get_field(changeset, :syst_defined, false) do
-        [:internal_name, "System defined settings may not have their internal names changed."]
-      else
-        []
-      end
-    end
-
-    changeset
-    |> validate_required(:internal_name)
-    |> validate_change(:internal_name, :validate_internal_name, &validation_func.(&1, &2))
-    |> validate_length(:internal_name,
-      min: opts[:min_internal_name_length],
-      max: opts[:max_internal_name_length]
-    )
-    |> unique_constraint(:internal_name)
-  end
-
-  defp validate_display_name(changeset, opts) do
-    changeset
-    |> validate_required(:display_name)
-    |> validate_length(:display_name,
-      min: opts[:min_display_name_length],
-      max: opts[:max_display_name_length]
-    )
-    |> unique_constraint(:display_name)
-  end
-
-  defp validate_user_description(changeset, opts) do
-    (!get_field(changeset, :syst_defined) or !is_nil(get_field(changeset, :user_description, nil)))
-    |> validate_user_description(changeset, opts)
-  end
-
-  defp validate_user_description(true, changeset, opts) do
-    changeset
-    |> validate_required(:user_description)
-    |> validate_length(:user_description,
-      min: opts[:min_user_description_length],
-      max: opts[:max_user_description_length]
-    )
-  end
-
-  defp validate_user_description(false, changeset, _opts), do: changeset
 
   # Add a change for syst_defined set to false.
   #

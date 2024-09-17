@@ -19,8 +19,12 @@ defmodule Msdata.SystSettings do
 
   use MscmpSystDb.Schema
 
+  import Msutils.Data, only: [common_validator_options: 1]
+
   alias MscmpSystDb.DbTypes
   alias MscmpSystSettings.Impl.Msdata.SystSettings.Validators
+
+  require Msutils.Data
 
   @type t() ::
           %__MODULE__{
@@ -87,11 +91,19 @@ defmodule Msdata.SystSettings do
     field(:diag_update_count, :integer, load_in_query: false)
   end
 
+  ##############################################################################
+  #
+  # changeset
+  #
+  #
+
+  @changeset_opts common_validator_options([:internal_name, :display_name, :user_description])
+
   @doc """
-  Produces a changeset used to create or update a settings record.
+  Produces a changeset used to create or update a Settings record.
 
   The `change_params` argument defines the attributes to be used in maintaining
-  a settings record.  Of the allowed fields, the following are required for
+  a Settings record.  Of the allowed fields, the following are required for
   creation:
 
     * `internal_name` - A unique key which is intended for programmatic usage
@@ -101,16 +113,17 @@ defmodule Msdata.SystSettings do
       in user interfaces, reporting, etc.
 
     * `user_description` - A description of the setting including its use cases
-      and any limits or restrictions.  This field must contain between 6 and
-      1000 characters to be considered valid.
+      and any limits or restrictions.
 
-  The options define other attributes which can guide validation of
-  `change_param` values:
+  ## Options
 
-  #{Validators.get_validation_opts_docs()}
+    #{NimbleOptions.docs(@changeset_opts)}
   """
   @spec changeset(t()) :: Ecto.Changeset.t()
   @spec changeset(t(), map()) :: Ecto.Changeset.t()
   @spec changeset(t(), map(), Keyword.t()) :: Ecto.Changeset.t()
-  defdelegate changeset(syst_settings, change_params \\ %{}, opts \\ []), to: Validators
+  def changeset(syst_settings, change_params \\ %{}, opts \\ []) do
+    opts = NimbleOptions.validate!(opts, @changeset_opts)
+    Validators.changeset(syst_settings, change_params, opts)
+  end
 end

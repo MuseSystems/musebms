@@ -26,7 +26,8 @@ defmodule MscmpSystSettings.MixProject do
 
     # Muse Systems Business Management System Components
     {:mscmp_syst_error, path: "../mscmp_syst_error"},
-    {:mscmp_syst_utils, path: "../mscmp_syst_utils"},
+    {:mscmp_syst_utils_string, path: "../mscmp_syst_utils_string"},
+    {:mscmp_syst_utils_data, path: "../mscmp_syst_utils_data"},
     {:mscmp_syst_db, path: "../mscmp_syst_db"}
   ]
 
@@ -58,9 +59,10 @@ defmodule MscmpSystSettings.MixProject do
         deps: [
           mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db",
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
-          mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils"
+          mscmp_syst_utils_string:
+            "../../../../documentation/technical/app_server/mscmp_syst_utils_string"
         ],
-        groups_for_functions: [
+        groups_for_docs: [
           Settings: &(&1[:section] == :settings_data),
           Runtime: &(&1[:section] == :service_management),
           "Development Support": &(&1[:section] == :development_support)

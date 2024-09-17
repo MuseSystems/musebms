@@ -4,22 +4,19 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.31.1">
+    <meta name="generator" content="ExDoc v0.34.2">
     <meta name="project" content="mscmp_syst_settings v0.1.0">
 
 
     <title>MscmpSystSettings — mscmp_syst_settings v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-FM2CSD74.css" />
+    <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-43PMFBC7.js"></script>
-    <script src="dist/sidebar_items-20914712.js"></script>
-
-      <script src="docs_config.js"></script>
-
-    <script async src="dist/html-L4O5OK2K.js"></script>
-
+    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
+    <script src="dist/sidebar_items-9D0FE190.js"></script>
+    <script src="docs_config.js"></script>
+    <script async src="dist/html-YIPIRHGU.js"></script>
 
   </head>
   <body data-type="modules" class="page-module">
@@ -37,13 +34,11 @@
       } catch (error) { }
     </script>
 
-<div class="main">
+<div class="body-wrapper">
 
 <button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
   <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
 </button>
-
-<div class="background-layer"></div>
 
 <nav id="sidebar" class="sidebar">
 
@@ -89,41 +84,41 @@ Pages
 
 <main class="content">
   <output role="status" id="toast"></output>
-  <div class="content-outer">
-    <div id="content" class="content-inner">
-      <div class="top-search">
-        <div class="search-settings">
-          <form class="search-bar" action="search.html">
-            <label class="search-label">
-              <span class="sr-only">Search documentation of mscmp_syst_settings</span>
-              <input name="q" type="text" class="search-input" placeholder="Search Documentation (press /)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-            </label>
-            <button type="submit" class="search-button" aria-label="Submit Search">
-              <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
-            </button>
-            <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
-              <i class="ri-close-line ri-lg" title="Cancel search"></i>
-            </button>
-          </form>
-          <div class="autocomplete">
-          </div>
-          <button class="icon-settings display-settings">
-            <i class="ri-settings-3-line"></i>
-            <span class="sr-only">Settings</span>
+
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of mscmp_syst_settings</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
           </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
         </div>
-
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
       </div>
+    </div>
 
-<h1>
+<div id="top-content">
+  <h1>
 
-  <span translate="no">MscmpSystSettings</span> 
-  <small class="app-vsn" translate="no">(mscmp_syst_settings v0.1.0)</small>
+    <span translate="no">MscmpSystSettings</span> 
+    <small class="app-vsn" translate="no">(mscmp_syst_settings v0.1.0)</small>
 
-</h1>
+  </h1>
 
 
-  <section id="moduledoc">
+    <section id="moduledoc">
 <p>A user options configuration management service.</p><p>The Settings Service provides caching and management functions for user
 configurable options which govern how the application operates.  Multiple
 Settings Service instances may be in operation depending on the needs of the
@@ -137,8 +132,9 @@ the application is running.  Therefore, any logic depending on the Settings
 from this service should be written as to be insensitive to such changes.
 Logic should avoid multiple retrievals of the same setting during any one
 transaction.</p>
-  </section>
+    </section>
 
+</div>
 
   <section id="summary" class="details-list">
     <h1 class="section-heading">
@@ -154,7 +150,7 @@ transaction.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#create_setting/1" translate="no">create_setting(creation_params)</a>
+        <a href="#create_setting/1" data-no-tooltip translate="no">create_setting(creation_params)</a>
 
       </div>
 
@@ -164,7 +160,7 @@ transaction.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#delete_setting/1" translate="no">delete_setting(setting_name)</a>
+        <a href="#delete_setting/1" data-no-tooltip translate="no">delete_setting(setting_name)</a>
 
       </div>
 
@@ -174,7 +170,7 @@ transaction.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_setting_value/2" translate="no">get_setting_value(setting_name, setting_type)</a>
+        <a href="#get_setting_value/2" data-no-tooltip translate="no">get_setting_value(setting_name, setting_type)</a>
 
       </div>
 
@@ -184,7 +180,7 @@ transaction.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_setting_values/1" translate="no">get_setting_values(setting_name)</a>
+        <a href="#get_setting_values/1" data-no-tooltip translate="no">get_setting_values(setting_name)</a>
 
       </div>
 
@@ -194,7 +190,7 @@ transaction.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#list_all_settings/0" translate="no">list_all_settings()</a>
+        <a href="#list_all_settings/0" data-no-tooltip translate="no">list_all_settings()</a>
 
       </div>
 
@@ -204,7 +200,7 @@ transaction.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#set_setting_value/3" translate="no">set_setting_value(setting_name, setting_type, setting_value)</a>
+        <a href="#set_setting_value/3" data-no-tooltip translate="no">set_setting_value(setting_name, setting_type, setting_value)</a>
 
       </div>
 
@@ -214,7 +210,7 @@ transaction.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#set_setting_values/2" translate="no">set_setting_values(setting_name, update_params)</a>
+        <a href="#set_setting_values/2" data-no-tooltip translate="no">set_setting_values(setting_name, update_params)</a>
 
       </div>
 
@@ -230,28 +226,38 @@ transaction.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_settings_service/0" translate="no">get_settings_service()</a>
+        <a href="#child_spec/1" data-no-tooltip translate="no">child_spec(opts)</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>Retrieves the currently set Settings Service name or <code class="inline">nil</code> if none has been
-set.</p></div>
+        <div class="summary-synopsis"><p>Returns a child specification for the Settings Service.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#put_settings_service/1" translate="no">put_settings_service(service_name)</a>
+        <a href="#get_settings_service/0" data-no-tooltip translate="no">get_settings_service()</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>Establishes the current Settings Service instance for the process.</p></div>
+        <div class="summary-synopsis"><p>Retrieve the current specific Settings Service name in effect for the process.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#refresh_from_database/0" translate="no">refresh_from_database()</a>
+        <a href="#put_settings_service/1" data-no-tooltip translate="no">put_settings_service(settings_service_name)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Establishes the currently active Settings Service instance for the current
+process.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#refresh_from_database/0" data-no-tooltip translate="no">refresh_from_database()</a>
 
       </div>
 
@@ -261,7 +267,7 @@ set.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#start_link/1" translate="no">start_link(params)</a>
+        <a href="#start_link/3" data-no-tooltip translate="no">start_link(service_name, datastore_context_name, opts \\ [])</a>
 
       </div>
 
@@ -271,70 +277,11 @@ set.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#terminate_settings_service/0" translate="no">terminate_settings_service()</a>
+        <a href="#terminate_settings_service/0" data-no-tooltip translate="no">terminate_settings_service()</a>
 
       </div>
 
         <div class="summary-synopsis"><p>Terminates a running instance of the settings service.</p></div>
-
-    </div>
-
-</div>
-<div class="summary-development-support summary">
-  <h2>
-    <a href="#development-support">Development Support</a>
-  </h2>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#get_devsupport_service_name/0" translate="no">get_devsupport_service_name()</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>Retrieves the Settings Service Name typically used to support development.</p></div>
-
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#get_testsupport_service_name/0" translate="no">get_testsupport_service_name()</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>Retrieves the Settings Service Name typically used to support testing.</p></div>
-
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#start_devsupport_services/1" translate="no">start_devsupport_services(opts \\ [])</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>Starts a Settings Service instance for the purposes of supporting interactive
-development activities.</p></div>
-
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#start_support_services/1" translate="no">start_support_services(opts \\ [])</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>Starts a Settings Service instance for the purposes of supporting interactive
-development or testing activities.</p></div>
-
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#start_testsupport_services/1" translate="no">start_testsupport_services(opts \\ [])</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>Starts a Settings Service instance for the purposes of supporting testing
-activities.</p></div>
 
     </div>
 
@@ -354,7 +301,7 @@ activities.</p></div>
 <section class="detail" id="create_setting/1">
 
   <div class="detail-header">
-    <a href="#create_setting/1" class="detail-link" title="Link to this function">
+    <a href="#create_setting/1" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -394,20 +341,20 @@ permitted here, but not required.</p></li></ul><h2 id="create_setting/1-examples
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">new_setting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="6070059373-1">%{</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">new_setting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="7617646358-1">%{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;create_example_setting&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Create Example Setting&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">user_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;An example of setting creation.&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">setting_integer</span><span class="p">:</span><span class="w"> </span><span class="mi">9876</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="6070059373-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">create_setting</span><span class="p" data-group-id="6070059373-2">(</span><span class="n">new_setting</span><span class="p" data-group-id="6070059373-2">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="7617646358-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">create_setting</span><span class="p" data-group-id="7617646358-2">(</span><span class="n">new_setting</span><span class="p" data-group-id="7617646358-2">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
 <section class="detail" id="delete_setting/1">
 
   <div class="detail-header">
-    <a href="#delete_setting/1" class="detail-link" title="Link to this function">
+    <a href="#delete_setting/1" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -438,14 +385,14 @@ Trying to do so will result in a error being raised.</p><h2 id="delete_setting/1
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">delete_setting</span><span class="p" data-group-id="6001736877-1">(</span><span class="s">&quot;delete_example_setting&quot;</span><span class="p" data-group-id="6001736877-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">delete_setting</span><span class="p" data-group-id="7450629219-1">(</span><span class="s">&quot;delete_example_setting&quot;</span><span class="p" data-group-id="7450629219-1">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_setting_value/2">
 
   <div class="detail-header">
-    <a href="#get_setting_value/2" class="detail-link" title="Link to this function">
+    <a href="#get_setting_value/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -477,21 +424,21 @@ Trying to do so will result in a error being raised.</p><h2 id="delete_setting/1
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_setting_value</span><span class="p" data-group-id="4387382845-1">(</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_setting_value</span><span class="p" data-group-id="0681125639-1">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;get_example_setting&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:setting_decimal_range</span><span class="p" data-group-id="4387382845-1">)</span><span class="w">
-</span><span class="p" data-group-id="4387382845-2">%</span><span class="nc" data-group-id="4387382845-2">MscmpSystDb.DbTypes.DecimalRange</span><span class="p" data-group-id="4387382845-2">{</span><span class="w">
-  </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="4387382845-3">(</span><span class="s">&quot;1.1&quot;</span><span class="p" data-group-id="4387382845-3">)</span><span class="p">,</span><span class="w">
-  </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="4387382845-4">(</span><span class="s">&quot;99.99&quot;</span><span class="p" data-group-id="4387382845-4">)</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:setting_decimal_range</span><span class="p" data-group-id="0681125639-1">)</span><span class="w">
+</span><span class="p" data-group-id="0681125639-2">%</span><span class="nc" data-group-id="0681125639-2">MscmpSystDb.DbTypes.DecimalRange</span><span class="p" data-group-id="0681125639-2">{</span><span class="w">
+  </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="0681125639-3">(</span><span class="s">&quot;1.1&quot;</span><span class="p" data-group-id="0681125639-3">)</span><span class="p">,</span><span class="w">
+  </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="0681125639-4">(</span><span class="s">&quot;99.99&quot;</span><span class="p" data-group-id="0681125639-4">)</span><span class="p">,</span><span class="w">
   </span><span class="ss">lower_inclusive</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
   </span><span class="ss">upper_inclusive</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="w">
-</span><span class="p" data-group-id="4387382845-2">}</span></code></pre>
+</span><span class="p" data-group-id="0681125639-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_setting_values/1">
 
   <div class="detail-header">
-    <a href="#get_setting_values/1" class="detail-link" title="Link to this function">
+    <a href="#get_setting_values/1" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -522,13 +469,13 @@ Trying to do so will result in a error being raised.</p><h2 id="delete_setting/1
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_setting_values</span><span class="p" data-group-id="1598801172-1">(</span><span class="s">&quot;get_example_setting&quot;</span><span class="p" data-group-id="1598801172-1">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_setting_values</span><span class="p" data-group-id="9693631719-1">(</span><span class="s">&quot;get_example_setting&quot;</span><span class="p" data-group-id="9693631719-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="list_all_settings/0">
 
   <div class="detail-header">
-    <a href="#list_all_settings/0" class="detail-link" title="Link to this function">
+    <a href="#list_all_settings/0" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -552,13 +499,13 @@ descriptions, etc.</p><h2 id="list_all_settings/0-examples" class="section-headi
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">list_all_settings</span><span class="p" data-group-id="7419486054-1">(</span><span class="p" data-group-id="7419486054-1">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">list_all_settings</span><span class="p" data-group-id="6757935795-1">(</span><span class="p" data-group-id="6757935795-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="set_setting_value/3">
 
   <div class="detail-header">
-    <a href="#set_setting_value/3" class="detail-link" title="Link to this function">
+    <a href="#set_setting_value/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -594,17 +541,17 @@ error will be raised.</p></li></ul><h2 id="set_setting_value/3-examples" class="
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">set_setting_value</span><span class="p" data-group-id="3987058108-1">(</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">set_setting_value</span><span class="p" data-group-id="0367977577-1">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;set_example_setting&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:setting_decimal</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="3987058108-2">(</span><span class="s">&quot;1029.3847&quot;</span><span class="p" data-group-id="3987058108-2">)</span><span class="p" data-group-id="3987058108-1">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="0367977577-2">(</span><span class="s">&quot;1029.3847&quot;</span><span class="p" data-group-id="0367977577-2">)</span><span class="p" data-group-id="0367977577-1">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
 <section class="detail" id="set_setting_values/2">
 
   <div class="detail-header">
-    <a href="#set_setting_values/2" class="detail-link" title="Link to this function">
+    <a href="#set_setting_values/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -619,7 +566,7 @@ error will be raised.</p></li></ul><h2 id="set_setting_value/3-examples" class="
 
           <pre translate="no"><span class="attribute">@spec</span> set_setting_values(
   <a href="MscmpSystSettings.Types.html#t:setting_name/0">MscmpSystSettings.Types.setting_name</a>(),
-  <a href="MscmpSystSettings.Types.html#t:setting_service_params/0">MscmpSystSettings.Types.setting_service_params</a>()
+  <a href="MscmpSystSettings.Types.html#t:setting_params/0">MscmpSystSettings.Types.setting_params</a>()
 ) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
@@ -634,7 +581,7 @@ may also be set.</p><h2 id="set_setting_values/2-parameters" class="section-head
   <span class="text">Parameters</span>
 </h2>
 <ul><li><p><code class="inline">setting_name</code> - the name of the setting to update with the new values.</p></li><li><p><code class="inline">update_params</code> - is a map that complies with the
-<code class="inline">MscmpSystSettings.Types.setting_service_params()</code> type specification and
+<a href="MscmpSystSettings.Types.html#t:setting_params/0"><code class="inline">MscmpSystSettings.Types.setting_params/0</code></a> type specification and
 includes the updates to setting type values, updates to the <code class="inline">display_name</code>
 value, and/or updates to the <code class="inline">user_description</code> value.</p></li></ul><h2 id="set_setting_values/2-examples" class="section-heading">
   <a href="#set_setting_values/2-examples" class="hover-link">
@@ -642,19 +589,19 @@ value, and/or updates to the <code class="inline">user_description</code> value.
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">update_values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="7846385779-1">%{</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">update_values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="3581672993-1">%{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">user_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;An example of updating the user description.&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">setting_integer</span><span class="p">:</span><span class="w"> </span><span class="mi">6758</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">setting_date_range</span><span class="p">:</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="7846385779-2">%</span><span class="nc" data-group-id="7846385779-2">MscmpSystDb.DbTypes.DateRange</span><span class="p" data-group-id="7846385779-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="3581672993-2">%</span><span class="nc" data-group-id="3581672993-2">MscmpSystDb.DbTypes.DateRange</span><span class="p" data-group-id="3581672993-2">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="ld">~D[2022-04-01]</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="ld">~D[2022-04-12]</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="ss">upper_inclusive</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="7846385779-2">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="7846385779-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">set_setting_values</span><span class="p" data-group-id="7846385779-3">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="3581672993-2">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="3581672993-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">set_setting_values</span><span class="p" data-group-id="3581672993-3">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;set_example_setting&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="n">update_values</span><span class="p" data-group-id="7846385779-3">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="n">update_values</span><span class="p" data-group-id="3581672993-3">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
@@ -670,10 +617,64 @@ value, and/or updates to the <code class="inline">user_description</code> value.
       <span class="text">Runtime</span>
     </h1>
     <div class="runtime-list">
+<section class="detail" id="child_spec/1">
+
+  <div class="detail-header">
+    <a href="#child_spec/1" class="detail-link" data-no-tooltip title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">child_spec(opts)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> child_spec(<a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/elixir/Supervisor.html#t:child_spec/0">Supervisor.child_spec</a>()</pre>
+
+      </div>
+
+<p>Returns a child specification for the Settings Service.</p><h2 id="child_spec/1-parameters" class="section-heading">
+  <a href="#child_spec/1-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">opts</code> - A keyword list of options.  See the <code class="inline">Options</code> section for
+details.</li></ul><h2 id="child_spec/1-options" class="section-heading">
+  <a href="#child_spec/1-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options</span>
+</h2>
+<ul><li><p><code class="inline">:debug</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">boolean/0</code></a>) - If true, the GenServer backing the Settings Service will be started in
+debug mode.</p></li><li><p><code class="inline">:timeout</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - Timeout value for the start_link call. The default value is <code class="inline">:infinity</code>.</p></li><li><p><code class="inline">:hibernate_after</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - If present, the GenServer process awaits any message for the specified
+time before hibernating.  The timeout value is expressed in Milliseconds.</p></li><li><p><code class="inline">:datastore_context_name</code> (<code class="inline">t:GenServer.name/0 or</code>nil<code class="inline">) - Specifies the name of the Datastore Context to be used by the Settings Service. *</code>:service_name<code class="inline">(</code>t:GenServer.name/0 or <code class="inline">nil</code>) - The name to use for the GenServer backing this specific Settings Service
+instance.</p></li></ul><h2 id="child_spec/1-examples" class="section-heading">
+  <a href="#child_spec/1-examples" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Examples</span>
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">child_spec</span><span class="p" data-group-id="5076598061-1">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">service_name</span><span class="p">:</span><span class="w"> </span><span class="nc">MyApp.SettingsService</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">datastore_context_name</span><span class="p">:</span><span class="w"> </span><span class="nc">MyApp.DatastoreContext</span><span class="p" data-group-id="5076598061-1">)</span><span class="w">
+</span><span class="p" data-group-id="5076598061-2">%{</span><span class="w">
+  </span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="nc">MscmpSystSettings.Runtime.Service</span><span class="p">,</span><span class="w">
+  </span><span class="ss">start</span><span class="p">:</span><span class="w">
+    </span><span class="p" data-group-id="5076598061-3">{</span><span class="nc">MscmpSystSettings</span><span class="p">,</span><span class="w">
+     </span><span class="ss">:start_link</span><span class="p">,</span><span class="w">
+     </span><span class="p" data-group-id="5076598061-4">[</span><span class="nc">MyApp.SettingsService</span><span class="p">,</span><span class="w"> </span><span class="nc">MyApp.DatastoreContext</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5076598061-5">[</span><span class="ss">timeout</span><span class="p">:</span><span class="w"> </span><span class="ss">:infinity</span><span class="p" data-group-id="5076598061-5">]</span><span class="p" data-group-id="5076598061-4">]</span><span class="p" data-group-id="5076598061-3">}</span><span class="p">,</span><span class="w">
+</span><span class="p" data-group-id="5076598061-2">}</span></code></pre>
+  </section>
+</section>
 <section class="detail" id="get_settings_service/0">
 
   <div class="detail-header">
-    <a href="#get_settings_service/0" class="detail-link" title="Link to this function">
+    <a href="#get_settings_service/0" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -686,29 +687,35 @@ value, and/or updates to the <code class="inline">user_description</code> value.
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> get_settings_service() :: <a href="MscmpSystSettings.Types.html#t:service_name/0">MscmpSystSettings.Types.service_name</a>() | nil</pre>
+          <pre translate="no"><span class="attribute">@spec</span> get_settings_service() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>() | nil</pre>
 
       </div>
 
-<p>Retrieves the currently set Settings Service name or <code class="inline">nil</code> if none has been
-set.</p><h2 id="get_settings_service/0-examples" class="section-heading">
+<p>Retrieve the current specific Settings Service name in effect for the process.</p><p>This function returns the name of the Settings Service that has been using the
+<a href="#put_settings_service/1"><code class="inline">put_settings_service/1</code></a> function to override the default Settings Service
+associated with the Instance Name. If no specific Settings Service name has
+been set, this function will return <code class="inline">nil</code>.</p><h2 id="get_settings_service/0-examples" class="section-heading">
   <a href="#get_settings_service/0-examples" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_settings_service</span><span class="p" data-group-id="7147818483-1">(</span><span class="p" data-group-id="7147818483-1">)</span><span class="w">
-</span><span class="ss">:settings_test_service</span></code></pre>
+<p>  Retrieving a specific Settings Service name:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">put_settings_service</span><span class="p" data-group-id="1944818885-1">(</span><span class="ss">:&quot;MscmpSystSettings.TestSupportService&quot;</span><span class="p" data-group-id="1944818885-1">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_settings_service</span><span class="p" data-group-id="1944818885-2">(</span><span class="p" data-group-id="1944818885-2">)</span><span class="w">
+</span><span class="ss">:&quot;MscmpSystSettings.TestSupportService&quot;</span></code></pre><p>  Retrieving a specific Settings Service name when no value is currently set
+  for the process:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">put_settings_service</span><span class="p" data-group-id="5123617678-1">(</span><span class="no">nil</span><span class="p" data-group-id="5123617678-1">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_settings_service</span><span class="p" data-group-id="5123617678-2">(</span><span class="p" data-group-id="5123617678-2">)</span><span class="w">
+</span><span class="no">nil</span></code></pre>
   </section>
 </section>
 <section class="detail" id="put_settings_service/1">
 
   <div class="detail-header">
-    <a href="#put_settings_service/1" class="detail-link" title="Link to this function">
+    <a href="#put_settings_service/1" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">put_settings_service(service_name)</h1>
+    <h1 class="signature" translate="no">put_settings_service(settings_service_name)</h1>
 
 
   </div>
@@ -717,40 +724,40 @@ set.</p><h2 id="get_settings_service/0-examples" class="section-heading">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> put_settings_service(<a href="MscmpSystSettings.Types.html#t:service_name/0">MscmpSystSettings.Types.service_name</a>() | nil) ::
-  <a href="MscmpSystSettings.Types.html#t:service_name/0">MscmpSystSettings.Types.service_name</a>() | nil</pre>
+          <pre translate="no"><span class="attribute">@spec</span> put_settings_service(<a href="https://hexdocs.pm/elixir/GenServer.html#t:name/0">GenServer.name</a>() | nil) :: <a href="https://hexdocs.pm/elixir/GenServer.html#t:name/0">GenServer.name</a>() | nil</pre>
 
       </div>
 
-<p>Establishes the current Settings Service instance for the process.</p><p>A running system is likely to have more than one instance of the Settings
-Service running.  For example, in multi-tenant applications each tenant may
-have its own instance of the Setting Service, caching data unique to the
-tenant.</p><p>Calling <a href="#put_settings_service/1"><code class="inline">MscmpSystSettings.put_settings_service/1</code></a> will set the reference to
-the desired Settings Service instance for any subsequent MscmpSystSettings
-calls.  The service name is set in the Process Dictionary of the process from
-which the calls are being made.  As such, you must call put_settings_service
-at least once for any process from which you wish to access the Settings
-Service.</p><p>Because we're just thinly wrapping <a href="https://hexdocs.pm/elixir/Process.html#put/2"><code class="inline">Process.put/2</code></a> here, the return value will
-be the previous value set here, or nil if no previous value was set.</p><h2 id="put_settings_service/1-parameters" class="section-heading">
+<p>Establishes the currently active Settings Service instance for the current
+process.</p><h2 id="put_settings_service/1-parameters" class="section-heading">
   <a href="#put_settings_service/1-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
   </a>
   <span class="text">Parameters</span>
 </h2>
-<ul><li><code class="inline">service_name</code> - The name of the service which is to be set as servicing
-the process.</li></ul><h2 id="put_settings_service/1-examples" class="section-heading">
+<ul><li><code class="inline">settings_service_name</code> - the canonical name of the specific Settings
+Service to access.  When this function is called with a non-nil argument,
+calls to Settings related functions will make use of the Settings Service
+specified here.  Setting this value to <code class="inline">nil</code> will clear the currently
+active Settings Service for the process.  Any calls to Settings related
+functions will fail until a new Settings Service is designated for the
+process using this function with a non-nil argument.</li></ul><h2 id="put_settings_service/1-examples" class="section-heading">
   <a href="#put_settings_service/1-examples" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">put_settings_service</span><span class="p" data-group-id="5982426345-1">(</span><span class="ss">:settings_test_service</span><span class="p" data-group-id="5982426345-1">)</span></code></pre>
+<p>  Setting a specific Settings Service name:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">put_settings_service</span><span class="p" data-group-id="9045520198-1">(</span><span class="ss">:&quot;MscmpSystSettings.TestSupportService&quot;</span><span class="p" data-group-id="9045520198-1">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_settings_service</span><span class="p" data-group-id="9045520198-2">(</span><span class="p" data-group-id="9045520198-2">)</span><span class="w">
+</span><span class="ss">:&quot;MscmpSystSettings.TestSupportService&quot;</span></code></pre><p>  Clearing a previously set specific Service Name:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">put_settings_service</span><span class="p" data-group-id="3984218588-1">(</span><span class="no">nil</span><span class="p" data-group-id="3984218588-1">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_settings_service</span><span class="p" data-group-id="3984218588-2">(</span><span class="p" data-group-id="3984218588-2">)</span><span class="w">
+</span><span class="no">nil</span></code></pre>
   </section>
 </section>
 <section class="detail" id="refresh_from_database/0">
 
   <div class="detail-header">
-    <a href="#refresh_from_database/0" class="detail-link" title="Link to this function">
+    <a href="#refresh_from_database/0" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -769,24 +776,26 @@ the process.</li></ul><h2 id="put_settings_service/1-examples" class="section-he
 
 <p>Refreshes the cached settings values from the database.</p><p>Calling this function causes the existing cached settings to be purged from
 the cache and the cache to be repopulated from the database using the
-datastore context provided to <a href="#start_link/1"><code class="inline">start_link/1</code></a>.</p><h2 id="refresh_from_database/0-examples" class="section-heading">
+datastore context provided to <code class="inline">start_link/1</code>.</p><h2 id="refresh_from_database/0-examples" class="section-heading">
   <a href="#refresh_from_database/0-examples" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">refresh_from_database</span><span class="p" data-group-id="2996926766-1">(</span><span class="p" data-group-id="2996926766-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">refresh_from_database</span><span class="p" data-group-id="6647627388-1">(</span><span class="p" data-group-id="6647627388-1">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
-<section class="detail" id="start_link/1">
+<section class="detail" id="start_link/3">
+
+    <span id="start_link/2"></span>
 
   <div class="detail-header">
-    <a href="#start_link/1" class="detail-link" title="Link to this function">
+    <a href="#start_link/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">start_link(params)</h1>
+    <h1 class="signature" translate="no">start_link(service_name, datastore_context_name, opts \\ [])</h1>
 
 
   </div>
@@ -796,28 +805,39 @@ datastore context provided to <a href="#start_link/1"><code class="inline">start
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> start_link(
-  {<a href="MscmpSystSettings.Types.html#t:service_name/0">MscmpSystSettings.Types.service_name</a>(), <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.Types.html#t:context_name/0">MscmpSystDb.Types.context_name</a>()}
-) ::
-  {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  <a href="MscmpSystSettings.Types.html#t:service_name/0">MscmpSystSettings.Types.service_name</a>(),
+  <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.Types.html#t:context_service_name/0">MscmpSystDb.Types.context_service_name</a>(),
+  <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
+) :: {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
 
 <p>Starts an instance of the Settings Service.</p><p>Starting the service establishes the required processes and pre-populates the
 service cache with data from the database.  Most other functions in this
 module require that the service is started prior to use and will fail if the
-service is not started.</p><p>The <code class="inline">service_name</code> argument provides a unique name under which the service can
-be found.  This argument is a subset of those that allowed for registering
-GenServers; the allowed forms for service name are simple atoms for basic
-local name registry or a &quot;via tuple&quot;, such as might be used with the
-<a href="https://hexdocs.pm/elixir/Registry.html"><code class="inline">Registry</code></a> module.</p><p>The <code class="inline">datastore_context_name</code> is an atom which represents a started
-<a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.html"><code class="inline">MscmpSystDb</code></a> context.  This context will be used for accessing and
-modifying database data.</p>
+service is not started.</p><h2 id="start_link/3-parameters" class="section-heading">
+  <a href="#start_link/3-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><p><code class="inline">service_name</code> - The name of the Settings Service.</p></li><li><p><code class="inline">datastore_context_name</code> - The name of the Datastore Context to be used by
+the Settings Service.</p></li><li><p><code class="inline">opts</code> - Options for the Settings Service. See the Options section below
+for more information.</p></li></ul><h2 id="start_link/3-options" class="section-heading">
+  <a href="#start_link/3-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options</span>
+</h2>
+<ul><li><p><code class="inline">:debug</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">boolean/0</code></a>) - If true, the GenServer backing the Settings Service will be started in
+debug mode.</p></li><li><p><code class="inline">:timeout</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - Timeout value for the start_link call. The default value is <code class="inline">:infinity</code>.</p></li><li><p><code class="inline">:hibernate_after</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - If present, the GenServer process awaits any message for the specified
+time before hibernating.  The timeout value is expressed in Milliseconds.</p></li></ul>
   </section>
 </section>
 <section class="detail" id="terminate_settings_service/0">
 
   <div class="detail-header">
-    <a href="#terminate_settings_service/0" class="detail-link" title="Link to this function">
+    <a href="#terminate_settings_service/0" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -840,7 +860,7 @@ modifying database data.</p>
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="o">&gt;</span><span class="w"> </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">terminate_settings_service</span><span class="p" data-group-id="9309039261-1">(</span><span class="p" data-group-id="9309039261-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="o">&gt;</span><span class="w"> </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">terminate_settings_service</span><span class="p" data-group-id="8945602522-1">(</span><span class="p" data-group-id="8945602522-1">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
@@ -848,221 +868,33 @@ modifying database data.</p>
     </div>
   </section>
 
-  <section id="development-support" class="details-list">
-    <h1 class="section-heading">
-      <a class="hover-link" href="#development-support">
-        <i class="ri-link-m" aria-hidden="true"></i>
-      </a>
-      <span class="text">Development Support</span>
-    </h1>
-    <div class="development-support-list">
-<section class="detail" id="get_devsupport_service_name/0">
+    <footer class="footer">
+      <p>
 
-  <div class="detail-header">
-    <a href="#get_devsupport_service_name/0" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">get_devsupport_service_name()</h1>
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
 
+            <a href="mscmp_syst_settings.epub" title="ePub version">
+              Download ePub version
+            </a>
 
-  </div>
+        </span>
+      </p>
 
-  <section class="docstring">
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.34.2) for the
 
-      <div class="specs">
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
-          <pre translate="no"><span class="attribute">@spec</span> get_devsupport_service_name() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()</pre>
+      </p>
 
-      </div>
-
-<p>Retrieves the Settings Service Name typically used to support development.</p><p>This is a way to retrieve the standard development support name for use with
-functions such as <a href="#put_settings_service/1"><code class="inline">put_settings_service/1</code></a></p>
-  </section>
-</section>
-<section class="detail" id="get_testsupport_service_name/0">
-
-  <div class="detail-header">
-    <a href="#get_testsupport_service_name/0" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">get_testsupport_service_name()</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@spec</span> get_testsupport_service_name() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()</pre>
-
-      </div>
-
-<p>Retrieves the Settings Service Name typically used to support testing.</p><p>This is a way to retrieve the standard testing support name for use with
-functions such as <a href="#put_settings_service/1"><code class="inline">put_settings_service/1</code></a></p>
-  </section>
-</section>
-<section class="detail" id="start_devsupport_services/1">
-
-    <span id="start_devsupport_services/0"></span>
-
-  <div class="detail-header">
-    <a href="#start_devsupport_services/1" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">start_devsupport_services(opts \\ [])</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@spec</span> start_devsupport_services(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) ::
-  :ignore | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
-
-      </div>
-
-<p>Starts a Settings Service instance for the purposes of supporting interactive
-development activities.</p><blockquote><h4 class="warning">Not for Production</h4><p>This operation is specifically intended to support development and should
-not be used by code which runs in production environments.</p></blockquote><p>Currently this function simply redirects to <a href="#start_support_services/1"><code class="inline">start_support_services/1</code></a>.</p><h2 id="start_devsupport_services/1-parameters" class="section-heading">
-  <a href="#start_devsupport_services/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">opts</code> - a <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0"><code class="inline">Keyword.t/0</code></a> list of optional parameters which can override
-default values for service parameters.  The available options and their
-defaults are the same as <a href="#start_support_services/1"><code class="inline">start_support_services/1</code></a>.</li></ul>
-  </section>
-</section>
-<section class="detail" id="start_support_services/1">
-
-    <span id="start_support_services/0"></span>
-
-  <div class="detail-header">
-    <a href="#start_support_services/1" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">start_support_services(opts \\ [])</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@spec</span> start_support_services(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) ::
-  :ignore | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
-
-      </div>
-
-<p>Starts a Settings Service instance for the purposes of supporting interactive
-development or testing activities.</p><blockquote><h4 class="warning">Not for Production</h4><p>This operation is specifically intended to support development and testing
-activities and should not be used by code which runs in production
-environments.</p></blockquote><h2 id="start_support_services/1-parameters" class="section-heading">
-  <a href="#start_support_services/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">opts</code> - a <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0"><code class="inline">Keyword.t/0</code></a> list of optional parameters which can override
-default values for service parameters.  The available options are:</p><ul><li><p><code class="inline">childspec_id</code> - the ID value used in defining a Child Specification for
-the service. This is an atom value which defaults to
-<a href="MscmpSystSettings.html#content"><code class="inline">MscmpSystSettings</code></a>.</p></li><li><p><code class="inline">supervisor_name</code> - the name of the <a href="https://hexdocs.pm/elixir/DynamicSupervisor.html"><code class="inline">DynamicSupervisor</code></a> which will
-will supervise the Settings Service.  This is an atom value which
-defaults to <code class="inline">MscmpSystSettings.DevSupportSupervisor</code>.</p></li><li><p><code class="inline">service_name</code> - the name of the Settings Service instance.  This is the
-value by which the specific Settings Service may be set using functions
-such as <a href="#put_settings_service/1"><code class="inline">put_settings_service/1</code></a>.  This is an atom value which defaults
-to the value returned by <a href="#get_devsupport_service_name/0"><code class="inline">get_devsupport_service_name/0</code></a>.</p></li><li><p><code class="inline">datastore_context</code> - the name of the login Datastore Context which can
-access the database storage backing the Settings Service.  This is an
-atom value which defaults to the value returned by
-<a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.html#get_devsupport_context_name/0"><code class="inline">MscmpSystDb.get_devsupport_context_name/0</code></a>.</p></li></ul></li></ul>
-  </section>
-</section>
-<section class="detail" id="start_testsupport_services/1">
-
-    <span id="start_testsupport_services/0"></span>
-
-  <div class="detail-header">
-    <a href="#start_testsupport_services/1" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">start_testsupport_services(opts \\ [])</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@spec</span> start_testsupport_services(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) ::
-  :ignore | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
-
-      </div>
-
-<p>Starts a Settings Service instance for the purposes of supporting testing
-activities.</p><blockquote><h4 class="warning">Not for Production</h4><p>This operation is specifically intended to support testing activities and
-should not be used by code which runs in production environments.</p></blockquote><h2 id="start_testsupport_services/1-parameters" class="section-heading">
-  <a href="#start_testsupport_services/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">opts</code> - a <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0"><code class="inline">Keyword.t/0</code></a> list of optional parameters which can override
-default values for service parameters.  The available options are:</p><ul><li><p><code class="inline">childspec_id</code> - the ID value used in defining a Child Specification for
-the service. This is an atom value which defaults to
-<a href="MscmpSystSettings.html#content"><code class="inline">MscmpSystSettings</code></a>.</p></li><li><p><code class="inline">supervisor_name</code> - the name of the <a href="https://hexdocs.pm/elixir/DynamicSupervisor.html"><code class="inline">DynamicSupervisor</code></a> which will
-will supervise the Settings Service.  This is an atom value which
-defaults to <code class="inline">MscmpSystSettings.TestSupportSupervisor</code>.</p></li><li><p><code class="inline">service_name</code> - the name of the Settings Service instance.  This is the
-value by which the specific Settings Service may be set using functions
-such as <a href="#put_settings_service/1"><code class="inline">put_settings_service/1</code></a>.  This is an atom value which defaults
-to the value returned by <a href="#get_testsupport_service_name/0"><code class="inline">get_testsupport_service_name/0</code></a>.</p></li><li><p><code class="inline">datastore_context</code> - the name of the login Datastore Context which can
-access the database storage backing the Settings Service.  This is an
-atom value which defaults to the value returned by
-<a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.html#get_testsupport_context_name/0"><code class="inline">MscmpSystDb.get_testsupport_context_name/0</code></a>.</p></li></ul></li></ul>
-  </section>
-</section>
-
-    </div>
-  </section>
-
-      <footer class="footer">
-        <p>
-
-          <span class="line">
-            <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
-              Search HexDocs
-            </button>
-
-              <a href="mscmp_syst_settings.epub" title="ePub version">
-                Download ePub version
-              </a>
-
-          </span>
-        </p>
-
-        <p class="built-using">
-          Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.31.1) for the
-
-            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
-
-        </p>
-      </footer>
-    </div>
+    </footer>
   </div>
 </main>
 </div>
-
 
   </body>
 </html>
