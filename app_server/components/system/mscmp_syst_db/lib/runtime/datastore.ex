@@ -661,7 +661,8 @@ defmodule MscmpSystDb.Runtime.Datastore do
     end
   end
 
-  defp lookup_context_pid(context_registry, context_name) when is_atom(context_registry) do
+  defp lookup_context_pid(context_registry, context_name)
+       when is_atom(context_registry) and not is_nil(context_registry) do
     case Registry.lookup(context_registry, context_name) do
       [{pid, _}] ->
         pid

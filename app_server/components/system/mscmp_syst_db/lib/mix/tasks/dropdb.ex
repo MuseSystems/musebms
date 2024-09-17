@@ -134,16 +134,24 @@ defmodule Mix.Tasks.Dropdb do
   end
 
   defp get_drop_datastore_options(opts_cli) do
-    opts = [
-      database_name: opts_cli[:db_name],
-      datastore_name: opts_cli[:ds_name],
-      database_role_prefix: opts_cli[:db_role_prefix],
-      context_name: opts_cli[:context_name],
-      db_host: opts_cli[:db_host],
-      db_port: opts_cli[:db_port],
-      dbadmin_password: opts_cli[:dbadmin_pwd]
-    ]
+    opts =
+      []
+      |> add_option(:database_name, opts_cli[:db_name])
+      |> add_option(:datastore_name, opts_cli[:ds_name])
+      |> add_option(:database_role_prefix, opts_cli[:db_role_prefix])
+      |> add_option(:context_name, opts_cli[:context_name])
+      |> add_option(:db_host, opts_cli[:db_host])
+      |> add_option(:db_port, opts_cli[:db_port])
+      |> add_option(:dbadmin_password, opts_cli[:dbadmin_pwd])
 
     get_datastore_options(opts)
+  end
+
+  defp add_option(opts, key, value) do
+    if value != nil do
+      Keyword.put(opts, key, value)
+    else
+      opts
+    end
   end
 end

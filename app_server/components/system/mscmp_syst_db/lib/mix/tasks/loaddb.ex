@@ -151,22 +151,30 @@ defmodule Mix.Tasks.Loaddb do
   end
 
   defp get_load_datastore_options(opts_cli) do
-    opts = [
-      database_name: opts_cli[:db_name],
-      datastore_code: opts_cli[:ds_code],
-      datastore_name: opts_cli[:ds_name],
-      description_prefix: opts_cli[:desc_prefix],
-      database_role_prefix: opts_cli[:db_role_prefix],
-      context_name: opts_cli[:context_name],
-      database_password: opts_cli[:context_pwd],
-      starting_pool_size: opts_cli[:context_pool],
-      db_host: opts_cli[:db_host],
-      db_port: opts_cli[:db_port],
-      server_salt: opts_cli[:db_salt],
-      dbadmin_password: opts_cli[:dbadmin_pwd],
-      dbadmin_pool_size: opts_cli[:dbadmin_pool]
-    ]
+    opts =
+      []
+      |> add_option(:database_name, opts_cli[:db_name])
+      |> add_option(:datastore_code, opts_cli[:ds_code])
+      |> add_option(:datastore_name, opts_cli[:ds_name])
+      |> add_option(:description_prefix, opts_cli[:desc_prefix])
+      |> add_option(:database_role_prefix, opts_cli[:db_role_prefix])
+      |> add_option(:context_name, opts_cli[:context_name])
+      |> add_option(:database_password, opts_cli[:context_pwd])
+      |> add_option(:starting_pool_size, opts_cli[:context_pool])
+      |> add_option(:db_host, opts_cli[:db_host])
+      |> add_option(:db_port, opts_cli[:db_port])
+      |> add_option(:server_salt, opts_cli[:db_salt])
+      |> add_option(:dbadmin_password, opts_cli[:dbadmin_pwd])
+      |> add_option(:dbadmin_pool_size, opts_cli[:dbadmin_pool])
 
     get_datastore_options(opts)
+  end
+
+  defp add_option(opts, key, value) do
+    if value != nil do
+      Keyword.put(opts, key, value)
+    else
+      opts
+    end
   end
 end
