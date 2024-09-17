@@ -32,6 +32,12 @@ defmodule MscmpSystEnums.Impl.Enums do
   # since we need to change data in the ets tables which are owned by the
   # GenServer and are in "protected" mode.
 
+  ##############################################################################
+  #
+  # refresh_from_database
+  #
+  #
+
   @spec refresh_from_database() :: :ok
   def refresh_from_database, do: ProcessUtils.get_enums_table() |> refresh_from_database()
 
@@ -43,6 +49,12 @@ defmodule MscmpSystEnums.Impl.Enums do
     |> MscmpSystDb.all()
     |> Enum.each(&:ets.insert(enums_table, {&1.internal_name, &1}))
   end
+
+  ##############################################################################
+  #
+  # refresh_enum_from_database
+  #
+  #
 
   # refresh_enum_from_database/2 is often called after changes to enum data is
   # persisted to the database in order to refresh the cached enum data.  Most of
@@ -83,6 +95,12 @@ defmodule MscmpSystEnums.Impl.Enums do
       }
   end
 
+  ##############################################################################
+  #
+  # get_enum_values
+  #
+  #
+
   @spec get_enum_values(Types.enum_name()) :: Msdata.SystEnums.t()
   def get_enum_values(enum_name),
     do: ProcessUtils.get_enums_table() |> get_enum_values(enum_name)
@@ -93,6 +111,12 @@ defmodule MscmpSystEnums.Impl.Enums do
     :ets.lookup_element(enums_table, enum_name, 2)
   end
 
+  ##############################################################################
+  #
+  # list_all_enums
+  #
+  #
+
   @spec list_all_enums() :: list(Msdata.SystEnums.t())
   def list_all_enums, do: ProcessUtils.get_enums_table() |> list_all_enums()
 
@@ -101,6 +125,12 @@ defmodule MscmpSystEnums.Impl.Enums do
     # Select query :ets.fun2ms(fn {_, enum_values} -> enum_values end)
     :ets.select(enums_table, [{{:_, :"$1"}, [], [:"$1"]}])
   end
+
+  ##############################################################################
+  #
+  # get_enum_syst_defined
+  #
+  #
 
   @spec get_enum_syst_defined(Types.enum_name()) :: boolean()
   def get_enum_syst_defined(enum_name),
@@ -113,6 +143,12 @@ defmodule MscmpSystEnums.Impl.Enums do
     |> hd()
   end
 
+  ##############################################################################
+  #
+  # get_enum_user_maintainable
+  #
+  #
+
   @spec get_enum_user_maintainable(Types.enum_name()) :: boolean()
   def get_enum_user_maintainable(enum_name),
     do: ProcessUtils.get_enums_table() |> get_enum_user_maintainable(enum_name)
@@ -123,6 +159,12 @@ defmodule MscmpSystEnums.Impl.Enums do
     :ets.select(enums_table, [{{enum_name, %{user_maintainable: :"$1"}}, [], [:"$1"]}])
     |> hd()
   end
+
+  ##############################################################################
+  #
+  # list_enum_items
+  #
+  #
 
   @spec list_enum_items(Types.enum_name()) :: list(Msdata.SystEnumItems.t())
   def list_enum_items(enum_name),
@@ -135,6 +177,12 @@ defmodule MscmpSystEnums.Impl.Enums do
     |> hd()
   end
 
+  ##############################################################################
+  #
+  # list_sorted_enum_items
+  #
+  #
+
   @spec list_sorted_enum_items(Types.enum_name()) :: list(Msdata.SystEnumItems.t())
   def list_sorted_enum_items(enum_name),
     do: ProcessUtils.get_enums_table() |> list_sorted_enum_items(enum_name)
@@ -144,6 +192,12 @@ defmodule MscmpSystEnums.Impl.Enums do
       when is_atom(enums_table) or is_reference(enums_table) do
     Enum.sort(list_enum_items(enums_table, enum_name), &(&1.sort_order < &2.sort_order))
   end
+
+  ##############################################################################
+  #
+  # list_enum_functional_types
+  #
+  #
 
   @spec list_enum_functional_types(Types.enum_name()) :: list(Msdata.SystEnumFunctionalTypes.t())
   def list_enum_functional_types(enum_name),
@@ -156,6 +210,12 @@ defmodule MscmpSystEnums.Impl.Enums do
     :ets.select(enums_table, [{{enum_name, %{functional_types: :"$1"}}, [], [:"$1"]}])
     |> hd()
   end
+
+  ##############################################################################
+  #
+  # get_enum_item_by_name
+  #
+  #
 
   @spec get_enum_item_by_name(Types.enum_name(), Types.enum_item_name()) ::
           Msdata.SystEnumItems.t() | nil
@@ -170,6 +230,12 @@ defmodule MscmpSystEnums.Impl.Enums do
     |> Enum.find(&(&1.internal_name == enum_item_name))
   end
 
+  ##############################################################################
+  #
+  # get_enum_item_by_id
+  #
+  #
+
   @spec get_enum_item_by_id(Types.enum_name(), Types.enum_item_id()) ::
           Msdata.SystEnumItems.t() | nil
   def get_enum_item_by_id(enum_name, enum_item_id),
@@ -183,11 +249,17 @@ defmodule MscmpSystEnums.Impl.Enums do
     |> Enum.find(&(&1.id == enum_item_id))
   end
 
-  @spec get_default_enum_item(Types.enum_name(), Keyword.t() | []) :: Msdata.SystEnumItems.t()
+  ##############################################################################
+  #
+  # get_default_enum_item
+  #
+  #
+
+  @spec get_default_enum_item(Types.enum_name(), Keyword.t()) :: Msdata.SystEnumItems.t()
   def get_default_enum_item(enum_name, opts),
     do: ProcessUtils.get_enums_table() |> get_default_enum_item(enum_name, opts)
 
-  @spec get_default_enum_item(:ets.table(), Types.enum_name(), Keyword.t() | []) ::
+  @spec get_default_enum_item(:ets.table(), Types.enum_name(), Keyword.t()) ::
           Msdata.SystEnumItems.t()
   def get_default_enum_item(enums_table, enum_name, opts)
       when is_atom(enums_table) or is_reference(enums_table) do
@@ -199,6 +271,12 @@ defmodule MscmpSystEnums.Impl.Enums do
     end)
   end
 
+  ##############################################################################
+  #
+  # default_enum_item_found?
+  #
+  #
+
   defp default_enum_item_found?(enum_item, functional_type_name)
        when is_binary(functional_type_name) do
     enum_item.functional_type.internal_name == functional_type_name and
@@ -208,6 +286,12 @@ defmodule MscmpSystEnums.Impl.Enums do
   defp default_enum_item_found?(enum_item, _functional_type_name) do
     enum_item.enum_default == true
   end
+
+  ##############################################################################
+  #
+  # create_enum
+  #
+  #
 
   @spec create_enum(Types.enum_params()) :: :ok | {:error, MscmpSystError.t()}
   def create_enum(enum_params),
@@ -285,6 +369,12 @@ defmodule MscmpSystEnums.Impl.Enums do
 
   defp create_enum_items_for_enum(multi, _changes, _enum_params), do: multi
 
+  ##############################################################################
+  #
+  # create_enum_functional_type
+  #
+  #
+
   @spec create_enum_functional_type(
           Types.enum_name(),
           Types.enum_functional_type_params()
@@ -325,6 +415,12 @@ defmodule MscmpSystEnums.Impl.Enums do
         }
       }
   end
+
+  ##############################################################################
+  #
+  # create_enum_item
+  #
+  #
 
   @spec create_enum_item(Types.enum_name(), Types.enum_item_params()) ::
           :ok | {:error, MscmpSystError.t()}
@@ -412,6 +508,12 @@ defmodule MscmpSystEnums.Impl.Enums do
       cause: %{functional_type_id: functional_type_id}
   end
 
+  ##############################################################################
+  #
+  # set_enum_values
+  #
+  #
+
   @spec set_enum_values(Types.enum_name(), Types.enum_params()) ::
           :ok | {:error, MscmpSystError.t()}
   def set_enum_values(enum_name, enum_params),
@@ -443,6 +545,12 @@ defmodule MscmpSystEnums.Impl.Enums do
         }
       }
   end
+
+  ##############################################################################
+  #
+  # set_enum_functional_type_values
+  #
+  #
 
   @spec set_enum_functional_type_values(
           Types.enum_name(),
@@ -490,6 +598,12 @@ defmodule MscmpSystEnums.Impl.Enums do
       }
   end
 
+  ##############################################################################
+  #
+  # set_enum_item_values
+  #
+  #
+
   @spec set_enum_item_values(Types.enum_name(), Types.enum_item_name(), Types.enum_item_params()) ::
           :ok | {:error, MscmpSystError.t()}
   def set_enum_item_values(enum_name, enum_item_name, enum_item_params) do
@@ -527,6 +641,12 @@ defmodule MscmpSystEnums.Impl.Enums do
       }
   end
 
+  ##############################################################################
+  #
+  # delete_enum
+  #
+  #
+
   @spec delete_enum(Types.enum_name()) :: :ok | {:error, MscmpSystError.t()}
   def delete_enum(enum_name), do: ProcessUtils.get_enums_table() |> delete_enum(enum_name)
 
@@ -553,6 +673,12 @@ defmodule MscmpSystEnums.Impl.Enums do
         }
       }
   end
+
+  ##############################################################################
+  #
+  # delete_enum_functional_type
+  #
+  #
 
   @spec delete_enum_functional_type(Types.enum_name(), Types.enum_functional_type_name()) ::
           :ok | {:error, MscmpSystError.t()}
@@ -589,6 +715,12 @@ defmodule MscmpSystEnums.Impl.Enums do
       }
   end
 
+  ##############################################################################
+  #
+  # delete_enum_item
+  #
+  #
+
   @spec delete_enum_item(Types.enum_name(), Types.enum_item_name()) ::
           :ok | {:error, MscmpSystError.t()}
   def delete_enum_item(enum_name, enum_item_name),
@@ -616,6 +748,12 @@ defmodule MscmpSystEnums.Impl.Enums do
         }
       }
   end
+
+  ##############################################################################
+  #
+  # get_functional_type_by_enum_item_id
+  #
+  #
 
   @spec get_functional_type_by_enum_item_id(Types.enum_name(), Types.enum_item_id()) ::
           Types.enum_functional_type_name()

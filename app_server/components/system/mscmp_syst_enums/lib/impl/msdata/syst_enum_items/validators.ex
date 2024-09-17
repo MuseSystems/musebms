@@ -19,8 +19,6 @@ defmodule MscmpSystEnums.Impl.Msdata.SystEnumItems.Validators do
 
   @spec changeset(Msdata.SystEnumItems.t(), map(), Keyword.t()) :: Ecto.Changeset.t()
   def changeset(syst_enum_items, change_params, opts) do
-    opts = GeneralValidators.resolve_options(opts)
-
     syst_enum_items
     |> cast(change_params, [
       :internal_name,
@@ -34,16 +32,16 @@ defmodule MscmpSystEnums.Impl.Msdata.SystEnumItems.Validators do
       :enum_id,
       :functional_type_id
     ])
+    |> GeneralValidators.maybe_put_syst_defined()
+    |> GeneralValidators.maybe_put_user_maintainable()
     |> maybe_default_enum_default()
     |> maybe_default_functional_type_default()
     |> GeneralValidators.validate_enum_id()
     |> GeneralValidators.validate_functional_type_id()
-    |> GeneralValidators.validate_internal_name(opts)
-    |> GeneralValidators.validate_display_name(opts)
-    |> GeneralValidators.validate_external_name(opts)
-    |> GeneralValidators.validate_user_description(opts)
-    |> GeneralValidators.maybe_put_syst_defined()
-    |> GeneralValidators.maybe_put_user_maintainable()
+    |> Msutils.Data.validate_internal_name(opts)
+    |> Msutils.Data.validate_display_name(opts)
+    |> Msutils.Data.validate_external_name(opts)
+    |> Msutils.Data.validate_user_description(opts)
     |> optimistic_lock(:diag_row_version)
     |> unique_constraint(:internal_name, name: :syst_enum_items_internal_name_udx)
     |> unique_constraint(:display_name, name: :syst_enum_items_display_name_udx)

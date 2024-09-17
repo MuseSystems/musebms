@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_enums" schema="ms_syst_data" type="PostgreSQL - 16.1 (Ubuntu 16.1-1.pgdg22.04+1)">
+<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_enums" schema="ms_syst_data" type="PostgreSQL - 16.4 (Ubuntu 16.4-1.pgdg22.04+1)">
    <tables>
       <table name="syst_enum_functional_types" remarks="For those Enumerations requiring Functional Type designation, this table defines&#10;the available types and persists related metadata.  Note that not all&#10;Enumerations require Functional Types." schema="ms_syst_data" type="TABLE">
          <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">

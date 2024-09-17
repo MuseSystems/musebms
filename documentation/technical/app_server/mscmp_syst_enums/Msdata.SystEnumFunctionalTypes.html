@@ -4,22 +4,19 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.31.1">
+    <meta name="generator" content="ExDoc v0.34.2">
     <meta name="project" content="mscmp_syst_enums v0.1.0">
 
 
     <title>Msdata.SystEnumFunctionalTypes — mscmp_syst_enums v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-FM2CSD74.css" />
+    <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-43PMFBC7.js"></script>
-    <script src="dist/sidebar_items-FAAB792D.js"></script>
-
-      <script src="docs_config.js"></script>
-
-    <script async src="dist/html-L4O5OK2K.js"></script>
-
+    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
+    <script src="dist/sidebar_items-D9873E2C.js"></script>
+    <script src="docs_config.js"></script>
+    <script async src="dist/html-YIPIRHGU.js"></script>
 
   </head>
   <body data-type="modules" class="page-module">
@@ -37,13 +34,11 @@
       } catch (error) { }
     </script>
 
-<div class="main">
+<div class="body-wrapper">
 
 <button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
   <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
 </button>
-
-<div class="background-layer"></div>
 
 <nav id="sidebar" class="sidebar">
 
@@ -89,41 +84,41 @@ Pages
 
 <main class="content">
   <output role="status" id="toast"></output>
-  <div class="content-outer">
-    <div id="content" class="content-inner">
-      <div class="top-search">
-        <div class="search-settings">
-          <form class="search-bar" action="search.html">
-            <label class="search-label">
-              <span class="sr-only">Search documentation of mscmp_syst_enums</span>
-              <input name="q" type="text" class="search-input" placeholder="Search Documentation (press /)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-            </label>
-            <button type="submit" class="search-button" aria-label="Submit Search">
-              <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
-            </button>
-            <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
-              <i class="ri-close-line ri-lg" title="Cancel search"></i>
-            </button>
-          </form>
-          <div class="autocomplete">
-          </div>
-          <button class="icon-settings display-settings">
-            <i class="ri-settings-3-line"></i>
-            <span class="sr-only">Settings</span>
+
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of mscmp_syst_enums</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
           </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
         </div>
-
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
       </div>
+    </div>
 
-<h1>
+<div id="top-content">
+  <h1>
 
-  <span translate="no">Msdata.SystEnumFunctionalTypes</span> 
-  <small class="app-vsn" translate="no">(mscmp_syst_enums v0.1.0)</small>
+    <span translate="no">Msdata.SystEnumFunctionalTypes</span> 
+    <small class="app-vsn" translate="no">(mscmp_syst_enums v0.1.0)</small>
 
-</h1>
+  </h1>
 
 
-  <section id="moduledoc">
+    <section id="moduledoc">
 <p>The data structure defining the functional types associated with a given
 enumeration.</p><p>Functional types allow the application behavior associated with list choices
 to be decoupled from the information conveyance that the same list of choices
@@ -135,8 +130,9 @@ case would create two entries of functional type inactive, one each for
 cancelled and fulfilled.  Functionally the application will see the same
 value, but user reporting can reflect the nuance not needed by the application
 functionality.</p><p>Defined in <a href="MscmpSystEnums.html"><code class="inline">MscmpSystEnums</code></a>.</p>
-  </section>
+    </section>
 
+</div>
 
   <section id="summary" class="details-list">
     <h1 class="section-heading">
@@ -152,9 +148,25 @@ functionality.</p><p>Defined in <a href="MscmpSystEnums.html"><code class="inlin
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:t/0" translate="no">t()</a>
+        <a href="#t:t/0" data-no-tooltip translate="no">t()</a>
 
       </div>
+
+    </div>
+
+</div>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#changeset/3" data-no-tooltip translate="no">changeset(syst_enum_functional_types, change_params \\ %{}, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Produces a changeset used to create or update a Enum Functional Type record.</p></div>
 
     </div>
 
@@ -174,7 +186,7 @@ functionality.</p><p>Defined in <a href="MscmpSystEnums.html"><code class="inlin
 <section class="detail" id="t:t/0">
 
   <div class="detail-header">
-    <a href="#t:t/0" class="detail-link" title="Link to this type">
+    <a href="#t:t/0" class="detail-link" data-no-tooltip title="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
@@ -188,7 +200,7 @@ functionality.</p><p>Defined in <a href="MscmpSystEnums.html"><code class="inlin
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@type</span> t() :: %Msdata.SystEnumFunctionalTypes{
-  __meta__: <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Schema.Metadata.html#t:t/0">Ecto.Schema.Metadata.t</a>(),
+  __meta__: <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Schema.Metadata.html#t:t/0">Ecto.Schema.Metadata.t</a>(),
   diag_role_created: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
   diag_role_modified: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
   diag_row_version: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil,
@@ -197,10 +209,10 @@ functionality.</p><p>Defined in <a href="MscmpSystEnums.html"><code class="inlin
   diag_update_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil,
   diag_wallclock_modified: <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>() | nil,
   display_name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
-  enum: <a href="Msdata.SystEnums.html#t:t/0">Msdata.SystEnums.t</a>() | <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Association.NotLoaded.html#t:t/0">Ecto.Association.NotLoaded.t</a>() | nil,
-  enum_id: <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | nil,
+  enum: <a href="Msdata.SystEnums.html#t:t/0">Msdata.SystEnums.t</a>() | <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Association.NotLoaded.html#t:t/0">Ecto.Association.NotLoaded.t</a>() | nil,
+  enum_id: <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | nil,
   external_name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
-  id: <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | nil,
+  id: <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | nil,
   internal_name: <a href="MscmpSystEnums.Types.html#t:enum_functional_type_name/0">MscmpSystEnums.Types.enum_functional_type_name</a>() | nil,
   syst_defined: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>() | nil,
   syst_description: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
@@ -216,34 +228,84 @@ functionality.</p><p>Defined in <a href="MscmpSystEnums.html"><code class="inlin
     </div>
   </section>
 
-      <footer class="footer">
-        <p>
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="changeset/3">
 
-          <span class="line">
-            <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
-              Search HexDocs
-            </button>
+    <span id="changeset/1"></span>
 
-              <a href="mscmp_syst_enums.epub" title="ePub version">
-                Download ePub version
-              </a>
+    <span id="changeset/2"></span>
 
-          </span>
-        </p>
+  <div class="detail-header">
+    <a href="#changeset/3" class="detail-link" data-no-tooltip title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">changeset(syst_enum_functional_types, change_params \\ %{}, opts \\ [])</h1>
 
-        <p class="built-using">
-          Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.31.1) for the
 
-            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+  </div>
 
-        </p>
-      </footer>
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> changeset(<a href="#t:t/0">t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
+
+      </div>
+
+<p>Produces a changeset used to create or update a Enum Functional Type record.</p><p>The <code class="inline">change_params</code> argument defines the attributes to be used in maintaining
+an Enum Functional Type record.  Of the allowed fields, the following are
+required for creation:</p><ul><li><p><code class="inline">internal_name</code> - A unique key which is intended for programmatic usage
+by the application and other applications which make use of the data.</p></li><li><p><code class="inline">display_name</code> - A unique key for the purposes of presentation to users
+in user interfaces, reporting, etc.</p></li><li><p><code class="inline">external_name</code> - A non-unique name for the purposes of presentation to
+users in user interfaces, reporting, etc.</p></li><li><p><code class="inline">user_description</code> - A description of the setting including its use cases
+and any limits or restrictions.</p></li></ul><h2 id="changeset/3-options" class="section-heading">
+  <a href="#changeset/3-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options</span>
+</h2>
+<ul><li><p><code class="inline">:min_internal_name_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the minimum grapheme length of internal_name values. The default value is <code class="inline">6</code>.</p></li><li><p><code class="inline">:max_internal_name_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the maximum grapheme length of internal_name values. The default value is <code class="inline">64</code>.</p></li><li><p><code class="inline">:min_display_name_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the minimum grapheme length of display_name values. The default value is <code class="inline">6</code>.</p></li><li><p><code class="inline">:max_display_name_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the maximum grapheme length of display_name values. The default value is <code class="inline">64</code>.</p></li><li><p><code class="inline">:min_external_name_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the minimum grapheme length of external_name values. The default value is <code class="inline">6</code>.</p></li><li><p><code class="inline">:max_external_name_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the maximum grapheme length of external_name values. The default value is <code class="inline">64</code>.</p></li><li><p><code class="inline">:min_user_description_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the minimum grapheme length of user_description values. The default value is <code class="inline">6</code>.</p></li><li><p><code class="inline">:max_user_description_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the maximum grapheme length of user_description values. The default value is <code class="inline">1000</code>.</p></li></ul>
+  </section>
+</section>
+
     </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="mscmp_syst_enums.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.34.2) for the
+
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+      </p>
+
+    </footer>
   </div>
 </main>
 </div>
-
 
   </body>
 </html>

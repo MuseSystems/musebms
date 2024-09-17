@@ -19,7 +19,11 @@ defmodule Msdata.SystEnumItems do
 
   use MscmpSystDb.Schema
 
+  import Msutils.Data, only: [common_validator_options: 1]
+
   alias MscmpSystEnums.Impl.Msdata.SystEnumItems.Validators
+
+  require Msutils.Data
 
   @type t() ::
           %__MODULE__{
@@ -79,6 +83,47 @@ defmodule Msdata.SystEnumItems do
     belongs_to(:functional_type, Msdata.SystEnumFunctionalTypes)
   end
 
+  ##############################################################################
+  #
+  # changeset
+  #
+  #
+
+  @changeset_opts common_validator_options([
+                    :internal_name,
+                    :display_name,
+                    :external_name,
+                    :user_description
+                  ])
+
+  @doc """
+  Produces a changeset used to create or update a Enum Items record.
+
+  The `change_params` argument defines the attributes to be used in maintaining
+  a Enum Items record.  Of the allowed fields, the following are required for
+  creation:
+
+    * `internal_name` - A unique key which is intended for programmatic usage
+      by the application and other applications which make use of the data.
+
+    * `display_name` - A unique key for the purposes of presentation to users
+      in user interfaces, reporting, etc.
+
+    * `external_name` - A non-unique name for the purposes of presentation to
+      users in user interfaces, reporting, etc.
+
+    * `user_description` - A description of the setting including its use cases
+      and any limits or restrictions.
+
+  ## Options
+
+    #{NimbleOptions.docs(@changeset_opts)}
+  """
+  @spec changeset(t()) :: Ecto.Changeset.t()
+  @spec changeset(t(), map()) :: Ecto.Changeset.t()
   @spec changeset(t(), map(), Keyword.t()) :: Ecto.Changeset.t()
-  defdelegate changeset(syst_enum_items, change_params \\ %{}, opts \\ []), to: Validators
+  def changeset(syst_enum_items, change_params \\ %{}, opts \\ []) do
+    opts = NimbleOptions.validate!(opts, @changeset_opts)
+    Validators.changeset(syst_enum_items, change_params, opts)
+  end
 end

@@ -22,18 +22,87 @@ defmodule MscmpSystEnums do
   alias MscmpSystEnums.Runtime.ProcessUtils
   alias MscmpSystEnums.Types
 
+  ##############################################################################
+  #
+  # Options Definition
+  #
+  #
+
+  option_defs = [
+    debug: [
+      type: :boolean,
+      doc: """
+      If true, the GenServer backing the Settings Service will be started in
+      debug mode.
+      """
+    ],
+    timeout: [
+      type: :timeout,
+      default: :infinity,
+      doc: "Timeout value for the start_link call."
+    ],
+    hibernate_after: [
+      type: :timeout,
+      doc: """
+      If present, the GenServer process awaits any message for the specified
+      time before hibernating.  The timeout value is expressed in Milliseconds.
+      """
+    ],
+    datastore_context_name: [
+      type:
+        {:or,
+         [nil, :atom, {:tuple, [{:in, [:via]}, :atom, :any]}, {:tuple, [{:in, [:global]}, :any]}]},
+      type_doc: "`t:GenServer.name/0 or `nil`",
+      doc: """
+      Specifies the name of the Datastore Context to be used by the Settings
+      Service.
+      """
+    ],
+    service_name: [
+      type:
+        {:or,
+         [nil, :atom, {:tuple, [{:in, [:via]}, :atom, :any]}, {:tuple, [{:in, [:global]}, :any]}]},
+      type_doc: "`t:GenServer.name/0 or `nil`",
+      doc: """
+      The name to use for the GenServer backing this specific Enumerations
+      Service instance.
+      """
+    ],
+    functional_type_name: [
+      type: :string,
+      doc: """
+      The Internal Name of the Enumeration's Functional Type.
+      """
+    ]
+  ]
+
+  ##############################################################################
+  #
+  # get_datastore_state
+  #
+  #
+
+  @child_spec_opts NimbleOptions.new!(
+                     Keyword.take(option_defs, [
+                       :service_name,
+                       :datastore_context_name,
+                       :debug,
+                       :timeout,
+                       :hibernate_after
+                     ])
+                   )
+
   @doc section: :service_management
   @doc """
   Returns a child specification for the Enumerations Service.
 
   ## Parameters
 
-    * `opts` - A keyword list of options.  See the `Options` section for
-      details.
+    * `opts` - A keyword list of options.
 
   ## Options
 
-  #{Runtime.Service.get_child_spec_opts_docs()}
+    #{NimbleOptions.docs(@child_spec_opts)}
 
   ## Examples
 
@@ -50,7 +119,20 @@ defmodule MscmpSystEnums do
 
   """
   @spec child_spec(Keyword.t()) :: Supervisor.child_spec()
-  defdelegate child_spec(opts), to: Runtime.Service
+  def child_spec(opts) do
+    opts = NimbleOptions.validate!(opts, @child_spec_opts)
+    Runtime.Service.child_spec(opts)
+  end
+
+  ##############################################################################
+  #
+  # start_link
+  #
+  #
+
+  @start_link_opts NimbleOptions.new!(
+                     Keyword.take(option_defs, [:debug, :timeout, :hibernate_after])
+                   )
 
   @doc section: :service_management
   @doc """
@@ -63,13 +145,42 @@ defmodule MscmpSystEnums do
 
   ## Parameters
 
-  #{Runtime.Service.get_start_link_opts_docs()}
+    * `service_name` - The name to use for the GenServer backing this specific
+      Enumerations Service instance.
+
+    * `datastore_context_name` - The name of the Datastore Context to be used
+      by the Enumerations Service.
+
+    * `opts` - A keyword list of options.
+
+  ## Options
+
+    #{NimbleOptions.docs(@start_link_opts)}
   """
   @spec start_link(Types.service_name(), MscmpSystDb.Types.context_service_name()) ::
           {:ok, pid()} | {:error, MscmpSystError.t()}
   @spec start_link(Types.service_name(), MscmpSystDb.Types.context_service_name(), Keyword.t()) ::
           {:ok, pid()} | {:error, MscmpSystError.t()}
-  defdelegate start_link(service_name, datastore_context_name, opts \\ []), to: Runtime.Service
+  def start_link(service_name, datastore_context_name, opts \\ []) do
+    case NimbleOptions.validate(opts, @start_link_opts) do
+      {:ok, validated_opts} ->
+        Runtime.Service.start_link(service_name, datastore_context_name, validated_opts)
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :parameter_error,
+           message: "Option validation error",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # put_enums_service
+  #
+  #
 
   @doc section: :service_management
   @doc """
@@ -78,22 +189,22 @@ defmodule MscmpSystEnums do
 
   In some cases it may be desirable to establish an instance of the Enumerations
   Service outside of the constraints the "Instance Name" as defined by
-  `MscmpSystUtils`. In such cases, this function can be used to set a current
+  `Msutils.String`. In such cases, this function can be used to set a current
   Enumerations Service instance for the current process which will access the named
   Enumerations Service directly rather than the Enumerations Service associated with the
-  prevailing named Instance.  See `MscmpSystUtils` for more about establishing
+  prevailing named Instance.  See `Msutils.String` for more about establishing
   an instance identity with a given process.
 
   > #### Limited Use Cases {: .tip}
   >
   > Under most circumstances the correct Enumerations Service instance to access
   > will be determined by the prevailing Instance Name as managed by calls to
-  > `MscmpSystUtils.put_instance_name/1` and `MscmpSystUtils.get_instance_name/0`,
+  > `Msutils.String.put_instance_name/1` and `Msutils.String.get_instance_name/0`,
   > meaning that typically calls to `put_enums_service/1` are not necessary.
   >
   > The only time this function is required is when an alternative Enumerations
   > Service should be accessed or there is no Instance Name to set for the
-  > process using `MscmpSystUtils.put_instance_name/1`.
+  > process using `Msutils.String.put_instance_name/1`.
 
   ## Parameters
 
@@ -122,6 +233,12 @@ defmodule MscmpSystEnums do
   @spec put_enums_service(Types.service_name()) :: Types.service_name()
   defdelegate put_enums_service(enums_service_name), to: ProcessUtils
 
+  ##############################################################################
+  #
+  # get_enums_service
+  #
+  #
+
   @doc section: :service_management
   @doc """
   Retrieve the current specific Enumerations Service name in effect for the process.
@@ -149,6 +266,12 @@ defmodule MscmpSystEnums do
   @spec get_enums_service() :: Types.service_name()
   defdelegate get_enums_service(), to: ProcessUtils
 
+  ##############################################################################
+  #
+  # get_enum_values
+  #
+  #
+
   @doc section: :enum_data
   @doc """
   Retrieves all values associated with the requested enumeration.
@@ -167,6 +290,12 @@ defmodule MscmpSystEnums do
   @spec get_enum_values(Types.enum_name()) :: Msdata.SystEnums.t()
   defdelegate get_enum_values(enum_name), to: Impl.Enums
 
+  ##############################################################################
+  #
+  # list_all_enums
+  #
+  #
+
   @doc section: :enum_data
   @doc """
   Retrieves all values for all enumerations.
@@ -181,6 +310,12 @@ defmodule MscmpSystEnums do
   """
   @spec list_all_enums() :: list(Msdata.SystEnums.t())
   defdelegate list_all_enums(), to: Impl.Enums
+
+  ##############################################################################
+  #
+  # get_enum_syst_defined
+  #
+  #
 
   @doc section: :enum_data
   @doc """
@@ -197,6 +332,12 @@ defmodule MscmpSystEnums do
   """
   @spec get_enum_syst_defined(Types.enum_name()) :: boolean()
   defdelegate get_enum_syst_defined(enum_name), to: Impl.Enums
+
+  ##############################################################################
+  #
+  # get_enum_user_maintainable
+  #
+  #
 
   @doc section: :enum_data
   @doc """
@@ -215,6 +356,12 @@ defmodule MscmpSystEnums do
   @spec get_enum_user_maintainable(Types.enum_name()) :: boolean()
   defdelegate get_enum_user_maintainable(enum_name), to: Impl.Enums
 
+  ##############################################################################
+  #
+  # list_enum_items
+  #
+  #
+
   @doc section: :enum_item_data
   @doc """
   Returns the list of Enumeration Items associated with the requested
@@ -228,6 +375,12 @@ defmodule MscmpSystEnums do
   @spec list_enum_items(Types.enum_name()) :: list(Msdata.SystEnumItems.t())
   defdelegate list_enum_items(enum_name), to: Impl.Enums
 
+  ##############################################################################
+  #
+  # list_sorted_enum_items
+  #
+  #
+
   @doc section: :enum_item_data
   @doc """
   Returns the list of Enumeration Items associated with the requested
@@ -238,6 +391,12 @@ defmodule MscmpSystEnums do
   """
   @spec list_sorted_enum_items(Types.enum_name()) :: list(Msdata.SystEnumItems.t())
   defdelegate list_sorted_enum_items(enum_name), to: Impl.Enums
+
+  ##############################################################################
+  #
+  # list_enum_functional_types
+  #
+  #
 
   @doc section: :enum_functional_type_data
   @doc """
@@ -251,6 +410,12 @@ defmodule MscmpSystEnums do
   """
   @spec list_enum_functional_types(Types.enum_name()) :: list(Msdata.SystEnumFunctionalTypes.t())
   defdelegate list_enum_functional_types(enum_name), to: Impl.Enums
+
+  ##############################################################################
+  #
+  # get_enum_item_by_name
+  #
+  #
 
   @doc section: :enum_item_data
   @doc """
@@ -278,6 +443,12 @@ defmodule MscmpSystEnums do
           Msdata.SystEnumItems.t() | nil
   defdelegate get_enum_item_by_name(enum_name, enum_item_name), to: Impl.Enums
 
+  ##############################################################################
+  #
+  # get_enum_item_by_id
+  #
+  #
+
   @doc section: :enum_item_data
   @doc """
   Returns an Enumeration Item record from the named Enumeration as identified by
@@ -296,6 +467,12 @@ defmodule MscmpSystEnums do
   """
   @spec get_enum_item_by_id(Types.enum_name(), Ecto.UUID.t()) :: Msdata.SystEnumItems.t() | nil
   defdelegate get_enum_item_by_id(enum_name, enum_item_id), to: Impl.Enums
+
+  ##############################################################################
+  #
+  # get_functional_type_by_enum_item_id
+  #
+  #
 
   @doc section: :enum_functional_type_data
   @doc """
@@ -322,6 +499,16 @@ defmodule MscmpSystEnums do
           Types.enum_functional_type_name()
   defdelegate get_functional_type_by_enum_item_id(enum_name, enum_item_id), to: Impl.Enums
 
+  ##############################################################################
+  #
+  # get_default_enum_item
+  #
+  #
+
+  @get_default_enum_item_opts NimbleOptions.new!(
+                                Keyword.take(option_defs, [:functional_type_name])
+                              )
+
   @doc section: :enum_item_data
   @doc """
   Finds the default enumeration item for the requested enumeration or for the
@@ -337,11 +524,11 @@ defmodule MscmpSystEnums do
     * `enum_name`- the name of the enumeration for which to retrieve the default
       enumeration item.
 
-    * `opts` - a keyword list which takes one of the following optional values:
+    * `opts` - a keyword list of optional values.
 
-      * `functional_type_name` - If the enumeration uses functional types, this
-        option allows you to find the default for the functional type rather
-        than the entire enumeration.
+  ## Options
+
+    #{NimbleOptions.docs(@get_default_enum_item_opts)}
 
   ## Examples
       iex> %Msdata.SystEnumItems{
@@ -357,8 +544,18 @@ defmodule MscmpSystEnums do
       ...>     [functional_type_name: "example_enum_func_type_1"]
       ...>   )
   """
-  @spec get_default_enum_item(Types.enum_name(), Keyword.t() | []) :: Msdata.SystEnumItems.t()
-  defdelegate get_default_enum_item(enum_name, opts \\ []), to: Impl.Enums
+  @spec get_default_enum_item(Types.enum_name()) :: Msdata.SystEnumItems.t()
+  @spec get_default_enum_item(Types.enum_name(), Keyword.t()) :: Msdata.SystEnumItems.t()
+  def get_default_enum_item(enum_name, opts \\ []) do
+    opts = NimbleOptions.validate!(opts, @get_default_enum_item_opts)
+    Impl.Enums.get_default_enum_item(enum_name, opts)
+  end
+
+  ##############################################################################
+  #
+  # create_enum
+  #
+  #
 
   @doc section: :enum_data
   @doc """
@@ -411,6 +608,12 @@ defmodule MscmpSystEnums do
   def create_enum(enum_params),
     do: ProcessUtils.get_enums_service() |> GenServer.call({:create_enum, enum_params})
 
+  ##############################################################################
+  #
+  # create_enum_functional_type
+  #
+  #
+
   @doc section: :enum_functional_type_data
   @doc """
   Creates a new user defined functional type.
@@ -432,6 +635,12 @@ defmodule MscmpSystEnums do
     ProcessUtils.get_enums_service()
     |> GenServer.call({:create_enum_functional_type, enum_name, functional_type_params})
   end
+
+  ##############################################################################
+  #
+  # create_enum_item
+  #
+  #
 
   @doc section: :enum_item_data
   @doc """
@@ -456,6 +665,12 @@ defmodule MscmpSystEnums do
     ProcessUtils.get_enums_service()
     |> GenServer.call({:create_enum_item, enum_name, enum_item_params})
   end
+
+  ##############################################################################
+  #
+  # set_enum_values
+  #
+  #
 
   @doc section: :enum_data
   @doc """
@@ -491,6 +706,12 @@ defmodule MscmpSystEnums do
     ProcessUtils.get_enums_service()
     |> GenServer.call({:set_enum_values, enum_name, enum_params})
   end
+
+  ##############################################################################
+  #
+  # set_enum_functional_type_values
+  #
+  #
 
   @doc section: :enum_functional_type_data
   @doc """
@@ -539,6 +760,12 @@ defmodule MscmpSystEnums do
     )
   end
 
+  ##############################################################################
+  #
+  # set_enum_item_values
+  #
+  #
+
   @doc section: :enum_item_data
   @doc """
   Change the values of an existing enumeration item record.
@@ -586,6 +813,12 @@ defmodule MscmpSystEnums do
     |> GenServer.call({:set_enum_item_values, enum_name, enum_item_name, enum_item_params})
   end
 
+  ##############################################################################
+  #
+  # delete_enum
+  #
+  #
+
   @doc section: :enum_data
   @doc """
   Deletes a user defined enumeration and its child functional type and
@@ -603,6 +836,12 @@ defmodule MscmpSystEnums do
     ProcessUtils.get_enums_service()
     |> GenServer.call({:delete_enum, enum_name})
   end
+
+  ##############################################################################
+  #
+  # delete_enum_functional_type
+  #
+  #
 
   @doc section: :enum_functional_type_data
   @doc """
@@ -625,6 +864,12 @@ defmodule MscmpSystEnums do
     ProcessUtils.get_enums_service()
     |> GenServer.call({:delete_enum_functional_type, enum_name, functional_type_name})
   end
+
+  ##############################################################################
+  #
+  # delete_enum_item
+  #
+  #
 
   @doc section: :enum_item_data
   @doc """

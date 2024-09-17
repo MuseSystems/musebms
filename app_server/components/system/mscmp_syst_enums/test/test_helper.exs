@@ -13,6 +13,8 @@
 #  This testing presumes that the database schema is tested separately and is
 #  correct here.
 
+Logger.configure(level: :info)
+
 test_kind =
   cond do
     ExUnit.configuration() |> Keyword.get(:include) |> Enum.member?(:integration) ->
@@ -46,6 +48,8 @@ children = [
     strategy: :one_for_one,
     name: :"MscmpSystEnums.TestSupportSupervisor"
   )
+
+ExUnit.start()
 
 ExUnit.after_suite(fn _suite_result ->
   TestSupport.cleanup_testing_database(test_kind, context_registry: test_registry)

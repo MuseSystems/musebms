@@ -21,10 +21,12 @@ defmodule MscmpSystEnums.MixProject do
     {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
     {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
     {:ex_doc, "~> 0.31", only: :dev, runtime: false},
+    {:nimble_options, "~> 1.0"},
 
     # Muse Systems First Party Dependencies
     {:mscmp_syst_error, path: "../mscmp_syst_error"},
-    {:mscmp_syst_utils, path: "../mscmp_syst_utils"},
+    {:mscmp_syst_utils_string, path: "../mscmp_syst_utils_string"},
+    {:mscmp_syst_utils_data, path: "../mscmp_syst_utils_data"},
     {:mscmp_syst_db, path: "../mscmp_syst_db"}
   ]
 
@@ -52,13 +54,14 @@ defmodule MscmpSystEnums.MixProject do
       deps: [
         mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db",
         mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
-        mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils"
+        mscmp_syst_utils_string:
+          "../../../../documentation/technical/app_server/mscmp_syst_utils_string"
       ],
       docs: [
         name: "MscmpSystEnums",
         main: "MscmpSystEnums",
         output: "../../../../documentation/technical/app_server/mscmp_syst_enums",
-        groups_for_functions: [
+        groups_for_docs: [
           Enumerations: &(&1[:section] == :enum_data),
           "Enumeration Functional Types": &(&1[:section] == :enum_functional_type_data),
           "Enumeration items": &(&1[:section] == :enum_item_data),

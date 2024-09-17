@@ -20,8 +20,6 @@ defmodule MscmpSystEnums.Impl.Msdata.SystEnumFunctionalTypes.Validators do
   @doc false
   @spec changeset(Msdata.SystEnumFunctionalTypes.t(), map(), Keyword.t()) :: Ecto.Changeset.t()
   def changeset(syst_enum_functional_types, change_params, opts) do
-    opts = GeneralValidators.resolve_options(opts)
-
     syst_enum_functional_types
     |> cast(change_params, [
       :internal_name,
@@ -30,11 +28,11 @@ defmodule MscmpSystEnums.Impl.Msdata.SystEnumFunctionalTypes.Validators do
       :enum_id,
       :user_description
     ])
-    |> GeneralValidators.validate_internal_name(opts)
-    |> GeneralValidators.validate_display_name(opts)
+    |> Msutils.Data.validate_internal_name(opts)
+    |> Msutils.Data.validate_display_name(opts)
     |> GeneralValidators.validate_enum_id()
-    |> GeneralValidators.validate_external_name(opts)
-    |> GeneralValidators.validate_user_description(opts)
+    |> Msutils.Data.validate_external_name(opts)
+    |> Msutils.Data.validate_user_description(opts)
     |> optimistic_lock(:diag_row_version)
     |> unique_constraint(:internal_name, name: :syst_enum_functional_types_internal_name_udx)
     |> unique_constraint(:display_name, name: :syst_enum_functional_types_display_name_udx)

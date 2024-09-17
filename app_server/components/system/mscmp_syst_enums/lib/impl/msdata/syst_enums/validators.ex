@@ -19,8 +19,6 @@ defmodule MscmpSystEnums.Impl.Msdata.SystEnums.Validators do
 
   @spec changeset(Msdata.SystEnums.t(), map(), Keyword.t()) :: Ecto.Changeset.t()
   def changeset(syst_enums, change_params, opts) do
-    opts = GeneralValidators.resolve_options(opts)
-
     syst_enums
     |> cast(change_params, [
       :internal_name,
@@ -28,11 +26,11 @@ defmodule MscmpSystEnums.Impl.Msdata.SystEnums.Validators do
       :user_description,
       :default_user_options
     ])
-    |> GeneralValidators.validate_internal_name(opts)
-    |> GeneralValidators.validate_display_name(opts)
-    |> GeneralValidators.validate_user_description(opts)
     |> GeneralValidators.maybe_put_syst_defined()
     |> GeneralValidators.maybe_put_user_maintainable()
+    |> Msutils.Data.validate_internal_name(opts)
+    |> Msutils.Data.validate_display_name(opts)
+    |> Msutils.Data.validate_user_description(opts)
     |> optimistic_lock(:diag_row_version)
     |> unique_constraint(:internal_name, name: :syst_enums_internal_name_udx)
     |> unique_constraint(:display_name, name: :syst_enums_display_name_udx)
