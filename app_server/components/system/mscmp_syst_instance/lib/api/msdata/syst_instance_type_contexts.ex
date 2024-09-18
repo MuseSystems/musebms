@@ -72,9 +72,37 @@ defmodule Msdata.SystInstanceTypeContexts do
     has_one(:application, through: [:instance_type_application, :application])
   end
 
+  @doc """
+  Creates a changeset for inserting a new Instance Type Context.
+
+  ## Parameters
+
+    - `insert_params`: A map containing the parameters for creating a new
+      Instance Type Context.
+
+  ## Returns
+
+  An `t:Ecto.Changeset.t/0` struct ready for insertion.
+  """
   @spec insert_changeset(Types.instance_type_context_params()) :: Ecto.Changeset.t()
   defdelegate insert_changeset(insert_params), to: Validators
 
+  @doc """
+  Creates a changeset for updating an existing Instance Type Context.
+
+  ## Parameters
+
+    - `instance_type_context`: The existing Instance Type Context struct to be
+      updated.
+
+    - `update_params`: A map containing the parameters for updating the Instance
+      Type Context. Defaults to an empty map.
+
+  ## Returns
+
+  An `t:Ecto.Changeset.t/0` struct ready for updating.
+  """
+  @spec update_changeset(Msdata.SystInstanceTypeContexts.t()) :: Ecto.Changeset.t()
   @spec update_changeset(
           Msdata.SystInstanceTypeContexts.t(),
           Types.instance_type_context_params()

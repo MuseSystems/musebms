@@ -13,23 +13,55 @@
 defmodule MscmpSystInstance.Impl.Msdata.Helpers do
   @moduledoc false
 
-  # Resolve user provided options to a complete set of options by filling gaps
-  # with pre-defined defaults.
-  #
-  # Allows the changeset function to resolve defaults that are used to
-  # parameterize other validations.   We do that resolution in the changeset
-  # function directly so we're only doing the user/default resolution once for
-  # a changeset.
-  @spec option_defaults() :: Keyword.t()
-  def option_defaults,
-    do: [
-      min_internal_name_length: 6,
-      max_internal_name_length: 64,
-      min_display_name_length: 6,
-      max_display_name_length: 64,
-      min_context_code_length: 8,
-      max_context_code_length: 64,
-      min_instance_code_length: 8,
-      max_instance_code_length: 64
+  @option_defs [
+    min_internal_name_length: [
+      type: :non_neg_integer,
+      default: 6,
+      doc: "Minimum length for internal names"
+    ],
+    max_internal_name_length: [
+      type: :pos_integer,
+      default: 64,
+      doc: "Maximum length for internal names"
+    ],
+    min_display_name_length: [
+      type: :non_neg_integer,
+      default: 6,
+      doc: "Minimum length for display names"
+    ],
+    max_display_name_length: [
+      type: :pos_integer,
+      default: 64,
+      doc: "Maximum length for display names"
+    ],
+    min_context_code_length: [
+      type: :non_neg_integer,
+      default: 8,
+      doc: "Minimum length for context codes"
+    ],
+    max_context_code_length: [
+      type: :pos_integer,
+      default: 64,
+      doc: "Maximum length for context codes"
+    ],
+    min_instance_code_length: [
+      type: :non_neg_integer,
+      default: 8,
+      doc: "Minimum length for instance codes"
+    ],
+    max_instance_code_length: [
+      type: :pos_integer,
+      default: 64,
+      doc: "Maximum length for instance codes"
     ]
+  ]
+
+  @spec validator_options(list(atom())) :: Macro.t()
+  defmacro validator_options(option_names) do
+    wanted_opts = Keyword.take(@option_defs, option_names)
+
+    quote do
+      unquote(Macro.escape(NimbleOptions.new!(wanted_opts)))
+    end
+  end
 end

@@ -75,7 +75,7 @@ defmodule ApplicationTest do
     assert %Msdata.SystApplications{
              internal_name: "app1",
              application_contexts: %Ecto.Association.NotLoaded{}
-           } = Impl.Application.get_application("app1", [])
+           } = Impl.Application.get_application("app1", include_contexts: false)
   end
 
   test "Can get Application record with Contexts preloaded" do

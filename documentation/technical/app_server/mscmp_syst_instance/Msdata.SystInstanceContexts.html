@@ -4,22 +4,19 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.31.1">
+    <meta name="generator" content="ExDoc v0.34.2">
     <meta name="project" content="mscmp_syst_instance v0.1.0">
 
 
     <title>Msdata.SystInstanceContexts — mscmp_syst_instance v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-FM2CSD74.css" />
+    <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-43PMFBC7.js"></script>
-    <script src="dist/sidebar_items-7833A2AB.js"></script>
-
-      <script src="docs_config.js"></script>
-
-    <script async src="dist/html-L4O5OK2K.js"></script>
-
+    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
+    <script src="dist/sidebar_items-3E02365B.js"></script>
+    <script src="docs_config.js"></script>
+    <script async src="dist/html-YIPIRHGU.js"></script>
 
   </head>
   <body data-type="modules" class="page-module">
@@ -37,13 +34,11 @@
       } catch (error) { }
     </script>
 
-<div class="main">
+<div class="body-wrapper">
 
 <button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
   <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
 </button>
-
-<div class="background-layer"></div>
 
 <nav id="sidebar" class="sidebar">
 
@@ -89,48 +84,49 @@ Pages
 
 <main class="content">
   <output role="status" id="toast"></output>
-  <div class="content-outer">
-    <div id="content" class="content-inner">
-      <div class="top-search">
-        <div class="search-settings">
-          <form class="search-bar" action="search.html">
-            <label class="search-label">
-              <span class="sr-only">Search documentation of mscmp_syst_instance</span>
-              <input name="q" type="text" class="search-input" placeholder="Search Documentation (press /)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-            </label>
-            <button type="submit" class="search-button" aria-label="Submit Search">
-              <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
-            </button>
-            <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
-              <i class="ri-close-line ri-lg" title="Cancel search"></i>
-            </button>
-          </form>
-          <div class="autocomplete">
-          </div>
-          <button class="icon-settings display-settings">
-            <i class="ri-settings-3-line"></i>
-            <span class="sr-only">Settings</span>
+
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of mscmp_syst_instance</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
           </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
         </div>
-
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
       </div>
+    </div>
 
-<h1>
+<div id="top-content">
+  <h1>
 
-  <span translate="no">Msdata.SystInstanceContexts</span> 
-  <small class="app-vsn" translate="no">(mscmp_syst_instance v0.1.0)</small>
+    <span translate="no">Msdata.SystInstanceContexts</span> 
+    <small class="app-vsn" translate="no">(mscmp_syst_instance v0.1.0)</small>
 
-</h1>
+  </h1>
 
 
-  <section id="moduledoc">
+    <section id="moduledoc">
 <p>Defines the data structure of the Application Context.</p><p>Applications are written with certain security and connection characteristics
 in mind which correlate to database roles used by the application for
 establishing connections.  This data type defines the datastore contexts the
 application is expecting so that Instance records can be validated against the
 application expectations.</p><p>Defined in <a href="MscmpSystInstance.html"><code class="inline">MscmpSystInstance</code></a>.</p>
-  </section>
+    </section>
 
+</div>
 
   <section id="summary" class="details-list">
     <h1 class="section-heading">
@@ -146,7 +142,7 @@ application expectations.</p><p>Defined in <a href="MscmpSystInstance.html"><cod
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:t/0" translate="no">t()</a>
+        <a href="#t:t/0" data-no-tooltip translate="no">t()</a>
 
       </div>
 
@@ -160,11 +156,12 @@ application expectations.</p><p>Defined in <a href="MscmpSystInstance.html"><cod
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#update_changeset/3" translate="no">update_changeset(instance_context, update_params \\ %{}, opts \\ [])</a>
+        <a href="#update_changeset/3" data-no-tooltip translate="no">update_changeset(instance_context, update_params \\ %{}, opts \\ [])</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystInstance.Impl.Msdata.SystInstanceContexts.Validators.update_changeset/3</code>.</p></div>
+        <div class="summary-synopsis"><p>Validates update Instance Context parameters for use in updating an existing
+Instance Context record.</p></div>
 
     </div>
 
@@ -184,7 +181,7 @@ application expectations.</p><p>Defined in <a href="MscmpSystInstance.html"><cod
 <section class="detail" id="t:t/0">
 
   <div class="detail-header">
-    <a href="#t:t/0" class="detail-link" title="Link to this type">
+    <a href="#t:t/0" class="detail-link" data-no-tooltip title="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
@@ -198,10 +195,10 @@ application expectations.</p><p>Defined in <a href="MscmpSystInstance.html"><cod
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@type</span> t() :: %Msdata.SystInstanceContexts{
-  __meta__: <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Schema.Metadata.html#t:t/0">Ecto.Schema.Metadata.t</a>(),
+  __meta__: <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Schema.Metadata.html#t:t/0">Ecto.Schema.Metadata.t</a>(),
   application_context:
-    <a href="Msdata.SystApplicationContexts.html#t:t/0">Msdata.SystApplicationContexts.t</a>() | <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Association.NotLoaded.html#t:t/0">Ecto.Association.NotLoaded.t</a>() | nil,
-  application_context_id: <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | nil,
+    <a href="Msdata.SystApplicationContexts.html#t:t/0">Msdata.SystApplicationContexts.t</a>() | <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Association.NotLoaded.html#t:t/0">Ecto.Association.NotLoaded.t</a>() | nil,
+  application_context_id: <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | nil,
   context_code: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>() | nil,
   db_pool_size: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>() | nil,
   diag_role_created: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
@@ -211,9 +208,9 @@ application expectations.</p><p>Defined in <a href="MscmpSystInstance.html"><cod
   diag_timestamp_modified: <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>() | nil,
   diag_update_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil,
   diag_wallclock_modified: <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>() | nil,
-  id: <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | nil,
-  instance: <a href="Msdata.SystInstances.html#t:t/0">Msdata.SystInstances.t</a>() | <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Association.NotLoaded.html#t:t/0">Ecto.Association.NotLoaded.t</a>() | nil,
-  instance_id: <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | nil,
+  id: <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | nil,
+  instance: <a href="Msdata.SystInstances.html#t:t/0">Msdata.SystInstances.t</a>() | <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Association.NotLoaded.html#t:t/0">Ecto.Association.NotLoaded.t</a>() | nil,
+  instance_id: <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | nil,
   internal_name: <a href="MscmpSystInstance.Types.html#t:instance_context_name/0">MscmpSystInstance.Types.instance_context_name</a>() | nil,
   start_context: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>() | nil
 }</pre>
@@ -242,7 +239,7 @@ application expectations.</p><p>Defined in <a href="MscmpSystInstance.html"><cod
     <span id="update_changeset/2"></span>
 
   <div class="detail-header">
-    <a href="#update_changeset/3" class="detail-link" title="Link to this function">
+    <a href="#update_changeset/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -259,45 +256,65 @@ application expectations.</p><p>Defined in <a href="MscmpSystInstance.html"><cod
   <a href="#t:t/0">t</a>(),
   <a href="MscmpSystInstance.Types.html#t:instance_context_params/0">MscmpSystInstance.Types.instance_context_params</a>(),
   <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
-) :: <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
+) :: <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
 
       </div>
 
-<p>See <code class="inline">MscmpSystInstance.Impl.Msdata.SystInstanceContexts.Validators.update_changeset/3</code>.</p>
+<p>Validates update Instance Context parameters for use in updating an existing
+Instance Context record.</p><h2 id="update_changeset/3-parameters" class="section-heading">
+  <a href="#update_changeset/3-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><p><code class="inline">application_context</code>: The existing Instance Context struct to be
+updated.</p></li><li><p><code class="inline">update_params</code>: A map containing the parameters for updating the
+Instance Context.</p></li><li><p><code class="inline">opts</code>: Optional keyword list of validation options.</p></li></ul><h2 id="update_changeset/3-options" class="section-heading">
+  <a href="#update_changeset/3-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options</span>
+</h2>
+<ul><li><p><code class="inline">:min_context_code_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">non_neg_integer/0</code></a>) - Minimum length for context codes The default value is <code class="inline">8</code>.</p></li><li><p><code class="inline">:max_context_code_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Maximum length for context codes The default value is <code class="inline">64</code>.</p></li></ul><h2 id="update_changeset/3-returns" class="section-heading">
+  <a href="#update_changeset/3-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<p>  An <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Changeset.html"><code class="inline">Ecto.Changeset</code></a> struct representing the validation result.</p>
   </section>
 </section>
 
     </div>
   </section>
 
-      <footer class="footer">
-        <p>
+    <footer class="footer">
+      <p>
 
-          <span class="line">
-            <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
-              Search HexDocs
-            </button>
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
 
-              <a href="mscmp_syst_instance.epub" title="ePub version">
-                Download ePub version
-              </a>
+            <a href="mscmp_syst_instance.epub" title="ePub version">
+              Download ePub version
+            </a>
 
-          </span>
-        </p>
+        </span>
+      </p>
 
-        <p class="built-using">
-          Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.31.1) for the
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.34.2) for the
 
-            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
-        </p>
-      </footer>
-    </div>
+      </p>
+
+    </footer>
   </div>
 </main>
 </div>
-
 
   </body>
 </html>

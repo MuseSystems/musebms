@@ -15,13 +15,31 @@ defmodule MscmpSystInstance.Impl.InstanceState do
 
   alias MscmpSystInstance.Types
 
+  ##############################################################################
+  #
+  # get_instance_state_by_name
+  #
+  #
+
   @spec get_instance_state_by_name(Types.instance_state_name()) :: Msdata.SystEnumItems.t() | nil
   def get_instance_state_by_name(instance_state_name),
     do: MscmpSystEnums.get_enum_item_by_name("instance_states", instance_state_name)
 
+  ##############################################################################
+  #
+  # get_instance_state_default
+  #
+  #
+
   @spec get_instance_state_default(Types.instance_state_functional_types() | nil) ::
           Msdata.SystEnumItems.t()
   def get_instance_state_default(nil), do: MscmpSystEnums.get_default_enum_item("instance_states")
+
+  ##############################################################################
+  #
+  # get_instance_state_default
+  #
+  #
 
   def get_instance_state_default(functional_type) when is_atom(functional_type) do
     MscmpSystEnums.get_default_enum_item("instance_states",

@@ -19,6 +19,12 @@ defmodule MscmpSystInstance.Impl.ApplicationContexts do
 
   require Logger
 
+  ##############################################################################
+  #
+  # create_application_context
+  #
+  #
+
   @spec create_application_context(Types.application_context_params()) ::
           {:ok, Msdata.SystApplicationContexts.t()} | {:error, MscmpSystError.t()}
   def create_application_context(application_context_params) do
@@ -38,6 +44,12 @@ defmodule MscmpSystInstance.Impl.ApplicationContexts do
        }}
   end
 
+  ##############################################################################
+  #
+  # get_application_context_id_by_name
+  #
+  #
+
   @spec get_application_context_id_by_name(Types.application_context_name()) ::
           Types.application_context_id() | nil
   def get_application_context_id_by_name(application_context_name)
@@ -48,6 +60,12 @@ defmodule MscmpSystInstance.Impl.ApplicationContexts do
     )
     |> MscmpSystDb.one()
   end
+
+  ##############################################################################
+  #
+  # update_application_context
+  #
+  #
 
   @spec update_application_context(
           Types.application_context_id() | Msdata.SystApplicationContexts.t(),
@@ -89,6 +107,12 @@ defmodule MscmpSystInstance.Impl.ApplicationContexts do
        }}
   end
 
+  ##############################################################################
+  #
+  # delete_application_context
+  #
+  #
+
   @spec delete_application_context(Types.application_context_id()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
   def delete_application_context(application_context_id) do
@@ -120,6 +144,12 @@ defmodule MscmpSystInstance.Impl.ApplicationContexts do
          cause: error
        }}
   end
+
+  ##############################################################################
+  #
+  # list_application_contexts
+  #
+  #
 
   @spec list_application_contexts(Types.application_id() | nil) ::
           {:ok, list(Msdata.SystApplicationContexts.t())} | {:error, MscmpSystError.t()}

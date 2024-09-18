@@ -19,6 +19,12 @@ defmodule MscmpSystInstance.Impl.Owner do
 
   require Logger
 
+  ##############################################################################
+  #
+  # create_owner
+  #
+  #
+
   @spec create_owner(Types.owner_params()) ::
           {:ok, Msdata.SystOwners.t()} | {:error, MscmpSystError.t()}
   def create_owner(owner_params) do
@@ -33,6 +39,12 @@ defmodule MscmpSystInstance.Impl.Owner do
       {:error,
        %MscmpSystError{code: :undefined_error, message: "Failure creating Owner.", cause: error}}
   end
+
+  ##############################################################################
+  #
+  # update_owner
+  #
+  #
 
   @spec update_owner(Types.owner_id() | Msdata.SystOwners.t(), Types.owner_params()) ::
           {:ok, Msdata.SystOwners.t()} | {:error, MscmpSystError.t()}
@@ -64,9 +76,21 @@ defmodule MscmpSystInstance.Impl.Owner do
        %MscmpSystError{code: :undefined_error, message: "Failure updating Owner.", cause: error}}
   end
 
+  ##############################################################################
+  #
+  # get_owner_state_by_name
+  #
+  #
+
   @spec get_owner_state_by_name(Types.owner_state_name()) :: Msdata.SystEnumItems.t() | nil
   def get_owner_state_by_name(owner_state_name) when is_binary(owner_state_name),
     do: MscmpSystEnums.get_enum_item_by_name("owner_states", owner_state_name)
+
+  ##############################################################################
+  #
+  # get_owner_state_default
+  #
+  #
 
   @spec get_owner_state_default(Types.owner_state_functional_types() | nil) ::
           Msdata.SystEnumItems.t()
@@ -77,6 +101,12 @@ defmodule MscmpSystInstance.Impl.Owner do
       functional_type_name: Atom.to_string(functional_type)
     )
   end
+
+  ##############################################################################
+  #
+  # get_owner_by_name
+  #
+  #
 
   @spec get_owner_by_name(Types.owner_name()) ::
           {:ok, Msdata.SystOwners.t()} | {:error, MscmpSystError.t()}
@@ -102,6 +132,12 @@ defmodule MscmpSystInstance.Impl.Owner do
        }}
   end
 
+  ##############################################################################
+  #
+  # get_owner_id_by_name
+  #
+  #
+
   @spec get_owner_id_by_name(Types.owner_name()) ::
           {:ok, Types.owner_id()} | {:error, MscmpSystError.t()}
   def get_owner_id_by_name(owner_name) when is_binary(owner_name) do
@@ -119,6 +155,12 @@ defmodule MscmpSystInstance.Impl.Owner do
          cause: error
        }}
   end
+
+  ##############################################################################
+  #
+  # purge_owner
+  #
+  #
 
   @spec purge_owner(Types.owner_id() | Msdata.SystOwners.t()) ::
           :ok | {:error, MscmpSystError.t()}
@@ -174,13 +216,16 @@ defmodule MscmpSystInstance.Impl.Owner do
 
   def purge_owner(%Msdata.SystOwners{id: owner_id}), do: purge_owner(owner_id)
 
-  @spec owner_exists?(Keyword.t()) :: boolean() | {:error, MscmpSystError.t()}
-  def owner_exists?(opts) do
-    opts = MscmpSystUtils.resolve_options(opts, owner_name: nil, owner_id: nil)
+  ##############################################################################
+  #
+  # owner_id_exists?
+  #
+  #
 
+  @spec owner_id_exists?(Types.owner_id()) :: boolean() | {:error, MscmpSystError.t()}
+  def owner_id_exists?(owner_id) when is_binary(owner_id) do
     Msdata.SystOwners
-    |> maybe_filter_by_owner_name(opts[:owner_name])
-    |> maybe_filter_by_owner_id(opts[:owner_id])
+    |> where(id: ^owner_id)
     |> MscmpSystDb.exists?()
   rescue
     error ->
@@ -189,16 +234,52 @@ defmodule MscmpSystInstance.Impl.Owner do
       {:error,
        %MscmpSystError{
          code: :undefined_error,
-         message: "Failure testing if owner exists.",
+         message: "Failure testing if owner exists by ID.",
          cause: error
        }}
   end
 
-  defp maybe_filter_by_owner_name(query, nil), do: query
+  ##############################################################################
+  #
+  # owner_name_exists?
+  #
+  #
 
-  defp maybe_filter_by_owner_name(query, owner_name),
-    do: where(query, internal_name: ^owner_name)
+  @spec owner_name_exists?(Types.owner_name()) :: boolean() | {:error, MscmpSystError.t()}
+  def owner_name_exists?(owner_name) when is_binary(owner_name) do
+    Msdata.SystOwners
+    |> where(internal_name: ^owner_name)
+    |> MscmpSystDb.exists?()
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-  defp maybe_filter_by_owner_id(query, nil), do: query
-  defp maybe_filter_by_owner_id(query, owner_id), do: where(query, id: ^owner_id)
+      {:error,
+       %MscmpSystError{
+         code: :undefined_error,
+         message: "Failure testing if owner exists by name.",
+         cause: error
+       }}
+  end
+
+  ##############################################################################
+  #
+  # owners_exist?
+  #
+  #
+
+  @spec owners_exist?() :: boolean() | {:error, MscmpSystError.t()}
+  def owners_exist? do
+    Msdata.SystOwners |> MscmpSystDb.exists?()
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {:error,
+       %MscmpSystError{
+         code: :undefined_error,
+         message: "Failure testing if any owners exist.",
+         cause: error
+       }}
+  end
 end

@@ -213,10 +213,11 @@ defmodule OwnerTest do
       from(o in Msdata.SystOwners, limit: 1)
       |> MscmpSystDb.one!()
 
-    assert true == Impl.Owner.owner_exists?([])
-    assert true == Impl.Owner.owner_exists?(owner_id: owner_record.id)
-    assert true == Impl.Owner.owner_exists?(owner_name: owner_record.internal_name)
+    assert true == Impl.Owner.owners_exist?()
+    assert true == Impl.Owner.owner_id_exists?(owner_record.id)
+    assert true == Impl.Owner.owner_name_exists?(owner_record.internal_name)
 
-    assert false == Impl.Owner.owner_exists?(owner_name: "nonexistent_owner")
+    assert false == Impl.Owner.owner_id_exists?(Ecto.UUID.generate())
+    assert false == Impl.Owner.owner_name_exists?("nonexistent_owner")
   end
 end

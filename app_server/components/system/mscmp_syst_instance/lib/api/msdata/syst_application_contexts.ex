@@ -72,14 +72,50 @@ defmodule Msdata.SystApplicationContexts do
   @doc """
   Validates presented Application Context parameters for inserting a new
   Application Context record.
+
+  ## Parameters
+
+    - `insert_params`: A map containing the parameters for creating a new
+       Application Context.
+
+    - `opts`: Optional keyword list of validation options.
+
+  ## Options
+
+    #{Validators.get_insert_changeset_opts_docs()}
+
+  ## Returns
+
+    An `Ecto.Changeset` struct representing the validation result.
   """
+  @spec insert_changeset(Types.application_context_params()) :: Ecto.Changeset.t()
   @spec insert_changeset(Types.application_context_params(), Keyword.t()) :: Ecto.Changeset.t()
   defdelegate insert_changeset(insert_params, opts \\ []), to: Validators
 
   @doc """
   Validates update Application Context parameters for use in updating an
   existing Application Context record.
+
+  ## Parameters
+
+    - `application_context`: The existing Application Context struct to be
+      updated.
+
+    - `update_params`: A map containing the parameters for updating the
+      Application Context.
+
+    - `opts`: Optional keyword list of validation options.
+
+  ## Options
+
+    #{Validators.get_update_changeset_opts_docs()}
+
+  ## Returns
+
+    An `Ecto.Changeset` struct representing the validation result.
   """
+  @spec update_changeset(Msdata.SystApplicationContexts.t(), Types.application_context_params()) ::
+          Ecto.Changeset.t()
   @spec update_changeset(
           Msdata.SystApplicationContexts.t(),
           Types.application_context_params(),

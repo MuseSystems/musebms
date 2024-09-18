@@ -8,9 +8,7 @@
     <meta name="project" content="mscmp_syst_instance v0.1.0">
 
 
-      <meta name="robots" content="noindex">
-
-    <title>404 — mscmp_syst_instance v0.1.0</title>
+    <title>MscmpSystInstance.Instance — mscmp_syst_instance v0.1.0</title>
     <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
 
@@ -21,7 +19,7 @@
     <script async src="dist/html-YIPIRHGU.js"></script>
 
   </head>
-  <body data-type="extras" class="page-extra">
+  <body data-type="modules" class="page-behaviour">
     <script>
 
       try {
@@ -111,16 +109,94 @@ Pages
       </div>
     </div>
 
-<h1>
-  <span>Page not found</span>
-</h1>
+<div id="top-content">
+  <h1>
 
-<p>Sorry, but the page you were trying to get to, does not exist. You
-may want to try searching this site using the sidebar
+    <span translate="no">MscmpSystInstance.Instance</span> <small>behaviour</small>
+    <small class="app-vsn" translate="no">(mscmp_syst_instance v0.1.0)</small>
 
-  or using our <a href="api-reference.html">API Reference</a> page
+  </h1>
 
-to find what you were looking for.</p>
+
+    <section id="moduledoc">
+<p>Defines a behaviour and provides support functions for MscmpSystInstance
+compatible Instance modules.</p><p>Instances are defined in both data configurations and application code.
+Each Instance consists of a top level Instance <a href="https://hexdocs.pm/elixir/Supervisor.html"><code class="inline">Supervisor</code></a> and an optional
+set of Instance scoped services.</p><p>The startup sequence of an Instance is as follows:</p><ol><li><p>The Instance <a href="https://hexdocs.pm/elixir/Supervisor.html"><code class="inline">Supervisor</code></a> is started.</p></li><li><p>The Instance scoped services are started under the Supervisor in
+order .</p></li><li><p>A Instance Instances <a href="https://hexdocs.pm/elixir/DynamicSupervisor.html"><code class="inline">DynamicSupervisor</code></a> is started.</p></li><li><p>Any &quot;start-able&quot; Instances of the Instance are started, if the
+provided Instance startup options request Instance startup.</p></li></ol>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-callbacks summary">
+  <h2>
+    <a href="#callbacks">Callbacks</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_service_specs/1" data-no-tooltip translate="no">get_service_specs(arg1)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Retrieves service child specifications for a MscmpSystInstance compatible
+Instance.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="callbacks" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#callbacks">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Callbacks</span>
+    </h1>
+    <div class="callbacks-list">
+<section class="detail" id="c:get_service_specs/1">
+
+  <div class="detail-header">
+    <a href="#c:get_service_specs/1" class="detail-link" data-no-tooltip title="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature" translate="no">get_service_specs(arg1)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_service_specs(<a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>() | nil) :: [<a href="https://hexdocs.pm/elixir/Supervisor.html#t:child_spec/0">Supervisor.child_spec</a>()] | nil</pre>
+
+      </div>
+
+<p>Retrieves service child specifications for a MscmpSystInstance compatible
+Instance.</p><p>Details of the returned child specifications can be directed through the
+submission of a <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0"><code class="inline">Keyword.t/0</code></a> list of options.  The specific options
+accepted (or if options are accepted at all) are determined by each
+implementation of the behaviour.</p><p>If the Instance defines no Instance scoped services to start, the
+callback will return <code class="inline">nil</code>.</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
     <footer class="footer">
       <p>
 

@@ -15,9 +15,9 @@ defmodule MscmpSystInstance.Impl.Msdata.SystInstances.Validators do
 
   import Ecto.Changeset
   import Ecto.Query
+  import MscmpSystInstance.Impl.Msdata.Helpers
 
   alias MscmpSystInstance.Impl.Msdata.GeneralValidators
-  alias MscmpSystInstance.Impl.Msdata.Helpers
   alias MscmpSystInstance.Types
 
   # The expected behavior of instance name resolution is to favor the name over
@@ -26,9 +26,27 @@ defmodule MscmpSystInstance.Impl.Msdata.SystInstances.Validators do
   # more correct to assume the name represents a new value and the ID an old
   # value.
 
+  ##############################################################################
+  #
+  # insert_changeset
+  #
+  #
+
+  @insert_changeset_opts validator_options([
+                           :min_internal_name_length,
+                           :max_internal_name_length,
+                           :min_display_name_length,
+                           :max_display_name_length,
+                           :min_instance_code_length,
+                           :max_instance_code_length
+                         ])
+
+  @spec get_insert_changeset_opts_docs() :: String.t()
+  def get_insert_changeset_opts_docs, do: NimbleOptions.docs(@insert_changeset_opts)
+
   @spec insert_changeset(Types.instance_params(), Keyword.t()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, Helpers.option_defaults())
+    opts = NimbleOptions.validate!(opts, @insert_changeset_opts)
 
     resolved_insert_params = resolve_name_params(insert_params, :insert)
 
@@ -48,10 +66,28 @@ defmodule MscmpSystInstance.Impl.Msdata.SystInstances.Validators do
     |> validate_common(opts)
   end
 
+  ##############################################################################
+  #
+  # update_changeset
+  #
+  #
+
+  @update_changeset_opts validator_options([
+                           :min_internal_name_length,
+                           :max_internal_name_length,
+                           :min_display_name_length,
+                           :max_display_name_length,
+                           :min_instance_code_length,
+                           :max_instance_code_length
+                         ])
+
+  @spec get_update_changeset_opts_docs() :: String.t()
+  def get_update_changeset_opts_docs, do: NimbleOptions.docs(@update_changeset_opts)
+
   @spec update_changeset(Msdata.SystInstances.t(), Types.instance_params(), Keyword.t()) ::
           Ecto.Changeset.t()
   def update_changeset(instance, update_params, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, Helpers.option_defaults())
+    opts = NimbleOptions.validate!(opts, @update_changeset_opts)
 
     resolved_update_params = resolve_name_params(update_params, :update)
 

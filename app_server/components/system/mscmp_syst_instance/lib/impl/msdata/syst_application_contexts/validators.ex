@@ -15,14 +15,30 @@ defmodule MscmpSystInstance.Impl.Msdata.SystApplicationContexts.Validators do
 
   import Ecto.Changeset
   import Ecto.Query
+  import MscmpSystInstance.Impl.Msdata.Helpers
 
   alias MscmpSystInstance.Impl.Msdata.GeneralValidators
-  alias MscmpSystInstance.Impl.Msdata.Helpers
   alias MscmpSystInstance.Types
+
+  ##############################################################################
+  #
+  # insert_changeset
+  #
+  #
+
+  @insert_changeset_opts validator_options([
+                           :min_internal_name_length,
+                           :max_internal_name_length,
+                           :min_display_name_length,
+                           :max_display_name_length
+                         ])
+
+  @spec get_insert_changeset_opts_docs() :: String.t()
+  def get_insert_changeset_opts_docs, do: NimbleOptions.docs(@insert_changeset_opts)
 
   @spec insert_changeset(Types.application_context_params(), Keyword.t()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, Helpers.option_defaults())
+    opts = NimbleOptions.validate!(opts, @insert_changeset_opts)
 
     resolved_insert_params = resolve_name_params(insert_params, :insert)
 
@@ -37,39 +53,6 @@ defmodule MscmpSystInstance.Impl.Msdata.SystApplicationContexts.Validators do
       :database_owner_context
     ])
     |> validate_common(opts)
-  end
-
-  @spec update_changeset(
-          Msdata.SystApplicationContexts.t(),
-          Types.application_context_params(),
-          Keyword.t()
-        ) ::
-          Ecto.Changeset.t()
-  def update_changeset(application_context, update_params, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, Helpers.option_defaults())
-
-    application_context
-    |> cast(update_params, [:display_name, :description, :start_context])
-    |> optimistic_lock(:diag_row_version)
-    |> validate_common(opts)
-  end
-
-  defp validate_common(changeset, opts) do
-    changeset
-    |> GeneralValidators.validate_internal_name(opts)
-    |> GeneralValidators.validate_display_name(opts)
-    |> validate_required([
-      :internal_name,
-      :display_name,
-      :application_id,
-      :description,
-      :start_context,
-      :login_context,
-      :database_owner_context
-    ])
-    |> unique_constraint(:internal_name, name: :syst_application_contexts_internal_name_udx)
-    |> unique_constraint(:display_name, name: :syst_application_contexts_display_name_udx)
-    |> foreign_key_constraint(:application_id, name: :syst_application_contexts_applications_fk)
   end
 
   # Currently the operation parameter has no real use and is maintained here for
@@ -88,4 +71,59 @@ defmodule MscmpSystInstance.Impl.Msdata.SystApplicationContexts.Validators do
   end
 
   defp resolve_application_id(application_context_params), do: application_context_params
+
+  ##############################################################################
+  #
+  # update_changeset
+  #
+  #
+
+  @update_changeset_opts validator_options([
+                           :min_internal_name_length,
+                           :max_internal_name_length,
+                           :min_display_name_length,
+                           :max_display_name_length
+                         ])
+
+  @spec get_update_changeset_opts_docs() :: String.t()
+  def get_update_changeset_opts_docs, do: NimbleOptions.docs(@update_changeset_opts)
+
+  @spec update_changeset(
+          Msdata.SystApplicationContexts.t(),
+          Types.application_context_params(),
+          Keyword.t()
+        ) ::
+          Ecto.Changeset.t()
+  def update_changeset(application_context, update_params, opts) do
+    opts = NimbleOptions.validate!(opts, @update_changeset_opts)
+
+    application_context
+    |> cast(update_params, [:display_name, :description, :start_context])
+    |> optimistic_lock(:diag_row_version)
+    |> validate_common(opts)
+  end
+
+  ##############################################################################
+  #
+  # Common Functionality
+  #
+  #
+
+  defp validate_common(changeset, opts) do
+    changeset
+    |> GeneralValidators.validate_internal_name(opts)
+    |> GeneralValidators.validate_display_name(opts)
+    |> validate_required([
+      :internal_name,
+      :display_name,
+      :application_id,
+      :description,
+      :start_context,
+      :login_context,
+      :database_owner_context
+    ])
+    |> unique_constraint(:internal_name, name: :syst_application_contexts_internal_name_udx)
+    |> unique_constraint(:display_name, name: :syst_application_contexts_display_name_udx)
+    |> foreign_key_constraint(:application_id, name: :syst_application_contexts_applications_fk)
+  end
 end

@@ -57,9 +57,48 @@ defmodule Msdata.SystOwners do
     has_many(:instances, Msdata.SystInstances, foreign_key: :owner_id)
   end
 
+  @doc """
+  Creates a changeset for inserting a new Owner record.
+
+  ## Parameters
+
+    - `insert_params`: A map of parameters for creating a new Owner.
+
+    - `opts`: Optional keyword list of options.
+
+  ## Options
+
+    #{Validators.get_insert_changeset_opts_docs()}
+
+  ## Returns
+
+  Returns an `t:Ecto.Changeset.t/0`.
+  """
+  @spec insert_changeset(Types.owner_params()) :: Ecto.Changeset.t()
   @spec insert_changeset(Types.owner_params(), Keyword.t()) :: Ecto.Changeset.t()
   defdelegate insert_changeset(insert_params, opts \\ []), to: Validators
 
+  @doc """
+  Creates a changeset for updating an existing Owner record.
+
+  ## Parameters
+
+    - `owner`: The existing Owner record. struct to update.
+
+    - `update_params`: A map of parameters to update the Owner.
+
+    - `opts`: Optional keyword list of options.
+
+  ## Options
+
+    #{Validators.get_update_changeset_opts_docs()}
+
+  ## Returns
+
+  Returns an `t:Ecto.Changeset.t/0`.
+  """
+  @spec update_changeset(Msdata.SystOwners.t()) :: Ecto.Changeset.t()
+  @spec update_changeset(Msdata.SystOwners.t(), Types.owner_params()) :: Ecto.Changeset.t()
   @spec update_changeset(Msdata.SystOwners.t(), Types.owner_params(), Keyword.t()) ::
           Ecto.Changeset.t()
   defdelegate update_changeset(owner, update_params \\ %{}, opts \\ []), to: Validators

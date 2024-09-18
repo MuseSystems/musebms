@@ -23,6 +23,12 @@ defmodule MscmpSystInstance.Impl.Application do
   # code.  Please see `MscmpSystInstance.Runtime.Application` for that code.
   # This module is for working with `Msdata.SystApplications` records.
 
+  ##############################################################################
+  #
+  # create_application
+  #
+  #
+
   @spec create_application(Types.application_params()) ::
           {:ok, Msdata.SystApplications.t()} | {:error, MscmpSystError.t()}
   def create_application(application_params) do
@@ -41,6 +47,12 @@ defmodule MscmpSystInstance.Impl.Application do
          cause: error
        }}
   end
+
+  ##############################################################################
+  #
+  # update_application
+  #
+  #
 
   @spec update_application(
           Types.application_id() | Msdata.SystApplications.t(),
@@ -78,17 +90,27 @@ defmodule MscmpSystInstance.Impl.Application do
        }}
   end
 
+  ##############################################################################
+  #
+  # get_application_id_by_name
+  #
+  #
+
   @spec get_application_id_by_name(Types.application_name()) :: Types.application_id() | nil
   def get_application_id_by_name(application_name) when is_binary(application_name) do
     from(a in Msdata.SystApplications, where: a.internal_name == ^application_name, select: a.id)
     |> MscmpSystDb.one()
   end
 
+  ##############################################################################
+  #
+  # get_application
+  #
+  #
+
   @spec get_application(Types.application_id() | Types.application_name(), Keyword.t()) ::
           Msdata.SystApplications.t() | nil
   def get_application(application, opts) when is_binary(application) do
-    opts = MscmpSystUtils.resolve_options(opts, include_contexts: false)
-
     application
     |> Ecto.UUID.cast()
     |> get_application_record_query(application)

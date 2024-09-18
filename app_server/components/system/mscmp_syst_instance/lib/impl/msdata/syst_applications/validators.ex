@@ -14,24 +14,56 @@ defmodule MscmpSystInstance.Impl.Msdata.SystApplications.Validators do
   @moduledoc false
 
   import Ecto.Changeset
+  import MscmpSystInstance.Impl.Msdata.Helpers
 
   alias MscmpSystInstance.Impl.Msdata.GeneralValidators
-  alias MscmpSystInstance.Impl.Msdata.Helpers
   alias MscmpSystInstance.Types
+
+  ##############################################################################
+  #
+  # insert_changeset
+  #
+  #
+
+  @insert_changeset_opts validator_options([
+                           :min_internal_name_length,
+                           :max_internal_name_length,
+                           :min_display_name_length,
+                           :max_display_name_length
+                         ])
+
+  @spec get_insert_changeset_opts_docs() :: String.t()
+  def get_insert_changeset_opts_docs, do: NimbleOptions.docs(@insert_changeset_opts)
 
   @spec insert_changeset(Types.application_params(), Keyword.t()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, Helpers.option_defaults())
+    opts = NimbleOptions.validate!(opts, @insert_changeset_opts)
 
     %Msdata.SystApplications{}
     |> cast(insert_params, [:internal_name, :display_name, :syst_description])
     |> validate_common(opts)
   end
 
+  ##############################################################################
+  #
+  # update_changeset
+  #
+  #
+
+  @update_changeset_opts validator_options([
+                           :min_internal_name_length,
+                           :max_internal_name_length,
+                           :min_display_name_length,
+                           :max_display_name_length
+                         ])
+
+  @spec get_update_changeset_opts_docs() :: String.t()
+  def get_update_changeset_opts_docs, do: NimbleOptions.docs(@update_changeset_opts)
+
   @spec update_changeset(Msdata.SystApplications.t(), Types.application_params(), Keyword.t()) ::
           Ecto.Changeset.t()
   def update_changeset(application, update_params, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, Helpers.option_defaults())
+    opts = NimbleOptions.validate!(opts, @update_changeset_opts)
 
     application
     |> cast(update_params, [:display_name, :syst_description])

@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule IntegrationTest do
+  @moduledoc false
+
   use InstanceMgrTestCase, async: false
 
   import Ecto.Query
@@ -294,14 +296,14 @@ defmodule IntegrationTest do
       owner_state_id: owner1_state.id
     }
 
-    assert false == MscmpSystInstance.owner_exists?()
-    assert false == MscmpSystInstance.owner_exists?(owner_name: "owner1")
+    assert false == MscmpSystInstance.owners_exist?()
+    assert false == MscmpSystInstance.owner_name_exists?("owner1")
 
     assert {:ok, owner1} = MscmpSystInstance.create_owner(owner1_params)
 
-    assert true == MscmpSystInstance.owner_exists?()
-    assert true == MscmpSystInstance.owner_exists?(owner_name: "owner1")
-    assert true == MscmpSystInstance.owner_exists?(owner_id: owner1.id)
+    assert true == MscmpSystInstance.owners_exist?()
+    assert true == MscmpSystInstance.owner_name_exists?("owner1")
+    assert true == MscmpSystInstance.owner_id_exists?(owner1.id)
 
     assert owner1.internal_name == owner1_params.internal_name
     assert owner1.display_name == owner1_params.display_name
@@ -416,43 +418,7 @@ defmodule IntegrationTest do
     end)
   end
 
-  test "Step 12: Start Instances" do
-    assert :ok =
-             MscmpSystInstance.start_all_applications(@startup_options,
-               migrations_root_dir:
-                 "../../../../database/components/system/mscmp_syst_instance/testing_support"
-             )
-  end
-
-  test "Step 13: Make use of Instances" do
-    from(
-      ic in Msdata.SystInstanceContexts,
-      join: a in assoc(ic, :application_context),
-      where: a.login_context and a.start_context,
-      select: [:internal_name]
-    )
-    |> MscmpSystDb.all()
-    |> Enum.each(fn context ->
-      starting_datastore_context = MscmpSystDb.current_datastore_context()
-
-      MscmpSystDb.put_datastore_context(String.to_atom(context.internal_name))
-
-      assert MscmpSystDb.query_for_value!("""
-             SELECT true
-               FROM testing.test_header
-              WHERE test_value = '#{context.internal_name}'
-              LIMIT 1;
-             """)
-
-      MscmpSystDb.put_datastore_context(starting_datastore_context)
-    end)
-  end
-
-  test "Step 14: Stop Instances" do
-    assert :ok = MscmpSystInstance.stop_all_applications([])
-  end
-
-  test "Step 15: Purge Instances" do
+  test "Step 12: Purge Instances" do
     %Msdata.SystEnumItems{id: purge_instance_state_id} =
       MscmpSystInstance.get_instance_state_default(:instance_states_purge_eligible)
 
@@ -470,7 +436,7 @@ defmodule IntegrationTest do
     end)
   end
 
-  test "Step 16: Delete Application Contexts" do
+  test "Step 13: Delete Application Contexts" do
     assert app_context1_id = MscmpSystInstance.get_application_context_id_by_name("app1_apiusr")
     assert app_context2_id = MscmpSystInstance.get_application_context_id_by_name("app1_appusr")
     assert app_context3_id = MscmpSystInstance.get_application_context_id_by_name("app2_apiusr")

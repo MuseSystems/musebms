@@ -17,6 +17,12 @@ defmodule MscmpSystInstance.Impl.InstanceType do
 
   require Logger
 
+  ##############################################################################
+  #
+  # create_instance_type
+  #
+  #
+
   @spec create_instance_type(Types.instance_type_params()) ::
           {:ok, Msdata.SystEnumItems.t()} | {:error, MscmpSystError.t()}
   def create_instance_type(instance_type_params) do
@@ -35,6 +41,12 @@ defmodule MscmpSystInstance.Impl.InstanceType do
          cause: error
        }}
   end
+
+  ##############################################################################
+  #
+  # get_instance_type_by_name
+  #
+  #
 
   @spec get_instance_type_by_name(Types.instance_type_name()) :: Msdata.SystEnumItems.t() | nil
   def get_instance_type_by_name(instance_type_name),
@@ -74,6 +86,12 @@ defmodule MscmpSystInstance.Impl.InstanceType do
   end
 
   defp get_change_return_value(_instance_type_name, result), do: result
+
+  ##############################################################################
+  #
+  # delete_instance_type
+  #
+  #
 
   @spec delete_instance_type(Types.instance_type_name()) :: :ok | {:error, MscmpSystError.t()}
   def delete_instance_type(instance_type_name) do

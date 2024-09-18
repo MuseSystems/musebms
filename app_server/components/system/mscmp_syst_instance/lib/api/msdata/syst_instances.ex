@@ -77,9 +77,48 @@ defmodule Msdata.SystInstances do
     has_many(:instance_contexts, Msdata.SystInstanceContexts, foreign_key: :instance_id)
   end
 
+  @doc """
+  Creates a changeset for inserting a new Instance record.
+
+  ## Parameters
+
+    - `insert_params`: A map of parameters for creating a new Instance.
+
+    - `opts`: Optional keyword list of options.
+
+  ## Options
+
+    #{Validators.get_insert_changeset_opts_docs()}
+
+  ## Returns
+
+  An `t:Ecto.Changeset.t/0` for the new Instance.
+  """
+  @spec insert_changeset(Types.instance_params()) :: Ecto.Changeset.t()
   @spec insert_changeset(Types.instance_params(), Keyword.t()) :: Ecto.Changeset.t()
   defdelegate insert_changeset(insert_params, opts \\ []), to: Validators
 
+  @doc """
+  Creates a changeset for updating an existing Instance record.
+
+  ## Parameters
+
+    - `instance`: The existing Instance to update.
+
+    - `update_params`: A map of parameters to update the Instance.
+
+    - `opts`: Optional keyword list of options.
+
+  ## Options
+
+    #{Validators.get_update_changeset_opts_docs()}
+
+  ## Returns
+
+  An `t:Ecto.Changeset.t/0` for the updated Instance.
+  """
+  @spec update_changeset(Msdata.SystInstances.t()) :: Ecto.Changeset.t()
+  @spec update_changeset(Msdata.SystInstances.t(), Types.instance_params()) :: Ecto.Changeset.t()
   @spec update_changeset(Msdata.SystInstances.t(), Types.instance_params(), Keyword.t()) ::
           Ecto.Changeset.t()
   defdelegate update_changeset(instance, update_params \\ %{}, opts \\ []), to: Validators

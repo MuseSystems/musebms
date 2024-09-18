@@ -26,6 +26,12 @@ defmodule MscmpSystInstance.Impl.Instance do
   # that something isn't right here.
   @password_magic <<56, 14, 219, 174, 116, 26, 213, 144, 140, 191, 255, 187, 27, 58, 226, 253>>
 
+  ##############################################################################
+  #
+  # create_instance
+  #
+  #
+
   @spec create_instance(Types.instance_params()) ::
           {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
   def create_instance(instance_params) do
@@ -44,6 +50,12 @@ defmodule MscmpSystInstance.Impl.Instance do
          cause: error
        }}
   end
+
+  ##############################################################################
+  #
+  # get_instance_datastore_options
+  #
+  #
 
   # Retrieves the Datastore Options based on the Instance database record and
   # the provided Startup Options.
@@ -132,10 +144,16 @@ defmodule MscmpSystInstance.Impl.Instance do
     |> Base.encode64(padding: false)
   end
 
+  ##############################################################################
+  #
+  # initialize_instance
+  #
+  #
+
   @spec initialize_instance(Types.instance_id(), startup_options :: map(), opts :: Keyword.t()) ::
           {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
   def initialize_instance(instance_id, startup_options, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, get_default_instance_state_ids())
+    opts = Keyword.merge(opts, get_default_instance_state_ids())
 
     {:ok, initializing_instance} =
       from(i in Msdata.SystInstances, where: i.id == ^instance_id)
@@ -145,8 +163,10 @@ defmodule MscmpSystInstance.Impl.Instance do
 
     datastore_options = get_instance_datastore_options(initializing_instance.id, startup_options)
 
+    create_datastore_opts = Keyword.take(opts, [:db_shutdown_timeout])
+
     datastore_options
-    |> MscmpSystDb.create_datastore(opts)
+    |> MscmpSystDb.create_datastore(create_datastore_opts)
     |> process_create_datastore_result(initializing_instance, datastore_options, opts)
   rescue
     error ->
@@ -180,6 +200,12 @@ defmodule MscmpSystInstance.Impl.Instance do
       message: "The requested Instance is not in a valid state for initialization.",
       cause: %{instance_state_functional_type_name: state_functional_type, instance: instance}
   end
+
+  ##############################################################################
+  #
+  # set_instance_state
+  #
+  #
 
   # TODO: This is one of a number of places where we might want to consider a
   #       more formal state machine definition since there are allowed and
@@ -223,6 +249,12 @@ defmodule MscmpSystInstance.Impl.Instance do
      }}
   end
 
+  ##############################################################################
+  #
+  # get_default_instance_state_ids
+  #
+  #
+
   @spec get_default_instance_state_ids() :: Keyword.t()
   def get_default_instance_state_ids do
     initializing_state =
@@ -246,6 +278,12 @@ defmodule MscmpSystInstance.Impl.Instance do
     ]
   end
 
+  ##############################################################################
+  #
+  # get_standard_migration_bindings
+  #
+  #
+
   # Returns the standard bindings expected by Instance migrations which are
   # applied during Instance Datastore updates.
   #
@@ -267,6 +305,12 @@ defmodule MscmpSystInstance.Impl.Instance do
     |> MscmpSystDb.all()
     |> Enum.map(&{String.to_atom(elem(&1, 0)), elem(&1, 1)})
   end
+
+  ##############################################################################
+  #
+  # get_instance_by_name
+  #
+  #
 
   # Returns a populated SystInstances struct for the requested Instance internal
   # name.
@@ -299,6 +343,12 @@ defmodule MscmpSystInstance.Impl.Instance do
       }
   end
 
+  ##############################################################################
+  #
+  # get_instance_id_by_name
+  #
+  #
+
   # Returns the ID of a SystInstances record as looked up by its internal name.
 
   @spec get_instance_id_by_name(Types.instance_name()) ::
@@ -320,6 +370,12 @@ defmodule MscmpSystInstance.Impl.Instance do
         }
       }
   end
+
+  ##############################################################################
+  #
+  # purge_instance
+  #
+  #
 
   @spec purge_instance(Types.instance_id() | Msdata.SystInstances.t(), startup_options :: map()) ::
           :ok | {:error, MscmpSystError.t()}

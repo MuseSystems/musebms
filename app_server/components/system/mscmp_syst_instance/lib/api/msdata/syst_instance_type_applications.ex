@@ -64,6 +64,22 @@ defmodule Msdata.SystInstanceTypeApplications do
     )
   end
 
+  @doc """
+  Creates a changeset for inserting a new Instance Type Application record.
+
+  This function validates the provided parameters and prepares them for
+  insertion into the database.
+
+  ## Parameters
+
+    - `insert_params`: A map containing the parameters for creating a new
+      Instance Type Application.
+
+  ## Returns
+
+  Returns an `t:Ecto.Changeset.t/0` struct representing the changeset for the
+  new Instance Type Application.
+  """
   @spec insert_changeset(Types.instance_type_application_params()) :: Ecto.Changeset.t()
   defdelegate insert_changeset(insert_params), to: Validators
 end

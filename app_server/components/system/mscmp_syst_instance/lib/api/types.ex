@@ -114,6 +114,15 @@ defmodule MscmpSystInstance.Types do
           optional(:owning_instance_name) => instance_name()
         }
 
+  @type instance_runtime_state() :: :started | :stopped
+
+  @typedoc """
+  Expresses a specific Instance, its runtime state, and the functional type of
+  its runtime state.
+  """
+  @type instance_state() ::
+          {instance_name(), {:ok, instance_runtime_state()} | {:error, MscmpSystError.t()}}
+
   @typedoc """
   Establishes the available Instance state functional types understood by the
   module.
@@ -318,4 +327,57 @@ defmodule MscmpSystInstance.Types do
   Type for identifying Owner States by name.
   """
   @type owner_state_name() :: MscmpSystEnums.Types.enum_item_name()
+
+  @typedoc """
+  Defines the identification mechanism for the services of an Application or an
+  Instance.
+
+  This is differentiated from `t:service_name/0` in that a `service_name` is the
+  generic name of a service that an Application or Instance is expected to
+  provided whereas the `service_locator` is a running instance of the service.
+  """
+  @type service_locator :: Supervisor.name() | GenServer.name()
+
+  @typedoc """
+  Defines the generic name of a service that an Application or Instance is
+  expected to provide.
+
+  This is differentiated from `t:service_locator/0` in that a `service_name` is the
+  generic identifier for a type of service, while a `service_locator` represents
+  a specific running instance of that service.
+  """
+  @type service_name() :: atom()
+
+  @typedoc """
+  Represents a mapping of provided service names to the identifiers of the
+  running instances of those services.
+
+  The `t:service_name/0` key is a generic identifier for a type of service that
+  an Application or Instance is expected to provide.  The `t:service_locator/0`
+  value provides the running process identifier implementing that service.
+  """
+  @type services() :: %{optional(service_name()) => service_locator()}
+
+  @typedoc """
+  Defines the acceptable forms for identifying Instances to be subjected to an
+  action, such as starting or stopping.
+
+  The following values are available:
+
+    * `:none`: No Instances will be affected, effectively making the action a
+      no-op from an Instance management perspective.
+
+    *  `:all`: All qualifying Instances will be subjected to the action.
+
+    * A list of Instance Names
+  """
+  @type target_instances() :: :none | :all | list(instance_name())
+
+  @typedoc """
+  Expresses a specific Instance, its runtime state, and the functional type of
+  its runtime state.
+  """
+  @type target_instance_result() ::
+          {instance_name(),
+           {:ok, :upgraded} | {:ok, instance_runtime_state()} | {:error, MscmpSystError.t()}}
 end

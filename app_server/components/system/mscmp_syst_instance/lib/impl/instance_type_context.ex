@@ -17,6 +17,12 @@ defmodule MscmpSystInstance.Impl.InstanceTypeContext do
 
   require Logger
 
+  ##############################################################################
+  #
+  # update_instance_type_context
+  #
+  #
+
   @spec update_instance_type_context(
           Types.instance_type_context_id() | Msdata.SystInstanceTypeContexts.t(),
           Types.instance_type_context_params()
@@ -38,6 +44,12 @@ defmodule MscmpSystInstance.Impl.InstanceTypeContext do
         }
       }
   end
+
+  ##############################################################################
+  #
+  # update_instance_type_context
+  #
+  #
 
   def update_instance_type_context(
         %Msdata.SystInstanceTypeContexts{} = instance_type_context,

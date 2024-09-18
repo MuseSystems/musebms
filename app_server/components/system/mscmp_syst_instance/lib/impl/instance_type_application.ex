@@ -17,6 +17,12 @@ defmodule MscmpSystInstance.Impl.InstanceTypeApplication do
 
   require Logger
 
+  ##############################################################################
+  #
+  # create_instance_type_application
+  #
+  #
+
   @spec create_instance_type_application(Types.instance_type_id(), Types.application_id()) ::
           {:ok, Msdata.SystInstanceTypeApplications.t()} | {:error, MscmpSystError.t()}
   def create_instance_type_application(instance_type_id, application_id)
@@ -39,6 +45,12 @@ defmodule MscmpSystInstance.Impl.InstanceTypeApplication do
       }
   end
 
+  ##############################################################################
+  #
+  # delete_instance_type_application
+  #
+  #
+
   @spec delete_instance_type_application(
           Types.instance_type_application_id()
           | Msdata.SystInstanceTypeApplications.t()
@@ -60,6 +72,12 @@ defmodule MscmpSystInstance.Impl.InstanceTypeApplication do
         }
       }
   end
+
+  ##############################################################################
+  #
+  # delete_instance_type_application
+  #
+  #
 
   def delete_instance_type_application(
         %Msdata.SystInstanceTypeApplications{} = instance_type_application

@@ -18,12 +18,13 @@ defmodule MscmpSystInstance.MixProject do
 
   @deps [
     # Third Party Dependencies
-    {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
-    {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
-    {:ex_doc, "~> 0.20", only: :dev, runtime: false},
+    {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+    {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
+    {:ex_doc, "~> 0.31", only: :dev, runtime: false},
+    {:nimble_options, "~> 1.0"},
 
     # Muse Systems Business Management System Components
-    {:mscmp_syst_utils, path: "../mscmp_syst_utils"},
+    {:mscmp_syst_utils_string, path: "../mscmp_syst_utils_string"},
     {:mscmp_syst_error, path: "../mscmp_syst_error"},
     {:mscmp_syst_db, path: "../mscmp_syst_db"},
     {:mscmp_syst_enums, path: "../mscmp_syst_enums"},
@@ -45,7 +46,7 @@ defmodule MscmpSystInstance.MixProject do
     [
       app: @name,
       version: @version,
-      elixir: "~> 1.15",
+      elixir: "~> 1.17",
       deps: @deps,
       build_embedded: in_production,
       start_permanent: in_production,
@@ -56,13 +57,14 @@ defmodule MscmpSystInstance.MixProject do
         main: "MscmpSystInstance",
         output: "../../../../documentation/technical/app_server/mscmp_syst_instance",
         deps: [
-          mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils",
+          mscmp_syst_utils_string:
+            "../../../../documentation/technical/app_server/mscmp_syst_utils_string",
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
           mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db",
           mscmp_syst_enums: "../../../../documentation/technical/app_server/mscmp_syst_enums",
           mscmp_syst_options: "../../../../documentation/technical/app_server/mscmp_syst_options"
         ],
-        groups_for_functions: [
+        groups_for_docs: [
           Owners: &(&1[:section] == :owner_data),
           "Instance Types": &(&1[:section] == :instance_type_data),
           Instances: &(&1[:section] == :instance_data),

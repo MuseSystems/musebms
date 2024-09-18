@@ -72,6 +72,31 @@ defmodule Msdata.SystInstanceContexts do
     )
   end
 
+  @doc """
+  Validates update Instance Context parameters for use in updating an existing
+  Instance Context record.
+
+  ## Parameters
+
+    - `application_context`: The existing Instance Context struct to be
+      updated.
+
+    - `update_params`: A map containing the parameters for updating the
+      Instance Context.
+
+    - `opts`: Optional keyword list of validation options.
+
+  ## Options
+
+    #{Validators.get_update_changeset_opts_docs()}
+
+  ## Returns
+
+    An `Ecto.Changeset` struct representing the validation result.
+  """
+  @spec update_changeset(Msdata.SystInstanceContexts.t()) :: Ecto.Changeset.t()
+  @spec update_changeset(Msdata.SystInstanceContexts.t(), Types.instance_context_params()) ::
+          Ecto.Changeset.t()
   @spec update_changeset(
           Msdata.SystInstanceContexts.t(),
           Types.instance_context_params(),

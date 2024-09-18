@@ -14,10 +14,21 @@ defmodule MscmpSystInstance.Impl.Msdata.SystInstanceContexts.Validators do
   @moduledoc false
 
   import Ecto.Changeset
+  import MscmpSystInstance.Impl.Msdata.Helpers
 
   alias MscmpSystInstance.Impl.Msdata.GeneralValidators
-  alias MscmpSystInstance.Impl.Msdata.Helpers
   alias MscmpSystInstance.Types
+
+  ##############################################################################
+  #
+  # update_changeset
+  #
+  #
+
+  @update_changeset_opts validator_options([:min_context_code_length, :max_context_code_length])
+
+  @spec get_update_changeset_opts_docs() :: String.t()
+  def get_update_changeset_opts_docs, do: NimbleOptions.docs(@update_changeset_opts)
 
   @spec update_changeset(
           Msdata.SystInstanceContexts.t(),
@@ -25,7 +36,7 @@ defmodule MscmpSystInstance.Impl.Msdata.SystInstanceContexts.Validators do
           Keyword.t()
         ) :: Ecto.Changeset.t()
   def update_changeset(instance_context, update_params, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, Helpers.option_defaults())
+    opts = NimbleOptions.validate!(opts, @update_changeset_opts)
 
     instance_context
     |> cast(update_params, [:start_context, :db_pool_size, :context_code])

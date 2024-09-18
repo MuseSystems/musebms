@@ -61,14 +61,49 @@ defmodule Msdata.SystApplications do
   @doc """
   Validates presented Application parameters for inserting a new Application
   record.
+
+  ## Parameters
+
+    - `insert_params`: A map containing the parameters for creating a new
+       Application.
+
+    - `opts`: Optional keyword list of validation options.
+
+  ## Options
+
+    #{Validators.get_insert_changeset_opts_docs()}
+
+  ## Returns
+
+    An `Ecto.Changeset` struct representing the validation result.
   """
+  @spec insert_changeset(Types.application_params()) :: Ecto.Changeset.t()
   @spec insert_changeset(Types.application_params(), Keyword.t()) :: Ecto.Changeset.t()
   defdelegate insert_changeset(insert_params, opts \\ []), to: Validators
 
   @doc """
   Validates update Application parameters for use in updating an existing
   Application record.
+
+  ## Parameters
+
+    - `application`: The existing Application struct to be updated.
+
+    - `update_params`: A map containing the parameters for updating the
+      Application.
+
+    - `opts`: Optional keyword list of validation options.
+
+  ## Options
+
+    #{Validators.get_update_changeset_opts_docs()}
+
+  ## Returns
+
+    An `Ecto.Changeset` struct representing the validation result.
   """
+  @spec update_changeset(Msdata.SystApplications.t(), Types.application_params()) ::
+          Ecto.Changeset.t()
   @spec update_changeset(Msdata.SystApplications.t(), Types.application_params(), Keyword.t()) ::
           Ecto.Changeset.t()
   defdelegate update_changeset(application, update_params, opts \\ []), to: Validators

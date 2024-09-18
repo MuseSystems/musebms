@@ -18,14 +18,90 @@ defmodule MscmpSystInstance do
              |> Enum.fetch!(1)
 
   alias MscmpSystInstance.Impl
-  alias MscmpSystInstance.Runtime
   alias MscmpSystInstance.Types
+
+  ##############################################################################
+  #
+  # Options Definition
+  #
+  #
+
+  option_defs = [
+    include_contexts: [
+      type: :boolean,
+      default: false,
+      doc: """
+      When true, indicates that application context records should be preloaded.
+      """
+    ],
+    initializing_state_id: [
+      type: :string,
+      type_doc: "t:Ecto.UUID.t/0",
+      doc: """
+      The record ID value of the Instance State to use to indicate that the
+      record is being initialized.  If this value is not provided the configured
+      default Instance State for the functional type
+      `instance_states_initializing` will be used.
+      """
+    ],
+    active_state_id: [
+      type: :string,
+      type_doc: "t:Ecto.UUID.t/0",
+      doc: """
+      The record ID value of the Instance State to use to indicate that the
+      record is active. If this value is not provided the configured default
+      Instance State for the functional type `instance_states_active` will be used.
+      """
+    ],
+    failed_state_id: [
+      type: :string,
+      type_doc: "t:Ecto.UUID.t/0",
+      doc: """
+      the record ID value of the Instance State to use to indicate that the
+      record has failed to be initialized.  If this value is not provided the
+      default configured Instance State for the functional type
+      `instance_states_failure` will be used.
+      """
+    ],
+    initialized_state_id: [
+      type: :string,
+      type_doc: "t:Ecto.UUID.t/0",
+      doc: """
+      the record ID value of the Instance State to use to indicate that the
+      record has successfully been initialized.  If this value is not provided
+      the configured default Instance State for the functional type
+      `instance_states_initialized` will be used.
+      """
+    ],
+    migrating_state_id: [
+      type: :string,
+      type_doc: "t:Ecto.UUID.t/0",
+      doc: """
+      The record ID value of the Instance State to use to indicate that the
+      record is in the process of being migrated. If this value is not provided
+      the configured default Instance State for the functional type
+      `instance_states_migrating` will be used.
+      """
+    ],
+    db_shutdown_timeout: [
+      type: :timeout,
+      doc: """
+      Specifies the timeout value for the Datastore Context.
+      """
+    ]
+  ]
 
   # ==============================================================================================
   #
   # Applications & Application Contexts
   #
   # ==============================================================================================
+
+  ##############################################################################
+  #
+  # create_application
+  #
+  #
 
   @doc section: :application_data
   @doc """
@@ -75,6 +151,12 @@ defmodule MscmpSystInstance do
   @spec create_application(Types.application_params()) ::
           {:ok, Msdata.SystApplications.t()} | {:error, MscmpSystError.t()}
   defdelegate create_application(application_params), to: Impl.Application
+
+  ##############################################################################
+  #
+  # update_application
+  #
+  #
 
   @doc section: :application_data
   @doc """
@@ -126,6 +208,12 @@ defmodule MscmpSystInstance do
         ) :: {:ok, Msdata.SystApplications.t()} | {:error, MscmpSystError.t()}
   defdelegate update_application(application, application_params), to: Impl.Application
 
+  ##############################################################################
+  #
+  # get_application_id_by_name
+  #
+  #
+
   @doc section: :application_data
   @doc """
   Returns the Application record ID for the requested Application Internal Name;
@@ -143,7 +231,7 @@ defmodule MscmpSystInstance do
 
   ## Parameters
 
-    * `applicaton_name` - the internal name of the desired Application record.
+    * `application_name` - the internal name of the desired Application record.
 
   ## Examples
 
@@ -161,6 +249,14 @@ defmodule MscmpSystInstance do
   @spec get_application_id_by_name(Types.application_name()) :: Types.application_id() | nil
   defdelegate get_application_id_by_name(application_name), to: Impl.Application
 
+  ##############################################################################
+  #
+  # get_application
+  #
+  #
+
+  @get_application_opts NimbleOptions.new!(Keyword.take(option_defs, [:include_contexts]))
+
   @doc section: :application_data
   @doc """
   Returns a populated `Msdata.SystApplications` struct for the requested record.
@@ -171,18 +267,26 @@ defmodule MscmpSystInstance do
     its Internal Name.  This parameter is required.
 
     * `opts` - allows optional parameters to be provided which govern the
-    behavior of this function.  The options are provided via a Keyword List.
-    The available options are:
+    behavior of this function.
 
-      * `include_contexts` - a boolean value indicating whether or not to also
-      retrieve the fully populated list of `:application_contexts` associated
-      with the requested Application.  Contexts are returned as a standard
-      association of `Msdata.SystApplicationContexts` structs.  The default
-      value of this option is `false`.
+  ## Options
+
+    #{NimbleOptions.docs(@get_application_opts)}
   """
+  @spec get_application(Types.application_id() | Types.application_name()) ::
+          Msdata.SystApplications.t() | nil
   @spec get_application(Types.application_id() | Types.application_name(), Keyword.t()) ::
           Msdata.SystApplications.t() | nil
-  defdelegate get_application(application, opts \\ []), to: Impl.Application
+  def get_application(application, opts \\ []) do
+    opts = NimbleOptions.validate!(opts, @get_application_opts)
+    Impl.Application.get_application(application, opts)
+  end
+
+  ##############################################################################
+  #
+  # create_application_context
+  #
+  #
 
   @doc section: :application_data
   @doc """
@@ -279,6 +383,12 @@ defmodule MscmpSystInstance do
           {:ok, Msdata.SystApplicationContexts.t()} | {:error, MscmpSystError.t()}
   defdelegate create_application_context(application_context_params), to: Impl.ApplicationContexts
 
+  ##############################################################################
+  #
+  # get_application_context_id_by_name
+  #
+  #
+
   @doc section: :application_data
   @doc """
   Retrieves the Application Context record ID for the record matching provided
@@ -310,6 +420,12 @@ defmodule MscmpSystInstance do
   defdelegate get_application_context_id_by_name(application_context_name),
     to: Impl.ApplicationContexts
 
+  ##############################################################################
+  #
+  # list_application_contexts
+  #
+  #
+
   @doc section: :application_data
   @doc """
   Returns a list of Application Context records.
@@ -324,6 +440,12 @@ defmodule MscmpSystInstance do
   @spec list_application_contexts(Types.application_id() | nil) ::
           {:ok, list(Msdata.SystApplicationContexts.t())} | {:error, MscmpSystError.t()}
   defdelegate list_application_contexts(application_id \\ nil), to: Impl.ApplicationContexts
+
+  ##############################################################################
+  #
+  # update_application_context
+  #
+  #
 
   @doc section: :application_data
   @doc """
@@ -393,6 +515,12 @@ defmodule MscmpSystInstance do
   defdelegate update_application_context(application_context, application_context_params),
     to: Impl.ApplicationContexts
 
+  ##############################################################################
+  #
+  # delete_application_context
+  #
+  #
+
   @doc section: :application_data
   @doc """
   Deletes an Application Context record from the system
@@ -450,6 +578,12 @@ defmodule MscmpSystInstance do
   #
   # ==============================================================================================
 
+  ##############################################################################
+  #
+  # create_instance_type
+  #
+  #
+
   @doc section: :instance_type_data
   @doc """
   Creates a new Instance Type record via the `MscmpSystEnums` service.
@@ -464,6 +598,12 @@ defmodule MscmpSystInstance do
   @spec create_instance_type(Types.instance_type_params()) ::
           {:ok, Msdata.SystEnumItems.t()} | {:error, MscmpSystError.t()}
   defdelegate create_instance_type(instance_type_params), to: Impl.InstanceType
+
+  ##############################################################################
+  #
+  # get_instance_type_by_name
+  #
+  #
 
   @doc section: :instance_type_data
   @doc """
@@ -492,6 +632,12 @@ defmodule MscmpSystInstance do
   @spec get_instance_type_by_name(Types.instance_type_name()) :: Msdata.SystEnumItems.t() | nil
   defdelegate get_instance_type_by_name(instance_type_name), to: Impl.InstanceType
 
+  ##############################################################################
+  #
+  # get_instance_type_default
+  #
+  #
+
   @doc section: :instance_type_data
   @doc """
   Returns the Instance Type record which is configured as the system default
@@ -506,6 +652,12 @@ defmodule MscmpSystInstance do
   @spec get_instance_type_default :: Msdata.SystEnumItems.t()
   defdelegate get_instance_type_default, to: Impl.InstanceType
 
+  ##############################################################################
+  #
+  # update_instance_type
+  #
+  #
+
   @doc section: :instance_type_data
   @doc """
   Updates an existing Instance Type record via the `MscmpSystEnums` service.
@@ -519,10 +671,18 @@ defmodule MscmpSystInstance do
     Instance Type.  All attributes in the parameter map are optional in updating
     contexts.
   """
+  @spec update_instance_type(Types.instance_type_name()) ::
+          {:ok, Msdata.SystEnumItems.t()} | {:error, MscmpSystError.t()}
   @spec update_instance_type(Types.instance_type_name(), Types.instance_type_params() | %{}) ::
           {:ok, Msdata.SystEnumItems.t()} | {:error, MscmpSystError.t()}
   defdelegate update_instance_type(instance_type_name, instance_type_params \\ %{}),
     to: Impl.InstanceType
+
+  ##############################################################################
+  #
+  # delete_instance_type
+  #
+  #
 
   @doc section: :instance_type_data
   @doc """
@@ -542,6 +702,12 @@ defmodule MscmpSystInstance do
 
   #
   # Instance Type Applications
+  #
+
+  ##############################################################################
+  #
+  # create_instance_type_application
+  #
   #
 
   @doc section: :instance_type_data
@@ -565,6 +731,12 @@ defmodule MscmpSystInstance do
         ) :: {:ok, Msdata.SystInstanceTypeApplications.t()} | {:error, MscmpSystError.t()}
   defdelegate create_instance_type_application(instance_type_id, application_id),
     to: Impl.InstanceTypeApplication
+
+  ##############################################################################
+  #
+  # delete_instance_type_application
+  #
+  #
 
   @doc section: :instance_type_data
   @doc """
@@ -591,6 +763,12 @@ defmodule MscmpSystInstance do
 
   #
   # Instance Type Contexts
+  #
+
+  ##############################################################################
+  #
+  # update_instance_type_context
+  #
   #
 
   @doc section: :instance_type_data
@@ -630,6 +808,10 @@ defmodule MscmpSystInstance do
   """
   @spec update_instance_type_context(
           Types.instance_type_context_id()
+          | Msdata.SystInstanceTypeContexts.t()
+        ) :: {:ok, Msdata.SystInstanceTypeContexts.t()} | {:error, MscmpSystError.t()}
+  @spec update_instance_type_context(
+          Types.instance_type_context_id()
           | Msdata.SystInstanceTypeContexts.t(),
           Types.instance_type_context_params() | %{}
         ) :: {:ok, Msdata.SystInstanceTypeContexts.t()} | {:error, MscmpSystError.t()}
@@ -644,6 +826,12 @@ defmodule MscmpSystInstance do
   # Owners
   #
   # ==============================================================================================
+
+  ##############################################################################
+  #
+  # get_owner_state_by_name
+  #
+  #
 
   @doc section: :owner_data
   @doc """
@@ -670,6 +858,12 @@ defmodule MscmpSystInstance do
   """
   @spec get_owner_state_by_name(Types.owner_state_name()) :: Msdata.SystEnumItems.t() | nil
   defdelegate get_owner_state_by_name(owner_state_name), to: Impl.Owner
+
+  ##############################################################################
+  #
+  # get_owner_state_default
+  #
+  #
 
   @doc section: :owner_data
   @doc """
@@ -698,9 +892,16 @@ defmodule MscmpSystInstance do
       iex> %Msdata.SystEnumItems{internal_name: "owner_states_sysdef_inactive"} =
       ...>   MscmpSystInstance.get_owner_state_default(:owner_states_inactive)
   """
+  @spec get_owner_state_default() :: Msdata.SystEnumItems.t()
   @spec get_owner_state_default(Types.owner_state_functional_types() | nil) ::
           Msdata.SystEnumItems.t()
   defdelegate get_owner_state_default(functional_type \\ nil), to: Impl.Owner
+
+  ##############################################################################
+  #
+  # create_owner
+  #
+  #
 
   @doc section: :owner_data
   @doc """
@@ -728,6 +929,12 @@ defmodule MscmpSystInstance do
   @spec create_owner(Types.owner_params()) ::
           {:ok, Msdata.SystOwners.t()} | {:error, MscmpSystError.t()}
   defdelegate create_owner(owner_params), to: Impl.Owner
+
+  ##############################################################################
+  #
+  # update_owner
+  #
+  #
 
   @doc section: :owner_data
   @doc """
@@ -758,6 +965,12 @@ defmodule MscmpSystInstance do
           {:ok, Msdata.SystOwners.t()} | {:error, MscmpSystError.t()}
   defdelegate update_owner(owner, update_params), to: Impl.Owner
 
+  ##############################################################################
+  #
+  # get_owner_by_name
+  #
+  #
+
   @doc section: :owner_data
   @doc """
   Retrieves an Owner record by its internal name.
@@ -774,6 +987,12 @@ defmodule MscmpSystInstance do
           {:ok, Msdata.SystOwners.t()} | {:error, MscmpSystError.t()}
   defdelegate get_owner_by_name(owner_name), to: Impl.Owner
 
+  ##############################################################################
+  #
+  # get_owner_id_by_name
+  #
+  #
+
   @doc section: :owner_data
   @doc """
   Retrieves the Owner record ID by Owner internal name.
@@ -787,6 +1006,12 @@ defmodule MscmpSystInstance do
   @spec get_owner_id_by_name(Types.owner_name()) ::
           {:ok, Types.owner_id()} | {:error, MscmpSystError.t()}
   defdelegate get_owner_id_by_name(owner_name), to: Impl.Owner
+
+  ##############################################################################
+  #
+  # purge_owner
+  #
+  #
 
   @doc section: :owner_data
   @doc """
@@ -805,54 +1030,106 @@ defmodule MscmpSystInstance do
           :ok | {:error, MscmpSystError.t()}
   defdelegate purge_owner(owner), to: Impl.Owner
 
+  ##############################################################################
+  #
+  # owners_exist?
+  #
+  #
+
   @doc section: :owner_data
   @doc """
-  Tests to see if a specific Owner, or any Owner, record exists in the database.
+  Tests to see if any Owner records exist in the database.
 
-  The functions provides an optional test on either an Owner record's Internal
-  Name or record ID value.  If no selectivity option is made, the test checks if
-  any Owner records exist in the database at all.
-
-  If the Owner record(s) is found, the function returns true; other false.
+  If Owner records are found, the function returns true; otherwise false.
   Errors produce a result tuple.
-
-  ## Parameters
-
-    * `opts` - an optional Keyword List of optional parameters which can
-    influence the result of calling the function.  The available options are:
-
-      * `owner_id` - tests if a specific Owner record exists as referenced by
-      its record ID value.
-
-      * `owner_name` - tests if a specific Owner record exists as referenced by
-      its Internal Name.
 
   ## Examples
 
   Check if any Owner record exists.
 
-      iex> MscmpSystInstance.owner_exists?()
+      iex> MscmpSystInstance.owners_exist?()
+      true
+  """
+  @spec owners_exist?() :: boolean() | {:error, MscmpSystError.t()}
+  defdelegate owners_exist?(), to: Impl.Owner
+
+  ##############################################################################
+  #
+  # owner_id_exists?
+  #
+  #
+
+  @doc section: :owner_data
+  @doc """
+  Tests to see if a specific Owner exists for the given Owner ID value.
+
+  If the Owner record is found, the function returns true; otherwise false.
+  Errors produce a result tuple.
+
+  ## Parameters
+
+      * `owner_id` - the record ID value of the Owner record to test for
+        existence.
+
+  ## Examples
+
+  Check if a specific Owner record exists by ID.
+      iex> {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner1")
+      iex> MscmpSystInstance.owner_id_exists?(owner_id)
       true
 
-  Check if a specific Owner record exists.
+  If a non-existent Owner is requested, the function indicates the record was
+  not found by returning false.
+      iex> nonexistent_owner_id = Ecto.UUID.generate()
+      iex> MscmpSystInstance.owner_id_exists?(nonexistent_owner_id)
+      false
+  """
+  @spec owner_id_exists?(Types.owner_id()) :: boolean() | {:error, MscmpSystError.t()}
+  defdelegate owner_id_exists?(owner_id), to: Impl.Owner
 
-      iex> MscmpSystInstance.owner_exists?(owner_name: "owner1")
+  ##############################################################################
+  #
+  # owner_name_exists?
+  #
+  #
+
+  @doc section: :owner_data
+  @doc """
+  Tests to see if a specific Owner exists for the given Owner Name value.
+
+  The functions provide an existence test on an Owner record's Internal Name
+  value.
+
+  If the Owner record is found, the function returns true; otherwise false.
+  Errors produce a result tuple.
+
+  ## Examples
+
+  Check if a specific Owner record exists by name.
+
+      iex> MscmpSystInstance.owner_name_exists?("owner1")
       true
 
   If a non-existent Owner is requested, the function indicates the record was
   not found.
 
-      iex> MscmpSystInstance.owner_exists?(owner_name: "nonexistent_owner")
+      iex> MscmpSystInstance.owner_name_exists?("nonexistent_owner")
       false
   """
-  @spec owner_exists?(Keyword.t()) :: boolean() | {:error, MscmpSystError.t()}
-  defdelegate owner_exists?(opts \\ []), to: Impl.Owner
+  @spec owner_name_exists?(Types.owner_name()) :: boolean() | {:error, MscmpSystError.t()}
+  defdelegate owner_name_exists?(owner_name), to: Impl.Owner
 
   # ==============================================================================================
   #
   # Instances
   #
   # ==============================================================================================
+
+  ##############################################################################
+  #
+  # get_instance_state_by_name
+  #
+  #
 
   @doc section: :instance_data
   @doc """
@@ -881,6 +1158,12 @@ defmodule MscmpSystInstance do
   @spec get_instance_state_by_name(Types.instance_state_name()) :: Msdata.SystEnumItems.t() | nil
   defdelegate get_instance_state_by_name(instance_state_name), to: Impl.InstanceState
 
+  ##############################################################################
+  #
+  # get_instance_state_default
+  #
+  #
+
   @doc section: :instance_data
   @doc """
   Returns the Instance State Enumeration record which is configured as being
@@ -908,9 +1191,16 @@ defmodule MscmpSystInstance do
       iex> %Msdata.SystEnumItems{internal_name: "instance_states_sysdef_active"} =
       ...>   MscmpSystInstance.get_instance_state_default(:instance_states_active)
   """
+  @spec get_instance_state_default() :: Msdata.SystEnumItems.t()
   @spec get_instance_state_default(Types.instance_state_functional_types() | nil) ::
           Msdata.SystEnumItems.t()
   defdelegate get_instance_state_default(functional_type \\ nil), to: Impl.InstanceState
+
+  ##############################################################################
+  #
+  # create_instance
+  #
+  #
 
   @doc section: :instance_data
   @doc """
@@ -994,6 +1284,12 @@ defmodule MscmpSystInstance do
           {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
   defdelegate create_instance(instance_params), to: Impl.Instance
 
+  ##############################################################################
+  #
+  # get_instance_datastore_options
+  #
+  #
+
   @doc section: :instance_data
   @doc """
   Retrieves the Datastore Options based on the Instance database record and the
@@ -1011,6 +1307,23 @@ defmodule MscmpSystInstance do
   @spec get_instance_datastore_options(Types.instance_id() | Msdata.SystInstances.t(), map()) ::
           MscmpSystDb.Types.DatastoreOptions.t()
   defdelegate get_instance_datastore_options(instance, startup_options), to: Impl.Instance
+
+  ##############################################################################
+  #
+  # initialize_instance
+  #
+  #
+
+  @initialize_instance_opts NimbleOptions.new!(
+                              Keyword.take(option_defs, [
+                                :initializing_state_id,
+                                :active_state_id,
+                                :failed_state_id,
+                                :initialized_state_id,
+                                :migrating_state_id,
+                                :db_shutdown_timeout
+                              ])
+                            )
 
   @doc section: :instance_data
   @doc """
@@ -1037,31 +1350,36 @@ defmodule MscmpSystInstance do
     obtained from the `MscmpSystOptions` component.
 
     * `opts` - a Keyword List of optional values used during the initialization
-    process.  The available options include:
+    process.  See the "Options" section for more.
 
-      * `initializing_state_id` - the record ID value of the Instance State to
-      use to indicate that the record is being initialized.  If this value is
-      not provided the configured default Instance State for the functional type
-      `instance_states_initializing` will be used.
+  ## Options
 
-      * `initialized_state_id` - the record ID value of the Instance State to
-      use to indicate that the record has successfully been initialized.  If
-      this value is not provided the configured default Instance State for the
-      functional type `instance_states_initialized` will be used.
-
-      * `failed_state_id` - the record ID value of the Instance State to
-      use to indicate that the record has failed to be initialized.  If this
-      value is not provided the default configured Instance State for the
-      functional type `instance_states_failure` will be used.
-
-      * `db_shutdown_timeout` - a timeout value used to limit the time allowed
-      for a clean shutdown of the DBA and Privileged database connections used
-      for initialization of the Datastore.  See the documentation for
-      `MscmpSystDb.create_datastore/2` for more information.
+    #{NimbleOptions.docs(@initialize_instance_opts)}
   """
+  @spec initialize_instance(Types.instance_id(), map()) ::
+          {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
   @spec initialize_instance(Types.instance_id(), map(), Keyword.t()) ::
           {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
-  defdelegate initialize_instance(instance_id, startup_options, opts \\ []), to: Impl.Instance
+  def initialize_instance(instance_id, startup_options, opts \\ []) do
+    case NimbleOptions.validate(opts, @initialize_instance_opts) do
+      {:ok, validated_opts} ->
+        Impl.Instance.initialize_instance(instance_id, startup_options, validated_opts)
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :parameter_error,
+           message: "Option validation error",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # set_instance_state
+  #
+  #
 
   @doc section: :instance_data
   @doc """
@@ -1079,6 +1397,12 @@ defmodule MscmpSystInstance do
           {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
   defdelegate set_instance_state(instance, instance_state_id), to: Impl.Instance
 
+  ##############################################################################
+  #
+  # get_default_instance_state_ids
+  #
+  #
+
   @doc section: :instance_data
   @doc """
   Returns a Keyword List of the default values for each Instance State's
@@ -1090,6 +1414,12 @@ defmodule MscmpSystInstance do
   """
   @spec get_default_instance_state_ids() :: Keyword.t()
   defdelegate get_default_instance_state_ids, to: Impl.Instance
+
+  ##############################################################################
+  #
+  # get_instance_by_name
+  #
+  #
 
   @doc section: :instance_data
   @doc """
@@ -1107,6 +1437,12 @@ defmodule MscmpSystInstance do
   @spec get_instance_by_name(Types.instance_name()) ::
           {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
   defdelegate get_instance_by_name(instance_name), to: Impl.Instance
+
+  ##############################################################################
+  #
+  # get_instance_id_by_name
+  #
+  #
 
   @doc section: :instance_data
   @doc """
@@ -1126,6 +1462,12 @@ defmodule MscmpSystInstance do
   @spec get_instance_id_by_name(Types.instance_name()) ::
           {:ok, Types.instance_id()} | {:error, MscmpSystError.t()}
   defdelegate get_instance_id_by_name(instance_name), to: Impl.Instance
+
+  ##############################################################################
+  #
+  # purge_instance
+  #
+  #
 
   @doc section: :instance_data
   @doc """
@@ -1153,250 +1495,4 @@ defmodule MscmpSystInstance do
   @spec purge_instance(Types.instance_id() | Msdata.SystInstances.t(), map()) ::
           :ok | {:error, MscmpSystError.t()}
   defdelegate purge_instance(instance, startup_options), to: Impl.Instance
-
-  # ==============================================================================================
-  #
-  # Service Management
-  #
-  # ==============================================================================================
-
-  @doc section: :service_management
-  @doc """
-  Starts the MscmpSystInstance services and supervisors.
-
-  In an application context, MscmpSystInstances sets up a supervisory tree and
-  a process registry so that Application and Instance supervisors may be found
-  for later use.  At the top level, an Application Supervisor for each known
-  Application is created and below that are Instance Supervisors for each
-  Instance of the Application.  Finally, child services such as processes for
-  Datastores and other processes and supervisors as appropriate and specific to
-  a given Instance are started under each Instance Supervisor.
-
-  This function allows the client application to link the MscmpSystInstance
-  services to where it wishes within its own supervision tree using the normal
-  `Supervisor` and `DynamicSupervisor` calls for starting children.
-
-  ## Parameters:
-
-    * `opts` - A Keyword List of optional settings which override the
-    established default values.  The available options are:
-
-      * `supervisor_name` - the name of the MscmpSystInstance root Supervisor to
-      which other MscmpSystInstance processes and supervisors are bound.  The
-      default value is `MscmpSystInstance.Supervisor`.
-
-      * `registry_name` - the name of the Registry service used to resolve the
-      supervisors dynamically created by MscmpSystInstance. The default value
-      is `MscmpSystInstance.Registry`.
-
-      * `instance_supervisor_name` - the name of the supervisor to which all
-      individual, dynamically created instance supervisors are children.  The
-      default value is `MscmpSystInstance.InstanceSupervisor`.
-
-      * `task_supervisor_name` - on Instance startup, MscmpSystInstance will
-      process Instance Datastore startup and migration application via
-      concurrently `Task` processes.  This option establishes the name of the
-      supervisor under which these `Task` processes are started.  The default
-      value is `MscmpSystInstance.TaskSupervisor`.
-  """
-  @spec start_link(Keyword.t()) :: Supervisor.on_start_child()
-  defdelegate start_link(opts \\ []), to: Runtime.Services
-
-  @doc section: :service_management
-  @doc """
-  Starts all Applications and each Application's child Instances.
-
-  This function calls the `start_application/3` function for each Application
-  configured in the system.  See the documentation for `start_application/3`
-  for more information about this function and the available parameters.
-  """
-  @spec start_all_applications(map(), Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
-  defdelegate start_all_applications(startup_options, opts \\ []), to: Runtime.Services
-
-  @doc section: :service_management
-  @doc """
-  Starts the requested Application and its child Instances.
-
-  For the requested Application, start a DynamicSupervisor under which to
-  supervise all of the services related to that Application including its child
-  Instances.
-
-  Once the Application supervisor is started any child Instances which are in a
-  start-eligible status are started under the Application supervisor.  The
-  Instance startup process starts each Instance asynchronously and concurrently.
-  The instance startup process will also upgrade each Instance datastore to the
-  current version of the application, if required.  As such, you should be
-  prepared for Application startup to be long running.
-
-  ## Parameters
-
-    * `application` - either the record ID or the
-    `Msdata.SystApplications` struct representing the
-    Application to start.
-
-    * `startup_options` - a map of values containing the Startup Options
-    obtained from the `MscmpSystOptions` component.
-
-    * `opts` - a Keyword List of optional values used during the initialization
-    process.  The available options include:
-
-      * `max_concurrency` - the maximum number of Instances to start
-      concurrently.  This defaults to the greater of 1 or one quarter of the
-      value returned by `System.schedulers_online/0` floored.
-
-      * other available options are passed to `start_instance/3`.  See the
-      documentation for `start_instance/3` for the options it is able to accept.
-
-      * `registry_name` - the name of the Registry service used to resolve the
-      supervisors dynamically created by MscmpSystInstance. The default value
-      is `MscmpSystInstance.Registry`.
-
-      * `instance_supervisor_name` - the name of the supervisor to which all
-      individual, dynamically created instance supervisors are children.  The
-      default value is `MscmpSystInstance.InstanceSupervisor`.
-
-      * `task_supervisor_name` - on Instance startup, MscmpSystInstance will
-      process Instance Datastore startup and migration application via
-      concurrently `Task` processes.  This option establishes the name of the
-      supervisor under which these `Task` processes are started.  The default
-      value is `MscmpSystInstance.TaskSupervisor`.
-  """
-  @spec start_application(
-          Types.application_id() | Msdata.SystApplications.t(),
-          map(),
-          Keyword.t()
-        ) ::
-          :ok | {:error, MscmpSystError.t()}
-  defdelegate start_application(application, startup_options, opts \\ []), to: Runtime.Services
-
-  @doc section: :service_management
-  @doc """
-  Stops all Applications, Application Supervisors, and their child Instances.
-
-  This function will call `stop_application/2` for each Application configured
-  in the system.  For more information about the available options and behaviors
-  of Application shutdown, please see the documentation for
-  `stop_application/2`.
-  """
-  @spec stop_all_applications(Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
-  defdelegate stop_all_applications(opts \\ []), to: Runtime.Services
-
-  @doc section: :service_management
-  @doc """
-  Shuts down the Supervisor process of the requested Application and all of its
-  child processes, including Instances.
-
-  ## Parameters
-
-    * `application` - either the record ID or the
-    `Msdata.SystApplications` struct representing the
-    Application to stop.
-
-    * `opts` - a Keyword List of optional values used during the initialization
-    process.  The available options include:
-
-      * `supervisor_shutdown_timeout` - a timeout value used to allow processes
-      supervised by the Application supervisor to shut down cleanly.  By
-      default, this value is set to 60,000ms.
-
-      * Other options available are defined by and passed to the
-      `stop_instance/2` function for Instance shutdown.  See the
-      `stop_instance/2` for full information of the available options.
-  """
-  @spec stop_application(Types.application_id() | Msdata.SystApplications.t(), Keyword.t()) ::
-          :ok | {:error, MscmpSystError.t()}
-  defdelegate stop_application(application, opts \\ []), to: Runtime.Services
-
-  @doc section: :service_management
-  @doc """
-  Starts an Instance and places it under the appropriate Application's
-  supervisor.
-
-  An Instance is essentially a tenant environment running a specific
-  Application.  Each environment's runtime characteristics are independent of
-  other environments configured to run in the same system.
-
-  To be started the Instance must be in an Instance State of either functional
-  type `instance_states_initialized` or `instance_states_active`.  Trying to
-  start an Instance in other Instance States will result in an error.
-
-  Note that we assume that the Application supervisor is already started and is
-  ready to start child processes.
-
-  ## Parameters
-
-    * `instance` - either the record ID or the
-    `Msdata.SystInstances` struct of the Instance to start.
-
-    * `startup_options` - a map of values containing the Startup Options
-    obtained from the `MscmpSystOptions` component.
-
-    * `opts` - a Keyword List of optional values used during the initialization
-    process.  The available options include:
-
-      * `migrating_state_id` - the record ID of the Instance State to use while
-      the starting Instance is being updated to the most current database
-      definition of the application.  If not provided the currently configured
-      default Instance State for functional type `instance_states_migrating`
-      will be used.
-
-      * `active_state_id` - the record ID of the Instance State to use
-      indicating that the Instance is ready to accept user workloads.  If not
-      provided the currently configured default Instance State for functional
-      type `instance_states_active` will be used.
-
-      * `failure_state_id` - the record ID of the Instance State to use
-      indicating that the Instance startup process has failed and that the
-      Instance is in an inconsistent state.  If not provided the currently
-      configured default Instance State for functional type
-      `instance_states_failure` will be used.
-
-      * `migration_bindings` - this a Keyword List containing values that will
-      be substituted into the migration SQL files used to update a Datastore
-      to the current version of the Application.  Usually, there is no need to
-      provide this option as the most common migration bindings are
-      automatically generated from Instance record data.
-
-      * `registry_name` - the name of the Registry service used to resolve the
-      supervisors dynamically created by MscmpSystInstance. The default value
-      is `MscmpSystInstance.Registry`.
-
-      * `instance_supervisor_name` - the name of the supervisor to which all
-      individual, dynamically created instance supervisors are children.  The
-      default value is `MscmpSystInstance.InstanceSupervisor`.
-  """
-  @spec start_instance(Types.instance_id() | Msdata.SystInstances.t(), map(), Keyword.t()) ::
-          :ok | {:error, MscmpSystError.t()}
-  defdelegate start_instance(instance, startup_options, opts \\ []), to: Runtime.Services
-
-  @doc section: :service_management
-  @doc """
-  Stops an Instance.
-
-  Stopping an Instance shuts down its supervisor and any monitored processes.
-
-  ## Parameters
-
-    * `instance` - either the record ID or the
-    `Msdata.SystInstances` struct of the Instance to stop.
-
-    * `opts` - a Keyword List of optional values used during the initialization
-    process.  The available options include:
-
-      * `supervisor_shutdown_timeout` - a timeout value used to allow processes
-      supervised by the Instance supervisor to shut down cleanly.  By default,
-      this value is set to 60,000ms.
-
-      * `db_shutdown_timeout` - a timeout value used to limit the time allowed
-      for a clean shutdown of the database connections used for operating
-      Datastore.  See the documentation for
-      `MscmpSystDb.stop_datastore/2` for more information.
-
-      * `registry_name` - the name of the Registry service used to resolve the
-      supervisors dynamically created by MscmpSystInstance. The default value
-      is `MscmpSystInstance.Registry`.
-  """
-  @spec stop_instance(Types.instance_id() | Msdata.SystInstances.t(), Keyword.t()) ::
-          :ok | {:error, MscmpSystError.t()}
-  defdelegate stop_instance(instance, opts \\ []), to: Runtime.Services
 end

@@ -23,29 +23,52 @@ defmodule TestSupport do
   #
   ########################
 
+  use MscmpSystDb.Macros
+  use MscmpSystEnums.Macros
+
   alias Mix.Tasks.Builddb
+
+  db_devsupport(:test)
+  enums_devsupport()
 
   @migration_test_source_root_dir "../../../../database"
   @migration_unit_test_ds_type "mscmp_syst_instance_unit_test"
   @migration_integration_test_ds_type "mscmp_syst_instance_integration_test"
   @migration_doc_test_ds_type "mscmp_syst_instance_doc_test"
 
-  def setup_testing_database(test_kind) do
-    datastore_options = MscmpSystDb.get_testsupport_datastore_options()
+  @spec get_datastore_context_name() :: String.t()
+  def get_datastore_context_name, do: @db_support_context_name
+
+  @spec get_enums_service_name() :: atom()
+  def get_enums_service_name, do: @enums_service_name_test
+
+  @spec setup_testing_database(:doc_testing | :integration_testing | :unit_testing, Keyword.t()) ::
+          Supervisor.child_spec()
+  def setup_testing_database(test_kind, opts) do
+    datastore_options = get_datastore_options()
 
     :ok = build_migrations(test_kind)
 
-    {:ok, _} = MscmpSystDb.load_database(datastore_options, get_datastore_type(test_kind))
+    {:ok, _} = load_database(datastore_options, get_datastore_type(test_kind))
 
-    {:ok, _, _} = MscmpSystDb.start_datastore(datastore_options)
+    MscmpSystDb.Datastore.child_spec(datastore_options,
+      context_registry: opts[:context_registry] || MscmpSystInstance.TestRegistry
+    )
   end
 
-  def cleanup_testing_database(test_kind) do
-    datastore_options = MscmpSystDb.get_testsupport_datastore_options()
+  @spec cleanup_testing_database(:doc_testing | :integration_testing | :unit_testing) :: [
+          binary()
+        ]
+  @spec cleanup_testing_database(:doc_testing | :integration_testing | :unit_testing, Keyword.t()) ::
+          [
+            binary()
+          ]
+  def cleanup_testing_database(test_kind, opts \\ []) do
+    datastore_options = TestSupport.get_datastore_options()
 
-    :ok = MscmpSystDb.drop_database(datastore_options)
+    :ok = drop_database(datastore_options, context_registry: opts[:context_registry])
 
-    _ = File.rm_rf!(Path.join(["priv", "database", get_datastore_type(test_kind)]))
+    File.rm_rf!(Path.join(["priv", "database", get_datastore_type(test_kind)]))
   end
 
   defp get_datastore_type(:unit_testing), do: @migration_unit_test_ds_type
