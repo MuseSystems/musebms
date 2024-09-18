@@ -10,6 +10,8 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
+Logger.configure(level: :info)
+
 test_kind =
   cond do
     ExUnit.configuration() |> Keyword.get(:include) |> Enum.member?(:integration) ->
@@ -45,8 +47,7 @@ children =
     name: :"MscmpSystHierarchy.TestSupportSupervisor"
   )
 
-MscmpSystDb.put_datastore_context(datastore_context_name)
-MscmpSystEnums.put_enums_service(TestSupport.get_enums_service_name())
+ExUnit.start()
 
 ExUnit.after_suite(fn _suite_result ->
   TestSupport.cleanup_testing_database(test_kind, context_registry: test_registry)

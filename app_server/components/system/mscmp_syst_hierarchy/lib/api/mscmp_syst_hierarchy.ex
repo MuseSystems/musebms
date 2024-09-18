@@ -20,6 +20,22 @@ defmodule MscmpSystHierarchy do
   alias MscmpSystHierarchy.Impl
   alias MscmpSystHierarchy.Types
 
+  ##############################################################################
+  #
+  # Options Definition
+  #
+  #
+
+  option_defs = [
+    sorted: [
+      type: :boolean,
+      default: true,
+      doc: """
+      When true, the hierarchy types will be returned in sorted order.
+      """
+    ]
+  ]
+
   # ==============================================================================================
   # ==============================================================================================
   #
@@ -27,6 +43,12 @@ defmodule MscmpSystHierarchy do
   #
   # ==============================================================================================
   # ==============================================================================================
+
+  ##############################################################################
+  #
+  # get_hierarchy_type_by_name
+  #
+  #
 
   @doc section: :enumerations_data
   @doc """
@@ -57,6 +79,12 @@ defmodule MscmpSystHierarchy do
   """
   @spec get_hierarchy_type_by_name(Types.hierarchy_type_name()) :: Msdata.SystEnumItems.t() | nil
   defdelegate get_hierarchy_type_by_name(type_name), to: Impl.Hierarchy
+
+  ##############################################################################
+  #
+  # get_hierarchy_type_id_by_name
+  #
+  #
 
   @doc section: :enumerations_data
   @doc """
@@ -92,12 +120,21 @@ defmodule MscmpSystHierarchy do
           Types.hierarchy_type_id() | nil
   defdelegate get_hierarchy_type_id_by_name(type_name), to: Impl.Hierarchy
 
+  ##############################################################################
+  #
+  # list_hierarchy_types
+  #
+  #
+
+  @list_hierarchy_types_opts NimbleOptions.new!(Keyword.take(option_defs, [:sorted]))
+
   @doc section: :enumerations_data
   @doc """
   Lists the available Hierarchy Types, optionally sorted by the predefined sort
   order.
 
   Returns a list of Hierarchy Type records.  Raises an exception on errors.
+  Other than the return behavior, this is the same as `list_hierarchy_types/1`.
 
   ## Parameters
 
@@ -105,7 +142,7 @@ defmodule MscmpSystHierarchy do
 
   ## Options
 
-    #{Impl.Hierarchy.get_list_hierarchy_types_opts_docs()}
+    #{NimbleOptions.docs(@list_hierarchy_types_opts)}
 
   ## Examples
 
@@ -116,8 +153,12 @@ defmodule MscmpSystHierarchy do
       iex> [%Msdata.SystEnumItems{internal_name: "hierarchy_type_example"}] =
       ...>   MscmpSystHierarchy.list_hierarchy_types!()
   """
+  @spec list_hierarchy_types!() :: [Msdata.SystEnumItems.t()]
   @spec list_hierarchy_types!(Keyword.t()) :: [Msdata.SystEnumItems.t()]
-  defdelegate list_hierarchy_types!(opts \\ []), to: Impl.Hierarchy
+  def list_hierarchy_types!(opts \\ []) do
+    opts = NimbleOptions.validate!(opts, @list_hierarchy_types_opts)
+    Impl.Hierarchy.list_hierarchy_types!(opts)
+  end
 
   @doc section: :enumerations_data
   @doc """
@@ -135,7 +176,7 @@ defmodule MscmpSystHierarchy do
 
   ## Options
 
-    #{Impl.Hierarchy.get_list_hierarchy_types_opts_docs()}
+    #{NimbleOptions.docs(@list_hierarchy_types_opts)}
 
   ## Examples
 
@@ -146,9 +187,19 @@ defmodule MscmpSystHierarchy do
       iex> {:ok, [%Msdata.SystEnumItems{internal_name: "hierarchy_type_example"}]} =
       ...>   MscmpSystHierarchy.list_hierarchy_types()
   """
+  @spec list_hierarchy_types() :: {:ok, [Msdata.SystEnumItems.t()]} | {:error, MscmpSystError.t()}
   @spec list_hierarchy_types(Keyword.t()) ::
           {:ok, [Msdata.SystEnumItems.t()]} | {:error, MscmpSystError.t()}
-  defdelegate list_hierarchy_types(opts \\ []), to: Impl.Hierarchy
+  def list_hierarchy_types(opts \\ []) do
+    opts = NimbleOptions.validate!(opts, @list_hierarchy_types_opts)
+    Impl.Hierarchy.list_hierarchy_types(opts)
+  end
+
+  ##############################################################################
+  #
+  # get_hierarchy_state_by_name
+  #
+  #
 
   @doc section: :enumerations_data
   @doc """
@@ -182,6 +233,12 @@ defmodule MscmpSystHierarchy do
           Msdata.SystEnumItems.t() | nil
   defdelegate get_hierarchy_state_by_name(state_name), to: Impl.Hierarchy
 
+  ##############################################################################
+  #
+  # get_hierarchy_state_id_by_name
+  #
+  #
+
   @doc section: :enumerations_data
   @doc """
   Returns the Hierarchy State ID for the given Hierarchy State Internal Name.
@@ -214,6 +271,12 @@ defmodule MscmpSystHierarchy do
           Types.hierarchy_state_id() | nil
   defdelegate get_hierarchy_state_id_by_name(state_name), to: Impl.Hierarchy
 
+  ##############################################################################
+  #
+  # get_hierarchy_state_default
+  #
+  #
+
   @doc section: :enumerations_data
   @doc """
   Returns the default Hierarchy State record.
@@ -242,9 +305,16 @@ defmodule MscmpSystHierarchy do
       iex> %Msdata.SystEnumItems{internal_name: "hierarchy_states_sysdef_active"} =
       ...>   MscmpSystHierarchy.get_hierarchy_state_default(:hierarchy_states_active)
   """
+  @spec get_hierarchy_state_default() :: Msdata.SystEnumItems.t()
   @spec get_hierarchy_state_default(Types.hierarchy_state_functional_types() | nil) ::
           Msdata.SystEnumItems.t()
   defdelegate get_hierarchy_state_default(functional_type \\ nil), to: Impl.Hierarchy
+
+  ##############################################################################
+  #
+  # get_hierarchy_state_default_id
+  #
+  #
 
   @doc section: :enumerations_data
   @doc """
@@ -276,6 +346,7 @@ defmodule MscmpSystHierarchy do
       iex> is_binary(state_id)
       true
   """
+  @spec get_hierarchy_state_default_id() :: Types.hierarchy_state_id()
   @spec get_hierarchy_state_default_id(Types.hierarchy_state_functional_types() | nil) ::
           Types.hierarchy_state_id()
   defdelegate get_hierarchy_state_default_id(functional_type \\ nil), to: Impl.Hierarchy
@@ -288,13 +359,20 @@ defmodule MscmpSystHierarchy do
   # ==============================================================================================
   # ==============================================================================================
 
+  ##############################################################################
+  #
+  # get_hierarchy_id_by_name
+  #
+  #
+
   @doc section: :hierarchy_data
   @doc """
   Returns the record ID of the Hierarchy as identified by its Internal Name,
   raising exceptions on error.
 
   If the Hierarchy is not found or if some other error is encountered an
-  exception is raised.
+  exception is raised.  This is same as `get_hierarchy_id_by_name/1` with the
+  exception of the error handling.
 
   ## Parameters
 
