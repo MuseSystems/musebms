@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule IdentityAccountCodeTest do
+  @moduledoc false
+
   # credo:disable-for-this-file Credo.Check.Design.AliasUsage
   #
   # In the tests we'll be more permissive of failing this check for now.
@@ -25,13 +27,45 @@ defmodule IdentityAccountCodeTest do
   @moduletag :unit
   @moduletag :capture_log
 
+  ##############################################################################
+  #
+  # Test Option Definitions
+  #
+  #
+
+  @test_options [
+    identity_token_length: [
+      type: :pos_integer,
+      default: 12
+    ],
+    identity_tokens: [
+      type: {:or, [{:list, :any}, {:in, [:alphanum, :mixed_alphanum, :b32e, :b32c]}]},
+      default: :b32c
+    ],
+    create_validated: [
+      type: :boolean,
+      default: true
+    ]
+  ]
+
   test "Can create Account Code Identity" do
     {:ok, access_account_id} =
       Impl.AccessAccount.get_access_account_id_by_name("identity_account_code_create_test_accnt")
 
     # Default Options
+
+    opts =
+      @test_options
+      |> Keyword.take([
+        :identity_tokens,
+        :identity_token_length,
+        :create_validated
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([], &1))
+
     assert {:ok, default_identity} =
-             Impl.Identity.AccountCode.create_identity(access_account_id, nil, [])
+             Impl.Identity.AccountCode.create_identity(access_account_id, nil, opts)
 
     assert %Msdata.SystIdentities{validated: val_date, account_identifier: identifier} =
              default_identity
@@ -43,8 +77,19 @@ defmodule IdentityAccountCodeTest do
     :deleted = Impl.Identity.delete_identity(default_identity.id, "identity_types_sysdef_account")
 
     # Specific account_code value
+
+    opts =
+      @test_options
+      |> Keyword.take([
+        :identity_tokens,
+        :identity_token_length,
+        :create_validated
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([], &1))
+
     assert {:ok, specific_token_identity} =
-             Impl.Identity.AccountCode.create_identity(access_account_id, "This Is A Test", [])
+             Impl.Identity.AccountCode.create_identity(access_account_id, "This Is A Test", opts)
 
     assert %Msdata.SystIdentities{} = specific_token_identity
 
@@ -54,10 +99,19 @@ defmodule IdentityAccountCodeTest do
       Impl.Identity.delete_identity(specific_token_identity.id, "identity_types_sysdef_account")
 
     # identity_token_length
+
+    opts =
+      @test_options
+      |> Keyword.take([
+        :identity_tokens,
+        :identity_token_length,
+        :create_validated
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([identity_token_length: 40], &1))
+
     assert {:ok, token_length_identity} =
-             Impl.Identity.AccountCode.create_identity(access_account_id, nil,
-               identity_token_length: 40
-             )
+             Impl.Identity.AccountCode.create_identity(access_account_id, nil, opts)
 
     assert %Msdata.SystIdentities{validated: val_date, account_identifier: identifier} =
              token_length_identity
@@ -70,10 +124,19 @@ defmodule IdentityAccountCodeTest do
       Impl.Identity.delete_identity(token_length_identity.id, "identity_types_sysdef_account")
 
     # identity_tokens
+
+    opts =
+      @test_options
+      |> Keyword.take([
+        :identity_tokens,
+        :identity_token_length,
+        :create_validated
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([identity_tokens: ~c"ABC"], &1))
+
     assert {:ok, tokens_identity} =
-             Impl.Identity.AccountCode.create_identity(access_account_id, nil,
-               identity_tokens: ~c"ABC"
-             )
+             Impl.Identity.AccountCode.create_identity(access_account_id, nil, opts)
 
     assert %Msdata.SystIdentities{validated: val_date, account_identifier: identifier} =
              tokens_identity
@@ -157,30 +220,63 @@ defmodule IdentityAccountCodeTest do
       |> MscmpSystDb.one!()
 
     # Default Options
+
+    opts =
+      @test_options
+      |> Keyword.take([
+        :identity_tokens,
+        :identity_token_length,
+        :create_validated
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([], &1))
+
     assert {:ok, %Msdata.SystIdentities{} = default_identity} =
              Impl.Identity.AccountCode.reset_identity_for_access_account_id(
                target.access_account_id,
-               []
+               opts
              )
 
     assert String.length(default_identity.account_identifier) == 12
     assert target.account_identifier != default_identity.account_identifier
 
     # identity_token_length
+
+    opts =
+      @test_options
+      |> Keyword.take([
+        :identity_tokens,
+        :identity_token_length,
+        :create_validated
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([identity_token_length: 40], &1))
+
     assert {:ok, %Msdata.SystIdentities{} = token_length_identity} =
              Impl.Identity.AccountCode.reset_identity_for_access_account_id(
                target.access_account_id,
-               identity_token_length: 40
+               opts
              )
 
     assert String.length(token_length_identity.account_identifier) == 40
     assert default_identity.account_identifier != token_length_identity.account_identifier
 
     # identity_tokens
+
+    opts =
+      @test_options
+      |> Keyword.take([
+        :identity_tokens,
+        :identity_token_length,
+        :create_validated
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([identity_tokens: ~c"ABC"], &1))
+
     assert {:ok, %Msdata.SystIdentities{} = tokens_identity} =
              Impl.Identity.AccountCode.reset_identity_for_access_account_id(
                target.access_account_id,
-               identity_tokens: ~c"ABC"
+               opts
              )
 
     assert String.length(tokens_identity.account_identifier) == 12

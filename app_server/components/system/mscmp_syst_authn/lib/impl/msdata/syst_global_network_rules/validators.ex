@@ -18,6 +18,12 @@ defmodule MscmpSystAuthn.Impl.Msdata.SystGlobalNetworkRules.Validators do
   alias MscmpSystAuthn.Impl.Msdata.Helpers
   alias MscmpSystAuthn.Types
 
+  ##############################################################################
+  #
+  # insert_changeset
+  #
+  #
+
   @spec insert_changeset(Types.global_network_rule_params()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params) do
     resolved_params = Helpers.resolve_network_rule_params_func_type(insert_params)
@@ -34,6 +40,12 @@ defmodule MscmpSystAuthn.Impl.Msdata.SystGlobalNetworkRules.Validators do
     |> validate_functional_type()
     |> validate_network_addresses()
   end
+
+  ##############################################################################
+  #
+  # update_changeset
+  #
+  #
 
   @spec update_changeset(Msdata.SystGlobalNetworkRules.t(), Types.global_network_rule_params()) ::
           Ecto.Changeset.t()

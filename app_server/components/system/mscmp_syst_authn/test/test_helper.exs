@@ -13,6 +13,8 @@
 #  This testing presumes that the database schema is tested separately and is
 #  for module testing purposes.
 
+Logger.configure(level: :info)
+
 test_kind =
   cond do
     ExUnit.configuration() |> Keyword.get(:include) |> Enum.member?(:integration) ->
@@ -27,14 +29,37 @@ test_kind =
       :unit_testing
   end
 
-TestSupport.setup_testing_database(test_kind)
+test_registry = MscmpSystAuthn.TestRegistry
 
-MscmpSystDb.put_datastore_context(MscmpSystDb.get_testsupport_context_name())
+datastore_context_name =
+  {:via, Registry, {test_registry, TestSupport.get_datastore_context_name()}}
 
-MscmpSystEnums.start_testsupport_services()
+children =
+  [
+    Registry.child_spec(keys: :unique, name: test_registry),
+    TestSupport.setup_testing_database(test_kind, context_registry: test_registry),
+    MscmpSystEnums.child_spec(
+      service_name: TestSupport.get_enums_service_name(),
+      datastore_context_name: datastore_context_name
+    ),
+    {DynamicSupervisor, strategy: :one_for_one, name: MscmpSystAuthn.TestingSupervisor}
+  ]
+
+{:ok, _pid} =
+  Supervisor.start_link(children,
+    strategy: :one_for_one,
+    name: :"MscmpSystAuthn.TestSupportSupervisor"
+  )
+
+instance_service_spec = %{
+  id: TestingInstanceServices,
+  start: {MscmpSystAuthn, :start_link, []}
+}
+
+DynamicSupervisor.start_child(MscmpSystAuthn.TestingSupervisor, instance_service_spec)
 
 ExUnit.start()
 
 ExUnit.after_suite(fn _suite_result ->
-  TestSupport.cleanup_testing_database(test_kind)
+  TestSupport.cleanup_testing_database(test_kind, context_registry: test_registry)
 end)

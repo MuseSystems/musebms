@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule IdentityValidationTest do
+  @moduledoc false
+
   # credo:disable-for-this-file Credo.Check.Design.AliasUsage
   #
   # In the tests we'll be more permissive of failing this check for now.
@@ -26,6 +28,31 @@ defmodule IdentityValidationTest do
 
   @moduletag :unit
   @moduletag :capture_log
+
+  ##############################################################################
+  #
+  # Test Option Definitions
+  #
+  #
+
+  @test_options [
+    identity_token_length: [
+      type: :pos_integer,
+      default: 40
+    ],
+    identity_tokens: [
+      type: {:or, [{:list, :any}, {:in, [:alphanum, :mixed_alphanum, :b32e, :b32c]}]},
+      default: :mixed_alphanum
+    ],
+    expiration_hours: [
+      type: :pos_integer,
+      default: 24
+    ],
+    create_validated: [
+      type: :boolean,
+      default: false
+    ]
+  ]
 
   test "Request Identity Validation by target Identity ID" do
     target_identity =
@@ -63,8 +90,19 @@ defmodule IdentityValidationTest do
       upper: expires_end_time
     }
 
+    opts =
+      @test_options
+      |> Keyword.take([
+        :identity_tokens,
+        :identity_token_length,
+        :expiration_hours,
+        :create_validated
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([], &1))
+
     assert {:ok, validation_identity} =
-             Impl.Identity.Validation.request_identity_validation(target_identity.id, [])
+             Impl.Identity.Validation.request_identity_validation(target_identity.id, opts)
 
     updated_target_identity =
       from(
@@ -113,9 +151,21 @@ defmodule IdentityValidationTest do
       upper: expires_end_time
     }
 
+    opts =
+      @test_options
+      |> Keyword.take([
+        :identity_tokens,
+        :identity_token_length,
+        :expiration_hours,
+        :create_validated
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([expiration_hours: hours_before_expire], &1))
+
     assert {:ok, validation_identity} =
-             Impl.Identity.Validation.request_identity_validation(target_identity.id,
-               expiration_hours: hours_before_expire
+             Impl.Identity.Validation.request_identity_validation(
+               target_identity.id,
+               opts
              )
 
     updated_target_identity =
@@ -165,9 +215,21 @@ defmodule IdentityValidationTest do
 
     token_length_override = :rand.uniform(60) + 10
 
+    opts =
+      @test_options
+      |> Keyword.take([
+        :identity_tokens,
+        :identity_token_length,
+        :expiration_hours,
+        :create_validated
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([identity_token_length: token_length_override], &1))
+
     assert {:ok, validation_identity} =
-             Impl.Identity.Validation.request_identity_validation(target_identity.id,
-               identity_token_length: token_length_override
+             Impl.Identity.Validation.request_identity_validation(
+               target_identity.id,
+               opts
              )
 
     updated_target_identity =
@@ -215,9 +277,21 @@ defmodule IdentityValidationTest do
       upper: expires_end_time
     }
 
+    opts =
+      @test_options
+      |> Keyword.take([
+        :identity_tokens,
+        :identity_token_length,
+        :expiration_hours,
+        :create_validated
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([identity_tokens: ~c"ABC"], &1))
+
     assert {:ok, validation_identity} =
-             Impl.Identity.Validation.request_identity_validation(target_identity.id,
-               identity_tokens: ~c"ABC"
+             Impl.Identity.Validation.request_identity_validation(
+               target_identity.id,
+               opts
              )
 
     updated_target_identity =
@@ -286,8 +360,19 @@ defmodule IdentityValidationTest do
       upper: expires_end_time
     }
 
+    opts =
+      @test_options
+      |> Keyword.take([
+        :identity_tokens,
+        :identity_token_length,
+        :expiration_hours,
+        :create_validated
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([], &1))
+
     assert {:ok, validation_identity} =
-             Impl.Identity.Validation.request_identity_validation(target_identity, [])
+             Impl.Identity.Validation.request_identity_validation(target_identity, opts)
 
     updated_target_identity =
       from(
@@ -334,9 +419,21 @@ defmodule IdentityValidationTest do
       upper: expires_end_time
     }
 
+    opts =
+      @test_options
+      |> Keyword.take([
+        :identity_tokens,
+        :identity_token_length,
+        :expiration_hours,
+        :create_validated
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([expiration_hours: 48], &1))
+
     assert {:ok, validation_identity} =
-             Impl.Identity.Validation.request_identity_validation(updated_target_identity,
-               expiration_hours: 48
+             Impl.Identity.Validation.request_identity_validation(
+               updated_target_identity,
+               opts
              )
 
     updated_target_identity =
@@ -384,9 +481,21 @@ defmodule IdentityValidationTest do
       upper: expires_end_time
     }
 
+    opts =
+      @test_options
+      |> Keyword.take([
+        :identity_tokens,
+        :identity_token_length,
+        :expiration_hours,
+        :create_validated
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([identity_token_length: 20], &1))
+
     assert {:ok, validation_identity} =
-             Impl.Identity.Validation.request_identity_validation(updated_target_identity,
-               identity_token_length: 20
+             Impl.Identity.Validation.request_identity_validation(
+               updated_target_identity,
+               opts
              )
 
     updated_target_identity =
@@ -434,9 +543,21 @@ defmodule IdentityValidationTest do
       upper: expires_end_time
     }
 
+    opts =
+      @test_options
+      |> Keyword.take([
+        :identity_tokens,
+        :identity_token_length,
+        :expiration_hours,
+        :create_validated
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([identity_tokens: ~c"ABC"], &1))
+
     assert {:ok, validation_identity} =
-             Impl.Identity.Validation.request_identity_validation(updated_target_identity,
-               identity_tokens: ~c"ABC"
+             Impl.Identity.Validation.request_identity_validation(
+               updated_target_identity,
+               opts
              )
 
     updated_target_identity =

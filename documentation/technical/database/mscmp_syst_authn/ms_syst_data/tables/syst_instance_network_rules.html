@@ -471,16 +471,16 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>syst_instance_network_rules_host_or_range_chk</td>
-                                    <td>((((ip_host_or_network IS NOT NULL) AND (ip_host_range_lower IS NULL) AND (ip_host_range_upper IS NULL)) OR ((ip_host_or_network IS NULL) AND (ip_host_range_lower IS NOT NULL) AND (ip_host_range_upper IS NOT NULL))))</td>
-                                </tr>
-                                <tr>
                                     <td>syst_instance_network_rules_functional_type_chk</td>
                                     <td>((functional_type &#61; ANY (ARRAY[&#39;allow&#39;::text, &#39;deny&#39;::text])))</td>
                                 </tr>
                                 <tr>
                                     <td>syst_instance_network_rules_ip_range_family_chk</td>
                                     <td>((family(ip_host_range_lower) &#61; family(ip_host_range_upper)))</td>
+                                </tr>
+                                <tr>
+                                    <td>syst_instance_network_rules_host_or_range_chk</td>
+                                    <td>((((ip_host_or_network IS NOT NULL) AND (ip_host_range_lower IS NULL) AND (ip_host_range_upper IS NULL)) OR ((ip_host_or_network IS NULL) AND (ip_host_range_lower IS NOT NULL) AND (ip_host_range_upper IS NOT NULL))))</td>
                                 </tr>
                                 </tbody>
                             </table>

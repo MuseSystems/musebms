@@ -30,22 +30,15 @@ defmodule MscmpSystAuthn.Impl.Identity.Recovery do
   # MscmpSystAuthn.Impl.Identity behaviour here, though we should be
   # true to its spirit when appropriate.
 
-  @default_expiration_hours 24
-  @default_identity_token_length 40
-  @default_identity_tokens :mixed_alphanum
-  @default_create_validated true
+  ##############################################################################
+  #
+  # request_credential_recovery
+  #
+  #
 
   @spec request_credential_recovery(Types.access_account_id(), Keyword.t()) ::
           {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def request_credential_recovery(access_account_id, opts) when is_binary(access_account_id) do
-    opts =
-      MscmpSystUtils.resolve_options(opts,
-        expiration_hours: @default_expiration_hours,
-        identity_token_length: @default_identity_token_length,
-        identity_tokens: @default_identity_tokens,
-        create_validated: @default_create_validated
-      )
-
     access_account_id
     |> access_account_credential_recoverable!()
     |> maybe_create_recovery_identity(access_account_id, opts)
@@ -90,7 +83,7 @@ defmodule MscmpSystAuthn.Impl.Identity.Recovery do
 
   defp create_recovery_identity(access_account_id, opts) do
     generated_account_identifier =
-      MscmpSystUtils.get_random_string(opts[:identity_token_length], opts[:identity_tokens])
+      Msutils.String.get_random_string(opts[:identity_token_length], opts[:identity_tokens])
 
     date_now = DateTime.now!("Etc/UTC")
     date_expires = DateTime.add(date_now, opts[:expiration_hours] * 60 * 60)
@@ -104,6 +97,12 @@ defmodule MscmpSystAuthn.Impl.Identity.Recovery do
 
     Helpers.create_identity(recovery_identity_params, opts)
   end
+
+  ##############################################################################
+  #
+  # access_account_credential_recoverable!
+  #
+  #
 
   @spec access_account_credential_recoverable!(Types.access_account_id()) ::
           :ok | :not_found | :existing_recovery
@@ -146,6 +145,12 @@ defmodule MscmpSystAuthn.Impl.Identity.Recovery do
     end
   end
 
+  ##############################################################################
+  #
+  # identify_access_account
+  #
+  #
+
   @spec identify_access_account(
           Types.account_identifier(),
           MscmpSystInstance.Types.owner_id() | nil
@@ -174,6 +179,12 @@ defmodule MscmpSystAuthn.Impl.Identity.Recovery do
       }
   end
 
+  ##############################################################################
+  #
+  # revoke_credential_recovery
+  #
+  #
+
   @spec revoke_credential_recovery(Msdata.SystIdentities.t()) ::
           :ok | {:error, MscmpSystError.t()}
   def revoke_credential_recovery(recovery_identity) do
@@ -191,6 +202,12 @@ defmodule MscmpSystAuthn.Impl.Identity.Recovery do
         }
       }
   end
+
+  ##############################################################################
+  #
+  # get_recovery_identity_for_access_account_id
+  #
+  #
 
   @spec get_recovery_identity_for_access_account_id(Types.access_account_id()) ::
           {:ok, Msdata.SystIdentities.t() | nil} | {:error, MscmpSystError.t()}

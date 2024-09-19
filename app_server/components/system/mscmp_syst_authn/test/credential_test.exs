@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule CredentialTest do
+  @moduledoc false
+
   use AuthenticationTestCase, async: true
 
   alias MscmpSystAuthn.Impl

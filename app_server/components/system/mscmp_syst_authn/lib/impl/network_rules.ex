@@ -21,6 +21,12 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
 
   require Logger
 
+  ##############################################################################
+  #
+  # host_disallowed
+  #
+  #
+
   @spec host_disallowed(Types.host_address()) ::
           {:ok, boolean()} | {:error, MscmpSystError.t() | Exception.t()}
   def host_disallowed(host_addr) when is_ip(host_addr) do
@@ -45,6 +51,12 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
         cause: error
   end
 
+  ##############################################################################
+  #
+  # create_disallowed_host
+  #
+  #
+
   @spec create_disallowed_host(Types.host_address()) ::
           {:ok, Msdata.SystDisallowedHosts.t()} | {:error, MscmpSystError.t()}
   def create_disallowed_host(host_addr) when is_ip(host_addr) do
@@ -64,6 +76,12 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
          cause: error
        }}
   end
+
+  ##############################################################################
+  #
+  # delete_disallowed_host_addr
+  #
+  #
 
   @spec delete_disallowed_host_addr(Types.host_address()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
@@ -88,6 +106,12 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
         message: "Failure deleting Disallowed Host by host IP address.",
         cause: error
   end
+
+  ##############################################################################
+  #
+  # delete_disallowed_host
+  #
+  #
 
   @spec delete_disallowed_host(Types.disallowed_host_id() | Msdata.SystDisallowedHosts.t()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
@@ -143,6 +167,12 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
     end
   end
 
+  ##############################################################################
+  #
+  # get_disallowed_host_record_by_id
+  #
+  #
+
   @spec get_disallowed_host_record_by_id(Types.disallowed_host_id()) ::
           {:ok, Msdata.SystDisallowedHosts.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def get_disallowed_host_record_by_id(disallowed_host_id) when is_binary(disallowed_host_id) do
@@ -165,6 +195,12 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
         message: "Failure retrieving Disallowed Host by ID.",
         cause: error
   end
+
+  ##############################################################################
+  #
+  # get_disallowed_host_record_by_host
+  #
+  #
 
   @spec get_disallowed_host_record_by_host(Types.host_address()) ::
           {:ok, Msdata.SystDisallowedHosts.t() | nil}
@@ -191,6 +227,12 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
         message: "Failure retrieving Disallowed Host by host IP address.",
         cause: error
   end
+
+  ##############################################################################
+  #
+  # get_applied_network_rule
+  #
+  #
 
   @spec get_applied_network_rule(
           Types.host_address(),
@@ -258,6 +300,12 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
         cause: error
   end
 
+  ##############################################################################
+  #
+  # create_global_network_rule
+  #
+  #
+
   @spec create_global_network_rule(Types.global_network_rule_params()) ::
           {:ok, Msdata.SystGlobalNetworkRules.t()} | {:error, MscmpSystError.t()}
   def create_global_network_rule(insert_params) do
@@ -277,6 +325,12 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
          cause: error
        }}
   end
+
+  ##############################################################################
+  #
+  # create_owner_network_rule
+  #
+  #
 
   @spec create_owner_network_rule(
           MscmpSystInstance.Types.owner_id(),
@@ -302,6 +356,12 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
        }}
   end
 
+  ##############################################################################
+  #
+  # create_instance_network_rule
+  #
+  #
+
   @spec create_instance_network_rule(
           MscmpSystInstance.Types.instance_id(),
           Types.instance_network_rule_params()
@@ -325,6 +385,12 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
          cause: error
        }}
   end
+
+  ##############################################################################
+  #
+  # update_global_network_rule
+  #
+  #
 
   @spec update_global_network_rule(
           Ecto.UUID.t() | Msdata.SystGlobalNetworkRules.t(),
@@ -375,6 +441,12 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
         cause: error
   end
 
+  ##############################################################################
+  #
+  # update_owner_network_rule
+  #
+  #
+
   @spec update_owner_network_rule(
           Ecto.UUID.t() | Msdata.SystOwnerNetworkRules.t(),
           Types.owner_network_rule_params()
@@ -423,6 +495,12 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
         message: "Failure updating Owner Network Rule.",
         cause: error
   end
+
+  ##############################################################################
+  #
+  # update_instance_network_rule
+  #
+  #
 
   @spec update_instance_network_rule(
           Ecto.UUID.t() | Msdata.SystInstanceNetworkRules.t(),
@@ -474,6 +552,12 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
         cause: error
   end
 
+  ##############################################################################
+  #
+  # get_global_network_rule
+  #
+  #
+
   @spec get_global_network_rule(Ecto.UUID.t()) ::
           {:ok, Msdata.SystGlobalNetworkRules.t()}
           | {:ok, :not_found}
@@ -501,6 +585,12 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
         cause: error
   end
 
+  ##############################################################################
+  #
+  # get_owner_network_rule
+  #
+  #
+
   @spec get_owner_network_rule(Ecto.UUID.t()) ::
           {:ok, Msdata.SystOwnerNetworkRules.t()}
           | {:ok, :not_found}
@@ -527,6 +617,12 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
         message: "Failure retrieving Owner Network Rule.",
         cause: error
   end
+
+  ##############################################################################
+  #
+  # get_instance_network_rule
+  #
+  #
 
   @spec get_instance_network_rule(Ecto.UUID.t()) ::
           {:ok, Msdata.SystInstanceNetworkRules.t()}
@@ -556,6 +652,12 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
         cause: error
   end
 
+  ##############################################################################
+  #
+  # delete_global_network_rule
+  #
+  #
+
   @spec delete_global_network_rule(Ecto.UUID.t()) ::
           :ok | {:error, MscmpSystError.t() | Exception.t()}
   def delete_global_network_rule(global_network_rule_id) do
@@ -581,6 +683,12 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
         cause: error
   end
 
+  ##############################################################################
+  #
+  # delete_owner_network_rule
+  #
+  #
+
   @spec delete_owner_network_rule(Ecto.UUID.t()) ::
           :ok | {:error, MscmpSystError.t() | Exception.t()}
   def delete_owner_network_rule(owner_network_rule_id) do
@@ -604,6 +712,12 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
         message: "Failure deleting Owner Network Rule by record ID.",
         cause: error
   end
+
+  ##############################################################################
+  #
+  # delete_instance_network_rule
+  #
+  #
 
   @spec delete_instance_network_rule(Ecto.UUID.t()) ::
           :ok | {:error, MscmpSystError.t() | Exception.t()}

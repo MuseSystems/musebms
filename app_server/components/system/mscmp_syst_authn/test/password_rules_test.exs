@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule PasswordRulesTest do
+  @moduledoc false
+
   use AuthenticationTestCase, async: false
 
   import Ecto.Query
@@ -22,13 +24,36 @@ defmodule PasswordRulesTest do
   @moduletag :unit
   @moduletag :capture_log
 
+  ##############################################################################
+  #
+  # Test Option Definitions
+  #
+  #
+
+  @test_options [
+    pg_format: [
+      type: {:in, [:bytea, :plain_text]},
+      default: :plain_text
+    ],
+    timeout: [
+      type: :non_neg_integer,
+      default: 300_000
+    ]
+  ]
+
   test "Can load PostgreSQL formatted Disallowed Password List" do
     test_password = "load_test_password_" <> Integer.to_string(:rand.uniform(100))
+
+    opts =
+      @test_options
+      |> Keyword.take([:pg_format, :timeout])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([pg_format: :bytea], &1))
 
     assert :ok =
              Path.join(["database", "test_pg_disallowed_passwords.txt"])
              |> File.stream!()
-             |> Impl.PasswordRules.load_disallowed_passwords(pg_format: true)
+             |> Impl.PasswordRules.load_disallowed_passwords(opts)
 
     assert Impl.PasswordRules.password_disallowed?(test_password) == true
   end
@@ -36,11 +61,17 @@ defmodule PasswordRulesTest do
   test "Can load plain Disallowed Password List" do
     test_password = "plain_load_test_password_" <> Integer.to_string(:rand.uniform(100))
 
+    opts =
+      @test_options
+      |> Keyword.take([:pg_format, :timeout])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([], &1))
+
     assert :ok =
              Path.join(["database", "test_plain_disallowed_passwords.txt"])
              |> File.stream!()
              |> Stream.map(&String.trim_trailing(&1, "\n"))
-             |> Impl.PasswordRules.load_disallowed_passwords(pg_format: false)
+             |> Impl.PasswordRules.load_disallowed_passwords(opts)
 
     assert Impl.PasswordRules.password_disallowed?(test_password) == true
   end

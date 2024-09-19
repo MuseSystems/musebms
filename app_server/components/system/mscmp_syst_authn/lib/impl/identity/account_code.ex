@@ -22,24 +22,19 @@ defmodule MscmpSystAuthn.Impl.Identity.AccountCode do
 
   require Logger
 
-  @default_identity_token_length 12
-  @default_identity_tokens :b32c
-  @default_create_validated true
+  ##############################################################################
+  #
+  # create_identity
+  #
+  #
 
   @spec create_identity(Types.access_account_id(), Types.account_identifier() | nil, Keyword.t()) ::
           {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def create_identity(access_account_id, account_code, opts)
       when is_binary(access_account_id) do
-    opts =
-      MscmpSystUtils.resolve_options(opts,
-        identity_token_length: @default_identity_token_length,
-        identity_tokens: @default_identity_tokens,
-        create_validated: @default_create_validated
-      )
-
     account_code =
       account_code ||
-        MscmpSystUtils.get_random_string(opts[:identity_token_length], opts[:identity_tokens])
+        Msutils.String.get_random_string(opts[:identity_token_length], opts[:identity_tokens])
 
     identity_params = %{
       access_account_id: access_account_id,
@@ -59,6 +54,12 @@ defmodule MscmpSystAuthn.Impl.Identity.AccountCode do
          cause: error
        }}
   end
+
+  ##############################################################################
+  #
+  # identify_access_account
+  #
+  #
 
   @spec identify_access_account(
           Types.account_identifier(),
@@ -125,6 +126,12 @@ defmodule MscmpSystAuthn.Impl.Identity.AccountCode do
       message: "Unexpected Account Code Identity deletion result.",
       cause: delete_result
   end
+
+  ##############################################################################
+  #
+  # get_account_code_by_access_account_id
+  #
+  #
 
   @spec get_account_code_by_access_account_id(Types.access_account_id()) ::
           {:ok, Msdata.SystIdentities.t() | :not_found} | {:error, MscmpSystError.t()}

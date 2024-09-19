@@ -15,7 +15,11 @@ defmodule MscmpSystAuthn.Impl.Credential do
 
   alias MscmpSystAuthn.Types
 
-  # Setup callbacks for Credential type specific calls
+  ##############################################################################
+  #
+  # Credential Behaviour Callbacks
+  #
+  #
 
   @callback set_credential(
               Types.access_account_id(),
@@ -55,12 +59,22 @@ defmodule MscmpSystAuthn.Impl.Credential do
 
   @callback delete_credential!(Types.credential_id() | Msdata.SystCredentials.t()) :: :ok
 
-  # General Credential functionality
+  ##############################################################################
+  #
+  # get_credential_type_by_name
+  #
+  #
 
   @spec get_credential_type_by_name(Types.credential_type_name()) ::
           Msdata.SystEnumItems.t() | nil
   def get_credential_type_by_name(credential_type_name) when is_binary(credential_type_name),
     do: MscmpSystEnums.get_enum_item_by_name("credential_types", credential_type_name)
+
+  ##############################################################################
+  #
+  # get_credential_type_default
+  #
+  #
 
   @spec get_credential_type_default(Types.credential_type_functional_types() | nil) ::
           Msdata.SystEnumItems.t()

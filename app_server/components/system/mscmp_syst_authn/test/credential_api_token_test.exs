@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule CredentialApiTokenTest do
+  @moduledoc false
+
   # credo:disable-for-this-file Credo.Check.Design.AliasUsage
   #
   # In the tests we'll be more permissive of failing this check for now.
@@ -24,6 +26,23 @@ defmodule CredentialApiTokenTest do
 
   @moduletag :unit
   @moduletag :capture_log
+
+  ##############################################################################
+  #
+  # Test Option Definitions
+  #
+  #
+
+  @test_options [
+    credential_token_length: [
+      type: :pos_integer,
+      default: 40
+    ],
+    credential_tokens: [
+      type: {:or, [{:list, :any}, {:in, [:alphanum, :mixed_alphanum, :b32e, :b32c]}]},
+      default: :mixed_alphanum
+    ]
+  ]
 
   test "Can Confirm API Token Credential" do
     test_account = get_account_data("owned_all_access")
@@ -39,7 +58,7 @@ defmodule CredentialApiTokenTest do
              Impl.Credential.ApiToken.confirm_credential(
                test_account.access_account_id,
                test_account.identity_id,
-               MscmpSystUtils.get_random_string(48)
+               Msutils.String.get_random_string(48)
              )
 
     assert {:ok, {:no_credential, []}} =
@@ -60,7 +79,7 @@ defmodule CredentialApiTokenTest do
              Impl.Credential.ApiToken.confirm_credential!(
                test_account.access_account_id,
                test_account.identity_id,
-               MscmpSystUtils.get_random_string(48)
+               Msutils.String.get_random_string(48)
              )
 
     assert {:no_credential, []} =
@@ -73,50 +92,84 @@ defmodule CredentialApiTokenTest do
 
   test "Can insert an API Token Credential record" do
     # Default
+
     test_account = get_account_data("credential_api_token_create1_test_accnt")
+
+    default_opts =
+      @test_options
+      |> Keyword.take([
+        :credential_token_length,
+        :credential_tokens
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([], &1))
 
     assert {:ok, returned_credential} =
              Impl.Credential.ApiToken.set_credential(
                test_account.access_account_id,
-               test_account.identity_id
+               test_account.identity_id,
+               nil,
+               default_opts
              )
 
     assert String.length(returned_credential) == 40
 
     # Specified Token
+
     test_account = get_account_data("credential_api_token_create2_test_accnt")
 
-    specified_token = MscmpSystUtils.get_random_string(40)
+    specified_token = Msutils.String.get_random_string(40)
 
     assert {:ok, ^specified_token} =
              Impl.Credential.ApiToken.set_credential(
                test_account.access_account_id,
                test_account.identity_id,
-               specified_token
+               specified_token,
+               default_opts
              )
 
     # credential_token_length
+
     test_account = get_account_data("credential_api_token_create3_test_accnt")
+
+    opts =
+      @test_options
+      |> Keyword.take([
+        :credential_token_length,
+        :credential_tokens
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([credential_token_length: 20], &1))
 
     assert {:ok, returned_credential} =
              Impl.Credential.ApiToken.set_credential(
                test_account.access_account_id,
                test_account.identity_id,
                nil,
-               credential_token_length: 20
+               opts
              )
 
     assert String.length(returned_credential) == 20
 
     # credential_tokens
+
     test_account = get_account_data("credential_api_token_create4_test_accnt")
+
+    opts =
+      @test_options
+      |> Keyword.take([
+        :credential_token_length,
+        :credential_tokens
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([credential_tokens: ~c"XYZ"], &1))
 
     assert {:ok, returned_credential} =
              Impl.Credential.ApiToken.set_credential(
                test_account.access_account_id,
                test_account.identity_id,
                nil,
-               credential_tokens: ~c"XYZ"
+               opts
              )
 
     assert String.length(returned_credential) == 40
@@ -130,7 +183,9 @@ defmodule CredentialApiTokenTest do
     assert {:error, _} =
              Impl.Credential.ApiToken.set_credential(
                test_account.access_account_id,
-               test_account.identity_id
+               test_account.identity_id,
+               nil,
+               []
              )
   end
 

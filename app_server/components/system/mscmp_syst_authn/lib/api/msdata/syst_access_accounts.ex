@@ -23,8 +23,12 @@ defmodule Msdata.SystAccessAccounts do
 
   use MscmpSystDb.Schema
 
+  import Msutils.Data, only: [common_validator_options: 1]
+
   alias MscmpSystAuthn.Impl.Msdata.SystAccessAccounts.Validators
   alias MscmpSystAuthn.Types
+
+  require Msutils.Data
 
   @type t() ::
           %__MODULE__{
@@ -83,14 +87,79 @@ defmodule Msdata.SystAccessAccounts do
     has_many(:password_history, Msdata.SystPasswordHistory, foreign_key: :access_account_id)
   end
 
-  @spec insert_changeset(Types.access_account_params(), Keyword.t()) :: Ecto.Changeset.t()
-  defdelegate insert_changeset(insert_params, opts \\ []), to: Validators
+  ##############################################################################
+  #
+  # insert_changeset
+  #
+  #
 
+  @insert_changeset_opts common_validator_options([
+                           :internal_name,
+                           :display_name
+                         ])
+
+  @doc """
+  Produces a changeset for inserting a new Access Account.
+
+  ## Parameters
+
+    * `insert_params` - The parameters to be used to create the new Access Account.
+
+    * `opts` - A keyword list of options which can customize the changeset
+      creation process.
+
+  ## Options
+
+    #{NimbleOptions.docs(@insert_changeset_opts)}
+  """
+  @spec insert_changeset(Types.access_account_params()) :: Ecto.Changeset.t()
+  @spec insert_changeset(Types.access_account_params(), Keyword.t()) :: Ecto.Changeset.t()
+  def insert_changeset(insert_params, opts \\ []) do
+    opts = NimbleOptions.validate!(opts, @insert_changeset_opts)
+    Validators.insert_changeset(insert_params, opts)
+  end
+
+  ##############################################################################
+  #
+  # update_changeset
+  #
+  #
+
+  @update_changeset_opts common_validator_options([
+                           :internal_name,
+                           :external_name
+                         ])
+
+  @doc """
+  Produces a changeset for inserting a new Access Account.
+
+  ## Parameters
+
+    * `access_account` - The Access Account to be updated.
+
+    * `update_params` - The parameters to be used to update the Access Account.
+
+    * `opts` - A keyword list of options which can customize the changeset
+      update process.
+
+  ## Options
+
+    #{NimbleOptions.docs(@update_changeset_opts)}
+  """
+
+  @spec update_changeset(
+          Msdata.SystAccessAccounts.t(),
+          Types.access_account_params()
+        ) ::
+          Ecto.Changeset.t()
   @spec update_changeset(
           Msdata.SystAccessAccounts.t(),
           Types.access_account_params(),
           Keyword.t()
         ) ::
           Ecto.Changeset.t()
-  defdelegate update_changeset(access_account, update_params, opts \\ []), to: Validators
+  def update_changeset(access_account, update_params, opts \\ []) do
+    opts = NimbleOptions.validate!(opts, @update_changeset_opts)
+    Validators.update_changeset(access_account, update_params, opts)
+  end
 end

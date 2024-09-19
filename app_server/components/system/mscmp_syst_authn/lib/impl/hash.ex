@@ -21,15 +21,36 @@ defmodule MscmpSystAuthn.Impl.Hash do
   # Windows; so for Windows builds we may need to use a different algorithm
   # here.
 
+  ##############################################################################
+  #
+  # create_credential_hash
+  #
+  #
+
+  @spec create_credential_hash(String.t()) :: term()
+  @spec create_credential_hash(String.t(), Keyword.t()) :: term()
   def create_credential_hash(credential_plaintext, opts \\ []) do
     Argon2.hash_pwd_salt(credential_plaintext, opts)
   end
 
+  ##############################################################################
+  #
+  # verify_credential_hash
+  #
+  #
+
+  @spec verify_credential_hash(term(), String.t()) :: boolean()
   def verify_credential_hash(nil, _credential_plaintext), do: false
 
   def verify_credential_hash(credential_data, credential_plaintext) do
     Argon2.verify_pass(credential_plaintext, credential_data)
   end
+
+  ##############################################################################
+  #
+  # fake_credential_hash_verify
+  #
+  #
 
   # The function below attempts to eliminate certain timing attacks which could
   # otherwise see cases where we didn't run an actual verification of a
@@ -41,10 +62,19 @@ defmodule MscmpSystAuthn.Impl.Hash do
   # or processes may not have run possibly revealing timing discrepancies that
   # could be interpreted by an attacker.
 
+  @spec fake_credential_hash_verify() :: false
+  @spec fake_credential_hash_verify(Keyword.t()) :: false
   def fake_credential_hash_verify(opts \\ []) do
     Argon2.no_user_verify(opts)
   end
 
+  ##############################################################################
+  #
+  # weak_hash
+  #
+  #
+
+  @spec weak_hash(String.t()) :: binary()
   def weak_hash(plaintext) do
     :crypto.hash(:sha, plaintext)
   end

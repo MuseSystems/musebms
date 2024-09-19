@@ -18,6 +18,12 @@ defmodule MscmpSystAuthn.Impl.Msdata.SystInstanceNetworkRules.Validators do
   alias MscmpSystAuthn.Impl.Msdata.Helpers
   alias MscmpSystAuthn.Types
 
+  ##############################################################################
+  #
+  # insert_changeset
+  #
+  #
+
   @spec insert_changeset(Types.instance_network_rule_params()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params) do
     resolved_params =
@@ -38,6 +44,12 @@ defmodule MscmpSystAuthn.Impl.Msdata.SystInstanceNetworkRules.Validators do
     |> validate_functional_type()
     |> validate_network_addresses()
   end
+
+  ##############################################################################
+  #
+  # update_changeset
+  #
+  #
 
   @spec update_changeset(
           Msdata.SystInstanceNetworkRules.t(),

@@ -20,7 +20,11 @@ defmodule MscmpSystAuthn.Impl.Identity do
 
   require Logger
 
-  # Setup callbacks for Identity type specific calls
+  ##############################################################################
+  #
+  # Identity Behaviour Callbacks
+  #
+  #
 
   @callback create_identity(Types.access_account_id(), Types.account_identifier(), Keyword.t()) ::
               {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
@@ -30,11 +34,21 @@ defmodule MscmpSystAuthn.Impl.Identity do
               MscmpSystInstance.Types.owner_id() | nil
             ) :: Msdata.SystIdentities.t() | nil
 
-  # General Identity functionality
+  ##############################################################################
+  #
+  # get_identity_type_by_name
+  #
+  #
 
   @spec get_identity_type_by_name(Types.identity_type_name()) :: Msdata.SystEnumItems.t() | nil
   def get_identity_type_by_name(identity_type_name) when is_binary(identity_type_name),
     do: MscmpSystEnums.get_enum_item_by_name("identity_types", identity_type_name)
+
+  ##############################################################################
+  #
+  # get_identity_type_default
+  #
+  #
 
   @spec get_identity_type_default(Types.identity_type_functional_types() | nil) ::
           Msdata.SystEnumItems.t()
@@ -45,6 +59,12 @@ defmodule MscmpSystAuthn.Impl.Identity do
       functional_type_name: Atom.to_string(functional_type)
     )
   end
+
+  ##############################################################################
+  #
+  # set_identity_expiration
+  #
+  #
 
   @spec set_identity_expiration(Types.identity_id() | Msdata.SystIdentities.t(), DateTime.t()) ::
           {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t()}
@@ -83,6 +103,12 @@ defmodule MscmpSystAuthn.Impl.Identity do
       }
   end
 
+  ##############################################################################
+  #
+  # clear_identity_expiration
+  #
+  #
+
   @spec clear_identity_expiration(Types.identity_id() | Msdata.SystIdentities.t()) ::
           {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t()}
 
@@ -119,6 +145,12 @@ defmodule MscmpSystAuthn.Impl.Identity do
         }
       }
   end
+
+  ##############################################################################
+  #
+  # identity_expired?
+  #
+  #
 
   @spec identity_expired?(Types.identity_id() | Msdata.SystIdentities.t()) ::
           {:ok, boolean()} | {:error, MscmpSystError.t()}
@@ -164,6 +196,12 @@ defmodule MscmpSystAuthn.Impl.Identity do
       }
   end
 
+  ##############################################################################
+  #
+  # identity_validated?
+  #
+  #
+
   @spec identity_validated?(Types.identity_id() | Msdata.SystIdentities.t()) ::
           {:ok, boolean()} | {:error, MscmpSystError.t()}
   def identity_validated?(identity) when is_binary(identity) do
@@ -192,6 +230,12 @@ defmodule MscmpSystAuthn.Impl.Identity do
       do: {:ok, true}
 
   def identity_validated?(%Msdata.SystIdentities{}), do: {:ok, false}
+
+  ##############################################################################
+  #
+  # delete_identity
+  #
+  #
 
   @spec delete_identity(
           Types.identity_id() | Msdata.SystIdentities.t(),
@@ -222,6 +266,12 @@ defmodule MscmpSystAuthn.Impl.Identity do
 
   def delete_identity(%Msdata.SystIdentities{} = identity, identity_type_name),
     do: delete_identity(identity.id, identity_type_name)
+
+  ##############################################################################
+  #
+  # get_identity_record
+  #
+  #
 
   @spec get_identity_record(Types.identity_id()) :: Msdata.SystIdentities.t()
   def get_identity_record(identity_id) when is_binary(identity_id) do

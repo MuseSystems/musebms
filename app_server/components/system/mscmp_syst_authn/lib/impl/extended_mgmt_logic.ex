@@ -25,6 +25,12 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
   #
   # ============================================================================
 
+  ##############################################################################
+  #
+  # create_authenticator_email_password
+  #
+  #
+
   @spec create_authenticator_email_password(
           Types.access_account_id(),
           Types.account_identifier(),
@@ -34,13 +40,11 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
           {:ok, AuthenticatorResult.t()}
           | {:error, MscmpSystError.t() | Exception.t()}
   def create_authenticator_email_password(access_account_id, email_addr, plaintext_pwd, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, create_validated: false, credential_token: nil)
-
     authenticator_func = fn ->
       with {:ok, email_identity} <-
              Impl.Identity.Email.create_identity(access_account_id, email_addr, opts),
            :ok <-
-             Impl.Credential.Password.set_credential(access_account_id, plaintext_pwd, opts),
+             Impl.Credential.Password.set_credential(access_account_id, plaintext_pwd, []),
            {:ok, validator_result} <-
              maybe_create_email_validator(opts[:create_validated], email_identity, opts) do
         %AuthenticatorResult{
@@ -92,6 +96,12 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
   # Validation Token Management
   #
   # ============================================================================
+
+  ##############################################################################
+  #
+  # request_identity_validation
+  #
+  #
 
   @spec request_identity_validation(Types.identity_id() | Msdata.SystIdentities.t(), Keyword.t()) ::
           {:ok, AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
@@ -175,6 +185,12 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
   # defined in `Impl.Identity.Validation` into a more appropriate public API
   # composite function.
 
+  ##############################################################################
+  #
+  # revoke_validator_for_identity_id
+  #
+  #
+
   @spec revoke_validator_for_identity_id(Types.identity_id()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
   def revoke_validator_for_identity_id(target_identity_id) do
@@ -212,6 +228,12 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
   # Recovery Token Management
   #
   # ============================================================================
+
+  ##############################################################################
+  #
+  # request_password_recovery
+  #
+  #
 
   @spec request_password_recovery(Types.access_account_id(), Keyword.t()) ::
           {:ok, AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
@@ -254,6 +276,12 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
        }}
   end
 
+  ##############################################################################
+  #
+  # revoke_password_recovery
+  #
+  #
+
   @spec revoke_password_recovery(Types.access_account_id()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
   def revoke_password_recovery(access_account_id) when is_binary(access_account_id) do
@@ -291,11 +319,15 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
   #
   # ============================================================================
 
+  ##############################################################################
+  #
+  # create_authenticator_api_token
+  #
+  #
+
   @spec create_authenticator_api_token(Types.access_account_id(), Keyword.t()) ::
           {:ok, AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def create_authenticator_api_token(access_account_id, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, identity_token: nil, credential_token: nil)
-
     authenticator_func = fn ->
       with {:ok, identity} <-
              Impl.Identity.ApiToken.create_identity(
@@ -338,6 +370,12 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
        }}
   end
 
+  ##############################################################################
+  #
+  # update_api_token_external_name
+  #
+  #
+
   @spec update_api_token_external_name(
           Types.identity_id() | Msdata.SystIdentities.t(),
           String.t() | nil
@@ -356,6 +394,12 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
          cause: error
        }}
   end
+
+  ##############################################################################
+  #
+  # revoke_api_token
+  #
+  #
 
   @spec revoke_api_token(Types.identity_id() | Msdata.SystIdentities.t()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
@@ -380,6 +424,12 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
   # Account Code Management
   #
   # ============================================================================
+
+  ##############################################################################
+  #
+  # create_or_reset_account_code
+  #
+  #
 
   @spec create_or_reset_account_code(Types.access_account_id(), Keyword.t()) ::
           {:ok, AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
@@ -415,6 +465,12 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
        cause: error
      }}
   end
+
+  ##############################################################################
+  #
+  # revoke_account_code
+  #
+  #
 
   @spec revoke_account_code(Types.access_account_id()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}

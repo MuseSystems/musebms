@@ -20,15 +20,16 @@ defmodule MscmpSystAuthn.Impl.Identity.Validation do
 
   require Logger
 
-  @default_expiration_hours 24
-  @default_identity_token_length 40
-  @default_identity_tokens :mixed_alphanum
-  @default_create_validated true
-
   # Validation identities are sufficiently different from other kinds of
   # identities that we shouldn't implement the
   # MscmpSystAuthn.Impl.Identity behaviour here, though we should be
   # true to its spirit when appropriate.
+
+  ##############################################################################
+  #
+  # request_identity_validation
+  #
+  #
 
   @spec request_identity_validation(Types.identity_id() | Msdata.SystIdentities.t(), Keyword.t()) ::
           {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
@@ -51,14 +52,6 @@ defmodule MscmpSystAuthn.Impl.Identity.Validation do
   end
 
   def request_identity_validation(%Msdata.SystIdentities{} = target_identity, opts) do
-    opts =
-      MscmpSystUtils.resolve_options(opts,
-        expiration_hours: @default_expiration_hours,
-        identity_token_length: @default_identity_token_length,
-        identity_tokens: @default_identity_tokens,
-        create_validated: @default_create_validated
-      )
-
     MscmpSystDb.transaction(fn ->
       target_identity
       |> reset_validation_target_identity(opts)
@@ -92,7 +85,7 @@ defmodule MscmpSystAuthn.Impl.Identity.Validation do
 
   defp create_validation_identity(target_identity, opts) do
     generated_account_identifier =
-      MscmpSystUtils.get_random_string(opts[:identity_token_length], opts[:identity_tokens])
+      Msutils.String.get_random_string(opts[:identity_token_length], opts[:identity_tokens])
 
     date_now = DateTime.now!("Etc/UTC")
     date_expires = DateTime.add(date_now, opts[:expiration_hours] * 60 * 60)
@@ -108,6 +101,12 @@ defmodule MscmpSystAuthn.Impl.Identity.Validation do
     Helpers.create_identity(validation_identity_params, opts)
   end
 
+  ##############################################################################
+  #
+  # identify_access_account
+  #
+  #
+
   @spec identify_access_account(
           Types.account_identifier(),
           MscmpSystInstance.Types.owner_id() | nil
@@ -117,6 +116,12 @@ defmodule MscmpSystAuthn.Impl.Identity.Validation do
     |> Helpers.get_identification_query("identity_types_sysdef_validation", owner_id)
     |> MscmpSystDb.one()
   end
+
+  ##############################################################################
+  #
+  # confirm_identity_validation
+  #
+  #
 
   @spec confirm_identity_validation(Msdata.SystIdentities.t()) ::
           {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t()}
@@ -150,6 +155,12 @@ defmodule MscmpSystAuthn.Impl.Identity.Validation do
         }
       }
   end
+
+  ##############################################################################
+  #
+  # revoke_identity_validation
+  #
+  #
 
   @spec revoke_identity_validation(Msdata.SystIdentities.t()) ::
           {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t()}
@@ -213,6 +224,12 @@ defmodule MscmpSystAuthn.Impl.Identity.Validation do
   end
 
   defp verify_not_validated(target_identity), do: target_identity
+
+  ##############################################################################
+  #
+  # get_validation_identity_for_identity_id
+  #
+  #
 
   @spec get_validation_identity_for_identity_id(Types.identity_id()) ::
           {:ok, Msdata.SystIdentities.t() | nil} | {:error, MscmpSystError.t()}

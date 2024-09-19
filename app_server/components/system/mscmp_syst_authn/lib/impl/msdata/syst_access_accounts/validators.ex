@@ -15,14 +15,17 @@ defmodule MscmpSystAuthn.Impl.Msdata.SystAccessAccounts.Validators do
 
   import Ecto.Changeset
 
-  alias MscmpSystAuthn.Impl.Msdata.GeneralValidators
   alias MscmpSystAuthn.Impl.Msdata.Helpers
   alias MscmpSystAuthn.Types
 
+  ##############################################################################
+  #
+  # insert_changeset
+  #
+  #
+
   @spec insert_changeset(Types.access_account_params(), Keyword.t()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, Helpers.option_defaults())
-
     resolved_insert_params = resolve_name_params(insert_params, :insert)
 
     %Msdata.SystAccessAccounts{}
@@ -36,6 +39,12 @@ defmodule MscmpSystAuthn.Impl.Msdata.SystAccessAccounts.Validators do
     |> validate_common(opts)
   end
 
+  ##############################################################################
+  #
+  # update_changeset
+  #
+  #
+
   @spec update_changeset(
           Msdata.SystAccessAccounts.t(),
           Types.access_account_params(),
@@ -43,8 +52,6 @@ defmodule MscmpSystAuthn.Impl.Msdata.SystAccessAccounts.Validators do
         ) ::
           Ecto.Changeset.t()
   def update_changeset(access_account, update_params, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, Helpers.option_defaults())
-
     resolved_update_params = resolve_name_params(update_params, :update)
 
     access_account
@@ -60,7 +67,8 @@ defmodule MscmpSystAuthn.Impl.Msdata.SystAccessAccounts.Validators do
 
   defp validate_common(changeset, opts) do
     changeset
-    |> GeneralValidators.validate_internal_name(opts)
+    |> Msutils.Data.validate_internal_name(opts)
+    |> Msutils.Data.validate_external_name(opts)
     |> validate_required([
       :internal_name,
       :external_name,

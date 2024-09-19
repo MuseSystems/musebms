@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule AccessAccountInstanceAssocTest do
+  @moduledoc false
+
   use AuthenticationTestCase, async: true
 
   import Ecto.Query

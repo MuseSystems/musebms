@@ -18,6 +18,12 @@ defmodule MscmpSystAuthn.Impl.Msdata.SystIdentities.Validators do
   alias MscmpSystAuthn.Impl.Msdata.Helpers
   alias MscmpSystAuthn.Types
 
+  ##############################################################################
+  #
+  # insert_changeset
+  #
+  #
+
   @spec insert_changeset(Types.identity_params()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params) do
     resolved_insert_params = resolve_name_params(insert_params, :insert)
@@ -35,6 +41,12 @@ defmodule MscmpSystAuthn.Impl.Msdata.SystIdentities.Validators do
     ])
     |> validate_common()
   end
+
+  ##############################################################################
+  #
+  # update_changeset
+  #
+  #
 
   @spec update_changeset(Msdata.SystIdentities.t(), Types.identity_params()) :: Ecto.Changeset.t()
   def update_changeset(identity, update_params) do

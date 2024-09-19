@@ -21,6 +21,205 @@ defmodule MscmpSystAuthn do
   alias MscmpSystAuthn.Types
   alias MscmpSystNetwork.Types, as: NetTypes
 
+  ##############################################################################
+  #
+  # Options Definition
+  #
+  #
+
+  # Note that the defaults expressed in these general option statements should
+  # reflect the most secure value possible, not necessarily the most common
+  # option selected.  For example, `:create_validated` is more commonly
+  # defaulted to `true`, but in contexts where it should be `false` failing to
+  # override the general default would lead to a security vulnerability.
+
+  option_defs = [
+    access_account_id: [
+      type: :string,
+      doc: """
+      References a specific Access Account record to use by its record ID.
+      """
+    ],
+    access_account_name: [
+      type: :string,
+      doc: """
+      References a specific Access Account record to use by its Internal Name
+      value.
+      """
+    ],
+    create_accepted: [
+      type: :boolean,
+      default: false,
+      doc: "Whether to create the association as already accepted"
+    ],
+    expiration_days: [
+      type: :integer,
+      default: 30,
+      doc: "Number of days until the invitation expires"
+    ],
+    pg_format: [
+      type: {:in, [:bytea, :plain_text]},
+      default: :plain_text,
+      doc: """
+      Indicates the format of the disallowed password text.  `:bytea` is the
+      PostgreSQL textual representation of its `bytea` data type and
+      `:plain_text` is just what it sounds like.
+      """
+    ],
+    timeout: [
+      type: :non_neg_integer,
+      default: 300_000,
+      doc: """
+      The timeout (in milliseconds) of the database disallowed password load.
+      If the disallowed password load takes longer than this value, the load is
+      aborted and an error is raised.
+      """
+    ],
+    create_validated: [
+      type: :boolean,
+      default: false,
+      doc: """
+      Specifies whether or not to create a Identity record as being considered
+      validated, thereby bypassing any interactive validation process.
+      """
+    ],
+    credential_token: [
+      type: :string,
+      doc: """
+      Specifies a specific token value to use as a validation credential.
+      If this value is `nil`, which is typically the case, a token will be
+      randomly generated.  Therefore this option should be seen as an override
+      to standard behavior.
+      """
+    ],
+    credential_token_length: [
+      type: :pos_integer,
+      default: 40,
+      doc: """
+      Specifies the length of the token to generate when dealing with generated
+      credentials such as validation credentials.
+      """
+    ],
+    credential_tokens: [
+      type: {:or, [{:list, :any}, {:in, [:alphanum, :mixed_alphanum, :b32e, :b32c]}]},
+      type_doc: "t:Msutils.String.Types.tokens/0",
+      type_spec: quote(do: Msutils.String.Types.tokens()),
+      default: :mixed_alphanum,
+      doc: """
+      Specifies a pre-defined token set or a custom set of tokens for use in
+      generating credentials, such as validation credentials.  A custom token
+      set must be expressed as an Erlang charlist.
+      """
+    ],
+    identity_token: [
+      type: :string,
+      doc: """
+      Specifies a specific token value to use as an Identity in cases where an
+      identity is located by a token value. If this value is `nil`, which is
+      typically the case, a token will be randomly generated.  Therefore this
+      option should be seen as an override to standard behavior.
+      """
+    ],
+    identity_token_length: [
+      type: :pos_integer,
+      default: 40,
+      doc: """
+      Specifies the length of the token to generate when dealing with generated
+      identities such as validation identity.
+      """
+    ],
+    identity_tokens: [
+      type: {:or, [{:list, :any}, {:in, [:alphanum, :mixed_alphanum, :b32e, :b32c]}]},
+      type_doc: "t:Msutils.String.Types.tokens/0",
+      type_spec: quote(do: Msutils.String.Types.tokens()),
+      default: :mixed_alphanum,
+      doc: """
+      Specifies the pre-defined token set or a set of tokens to use for
+      generated identities, such as validation identities.  A token set must
+      be expressed as an erlang charlist.
+      """
+    ],
+    expiration_hours: [
+      type: :pos_integer,
+      default: 24,
+      doc: """
+      Specifies the number of hours that the recovery or validation identity
+      should be considered valid.
+      """
+    ],
+    account_code: [
+      type: :string,
+      doc: """
+      this option overrides the randomly generated Account Code with the value
+      of this option.  By default the system randomly generates the Account
+      Code.
+      """
+    ],
+    external_name: [
+      type: :string,
+      doc: """
+      API Token Identities permit Access Account holder naming of the Identity
+      as it may be common for an one Access Account to require multiple API
+      Token Authenticators for different purposes.  This option allows that name
+      to be set at Identity creation time.
+      """
+    ],
+    owning_owner_id: [
+      type: {:or, [:string, nil]},
+      doc: """
+      if the Access Account is an Owned Access Account, this value must be set
+      to the record ID of the Access Account's Owner. Otherwise it must be set
+      `nil` or not provided.
+      """
+    ],
+    instance_id: [
+      type: {:or, [:string, {:in, [:bypass]}, nil]},
+      doc: """
+      the record ID of the Application Instance to which the Access Account
+      holder wishes to authenticate.  A final value for instance_id is not
+      required when the Email/Password authentication process is initiated but
+      is required for it to complete.  If this value is not initially provided,
+      the function will be `interrupted` returning an Authentication State
+      status value of `:pending`.  Deferral may be appropriate if, for example,
+      we want to allow the Access Account holder to select the specific Instance
+      they wish to access from a list of their permitted Instances.  Final
+      resolution of the value must reference an Instance for which the Access
+      Account permitted authentication attempts or must be set `:bypass` if the
+      authentication attempt is a special case where a specific Instance is not
+      relevant.
+      """
+    ],
+    deadline_minutes: [
+      type: :non_neg_integer,
+      default: 5,
+      doc: """
+      overrides the default number of minutes that an authentication process can
+      take before being rejected for taking too long.  This deadline is needed
+      because an arbitrary time can pass due to user interaction, such as
+      selecting an Instance or providing an MFA credential.
+      """
+    ],
+    identifier_rate_limit: [
+      type: {:tuple, [:pos_integer, :pos_integer]},
+      default: {5, 60_000 * 30},
+      doc: """
+      The number of allowed attempts within a given time period to authenticate
+      using any single identifier.  The tuple is of the form: {<attempts>,
+      <milliseconds>}.
+      """
+    ],
+    host_ban_rate_limit: [
+      type: {:tuple, [:pos_integer, :pos_integer]},
+      default: {30, 60_000 * 60 * 2},
+      doc: """
+      The number of consecutive failed attempts made from a single host
+      permitted during the given time period before that host is added to the
+      "banned hosts" list.  The tuple is of the form:
+      {<attempts>, <milliseconds>}
+      """
+    ]
+  ]
+
   # ==============================================================================================
   # ==============================================================================================
   #
@@ -28,6 +227,12 @@ defmodule MscmpSystAuthn do
   #
   # ==============================================================================================
   # ==============================================================================================
+
+  ##############################################################################
+  #
+  # get_identity_type_by_name
+  #
+  #
 
   @doc section: :enumerations_data
   @doc """
@@ -56,6 +261,12 @@ defmodule MscmpSystAuthn do
   @spec get_identity_type_by_name(Types.identity_type_name()) :: Msdata.SystEnumItems.t() | nil
   defdelegate get_identity_type_by_name(identity_type_name), to: Impl.Identity
 
+  ##############################################################################
+  #
+  # get_identity_type_default
+  #
+  #
+
   @doc section: :enumerations_data
   @doc """
   Returns the Identity Type Enumeration record which is configured as being
@@ -83,9 +294,16 @@ defmodule MscmpSystAuthn do
       iex> %Msdata.SystEnumItems{internal_name: "identity_types_sysdef_api"} =
       ...>   MscmpSystAuthn.get_identity_type_default(:identity_types_api)
   """
+  @spec get_identity_type_default() :: Msdata.SystEnumItems.t()
   @spec get_identity_type_default(Types.identity_type_functional_types() | nil) ::
           Msdata.SystEnumItems.t()
   defdelegate get_identity_type_default(functional_type \\ nil), to: Impl.Identity
+
+  ##############################################################################
+  #
+  # get_credential_type_by_name
+  #
+  #
 
   @doc section: :enumerations_data
   @doc """
@@ -115,6 +333,12 @@ defmodule MscmpSystAuthn do
           Msdata.SystEnumItems.t() | nil
   defdelegate get_credential_type_by_name(credential_type_name), to: Impl.Credential
 
+  ##############################################################################
+  #
+  # get_credential_type_default
+  #
+  #
+
   @doc section: :enumerations_data
   @doc """
   Returns the Credential Type Enumeration record which is configured as being
@@ -142,6 +366,7 @@ defmodule MscmpSystAuthn do
       iex> %Msdata.SystEnumItems{internal_name: "credential_types_sysdef_mfa_totp"} =
       ...>   MscmpSystAuthn.get_credential_type_default(:credential_types_mfa_totp)
   """
+  @spec get_credential_type_default() :: Msdata.SystEnumItems.t()
   @spec get_credential_type_default(Types.credential_type_functional_types() | nil) ::
           Msdata.SystEnumItems.t()
   defdelegate get_credential_type_default(functional_type \\ nil), to: Impl.Credential
@@ -153,6 +378,12 @@ defmodule MscmpSystAuthn do
   #
   # ==============================================================================================
   # ==============================================================================================
+
+  ##############################################################################
+  #
+  # get_access_account_state_by_name
+  #
+  #
 
   @doc section: :access_account_data
   @doc """
@@ -183,6 +414,12 @@ defmodule MscmpSystAuthn do
           Msdata.SystEnumItems.t() | nil
   defdelegate get_access_account_state_by_name(access_account_state_name), to: Impl.AccessAccount
 
+  ##############################################################################
+  #
+  # get_access_account_state_default
+  #
+  #
+
   @doc section: :access_account_data
   @doc """
   Returns the Access Account State Enumeration record which is configured as
@@ -211,9 +448,16 @@ defmodule MscmpSystAuthn do
       iex> %Msdata.SystEnumItems{internal_name: "access_account_states_sysdef_inactive"} =
       ...>   MscmpSystAuthn.get_access_account_state_default(:access_account_states_inactive)
   """
+  @spec get_access_account_state_default() :: Msdata.SystEnumItems.t()
   @spec get_access_account_state_default(Types.access_account_state_functional_types() | nil) ::
           Msdata.SystEnumItems.t()
   defdelegate get_access_account_state_default(functional_type \\ nil), to: Impl.AccessAccount
+
+  ##############################################################################
+  #
+  # create_access_account
+  #
+  #
 
   @doc section: :access_account_data
   @doc """
@@ -244,6 +488,12 @@ defmodule MscmpSystAuthn do
           {:ok, Msdata.SystAccessAccounts.t()} | {:error, MscmpSystError.t()}
   defdelegate create_access_account(access_account_params), to: Impl.AccessAccount
 
+  ##############################################################################
+  #
+  # get_access_account_id_by_name
+  #
+  #
+
   @doc section: :access_account_data
   @doc """
   Looks up an Access Account record ID by its internal name.
@@ -264,6 +514,12 @@ defmodule MscmpSystAuthn do
   @spec get_access_account_id_by_name(Types.access_account_name()) ::
           {:ok, Types.access_account_id()} | {:error, MscmpSystError.t()}
   defdelegate get_access_account_id_by_name(access_account_name), to: Impl.AccessAccount
+
+  ##############################################################################
+  #
+  # get_access_account_by_name
+  #
+  #
 
   @doc section: :access_account_data
   @doc """
@@ -290,6 +546,12 @@ defmodule MscmpSystAuthn do
   @spec get_access_account_by_name(Types.access_account_name()) ::
           Msdata.SystAccessAccounts.t() | {:error, MscmpSystError.t()}
   defdelegate get_access_account_by_name(access_account_name), to: Impl.AccessAccount
+
+  ##############################################################################
+  #
+  # update_access_account
+  #
+  #
 
   @doc section: :access_account_data
   @doc """
@@ -325,6 +587,12 @@ defmodule MscmpSystAuthn do
           {:ok, Msdata.SystAccessAccounts.t()} | {:error, MscmpSystError.t()}
   defdelegate update_access_account(access_account, access_account_params), to: Impl.AccessAccount
 
+  ##############################################################################
+  #
+  # purge_access_account
+  #
+  #
+
   @doc section: :access_account_data
   @doc """
   Purges the requested Access Account if the Access Account State is of
@@ -347,50 +615,98 @@ defmodule MscmpSystAuthn do
           :ok | {:error, MscmpSystError.t()}
   defdelegate purge_access_account(access_account), to: Impl.AccessAccount
 
+  ##############################################################################
+  #
+  # access_accounts_exist?
+  #
+  #
+
   @doc section: :access_account_data
   @doc """
-  Tests to see if a specific Access Account, or any Access Account, record
-  exists in the database.
-
-  The functions provides an optional test on either an Access Account record's
-  Internal Name or record ID value.  If no selectivity option is made, the test
-  checks if any Access Account records exist in the database at all.
+  Tests to see if any Access Accounts exist in the database.
 
   If an appropriate Access Account record is found, the function returns true,
   otherwise false.  Any other condition is considered an error and will
   result in an error tuple being returned indicating the cause of the error.
 
-  ## Parameters
-
-    * `opts` - an optional Keyword List of optional parameters which can
-    influence the result of calling the function.  The available options are:
-
-      * `access_account_id` - tests if a specific Access Account record exists
-      as referenced by its record ID value.
-
-      * `access_account_name` - tests if a specific Access Account record exists
-      as referenced by its Internal Name.
 
   ## Examples
 
   Check if any Access Account record exists.
 
-      iex> MscmpSystAuthn.access_account_exists?()
+      iex> MscmpSystAuthn.access_accounts_exist?()
       true
 
-  Check if a specific Access Account record exists.
+  """
+  @spec access_accounts_exist?() :: boolean() | {:error, MscmpSystError.t()}
+  defdelegate access_accounts_exist?(), to: Impl.AccessAccount
 
-      iex> MscmpSystAuthn.access_account_exists?(access_account_name: "example_accnt")
+  ##############################################################################
+  #
+  # access_account_name_exists?
+  #
+  #
+
+  @doc section: :access_account_data
+  @doc """
+  Tests to see if a named Access Account exists in the database.
+
+  If an appropriate Access Account record is found, the function returns true,
+  otherwise false.  Any other condition is considered an error and will
+  result in an error tuple being returned indicating the cause of the error.
+
+
+  ## Examples
+
+  Check if a specific named Access Account record exists.
+
+      iex> MscmpSystAuthn.access_account_name_exists?("example_accnt")
       true
 
-  If a non-existent Access Account is requested, the function indicates the record was
-  not found.
+  If a non-existent Access Account is requested, the function indicates the
+  record was not found by returning false
 
-      iex> MscmpSystAuthn.access_account_exists?(access_account_name: "nonexistent_access_account")
+      iex> MscmpSystAuthn.access_account_name_exists?("nonexistent_access_account")
       false
   """
-  @spec access_account_exists?(Keyword.t()) :: boolean() | {:error, MscmpSystError.t()}
-  defdelegate access_account_exists?(opts \\ []), to: Impl.AccessAccount
+  @spec access_account_name_exists?(Types.access_account_name()) ::
+          boolean() | {:error, MscmpSystError.t()}
+  defdelegate access_account_name_exists?(access_account_name), to: Impl.AccessAccount
+
+  ##############################################################################
+  #
+  # access_account_id_exists?
+  #
+  #
+
+  @doc section: :access_account_data
+  @doc """
+  Tests to see if an Access Account with the given record ID exists in the
+  database.
+
+  If an appropriate Access Account record is found, the function returns true,
+  otherwise false.  Any other condition is considered an error and will
+  result in an error tuple being returned indicating the cause of the error.
+
+
+  ## Examples
+
+  Check if a specific Access Account record exists for the given ID.
+
+      iex> {:ok, access_account_id} =
+      ...>   MscmpSystAuthn.get_access_account_id_by_name("example_accnt")
+      iex> MscmpSystAuthn.access_account_id_exists?(access_account_id)
+      true
+
+  If a non-existent Access Account is requested, the function indicates the
+  record was not found by returning false
+
+      iex> MscmpSystAuthn.access_account_id_exists?("00000000-0000-0000-0000-000000000000")
+      false
+  """
+  @spec access_account_id_exists?(Types.access_account_name()) ::
+          boolean() | {:error, MscmpSystError.t()}
+  defdelegate access_account_id_exists?(access_account_name), to: Impl.AccessAccount
 
   # ==============================================================================================
   # ==============================================================================================
@@ -399,6 +715,16 @@ defmodule MscmpSystAuthn do
   #
   # ==============================================================================================
   # ==============================================================================================
+
+  ##############################################################################
+  #
+  # invite_to_instance
+  #
+  #
+
+  @invite_to_instance_opts NimbleOptions.new!(
+                             Keyword.take(option_defs, [:create_accepted, :expiration_days])
+                           )
 
   @doc section: :access_account_instance_assoc_data
   @doc """
@@ -427,25 +753,49 @@ defmodule MscmpSystAuthn do
     being invited.
 
     * `opts` - a keyword list of optional parameters used to set record values
-    and behaviors.  Available options are:
+    and behaviors.
 
-      * `create_accepted` - will create a `syst_access_account_instance_assocs`
-      record which is already accepted when set `true`.  The default value is
-      `false`.
+  ## Options
 
-      * `expiration_days` - for records that are not created as accepted and act
-      as true invitations, this option sets the number of days in which an
-      Access Account holder may accept the invitation.  After this time the
-      invitation is considered expired and must be re-invited before it can be
-      used to grant access again.  The default value for this option is 30 days.
+    #{NimbleOptions.docs(@invite_to_instance_opts)}
   """
+  @spec invite_to_instance(
+          Types.access_account_id(),
+          MscmpSystInstance.Types.instance_id()
+        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   @spec invite_to_instance(
           Types.access_account_id(),
           MscmpSystInstance.Types.instance_id(),
           Keyword.t()
         ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
-  defdelegate invite_to_instance(access_account_id, instance_id, opts \\ []),
-    to: Impl.AccessAccountInstanceAssoc
+  def invite_to_instance(
+        access_account_id,
+        instance_id,
+        opts \\ []
+      ) do
+    case NimbleOptions.validate(opts, @invite_to_instance_opts) do
+      {:ok, validated_opts} ->
+        Impl.AccessAccountInstanceAssoc.invite_to_instance(
+          access_account_id,
+          instance_id,
+          validated_opts
+        )
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :parameter_error,
+           message: "Option validation error",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # accept_instance_invite
+  #
+  #
 
   @doc section: :access_account_instance_assoc_data
   @doc """
@@ -498,6 +848,12 @@ defmodule MscmpSystAuthn do
   defdelegate accept_instance_invite(access_account_id, instance_id),
     to: Impl.AccessAccountInstanceAssoc
 
+  ##############################################################################
+  #
+  # decline_instance_invite
+  #
+  #
+
   @doc section: :access_account_instance_assoc_data
   @doc """
   Declines an unaccepted/unexpired invitation made to an Access Account to
@@ -549,6 +905,12 @@ defmodule MscmpSystAuthn do
         ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   defdelegate decline_instance_invite(access_account_id, instance_id),
     to: Impl.AccessAccountInstanceAssoc
+
+  ##############################################################################
+  #
+  # revoke_instance_access
+  #
+  #
 
   @doc section: :access_account_instance_assoc_data
   @doc """
@@ -611,6 +973,16 @@ defmodule MscmpSystAuthn do
   # ==============================================================================================
   # ==============================================================================================
 
+  ##############################################################################
+  #
+  # load_disallowed_passwords
+  #
+  #
+
+  @load_disallowed_passwords_opts NimbleOptions.new!(
+                                    Keyword.take(option_defs, [:pg_format, :timeout])
+                                  )
+
   @doc section: :password_rule_data
   @doc """
   Bulk loads a list of passwords into the Disallowed Passwords database table.
@@ -643,25 +1015,12 @@ defmodule MscmpSystAuthn do
     > function.  Failing to do so will result in incorrect hashing and the
     > requested passwords will not be effectively disallowed.
 
-    * `options` - An optional Keyword List of settings with which the caller can
-    influence the behavior of this function.  The available options are:
+    * `opts` - An optional Keyword List of settings with which the caller can
+    influence the behavior of this function.
 
-      * `pg_format` - a boolean value which indicates the format that the source
-      passwords are being provided in.  If true, the passwords to disallow are
-      expected to be already be SHA-1 hashed and represented using PostgreSQL's
-      `bytea` textual representation; if false, the passwords are assumed to be
-      represented using simple plain text which will be transformed as needed by
-      this function.  The default value of this parameter is `false` for plain
-      text processing.
+  ## Options
 
-      * `timeout` - an integer representing the number of milliseconds that the
-      database transaction processing the load operation will wait prior to
-      timing out with an error.  Bulk loading is assumed to be used in cases
-      where a substantial amount of data might be processed; certainly enough
-      data to possibly exceed the system default database transaction timeout.
-      As such it is recommend to be sure the timeout here is fit for the data
-      requirements expected for any given call.  The default value is 300,000
-      milliseconds (5 minutes).
+      #{NimbleOptions.docs(@load_disallowed_passwords_opts)}
 
   ## Examples
 
@@ -685,14 +1044,34 @@ defmodule MscmpSystAuthn do
       false
       iex> Path.join(["database", "example_pg_disallowed_passwords.txt"])
       ...>   |> File.stream!()
-      ...>   |> MscmpSystAuthn.load_disallowed_passwords(pg_format: true)
+      ...>   |> MscmpSystAuthn.load_disallowed_passwords(pg_format: :bytea)
       :ok
       iex> MscmpSystAuthn.password_disallowed?("example_pg_disallowed")
       true
   """
+  @spec load_disallowed_passwords(Enumerable.t()) :: :ok | {:error, MscmpSystError.t()}
   @spec load_disallowed_passwords(Enumerable.t(), Keyword.t()) ::
           :ok | {:error, MscmpSystError.t()}
-  defdelegate load_disallowed_passwords(password_list, opts \\ []), to: Impl.PasswordRules
+  def load_disallowed_passwords(password_list, opts \\ []) do
+    case NimbleOptions.validate(opts, @load_disallowed_passwords_opts) do
+      {:ok, validated_opts} ->
+        Impl.PasswordRules.load_disallowed_passwords(password_list, validated_opts)
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :undefined_error,
+           message: "Options validation error",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # disallowed_passwords_populated?
+  #
+  #
 
   @doc section: :password_rule_data
   @doc """
@@ -708,6 +1087,12 @@ defmodule MscmpSystAuthn do
   """
   @spec disallowed_passwords_populated?() :: boolean()
   defdelegate disallowed_passwords_populated?(), to: Impl.PasswordRules
+
+  ##############################################################################
+  #
+  # create_disallowed_password
+  #
+  #
 
   @doc section: :password_rule_data
   @doc """
@@ -743,6 +1128,12 @@ defmodule MscmpSystAuthn do
   """
   @spec create_disallowed_password(Types.credential()) :: :ok | {:error, MscmpSystError.t()}
   defdelegate create_disallowed_password(password), to: Impl.PasswordRules
+
+  ##############################################################################
+  #
+  # password_disallowed
+  #
+  #
 
   @doc section: :password_rule_data
   @doc """
@@ -805,6 +1196,12 @@ defmodule MscmpSystAuthn do
   @spec password_disallowed?(Types.credential()) :: boolean()
   defdelegate password_disallowed?(password), to: Impl.PasswordRules
 
+  ##############################################################################
+  #
+  # delete_disallowed_password
+  #
+  #
+
   @doc section: :password_rule_data
   @doc """
   Removes a password from the disallowed passwords list.
@@ -835,6 +1232,12 @@ defmodule MscmpSystAuthn do
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
   defdelegate delete_disallowed_password(password), to: Impl.PasswordRules
 
+  ##############################################################################
+  #
+  # create_owner_password_rules
+  #
+  #
+
   @doc section: :password_rule_data
   @doc """
   Creates Owner Password Rules for the requested Owner.
@@ -863,6 +1266,12 @@ defmodule MscmpSystAuthn do
           {:ok, Msdata.SystOwnerPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate create_owner_password_rules(owner_id, insert_params), to: Impl.PasswordRules
 
+  ##############################################################################
+  #
+  # update_global_password_rules
+  #
+  #
+
   @doc section: :password_rule_data
   @doc """
   Updates the Global Password Rules with new values.
@@ -885,6 +1294,12 @@ defmodule MscmpSystAuthn do
   @spec update_global_password_rules(Types.password_rule_params()) ::
           {:ok, Msdata.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate update_global_password_rules(update_params), to: Impl.PasswordRules
+
+  ##############################################################################
+  #
+  # update_global_password_rules
+  #
+  #
 
   @doc section: :password_rule_data
   @doc """
@@ -915,6 +1330,12 @@ defmodule MscmpSystAuthn do
   defdelegate update_global_password_rules(global_password_rules, update_params),
     to: Impl.PasswordRules
 
+  ##############################################################################
+  #
+  # update_owner_password_rules
+  #
+  #
+
   @doc section: :password_rule_data
   @doc """
   Updates the Owner Password Rules with new values.
@@ -941,6 +1362,12 @@ defmodule MscmpSystAuthn do
           {:ok, Msdata.SystOwnerPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate update_owner_password_rules(owner, update_params), to: Impl.PasswordRules
 
+  ##############################################################################
+  #
+  # get_global_password_rules
+  #
+  #
+
   @doc section: :password_rule_data
   @doc """
   Retrieves the currently active Global Password Rules.
@@ -953,6 +1380,12 @@ defmodule MscmpSystAuthn do
           {:ok, Msdata.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t()}
   defdelegate get_global_password_rules, to: Impl.PasswordRules
 
+  ##############################################################################
+  #
+  # get_global_password_rules
+  #
+  #
+
   @doc section: :password_rule_data
   @doc """
   Retrieves the currently active Global Password Rules, raising on error.
@@ -963,13 +1396,19 @@ defmodule MscmpSystAuthn do
   @spec get_global_password_rules!() :: Msdata.SystGlobalPasswordRules.t()
   defdelegate get_global_password_rules!, to: Impl.PasswordRules
 
+  ##############################################################################
+  #
+  # get_owner_password_rules
+  #
+  #
+
   @doc section: :password_rule_data
   @doc """
   Retrieves the currently active Owner Password Rules for the requested Owner.
 
   On successful retrieval a success tuple in the form of `{:ok, <record>}` is
   returned where `<record>` is a populated
-  `Msdata.SystownerPasswordRules` struct if Password Rules
+  `Msdata.SystOwnerPasswordRules` struct if Password Rules
   for the requested Owner was found or `nil` otherwise.  Any exceptions are
   returned via an error tuple.
 
@@ -999,6 +1438,12 @@ defmodule MscmpSystAuthn do
           Msdata.SystOwnerPasswordRules.t() | :not_found
   defdelegate get_owner_password_rules!(owner_id), to: Impl.PasswordRules
 
+  ##############################################################################
+  #
+  # get_generic_password_rules
+  #
+  #
+
   @doc section: :password_rule_data
   @doc """
   Converts a Global or Owner Password Rule struct into the generic map based
@@ -1013,11 +1458,21 @@ defmodule MscmpSystAuthn do
   that certain evaluation features such as `test_credential/2` are expecting.
   """
   @spec get_generic_password_rules(
+          Msdata.SystGlobalPasswordRules.t()
+          | Msdata.SystOwnerPasswordRules.t()
+        ) :: Types.PasswordRules.t() | nil
+  @spec get_generic_password_rules(
           Msdata.SystGlobalPasswordRules.t() | Msdata.SystOwnerPasswordRules.t(),
           Types.access_account_id() | nil
         ) :: Types.PasswordRules.t() | nil
   defdelegate get_generic_password_rules(pwd_rules_struct, access_account_id \\ nil),
     to: Impl.PasswordRules
+
+  ##############################################################################
+  #
+  # get_access_account_password_rule
+  #
+  #
 
   @doc section: :password_rule_data
   @doc """
@@ -1059,6 +1514,12 @@ defmodule MscmpSystAuthn do
   @spec get_access_account_password_rule!(Types.access_account_id()) :: Types.PasswordRules.t()
   defdelegate get_access_account_password_rule!(access_account_id), to: Impl.PasswordRules
 
+  ##############################################################################
+  #
+  # verify_password_rules
+  #
+  #
+
   @doc section: :password_rule_data
   @doc """
   Compares a "Test" set of Password Rules against a "Standard" set of Password
@@ -1090,6 +1551,9 @@ defmodule MscmpSystAuthn do
     or a populated `Msdata.SystGlobalPasswordRules` data
     struct may be provided.
   """
+  @spec verify_password_rules(Types.PasswordRules.t()) ::
+          {:ok, Keyword.t(Types.password_rule_violations())}
+          | {:error, MscmpSystError.t() | Exception.t()}
   @spec verify_password_rules(
           Types.PasswordRules.t(),
           Msdata.SystGlobalPasswordRules.t() | Types.PasswordRules.t() | nil
@@ -1120,6 +1584,8 @@ defmodule MscmpSystAuthn do
     or a populated `Msdata.SystGlobalPasswordRules` data
     struct may be provided.
   """
+  @spec verify_password_rules!(Types.PasswordRules.t()) ::
+          Keyword.t(Types.password_rule_violations())
   @spec verify_password_rules!(
           Types.PasswordRules.t(),
           Msdata.SystGlobalPasswordRules.t() | Types.PasswordRules.t() | nil
@@ -1127,6 +1593,12 @@ defmodule MscmpSystAuthn do
           Keyword.t(Types.password_rule_violations())
   defdelegate verify_password_rules!(test_rules, standard_rules \\ nil),
     to: Impl.PasswordRules
+
+  ##############################################################################
+  #
+  # delete_owner_password_rules
+  #
+  #
 
   @doc section: :password_rule_data
   @doc """
@@ -1139,6 +1611,12 @@ defmodule MscmpSystAuthn do
   @spec delete_owner_password_rules(MscmpSystInstance.Types.owner_id()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate delete_owner_password_rules(owner_id), to: Impl.PasswordRules
+
+  ##############################################################################
+  #
+  # test_credential
+  #
+  #
 
   @doc section: :password_rule_data
   @doc """
@@ -1194,6 +1672,12 @@ defmodule MscmpSystAuthn do
   #
   # ==============================================================================================
   # ==============================================================================================
+
+  ##############################################################################
+  #
+  # host_disallowed
+  #
+  #
 
   @doc section: :network_rule_data
   @doc """
@@ -1258,6 +1742,12 @@ defmodule MscmpSystAuthn do
   @spec host_disallowed?(Types.host_address()) :: boolean()
   defdelegate host_disallowed?(host_address), to: Impl.NetworkRules
 
+  ##############################################################################
+  #
+  # create_disallowed_host
+  #
+  #
+
   @doc section: :network_rule_data
   @doc """
   Adds a host IP address to the global disallowed hosts list.
@@ -1295,6 +1785,12 @@ defmodule MscmpSystAuthn do
   @spec create_disallowed_host(Types.host_address()) ::
           {:ok, Msdata.SystDisallowedHosts.t()} | {:error, MscmpSystError.t()}
   defdelegate create_disallowed_host(host_address), to: Impl.NetworkRules
+
+  ##############################################################################
+  #
+  # get_disallowed_host_record_by_host
+  #
+  #
 
   @doc section: :network_rule_data
   @doc """
@@ -1354,6 +1850,12 @@ defmodule MscmpSystAuthn do
           Msdata.SystDisallowedHosts.t() | nil
   defdelegate get_disallowed_host_record_by_host!(host_addr), to: Impl.NetworkRules
 
+  ##############################################################################
+  #
+  # delete_disallowed_host_addr
+  #
+  #
+
   @doc section: :network_rule_data
   @doc """
   Deletes a host IP address from the Disallowed Hosts list as looked up by the
@@ -1392,6 +1894,12 @@ defmodule MscmpSystAuthn do
   @spec delete_disallowed_host_addr(Types.host_address()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
   defdelegate delete_disallowed_host_addr(host_addr), to: Impl.NetworkRules
+
+  ##############################################################################
+  #
+  # get_disallowed_host_record_by_id
+  #
+  #
 
   @doc section: :network_rule_data
   @doc """
@@ -1444,6 +1952,12 @@ defmodule MscmpSystAuthn do
   @spec get_disallowed_host_record_by_id!(Types.disallowed_host_id()) ::
           Msdata.SystDisallowedHosts.t()
   defdelegate get_disallowed_host_record_by_id!(disallowed_host_id), to: Impl.NetworkRules
+
+  ##############################################################################
+  #
+  # delete_disallowed_host
+  #
+  #
 
   @doc section: :network_rule_data
   @doc """
@@ -1498,6 +2012,12 @@ defmodule MscmpSystAuthn do
   @spec delete_disallowed_host(Types.disallowed_host_id() | Msdata.SystDisallowedHosts.t()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
   defdelegate delete_disallowed_host(disallowed_host), to: Impl.NetworkRules
+
+  ##############################################################################
+  #
+  # get_applied_network_rule
+  #
+  #
 
   @doc section: :network_rule_data
   @doc """
@@ -1600,6 +2120,12 @@ defmodule MscmpSystAuthn do
     examples are none-the-less representative of cases where they are included.
 
   """
+  @spec get_applied_network_rule(Types.host_address()) ::
+          {:ok, Types.AppliedNetworkRule.t()} | {:error, MscmpSystError.t() | Exception.t()}
+  @spec get_applied_network_rule(
+          Types.host_address(),
+          MscmpSystInstance.Types.instance_id() | nil
+        ) :: {:ok, Types.AppliedNetworkRule.t()} | {:error, MscmpSystError.t() | Exception.t()}
   @spec get_applied_network_rule(
           Types.host_address(),
           MscmpSystInstance.Types.instance_id() | nil,
@@ -1672,6 +2198,11 @@ defmodule MscmpSystAuthn do
     Note that while the examples did not include Instance or Owner IDs, the
     examples are none-the-less representative of cases where they are included.
   """
+  @spec get_applied_network_rule!(Types.host_address()) :: Types.AppliedNetworkRule.t()
+  @spec get_applied_network_rule!(
+          Types.host_address(),
+          MscmpSystInstance.Types.instance_id() | nil
+        ) :: Types.AppliedNetworkRule.t()
   @spec get_applied_network_rule!(
           Types.host_address(),
           MscmpSystInstance.Types.instance_id() | nil,
@@ -1683,6 +2214,12 @@ defmodule MscmpSystAuthn do
                 instance_owner_id \\ nil
               ),
               to: Impl.NetworkRules
+
+  ##############################################################################
+  #
+  # create_global_network_rule
+  #
+  #
 
   @doc section: :network_rule_data
   @doc """
@@ -1733,6 +2270,12 @@ defmodule MscmpSystAuthn do
   @spec create_global_network_rule(Types.global_network_rule_params()) ::
           {:ok, Msdata.SystGlobalNetworkRules.t()} | {:error, MscmpSystError.t()}
   defdelegate create_global_network_rule(insert_params), to: Impl.NetworkRules
+
+  ##############################################################################
+  #
+  # create_owner_network_rule
+  #
+  #
 
   @doc section: :network_rule_data
   @doc """
@@ -1792,6 +2335,12 @@ defmodule MscmpSystAuthn do
         ) ::
           {:ok, Msdata.SystOwnerNetworkRules.t()} | {:error, MscmpSystError.t()}
   defdelegate create_owner_network_rule(owner_id, insert_params), to: Impl.NetworkRules
+
+  ##############################################################################
+  #
+  # create_instance_network_rule
+  #
+  #
 
   @doc section: :network_rule_data
   @doc """
@@ -1854,6 +2403,12 @@ defmodule MscmpSystAuthn do
           {:ok, Msdata.SystInstanceNetworkRules.t()} | {:error, MscmpSystError.t()}
   defdelegate create_instance_network_rule(instance_id, insert_params), to: Impl.NetworkRules
 
+  ##############################################################################
+  #
+  # update_global_network_rule
+  #
+  #
+
   @doc section: :network_rule_data
   @doc """
   Updates an existing Global Network Rule with new values.
@@ -1888,6 +2443,12 @@ defmodule MscmpSystAuthn do
   defdelegate update_global_network_rule(global_network_rule, update_params),
     to: Impl.NetworkRules
 
+  ##############################################################################
+  #
+  # update_owner_network_rule
+  #
+  #
+
   @doc section: :network_rule_data
   @doc """
   Updates an existing Owner Network Rule with new values.
@@ -1919,6 +2480,12 @@ defmodule MscmpSystAuthn do
         ) ::
           {:ok, Msdata.SystOwnerNetworkRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate update_owner_network_rule(owner_network_rule, update_params), to: Impl.NetworkRules
+
+  ##############################################################################
+  #
+  # update_instance_network_rule
+  #
+  #
 
   @doc section: :network_rule_data
   @doc """
@@ -1955,6 +2522,12 @@ defmodule MscmpSystAuthn do
   defdelegate update_instance_network_rule(instance_network_rule, update_params),
     to: Impl.NetworkRules
 
+  ##############################################################################
+  #
+  # get_global_network_rule
+  #
+  #
+
   @doc section: :network_rule_data
   @doc """
   Retrieves a Global Network Rule record based on its record ID.
@@ -1975,6 +2548,7 @@ defmodule MscmpSystAuthn do
           | {:ok, :not_found}
           | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate get_global_network_rule(global_network_rule_id), to: Impl.NetworkRules
+
   @doc section: :network_rule_data
   @doc """
   Retrieves a Global Network Rule record based on its record ID, raising on
@@ -1992,6 +2566,12 @@ defmodule MscmpSystAuthn do
   """
   @spec get_global_network_rule!(Ecto.UUID.t()) :: Msdata.SystGlobalNetworkRules.t() | :not_found
   defdelegate get_global_network_rule!(global_network_rule_id), to: Impl.NetworkRules
+
+  ##############################################################################
+  #
+  # get_owner_network_rule
+  #
+  #
 
   @doc section: :network_rule_data
   @doc """
@@ -2013,6 +2593,7 @@ defmodule MscmpSystAuthn do
           | {:ok, :not_found}
           | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate get_owner_network_rule(owner_network_rule_id), to: Impl.NetworkRules
+
   @doc section: :network_rule_data
   @doc """
   Retrieves a Owner Network Rule record based on its record ID, raising on
@@ -2030,6 +2611,12 @@ defmodule MscmpSystAuthn do
   """
   @spec get_owner_network_rule!(Ecto.UUID.t()) :: Msdata.SystOwnerNetworkRules.t() | :not_found
   defdelegate get_owner_network_rule!(owner_network_rule_id), to: Impl.NetworkRules
+
+  ##############################################################################
+  #
+  # get_instance_network_rule
+  #
+  #
 
   @doc section: :network_rule_data
   @doc """
@@ -2071,6 +2658,12 @@ defmodule MscmpSystAuthn do
           Msdata.SystInstanceNetworkRules.t() | :not_found
   defdelegate get_instance_network_rule!(instance_network_rule_id), to: Impl.NetworkRules
 
+  ##############################################################################
+  #
+  # delete_global_network_rule
+  #
+  #
+
   @doc section: :network_rule_data
   @doc """
   Deletes an existing Global Network Rule record as referenced by the record ID.
@@ -2087,6 +2680,12 @@ defmodule MscmpSystAuthn do
           :ok | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate delete_global_network_rule(global_network_rule_id), to: Impl.NetworkRules
 
+  ##############################################################################
+  #
+  # delete_owner_network_rule
+  #
+  #
+
   @doc section: :network_rule_data
   @doc """
   Deletes an existing Owner Network Rule record as referenced by the record ID.
@@ -2102,6 +2701,12 @@ defmodule MscmpSystAuthn do
   @spec delete_owner_network_rule(Ecto.UUID.t()) ::
           :ok | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate delete_owner_network_rule(owner_network_rule_id), to: Impl.NetworkRules
+
+  ##############################################################################
+  #
+  # delete_instance_network_rule
+  #
+  #
 
   @doc section: :network_rule_data
   @doc """
@@ -2128,6 +2733,24 @@ defmodule MscmpSystAuthn do
   # ==============================================================================================
   # ==============================================================================================
 
+  ##############################################################################
+  #
+  # create_or_reset_account_code
+  #
+  #
+
+  @create_or_reset_account_code_opts NimbleOptions.new!(
+                                       Keyword.take(option_defs, [
+                                         :account_code,
+                                         :identity_token_length,
+                                         :identity_tokens,
+                                         :create_validated
+                                       ])
+                                       |> put_in([:identity_tokens, :default], :b32c)
+                                       |> put_in([:create_validated, :default], true)
+                                       |> put_in([:identity_token_length, :default], 12)
+                                     )
+
   @doc section: :account_code
   @doc """
   Creates a new Account Code for an Access Account or resets the Account Code if
@@ -2150,25 +2773,36 @@ defmodule MscmpSystAuthn do
     identified by the Account Code Identity.
 
     * `opts` - a Keyword list of optional settings which can influence the
-    behavior of the function call.  Available options are:
+    behavior of the function call.
 
-      * `account_code` - this option overrides the randomly generated Account
-      Code with the value of this option.  By default the system randomly
-      generates the Account Code.
+  ## Options
 
-      * `identity_token_length` - overrides the number of characters to randomly
-      generate for use as the Account Code Identifier.  The default value is 12.
-
-      * `identity_tokens` - overrides the character set used to create the
-      randomly generated Account Code Identifier.  The default value is `:b32c`.
-      See the `MscmpSystUtils.get_random_string/2` documentation for the
-      `tokens` parameter which receives this option for more information
-      regarding valid values for this setting.
+    #{NimbleOptions.docs(@create_or_reset_account_code_opts)}
   """
+  @spec create_or_reset_account_code(Types.access_account_id()) ::
+          {:ok, Types.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
   @spec create_or_reset_account_code(Types.access_account_id(), Keyword.t()) ::
           {:ok, Types.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate create_or_reset_account_code(access_account_id, opts \\ []),
-    to: Impl.ExtendedMgmtLogic
+  def create_or_reset_account_code(access_account_id, opts \\ []) do
+    case NimbleOptions.validate(opts, @create_or_reset_account_code_opts) do
+      {:ok, validated_opts} ->
+        Impl.ExtendedMgmtLogic.create_or_reset_account_code(access_account_id, validated_opts)
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :undefined_error,
+           message: "Option validation failure.",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # identify_access_account_by_code
+  #
+  #
 
   @doc section: :account_code
   @doc """
@@ -2195,6 +2829,12 @@ defmodule MscmpSystAuthn do
           {:ok, Msdata.SystIdentities.t() | :not_found} | {:error, MscmpSystError.t()}
   defdelegate identify_access_account_by_code(account_code, owner_id), to: Impl.ExtendedAuthLogic
 
+  ##############################################################################
+  #
+  # get_account_code_by_access_account_id
+  #
+  #
+
   @doc section: :account_code
   @doc """
   Retrieves the Account Code Identity record defined for the requested Access
@@ -2212,6 +2852,12 @@ defmodule MscmpSystAuthn do
           {:ok, Msdata.SystIdentities.t() | :not_found} | {:error, MscmpSystError.t()}
   defdelegate get_account_code_by_access_account_id(access_account_id),
     to: Impl.Identity.AccountCode
+
+  ##############################################################################
+  #
+  # revoke_account_code
+  #
+  #
 
   @doc section: :account_code
   @doc """
@@ -2239,6 +2885,25 @@ defmodule MscmpSystAuthn do
   #
   # ==============================================================================================
   # ==============================================================================================
+
+  ##############################################################################
+  #
+  # create_authenticator_email_password
+  #
+  #
+
+  @create_authenticator_email_password_opts NimbleOptions.new!(
+                                              Keyword.take(option_defs, [
+                                                :create_validated,
+                                                :credential_token,
+                                                :credential_token_length,
+                                                :credential_tokens,
+                                                :identity_token,
+                                                :identity_token_length,
+                                                :identity_tokens,
+                                                :expiration_hours
+                                              ])
+                                            )
 
   @doc section: :authenticator_management
   @doc """
@@ -2299,7 +2964,20 @@ defmodule MscmpSystAuthn do
     * `plaintext_pwd` - the candidate password for use a the Credential in
     Email/Password authentication processes.
 
+    * `opts` - a keyword list of options to control the creation process.
+
+  ## Options
+
+    #{NimbleOptions.docs(@create_authenticator_email_password_opts)}
+
   """
+  @spec create_authenticator_email_password(
+          Types.access_account_id(),
+          Types.account_identifier(),
+          Types.credential()
+        ) ::
+          {:ok, Types.AuthenticatorResult.t()}
+          | {:error, MscmpSystError.t() | Exception.t()}
   @spec create_authenticator_email_password(
           Types.access_account_id(),
           Types.account_identifier(),
@@ -2308,13 +2986,36 @@ defmodule MscmpSystAuthn do
         ) ::
           {:ok, Types.AuthenticatorResult.t()}
           | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate create_authenticator_email_password(
-                access_account_id,
-                email_address,
-                plaintext_pwd,
-                opts \\ []
-              ),
-              to: Impl.ExtendedMgmtLogic
+  def create_authenticator_email_password(
+        access_account_id,
+        email_address,
+        plaintext_pwd,
+        opts \\ []
+      ) do
+    case NimbleOptions.validate(opts, @create_authenticator_email_password_opts) do
+      {:ok, validated_opts} ->
+        Impl.ExtendedMgmtLogic.create_authenticator_email_password(
+          access_account_id,
+          email_address,
+          plaintext_pwd,
+          validated_opts
+        )
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :undefined_error,
+           message: "Option validation failure.",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # reset_password_credential
+  #
+  #
 
   @doc section: :authenticator_management
   @doc """
@@ -2323,20 +3024,20 @@ defmodule MscmpSystAuthn do
   The assumption is that a Password Credential already exists and that only the
   password itself is being changed from an old value to a new value.
 
-  This function ensures that the new password meets all applicable Password 
+  This function ensures that the new password meets all applicable Password
   Rules prior to completing the change.  This function will not allow you to set
   the password to an invalid value.
 
-  Finally, in the case of a user initiated password change, it is traditional 
-  that the user has to re-authenticate or provide their current password to 
-  verify they are, in fact, the person initiating the change.  This function 
-  does not try to achieve this goal.  The scope of this function assumes that 
-  any such confirmation of identity has been completed satisfactorily elsewhere. 
+  Finally, in the case of a user initiated password change, it is traditional
+  that the user has to re-authenticate or provide their current password to
+  verify they are, in fact, the person initiating the change.  This function
+  does not try to achieve this goal.  The scope of this function assumes that
+  any such confirmation of identity has been completed satisfactorily elsewhere.
 
   On successful Password Credential reset this function will return `:ok`.  If
-  the new credential fails to meet the Password Rule criteria that applies to 
-  it, the function will return a failure tuple of type 
-  `t:MscmpSystAuthn.Types.credential_set_failures/0`.  All other return 
+  the new credential fails to meet the Password Rule criteria that applies to
+  it, the function will return a failure tuple of type
+  `t:MscmpSystAuthn.Types.credential_set_failures/0`.  All other return
   conditions are errors and result in an error tuple.
 
   ## Parameters
@@ -2351,6 +3052,25 @@ defmodule MscmpSystAuthn do
           :ok | Types.credential_set_failures() | {:error, MscmpSystError.t()}
   defdelegate reset_password_credential(access_account_id, new_credential),
     to: Impl.ExtendedMgmtLogic
+
+  ##############################################################################
+  #
+  # request_identity_validation
+  #
+  #
+
+  @request_identity_validation NimbleOptions.new!(
+                                 Keyword.take(option_defs, [
+                                   :expiration_hours,
+                                   :identity_token_length,
+                                   :identity_tokens,
+                                   :credential_token_length,
+                                   :credential_tokens,
+                                   :credential_token,
+                                   :create_validated
+                                 ])
+                                 |> put_in([:create_validated, :default], true)
+                               )
 
   @doc section: :authenticator_management
   @doc """
@@ -2393,37 +3113,34 @@ defmodule MscmpSystAuthn do
     * `opts` - a Keyword List of options which can change the behavior to the
     Identity validation request.  The available options are:
 
-      * `expiration_hours` - overrides the default number of hours after which
-      to consider the Validation Authenticator expired.  By default the
-      Validation Authenticator expires 24 hours after creation.
+  ## Options
 
-      * `identity_token_length` - this option overrides the default number of
-      random characters to generate for the Validation Token Identity
-      identifier.  The default number of characters generated is 40.
-
-      * `identity_tokens` - overrides the default character set to use in the
-      generation of the Validation Token Identity identifier.  The default value
-      is `:mixed_alphanum`.  See the `MscmpSystUtils.get_random_string/2`
-      documentation for the `tokens` parameter which receives this option for
-      more information regarding valid values for this setting.
-
-      * `credential_token_length` - this option overrides the default number of
-      random characters to generate for the Validation Token Credential. The
-      default number of characters generated is 40.
-
-      * `credential_tokens` - overrides the default character set to use in the
-      generation of the Validation Token Credential.  The default value is
-      `:mixed_alphanum`.  See the `MscmpSystUtils.get_random_string/2`
-      documentation for the `tokens` parameter which receives this option for
-      more information regarding valid values for this setting.
-
-      * `credential_token` - overrides the system generated Validation
-      Credential with the value of this option.  The default is to allow the
-      system to automatically generate the credential.
+    #{NimbleOptions.docs(@request_identity_validation)}
   """
+  @spec request_identity_validation(Types.identity_id() | Msdata.SystIdentities.t()) ::
+          {:ok, Types.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
   @spec request_identity_validation(Types.identity_id() | Msdata.SystIdentities.t(), Keyword.t()) ::
           {:ok, Types.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate request_identity_validation(target_identity, opts \\ []), to: Impl.ExtendedMgmtLogic
+  def request_identity_validation(target_identity, opts \\ []) do
+    case NimbleOptions.validate(opts, @request_identity_validation) do
+      {:ok, validated_opts} ->
+        Impl.ExtendedMgmtLogic.request_identity_validation(target_identity, validated_opts)
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :undefined_error,
+           message: "Option validation failure.",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # revoke_validator_for_identity_id
+  #
+  #
 
   @doc section: :authenticator_management
   @doc """
@@ -2450,6 +3167,12 @@ defmodule MscmpSystAuthn do
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate revoke_validator_for_identity_id(target_identity_id), to: Impl.ExtendedMgmtLogic
 
+  ##############################################################################
+  #
+  # access_account_credential_recoverable
+  #
+  #
+
   @doc section: :authenticator_management
   @doc """
   Indicates if an Access Account's Password Credential is recoverable or not.
@@ -2471,6 +3194,25 @@ defmodule MscmpSystAuthn do
           :ok | :not_found | :existing_recovery
   defdelegate access_account_credential_recoverable!(access_account_id),
     to: Impl.Identity.Recovery
+
+  ##############################################################################
+  #
+  # request_password_recovery
+  #
+  #
+
+  @request_password_recovery NimbleOptions.new!(
+                               Keyword.take(option_defs, [
+                                 :expiration_hours,
+                                 :identity_token_length,
+                                 :identity_tokens,
+                                 :credential_token_length,
+                                 :credential_tokens,
+                                 :credential_token,
+                                 :create_validated
+                               ])
+                               |> put_in([:create_validated, :default], true)
+                             )
 
   @doc section: :authenticator_management
   @doc """
@@ -2512,39 +3254,36 @@ defmodule MscmpSystAuthn do
     Password Credential needing recovering belongs.
 
     * `opts` - a Keyword List of options which can change the behavior to the
-    password recovery request.  The available options are:
+    password recovery request.
 
-      * `expiration_hours` - overrides the default number of hours after which
-      to consider the Recovery Authenticator expired.  By default the Recovery
-      Authenticator expires 24 hours after creation.
+  ## Options
 
-      * `identity_token_length` - this option overrides the default number of
-      random characters to generate for the Recovery Token Identity identifier.
-      The default number of characters generated is 40.
-
-      * `identity_tokens` - overrides the default character set to use in the
-      generation of the Recovery Token Identity identifier.  The default value
-      is `:mixed_alphanum`.  See the `MscmpSystUtils.get_random_string/2`
-      documentation for the `tokens` parameter which receives this option for
-      more information regarding valid values for this setting.
-
-      * `credential_token_length` - this option overrides the default number of
-      random characters to generate for the Recovery Token Credential. The
-      default number of characters generated is 40.
-
-      * `credential_tokens` - overrides the default character set to use in the
-      generation of the Recovery Token Credential.  The default value is
-      `:mixed_alphanum`.  See the `MscmpSystUtils.get_random_string/2`
-      documentation for the `tokens` parameter which receives this option for
-      more information regarding valid values for this setting.
-
-      * `credential_token` - overrides the system generated Recovery Credential
-      with the value of this option.  The default is to allow the system to
-      automatically generate the credential.
+    #{NimbleOptions.docs(@request_password_recovery)}
   """
+  @spec request_password_recovery(Types.access_account_id()) ::
+          {:ok, Types.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
   @spec request_password_recovery(Types.access_account_id(), Keyword.t()) ::
           {:ok, Types.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate request_password_recovery(access_account_id, opts \\ []), to: Impl.ExtendedMgmtLogic
+  def request_password_recovery(access_account_id, opts \\ []) do
+    case NimbleOptions.validate(opts, @request_password_recovery) do
+      {:ok, validated_opts} ->
+        Impl.ExtendedMgmtLogic.request_password_recovery(access_account_id, validated_opts)
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :undefined_error,
+           message: "Option validation failure.",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # revoke_password_recovery
+  #
+  #
 
   @doc section: :authenticator_management
   @doc """
@@ -2572,6 +3311,27 @@ defmodule MscmpSystAuthn do
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate revoke_password_recovery(access_account_id), to: Impl.ExtendedMgmtLogic
 
+  ##############################################################################
+  #
+  # create_authenticator_api_token
+  #
+  #
+
+  @create_authenticator_api_token NimbleOptions.new!(
+                                    Keyword.take(option_defs, [
+                                      :identity_token_length,
+                                      :identity_tokens,
+                                      :identity_token,
+                                      :external_name,
+                                      :credential_token_length,
+                                      :credential_tokens,
+                                      :credential_token,
+                                      :create_validated
+                                    ])
+                                    |> put_in([:identity_token_length, :default], 20)
+                                    |> put_in([:create_validated, :default], true)
+                                  )
+
   @doc section: :authenticator_management
   @doc """
   Creates an API Token Authenticator for the requested Access Account.
@@ -2596,42 +3356,36 @@ defmodule MscmpSystAuthn do
     create the API Token Authenticator.
 
     * `opts` - a Keyword List of optional values which changes the default
-    behavior of the Authenticator creation process.  Available options are:
+    behavior of the Authenticator creation process.
 
-      * `identity_token_length` - this option overrides the default number of
-      random characters to generate for the API Token Identity identifier. The
-      default number of characters generated is 20.
+  ## Options
 
-      * `identity_tokens` - overrides the default character set to use in the
-      generation of the API Token Identity identifier.  The default value is
-      `:mixed_alphanum`.  See the `MscmpSystUtils.get_random_string/2`
-      documentation for the `tokens` parameter which receives this option for
-      more information regarding valid values for this setting.
-
-      * `external_name` - API Token Identities permit Access Account holder
-      naming of the Identity as it may be common for an one Access Account to
-      require multiple API Token Authenticators for different purposes.  This
-      option allows that name to be set at Identity creation time.  The default
-      value is `nil`.
-
-      * `credential_token_length` - this option overrides the default number of
-      random characters to generate for the API Token Credential. The default
-      number of characters generated is 40.
-
-      * `credential_tokens` - overrides the default character set to use in the
-      generation of the API Token Credential.  The default value is
-      `:mixed_alphanum`.  See the `MscmpSystUtils.get_random_string/2`
-      documentation for the `tokens` parameter which receives this option for
-      more information regarding valid values for this setting.
-
-      * `credential_token` - overrides the system generated API Token Credential
-      with the value of this option.  The default is to allow the system to
-      automatically generate the credential.
+    #{NimbleOptions.docs(@create_authenticator_api_token)}
   """
+  @spec create_authenticator_api_token(Types.access_account_id()) ::
+          {:ok, Types.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
   @spec create_authenticator_api_token(Types.access_account_id(), Keyword.t()) ::
           {:ok, Types.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate create_authenticator_api_token(access_account_id, opts \\ []),
-    to: Impl.ExtendedMgmtLogic
+  def create_authenticator_api_token(access_account_id, opts \\ []) do
+    case NimbleOptions.validate(opts, @create_authenticator_api_token) do
+      {:ok, validated_opts} ->
+        Impl.ExtendedMgmtLogic.create_authenticator_api_token(access_account_id, validated_opts)
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :undefined_error,
+           message: "Option validation failure.",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # update_api_token_external_name
+  #
+  #
 
   @doc section: :authenticator_management
   @doc """
@@ -2660,6 +3414,12 @@ defmodule MscmpSystAuthn do
         ) ::
           {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t()}
   defdelegate update_api_token_external_name(identity, external_name), to: Impl.ExtendedMgmtLogic
+
+  ##############################################################################
+  #
+  # revoke_api_token
+  #
+  #
 
   @doc section: :authenticator_management
   @doc """
@@ -2692,6 +3452,22 @@ defmodule MscmpSystAuthn do
   # ==============================================================================================
   # ==============================================================================================
 
+  ##############################################################################
+  #
+  # authenticate_email_password
+  #
+  #
+
+  @authenticate_email_password_opts NimbleOptions.new!(
+                                      Keyword.take(option_defs, [
+                                        :owning_owner_id,
+                                        :instance_id,
+                                        :deadline_minutes,
+                                        :identifier_rate_limit,
+                                        :host_ban_rate_limit
+                                      ])
+                                    )
+
   @doc section: :authentication
   @doc """
   Identities and authenticates an Access Account using an Email/Password
@@ -2706,7 +3482,7 @@ defmodule MscmpSystAuthn do
   specific information carried by the Authentication State value.  Otherwise,
   an error tuple is returned indicating the nature of the processing failure.
 
-  Email/Password authentication is an interruptible process, meaning that this
+  Email/Password authentication is an interruptable process, meaning that this
   function may return prior to the authentication having been fully processed to
   a final result.  The two most common examples of when this partial processing
   may happen are:
@@ -2735,44 +3511,17 @@ defmodule MscmpSystAuthn do
 
     * `opts` - a Keyword List of values that either optionally override default
     behaviors of this function, are optionally required, or are required on a
-    deferred basis (eventually required).  The available options are:
+    deferred basis (eventually required).
 
-      * `owning_owner_id` - if the Access Account is an Owned Access Account,
-      this value must be set to the record ID of the Access Account's Owner.
-      Otherwise it must be set `nil` or not provided.  The default value is
-      `nil`.
+  ## Options
 
-      * `instance_id` - the record ID of the Application Instance to which the
-      Access Account holder wishes to authenticate.  A final value for
-      instance_id is not required when the Email/Password authentication process
-      is initiated but is required for it to complete.  If this value is not
-      initially provided, the function will be `interrupted` returning an
-      Authentication State status value of `:pending`.  Deferral may be
-      appropriate if, for example, we want to allow the Access Account holder to
-      select the specific Instance they wish to access from a list of their
-      permitted Instances.  Final resolution of the value must reference an
-      Instance for which the Access Account permitted authentication attempts or
-      must be set `:bypass` if the authentication attempt is a special case
-      where a specific Instance is not relevant.  The default value of this
-      option is `nil`.
-
-      * `host_ban_rate_limit` - overrides the default host IP address based Rate
-      Limit.  The value is set via a tuple in the following form:
-      `{<Maximum Attempts>, <Time Window in Seconds>}`.  The default value is 30
-      attempts over a time window of 2 hours.
-
-      * `identifier_rate_limit` - overrides the default identifier based Rate
-      Limit.  The value is set via a tuple in the following form:
-      `{<Maximum Attempts>, <Time Window in Seconds>}`.  The default value is 5
-      attempts over a time window of 30 minutes.
-
-      * `deadline_minutes` - overrides the default number of minutes that an
-      authentication process can take before being rejected for taking too long.
-      This deadline is needed because an arbitrary time can pass due to user
-      interaction, such as selecting an Instance or providing an MFA credential.
-      The default value is 5 minutes from the time the authentication process is
-      started.
+    #{NimbleOptions.docs(@authenticate_email_password_opts)}
   """
+  @spec authenticate_email_password(
+          Types.account_identifier(),
+          Types.credential(),
+          NetTypes.addr_structs()
+        ) :: {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
   @spec authenticate_email_password(
           Types.account_identifier(),
           Types.credential(),
@@ -2780,8 +3529,25 @@ defmodule MscmpSystAuthn do
           Keyword.t()
         ) ::
           {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
-  defdelegate authenticate_email_password(email_address, plaintext_pwd, host_address, opts \\ []),
-    to: Impl.ExtendedAuthLogic
+  def authenticate_email_password(email_address, plaintext_pwd, host_address, opts \\ []) do
+    case NimbleOptions.validate(opts, @authenticate_email_password_opts) do
+      {:ok, validated_opts} ->
+        Impl.ExtendedAuthLogic.authenticate_email_password(
+          email_address,
+          plaintext_pwd,
+          host_address,
+          validated_opts
+        )
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :undefined_error,
+           message: "Option validation failure.",
+           cause: error
+         }}
+    end
+  end
 
   @doc section: :authentication
   @doc """
@@ -2807,10 +3573,39 @@ defmodule MscmpSystAuthn do
   See `authenticate_email_password/4` for a discussion of the possible return
   values.
   """
+  @spec authenticate_email_password(Types.AuthenticationState.t()) ::
+          {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
   @spec authenticate_email_password(Types.AuthenticationState.t(), Keyword.t()) ::
           {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
-  defdelegate authenticate_email_password(authentication_state, opts \\ []),
-    to: Impl.ExtendedAuthLogic
+  def authenticate_email_password(authentication_state, opts \\ []) do
+    case NimbleOptions.validate(opts, @authenticate_email_password_opts) do
+      {:ok, validated_opts} ->
+        Impl.ExtendedAuthLogic.authenticate_email_password(authentication_state, validated_opts)
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :undefined_error,
+           message: "Option validation failure.",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # authenticate_validation_token
+  #
+  #
+
+  @authenticate_validation_token_opts NimbleOptions.new!(
+                                        Keyword.take(option_defs, [
+                                          :owning_owner_id,
+                                          :deadline_minutes,
+                                          :identifier_rate_limit,
+                                          :host_ban_rate_limit
+                                        ])
+                                      )
 
   @doc section: :authentication
   @doc """
@@ -2830,7 +3625,7 @@ defmodule MscmpSystAuthn do
   `validated` field set to the current date/time and the Validation
   Authenticator is deleted from the system.
 
-  The authentication process executed by this function is not interruptible.
+  The authentication process executed by this function is not interruptable.
   The initial call to this function must contain all parameter values required
   to fully complete the authentication process.  Any missing information will
   cause the authentication attempt to be rejected.
@@ -2850,31 +3645,19 @@ defmodule MscmpSystAuthn do
     enforcement of applicable Network Rules.
 
     * `opts` - a Keyword List of values that either optionally override default
-    behaviors of this function or are optionally required.  The available
-    options are:
+    behaviors of this function or are optionally required.
 
-      * `owning_owner_id` - if the Access Account is an Owned Access Account,
-      this value must be set to the record ID of the Access Account's Owner.
-      Otherwise it must be set `nil` or not provided.  The default value is
-      `nil`.
 
-      * `host_ban_rate_limit` - overrides the default host IP address based Rate
-      Limit.  The value is set via a tuple in the following form:
-      `{<Maximum Attempts>, <Time Window in Seconds>}`.  The default value is 30
-      attempts over a time window of 2 hours.
+  ## Options
 
-      * `identifier_rate_limit` - overrides the default identifier based Rate
-      Limit.  The value is set via a tuple in the following form:
-      `{<Maximum Attempts>, <Time Window in Seconds>}`.  The default value is 5
-      attempts over a time window of 30 minutes.
-
-      * `deadline_minutes` - overrides the default number of minutes that an
-      authentication process can take before being rejected for taking too long.
-      This deadline is needed because an arbitrary time can pass due to user
-      interaction if the authenticator allows for an interruptable
-      authentication process.  The default deadline allows for 5 minutes to
-      complete the authentication process.
+    #{NimbleOptions.docs(@authenticate_validation_token_opts)}
   """
+  @spec authenticate_validation_token(
+          Types.account_identifier(),
+          Types.credential(),
+          NetTypes.addr_structs()
+        ) ::
+          {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
   @spec authenticate_validation_token(
           Types.account_identifier(),
           Types.credential(),
@@ -2882,13 +3665,45 @@ defmodule MscmpSystAuthn do
           Keyword.t()
         ) ::
           {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
-  defdelegate authenticate_validation_token(
-                identifier,
-                plaintext_token,
-                host_address,
-                opts \\ []
-              ),
-              to: Impl.ExtendedAuthLogic
+  def authenticate_validation_token(
+        identifier,
+        plaintext_token,
+        host_address,
+        opts \\ []
+      ) do
+    case NimbleOptions.validate(opts, @authenticate_validation_token_opts) do
+      {:ok, validated_opts} ->
+        Impl.ExtendedAuthLogic.authenticate_validation_token(
+          identifier,
+          plaintext_token,
+          host_address,
+          validated_opts
+        )
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :undefined_error,
+           message: "Option validation failure.",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # authenticate_recovery_token
+  #
+  #
+
+  @authenticate_recovery_token_opts NimbleOptions.new!(
+                                      Keyword.take(option_defs, [
+                                        :owning_owner_id,
+                                        :deadline_minutes,
+                                        :identifier_rate_limit,
+                                        :host_ban_rate_limit
+                                      ])
+                                    )
 
   @doc section: :authentication
   @doc """
@@ -2909,7 +3724,7 @@ defmodule MscmpSystAuthn do
   is taken by this function.  The actual process of recovering a password is
   external to this function.
 
-  The authentication process executed by this function is not interruptible.
+  The authentication process executed by this function is not interruptable.
   The initial call to this function must contain all parameter values required
   to fully complete the authentication process.  Any missing information will
   cause the authentication attempt to be rejected.
@@ -2929,31 +3744,17 @@ defmodule MscmpSystAuthn do
     enforcement of applicable Network Rules.
 
     * `opts` - a Keyword List of values that either optionally override default
-    behaviors of this function or are optionally required.  The available
-    options are:
+    behaviors of this function or are optionally required.
 
-      * `owning_owner_id` - if the Access Account is an Owned Access Account,
-      this value must be set to the record ID of the Access Account's Owner.
-      Otherwise it must be set `nil` or not provided.  The default value is
-      `nil`.
+  ## Options
 
-      * `host_ban_rate_limit` - overrides the default host IP address based Rate
-      Limit.  The value is set via a tuple in the following form:
-      `{<Maximum Attempts>, <Time Window in Seconds>}`.  The default value is 30
-      attempts over a time window of 2 hours.
-
-      * `identifier_rate_limit` - overrides the default identifier based Rate
-      Limit.  The value is set via a tuple in the following form:
-      `{<Maximum Attempts>, <Time Window in Seconds>}`.  The default value is 5
-      attempts over a time window of 30 minutes.
-
-      * `deadline_minutes` - overrides the default number of minutes that an
-      authentication process can take before being rejected for taking too long.
-      This deadline is needed because an arbitrary time can pass due to user
-      interaction if the authenticator allows for an interruptable
-      authentication process.  The default deadline allows for 5 minutes to
-      complete the authentication process.
+    #{NimbleOptions.docs(@authenticate_recovery_token_opts)}
   """
+  @spec authenticate_recovery_token(
+          Types.account_identifier(),
+          Types.credential(),
+          NetTypes.addr_structs()
+        ) :: {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
   @spec authenticate_recovery_token(
           Types.account_identifier(),
           Types.credential(),
@@ -2961,8 +3762,40 @@ defmodule MscmpSystAuthn do
           Keyword.t()
         ) ::
           {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
-  defdelegate authenticate_recovery_token(identifier, plaintext_token, host_addr, opts \\ []),
-    to: Impl.ExtendedAuthLogic
+  def authenticate_recovery_token(identifier, plaintext_token, host_addr, opts \\ []) do
+    case NimbleOptions.validate(opts, @authenticate_recovery_token_opts) do
+      {:ok, validated_opts} ->
+        Impl.ExtendedAuthLogic.authenticate_recovery_token(
+          identifier,
+          plaintext_token,
+          host_addr,
+          validated_opts
+        )
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :undefined_error,
+           message: "Option validation failure.",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # authenticate_api_token
+  #
+  #
+
+  @authenticate_api_token_opts NimbleOptions.new!(
+                                 Keyword.take(option_defs, [
+                                   :owning_owner_id,
+                                   :deadline_minutes,
+                                   :identifier_rate_limit,
+                                   :host_ban_rate_limit
+                                 ])
+                               )
 
   @doc section: :authentication
   @doc """
@@ -2978,7 +3811,7 @@ defmodule MscmpSystAuthn do
   specific information carried by the Authentication State value.  Otherwise,
   an error tuple is returned indicating the nature of the processing failure.
 
-  The authentication process executed by this function is not interruptible.
+  The authentication process executed by this function is not interruptable.
   The initial call to this function must contain all parameter values required
   to fully complete the authentication process.  Any missing information will
   cause the authentication attempt to be rejected.
@@ -2998,40 +3831,19 @@ defmodule MscmpSystAuthn do
     enforcement of applicable Network Rules.
 
     * `opts` - a Keyword List of values that either optionally override default
-    behaviors of this function or are optionally required.  The available
-    options are:
+    behaviors of this function or are optionally required.
 
-      * `owning_owner_id` - if the Access Account is an Owned Access Account,
-      this value must be set to the record ID of the Access Account's Owner.
-      Otherwise it must be set `nil` or not provided.  The default value is
-      `nil`.
+  ## Options
 
-      * `instance_id` - the record ID of the Application Instance to which the
-      Access Account holder wishes to authenticate.  This value is required must
-      be provided at function call time or the Authentication State will be
-      returned in a `:rejected` status.  In special cases where the
-      authentication attempt is outside of the context of a specific Instance,
-      the special value `:bypass` may be used for this option indicating that
-      the authentication attempt may skip the permitted Instance check. There is
-      no default value (default `nil`).
-
-      * `host_ban_rate_limit` - overrides the default host IP address based Rate
-      Limit.  The value is set via a tuple in the following form:
-      `{<Maximum Attempts>, <Time Window in Seconds>}`.  The default value is 30
-      attempts over a time window of 2 hours.
-
-      * `identifier_rate_limit` - overrides the default identifier based Rate
-      Limit.  The value is set via a tuple in the following form:
-      `{<Maximum Attempts>, <Time Window in Seconds>}`.  The default value is 5
-      attempts over a time window of 30 minutes.
-
-      * `deadline_minutes` - overrides the default number of minutes that an
-      authentication process can take before being rejected for taking too long.
-      This deadline is needed because an arbitrary time can pass due to user
-      interaction if the authenticator allows for an interruptable
-      authentication process.  The default deadline allows for 5 minutes to
-      complete the authentication process.
+    #{NimbleOptions.docs(@authenticate_api_token_opts)}
   """
+  @spec authenticate_api_token(
+          Types.account_identifier(),
+          Types.credential(),
+          NetTypes.addr_structs(),
+          MscmpSystInstance.Types.instance_id()
+        ) ::
+          {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
   @spec authenticate_api_token(
           Types.account_identifier(),
           Types.credential(),
@@ -3041,12 +3853,30 @@ defmodule MscmpSystAuthn do
         ) ::
           {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
 
-  defdelegate authenticate_api_token(
-                identifier,
-                plaintext_token,
-                host_addr,
-                instance_id,
-                opts \\ []
-              ),
-              to: Impl.ExtendedAuthLogic
+  def authenticate_api_token(
+        identifier,
+        plaintext_token,
+        host_addr,
+        instance_id,
+        opts \\ []
+      ) do
+    case NimbleOptions.validate(opts, @authenticate_api_token_opts) do
+      {:ok, validated_opts} ->
+        Impl.ExtendedAuthLogic.authenticate_api_token(
+          identifier,
+          plaintext_token,
+          host_addr,
+          instance_id,
+          validated_opts
+        )
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :undefined_error,
+           message: "Option validation failure.",
+           cause: error
+         }}
+    end
+  end
 end

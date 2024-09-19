@@ -27,6 +27,12 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
   #       plaintext_pwd to leak here.  No special care has been taken at this
   #       point time.
 
+  ##############################################################################
+  #
+  # test_credential
+  #
+  #
+
   @spec test_credential(Types.access_account_id() | Types.PasswordRules.t(), Types.credential()) ::
           {:ok, Keyword.t(Types.password_rule_violations())}
           | {:error, MscmpSystError.t() | Exception.t()}
@@ -194,6 +200,12 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
     end)
   end
 
+  ##############################################################################
+  #
+  # confirm_credential
+  #
+  #
+
   @spec confirm_credential(
           Types.access_account_id(),
           Types.identity_id() | nil,
@@ -305,9 +317,21 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
 
   defp maybe_require_mfa(extended_state, _rules), do: extended_state
 
+  ##############################################################################
+  #
+  # set_credential
+  #
+  #
+
   @spec set_credential(
           Types.access_account_id(),
-          Types.identity_id() | nil,
+          Types.credential(),
+          Keyword.t()
+        ) ::
+          :ok | Types.credential_set_failures() | {:error, MscmpSystError.t()}
+  @spec set_credential(
+          Types.access_account_id(),
+          nil,
           Types.credential(),
           Keyword.t()
         ) ::
@@ -407,6 +431,12 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
     MscmpSystDb.delete_all(delete_qry)
   end
 
+  ##############################################################################
+  #
+  # get_credential_record
+  #
+  #
+
   @spec get_credential_record(Types.access_account_id(), Types.identity_id() | nil) ::
           {:ok, Msdata.SystCredentials.t() | nil} | {:error, MscmpSystError.t() | Exception.t()}
   def get_credential_record(access_account_id, _identity_id \\ nil) do
@@ -436,6 +466,12 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
         message: "Failure retrieving Password Credential record.",
         cause: error
   end
+
+  ##############################################################################
+  #
+  # delete_credential
+  #
+  #
 
   @spec delete_credential(Types.credential_id() | Msdata.SystCredentials.t()) ::
           :ok | {:error, MscmpSystError.t() | Exception.t()}

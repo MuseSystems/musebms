@@ -32,6 +32,12 @@ defmodule MscmpSystAuthn.Impl.Credential.GenericToken do
   # based credential types.  The functions of this module should not be used
   # directly, but rather via the appropriate specialized modules for each type.
 
+  ##############################################################################
+  #
+  # confirm_credential
+  #
+  #
+
   @spec confirm_credential(
           Types.credential_types(),
           Types.access_account_id(),
@@ -68,6 +74,12 @@ defmodule MscmpSystAuthn.Impl.Credential.GenericToken do
     if hash_verified, do: :confirmed, else: :wrong_credential
   end
 
+  ##############################################################################
+  #
+  # set_credential
+  #
+  #
+
   @spec set_credential(
           Types.credential_types(),
           Types.access_account_id(),
@@ -85,7 +97,7 @@ defmodule MscmpSystAuthn.Impl.Credential.GenericToken do
     if identity_ownership_confirmed do
       token =
         token ||
-          MscmpSystUtils.get_random_string(
+          Msutils.String.get_random_string(
             opts[:credential_token_length],
             opts[:credential_tokens]
           )
@@ -148,6 +160,12 @@ defmodule MscmpSystAuthn.Impl.Credential.GenericToken do
     |> MscmpSystDb.exists?()
   end
 
+  ##############################################################################
+  #
+  # get_credential_record
+  #
+  #
+
   @spec get_credential_record(
           Types.credential_types(),
           Types.access_account_id(),
@@ -179,6 +197,12 @@ defmodule MscmpSystAuthn.Impl.Credential.GenericToken do
   end
 
   def get_credential_record(_credential_type, _access_account_id, _identity_id), do: nil
+
+  ##############################################################################
+  #
+  # delete_credential
+  #
+  #
 
   # Token types involve a matched pair of Identity and Credential records and as
   # such any attempt to delete one will delete the other.  This deletion is done

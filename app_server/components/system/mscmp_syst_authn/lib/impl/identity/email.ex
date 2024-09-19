@@ -20,14 +20,16 @@ defmodule MscmpSystAuthn.Impl.Identity.Email do
 
   require Logger
 
-  @default_create_validated false
+  ##############################################################################
+  #
+  # create_identity
+  #
+  #
 
   @spec create_identity(Types.access_account_id(), Types.account_identifier(), Keyword.t()) ::
           {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  def create_identity(access_account_id, email_address, opts \\ [])
+  def create_identity(access_account_id, email_address, opts)
       when is_binary(access_account_id) and is_binary(email_address) do
-    opts = MscmpSystUtils.resolve_options(opts, create_validated: @default_create_validated)
-
     case verify_email_address(email_address) do
       {:ok, valid_email} ->
         normalized_email = normalize_email_address(valid_email)
@@ -62,6 +64,12 @@ defmodule MscmpSystAuthn.Impl.Identity.Email do
        }}
   end
 
+  ##############################################################################
+  #
+  # identify_access_account
+  #
+  #
+
   @spec identify_access_account(
           Types.account_identifier(),
           MscmpSystInstance.Types.owner_id() | nil
@@ -79,12 +87,19 @@ defmodule MscmpSystAuthn.Impl.Identity.Email do
     end
   end
 
+  ##############################################################################
+  #
+  # verify_email_address
+  #
+  #
+
   # This doesn't catch all RFC compliant email addresses; specifically "@" is
   # valid in the local part of the email address (when properly escaped) and
   # would cause this verification to pass even if the correct local/domain
   # separating "@" were missing.  But we should properly handle the vast
   # majority of cases as embedded "@" should be very rare (and expected to be
   # unreliable).
+
   @spec verify_email_address(Types.account_identifier()) ::
           {:ok, Types.account_identifier()} | {:error, MscmpSystError.t()}
   def verify_email_address(email_address) when is_binary(email_address) do
@@ -99,6 +114,12 @@ defmodule MscmpSystAuthn.Impl.Identity.Email do
        }}
     end
   end
+
+  ##############################################################################
+  #
+  # normalize_email_address
+  #
+  #
 
   @spec normalize_email_address(Types.account_identifier()) :: Types.account_identifier()
   def normalize_email_address(email_address) when is_binary(email_address) do

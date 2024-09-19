@@ -24,6 +24,12 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
 
   require Logger
 
+  ##############################################################################
+  #
+  # create_disallowed_password
+  #
+  #
+
   @spec create_disallowed_password(Types.credential()) ::
           :ok | {:error, MscmpSystError.t() | Exception.t()}
   def create_disallowed_password(password) do
@@ -50,6 +56,12 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
         cause: error
   end
 
+  ##############################################################################
+  #
+  # password_disallowed
+  #
+  #
+
   @spec password_disallowed(Types.credential()) ::
           {:ok, boolean()} | {:error, MscmpSystError.t()}
   def password_disallowed(password) when is_binary(password) do
@@ -73,6 +85,12 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
         message: "Failure testing if password is disallowed.",
         cause: error
   end
+
+  ##############################################################################
+  #
+  # delete_disallowed_password
+  #
+  #
 
   @spec delete_disallowed_password(Types.credential()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
@@ -111,6 +129,12 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
         cause: error
   end
 
+  ##############################################################################
+  #
+  # create_owner_password_rules
+  #
+  #
+
   @spec create_owner_password_rules(
           MscmpSystInstance.Types.owner_id(),
           Types.password_rule_params()
@@ -144,6 +168,12 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
         message: "Failure creating Owner Password Rules.",
         cause: error
   end
+
+  ##############################################################################
+  #
+  # update_global_password_rules
+  #
+  #
 
   @spec update_global_password_rules(Types.password_rule_params()) ::
           {:ok, Msdata.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
@@ -198,6 +228,12 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
         cause: error
   end
 
+  ##############################################################################
+  #
+  # update_owner_password_rules
+  #
+  #
+
   @spec update_owner_password_rules(
           MscmpSystInstance.Types.owner_id() | Msdata.SystOwnerPasswordRules.t(),
           Types.password_rule_params()
@@ -242,6 +278,12 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
         cause: error
   end
 
+  ##############################################################################
+  #
+  # get_global_password_rules
+  #
+  #
+
   @spec get_global_password_rules() ::
           {:ok, Msdata.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t()}
   def get_global_password_rules do
@@ -265,6 +307,12 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
         message: "Failure retrieving Global Password Rules.",
         cause: error
   end
+
+  ##############################################################################
+  #
+  # get_owner_password_rules
+  #
+  #
 
   @spec get_owner_password_rules(MscmpSystInstance.Types.owner_id()) ::
           {:ok, Msdata.SystOwnerPasswordRules.t()}
@@ -294,6 +342,12 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
         message: "Failure retrieving Owner Password Rules.",
         cause: error
   end
+
+  ##############################################################################
+  #
+  # get_access_account_password_rule
+  #
+  #
 
   @spec get_access_account_password_rule(Types.access_account_id()) ::
           {:ok, PasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
@@ -335,6 +389,12 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
     |> MscmpSystDb.one()
     |> parse_data_struct_to_generic_rule(access_account_id)
   end
+
+  ##############################################################################
+  #
+  # get_generic_password_rules
+  #
+  #
 
   @spec get_generic_password_rules(
           Msdata.SystGlobalPasswordRules.t() | Msdata.SystOwnerPasswordRules.t(),
@@ -409,6 +469,12 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
     update_path = path(:require_mfa, :map)
     Pathex.over!(rule, update_path, fn _ -> req_value end)
   end
+
+  ##############################################################################
+  #
+  # verify_password_rules
+  #
+  #
 
   @spec verify_password_rules(
           PasswordRules.t(),
@@ -602,6 +668,12 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
        when std_req == true and test_req == false,
        do: [{rule, std_req} | failure_list]
 
+  ##############################################################################
+  #
+  # delete_owner_password_rules
+  #
+  #
+
   @spec delete_owner_password_rules(MscmpSystInstance.Types.owner_id()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
   def delete_owner_password_rules(owner_id) do
@@ -638,11 +710,15 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
         cause: error
   end
 
+  ##############################################################################
+  #
+  # load_disallowed_passwords
+  #
+  #
+
   @spec load_disallowed_passwords(Enumerable.t(), Keyword.t()) ::
           :ok | {:error, MscmpSystError.t()}
   def load_disallowed_passwords(password_list, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, pg_format: false, timeout: 300_000)
-
     transform_func = get_disallowed_passwords_transform(opts[:pg_format])
 
     data_stream =
@@ -688,9 +764,9 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
        }}
   end
 
-  defp get_disallowed_passwords_transform(true), do: fn bytea_hash -> bytea_hash end
+  defp get_disallowed_passwords_transform(:bytea), do: fn bytea_hash -> bytea_hash end
 
-  defp get_disallowed_passwords_transform(false) do
+  defp get_disallowed_passwords_transform(:plain_text) do
     fn plain_password ->
       plain_password
       |> then(&:crypto.hash(:sha, &1))
@@ -698,6 +774,12 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
       |> then(&("\\\\x" <> &1 <> "\n"))
     end
   end
+
+  ##############################################################################
+  #
+  # disallowed_passwords_populated?
+  #
+  #
 
   @spec disallowed_passwords_populated?() :: boolean()
   def disallowed_passwords_populated?, do: MscmpSystDb.exists?(Msdata.SystDisallowedPasswords)

@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule IntegrationTest do
+  @moduledoc false
+
   use AuthenticationTestCase, async: false
 
   import Ecto.Query
@@ -42,7 +44,7 @@ defmodule IntegrationTest do
     assert :ok =
              Path.join(["database", "test_pg_disallowed_passwords.txt"])
              |> File.stream!()
-             |> MscmpSystAuthn.load_disallowed_passwords(pg_format: true)
+             |> MscmpSystAuthn.load_disallowed_passwords(pg_format: :bytea)
 
     assert :ok =
              Path.join(["database", "test_plain_disallowed_passwords.txt"])
@@ -329,10 +331,10 @@ defmodule IntegrationTest do
   test "Step 2.01: Add Unowned Access Accounts" do
     state = MscmpSystEnums.get_default_enum_item("access_account_states")
 
-    assert false == MscmpSystAuthn.access_account_exists?()
+    assert false == MscmpSystAuthn.access_accounts_exist?()
 
     assert false ==
-             MscmpSystAuthn.access_account_exists?(access_account_name: "unowned_access_account")
+             MscmpSystAuthn.access_account_name_exists?("unowned_access_account")
 
     assert {:ok, %Msdata.SystAccessAccounts{} = access_account} =
              MscmpSystAuthn.create_access_account(%{
@@ -342,12 +344,12 @@ defmodule IntegrationTest do
                allow_global_logins: true
              })
 
-    assert true == MscmpSystAuthn.access_account_exists?()
+    assert true == MscmpSystAuthn.access_accounts_exist?()
 
     assert true ==
-             MscmpSystAuthn.access_account_exists?(access_account_name: "unowned_access_account")
+             MscmpSystAuthn.access_account_name_exists?("unowned_access_account")
 
-    assert true == MscmpSystAuthn.access_account_exists?(access_account_id: access_account.id)
+    assert true == MscmpSystAuthn.access_account_id_exists?(access_account.id)
   end
 
   test "Step 2.02: Test Password for Unowned Access Account" do
@@ -870,7 +872,7 @@ defmodule IntegrationTest do
     assert {:ok, bad_token_state} =
              MscmpSystAuthn.authenticate_recovery_token(
                recovery_result.account_identifier,
-               MscmpSystUtils.get_random_string(20),
+               Msutils.String.get_random_string(20),
                ~i"10.100.170.10"
              )
 
@@ -1269,7 +1271,7 @@ defmodule IntegrationTest do
     assert {:ok, %{status: :rejected_rate_limited}} =
              MscmpSystAuthn.authenticate_email_password(
                "owned.access.account@musesystems.com",
-               MscmpSystUtils.get_random_string(40),
+               Msutils.String.get_random_string(40),
                ~i"10.123.123.123",
                owning_owner_id: owner2_id
              )
@@ -1279,7 +1281,7 @@ defmodule IntegrationTest do
     assert {:ok, %{status: :rejected}} =
              MscmpSystAuthn.authenticate_email_password(
                "owned.access.account@musesystems.com",
-               MscmpSystUtils.get_random_string(40),
+               Msutils.String.get_random_string(40),
                ~i"10.123.123.123",
                owning_owner_id: owner2_id
              )
@@ -1557,7 +1559,7 @@ defmodule IntegrationTest do
     {:ok, auth_state} =
       MscmpSystAuthn.authenticate_validation_token(
         identifier,
-        MscmpSystUtils.get_random_string(40),
+        Msutils.String.get_random_string(40),
         host_addr,
         owning_owner_id: owner_id
       )
@@ -1580,7 +1582,7 @@ defmodule IntegrationTest do
     {:ok, auth_state} =
       MscmpSystAuthn.authenticate_email_password(
         identifier,
-        MscmpSystUtils.get_random_string(40),
+        Msutils.String.get_random_string(40),
         host_addr,
         owning_owner_id: owner_id
       )
@@ -1602,8 +1604,8 @@ defmodule IntegrationTest do
   defp violate_host_rate_limit(host_addr, :rejected, limit) do
     {:ok, auth_state} =
       MscmpSystAuthn.authenticate_validation_token(
-        MscmpSystUtils.get_random_string(40),
-        MscmpSystUtils.get_random_string(40),
+        Msutils.String.get_random_string(40),
+        Msutils.String.get_random_string(40),
         host_addr
       )
 

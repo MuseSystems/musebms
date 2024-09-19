@@ -29,6 +29,12 @@ defmodule MscmpSystAuthn.Impl.Msdata.SystOwnerPasswordRules.Validators do
   @min_max_password_length 64
   @max_password_length 1024
 
+  ##############################################################################
+  #
+  # insert_changeset
+  #
+  #
+
   @spec insert_changeset(Types.password_rule_params()) ::
           Ecto.Changeset.t()
   def insert_changeset(insert_params) do
@@ -50,6 +56,12 @@ defmodule MscmpSystAuthn.Impl.Msdata.SystOwnerPasswordRules.Validators do
     ])
     |> validate_common()
   end
+
+  ##############################################################################
+  #
+  # update_changeset
+  #
+  #
 
   @spec update_changeset(Msdata.SystOwnerPasswordRules.t(), Types.password_rule_params()) ::
           Ecto.Changeset.t()

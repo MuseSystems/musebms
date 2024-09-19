@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule IdentityEmailTest do
+  @moduledoc false
+
   # credo:disable-for-this-file Credo.Check.Design.AliasUsage
   #
   # In the tests we'll be more permissive of failing this check for now.
@@ -24,6 +26,19 @@ defmodule IdentityEmailTest do
 
   @moduletag :unit
   @moduletag :capture_log
+
+  ##############################################################################
+  #
+  # Test Option Definitions
+  #
+  #
+
+  @test_options [
+    create_validated: [
+      type: :boolean,
+      default: false
+    ]
+  ]
 
   test "Can validate Email Address format" do
     assert {:ok, "AValid!EmailAddress@MuseSystems.Com"} =
@@ -43,10 +58,20 @@ defmodule IdentityEmailTest do
       Impl.AccessAccount.get_access_account_id_by_name("identity_email_create_test_accnt")
 
     # Default Options
+
+    default_opts =
+      @test_options
+      |> Keyword.take([
+        :create_validated
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([], &1))
+
     assert {:ok, default_identity} =
              Impl.Identity.Email.create_identity(
                access_account_id,
-               "identity_email_create_test_accnt@musesystems.com"
+               "identity_email_create_test_accnt@musesystems.com",
+               default_opts
              )
 
     assert %Msdata.SystIdentities{validated: nil, account_identifier: identifier} =
@@ -58,11 +83,19 @@ defmodule IdentityEmailTest do
 
     # Options: create_validated
 
+    opts =
+      @test_options
+      |> Keyword.take([
+        :create_validated
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([create_validated: true], &1))
+
     assert {:ok, default_identity} =
              Impl.Identity.Email.create_identity(
                access_account_id,
                "identity_email_create_test_accnt@musesystems.com",
-               create_validated: true
+               opts
              )
 
     assert %Msdata.SystIdentities{validated: val_date, account_identifier: identifier} =
@@ -79,7 +112,8 @@ defmodule IdentityEmailTest do
     assert {:error, %MscmpSystError{}} =
              Impl.Identity.Email.create_identity(
                access_account_id,
-               "identity_email_create_test_accnt"
+               "identity_email_create_test_accnt",
+               default_opts
              )
 
     # Mixed Case Handling
@@ -87,7 +121,8 @@ defmodule IdentityEmailTest do
     assert {:ok, default_identity} =
              Impl.Identity.Email.create_identity(
                access_account_id,
-               "Identity_Email_Create_Test_Accnt@MuseSystems.Com"
+               "Identity_Email_Create_Test_Accnt@MuseSystems.Com",
+               default_opts
              )
 
     assert %Msdata.SystIdentities{validated: nil, account_identifier: identifier} =

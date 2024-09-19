@@ -19,6 +19,12 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
 
   require Logger
 
+  ##############################################################################
+  #
+  # invite_to_instance
+  #
+  #
+
   @spec invite_to_instance(
           Types.access_account_id(),
           MscmpSystInstance.Types.instance_id(),
@@ -26,8 +32,6 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
         ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   def invite_to_instance(access_account_id, instance_id, opts)
       when is_binary(access_account_id) and is_binary(instance_id) do
-    opts = MscmpSystUtils.resolve_options(opts, create_accepted: false, expiration_days: 30)
-
     date_now = DateTime.now!("Etc/UTC")
     date_invitation = date_now
     date_accepted = if opts[:create_accepted], do: date_now, else: nil
@@ -72,6 +76,12 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
     |> verify_not_accepted()
     |> update_record(invite_params)
   end
+
+  ##############################################################################
+  #
+  # accept_instance_invite
+  #
+  #
 
   @spec accept_instance_invite(
           Types.access_account_id(),
@@ -141,6 +151,12 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
       }
   end
 
+  ##############################################################################
+  #
+  # instance_access_granted?
+  #
+  #
+
   @spec instance_access_granted?(
           Types.access_account_id(),
           MscmpSystInstance.Types.instance_id()
@@ -153,6 +169,12 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
     )
     |> MscmpSystDb.exists?()
   end
+
+  ##############################################################################
+  #
+  # decline_instance_invite
+  #
+  #
 
   @spec decline_instance_invite(
           Types.access_account_id(),
@@ -221,6 +243,12 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
         }
       }
   end
+
+  ##############################################################################
+  #
+  # revoke_instance_access
+  #
+  #
 
   @spec revoke_instance_access(
           Types.access_account_id(),

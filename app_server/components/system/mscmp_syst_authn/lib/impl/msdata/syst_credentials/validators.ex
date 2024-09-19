@@ -18,6 +18,12 @@ defmodule MscmpSystAuthn.Impl.Msdata.SystCredentials.Validators do
   alias MscmpSystAuthn.Impl.Msdata.Helpers
   alias MscmpSystAuthn.Types
 
+  ##############################################################################
+  #
+  # insert_changeset
+  #
+  #
+
   @spec insert_changeset(Types.credential_params()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params) do
     resolved_insert_params = resolve_name_params(insert_params, :insert)
@@ -33,6 +39,12 @@ defmodule MscmpSystAuthn.Impl.Msdata.SystCredentials.Validators do
     |> put_last_updated()
     |> validate_common()
   end
+
+  ##############################################################################
+  #
+  # update_changeset
+  #
+  #
 
   @spec update_changeset(Msdata.SystCredentials.t(), Types.credential_params()) ::
           Ecto.Changeset.t()

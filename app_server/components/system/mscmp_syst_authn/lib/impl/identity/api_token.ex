@@ -22,26 +22,19 @@ defmodule MscmpSystAuthn.Impl.Identity.ApiToken do
 
   require Logger
 
-  @default_create_validated true
-  @default_identity_token_length 20
-  @default_identity_tokens :mixed_alphanum
-  @default_external_name nil
+  ##############################################################################
+  #
+  # create_identity
+  #
+  #
 
   @spec create_identity(Types.access_account_id(), Types.account_identifier() | nil, Keyword.t()) ::
           {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  def create_identity(access_account_id, api_token, opts \\ [])
+  def create_identity(access_account_id, api_token, opts)
       when is_binary(access_account_id) do
-    opts =
-      MscmpSystUtils.resolve_options(opts,
-        create_validated: @default_create_validated,
-        identity_token_length: @default_identity_token_length,
-        identity_tokens: @default_identity_tokens,
-        external_name: @default_external_name
-      )
-
     api_token =
       api_token ||
-        MscmpSystUtils.get_random_string(opts[:identity_token_length], opts[:identity_tokens])
+        Msutils.String.get_random_string(opts[:identity_token_length], opts[:identity_tokens])
 
     identity_params = %{
       access_account_id: access_account_id,
@@ -65,6 +58,12 @@ defmodule MscmpSystAuthn.Impl.Identity.ApiToken do
       }
   end
 
+  ##############################################################################
+  #
+  # identify_access_account
+  #
+  #
+
   @spec identify_access_account(
           Types.account_identifier(),
           MscmpSystInstance.Types.owner_id() | nil
@@ -74,6 +73,12 @@ defmodule MscmpSystAuthn.Impl.Identity.ApiToken do
     |> Helpers.get_identification_query("identity_types_sysdef_api", owner_id)
     |> MscmpSystDb.one()
   end
+
+  ##############################################################################
+  #
+  # update_identity_external_name
+  #
+  #
 
   @spec update_identity_external_name(
           Types.identity_id() | Msdata.SystIdentities.t(),

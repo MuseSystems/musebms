@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule IdentityTest do
+  @moduledoc false
+
   # credo:disable-for-this-file Credo.Check.Design.AliasUsage
   #
   # In the tests we'll be more permissive of failing this check for now.

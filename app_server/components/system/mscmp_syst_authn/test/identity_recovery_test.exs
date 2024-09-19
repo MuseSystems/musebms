@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule IdentityRecoveryTest do
+  @moduledoc false
+
   # credo:disable-for-this-file Credo.Check.Design.AliasUsage
   #
   # In the tests we'll be more permissive of failing this check for now.
@@ -26,6 +28,31 @@ defmodule IdentityRecoveryTest do
 
   @moduletag :unit
   @moduletag :capture_log
+
+  ##############################################################################
+  #
+  # Test Option Definitions
+  #
+  #
+
+  @test_options [
+    identity_token_length: [
+      type: :pos_integer,
+      default: 40
+    ],
+    identity_tokens: [
+      type: {:or, [{:list, :any}, {:in, [:alphanum, :mixed_alphanum, :b32e, :b32c]}]},
+      default: :mixed_alphanum
+    ],
+    expiration_hours: [
+      type: :pos_integer,
+      default: 24
+    ],
+    create_validated: [
+      type: :boolean,
+      default: true
+    ]
+  ]
 
   test "Can successfully Request Identity Recovery" do
     {:ok, access_account_id} =
@@ -48,8 +75,19 @@ defmodule IdentityRecoveryTest do
       upper: expires_end_time
     }
 
+    opts =
+      @test_options
+      |> Keyword.take([
+        :identity_tokens,
+        :identity_token_length,
+        :expiration_hours,
+        :create_validated
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([], &1))
+
     assert {:ok, recovery_identity} =
-             Impl.Identity.Recovery.request_credential_recovery(access_account_id, [])
+             Impl.Identity.Recovery.request_credential_recovery(access_account_id, opts)
 
     assert :rcl = DbTypes.compare(recovery_identity.identity_expires, expires_datetime_range)
 
@@ -72,9 +110,21 @@ defmodule IdentityRecoveryTest do
       upper: expires_end_time
     }
 
+    opts =
+      @test_options
+      |> Keyword.take([
+        :identity_tokens,
+        :identity_token_length,
+        :expiration_hours,
+        :create_validated
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([expiration_hours: hours_before_expire], &1))
+
     assert {:ok, recovery_identity} =
-             Impl.Identity.Recovery.request_credential_recovery(access_account_id,
-               expiration_hours: hours_before_expire
+             Impl.Identity.Recovery.request_credential_recovery(
+               access_account_id,
+               opts
              )
 
     assert :rcl = DbTypes.compare(recovery_identity.identity_expires, expires_datetime_range)
@@ -98,9 +148,21 @@ defmodule IdentityRecoveryTest do
 
     token_length_override = :rand.uniform(60) + 10
 
+    opts =
+      @test_options
+      |> Keyword.take([
+        :identity_tokens,
+        :identity_token_length,
+        :expiration_hours,
+        :create_validated
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([identity_token_length: token_length_override], &1))
+
     assert {:ok, recovery_identity} =
-             Impl.Identity.Recovery.request_credential_recovery(access_account_id,
-               identity_token_length: token_length_override
+             Impl.Identity.Recovery.request_credential_recovery(
+               access_account_id,
+               opts
              )
 
     assert :rcl = DbTypes.compare(recovery_identity.identity_expires, expires_datetime_range)
@@ -122,9 +184,21 @@ defmodule IdentityRecoveryTest do
       upper: expires_end_time
     }
 
+    opts =
+      @test_options
+      |> Keyword.take([
+        :identity_tokens,
+        :identity_token_length,
+        :expiration_hours,
+        :create_validated
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([identity_tokens: ~c"ABC"], &1))
+
     assert {:ok, recovery_identity} =
-             Impl.Identity.Recovery.request_credential_recovery(access_account_id,
-               identity_tokens: ~c"ABC"
+             Impl.Identity.Recovery.request_credential_recovery(
+               access_account_id,
+               opts
              )
 
     assert :rcl = DbTypes.compare(recovery_identity.identity_expires, expires_datetime_range)

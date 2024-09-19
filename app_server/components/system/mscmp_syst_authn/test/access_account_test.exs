@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule AccessAccountTest do
+  @moduledoc false
+
   use AuthenticationTestCase, async: true
 
   alias MscmpSystAuthn.Impl
@@ -160,24 +162,21 @@ defmodule AccessAccountTest do
     assert is_binary(access_account_id)
   end
 
-  test "Can test if Access Account Exists" do
+  test "Can test if Access Accounts Exists" do
     {:ok, access_account_record} = MscmpSystAuthn.get_access_account_by_name("owned_all_access")
 
-    assert true == Impl.AccessAccount.access_account_exists?([])
+    assert true == Impl.AccessAccount.access_accounts_exist?()
 
     assert true ==
-             Impl.AccessAccount.access_account_exists?(
-               access_account_id: access_account_record.id
-             )
-
-    assert true ==
-             Impl.AccessAccount.access_account_exists?(
-               access_account_name: access_account_record.internal_name
-             )
+             Impl.AccessAccount.access_account_id_exists?(access_account_record.id)
 
     assert false ==
-             Impl.AccessAccount.access_account_exists?(
-               access_account_name: "nonexistent_access_account"
-             )
+             Impl.AccessAccount.access_account_id_exists?("00000000-0000-0000-0000-000000000000")
+
+    assert true ==
+             Impl.AccessAccount.access_account_name_exists?(access_account_record.internal_name)
+
+    assert false ==
+             Impl.AccessAccount.access_account_name_exists?("nonexistent_access_account")
   end
 end

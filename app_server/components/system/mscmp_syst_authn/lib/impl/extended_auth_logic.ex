@@ -55,11 +55,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   # Rate Limit is max attempts per time window in milliseconds expressed as:
   # {<attempts>, <milliseconds>}
 
-  @default_identifier_rate_limit {5, 60_000 * 30}
-  @default_host_ban_rate_limit {30, 60_000 * 60 * 2}
   @reset_rate_limit_statuses [:authenticated]
-
-  @default_deadline_minutes 5
 
   @email_password_extended_auth_ops [
     :require_mfa,
@@ -114,6 +110,12 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     :check_credential
   ]
 
+  ##############################################################################
+  #
+  # authenticate_email_password
+  #
+  #
+
   @spec authenticate_email_password(
           Types.account_identifier(),
           Types.credential(),
@@ -122,13 +124,6 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
         ) ::
           {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
   def authenticate_email_password(email_addr, pwd_text, host_addr, opts) do
-    opts =
-      MscmpSystUtils.resolve_options(opts,
-        owning_owner_id: nil,
-        instance_id: nil,
-        deadline_minutes: @default_deadline_minutes
-      )
-
     authentication_deadline = DateTime.utc_now() |> DateTime.add(opts[:deadline_minutes], :minute)
 
     %{id: identity_type_id} =
@@ -187,6 +182,9 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   @spec authenticate_email_password(AuthenticationState.t(), Keyword.t()) ::
           {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
   def authenticate_email_password(auth_state, opts) do
+    identifier_rate_limit_opts = Keyword.take(opts, [:identifier_rate_limit])
+    host_rate_limit_opts = Keyword.take(opts, [:host_ban_rate_limit])
+
     preliminary_auth_state =
       auth_state
       |> struct!(
@@ -196,7 +194,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
       |> maybe_start_email_password_authentication()
       |> confirm_deadline()
       |> confirm_instance_identified()
-      |> confirm_identifier_rate_limit(opts)
+      |> confirm_identifier_rate_limit(identifier_rate_limit_opts)
       |> confirm_global_network_rules()
       |> confirm_email_identity()
       |> confirm_password_credential()
@@ -207,7 +205,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
       preliminary_auth_state
       |> confirm_instance()
       |> confirm_instance_network_rules()
-      |> confirm_host_rate_limit(opts)
+      |> confirm_host_rate_limit(host_rate_limit_opts)
       |> finalize_authentication()
       |> maybe_reset_rate_limits()
       |> cleanse_auth_state()
@@ -292,6 +290,12 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     end
   end
 
+  ##############################################################################
+  #
+  # authenticate_api_token
+  #
+  #
+
   @spec authenticate_api_token(
           Types.account_identifier(),
           Types.credential(),
@@ -302,12 +306,6 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
           {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
 
   def authenticate_api_token(identifier, token, host_addr, instance_id, opts) do
-    opts =
-      MscmpSystUtils.resolve_options(opts,
-        owning_owner_id: nil,
-        deadline_minutes: @default_deadline_minutes
-      )
-
     authentication_deadline = DateTime.utc_now() |> DateTime.add(opts[:deadline_minutes], :minute)
 
     %{id: identity_type_id} = Impl.Identity.get_identity_type_by_name("identity_types_sysdef_api")
@@ -332,16 +330,19 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   @spec authenticate_api_token(AuthenticationState.t(), Keyword.t()) ::
           {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
   def authenticate_api_token(auth_state, opts) do
+    identifier_rate_limit_opts = Keyword.take(opts, [:identifier_rate_limit])
+    host_rate_limit_opts = Keyword.take(opts, [:host_ban_rate_limit])
+
     auth_state
     |> struct!(owning_owner_id: auth_state.owning_owner_id || opts[:owning_owner_id])
     |> confirm_deadline()
-    |> confirm_identifier_rate_limit(opts)
+    |> confirm_identifier_rate_limit(identifier_rate_limit_opts)
     |> confirm_global_network_rules()
     |> confirm_api_token_identity()
     |> confirm_api_token_credential()
     |> confirm_instance()
     |> confirm_instance_network_rules()
-    |> confirm_host_rate_limit(opts)
+    |> confirm_host_rate_limit(host_rate_limit_opts)
     |> finalize_authentication()
     |> maybe_reset_rate_limits()
     |> cleanse_auth_state()
@@ -392,6 +393,12 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     end
   end
 
+  ##############################################################################
+  #
+  # authenticate_validation_token
+  #
+  #
+
   @spec authenticate_validation_token(
           Types.account_identifier(),
           Types.credential(),
@@ -401,12 +408,6 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
           {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
 
   def authenticate_validation_token(identifier, token, host_addr, opts) do
-    opts =
-      MscmpSystUtils.resolve_options(opts,
-        owning_owner_id: nil,
-        deadline_minutes: @default_deadline_minutes
-      )
-
     authentication_deadline = DateTime.utc_now() |> DateTime.add(opts[:deadline_minutes], :minute)
 
     %{id: identity_type_id} =
@@ -432,13 +433,16 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   @spec authenticate_validation_token(AuthenticationState.t(), Keyword.t()) ::
           {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
   def authenticate_validation_token(auth_state, opts) do
+    identifier_rate_limit_opts = Keyword.take(opts, [:identifier_rate_limit])
+    host_rate_limit_opts = Keyword.take(opts, [:host_ban_rate_limit])
+
     auth_state
     |> confirm_deadline()
-    |> confirm_identifier_rate_limit(opts)
+    |> confirm_identifier_rate_limit(identifier_rate_limit_opts)
     |> confirm_global_network_rules()
     |> confirm_validation_identity()
     |> confirm_validation_credential()
-    |> confirm_host_rate_limit(opts)
+    |> confirm_host_rate_limit(host_rate_limit_opts)
     |> finalize_authentication()
     |> confirm_successful_validation()
     |> maybe_reset_rate_limits()
@@ -501,6 +505,12 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
 
   defp confirm_successful_validation(auth_state), do: auth_state
 
+  ##############################################################################
+  #
+  # authenticate_recovery_token
+  #
+  #
+
   @spec authenticate_recovery_token(
           Types.account_identifier(),
           Types.credential(),
@@ -509,12 +519,6 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
         ) ::
           {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
   def authenticate_recovery_token(identifier, token, host_addr, opts) do
-    opts =
-      MscmpSystUtils.resolve_options(opts,
-        owning_owner_id: nil,
-        deadline_minutes: @default_deadline_minutes
-      )
-
     authentication_deadline = DateTime.utc_now() |> DateTime.add(opts[:deadline_minutes], :minute)
 
     %{id: identity_type_id} =
@@ -540,13 +544,16 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   @spec authenticate_recovery_token(AuthenticationState.t(), Keyword.t()) ::
           {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
   def authenticate_recovery_token(auth_state, opts) do
+    identifier_rate_limit_opts = Keyword.take(opts, [:identifier_rate_limit])
+    host_rate_limit_opts = Keyword.take(opts, [:host_ban_rate_limit])
+
     auth_state
     |> confirm_deadline()
-    |> confirm_identifier_rate_limit(opts)
+    |> confirm_identifier_rate_limit(identifier_rate_limit_opts)
     |> confirm_global_network_rules()
     |> confirm_credential_recovery()
     |> confirm_recovery_credential()
-    |> confirm_host_rate_limit(opts)
+    |> confirm_host_rate_limit(host_rate_limit_opts)
     |> finalize_authentication()
     |> confirm_successful_recovery()
     |> maybe_reset_rate_limits()
@@ -608,6 +615,12 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   end
 
   defp confirm_successful_recovery(auth_state), do: auth_state
+
+  ##############################################################################
+  #
+  # identify_access_account_by_code
+  #
+  #
 
   @spec identify_access_account_by_code(
           Types.account_identifier(),
@@ -905,16 +918,10 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
       cause: error
   end
 
-  defp check_identifier_rate_limit(identifier, opts) do
-    opts =
-      MscmpSystUtils.resolve_options(opts, identifier_rate_limit: @default_identifier_rate_limit)
-
-    check_rate_limit(:identifier, identifier, opts[:identifier_rate_limit])
-  end
+  defp check_identifier_rate_limit(identifier, opts),
+    do: check_rate_limit(:identifier, identifier, opts[:identifier_rate_limit])
 
   defp check_host_ban_rate_limit(host_addr, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, host_ban_rate_limit: @default_host_ban_rate_limit)
-
     check_rate_limit(:host_ban, MscmpSystNetwork.to_string(host_addr), opts[:host_ban_rate_limit])
   end
 
