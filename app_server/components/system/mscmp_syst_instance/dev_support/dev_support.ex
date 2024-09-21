@@ -19,7 +19,7 @@ defmodule DevSupport do
   use MscmpSystEnums.Macros
 
   db_devsupport(:dev)
-  enums_devsupport()
+  enums_devsupport(:dev)
 
   @migration_test_source_root_dir "../../../../database"
   @migration_unit_test_ds_type "mscmp_syst_instance_unit_test"
@@ -35,7 +35,7 @@ defmodule DevSupport do
         Registry.child_spec(keys: :unique, name: @registry),
         setup_database(db_kind),
         MscmpSystEnums.child_spec(
-          service_name: @enums_service_name_dev, datastore_context_name: @datastore_context_name )
+          service_name: @enums_service_name, datastore_context_name: @datastore_context_name )
       ]
 
       {:ok, _pid} =
@@ -43,7 +43,7 @@ defmodule DevSupport do
           children, strategy: :one_for_one, name: :"MscmpSystInstance.DevSupportSupervisor")
 
     _ = MscmpSystDb.put_datastore_context(@datastore_context_name)
-    _ = MscmpSystEnums.put_enums_service(@enums_service_name_dev)
+    _ = MscmpSystEnums.put_enums_service(@enums_service_name)
 
     :ok
   end

@@ -14,16 +14,23 @@
 defmodule MscmpSystEnums.Macros do
   @moduledoc false
 
+  @spec __using__(term()) :: Macro.t()
   defmacro __using__(_opts) do
     quote do
       import MscmpSystEnums.Macros
     end
   end
 
-  defmacro enums_devsupport do
+  @spec enums_devsupport(:dev | :test) :: Macro.t()
+  defmacro enums_devsupport(support_type) do
+    service_name =
+      case support_type do
+        :dev -> :"MscmpSystEnums.DevSupportService"
+        :test -> :"MscmpSystEnums.TestSupportService"
+      end
+
     quote do
-      @enums_service_name_dev :"MscmpSystEnums.DevSupportService"
-      @enums_service_name_test :"MscmpSystEnums.TestSupportService"
+      @enums_service_name unquote(service_name)
     end
   end
 end

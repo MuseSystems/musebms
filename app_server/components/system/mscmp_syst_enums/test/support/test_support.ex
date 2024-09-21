@@ -29,7 +29,7 @@ defmodule TestSupport do
   alias Mix.Tasks.Builddb
 
   db_devsupport(:test)
-  enums_devsupport()
+  enums_devsupport(:test)
 
   @migration_test_source_root_dir "../../../../database"
   @migration_unit_test_ds_type "mscmp_syst_enums_unit_test"
@@ -51,7 +51,7 @@ defmodule TestSupport do
   end
 
   def get_datastore_context_name, do: @db_support_context_name
-  def get_enums_service_name, do: @enums_service_name_test
+  def get_enums_service_name, do: @enums_service_name
 
   @spec cleanup_testing_database(:doc_testing | :integration_testing | :unit_testing) :: [
           binary()
