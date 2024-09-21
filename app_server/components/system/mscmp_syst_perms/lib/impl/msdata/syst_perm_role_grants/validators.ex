@@ -78,7 +78,7 @@ defmodule MscmpSystPerms.Impl.Msdata.SystPermRoleGrants.Validators do
     |> validate_inclusion(:admin_scope, @scopes)
     |> validate_inclusion(:ops_scope, @scopes)
     |> validate_view_maint_relative_scopes()
-    |> unique_constraint([:pern_role_id, :perm_id],
+    |> unique_constraint([:perm_role_id, :perm_id],
       name: :syst_perm_role_grants_perm_perm_role_udx
     )
     |> foreign_key_constraint(:perm_role_id, name: :syst_perm_role_grants_perm_role_fk)
@@ -97,9 +97,9 @@ defmodule MscmpSystPerms.Impl.Msdata.SystPermRoleGrants.Validators do
     view_scope = get_field(changeset, :view_scope)
     maint_scope = get_field(changeset, :maint_scope)
 
-    comparision_result = Impl.PermRoleGrant.compare_scopes(view_scope, maint_scope)
+    comparison_result = Impl.PermRoleGrant.compare_scopes(view_scope, maint_scope)
 
-    maybe_add_view_maint_scope_error(comparision_result, changeset)
+    maybe_add_view_maint_scope_error(comparison_result, changeset)
   end
 
   defp maybe_add_view_maint_scope_error(:lt, changeset) do

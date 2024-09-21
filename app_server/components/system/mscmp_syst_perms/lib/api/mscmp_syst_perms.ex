@@ -26,6 +26,12 @@ defmodule MscmpSystPerms do
   #
   # ==============================================================================================
 
+  ##############################################################################
+  #
+  # update_perm_functional_type
+  #
+  #
+
   @doc section: :perms_data
   @doc """
   Updates Permission Functional Type user maintainable data.
@@ -64,6 +70,12 @@ defmodule MscmpSystPerms do
   #
   # ==============================================================================================
 
+  ##############################################################################
+  #
+  # create_perm
+  #
+  #
+
   @doc section: :perms_data
   @doc """
   Creates a new user defined Permission record.
@@ -80,6 +92,12 @@ defmodule MscmpSystPerms do
   @spec create_perm(Types.perm_params()) ::
           {:ok, Msdata.SystPerms.t()} | {:error, MscmpSystError.t()}
   defdelegate create_perm(perm_params), to: Impl.Perm
+
+  ##############################################################################
+  #
+  # update_perm
+  #
+  #
 
   @doc section: :perms_data
   @doc """
@@ -106,6 +124,12 @@ defmodule MscmpSystPerms do
           {:ok, Msdata.SystPerms.t()} | {:error, MscmpSystError.t()}
   defdelegate update_perm(perm, perm_params), to: Impl.Perm
 
+  ##############################################################################
+  #
+  # delete_perm
+  #
+  #
+
   @doc section: :perms_data
   @doc """
   Deletes a user defined Permission record.
@@ -130,6 +154,12 @@ defmodule MscmpSystPerms do
   #
   # ==============================================================================================
 
+  ##############################################################################
+  #
+  # create_perm_role
+  #
+  #
+
   @doc section: :perms_data
   @doc """
   Creates a new user defined Permission Role record.
@@ -147,6 +177,12 @@ defmodule MscmpSystPerms do
   @spec create_perm_role(Types.perm_role_params()) ::
           {:ok, Msdata.SystPermRoles.t()} | {:error, MscmpSystError.t()}
   defdelegate create_perm_role(perm_role_params), to: Impl.PermRole
+
+  ##############################################################################
+  #
+  # update_perm_role
+  #
+  #
 
   @doc section: :perms_data
   @doc """
@@ -177,6 +213,12 @@ defmodule MscmpSystPerms do
           {:ok, Msdata.SystPermRoles.t()} | {:error, MscmpSystError.t()}
   defdelegate update_perm_role(perm_role, perm_role_params), to: Impl.PermRole
 
+  ##############################################################################
+  #
+  # delete_perm_role
+  #
+  #
+
   @doc section: :perms_data
   @doc """
   Deletes user defined Permission Role records.
@@ -197,6 +239,12 @@ defmodule MscmpSystPerms do
   @spec delete_perm_role(Msdata.SystPermRoles.t() | Types.perm_role_id()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
   defdelegate delete_perm_role(perm_role), to: Impl.PermRole
+
+  ##############################################################################
+  #
+  # get_perm_role_id_by_name
+  #
+  #
 
   @doc section: :perms_data
   @doc """
@@ -239,6 +287,12 @@ defmodule MscmpSystPerms do
   #
   # ==============================================================================================
 
+  ##############################################################################
+  #
+  # create_perm_role_grant
+  #
+  #
+
   @doc section: :perms_data
   @doc """
   Creates a new Permission Role Grant to a user defined Permission Role.
@@ -260,6 +314,12 @@ defmodule MscmpSystPerms do
   @spec create_perm_role_grant(Types.perm_role_grant_params()) ::
           {:ok, Msdata.SystPermRoleGrants.t()} | {:error, MscmpSystError.t()}
   defdelegate create_perm_role_grant(perm_role_grant_params), to: Impl.PermRoleGrant
+
+  ##############################################################################
+  #
+  # update_perm_role_grant
+  #
+  #
 
   @doc section: :perms_data
   @doc """
@@ -291,6 +351,12 @@ defmodule MscmpSystPerms do
   defdelegate update_perm_role_grant(perm_role_grant, perm_role_grant_params),
     to: Impl.PermRoleGrant
 
+  ##############################################################################
+  #
+  # delete_perm_role_grant
+  #
+  #
+
   @doc section: :perms_data
   @doc """
   Deletes the Permission Role Grant records of user defined Permission Roles.
@@ -312,6 +378,12 @@ defmodule MscmpSystPerms do
   @spec delete_perm_role_grant(Msdata.SystPermRoleGrants.t() | Types.perm_role_grant_id()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
   defdelegate delete_perm_role_grant(perm_role_grant), to: Impl.PermRoleGrant
+
+  ##############################################################################
+  #
+  # compare_scopes
+  #
+  #
 
   @doc section: :perms_data
   @doc """
@@ -350,6 +422,42 @@ defmodule MscmpSystPerms do
   #
   # ==============================================================================================
 
+  ##############################################################################
+  #
+  # Protocol Options Definition
+  #
+  #
+
+  protocol_option_defs = [
+    permissions: [
+      type: {:or, [{:in, [:all]}, :string, {:list, :string}]},
+      default: :all,
+      doc: """
+      Optionally filters the permissions returned to the single requested
+      permission or a list of permissions.  The special value of `:all` will
+      return all permissions.
+      """
+    ],
+    preload_perms: [
+      type: :boolean,
+      default: false,
+      doc: """
+      A boolean option which, when `true`, will preload the
+      `Msdata.SystPermRoleGrants` `perm` data.
+      """
+    ]
+  ]
+
+  ##############################################################################
+  #
+  # get_effective_perm_grants
+  #
+  #
+
+  @get_effective_perm_grant_opts NimbleOptions.new!(
+                                   Keyword.take(protocol_option_defs, [:permissions])
+                                 )
+
   @doc section: :perms_management
   @doc """
   Provides the effective Permissions/Rights/Scopes for the user context
@@ -371,21 +479,38 @@ defmodule MscmpSystPerms do
     selection return values are determine are implementation specific and will
     be documented on a case-by-case basis.
 
-    * `opts` - a Keyword List of optional parameters which may be provided.  The
-    only general option is listed below, each specific implementation of this
-    function may extend the available options as appropriate to the
-    implementation.
+    * `opts` - a Keyword List of optional parameters which may be provided.
 
-      * `permissions` - a list of specific Permission names to lookup.  This is
-      usually supplied as a limiting filter; without this list the typical
-      behavior is to return all of the permissions for a given Permission
-      Functional Type filtered only by the `selector` data.  Again, the details
-      of the filtering or inclusion using this option will be implementation
-      specific and documented for each individual implementation.
+  ## Options
+
+      #{NimbleOptions.docs(@get_effective_perm_grant_opts)}
   """
+  @spec get_effective_perm_grants(struct()) ::
+          {:ok, Types.perm_grants()} | {:error, MscmpSystError.t()}
   @spec get_effective_perm_grants(struct(), Keyword.t()) ::
           {:ok, Types.perm_grants()} | {:error, MscmpSystError.t()}
-  defdelegate get_effective_perm_grants(selector, opts \\ []), to: MscmpSystPerms.Protocol
+  def get_effective_perm_grants(selector, opts \\ []) do
+    case NimbleOptions.validate(opts, @get_effective_perm_grant_opts) do
+      {:ok, validated_opts} ->
+        MscmpSystPerms.Protocol.get_effective_perm_grants(selector, validated_opts)
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :parameter_error,
+           message: "Option validation error",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # list_perm_grants
+  #
+  #
+
+  @list_perm_grant_opts NimbleOptions.new!(Keyword.take(protocol_option_defs, [:preload_perms]))
 
   @doc section: :perms_management
   @doc """
@@ -407,18 +532,38 @@ defmodule MscmpSystPerms do
     selection return values are determine are implementation specific and will
     be documented on a case-by-case basis.
 
-    * `opts` - a Keyword List of optional parameters which may be provided.  The
-    only general option is listed below, each specific implementation of this
-    function may extend the available options as appropriate to the
-    implementation.
+    * `opts` - a Keyword List of optional parameters which may be provided.
 
-      * `include_perms` - a boolean option which, when set `true`, will preload
-      the `Msdata.SystPermRoleGrants` `perm` data.  The default value for this
-      option is `false`.
+  ## Options
+
+    #{NimbleOptions.docs(@list_perm_grant_opts)}
   """
+  @spec list_perm_grants(struct()) ::
+          {:ok, [Msdata.SystPermRoles.t()]} | {:error, MscmpSystError.t()}
   @spec list_perm_grants(struct(), Keyword.t()) ::
           {:ok, [Msdata.SystPermRoles.t()]} | {:error, MscmpSystError.t()}
-  defdelegate list_perm_grants(selector, opts \\ []), to: MscmpSystPerms.Protocol
+  def list_perm_grants(selector, opts \\ []) do
+    case NimbleOptions.validate(opts, @list_perm_grant_opts) do
+      {:ok, validated_opts} ->
+        MscmpSystPerms.Protocol.list_perm_grants(selector, validated_opts)
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :parameter_error,
+           message: "Option validation error",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # list_perm_denials
+  #
+  #
+
+  @list_perm_denial_opts NimbleOptions.new!(Keyword.take(protocol_option_defs, [:preload_perms]))
 
   @doc section: :perms_management
   @doc """
@@ -442,14 +587,36 @@ defmodule MscmpSystPerms do
     are determine are implementation specific and will be documented on a case-
     by-case basis.
 
-    * `opts` - a Keyword List of optional parameters which may be provided.  The
-    only general option is listed below, each specific implementation of this
-    function may extend the available options as appropriate to the
-    implementation.
+    * `opts` - a Keyword List of optional parameters which may be provided.
+
+  ## Options
+
+    #{NimbleOptions.docs(@list_perm_denial_opts)}
   """
+  @spec list_perm_denials(struct()) ::
+          {:ok, [Msdata.SystPerms.t()] | []} | {:error, MscmpSystError.t()}
   @spec list_perm_denials(struct(), Keyword.t()) ::
           {:ok, [Msdata.SystPerms.t()] | []} | {:error, MscmpSystError.t()}
-  defdelegate list_perm_denials(selector, opts \\ []), to: MscmpSystPerms.Protocol
+  def list_perm_denials(selector, opts \\ []) do
+    case NimbleOptions.validate(opts, @list_perm_denial_opts) do
+      {:ok, validated_opts} ->
+        MscmpSystPerms.Protocol.list_perm_denials(selector, validated_opts)
+
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :parameter_error,
+           message: "Option validation error",
+           cause: error
+         }}
+    end
+  end
+
+  ##############################################################################
+  #
+  # grant_perm_role
+  #
+  #
 
   @doc section: :perms_management
   @doc """
@@ -470,6 +637,12 @@ defmodule MscmpSystPerms do
   """
   @spec grant_perm_role(struct(), Types.perm_role_id()) :: :ok | {:error, MscmpSystError.t()}
   defdelegate grant_perm_role(selector, perm_role_id), to: MscmpSystPerms.Protocol
+
+  ##############################################################################
+  #
+  # revoke_perm_role
+  #
+  #
 
   @doc section: :perms_management
   @doc """

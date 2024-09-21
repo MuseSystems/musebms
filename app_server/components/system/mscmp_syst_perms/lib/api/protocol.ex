@@ -79,7 +79,7 @@ defprotocol MscmpSystPerms.Protocol do
     implementation.
 
 
-      * `include_perms` - a boolean option which, when set `true`, will preload
+      * `preload_perms` - a boolean option which, when set `true`, will preload
       the `Msdata.SystPermRoleGrants` `perm` data.  The default value for this
       option is `false`.
   """

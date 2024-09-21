@@ -15,8 +15,6 @@ defmodule MscmpSystPerms.Impl.Msdata.SystPerms.Validators do
 
   import Ecto.Changeset
 
-  alias MscmpSystPerms.Impl.Msdata.GeneralValidators
-  alias MscmpSystPerms.Impl.Msdata.Helpers
   alias MscmpSystPerms.Types
 
   # The scope options fields are not "required" in the insert_changeset function
@@ -25,8 +23,6 @@ defmodule MscmpSystPerms.Impl.Msdata.SystPerms.Validators do
 
   @spec insert_changeset(Types.perm_params(), Keyword.t()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, Helpers.option_defaults())
-
     resolved_insert_params = resolve_scopes(insert_params)
 
     %Msdata.SystPerms{}
@@ -52,8 +48,6 @@ defmodule MscmpSystPerms.Impl.Msdata.SystPerms.Validators do
   @spec update_changeset(Msdata.SystPerms.t(), Types.perm_params(), Keyword.t()) ::
           Ecto.Changeset.t()
   def update_changeset(perm, update_params, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, Helpers.option_defaults())
-
     resolved_update_params = resolve_scopes(update_params)
 
     perm
@@ -66,7 +60,7 @@ defmodule MscmpSystPerms.Impl.Msdata.SystPerms.Validators do
       :admin_scope_options,
       :ops_scope_options
     ])
-    |> GeneralValidators.validate_syst_defined_changes([
+    |> Msutils.Data.validate_syst_defined_changes([
       :internal_name,
       :view_scope_options,
       :maint_scope_options,
@@ -88,8 +82,8 @@ defmodule MscmpSystPerms.Impl.Msdata.SystPerms.Validators do
 
   defp validate_common(changeset, opts) do
     changeset
-    |> GeneralValidators.validate_internal_name(opts)
-    |> GeneralValidators.validate_display_name(opts)
+    |> Msutils.Data.validate_internal_name(opts)
+    |> Msutils.Data.validate_display_name(opts)
     |> unique_constraint(:internal_name, name: :syst_perms_internal_name_udx)
     |> unique_constraint(:display_name, name: :syst_perms_display_name_udx)
     |> check_constraint(:view_scope_options, name: :syst_perms_view_scope_options_chk)

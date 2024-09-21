@@ -596,20 +596,20 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>syst_perms_view_scope_options_chk</td>
-                                    <td>(((cardinality(view_scope_options) &gt; 0) AND (view_scope_options &lt;@ ARRAY[&#39;unused&#39;::text, &#39;deny&#39;::text, &#39;same_user&#39;::text, &#39;same_group&#39;::text, &#39;all&#39;::text])))</td>
-                                </tr>
-                                <tr>
                                     <td>syst_perms_ops_scope_options_chk</td>
                                     <td>(((cardinality(ops_scope_options) &gt; 0) AND (ops_scope_options &lt;@ ARRAY[&#39;unused&#39;::text, &#39;deny&#39;::text, &#39;same_user&#39;::text, &#39;same_group&#39;::text, &#39;all&#39;::text])))</td>
                                 </tr>
                                 <tr>
-                                    <td>syst_perms_admin_scope_options_chk</td>
-                                    <td>(((cardinality(admin_scope_options) &gt; 0) AND (admin_scope_options &lt;@ ARRAY[&#39;unused&#39;::text, &#39;deny&#39;::text, &#39;same_user&#39;::text, &#39;same_group&#39;::text, &#39;all&#39;::text])))</td>
+                                    <td>syst_perms_view_scope_options_chk</td>
+                                    <td>(((cardinality(view_scope_options) &gt; 0) AND (view_scope_options &lt;@ ARRAY[&#39;unused&#39;::text, &#39;deny&#39;::text, &#39;same_user&#39;::text, &#39;same_group&#39;::text, &#39;all&#39;::text])))</td>
                                 </tr>
                                 <tr>
                                     <td>syst_perms_maint_scope_options_chk</td>
                                     <td>(((cardinality(maint_scope_options) &gt; 0) AND (maint_scope_options &lt;@ ARRAY[&#39;unused&#39;::text, &#39;deny&#39;::text, &#39;same_user&#39;::text, &#39;same_group&#39;::text, &#39;all&#39;::text])))</td>
+                                </tr>
+                                <tr>
+                                    <td>syst_perms_admin_scope_options_chk</td>
+                                    <td>(((cardinality(admin_scope_options) &gt; 0) AND (admin_scope_options &lt;@ ARRAY[&#39;unused&#39;::text, &#39;deny&#39;::text, &#39;same_user&#39;::text, &#39;same_group&#39;::text, &#39;all&#39;::text])))</td>
                                 </tr>
                                 </tbody>
                             </table>

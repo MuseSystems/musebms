@@ -15,8 +15,6 @@ defmodule MscmpSystPerms.Impl.Msdata.SystPermFunctionalTypes.Validators do
 
   import Ecto.Changeset
 
-  alias MscmpSystPerms.Impl.Msdata.GeneralValidators
-  alias MscmpSystPerms.Impl.Msdata.Helpers
   alias MscmpSystPerms.Types
 
   @spec update_changeset(
@@ -26,12 +24,10 @@ defmodule MscmpSystPerms.Impl.Msdata.SystPermFunctionalTypes.Validators do
         ) ::
           Ecto.Changeset.t()
   def update_changeset(perm_functional_type, update_params, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, Helpers.option_defaults())
-
     perm_functional_type
     |> cast(update_params, [:display_name, :user_description])
     |> validate_required([:display_name])
-    |> GeneralValidators.validate_display_name(opts)
+    |> Msutils.Data.validate_display_name(opts)
     |> optimistic_lock(:diag_row_version)
     |> unique_constraint(:internal_name, name: :syst_perm_functional_types_internal_name_udx)
     |> unique_constraint(:display_name, name: :syst_perm_functional_types_display_name_udx)

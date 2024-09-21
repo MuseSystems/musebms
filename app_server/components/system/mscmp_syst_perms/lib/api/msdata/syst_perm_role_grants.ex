@@ -61,9 +61,39 @@ defmodule Msdata.SystPermRoleGrants do
     belongs_to(:perm, Msdata.SystPerms)
   end
 
+  ##############################################################################
+  #
+  # insert_changeset
+  #
+  #
+
+  @doc """
+  Creates a validated `Ecto.Changeset` struct for inserting into the database.
+
+  ## Parameters
+
+    * `insert_params` - the initial values with which to populate the new
+      record.
+  """
   @spec insert_changeset(Types.perm_role_grant_params()) :: Ecto.Changeset.t()
   defdelegate insert_changeset(insert_params), to: Validators
 
+  ##############################################################################
+  #
+  # update_changeset
+  #
+  #
+
+  @doc """
+  Creates a validated `Ecto.Changeset` struct for updating an existing database
+  record.
+
+  ## Parameters
+
+    * `perm_role_grant` - The `Msdata.SystPermRoleGrants` record to update.
+
+    * `update_params` - the values with which to update the record.
+  """
   @spec update_changeset(Msdata.SystPermRoleGrants.t(), Types.perm_role_grant_params()) ::
           Ecto.Changeset.t()
   defdelegate update_changeset(perm_role_grant, update_params), to: Validators

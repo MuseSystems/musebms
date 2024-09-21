@@ -18,7 +18,10 @@ defmodule PermsTestCase do
   setup do
     [
       datastore_context:
-        MscmpSystDb.put_datastore_context(MscmpSystDb.get_testsupport_context_name())
+        MscmpSystDb.put_datastore_context(
+          {:via, Registry,
+           {MscmpSystPerms.TestRegistry, TestSupport.get_datastore_context_name()}}
+        )
     ]
   end
 end

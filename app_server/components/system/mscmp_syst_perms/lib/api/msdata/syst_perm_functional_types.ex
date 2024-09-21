@@ -20,8 +20,12 @@ defmodule Msdata.SystPermFunctionalTypes do
 
   use MscmpSystDb.Schema
 
+  import Msutils.Data, only: [common_validator_options: 1]
+
   alias MscmpSystPerms.Impl.Msdata.SystPermFunctionalTypes.Validators
   alias MscmpSystPerms.Types
+
+  require Msutils.Data
 
   @type t() ::
           %__MODULE__{
@@ -59,12 +63,44 @@ defmodule Msdata.SystPermFunctionalTypes do
     has_many(:perm_roles, Msdata.SystPermRoles, foreign_key: :perm_functional_type_id)
   end
 
+  ##############################################################################
+  #
+  # update_changeset
+  #
+  #
+
+  @update_changeset_opts common_validator_options([
+                           :display_name,
+                           :user_description
+                         ])
+  @doc """
+  Creates a validated `Ecto.Changeset` struct for updating an existing database
+  record.
+
+  ## Parameters
+
+    * `perm_functional_type` - The `Msdata.SystPermFunctionalTypes` record to
+      update.
+
+    * `update_params` - the values with which to update the record.
+
+    * `opts` - a keyword list of options to control the validation.
+
+  ## Options
+
+    #{NimbleOptions.docs(@update_changeset_opts)}
+  """
+
+  @spec update_changeset(Msdata.SystPermFunctionalTypes.t(), Types.perm_functional_type_params()) ::
+          Ecto.Changeset.t()
   @spec update_changeset(
           Msdata.SystPermFunctionalTypes.t(),
           Types.perm_functional_type_params(),
           Keyword.t()
         ) ::
           Ecto.Changeset.t()
-  defdelegate update_changeset(perm_functional_type, update_params, opts \\ []),
-    to: Validators
+  def update_changeset(perm_functional_type, update_params, opts \\ []) do
+    opts = NimbleOptions.validate!(opts, @update_changeset_opts)
+    Validators.update_changeset(perm_functional_type, update_params, opts)
+  end
 end

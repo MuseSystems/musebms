@@ -19,8 +19,12 @@ defmodule Msdata.SystPerms do
 
   use MscmpSystDb.Schema
 
+  import Msutils.Data, only: [common_validator_options: 1]
+
   alias MscmpSystPerms.Impl.Msdata.SystPerms.Validators
   alias MscmpSystPerms.Types
+
+  require Msutils.Data
 
   @type t() ::
           %__MODULE__{
@@ -70,10 +74,72 @@ defmodule Msdata.SystPerms do
     has_many(:perm_role_grants, Msdata.SystPermRoleGrants, foreign_key: :perm_id)
   end
 
-  @spec insert_changeset(Types.perm_params(), Keyword.t()) :: Ecto.Changeset.t()
-  defdelegate insert_changeset(insert_params, opts \\ []), to: Validators
+  ##############################################################################
+  #
+  # insert_changeset
+  #
+  #
 
+  @insert_changeset_opts common_validator_options([
+                           :internal_name,
+                           :display_name,
+                           :user_description
+                         ])
+
+  @doc """
+  Creates a validated `Ecto.Changeset` struct for inserting into the database.
+
+  ## Parameters
+
+    * `insert_params` - the initial values with which to populate the new
+      record.
+
+    * `opts` - a keyword list of options to control the validation.
+
+  ## Options
+
+    #{NimbleOptions.docs(@insert_changeset_opts)}
+  """
+  @spec insert_changeset(Types.perm_params()) :: Ecto.Changeset.t()
+  @spec insert_changeset(Types.perm_params(), Keyword.t()) :: Ecto.Changeset.t()
+  def insert_changeset(insert_params, opts \\ []) do
+    opts = NimbleOptions.validate!(opts, @insert_changeset_opts)
+    Validators.insert_changeset(insert_params, opts)
+  end
+
+  ##############################################################################
+  #
+  # update_changeset
+  #
+  #
+
+  @update_changeset_opts common_validator_options([
+                           :internal_name,
+                           :display_name,
+                           :user_description
+                         ])
+  @doc """
+  Creates a validated `Ecto.Changeset` struct for updating an existing database
+  record.
+
+  ## Parameters
+
+    * `perm` - The `Msdata.SystPerms` record to update.
+
+    * `update_params` - the values with which to update the record.
+
+    * `opts` - a keyword list of options to control the validation.
+
+  ## Options
+
+    #{NimbleOptions.docs(@update_changeset_opts)}
+  """
+  @spec update_changeset(Msdata.SystPerms.t(), Types.perm_params()) ::
+          Ecto.Changeset.t()
   @spec update_changeset(Msdata.SystPerms.t(), Types.perm_params(), Keyword.t()) ::
           Ecto.Changeset.t()
-  defdelegate update_changeset(perm, update_params, opts \\ []), to: Validators
+  def update_changeset(perm, update_params, opts \\ []) do
+    opts = NimbleOptions.validate!(opts, @update_changeset_opts)
+    Validators.update_changeset(perm, update_params, opts)
+  end
 end

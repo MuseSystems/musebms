@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule IntegrationTest do
+  @moduledoc false
+
   use PermsTestCase, async: false
 
   import Ecto.Query
@@ -97,17 +99,17 @@ defmodule IntegrationTest do
 
     assert updated_record_2.user_description == nil
 
-    failure_parms = %{display_name: nil}
+    failure_params = %{display_name: nil}
 
-    assert {:error, _} = MscmpSystPerms.update_perm(perm_id, failure_parms)
+    assert {:error, _} = MscmpSystPerms.update_perm(perm_id, failure_params)
 
     failure_params_2 = %{internal_name: "bad_perm_2_name"}
 
     assert {:error, _} = MscmpSystPerms.update_perm(perm_id, failure_params_2)
 
-    failure_parms_3 = %{perm_functional_type: failure_func_type_id}
+    failure_params_3 = %{perm_functional_type: failure_func_type_id}
 
-    assert {:ok, failure_record_3} = MscmpSystPerms.update_perm(perm_id, failure_parms_3)
+    assert {:ok, failure_record_3} = MscmpSystPerms.update_perm(perm_id, failure_params_3)
 
     # Use updated_record_2 here as a proxy for "correct" to avoid extra DB call.
 

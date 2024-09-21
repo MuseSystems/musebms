@@ -4,22 +4,19 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.31.1">
+    <meta name="generator" content="ExDoc v0.34.2">
     <meta name="project" content="mscmp_syst_perms v0.1.0">
 
 
     <title>MscmpSystPerms — mscmp_syst_perms v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-FM2CSD74.css" />
+    <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-43PMFBC7.js"></script>
-    <script src="dist/sidebar_items-CEA21F97.js"></script>
-
-      <script src="docs_config.js"></script>
-
-    <script async src="dist/html-L4O5OK2K.js"></script>
-
+    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
+    <script src="dist/sidebar_items-8CD7756D.js"></script>
+    <script src="docs_config.js"></script>
+    <script async src="dist/html-YIPIRHGU.js"></script>
 
   </head>
   <body data-type="modules" class="page-module">
@@ -37,13 +34,11 @@
       } catch (error) { }
     </script>
 
-<div class="main">
+<div class="body-wrapper">
 
 <button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
   <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
 </button>
-
-<div class="background-layer"></div>
 
 <nav id="sidebar" class="sidebar">
 
@@ -89,41 +84,41 @@ Pages
 
 <main class="content">
   <output role="status" id="toast"></output>
-  <div class="content-outer">
-    <div id="content" class="content-inner">
-      <div class="top-search">
-        <div class="search-settings">
-          <form class="search-bar" action="search.html">
-            <label class="search-label">
-              <span class="sr-only">Search documentation of mscmp_syst_perms</span>
-              <input name="q" type="text" class="search-input" placeholder="Search Documentation (press /)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-            </label>
-            <button type="submit" class="search-button" aria-label="Submit Search">
-              <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
-            </button>
-            <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
-              <i class="ri-close-line ri-lg" title="Cancel search"></i>
-            </button>
-          </form>
-          <div class="autocomplete">
-          </div>
-          <button class="icon-settings display-settings">
-            <i class="ri-settings-3-line"></i>
-            <span class="sr-only">Settings</span>
+
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of mscmp_syst_perms</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
           </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
         </div>
-
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
       </div>
+    </div>
 
-<h1>
+<div id="top-content">
+  <h1>
 
-  <span translate="no">MscmpSystPerms</span> 
-  <small class="app-vsn" translate="no">(mscmp_syst_perms v0.1.0)</small>
+    <span translate="no">MscmpSystPerms</span> 
+    <small class="app-vsn" translate="no">(mscmp_syst_perms v0.1.0)</small>
 
-</h1>
+  </h1>
 
 
-  <section id="moduledoc">
+    <section id="moduledoc">
 <p>Provides a generalized foundation for user permission system
 implementations.</p><p>The principle idea of this component is to organization permissions in a way
 that higher level components can introduce the concept of user and
@@ -252,8 +247,9 @@ of Permissions Rights from specific individual users is acceptable, however,
 because the its immediately apparent to the user when user maintenance has
 overlooked the removal of a one-off revocations (the user can't dont something
 they expect to be able to do).</p>
-  </section>
+    </section>
 
+</div>
 
   <section id="summary" class="details-list">
     <h1 class="section-heading">
@@ -269,7 +265,7 @@ they expect to be able to do).</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_effective_perm_grants/2" translate="no">get_effective_perm_grants(selector, opts \\ [])</a>
+        <a href="#get_effective_perm_grants/2" data-no-tooltip translate="no">get_effective_perm_grants(selector, opts \\ [])</a>
 
       </div>
 
@@ -281,7 +277,7 @@ revocations.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#grant_perm_role/2" translate="no">grant_perm_role(selector, perm_role_id)</a>
+        <a href="#grant_perm_role/2" data-no-tooltip translate="no">grant_perm_role(selector, perm_role_id)</a>
 
       </div>
 
@@ -291,7 +287,7 @@ revocations.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#list_perm_denials/2" translate="no">list_perm_denials(selector, opts \\ [])</a>
+        <a href="#list_perm_denials/2" data-no-tooltip translate="no">list_perm_denials(selector, opts \\ [])</a>
 
       </div>
 
@@ -301,7 +297,7 @@ revocations.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#list_perm_grants/2" translate="no">list_perm_grants(selector, opts \\ [])</a>
+        <a href="#list_perm_grants/2" data-no-tooltip translate="no">list_perm_grants(selector, opts \\ [])</a>
 
       </div>
 
@@ -312,7 +308,7 @@ identified by the <code class="inline">selector</code>, including the Rights/Sco
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#revoke_perm_role/2" translate="no">revoke_perm_role(selector, perm_role_id)</a>
+        <a href="#revoke_perm_role/2" data-no-tooltip translate="no">revoke_perm_role(selector, perm_role_id)</a>
 
       </div>
 
@@ -328,7 +324,7 @@ identified by the <code class="inline">selector</code>, including the Rights/Sco
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#compare_scopes/2" translate="no">compare_scopes(test_scope, standard_scope)</a>
+        <a href="#compare_scopes/2" data-no-tooltip translate="no">compare_scopes(test_scope, standard_scope)</a>
 
       </div>
 
@@ -339,7 +335,7 @@ expansiveness of Scope.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#create_perm/1" translate="no">create_perm(perm_params)</a>
+        <a href="#create_perm/1" data-no-tooltip translate="no">create_perm(perm_params)</a>
 
       </div>
 
@@ -349,7 +345,7 @@ expansiveness of Scope.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#create_perm_role/1" translate="no">create_perm_role(perm_role_params)</a>
+        <a href="#create_perm_role/1" data-no-tooltip translate="no">create_perm_role(perm_role_params)</a>
 
       </div>
 
@@ -359,7 +355,7 @@ expansiveness of Scope.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#create_perm_role_grant/1" translate="no">create_perm_role_grant(perm_role_grant_params)</a>
+        <a href="#create_perm_role_grant/1" data-no-tooltip translate="no">create_perm_role_grant(perm_role_grant_params)</a>
 
       </div>
 
@@ -369,7 +365,7 @@ expansiveness of Scope.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#delete_perm/1" translate="no">delete_perm(perm)</a>
+        <a href="#delete_perm/1" data-no-tooltip translate="no">delete_perm(perm)</a>
 
       </div>
 
@@ -379,7 +375,7 @@ expansiveness of Scope.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#delete_perm_role/1" translate="no">delete_perm_role(perm_role)</a>
+        <a href="#delete_perm_role/1" data-no-tooltip translate="no">delete_perm_role(perm_role)</a>
 
       </div>
 
@@ -389,7 +385,7 @@ expansiveness of Scope.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#delete_perm_role_grant/1" translate="no">delete_perm_role_grant(perm_role_grant)</a>
+        <a href="#delete_perm_role_grant/1" data-no-tooltip translate="no">delete_perm_role_grant(perm_role_grant)</a>
 
       </div>
 
@@ -399,7 +395,7 @@ expansiveness of Scope.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_perm_role_id_by_name/2" translate="no">get_perm_role_id_by_name(perm_func_type_name, perm_role_name)</a>
+        <a href="#get_perm_role_id_by_name/2" data-no-tooltip translate="no">get_perm_role_id_by_name(perm_func_type_name, perm_role_name)</a>
 
       </div>
 
@@ -410,7 +406,7 @@ and Internal Name.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#update_perm/2" translate="no">update_perm(perm, perm_params)</a>
+        <a href="#update_perm/2" data-no-tooltip translate="no">update_perm(perm, perm_params)</a>
 
       </div>
 
@@ -420,7 +416,7 @@ and Internal Name.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#update_perm_functional_type/2" translate="no">update_perm_functional_type(perm_functional_type, perm_functional_type_params)</a>
+        <a href="#update_perm_functional_type/2" data-no-tooltip translate="no">update_perm_functional_type(perm_functional_type, perm_functional_type_params)</a>
 
       </div>
 
@@ -430,7 +426,7 @@ and Internal Name.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#update_perm_role/2" translate="no">update_perm_role(perm_role, perm_role_params)</a>
+        <a href="#update_perm_role/2" data-no-tooltip translate="no">update_perm_role(perm_role, perm_role_params)</a>
 
       </div>
 
@@ -440,7 +436,7 @@ and Internal Name.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#update_perm_role_grant/2" translate="no">update_perm_role_grant(perm_role_grant, perm_role_grant_params)</a>
+        <a href="#update_perm_role_grant/2" data-no-tooltip translate="no">update_perm_role_grant(perm_role_grant, perm_role_grant_params)</a>
 
       </div>
 
@@ -466,7 +462,7 @@ and Internal Name.</p></div>
     <span id="get_effective_perm_grants/1"></span>
 
   <div class="detail-header">
-    <a href="#get_effective_perm_grants/2" class="detail-link" title="Link to this function">
+    <a href="#get_effective_perm_grants/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -501,21 +497,20 @@ implementation of this function to call and which contains the keys/values
 to use in selecting which Permission and Permission Role Grant records to
 retrieve.  Specific details about what records are involved and how the
 selection return values are determine are implementation specific and will
-be documented on a case-by-case basis.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional parameters which may be provided.  The
-only general option is listed below, each specific implementation of this
-function may extend the available options as appropriate to the
-implementation.</p><ul><li><code class="inline">permissions</code> - a list of specific Permission names to lookup.  This is
-usually supplied as a limiting filter; without this list the typical
-behavior is to return all of the permissions for a given Permission
-Functional Type filtered only by the <code class="inline">selector</code> data.  Again, the details
-of the filtering or inclusion using this option will be implementation
-specific and documented for each individual implementation.</li></ul></li></ul>
+be documented on a case-by-case basis.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional parameters which may be provided.</p></li></ul><h2 id="get_effective_perm_grants/2-options" class="section-heading">
+  <a href="#get_effective_perm_grants/2-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options</span>
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="o">*</span><span class="w"> </span><span class="err">`</span><span class="ss">:permissions</span><span class="err">`</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nc">Optionally</span><span class="w"> </span><span class="n">filters</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">permissions</span><span class="w"> </span><span class="n">returned</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">single</span><span class="w"> </span><span class="n">requested</span></code></pre><p>  permission or a list of permissions.  The special value of <code class="inline">:all</code> will
+  return all permissions. The default value is <code class="inline">:all</code>.</p>
   </section>
 </section>
 <section class="detail" id="grant_perm_role/2">
 
   <div class="detail-header">
-    <a href="#grant_perm_role/2" class="detail-link" title="Link to this function">
+    <a href="#grant_perm_role/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -554,7 +549,7 @@ you are granting to the user context identified by the <code class="inline">sele
     <span id="list_perm_denials/1"></span>
 
   <div class="detail-header">
-    <a href="#list_perm_denials/2" class="detail-link" title="Link to this function">
+    <a href="#list_perm_denials/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -590,10 +585,14 @@ implementation of this function to call and which contains the keys/values
 to use in selecting which Permission denial records to retrieve.  Specific
 details about what records are involved and how the selection return values
 are determine are implementation specific and will be documented on a case-
-by-case basis.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional parameters which may be provided.  The
-only general option is listed below, each specific implementation of this
-function may extend the available options as appropriate to the
-implementation.</p></li></ul>
+by-case basis.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional parameters which may be provided.</p></li></ul><h2 id="list_perm_denials/2-options" class="section-heading">
+  <a href="#list_perm_denials/2-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options</span>
+</h2>
+<ul><li><code class="inline">:preload_perms</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">boolean/0</code></a>) - A boolean option which, when <code class="inline">true</code>, will preload the
+<a href="Msdata.SystPermRoleGrants.html"><code class="inline">Msdata.SystPermRoleGrants</code></a> <code class="inline">perm</code> data. The default value is <code class="inline">false</code>.</li></ul>
   </section>
 </section>
 <section class="detail" id="list_perm_grants/2">
@@ -601,7 +600,7 @@ implementation.</p></li></ul>
     <span id="list_perm_grants/1"></span>
 
   <div class="detail-header">
-    <a href="#list_perm_grants/2" class="detail-link" title="Link to this function">
+    <a href="#list_perm_grants/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -637,18 +636,20 @@ implementation of this function to call and which contains the keys/values
 to use in selecting which Permission and Permission Role Grant records to
 retrieve.  Specific details about what records are involved and how the
 selection return values are determine are implementation specific and will
-be documented on a case-by-case basis.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional parameters which may be provided.  The
-only general option is listed below, each specific implementation of this
-function may extend the available options as appropriate to the
-implementation.</p><ul><li><code class="inline">include_perms</code> - a boolean option which, when set <code class="inline">true</code>, will preload
-the <a href="Msdata.SystPermRoleGrants.html"><code class="inline">Msdata.SystPermRoleGrants</code></a> <code class="inline">perm</code> data.  The default value for this
-option is <code class="inline">false</code>.</li></ul></li></ul>
+be documented on a case-by-case basis.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional parameters which may be provided.</p></li></ul><h2 id="list_perm_grants/2-options" class="section-heading">
+  <a href="#list_perm_grants/2-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options</span>
+</h2>
+<ul><li><code class="inline">:preload_perms</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">boolean/0</code></a>) - A boolean option which, when <code class="inline">true</code>, will preload the
+<a href="Msdata.SystPermRoleGrants.html"><code class="inline">Msdata.SystPermRoleGrants</code></a> <code class="inline">perm</code> data. The default value is <code class="inline">false</code>.</li></ul>
   </section>
 </section>
 <section class="detail" id="revoke_perm_role/2">
 
   <div class="detail-header">
-    <a href="#revoke_perm_role/2" class="detail-link" title="Link to this function">
+    <a href="#revoke_perm_role/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -700,7 +701,7 @@ you are revoking from the user context identified by the <code class="inline">se
 <section class="detail" id="compare_scopes/2">
 
   <div class="detail-header">
-    <a href="#compare_scopes/2" class="detail-link" title="Link to this function">
+    <a href="#compare_scopes/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -738,7 +739,7 @@ parameter.</p></li></ul>
 <section class="detail" id="create_perm/1">
 
   <div class="detail-header">
-    <a href="#create_perm/1" class="detail-link" title="Link to this function">
+    <a href="#create_perm/1" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -771,7 +772,7 @@ create.  For details see <a href="MscmpSystPerms.Types.html#t:perm_params/0"><co
 <section class="detail" id="create_perm_role/1">
 
   <div class="detail-header">
-    <a href="#create_perm_role/1" class="detail-link" title="Link to this function">
+    <a href="#create_perm_role/1" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -805,7 +806,7 @@ values.  For more about see <a href="MscmpSystPerms.Types.html#t:perm_role_param
 <section class="detail" id="create_perm_role_grant/1">
 
   <div class="detail-header">
-    <a href="#create_perm_role_grant/1" class="detail-link" title="Link to this function">
+    <a href="#create_perm_role_grant/1" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -841,7 +842,7 @@ record's values.  For more about see
 <section class="detail" id="delete_perm/1">
 
   <div class="detail-header">
-    <a href="#delete_perm/1" class="detail-link" title="Link to this function">
+    <a href="#delete_perm/1" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -875,7 +876,7 @@ value of the Permission record to delete.</li></ul>
 <section class="detail" id="delete_perm_role/1">
 
   <div class="detail-header">
-    <a href="#delete_perm_role/1" class="detail-link" title="Link to this function">
+    <a href="#delete_perm_role/1" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -910,7 +911,7 @@ Permission Role record.</li></ul>
 <section class="detail" id="delete_perm_role_grant/1">
 
   <div class="detail-header">
-    <a href="#delete_perm_role_grant/1" class="detail-link" title="Link to this function">
+    <a href="#delete_perm_role_grant/1" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -949,7 +950,7 @@ representing the Permission Role Grant record.</li></ul>
 <section class="detail" id="get_perm_role_id_by_name/2">
 
   <div class="detail-header">
-    <a href="#get_perm_role_id_by_name/2" class="detail-link" title="Link to this function">
+    <a href="#get_perm_role_id_by_name/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -989,14 +990,14 @@ for.</p></li></ul><h2 id="get_perm_role_id_by_name/2-examples" class="section-he
   <span class="text">Examples</span>
 </h2>
 <p>Retrieve the record ID of a Permission Role record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="c">_perm_role_id</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystPerms</span><span class="o">.</span><span class="n">get_perm_role_id_by_name</span><span class="p" data-group-id="2945878806-1">(</span><span class="s">&quot;func_type_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;perm_role_1&quot;</span><span class="p" data-group-id="2945878806-1">)</span></code></pre><p>Searching for a non-existent record returns <code class="inline">nil</code>.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystPerms</span><span class="o">.</span><span class="n">get_perm_role_id_by_name</span><span class="p" data-group-id="5978155855-1">(</span><span class="s">&quot;func_type_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;nonexistent_role&quot;</span><span class="p" data-group-id="5978155855-1">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystPerms</span><span class="o">.</span><span class="n">get_perm_role_id_by_name</span><span class="p" data-group-id="2438121557-1">(</span><span class="s">&quot;func_type_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;perm_role_1&quot;</span><span class="p" data-group-id="2438121557-1">)</span></code></pre><p>Searching for a non-existent record returns <code class="inline">nil</code>.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystPerms</span><span class="o">.</span><span class="n">get_perm_role_id_by_name</span><span class="p" data-group-id="4547156713-1">(</span><span class="s">&quot;func_type_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;nonexistent_role&quot;</span><span class="p" data-group-id="4547156713-1">)</span><span class="w">
 </span><span class="no">nil</span></code></pre>
   </section>
 </section>
 <section class="detail" id="update_perm/2">
 
   <div class="detail-header">
-    <a href="#update_perm/2" class="detail-link" title="Link to this function">
+    <a href="#update_perm/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1035,7 +1036,7 @@ and their new values.  For details see <a href="MscmpSystPerms.Types.html#t:perm
 <section class="detail" id="update_perm_functional_type/2">
 
   <div class="detail-header">
-    <a href="#update_perm_functional_type/2" class="detail-link" title="Link to this function">
+    <a href="#update_perm_functional_type/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1077,7 +1078,7 @@ be made to the database.  For details on which fields may be maintained see
 <section class="detail" id="update_perm_role/2">
 
   <div class="detail-header">
-    <a href="#update_perm_role/2" class="detail-link" title="Link to this function">
+    <a href="#update_perm_role/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1116,7 +1117,7 @@ values.  For more about see <a href="MscmpSystPerms.Types.html#t:perm_role_param
 <section class="detail" id="update_perm_role_grant/2">
 
   <div class="detail-header">
-    <a href="#update_perm_role_grant/2" class="detail-link" title="Link to this function">
+    <a href="#update_perm_role_grant/2" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
@@ -1157,34 +1158,33 @@ record values to update.  For more about see
     </div>
   </section>
 
-      <footer class="footer">
-        <p>
+    <footer class="footer">
+      <p>
 
-          <span class="line">
-            <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
-              Search HexDocs
-            </button>
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
 
-              <a href="mscmp_syst_perms.epub" title="ePub version">
-                Download ePub version
-              </a>
+            <a href="mscmp_syst_perms.epub" title="ePub version">
+              Download ePub version
+            </a>
 
-          </span>
-        </p>
+        </span>
+      </p>
 
-        <p class="built-using">
-          Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.31.1) for the
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.34.2) for the
 
-            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
-        </p>
-      </footer>
-    </div>
+      </p>
+
+    </footer>
   </div>
 </main>
 </div>
-
 
   </body>
 </html>

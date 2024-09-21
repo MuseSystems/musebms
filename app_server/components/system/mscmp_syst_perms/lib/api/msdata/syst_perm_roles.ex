@@ -20,10 +20,12 @@ defmodule Msdata.SystPermRoles do
 
   use MscmpSystDb.Schema
 
+  import Msutils.Data, only: [common_validator_options: 1]
+
   alias MscmpSystPerms.Impl.Msdata.SystPermRoles.Validators
   alias MscmpSystPerms.Types
 
-  @schema_prefix "ms_syst"
+  require Msutils.Data
 
   @type t() ::
           %__MODULE__{
@@ -44,6 +46,8 @@ defmodule Msdata.SystPermRoles do
             diag_update_count: integer() | nil
           }
 
+  @schema_prefix "ms_syst"
+
   schema "syst_perm_roles" do
     field(:internal_name, :string)
     field(:display_name, :string)
@@ -63,9 +67,65 @@ defmodule Msdata.SystPermRoles do
     has_many(:perm_role_grants, Msdata.SystPermRoleGrants, foreign_key: :perm_role_id)
   end
 
+  ##############################################################################
+  #
+  # insert_changeset
+  #
+  #
+
+  @insert_changeset_opts common_validator_options([
+                           :internal_name,
+                           :display_name,
+                           :user_description
+                         ])
+
+  @doc """
+  Creates a validated `Ecto.Changeset` struct for inserting into the database.
+
+  ## Parameters
+
+    * `insert_params` - the initial values with which to populate the new
+      record.
+
+    * `opts` - a keyword list of options to control the validation.
+
+  ## Options
+
+    #{NimbleOptions.docs(@insert_changeset_opts)}
+  """
+  @spec insert_changeset(Types.perm_role_params()) :: Ecto.Changeset.t()
   @spec insert_changeset(Types.perm_role_params(), Keyword.t()) :: Ecto.Changeset.t()
   defdelegate insert_changeset(insert_params, opts \\ []), to: Validators
 
+  ##############################################################################
+  #
+  # update_changeset
+  #
+  #
+
+  @update_changeset_opts common_validator_options([
+                           :internal_name,
+                           :display_name,
+                           :user_description
+                         ])
+  @doc """
+  Creates a validated `Ecto.Changeset` struct for updating an existing database
+  record.
+
+  ## Parameters
+
+    * `perm_role` - The `Msdata.SystPermRoles` record to update.
+
+    * `update_params` - the values with which to update the record.
+
+    * `opts` - a keyword list of options to control the validation.
+
+  ## Options
+
+    #{NimbleOptions.docs(@update_changeset_opts)}
+  """
+  @spec update_changeset(Msdata.SystPermRoles.t(), Types.perm_role_params()) ::
+          Ecto.Changeset.t()
   @spec update_changeset(Msdata.SystPermRoles.t(), Types.perm_role_params(), Keyword.t()) ::
           Ecto.Changeset.t()
   defdelegate update_changeset(perm_role, update_params, opts \\ []), to: Validators
