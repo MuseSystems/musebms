@@ -50,7 +50,10 @@ defmodule TestSupport do
     )
   end
 
+  @spec get_datastore_context_name() :: String.t()
   def get_datastore_context_name, do: @db_support_context_name
+
+  @spec get_enums_service_name() :: atom()
   def get_enums_service_name, do: @enums_service_name
 
   @spec cleanup_testing_database(:doc_testing | :integration_testing | :unit_testing) :: [
