@@ -29,7 +29,7 @@ defmodule TestSupport do
   alias Mix.Tasks.Builddb
 
   db_devsupport(:test)
-  settings_devsupport()
+  settings_devsupport(:test)
 
   @migration_test_source_root_dir "../../../../database"
   @migration_unit_test_ds_type "mscmp_syst_settings_unit_test"
@@ -54,7 +54,7 @@ defmodule TestSupport do
   def get_datastore_context_name, do: @db_support_context_name
 
   @spec get_settings_service_name() :: atom()
-  def get_settings_service_name, do: @settings_service_name_test
+  def get_settings_service_name, do: @settings_service_name
 
   @spec cleanup_testing_database(:doc_testing | :integration_testing | :unit_testing) :: [
           binary()

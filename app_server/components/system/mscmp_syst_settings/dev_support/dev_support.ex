@@ -17,7 +17,7 @@ defmodule DevSupport do
   use MscmpSystSettings.Macros
 
   db_devsupport(:dev)
-  settings_devsupport()
+  settings_devsupport(:dev)
 
   @migration_test_source_root_dir "../../../../database"
   @migration_unit_test_ds_type "mscmp_syst_settings_unit_test"
@@ -33,7 +33,7 @@ defmodule DevSupport do
         Registry.child_spec(keys: :unique, name: @registry),
         setup_database(db_kind),
         MscmpSystSettings.child_spec(
-          service_name: @settings_service_name_dev, datastore_context_name: @datastore_context_name )
+          service_name: @settings_service_name, datastore_context_name: @datastore_context_name )
       ]
 
       {:ok, _pid} =
@@ -41,7 +41,7 @@ defmodule DevSupport do
           children, strategy: :one_for_one, name: :"MscmpSystSettings.DevSupportSupervisor")
 
     _ = MscmpSystDb.put_datastore_context(@datastore_context_name)
-    _ = MscmpSystSettings.put_settings_service(@settings_service_name_dev)
+    _ = MscmpSystSettings.put_settings_service(@settings_service_name)
 
     :ok
   end

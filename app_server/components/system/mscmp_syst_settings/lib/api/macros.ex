@@ -13,16 +13,23 @@
 defmodule MscmpSystSettings.Macros do
   @moduledoc false
 
+  @spec __using__(term()) :: Macro.t()
   defmacro __using__(_opts) do
     quote do
       import MscmpSystSettings.Macros
     end
   end
 
-  defmacro settings_devsupport do
+  @spec settings_devsupport(:dev | :test) :: Macro.t()
+  defmacro settings_devsupport(support_type) do
+    service_name =
+      case support_type do
+        :dev -> :"MscmpSystSettings.DevSupportService"
+        :test -> :"MscmpSystSettings.TestSupportService"
+      end
+
     quote do
-      @settings_service_name_dev :"MscmpSystSettings.DevSupportService"
-      @settings_service_name_test :"MscmpSystSettings.TestSupportService"
+      @settings_service_name unquote(service_name)
     end
   end
 end
