@@ -86,7 +86,7 @@ defmodule MscmpSystAuthn.Impl.Msdata.SystIdentities.Validators do
          _operation
        )
        when is_binary(identity_type_name) do
-    identity_type = MscmpSystEnums.get_enum_item_by_name("identity_types", identity_type_name)
+    identity_type = MscmpSystEnums.get_item_by_name("identity_types", identity_type_name)
 
     Map.put(change_params, :identity_type_id, identity_type.id)
   end
@@ -101,7 +101,7 @@ defmodule MscmpSystAuthn.Impl.Msdata.SystIdentities.Validators do
 
   # TODO: Should we really be defaulting this value?  Is such defaulting valid?
   defp resolve_identity_type_id(change_params, :insert) do
-    identity_type = MscmpSystEnums.get_default_enum_item("identity_types")
+    identity_type = MscmpSystEnums.get_default_item("identity_types")
 
     Map.put(change_params, :identity_type_id, identity_type.id)
   end

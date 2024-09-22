@@ -135,7 +135,7 @@ defmodule MscmpSystSettings.Runtime.Service do
   def handle_call({:create, creation_params}, _from, state) do
     {
       :reply,
-      Impl.Settings.create_setting(state.settings_table_tid, creation_params),
+      Impl.Settings.create(state.settings_table_tid, creation_params),
       state
     }
   end
@@ -153,7 +153,7 @@ defmodule MscmpSystSettings.Runtime.Service do
   def handle_call({:delete, setting_name}, _from, state) do
     {
       :reply,
-      Impl.Settings.delete_setting(state.settings_table_tid, setting_name),
+      Impl.Settings.delete(state.settings_table_tid, setting_name),
       state
     }
   end

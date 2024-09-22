@@ -329,7 +329,7 @@ defmodule IntegrationTest do
   # ==============================================================================================
 
   test "Step 2.01: Add Unowned Access Accounts" do
-    state = MscmpSystEnums.get_default_enum_item("access_account_states")
+    state = MscmpSystEnums.get_default_item("access_account_states")
 
     assert false == MscmpSystAuthn.access_accounts_exist?()
 

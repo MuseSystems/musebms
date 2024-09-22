@@ -82,36 +82,36 @@ defmodule SettingsTest do
       setting_integer: 9876
     }
 
-    assert :ok = MscmpSystSettings.create_setting(success_setting)
+    assert :ok = MscmpSystSettings.create(success_setting)
 
     assert %Msdata.SystSettings{internal_name: "test_success_setting"} =
              :ets.lookup_element(ProcessUtils.get_settings_table(), "test_success_setting", 2)
 
-    assert {:error, %MscmpSystError{}} = MscmpSystSettings.create_setting(success_setting)
+    assert {:error, %MscmpSystError{}} = MscmpSystSettings.create(success_setting)
 
-    assert :ok = MscmpSystSettings.delete_setting(success_setting.internal_name)
+    assert :ok = MscmpSystSettings.delete(success_setting.internal_name)
 
     assert catch_error(
              :ets.lookup_element(ProcessUtils.get_settings_table(), "test_success_setting", 2)
            )
 
-    assert {:error, %MscmpSystError{}} = MscmpSystSettings.create_setting(short_desc_setting)
+    assert {:error, %MscmpSystError{}} = MscmpSystSettings.create(short_desc_setting)
 
-    assert {:error, %MscmpSystError{}} = MscmpSystSettings.create_setting(long_desc_setting)
+    assert {:error, %MscmpSystError{}} = MscmpSystSettings.create(long_desc_setting)
 
-    assert {:error, %MscmpSystError{}} = MscmpSystSettings.delete_setting("test_setting_one")
-
-    assert {:error, %MscmpSystError{}} =
-             MscmpSystSettings.create_setting(short_internal_name_setting)
+    assert {:error, %MscmpSystError{}} = MscmpSystSettings.delete("test_setting_one")
 
     assert {:error, %MscmpSystError{}} =
-             MscmpSystSettings.create_setting(long_internal_name_setting)
+             MscmpSystSettings.create(short_internal_name_setting)
 
     assert {:error, %MscmpSystError{}} =
-             MscmpSystSettings.create_setting(short_display_name_setting)
+             MscmpSystSettings.create(long_internal_name_setting)
 
     assert {:error, %MscmpSystError{}} =
-             MscmpSystSettings.create_setting(long_display_name_setting)
+             MscmpSystSettings.create(short_display_name_setting)
+
+    assert {:error, %MscmpSystError{}} =
+             MscmpSystSettings.create(long_display_name_setting)
   end
 
   test "Set/Get display_name Setting" do
@@ -124,25 +124,25 @@ defmodule SettingsTest do
     short_change = %{display_name: "Short"}
 
     assert %Msdata.SystSettings{display_name: "Test Setting One"} =
-             MscmpSystSettings.get_setting_values("test_setting_one")
+             MscmpSystSettings.get_values("test_setting_one")
 
     assert :ok =
-             MscmpSystSettings.set_setting_values(
+             MscmpSystSettings.set_values(
                "test_setting_one",
                good_change
              )
 
     assert %Msdata.SystSettings{display_name: "Updated Test Setting One"} =
-             MscmpSystSettings.get_setting_values("test_setting_one")
+             MscmpSystSettings.get_values("test_setting_one")
 
     assert {:error, %MscmpSystError{}} =
-             MscmpSystSettings.set_setting_values(
+             MscmpSystSettings.set_values(
                "test_setting_one",
                long_change
              )
 
     assert {:error, %MscmpSystError{}} =
-             MscmpSystSettings.set_setting_values(
+             MscmpSystSettings.set_values(
                "test_setting_one",
                short_change
              )
@@ -174,34 +174,34 @@ defmodule SettingsTest do
     short_change = %{user_description: "Short"}
 
     assert %Msdata.SystSettings{user_description: "Test Setting One User Description"} =
-             MscmpSystSettings.get_setting_values("test_setting_one")
+             MscmpSystSettings.get_values("test_setting_one")
 
     assert :ok =
-             MscmpSystSettings.set_setting_values(
+             MscmpSystSettings.set_values(
                "test_setting_one",
                good_change
              )
 
     assert %Msdata.SystSettings{user_description: "Updated test one setting description."} =
-             MscmpSystSettings.get_setting_values("test_setting_one")
+             MscmpSystSettings.get_values("test_setting_one")
 
     assert :ok =
-             MscmpSystSettings.set_setting_values(
+             MscmpSystSettings.set_values(
                "test_setting_one",
                nil_change
              )
 
     assert %Msdata.SystSettings{user_description: nil} =
-             MscmpSystSettings.get_setting_values("test_setting_one")
+             MscmpSystSettings.get_values("test_setting_one")
 
     assert {:error, %MscmpSystError{}} =
-             MscmpSystSettings.set_setting_values(
+             MscmpSystSettings.set_values(
                "test_setting_one",
                long_change
              )
 
     assert {:error, %MscmpSystError{}} =
-             MscmpSystSettings.set_setting_values(
+             MscmpSystSettings.set_values(
                "test_setting_one",
                short_change
              )
@@ -213,48 +213,48 @@ defmodule SettingsTest do
     nil_change = %{setting_flag: nil}
 
     assert %Msdata.SystSettings{setting_flag: true} =
-             MscmpSystSettings.get_setting_values("test_setting_one")
+             MscmpSystSettings.get_values("test_setting_one")
 
     assert true =
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_flag
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_values(
+             MscmpSystSettings.set_values(
                "test_setting_one",
                false_change
              )
 
     assert false ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_flag
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_flag,
                true_change.setting_flag
              )
 
     assert true ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_flag
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_flag,
                nil_change.setting_flag
              )
 
     assert nil ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_flag
              )
@@ -266,48 +266,48 @@ defmodule SettingsTest do
     nil_change = %{setting_integer: nil}
 
     assert %Msdata.SystSettings{setting_integer: 111} =
-             MscmpSystSettings.get_setting_values("test_setting_one")
+             MscmpSystSettings.get_values("test_setting_one")
 
     assert 111 =
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_integer
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_values(
+             MscmpSystSettings.set_values(
                "test_setting_one",
                second_change
              )
 
     assert second_change.setting_integer ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_integer
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_integer,
                first_change.setting_integer
              )
 
     assert first_change.setting_integer ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_integer
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_integer,
                nil_change.setting_integer
              )
 
     assert nil ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_integer
              )
@@ -343,7 +343,7 @@ defmodule SettingsTest do
                lower_inclusive: true,
                upper_inclusive: false
              }
-           } = MscmpSystSettings.get_setting_values("test_setting_one")
+           } = MscmpSystSettings.get_values("test_setting_one")
 
     assert %MscmpSystDb.DbTypes.IntegerRange{
              lower: 1,
@@ -351,13 +351,13 @@ defmodule SettingsTest do
              lower_inclusive: true,
              upper_inclusive: false
            } =
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_integer_range
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_values(
+             MscmpSystSettings.set_values(
                "test_setting_one",
                second_change
              )
@@ -368,13 +368,13 @@ defmodule SettingsTest do
              upper: 22_223,
              upper_inclusive: false
            } ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_integer_range
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_integer_range,
                first_change.setting_integer_range
@@ -386,20 +386,20 @@ defmodule SettingsTest do
              upper: 11_112,
              upper_inclusive: false
            } ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_integer_range
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_integer_range,
                nil_change.setting_integer_range
              )
 
     assert nil ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_integer_range
              )
@@ -411,34 +411,34 @@ defmodule SettingsTest do
     nil_change = %{setting_decimal: nil}
 
     assert %Msdata.SystSettings{setting_decimal: start_value} =
-             MscmpSystSettings.get_setting_values("test_setting_one")
+             MscmpSystSettings.get_values("test_setting_one")
 
     assert Decimal.eq?(Decimal.new("111.111"), start_value)
 
     assert Decimal.eq?(
              Decimal.new("111.111"),
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_decimal
              )
            )
 
     assert :ok =
-             MscmpSystSettings.set_setting_values(
+             MscmpSystSettings.set_values(
                "test_setting_one",
                second_change
              )
 
     assert Decimal.eq?(
              second_change.setting_decimal,
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_decimal
              )
            )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_decimal,
                first_change.setting_decimal
@@ -446,21 +446,21 @@ defmodule SettingsTest do
 
     assert Decimal.eq?(
              first_change.setting_decimal,
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_decimal
              )
            )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_decimal,
                nil_change.setting_decimal
              )
 
     assert nil ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_decimal
              )
@@ -497,16 +497,16 @@ defmodule SettingsTest do
     }
 
     assert %Msdata.SystSettings{setting_decimal_range: ^starting_value} =
-             MscmpSystSettings.get_setting_values("test_setting_one")
+             MscmpSystSettings.get_values("test_setting_one")
 
     assert ^starting_value =
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_decimal_range
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_values(
+             MscmpSystSettings.set_values(
                "test_setting_one",
                second_change
              )
@@ -514,13 +514,13 @@ defmodule SettingsTest do
     second_change_comparison = second_change.setting_decimal_range
 
     assert ^second_change_comparison =
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_decimal_range
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_decimal_range,
                first_change.setting_decimal_range
@@ -529,20 +529,20 @@ defmodule SettingsTest do
     first_change_comparison = first_change.setting_decimal_range
 
     assert ^first_change_comparison =
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_decimal_range
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_decimal_range,
                nil_change.setting_decimal_range
              )
 
     assert nil ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_decimal_range
              )
@@ -576,7 +576,7 @@ defmodule SettingsTest do
                secs: 0,
                microsecs: 0
              }
-           } = MscmpSystSettings.get_setting_values("test_setting_one")
+           } = MscmpSystSettings.get_values("test_setting_one")
 
     assert %MscmpSystDb.DbTypes.Interval{
              months: 1,
@@ -584,13 +584,13 @@ defmodule SettingsTest do
              secs: 0,
              microsecs: 0
            } =
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_interval
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_values(
+             MscmpSystSettings.set_values(
                "test_setting_one",
                second_change
              )
@@ -598,13 +598,13 @@ defmodule SettingsTest do
     second_change_comparison = second_change.setting_interval
 
     assert ^second_change_comparison =
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_interval
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_interval,
                first_change.setting_interval
@@ -613,20 +613,20 @@ defmodule SettingsTest do
     first_change_comparison = first_change.setting_interval
 
     assert ^first_change_comparison =
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_interval
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_interval,
                nil_change.setting_interval
              )
 
     assert nil ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_interval
              )
@@ -638,48 +638,48 @@ defmodule SettingsTest do
     nil_change = %{setting_date: nil}
 
     assert %Msdata.SystSettings{setting_date: ~D[2022-01-01]} =
-             MscmpSystSettings.get_setting_values("test_setting_one")
+             MscmpSystSettings.get_values("test_setting_one")
 
     assert ~D[2022-01-01] =
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_date
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_values(
+             MscmpSystSettings.set_values(
                "test_setting_one",
                second_change
              )
 
     assert second_change.setting_date ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_date
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_date,
                first_change.setting_date
              )
 
     assert first_change.setting_date ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_date
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_date,
                nil_change.setting_date
              )
 
     assert nil ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_date
              )
@@ -713,7 +713,7 @@ defmodule SettingsTest do
                lower_inclusive: true,
                upper_inclusive: false
              }
-           } = MscmpSystSettings.get_setting_values("test_setting_one")
+           } = MscmpSystSettings.get_values("test_setting_one")
 
     assert %MscmpSystDb.DbTypes.DateRange{
              lower: ~D[2022-01-01],
@@ -721,13 +721,13 @@ defmodule SettingsTest do
              lower_inclusive: true,
              upper_inclusive: false
            } =
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_date_range
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_values(
+             MscmpSystSettings.set_values(
                "test_setting_one",
                second_change
              )
@@ -740,13 +740,13 @@ defmodule SettingsTest do
     }
 
     assert ^second_change_comparison =
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_date_range
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_date_range,
                first_change.setting_date_range
@@ -760,20 +760,20 @@ defmodule SettingsTest do
     }
 
     assert ^first_change_comparison =
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_date_range
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_date_range,
                nil_change.setting_date_range
              )
 
     assert nil ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_date_range
              )
@@ -785,48 +785,48 @@ defmodule SettingsTest do
     nil_change = %{setting_time: nil}
 
     assert %Msdata.SystSettings{setting_time: ~T[01:00:00]} =
-             MscmpSystSettings.get_setting_values("test_setting_one")
+             MscmpSystSettings.get_values("test_setting_one")
 
     assert ~T[01:00:00] =
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_time
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_values(
+             MscmpSystSettings.set_values(
                "test_setting_one",
                second_change
              )
 
     assert second_change.setting_time ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_time
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_time,
                first_change.setting_time
              )
 
     assert first_change.setting_time ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_time
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_time,
                nil_change.setting_time
              )
 
     assert nil ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_time
              )
@@ -838,48 +838,48 @@ defmodule SettingsTest do
     nil_change = %{setting_timestamp: nil}
 
     assert %Msdata.SystSettings{setting_timestamp: ~U[2022-01-01 01:00:00Z]} =
-             MscmpSystSettings.get_setting_values("test_setting_one")
+             MscmpSystSettings.get_values("test_setting_one")
 
     assert ~U[2022-01-01 01:00:00Z] =
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_timestamp
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_values(
+             MscmpSystSettings.set_values(
                "test_setting_one",
                second_change
              )
 
     assert second_change.setting_timestamp ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_timestamp
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_timestamp,
                first_change.setting_timestamp
              )
 
     assert first_change.setting_timestamp ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_timestamp
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_timestamp,
                nil_change.setting_timestamp
              )
 
     assert nil ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_timestamp
              )
@@ -913,7 +913,7 @@ defmodule SettingsTest do
                lower_inclusive: true,
                upper_inclusive: false
              }
-           } = MscmpSystSettings.get_setting_values("test_setting_one")
+           } = MscmpSystSettings.get_values("test_setting_one")
 
     assert %MscmpSystDb.DbTypes.DateTimeRange{
              lower: ~U[2022-01-01 01:00:00.000000Z],
@@ -921,13 +921,13 @@ defmodule SettingsTest do
              lower_inclusive: true,
              upper_inclusive: false
            } =
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_timestamp_range
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_values(
+             MscmpSystSettings.set_values(
                "test_setting_one",
                second_change
              )
@@ -935,13 +935,13 @@ defmodule SettingsTest do
     second_change_comparison = second_change.setting_timestamp_range
 
     assert ^second_change_comparison =
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_timestamp_range
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_timestamp_range,
                first_change.setting_timestamp_range
@@ -950,20 +950,20 @@ defmodule SettingsTest do
     first_change_comparison = first_change.setting_timestamp_range
 
     assert ^first_change_comparison =
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_timestamp_range
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_timestamp_range,
                nil_change.setting_timestamp_range
              )
 
     assert nil ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_timestamp_range
              )
@@ -980,7 +980,7 @@ defmodule SettingsTest do
                "test_settings_one_number" => 1111,
                "test_settings_one_boolean" => true
              }
-           } = MscmpSystSettings.get_setting_values("test_setting_one")
+           } = MscmpSystSettings.get_values("test_setting_one")
 
     assert %{
              "test_settings_one" => %{
@@ -989,45 +989,45 @@ defmodule SettingsTest do
              "test_settings_one_number" => 1111,
              "test_settings_one_boolean" => true
            } =
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_json
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_values(
+             MscmpSystSettings.set_values(
                "test_setting_one",
                second_change
              )
 
     assert second_change.setting_json ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_json
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_json,
                first_change.setting_json
              )
 
     assert first_change.setting_json ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_json
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_json,
                nil_change.setting_json
              )
 
     assert nil ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_json
              )
@@ -1039,48 +1039,48 @@ defmodule SettingsTest do
     nil_change = %{setting_text: nil}
 
     assert %Msdata.SystSettings{setting_text: "Test Setting One Text"} =
-             MscmpSystSettings.get_setting_values("test_setting_one")
+             MscmpSystSettings.get_values("test_setting_one")
 
     assert "Test Setting One Text" =
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_text
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_values(
+             MscmpSystSettings.set_values(
                "test_setting_one",
                second_change
              )
 
     assert second_change.setting_text ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_text
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_text,
                first_change.setting_text
              )
 
     assert first_change.setting_text ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_text
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_text,
                nil_change.setting_text
              )
 
     assert nil ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_text
              )
@@ -1092,48 +1092,48 @@ defmodule SettingsTest do
     nil_change = %{setting_uuid: nil}
 
     assert %Msdata.SystSettings{setting_uuid: "bbd4d590-b2c7-11ec-a45c-00155d708817"} =
-             MscmpSystSettings.get_setting_values("test_setting_one")
+             MscmpSystSettings.get_values("test_setting_one")
 
     assert "bbd4d590-b2c7-11ec-a45c-00155d708817" =
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_uuid
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_values(
+             MscmpSystSettings.set_values(
                "test_setting_one",
                second_change
              )
 
     assert second_change.setting_uuid ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_uuid
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_uuid,
                first_change.setting_uuid
              )
 
     assert first_change.setting_uuid ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_uuid
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_uuid,
                nil_change.setting_uuid
              )
 
     assert nil ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_uuid
              )
@@ -1145,69 +1145,69 @@ defmodule SettingsTest do
     nil_change = %{setting_blob: nil}
 
     assert %Msdata.SystSettings{setting_blob: "Test Setting One Bytea"} =
-             MscmpSystSettings.get_setting_values("test_setting_one")
+             MscmpSystSettings.get_values("test_setting_one")
 
     assert "Test Setting One Bytea" =
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_blob
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_values(
+             MscmpSystSettings.set_values(
                "test_setting_one",
                second_change
              )
 
     assert second_change.setting_blob ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_blob
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_blob,
                first_change.setting_blob
              )
 
     assert first_change.setting_blob ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_blob
              )
 
     assert :ok =
-             MscmpSystSettings.set_setting_value(
+             MscmpSystSettings.set_value(
                "test_setting_one",
                :setting_blob,
                nil_change.setting_blob
              )
 
     assert nil ==
-             MscmpSystSettings.get_setting_value(
+             MscmpSystSettings.get_value(
                "test_setting_one",
                :setting_blob
              )
   end
 
   test "Can List All Settings." do
-    assert [_ | _] = MscmpSystSettings.list_all_settings()
+    assert [_ | _] = MscmpSystSettings.list_all()
   end
 
   test "Can Set Special Settings Service" do
-    curr_service_name = ProcessUtils.get_settings_service()
+    curr_service_name = ProcessUtils.get_service()
     curr_table_name = ProcessUtils.get_settings_table()
 
-    assert curr_service_name === ProcessUtils.put_settings_service(nil)
+    assert curr_service_name === ProcessUtils.put_service(nil)
 
-    assert nil === ProcessUtils.get_settings_service()
+    assert nil === ProcessUtils.get_service()
     assert nil === ProcessUtils.get_settings_table()
 
-    assert nil === ProcessUtils.put_settings_service(curr_service_name)
+    assert nil === ProcessUtils.put_service(curr_service_name)
 
-    assert curr_service_name === ProcessUtils.get_settings_service()
+    assert curr_service_name === ProcessUtils.get_service()
     assert curr_table_name === ProcessUtils.get_settings_table()
   end
 end

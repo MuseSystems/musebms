@@ -192,11 +192,11 @@ defmodule MscmpSystSettings do
   """
   @spec refresh_from_database() :: :ok
   def refresh_from_database,
-    do: Runtime.ProcessUtils.get_settings_service() |> GenServer.call(:refresh)
+    do: Runtime.ProcessUtils.get_service() |> GenServer.call(:refresh)
 
   ##############################################################################
   #
-  # put_settings_service
+  # put_service
   #
   #
 
@@ -219,22 +219,22 @@ defmodule MscmpSystSettings do
 
     Setting a specific Settings Service name:
 
-      iex> MscmpSystSettings.put_settings_service(:"MscmpSystSettings.TestSupportService")
-      ...> MscmpSystSettings.get_settings_service()
+      iex> MscmpSystSettings.put_service(:"MscmpSystSettings.TestSupportService")
+      ...> MscmpSystSettings.get_service()
       :"MscmpSystSettings.TestSupportService"
 
     Clearing a previously set specific Service Name:
 
-      iex> MscmpSystSettings.put_settings_service(nil)
-      ...> MscmpSystSettings.get_settings_service()
+      iex> MscmpSystSettings.put_service(nil)
+      ...> MscmpSystSettings.get_service()
       nil
   """
-  @spec put_settings_service(GenServer.name() | nil) :: GenServer.name() | nil
-  defdelegate put_settings_service(settings_service_name), to: Runtime.ProcessUtils
+  @spec put_service(GenServer.name() | nil) :: GenServer.name() | nil
+  defdelegate put_service(settings_service_name), to: Runtime.ProcessUtils
 
   ##############################################################################
   #
-  # get_settings_service
+  # get_service
   #
   #
 
@@ -243,7 +243,7 @@ defmodule MscmpSystSettings do
   Retrieve the current specific Settings Service name in effect for the process.
 
   This function returns the name of the Settings Service that has been using the
-  `put_settings_service/1` function to override the default Settings Service
+  `put_service/1` function to override the default Settings Service
   associated with the Instance Name. If no specific Settings Service name has
   been set, this function will return `nil`.
 
@@ -251,23 +251,23 @@ defmodule MscmpSystSettings do
 
     Retrieving a specific Settings Service name:
 
-      iex> MscmpSystSettings.put_settings_service(:"MscmpSystSettings.TestSupportService")
-      ...> MscmpSystSettings.get_settings_service()
+      iex> MscmpSystSettings.put_service(:"MscmpSystSettings.TestSupportService")
+      ...> MscmpSystSettings.get_service()
       :"MscmpSystSettings.TestSupportService"
 
     Retrieving a specific Settings Service name when no value is currently set
     for the process:
 
-      iex> MscmpSystSettings.put_settings_service(nil)
-      ...> MscmpSystSettings.get_settings_service()
+      iex> MscmpSystSettings.put_service(nil)
+      ...> MscmpSystSettings.get_service()
       nil
   """
-  @spec get_settings_service() :: atom() | nil
-  defdelegate get_settings_service(), to: Runtime.ProcessUtils
+  @spec get_service() :: atom() | nil
+  defdelegate get_service(), to: Runtime.ProcessUtils
 
   ##############################################################################
   #
-  # create_setting
+  # create
   #
   #
 
@@ -277,7 +277,7 @@ defmodule MscmpSystSettings do
 
   This function creates a setting which is automatically marked as being user
   defined.  User created settings such as those created by this function are the
-  only kind of settings which may be deleted via `delete_setting/2`.
+  only kind of settings which may be deleted via `delete/2`.
 
   ## Parameters
     * `creation_params`a map defining the new settings record.  The map must
@@ -306,17 +306,17 @@ defmodule MscmpSystSettings do
       ...>   user_description: "An example of setting creation.",
       ...>   setting_integer: 9876
       ...> }
-      iex> MscmpSystSettings.create_setting(new_setting)
+      iex> MscmpSystSettings.create(new_setting)
       :ok
   """
-  @spec create_setting(MscmpSystSettings.Types.setting_params()) ::
+  @spec create(MscmpSystSettings.Types.setting_params()) ::
           :ok | {:error, MscmpSystError.t()}
-  def create_setting(creation_params),
-    do: Runtime.ProcessUtils.get_settings_service() |> GenServer.call({:create, creation_params})
+  def create(creation_params),
+    do: Runtime.ProcessUtils.get_service() |> GenServer.call({:create, creation_params})
 
   ##############################################################################
   #
-  # set_setting_value
+  # set_value
   #
   #
 
@@ -337,27 +337,27 @@ defmodule MscmpSystSettings do
 
   ## Examples
 
-      iex> MscmpSystSettings.set_setting_value(
+      iex> MscmpSystSettings.set_value(
       ...>   "set_example_setting",
       ...>   :setting_decimal,
       ...>   Decimal.new("1029.3847"))
       :ok
   """
-  @spec set_setting_value(
+  @spec set_value(
           MscmpSystSettings.Types.setting_name(),
           MscmpSystSettings.Types.setting_types(),
           any()
         ) :: :ok | {:error, MscmpSystError.t()}
-  def set_setting_value(setting_name, setting_type, setting_value) do
+  def set_value(setting_name, setting_type, setting_value) do
     update_params = Map.put_new(%{}, setting_type, setting_value)
 
-    Runtime.ProcessUtils.get_settings_service()
+    Runtime.ProcessUtils.get_service()
     |> GenServer.call({:update, setting_name, update_params})
   end
 
   ##############################################################################
   #
-  # set_setting_values
+  # set_values
   #
   #
 
@@ -365,7 +365,7 @@ defmodule MscmpSystSettings do
   @doc """
   Sets one or more of the available setting types for the named setting.
 
-  This function is similar to `set_setting_values/4`, except that multiple
+  This function is similar to `set_values/4`, except that multiple
   setting types can have their values set at the same time.  In addition to the
   typed setting values, the setting display name and/or user description values
   may also be set.
@@ -391,23 +391,23 @@ defmodule MscmpSystSettings do
       ...>        upper_inclusive: true
       ...>      }
       ...> }
-      iex> MscmpSystSettings.set_setting_values(
+      iex> MscmpSystSettings.set_values(
       ...>   "set_example_setting",
       ...>   update_values)
       :ok
   """
-  @spec set_setting_values(
+  @spec set_values(
           MscmpSystSettings.Types.setting_name(),
           MscmpSystSettings.Types.setting_params()
         ) :: :ok | {:error, MscmpSystError.t()}
-  def set_setting_values(setting_name, update_params) do
-    Runtime.ProcessUtils.get_settings_service()
+  def set_values(setting_name, update_params) do
+    Runtime.ProcessUtils.get_service()
     |> GenServer.call({:update, setting_name, update_params})
   end
 
   ##############################################################################
   #
-  # get_setting_value
+  # get_value
   #
   #
 
@@ -422,7 +422,7 @@ defmodule MscmpSystSettings do
 
   ## Examples
 
-      iex> MscmpSystSettings.get_setting_value(
+      iex> MscmpSystSettings.get_value(
       ...>   "get_example_setting",
       ...>   :setting_decimal_range)
       %MscmpSystDb.DbTypes.DecimalRange{
@@ -432,16 +432,16 @@ defmodule MscmpSystSettings do
         upper_inclusive: false
       }
   """
-  @spec get_setting_value(
+  @spec get_value(
           MscmpSystSettings.Types.setting_name(),
           MscmpSystSettings.Types.setting_types()
         ) :: any()
-  defdelegate get_setting_value(setting_name, setting_type),
+  defdelegate get_value(setting_name, setting_type),
     to: Impl.Settings
 
   ##############################################################################
   #
-  # get_setting_values
+  # get_values
   #
   #
 
@@ -458,14 +458,14 @@ defmodule MscmpSystSettings do
 
   ## Examples
 
-      iex> MscmpSystSettings.get_setting_values("get_example_setting")
+      iex> MscmpSystSettings.get_values("get_example_setting")
   """
-  @spec get_setting_values(MscmpSystSettings.Types.setting_name()) :: Msdata.SystSettings.t()
-  defdelegate get_setting_values(setting_name), to: Impl.Settings
+  @spec get_values(MscmpSystSettings.Types.setting_name()) :: Msdata.SystSettings.t()
+  defdelegate get_values(setting_name), to: Impl.Settings
 
   ##############################################################################
   #
-  # list_all_settings
+  # list_all
   #
   #
 
@@ -478,14 +478,14 @@ defmodule MscmpSystSettings do
 
   ## Examples
 
-      iex> MscmpSystSettings.list_all_settings()
+      iex> MscmpSystSettings.list_all()
   """
-  @spec list_all_settings() :: list(Msdata.SystSettings)
-  defdelegate list_all_settings(), to: Impl.Settings
+  @spec list_all() :: list(Msdata.SystSettings)
+  defdelegate list_all(), to: Impl.Settings
 
   ##############################################################################
   #
-  # delete_setting
+  # delete
   #
   #
 
@@ -502,17 +502,17 @@ defmodule MscmpSystSettings do
 
   ## Examples
 
-      iex> MscmpSystSettings.delete_setting("delete_example_setting")
+      iex> MscmpSystSettings.delete("delete_example_setting")
       :ok
   """
-  @spec delete_setting(MscmpSystSettings.Types.setting_name()) ::
+  @spec delete(MscmpSystSettings.Types.setting_name()) ::
           :ok | {:error, MscmpSystError.t()}
-  def delete_setting(setting_name),
-    do: Runtime.ProcessUtils.get_settings_service() |> GenServer.call({:delete, setting_name})
+  def delete(setting_name),
+    do: Runtime.ProcessUtils.get_service() |> GenServer.call({:delete, setting_name})
 
   ##############################################################################
   #
-  # terminate_settings_service
+  # terminate_service
   #
   #
 
@@ -522,10 +522,10 @@ defmodule MscmpSystSettings do
 
   ## Examples
 
-      > MscmpSystSettings.terminate_settings_service()
+      > MscmpSystSettings.terminate_service()
       :ok
   """
-  @spec terminate_settings_service() :: :ok
-  def terminate_settings_service,
-    do: Runtime.ProcessUtils.get_settings_service() |> GenServer.stop(:normal)
+  @spec terminate_service() :: :ok
+  def terminate_service,
+    do: Runtime.ProcessUtils.get_service() |> GenServer.stop(:normal)
 end

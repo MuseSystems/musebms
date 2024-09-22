@@ -17,7 +17,7 @@ defmodule FunctionalTypesTest do
   @moduletag :capture_log
 
   test "Get Enum Functional Types" do
-    assert functional_types = MscmpSystEnums.list_enum_functional_types("test_syst_enum_one")
+    assert functional_types = MscmpSystEnums.list_functional_types("test_syst_enum_one")
 
     assert 2 = length(functional_types)
   end
@@ -29,7 +29,7 @@ defmodule FunctionalTypesTest do
       user_description: "A test enumeration to allow creating new functional types. (Success)"
     }
 
-    :ok = MscmpSystEnums.create_enum(success_enum)
+    :ok = MscmpSystEnums.create(success_enum)
 
     failure_enum = %{
       internal_name: "create_func_type_test_failure_enum",
@@ -47,7 +47,7 @@ defmodule FunctionalTypesTest do
       ]
     }
 
-    :ok = MscmpSystEnums.create_enum(failure_enum)
+    :ok = MscmpSystEnums.create(failure_enum)
 
     success_func_type = %{
       internal_name: "create_func_type_test_success",
@@ -64,7 +64,7 @@ defmodule FunctionalTypesTest do
     }
 
     assert :ok =
-             MscmpSystEnums.create_enum_functional_type(
+             MscmpSystEnums.create_functional_type(
                "create_func_type_test_success_enum",
                success_func_type
              )
@@ -74,7 +74,7 @@ defmodule FunctionalTypesTest do
     # for functional types under these conditions.
 
     assert {:error, _} =
-             MscmpSystEnums.create_enum_functional_type(
+             MscmpSystEnums.create_functional_type(
                "create_func_type_test_failure_enum",
                failure_func_type
              )
@@ -84,7 +84,7 @@ defmodule FunctionalTypesTest do
     # types.
 
     assert {:error, _} =
-             MscmpSystEnums.create_enum_functional_type(
+             MscmpSystEnums.create_functional_type(
                "test_syst_enum_one",
                failure_func_type
              )
@@ -96,50 +96,50 @@ defmodule FunctionalTypesTest do
     change_user_description = %{user_description: "Updated user description test"}
     change_external_name = %{external_name: "Changed Test External Name"}
 
-    other_enum = MscmpSystEnums.get_enum_values("test_syst_enum_two")
+    other_enum = MscmpSystEnums.get_values("test_syst_enum_two")
 
-    %{functional_types: functional_types} = MscmpSystEnums.get_enum_values("test_syst_enum_one")
+    %{functional_types: functional_types} = MscmpSystEnums.get_values("test_syst_enum_one")
 
     orig_functional_type = Enum.find(functional_types, &(&1.internal_name == "enum_one_active"))
 
     change_enum_id = %{enum_id: other_enum.id}
 
     assert {:error, _} =
-             MscmpSystEnums.set_enum_functional_type_values(
+             MscmpSystEnums.set_functional_type_values(
                "test_syst_enum_one",
                "enum_one_active",
                change_internal_name
              )
 
     assert {:error, _} =
-             MscmpSystEnums.set_enum_functional_type_values(
+             MscmpSystEnums.set_functional_type_values(
                "test_syst_enum_one",
                "enum_one_active",
                change_enum_id
              )
 
     assert :ok =
-             MscmpSystEnums.set_enum_functional_type_values(
+             MscmpSystEnums.set_functional_type_values(
                "test_syst_enum_one",
                "enum_one_active",
                change_display_name
              )
 
     assert :ok =
-             MscmpSystEnums.set_enum_functional_type_values(
+             MscmpSystEnums.set_functional_type_values(
                "test_syst_enum_one",
                "enum_one_active",
                change_user_description
              )
 
     assert :ok =
-             MscmpSystEnums.set_enum_functional_type_values(
+             MscmpSystEnums.set_functional_type_values(
                "test_syst_enum_one",
                "enum_one_active",
                change_external_name
              )
 
-    %{functional_types: functional_types} = MscmpSystEnums.get_enum_values("test_syst_enum_one")
+    %{functional_types: functional_types} = MscmpSystEnums.get_values("test_syst_enum_one")
 
     updated_functional_type =
       Enum.find(functional_types, &(&1.internal_name == "enum_one_active"))
@@ -171,17 +171,17 @@ defmodule FunctionalTypesTest do
       ]
     }
 
-    :ok = MscmpSystEnums.create_enum(new_enum)
+    :ok = MscmpSystEnums.create(new_enum)
 
     change_internal_name = %{internal_name: "user_def_func_type_changes_new"}
     change_display_name = %{display_name: "User Defined Enum Functional Type New"}
     change_user_description = %{user_description: "User Defined Enum Functional Type New"}
     change_external_name = %{external_name: "User Defined Enum Functional Type New"}
 
-    other_enum = MscmpSystEnums.get_enum_values("test_syst_enum_two")
+    other_enum = MscmpSystEnums.get_values("test_syst_enum_two")
 
     %{functional_types: functional_types} =
-      MscmpSystEnums.get_enum_values("user_def_func_type_changes_enum")
+      MscmpSystEnums.get_values("user_def_func_type_changes_enum")
 
     orig_functional_type =
       Enum.find(functional_types, &(&1.internal_name == "user_def_func_type_changes_old"))
@@ -189,42 +189,42 @@ defmodule FunctionalTypesTest do
     change_enum_id = %{enum_id: other_enum.id}
 
     assert {:error, _} =
-             MscmpSystEnums.set_enum_functional_type_values(
+             MscmpSystEnums.set_functional_type_values(
                "user_def_func_type_changes_enum",
                "user_def_func_type_changes_old",
                change_enum_id
              )
 
     assert :ok =
-             MscmpSystEnums.set_enum_functional_type_values(
+             MscmpSystEnums.set_functional_type_values(
                "user_def_func_type_changes_enum",
                "user_def_func_type_changes_old",
                change_internal_name
              )
 
     assert :ok =
-             MscmpSystEnums.set_enum_functional_type_values(
+             MscmpSystEnums.set_functional_type_values(
                "user_def_func_type_changes_enum",
                "user_def_func_type_changes_new",
                change_display_name
              )
 
     assert :ok =
-             MscmpSystEnums.set_enum_functional_type_values(
+             MscmpSystEnums.set_functional_type_values(
                "user_def_func_type_changes_enum",
                "user_def_func_type_changes_new",
                change_user_description
              )
 
     assert :ok =
-             MscmpSystEnums.set_enum_functional_type_values(
+             MscmpSystEnums.set_functional_type_values(
                "user_def_func_type_changes_enum",
                "user_def_func_type_changes_new",
                change_external_name
              )
 
     %{functional_types: functional_types} =
-      MscmpSystEnums.get_enum_values("user_def_func_type_changes_enum")
+      MscmpSystEnums.get_values("user_def_func_type_changes_enum")
 
     updated_functional_type =
       Enum.find(functional_types, &(&1.internal_name == "user_def_func_type_changes_new"))
@@ -271,43 +271,43 @@ defmodule FunctionalTypesTest do
       ]
     }
 
-    :ok = MscmpSystEnums.create_enum(new_enum)
+    :ok = MscmpSystEnums.create(new_enum)
 
     before_functional_types =
-      MscmpSystEnums.list_enum_functional_types("delete_user_defined_functional_type_enum")
+      MscmpSystEnums.list_functional_types("delete_user_defined_functional_type_enum")
 
     assert 2 = length(before_functional_types)
 
     assert :ok =
-             MscmpSystEnums.delete_enum_functional_type(
+             MscmpSystEnums.delete_functional_type(
                "delete_user_defined_functional_type_enum",
                "delete_user_def_functional_type_success"
              )
 
     assert {:error, _} =
-             MscmpSystEnums.delete_enum_functional_type(
+             MscmpSystEnums.delete_functional_type(
                "delete_user_defined_functional_type_enum",
                "delete_user_def_functional_type_failure"
              )
 
     after_functional_types =
-      MscmpSystEnums.list_enum_functional_types("delete_user_defined_functional_type_enum")
+      MscmpSystEnums.list_functional_types("delete_user_defined_functional_type_enum")
 
     assert 1 = length(after_functional_types)
   end
 
   test "Delete System Defined Functional Types" do
-    before_functional_types = MscmpSystEnums.list_enum_functional_types("test_syst_enum_three")
+    before_functional_types = MscmpSystEnums.list_functional_types("test_syst_enum_three")
 
     assert 2 = length(before_functional_types)
 
     assert {:error, _} =
-             MscmpSystEnums.delete_enum_functional_type(
+             MscmpSystEnums.delete_functional_type(
                "test_syst_enum_three",
                "enum_three_active"
              )
 
-    after_functional_types = MscmpSystEnums.list_enum_functional_types("test_syst_enum_three")
+    after_functional_types = MscmpSystEnums.list_functional_types("test_syst_enum_three")
 
     assert 2 = length(after_functional_types)
   end

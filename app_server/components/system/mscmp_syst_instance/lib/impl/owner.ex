@@ -84,7 +84,7 @@ defmodule MscmpSystInstance.Impl.Owner do
 
   @spec get_owner_state_by_name(Types.owner_state_name()) :: Msdata.SystEnumItems.t() | nil
   def get_owner_state_by_name(owner_state_name) when is_binary(owner_state_name),
-    do: MscmpSystEnums.get_enum_item_by_name("owner_states", owner_state_name)
+    do: MscmpSystEnums.get_item_by_name("owner_states", owner_state_name)
 
   ##############################################################################
   #
@@ -94,10 +94,10 @@ defmodule MscmpSystInstance.Impl.Owner do
 
   @spec get_owner_state_default(Types.owner_state_functional_types() | nil) ::
           Msdata.SystEnumItems.t()
-  def get_owner_state_default(nil), do: MscmpSystEnums.get_default_enum_item("owner_states")
+  def get_owner_state_default(nil), do: MscmpSystEnums.get_default_item("owner_states")
 
   def get_owner_state_default(functional_type) when is_atom(functional_type) do
-    MscmpSystEnums.get_default_enum_item("owner_states",
+    MscmpSystEnums.get_default_item("owner_states",
       functional_type_name: Atom.to_string(functional_type)
     )
   end

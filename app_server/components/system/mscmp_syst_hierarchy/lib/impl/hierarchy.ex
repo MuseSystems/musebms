@@ -47,7 +47,7 @@ defmodule MscmpSystHierarchy.Impl.Hierarchy do
 
   @spec get_hierarchy_type_by_name(Types.hierarchy_type_name()) :: Msdata.SystEnumItems.t() | nil
   def get_hierarchy_type_by_name(type_name) when is_binary(type_name),
-    do: MscmpSystEnums.get_enum_item_by_name("hierarchy_types", type_name)
+    do: MscmpSystEnums.get_item_by_name("hierarchy_types", type_name)
 
   ##############################################################################
   #
@@ -80,8 +80,8 @@ defmodule MscmpSystHierarchy.Impl.Hierarchy do
     opts = NimbleOptions.validate!(opts, @list_hierarchy_types_opts)
 
     if opts[:sorted],
-      do: MscmpSystEnums.list_sorted_enum_items("hierarchy_types"),
-      else: MscmpSystEnums.list_enum_items("hierarchy_types")
+      do: MscmpSystEnums.list_sorted_items("hierarchy_types"),
+      else: MscmpSystEnums.list_items("hierarchy_types")
   end
 
   @spec list_hierarchy_types(Keyword.t()) ::
@@ -113,7 +113,7 @@ defmodule MscmpSystHierarchy.Impl.Hierarchy do
   @spec get_hierarchy_state_by_name(Types.hierarchy_state_name()) ::
           Msdata.SystEnumItems.t() | nil
   def get_hierarchy_state_by_name(state_name) when is_binary(state_name),
-    do: MscmpSystEnums.get_enum_item_by_name("hierarchy_states", state_name)
+    do: MscmpSystEnums.get_item_by_name("hierarchy_states", state_name)
 
   @spec get_hierarchy_state_id_by_name(Types.hierarchy_state_name()) ::
           Types.hierarchy_state_id() | nil
@@ -133,10 +133,10 @@ defmodule MscmpSystHierarchy.Impl.Hierarchy do
   @spec get_hierarchy_state_default(Types.hierarchy_state_functional_types() | nil) ::
           Msdata.SystEnumItems.t()
   def get_hierarchy_state_default(nil),
-    do: MscmpSystEnums.get_default_enum_item("hierarchy_states")
+    do: MscmpSystEnums.get_default_item("hierarchy_states")
 
   def get_hierarchy_state_default(functional_type) when is_atom(functional_type) do
-    MscmpSystEnums.get_default_enum_item("hierarchy_states",
+    MscmpSystEnums.get_default_item("hierarchy_states",
       functional_type_name: Atom.to_string(functional_type)
     )
   end

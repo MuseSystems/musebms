@@ -411,7 +411,7 @@ defmodule IntegrationTest do
       Enum.each(context_states, &assert(%{context: _, state: :ready} = &1))
 
       assert "instance_states_initialized" =
-               MscmpSystEnums.get_functional_type_by_enum_item_id(
+               MscmpSystEnums.get_functional_type_by_item_id(
                  "instance_states",
                  initialized_instance.instance_state_id
                )

@@ -123,50 +123,50 @@ defmodule MscmpSystEnums.Runtime.Service do
   #
 
   @impl true
-  def handle_call({:create_enum, creation_params}, _from, state) do
+  def handle_call({:create, creation_params}, _from, state) do
     {
       :reply,
-      Impl.Enums.create_enum(state.enums_table_tid, creation_params),
+      Impl.Enums.create(state.enums_table_tid, creation_params),
       state
     }
   end
 
   @impl true
-  def handle_call({:create_enum_functional_type, enum_name, creation_params}, _from, state) do
+  def handle_call({:create_functional_type, enum_name, creation_params}, _from, state) do
     {
       :reply,
-      Impl.Enums.create_enum_functional_type(state.enums_table_tid, enum_name, creation_params),
+      Impl.Enums.create_functional_type(state.enums_table_tid, enum_name, creation_params),
       state
     }
   end
 
   @impl true
-  def handle_call({:create_enum_item, enum_name, creation_params}, _from, state) do
+  def handle_call({:create_item, enum_name, creation_params}, _from, state) do
     {
       :reply,
-      Impl.Enums.create_enum_item(state.enums_table_tid, enum_name, creation_params),
+      Impl.Enums.create_item(state.enums_table_tid, enum_name, creation_params),
       state
     }
   end
 
   @impl true
-  def handle_call({:set_enum_values, enum_name, set_value_params}, _from, state) do
+  def handle_call({:set_values, enum_name, set_value_params}, _from, state) do
     {
       :reply,
-      Impl.Enums.set_enum_values(state.enums_table_tid, enum_name, set_value_params),
+      Impl.Enums.set_values(state.enums_table_tid, enum_name, set_value_params),
       state
     }
   end
 
   @impl true
   def handle_call(
-        {:set_enum_functional_type_values, enum_name, functional_type_name, set_value_params},
+        {:set_functional_type_values, enum_name, functional_type_name, set_value_params},
         _from,
         state
       ) do
     {
       :reply,
-      Impl.Enums.set_enum_functional_type_values(
+      Impl.Enums.set_functional_type_values(
         state.enums_table_tid,
         enum_name,
         functional_type_name,
@@ -178,13 +178,13 @@ defmodule MscmpSystEnums.Runtime.Service do
 
   @impl true
   def handle_call(
-        {:set_enum_item_values, enum_name, enum_item_name, set_value_params},
+        {:set_item_values, enum_name, enum_item_name, set_value_params},
         _from,
         state
       ) do
     {
       :reply,
-      Impl.Enums.set_enum_item_values(
+      Impl.Enums.set_item_values(
         state.enums_table_tid,
         enum_name,
         enum_item_name,
@@ -196,26 +196,26 @@ defmodule MscmpSystEnums.Runtime.Service do
 
   @impl true
   def handle_call(
-        {:delete_enum, enum_name},
+        {:delete, enum_name},
         _from,
         state
       ) do
     {
       :reply,
-      Impl.Enums.delete_enum(state.enums_table_tid, enum_name),
+      Impl.Enums.delete(state.enums_table_tid, enum_name),
       state
     }
   end
 
   @impl true
   def handle_call(
-        {:delete_enum_functional_type, enum_name, functional_type_name},
+        {:delete_functional_type, enum_name, functional_type_name},
         _from,
         state
       ) do
     {
       :reply,
-      Impl.Enums.delete_enum_functional_type(
+      Impl.Enums.delete_functional_type(
         state.enums_table_tid,
         enum_name,
         functional_type_name
@@ -226,13 +226,13 @@ defmodule MscmpSystEnums.Runtime.Service do
 
   @impl true
   def handle_call(
-        {:delete_enum_item, enum_name, enum_item_name},
+        {:delete_item, enum_name, enum_item_name},
         _from,
         state
       ) do
     {
       :reply,
-      Impl.Enums.delete_enum_item(state.enums_table_tid, enum_name, enum_item_name),
+      Impl.Enums.delete_item(state.enums_table_tid, enum_name, enum_item_name),
       state
     }
   end

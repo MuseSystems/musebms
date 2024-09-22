@@ -124,7 +124,7 @@ defmodule MscmpSystAuthn.Impl.Msdata.Helpers do
       )
       when is_binary(credential_type_name) do
     credential_type =
-      MscmpSystEnums.get_enum_item_by_name("credential_types", credential_type_name)
+      MscmpSystEnums.get_item_by_name("credential_types", credential_type_name)
 
     Map.put(change_params, :credential_type_id, credential_type.id)
   end
@@ -142,7 +142,7 @@ defmodule MscmpSystAuthn.Impl.Msdata.Helpers do
 
   @spec resolve_credential_type_id(any()) :: any()
   def resolve_credential_type_id(change_params, :insert) do
-    credential_type = MscmpSystEnums.get_default_enum_item("credential_types")
+    credential_type = MscmpSystEnums.get_default_item("credential_types")
 
     Map.put(change_params, :credential_type_id, credential_type.id)
   end

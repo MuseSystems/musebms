@@ -22,8 +22,7 @@ defmodule SettingsTestCase do
           {:via, Registry,
            {MscmpSystSettings.TestRegistry, TestSupport.get_datastore_context_name()}}
         ),
-      settings_service:
-        MscmpSystSettings.put_settings_service(TestSupport.get_settings_service_name())
+      settings_service: MscmpSystSettings.put_service(TestSupport.get_settings_service_name())
     ]
   end
 end

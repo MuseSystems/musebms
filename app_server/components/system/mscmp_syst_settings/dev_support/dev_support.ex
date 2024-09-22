@@ -41,7 +41,7 @@ defmodule DevSupport do
           children, strategy: :one_for_one, name: :"MscmpSystSettings.DevSupportSupervisor")
 
     _ = MscmpSystDb.put_datastore_context(@datastore_context_name)
-    _ = MscmpSystSettings.put_settings_service(@settings_service_name)
+    _ = MscmpSystSettings.put_service(@settings_service_name)
 
     :ok
   end

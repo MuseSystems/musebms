@@ -30,7 +30,7 @@ defmodule OwnerTest do
   #       directed to their respective public APIs,
 
   test "Can Create Owner" do
-    new_owner_state = MscmpSystEnums.get_default_enum_item("owner_states")
+    new_owner_state = MscmpSystEnums.get_default_item("owner_states")
 
     new_owner_params = %{
       internal_name: "create_test",
@@ -61,7 +61,7 @@ defmodule OwnerTest do
   end
 
   test "Can Update Owner by ID" do
-    new_owner_state = MscmpSystEnums.get_default_enum_item("owner_states")
+    new_owner_state = MscmpSystEnums.get_default_item("owner_states")
 
     new_owner_params = %{
       internal_name: "update_test1",
@@ -72,7 +72,7 @@ defmodule OwnerTest do
     {:ok, new_owner} = MscmpSystInstance.create_owner(new_owner_params)
 
     update_owner_state =
-      MscmpSystEnums.get_default_enum_item(
+      MscmpSystEnums.get_default_item(
         "owner_states",
         functional_type_name: "owner_states_suspended"
       )
@@ -92,7 +92,7 @@ defmodule OwnerTest do
   end
 
   test "Can Update Owner by Struct" do
-    new_owner_state = MscmpSystEnums.get_default_enum_item("owner_states")
+    new_owner_state = MscmpSystEnums.get_default_item("owner_states")
 
     new_owner_params = %{
       internal_name: "update_test2",
@@ -103,7 +103,7 @@ defmodule OwnerTest do
     {:ok, new_owner} = MscmpSystInstance.create_owner(new_owner_params)
 
     update_owner_state =
-      MscmpSystEnums.get_default_enum_item(
+      MscmpSystEnums.get_default_item(
         "owner_states",
         functional_type_name: "owner_states_suspended"
       )
@@ -123,7 +123,7 @@ defmodule OwnerTest do
 
   test "Can Purge Owner by ID" do
     new_owner_state =
-      MscmpSystEnums.get_default_enum_item("owner_states",
+      MscmpSystEnums.get_default_item("owner_states",
         functional_type_name: "owner_states_purge_eligible"
       )
 
@@ -140,7 +140,7 @@ defmodule OwnerTest do
 
   test "Can Purge Owner by Bare Struct" do
     new_owner_state =
-      MscmpSystEnums.get_default_enum_item("owner_states",
+      MscmpSystEnums.get_default_item("owner_states",
         functional_type_name: "owner_states_purge_eligible"
       )
 
@@ -184,7 +184,7 @@ defmodule OwnerTest do
 
   test "Can Purge Owner by Preloaded Struct" do
     new_owner_state =
-      MscmpSystEnums.get_default_enum_item("owner_states",
+      MscmpSystEnums.get_default_item("owner_states",
         functional_type_name: "owner_states_purge_eligible"
       )
 

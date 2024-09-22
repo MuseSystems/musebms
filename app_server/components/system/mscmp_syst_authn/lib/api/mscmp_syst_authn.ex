@@ -472,7 +472,7 @@ defmodule MscmpSystAuthn do
 
   ## Example
 
-      iex> state = MscmpSystEnums.get_default_enum_item("access_account_states")
+      iex> state = MscmpSystEnums.get_default_item("access_account_states")
       iex> {:ok, %Msdata.SystAccessAccounts{}} =
       ...>   MscmpSystAuthn.create_access_account(
       ...>     %{

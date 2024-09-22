@@ -21,7 +21,7 @@ defmodule InstanceTypeApplicationTest do
   test "Can Create Instance Type Application" do
     # The test data setup should not set up any instance type application
     # records for the "instance_types_std" instance type.
-    instance_type = MscmpSystEnums.get_enum_item_by_name("instance_types", "instance_types_std")
+    instance_type = MscmpSystEnums.get_item_by_name("instance_types", "instance_types_std")
 
     application_id =
       from(a in Msdata.SystApplications, where: a.internal_name == "app1", select: a.id)
@@ -37,7 +37,7 @@ defmodule InstanceTypeApplicationTest do
   test "Can Delete Instance Type Application" do
     # The test data setup should not set up any instance type application
     # records for the "instance_types_std" instance type.
-    instance_type = MscmpSystEnums.get_enum_item_by_name("instance_types", "instance_types_std")
+    instance_type = MscmpSystEnums.get_item_by_name("instance_types", "instance_types_std")
 
     application_id =
       from(a in Msdata.SystApplications, where: a.internal_name == "app2", select: a.id)

@@ -16,5 +16,5 @@ defmodule DoctestsTest do
   @moduletag :doctest
   @moduletag :capture_log
 
-  doctest MscmpSystSettings, except: [terminate_settings_service: 1]
+  doctest MscmpSystSettings, except: [terminate_service: 1]
 end

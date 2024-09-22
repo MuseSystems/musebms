@@ -128,7 +128,7 @@ defmodule MscmpSystAuthn.Impl.Credential.GenericToken do
     credential_type = Atom.to_string(credential_type)
 
     %{id: credential_type_id} =
-      MscmpSystEnums.get_enum_item_by_name("credential_types", credential_type)
+      MscmpSystEnums.get_item_by_name("credential_types", credential_type)
 
     password_hash = Impl.Hash.create_credential_hash(token)
 
@@ -238,7 +238,7 @@ defmodule MscmpSystAuthn.Impl.Credential.GenericToken do
 
   def delete_credential(credential_type, %Msdata.SystCredentials{} = cred) do
     %{internal_name: target_cred_type_name} =
-      MscmpSystEnums.get_enum_item_by_id("credential_types", cred.credential_type_id)
+      MscmpSystEnums.get_item_by_id("credential_types", cred.credential_type_id)
 
     if target_cred_type_name == Atom.to_string(credential_type) do
       MscmpSystDb.delete!(cred)

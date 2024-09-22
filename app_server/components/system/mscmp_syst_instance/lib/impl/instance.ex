@@ -186,7 +186,7 @@ defmodule MscmpSystInstance.Impl.Instance do
          %Msdata.SystInstances{instance_state_id: instance_state_id} = instance
        ) do
     functional_type_name =
-      MscmpSystEnums.get_functional_type_by_enum_item_id("instance_states", instance_state_id)
+      MscmpSystEnums.get_functional_type_by_item_id("instance_states", instance_state_id)
 
     verify_initialization_eligibility(functional_type_name, instance)
   end
