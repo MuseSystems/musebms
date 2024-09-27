@@ -54,7 +54,7 @@ defmodule MscmpSystEnums do
          [nil, :atom, {:tuple, [{:in, [:via]}, :atom, :any]}, {:tuple, [{:in, [:global]}, :any]}]},
       type_doc: "`t:GenServer.name/0 or `nil`",
       doc: """
-      Specifies the name of the Datastore Context to be used by the Settings
+      Specifies the name of the Datastore Context to be used by the Enumerations
       Service.
       """
     ],
@@ -78,7 +78,7 @@ defmodule MscmpSystEnums do
 
   ##############################################################################
   #
-  # get_datastore_state
+  # child_spec
   #
   #
 
@@ -184,37 +184,21 @@ defmodule MscmpSystEnums do
 
   @doc section: :service_management
   @doc """
-  An optional method for establishing a specific, named Enumerations Service to
-  access by the current process.
+  Sets the specific Enumeration Service instance which the current process
+  should use.
 
-  In some cases it may be desirable to establish an instance of the Enumerations
-  Service outside of the constraints the "Instance Name" as defined by
-  `Msutils.String`. In such cases, this function can be used to set a current
-  Enumerations Service instance for the current process which will access the named
-  Enumerations Service directly rather than the Enumerations Service associated with the
-  prevailing named Instance.  See `Msutils.String` for more about establishing
-  an instance identity with a given process.
-
-  > #### Limited Use Cases {: .tip}
-  >
-  > Under most circumstances the correct Enumerations Service instance to access
-  > will be determined by the prevailing Instance Name as managed by calls to
-  > `Msutils.String.put_instance_name/1` and `Msutils.String.get_instance_name/0`,
-  > meaning that typically calls to `put_service/1` are not necessary.
-  >
-  > The only time this function is required is when an alternative Enumerations
-  > Service should be accessed or there is no Instance Name to set for the
-  > process using `Msutils.String.put_instance_name/1`.
 
   ## Parameters
 
-    * `enums_service_name` - the canonical name of the specific Enumerations
-    Service to access.  When this function is called with a non-nil argument,
-    calls to Enumerations related functions will make use of the Enumerations Service
-    specified here, overriding any Enumerations Service which may be started derived
-    from the Instance Name.  Setting this value to `nil` will clear the special
-    Enumerations Service name and revert to using the Enumerations Service associated
-    with the Instance Name, if one has been set.
+    * `enums_service_name` - the name under which the Enumerations Service is
+      started and by which it may be referenced.  This is any name that may be
+      used to reference a GenServer process.  Additionally, this value may be
+      set `nil` to clear the currently set Enumerations Service name.
+
+  ## Returns
+
+  Returns the name of the previously set Enumerations Service name or `nil` if
+  no Enumerations Service name had been previously set.
 
   ## Examples
 
@@ -241,12 +225,15 @@ defmodule MscmpSystEnums do
 
   @doc section: :service_management
   @doc """
-  Retrieve the current specific Enumerations Service name in effect for the process.
+  Retrieves the name of the currently set Enumerations Service instance.
 
-  This function returns the name of the Enumerations Service that has been using the
-  `put_service/1` function to override the default Enumerations Service
-  associated with the Instance Name. If no specific Enumerations Service name has
-  been set, this function will return `nil`.
+  See `put_service/1` for more information about setting an active Enumeration
+  Service name.
+
+  ## Returns
+
+  Returns the name of the currently set Enumerations Service name or `nil` if
+  no Enumerations Service name has been set.
 
   ## Examples
 
@@ -256,8 +243,8 @@ defmodule MscmpSystEnums do
       ...> MscmpSystEnums.get_service()
       :"MscmpSystEnums.TestSupportService"
 
-    Retrieving a specific Enumerations Service name when no value is currently set
-    for the process:
+    Retrieving a specific Enumerations Service name when no value is currently
+    set for the process:
 
       iex> MscmpSystEnums.put_service(nil)
       ...> MscmpSystEnums.get_service()
