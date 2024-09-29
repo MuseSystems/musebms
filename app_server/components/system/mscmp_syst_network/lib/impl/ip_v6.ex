@@ -20,6 +20,12 @@ defmodule MscmpSystNetwork.Impl.IpV6 do
   alias MscmpSystNetwork.Types
   alias MscmpSystNetwork.Types.IpV6
 
+  ##############################################################################
+  #
+  # to_string
+  #
+  #
+
   @spec to_string(IpV6.t()) :: String.t()
   def to_string(addr) when is_ipv6(addr) do
     address = addr.address |> :inet.ntoa() |> List.to_string()
@@ -27,8 +33,20 @@ defmodule MscmpSystNetwork.Impl.IpV6 do
     address <> "/" <> mask
   end
 
+  ##############################################################################
+  #
+  # get_netmask
+  #
+  #
+
   @spec get_netmask(IpV6.t()) :: Types.ipv6_addr()
   def get_netmask(addr) when is_ipv6(addr), do: mask(addr.mask)
+
+  ##############################################################################
+  #
+  # get_network
+  #
+  #
 
   @spec get_network(IpV6.t()) :: Types.ipv6_addr() | nil
   def get_network(%IpV6{mask: 128}), do: nil
@@ -40,11 +58,29 @@ defmodule MscmpSystNetwork.Impl.IpV6 do
     band(address, mask) |> from_integer()
   end
 
+  ##############################################################################
+  #
+  # get_host
+  #
+  #
+
   @spec get_host(IpV6.t()) :: Types.ipv6_addr() | nil
   def get_host(addr) when is_ipv6(addr), do: if(host?(addr), do: addr.address, else: nil)
 
+  ##############################################################################
+  #
+  # host?
+  #
+  #
+
   @spec host?(IpV6.t()) :: boolean()
   def host?(addr) when is_ipv6(addr), do: if(network?(addr), do: false, else: true)
+
+  ##############################################################################
+  #
+  # network?
+  #
+  #
 
   @spec network?(IpV6.t()) :: boolean()
   def network?(%IpV6{mask: 128}), do: false
@@ -55,6 +91,12 @@ defmodule MscmpSystNetwork.Impl.IpV6 do
 
     (address &&& inverse_mask) == 0
   end
+
+  ##############################################################################
+  #
+  # in_network?
+  #
+  #
 
   @spec in_network?(IpV6.t(), IpV6.t()) :: boolean()
   def in_network?(target_addr, network_addr)
@@ -80,6 +122,12 @@ defmodule MscmpSystNetwork.Impl.IpV6 do
         extracted_target === extracted_network
     end
   end
+
+  ##############################################################################
+  #
+  # in_range?
+  #
+  #
 
   @spec in_range?(IpV6.t(), IpV6.t(), IpV6.t()) :: boolean()
   def in_range?(target_addr, low_addr, high_addr)
@@ -112,6 +160,12 @@ defmodule MscmpSystNetwork.Impl.IpV6 do
 
     target_low >= low_resolved and target_hi <= high_resolved
   end
+
+  ##############################################################################
+  #
+  # to_struct
+  #
+  #
 
   @spec to_struct(Types.ipv6_addr(), Types.ipv6_mask() | nil) :: IpV6.t()
   def to_struct(erlang_addr, mask) when is_ipv6_tuple(erlang_addr),

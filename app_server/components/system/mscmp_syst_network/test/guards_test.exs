@@ -19,6 +19,9 @@ defmodule GuardsTest do
 
   alias MscmpSystNetwork.Types.{IpV4, IpV6}
 
+  @moduletag :unit
+  @moduletag :capture_log
+
   #
   # defguard is_ipv4_tuple(addr)
   #

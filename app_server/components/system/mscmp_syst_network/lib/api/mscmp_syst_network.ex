@@ -130,7 +130,17 @@ defmodule MscmpSystNetwork do
        }}
   """
   @spec parse(String.t()) :: {:ok, Types.addr_structs()} | {:error, MscmpSystError.t()}
-  defdelegate parse(addr_string), to: Impl.Ip
+  def parse(addr_string) do
+    {:ok, parse!(addr_string)}
+  rescue
+    error ->
+      {:error,
+       %MscmpSystError{
+         code: :undefined_error,
+         message: "Failure parsing IP address or subnet address string.",
+         cause: error
+       }}
+  end
 
   @doc section: :parse_api
   @doc """
@@ -176,7 +186,7 @@ defmodule MscmpSystNetwork do
       ** (MatchError) no match of right hand side value: {:error, :einval}
   """
   @spec parse!(String.t()) :: Types.addr_structs()
-  defdelegate parse!(addr_string), to: Impl.Ip
+  defdelegate parse!(addr_string), to: Impl.Ip, as: :parse
 
   ##############################################################################
   #
@@ -233,7 +243,7 @@ defmodule MscmpSystNetwork do
       ** (MatchError) no match of right hand side value: {:error, :einval}
   """
   @spec sigil_i(String.t(), list()) :: Types.addr_structs()
-  defdelegate sigil_i(addr_string, modifiers), to: Impl.Ip, as: :parse!
+  defdelegate sigil_i(addr_string, modifiers), to: Impl.Ip, as: :parse
 
   ##############################################################################
   #

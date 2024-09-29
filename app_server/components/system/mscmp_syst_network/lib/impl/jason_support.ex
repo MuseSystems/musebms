@@ -17,7 +17,13 @@ defmodule MscmpSystNetwork.Impl.JasonSupport do
 
   alias MscmpSystNetwork.Types
 
-  # TODO: :noward_function is too broad an exclusion, but the only one that
+  ##############################################################################
+  #
+  # encode
+  #
+  #
+
+  # TODO: :nowarn_function is too broad an exclusion, but the only one that
   #       seems to work.  Dialyzer is complaining about :extra_range, but I
   #       can't find any magic that is either 1) a valid exclusion, 2) actually
   #       does what is expected.  In all cases either I get an error about

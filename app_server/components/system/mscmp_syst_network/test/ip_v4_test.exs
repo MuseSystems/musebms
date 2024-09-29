@@ -18,6 +18,7 @@ defmodule IpV4Test do
   alias MscmpSystNetwork.Impl
   alias MscmpSystNetwork.Types.IpV4
 
+  @moduletag :unit
   @moduletag :capture_log
 
   #

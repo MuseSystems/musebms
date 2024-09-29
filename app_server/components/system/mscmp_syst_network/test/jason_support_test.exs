@@ -15,6 +15,7 @@ defmodule JasonSupportTest do
 
   import MscmpSystNetwork, only: [sigil_i: 2]
 
+  @moduletag :unit
   @moduletag :capture_log
 
   # Rather than test the Impl.JasonSupport.encode/2 function directly, we're

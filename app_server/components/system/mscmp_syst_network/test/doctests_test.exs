@@ -13,6 +13,7 @@
 defmodule DoctestsTest do
   use ExUnit.Case, async: true
 
+  @moduletag :doctest
   @moduletag :capture_log
 
   doctest MscmpSystNetwork

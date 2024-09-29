@@ -20,6 +20,12 @@ defmodule MscmpSystNetwork.Impl.IpV4 do
   alias MscmpSystNetwork.Types
   alias MscmpSystNetwork.Types.IpV4
 
+  ##############################################################################
+  #
+  # to_string
+  #
+  #
+
   @spec to_string(IpV4.t()) :: String.t()
   def to_string(addr) when is_ipv4(addr) do
     address = addr.address |> :inet.ntoa() |> List.to_string()
@@ -27,8 +33,20 @@ defmodule MscmpSystNetwork.Impl.IpV4 do
     address <> "/" <> mask
   end
 
+  ##############################################################################
+  #
+  # get_netmask
+  #
+  #
+
   @spec get_netmask(IpV4.t()) :: Types.ipv4_addr()
   def get_netmask(addr) when is_ipv4(addr), do: mask(addr.mask)
+
+  ##############################################################################
+  #
+  # get_network
+  #
+  #
 
   @spec get_network(IpV4.t()) :: Types.ipv4_addr() | nil
   def get_network(%IpV4{mask: 32}), do: nil
@@ -40,8 +58,20 @@ defmodule MscmpSystNetwork.Impl.IpV4 do
     band(address, mask) |> from_integer()
   end
 
+  ##############################################################################
+  #
+  # get_host
+  #
+  #
+
   @spec get_host(IpV4.t()) :: Types.ipv4_addr() | nil
   def get_host(addr) when is_ipv4(addr), do: if(host?(addr), do: addr.address, else: nil)
+
+  ##############################################################################
+  #
+  # host?
+  #
+  #
 
   @spec host?(IpV4.t()) :: boolean()
   def host?(addr) when is_ipv4(addr) do
@@ -59,6 +89,12 @@ defmodule MscmpSystNetwork.Impl.IpV4 do
     end
   end
 
+  ##############################################################################
+  #
+  # network?
+  #
+  #
+
   @spec network?(IpV4.t()) :: boolean()
   def network?(%IpV4{mask: 32}), do: false
 
@@ -68,6 +104,12 @@ defmodule MscmpSystNetwork.Impl.IpV4 do
 
     (address &&& inverse_mask) == 0
   end
+
+  ##############################################################################
+  #
+  # in_network?
+  #
+  #
 
   @spec in_network?(IpV4.t(), IpV4.t()) :: boolean()
   def in_network?(target_addr, network_addr)
@@ -93,6 +135,12 @@ defmodule MscmpSystNetwork.Impl.IpV4 do
         extracted_target === extracted_network
     end
   end
+
+  ##############################################################################
+  #
+  # in_range?
+  #
+  #
 
   @spec in_range?(IpV4.t(), IpV4.t(), IpV4.t()) :: boolean()
   def in_range?(target_addr, low_addr, high_addr)
@@ -125,6 +173,12 @@ defmodule MscmpSystNetwork.Impl.IpV4 do
 
     target_low >= low_resolved and target_hi <= high_resolved
   end
+
+  ##############################################################################
+  #
+  # to_struct
+  #
+  #
 
   @spec to_struct(Types.ipv4_addr(), Types.ipv4_mask() | nil) :: IpV4.t()
   def to_struct(erlang_addr, mask) when is_ipv4_tuple(erlang_addr),

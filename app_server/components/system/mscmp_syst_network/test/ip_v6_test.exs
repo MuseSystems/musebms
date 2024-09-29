@@ -20,6 +20,7 @@ defmodule IpV6Test do
   alias MscmpSystNetwork.Impl
   alias MscmpSystNetwork.Types.IpV6
 
+  @moduletag :unit
   @moduletag :capture_log
 
   #
