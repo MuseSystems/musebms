@@ -17,9 +17,24 @@ defmodule MscmpSystLimiter.Impl.RateLimiter do
 
   require Logger
 
+  ##############################################################################
+  #
+  # get_counter_name
+  #
+  #
+
   @spec get_counter_name(Types.counter_type(), Types.counter_id()) :: Types.counter_name()
   def get_counter_name(counter_type, counter_id),
     do: Atom.to_string(counter_type) <> "_" <> counter_id
+
+  ##############################################################################
+  #
+  # get_check_rate_function
+  #
+  #
+
+  # In this case we're calling the public API function since it returns the
+  # desired MscmpSystError.t() based error tuple.
 
   @spec get_check_rate_function(Types.counter_type(), integer(), integer()) ::
           (counter_id :: Types.counter_id() ->
@@ -28,29 +43,28 @@ defmodule MscmpSystLimiter.Impl.RateLimiter do
              | {:error, MscmpSystError.t()})
   def get_check_rate_function(counter_type, scale_ms, limit) do
     fn counter_id ->
-      check_rate(counter_type, counter_id, scale_ms, limit)
+      MscmpSystLimiter.check_rate(counter_type, counter_id, scale_ms, limit)
     end
   end
 
+  ##############################################################################
+  #
+  # check_rate
+  #
+  #
+
   @spec check_rate(Types.counter_type(), Types.counter_id(), integer(), integer()) ::
-          {:allow, count :: integer()}
-          | {:deny, limit :: integer()}
-          | {:error, MscmpSystError.t()}
+          {:allow, count :: integer()} | {:deny, limit :: integer()} | {:error, any()}
   def check_rate(counter_type, counter_id, scale_ms, limit) do
     get_counter_name(counter_type, counter_id)
     |> Hammer.check_rate(scale_ms, limit)
-    |> process_hammer_check_rate_result()
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure checking rate limit counter.",
-         cause: error
-       }}
   end
+
+  ##############################################################################
+  #
+  # check_rate_with_increment
+  #
+  #
 
   @spec check_rate_with_increment(
           Types.counter_type(),
@@ -58,34 +72,17 @@ defmodule MscmpSystLimiter.Impl.RateLimiter do
           integer(),
           integer(),
           integer()
-        ) ::
-          {:allow, count :: integer()}
-          | {:deny, limit :: integer()}
-          | {:error, MscmpSystError.t()}
+        ) :: {:allow, count :: integer()} | {:deny, limit :: integer()} | {:error, any()}
   def check_rate_with_increment(counter_type, counter_id, scale_ms, limit, increment) do
     get_counter_name(counter_type, counter_id)
     |> Hammer.check_rate_inc(scale_ms, limit, increment)
-    |> process_hammer_check_rate_result()
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure checking rate limit counter with increment.",
-         cause: error
-       }}
   end
 
-  defp process_hammer_check_rate_result({:error, reason}) do
-    raise MscmpSystError,
-      code: :undefined_error,
-      message: "Internal error checking rate limit counter.",
-      cause: reason
-  end
-
-  defp process_hammer_check_rate_result(result), do: result
+  ##############################################################################
+  #
+  # inspect_counter
+  #
+  #
 
   @spec inspect_counter(Types.counter_type(), Types.counter_id(), integer(), integer()) ::
           {:ok,
@@ -96,56 +93,16 @@ defmodule MscmpSystLimiter.Impl.RateLimiter do
              created_at :: integer() | nil,
              updated_at :: integer() | nil
            }}
-          | {:error, MscmpSystError.t()}
+          | {:error, any()}
   def inspect_counter(counter_type, counter_id, scale_ms, limit) do
     get_counter_name(counter_type, counter_id)
     |> Hammer.inspect_bucket(scale_ms, limit)
-    |> process_hammer_inspect_bucket_result()
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure inspecting rate limit counter.",
-         cause: error
-       }}
   end
-
-  defp process_hammer_inspect_bucket_result({:error, reason}) do
-    raise MscmpSystError,
-      code: :undefined_error,
-      message: "Internal error inspecting rate limit counter.",
-      cause: reason
-  end
-
-  defp process_hammer_inspect_bucket_result(result), do: result
 
   @spec delete_counters(Types.counter_type(), Types.counter_id()) ::
-          {:ok, integer()} | {:error, MscmpSystError.t()}
+          {:ok, integer()} | {:error, any()}
   def delete_counters(counter_type, counter_id) do
     get_counter_name(counter_type, counter_id)
     |> Hammer.delete_buckets()
-    |> process_hammer_delete_result()
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure deleting rate counters.",
-         cause: error
-       }}
   end
-
-  defp process_hammer_delete_result({:error, reason}) do
-    raise MscmpSystError,
-      code: :undefined_error,
-      message: "Internal error deleting rate counters.",
-      cause: reason
-  end
-
-  defp process_hammer_delete_result(result), do: result
 end

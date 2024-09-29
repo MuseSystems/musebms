@@ -148,7 +148,20 @@ defmodule MscmpSystLimiter do
           {:allow, count :: integer()}
           | {:deny, limit :: integer()}
           | {:error, MscmpSystError.t()}
-  defdelegate check_rate(counter_type, counter_id, scale_ms, limit), to: Impl.RateLimiter
+  def check_rate(counter_type, counter_id, scale_ms, limit) do
+    case Impl.RateLimiter.check_rate(counter_type, counter_id, scale_ms, limit) do
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :undefined_error,
+           message: "Failure checking rate limit counter.",
+           cause: error
+         }}
+
+      result ->
+        result
+    end
+  end
 
   ##############################################################################
   #
@@ -207,8 +220,29 @@ defmodule MscmpSystLimiter do
           {:allow, count :: integer()}
           | {:deny, limit :: integer()}
           | {:error, MscmpSystError.t()}
-  defdelegate check_rate_with_increment(counter_type, counter_id, scale_ms, limit, increment),
-    to: Impl.RateLimiter
+  def check_rate_with_increment(counter_type, counter_id, scale_ms, limit, increment) do
+    native_result =
+      Impl.RateLimiter.check_rate_with_increment(
+        counter_type,
+        counter_id,
+        scale_ms,
+        limit,
+        increment
+      )
+
+    case native_result do
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :undefined_error,
+           message: "Failure checking rate limit counter with increment.",
+           cause: error
+         }}
+
+      result ->
+        result
+    end
+  end
 
   ##############################################################################
   #
@@ -246,7 +280,20 @@ defmodule MscmpSystLimiter do
              updated_at :: integer() | nil
            }}
           | {:error, MscmpSystError.t()}
-  defdelegate inspect_counter(counter_type, counter_id, scale_ms, limit), to: Impl.RateLimiter
+  def inspect_counter(counter_type, counter_id, scale_ms, limit) do
+    case Impl.RateLimiter.inspect_counter(counter_type, counter_id, scale_ms, limit) do
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :undefined_error,
+           message: "Failure inspecting rate limit counter.",
+           cause: error
+         }}
+
+      result ->
+        result
+    end
+  end
 
   ##############################################################################
   #
@@ -277,5 +324,18 @@ defmodule MscmpSystLimiter do
 
   @spec delete_counters(Types.counter_type(), Types.counter_id()) ::
           {:ok, integer()} | {:error, MscmpSystError.t()}
-  defdelegate delete_counters(counter_type, counter_id), to: Impl.RateLimiter
+  def delete_counters(counter_type, counter_id) do
+    case Impl.RateLimiter.delete_counters(counter_type, counter_id) do
+      {:error, error} ->
+        {:error,
+         %MscmpSystError{
+           code: :undefined_error,
+           message: "Failure deleting rate limit counter.",
+           cause: error
+         }}
+
+      result ->
+        result
+    end
+  end
 end

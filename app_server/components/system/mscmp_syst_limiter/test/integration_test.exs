@@ -14,6 +14,7 @@ defmodule IntegrationTest do
   use ExUnit.Case, async: false
 
   @moduletag :integration
+  @moduletag :capture_log
 
   test "Step 1: Can check a rate limit counter" do
     assert {:allow, 1} = MscmpSystLimiter.check_rate(:check_rate_test, "1", 60_000, 3)
