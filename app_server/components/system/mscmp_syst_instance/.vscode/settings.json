@@ -8,8 +8,10 @@
         "IntegrationTest",
         "isft",
         "osft",
+        "startable",
         "statusing",
         "sysdef",
+        "unstarted",
         "updctx"
     ]
 }
