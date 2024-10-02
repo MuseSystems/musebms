@@ -48,13 +48,29 @@ defmodule MscmpSystNetwork.Impl.Ip do
   @spec parse(String.t()) :: Types.addr_structs()
   def parse(cidr_string) do
     [addr_str, mask_str] = cidr_string |> String.split("/") |> parse_split()
-    {:ok, address} = addr_str |> to_charlist() |> :inet.parse_address()
-    mask = parse_mask_str(address, mask_str)
-    to_ip_struct(address, mask)
+
+    case addr_str |> to_charlist() |> :inet.parse_address() do
+      {:ok, address} ->
+        mask = parse_mask_str(address, mask_str)
+        to_ip_struct(address, mask)
+
+      {:error, _} = error ->
+        raise MscmpSystError,
+          code: :parameter_error,
+          message: "Error returned by :inet.parse_address/1",
+          cause: error
+    end
   end
 
   defp parse_split([addr_str, mask_str]), do: [addr_str, mask_str]
   defp parse_split([addr_str]), do: [addr_str, nil]
+
+  defp parse_split(parse_chars) do
+    raise MscmpSystError,
+      code: :parameter_error,
+      message: "Failure parsing IP address or subnet address string.",
+      cause: %{parse_chars: parse_chars}
+  end
 
   defp parse_mask_str({_, _, _, _}, nil), do: 32
 
@@ -75,4 +91,11 @@ defmodule MscmpSystNetwork.Impl.Ip do
 
   defp to_ip_struct({_, _, _, _, _, _, _, _} = address, mask) when mask >= 0 and mask <= 128,
     do: %IpV6{address: address, mask: mask}
+
+  defp to_ip_struct(address, mask) do
+    raise MscmpSystError,
+      code: :parameter_error,
+      message: "Invalid IP address or subnet address string.",
+      cause: %{address: address, mask: mask}
+  end
 end

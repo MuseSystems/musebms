@@ -75,11 +75,15 @@ defmodule MscmpSystNetwork do
 
       iex> MscmpSystNetwork.parse("192.618.10.14/32")
       {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure parsing IP address or subnet address string.",
-         cause: %MatchError{term: {:error, :einval}}
-       }}
+        %MscmpSystError{
+          code: :api_error,
+          message: "Public API MscmpSystNetwork.parse/1 call failed.",
+          cause: %MscmpSystError{
+            code: :parameter_error,
+            message: "Error returned by :inet.parse_address/1",
+            cause: {:error, :einval}
+          }
+      }}
 
     IPv6 addresses
 
@@ -123,21 +127,25 @@ defmodule MscmpSystNetwork do
 
       iex> MscmpSystNetwork.parse("fd9b:77f8:714d:qqqq::z")
       {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure parsing IP address or subnet address string.",
-         cause: %MatchError{term: {:error, :einval}}
-       }}
+        %MscmpSystError{
+          code: :api_error,
+          message: "Public API MscmpSystNetwork.parse/1 call failed.",
+          cause: %MscmpSystError{
+            code: :parameter_error,
+            message: "Error returned by :inet.parse_address/1",
+            cause: {:error, :einval}
+          }
+      }}
   """
   @spec parse(String.t()) :: {:ok, Types.addr_structs()} | {:error, MscmpSystError.t()}
   def parse(addr_string) do
     {:ok, parse!(addr_string)}
   rescue
-    error ->
+    error in MscmpSystError ->
       {:error,
        %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure parsing IP address or subnet address string.",
+         code: :api_error,
+         message: "Public API MscmpSystNetwork.parse/1 call failed.",
          cause: error
        }}
   end
@@ -169,7 +177,7 @@ defmodule MscmpSystNetwork do
 
       iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> MscmpSystNetwork.parse!("192.618.10.14/32")
-      ** (MatchError) no match of right hand side value: {:error, :einval}
+      ** (MscmpSystError) Error returned by :inet.parse_address/1
 
     IPv6 addresses
 
@@ -183,7 +191,7 @@ defmodule MscmpSystNetwork do
 
       iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> MscmpSystNetwork.parse!("fd9b:77f8:714d:qqqq::z")
-      ** (MatchError) no match of right hand side value: {:error, :einval}
+      ** (MscmpSystError) Error returned by :inet.parse_address/1
   """
   @spec parse!(String.t()) :: Types.addr_structs()
   defdelegate parse!(addr_string), to: Impl.Ip, as: :parse
@@ -226,7 +234,7 @@ defmodule MscmpSystNetwork do
 
       iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> ~i"192.618.10.14/32"
-      ** (MatchError) no match of right hand side value: {:error, :einval}
+      ** (MscmpSystError) Error returned by :inet.parse_address/1
 
     IPv6 Addresses
 
@@ -240,7 +248,7 @@ defmodule MscmpSystNetwork do
 
       iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> ~i"fd9b:77f8:714d:qqqq::z"
-      ** (MatchError) no match of right hand side value: {:error, :einval}
+      ** (MscmpSystError) Error returned by :inet.parse_address/1
   """
   @spec sigil_i(String.t(), list()) :: Types.addr_structs()
   defdelegate sigil_i(addr_string, modifiers), to: Impl.Ip, as: :parse

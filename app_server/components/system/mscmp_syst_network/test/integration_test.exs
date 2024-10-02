@@ -117,16 +117,16 @@ defmodule IntegrationTest do
     end
 
     test "Cannot parse invalid IPv4 strings" do
-      assert {:error, %MscmpSystError{code: :undefined_error}} =
+      assert {:error, %MscmpSystError{code: :api_error}} =
                MscmpSystNetwork.parse("10.1.1.1.1")
 
-      assert {:error, %MscmpSystError{code: :undefined_error}} =
+      assert {:error, %MscmpSystError{code: :api_error}} =
                MscmpSystNetwork.parse("10.1.1.1.1/32")
 
-      assert {:error, %MscmpSystError{code: :undefined_error}} =
+      assert {:error, %MscmpSystError{code: :api_error}} =
                MscmpSystNetwork.parse("10.1.1.1/32/32")
 
-      assert {:error, %MscmpSystError{code: :undefined_error}} =
+      assert {:error, %MscmpSystError{code: :api_error}} =
                MscmpSystNetwork.parse("10.1.1.1/-32")
     end
 
@@ -200,16 +200,16 @@ defmodule IntegrationTest do
     end
 
     test "Cannot parse invalid IPv6 strings" do
-      assert {:error, %MscmpSystError{code: :undefined_error}} =
+      assert {:error, %MscmpSystError{code: :api_error}} =
                MscmpSystNetwork.parse("2001::0010::abcd")
 
-      assert {:error, %MscmpSystError{code: :undefined_error}} =
+      assert {:error, %MscmpSystError{code: :api_error}} =
                MscmpSystNetwork.parse("2001::0010::abcd/128")
 
-      assert {:error, %MscmpSystError{code: :undefined_error}} =
+      assert {:error, %MscmpSystError{code: :api_error}} =
                MscmpSystNetwork.parse("2001::0010:abcd/128/128")
 
-      assert {:error, %MscmpSystError{code: :undefined_error}} =
+      assert {:error, %MscmpSystError{code: :api_error}} =
                MscmpSystNetwork.parse("2001::0010:abcd/-128")
     end
   end
