@@ -14,12 +14,12 @@
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
     <script src="dist/handlebars.templates-K7URE6B4.js"></script>
-    <script src="dist/sidebar_items-888A8F26.js"></script>
+    <script src="dist/sidebar_items-46A79B65.js"></script>
     <script src="docs_config.js"></script>
     <script async src="dist/html-YIPIRHGU.js"></script>
 
   </head>
-  <body data-type="modules" class="page-exception">
+  <body data-type="modules" class="page-behaviour">
     <script>
 
       try {
@@ -112,19 +112,35 @@ Pages
 <div id="top-content">
   <h1>
 
-    <span translate="no">MscmpSystError</span> <small>exception</small>
+    <span translate="no">MscmpSystError</span> <small>behaviour</small>
     <small class="app-vsn" translate="no">(mscmp_syst_error v0.1.0)</small>
 
   </h1>
 
 
     <section id="moduledoc">
-<p>API for defining a standard for error handling and reporting.</p><p>This module defines a nested structure for reporting errors in contexts where a result should be
-represented by an error result.  By capturing lower level errors and reporting them in a
-standard way, various application errors, especially non-fatal errors, can be handled as
-appropriate and logged for later analysis.</p><p>The basic form of a reportable application error is: <code class="inline">{:error, %MscmpSystError{}}</code> where
-<code class="inline">%MscmpSystError{}</code> contains basic fields to identify the kind of error, the source of the
-error, and other error related data.</p><p>Functions in this API are used to work with the returned exception.</p>
+<p>MscmpSystError establishes a common framework for defining and handling errors.</p><p>MscmpSystError provides a structured way to define and handle errors within an
+application. It defines a set of fields that errors should include, such as
+<code class="inline">kind</code>, <code class="inline">message</code>, <code class="inline">context</code>, and <code class="inline">cause</code>. This standardization enables
+consistent error handling and reporting across different parts of an
+application.</p><p>To create a new Error type implemention, you can use the <code class="inline">use MscmpSystError</code>
+macro in your module.</p><pre><code class="makeup elixir" translate="no"><span class="kd">defmodule</span><span class="w"> </span><span class="nc">Mserror.MyError</span><span class="w"> </span><span class="k" data-group-id="3727655340-1">do</span><span class="w">
+  </span><span class="kn">use</span><span class="w"> </span><span class="nc">MscmpSystError</span><span class="p">,</span><span class="w">
+    </span><span class="ss">kinds</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3727655340-2">[</span><span class="ss">my_error</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;`:my_error` Error Kind documentation&quot;</span><span class="p" data-group-id="3727655340-2">]</span><span class="p">,</span><span class="w">
+    </span><span class="ss">component</span><span class="p">:</span><span class="w"> </span><span class="nc">ExampleComponent</span><span class="w">
+</span><span class="k" data-group-id="3727655340-1">end</span></code></pre><h2 id="module-options" class="section-heading">
+  <a href="#module-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options</span>
+</h2>
+<p>The <code class="inline">use MscmpSystError</code> macro requires that the following options are provided:</p><ul><li><p><code class="inline">:kinds</code> - A keyword list of error kinds, where the key is the atom
+representing the error kind, and the value is a string providing a
+documentation string for the error kind.</p></li><li><p><code class="inline">:component</code> - This is a reference to the Component where the error type is
+defined.  As errors may be propogated from lower level dependencies to higher
+level components, this value helps identify the origin of any given error.</p></li></ul><p>Failing to provide these options will result in a compile time error.</p><blockquote><h4 class="info"><code class="inline">use MscmpSystError</code></h4><p>When <code class="inline">use MscmpSystError</code> is called with the required options, it:</p><ol><li><p>Implements the <a href="MscmpSystError.html"><code class="inline">MscmpSystError</code></a> behaviour.</p></li><li><p>Defines a <code class="inline">kinds</code> type based on the provided <code class="inline">:kinds</code> option.</p></li><li><p>Creates a struct with fields for <code class="inline">kind</code>, <code class="inline">message</code>, <code class="inline">mserror</code>, <code class="inline">component</code>,
+<code class="inline">context</code>, and <code class="inline">cause</code>.</p></li><li><p>Implements <code class="inline">defexception</code> with the struct fields.</p></li><li><p>Defines an <code class="inline">exception/1</code> function that delegates to <code class="inline">new/3</code>.</p></li><li><p>Implements a <code class="inline">new/3</code> function that creates a new error struct with the
+given kind, message, and options.</p></li></ol></blockquote>
     </section>
 
 </div>
@@ -147,23 +163,23 @@ error, and other error related data.</p><p>Functions in this API are used to wor
 
       </div>
 
-        <div class="summary-synopsis"><p>Returns the root cause of an <a href="MscmpSystError.html"><code class="inline">MscmpSystError</code></a> exception object.</p></div>
+        <div class="summary-synopsis"><p>Returns the root cause of an error object implementing the MscmpSystError behavior.</p></div>
 
     </div>
 
 </div>
-<div class="summary-types summary">
+<div class="summary-callbacks summary">
   <h2>
-    <a href="#types">Types</a>
+    <a href="#callbacks">Callbacks</a>
   </h2>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:t/0" data-no-tooltip translate="no">t()</a>
+        <a href="#c:new/3" data-no-tooltip translate="no">new(kind, message, opts)</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>Defines a nestable exception format for reporting MuseBMS application exceptions.</p></div>
+        <div class="summary-synopsis"><p>Defines the callback for creating a new error of the implementing module.</p></div>
 
     </div>
 
@@ -200,60 +216,68 @@ error, and other error related data.</p><p>Functions in this API are used to wor
 
       </div>
 
-<p>Returns the root cause of an <a href="MscmpSystError.html"><code class="inline">MscmpSystError</code></a> exception object.</p><p>The <a href="MscmpSystError.html"><code class="inline">MscmpSystError</code></a> exception handling framework allows for nested exceptions to be reported
+<p>Returns the root cause of an error object implementing the MscmpSystError behavior.</p><p>The MscmpSystError exception handling framework allows for nested exceptions to be reported
 stack trace style from lower levels of the application where an exception was caused into higher
-levels of the application which enter a failure state due to the lower level root cause.</p><p>This function will traverse the nesting and return the bottom most Error Struct.  If some other
+levels of the application which enter a failure state due to the lower level root cause.</p><p>This function will traverse the nesting and return the bottom most Error Struct. If some other
 object, such as a standard error tuple is passed to the function, the function will simply
-return the value.</p><h2 id="get_root_cause/1-examples" class="section-heading">
+return that value.</p><h2 id="get_root_cause/1-examples" class="section-heading">
   <a href="#get_root_cause/1-examples" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">my_err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="6662632632-1">%</span><span class="nc" data-group-id="6662632632-1">MscmpSystError</span><span class="p" data-group-id="6662632632-1">{</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">           </span><span class="ss">code</span><span class="p">:</span><span class="w">    </span><span class="ss">:example_error</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">           </span><span class="ss">message</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Outer error message&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">           </span><span class="ss">cause</span><span class="p">:</span><span class="w">    </span><span class="p" data-group-id="6662632632-2">%</span><span class="nc" data-group-id="6662632632-2">MscmpSystError</span><span class="p" data-group-id="6662632632-2">{</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">                       </span><span class="ss">code</span><span class="p">:</span><span class="w">    </span><span class="ss">:example_error</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">                       </span><span class="ss">message</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Intermediate error message&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">                       </span><span class="ss">cause</span><span class="p">:</span><span class="w">    </span><span class="p" data-group-id="6662632632-3">%</span><span class="nc" data-group-id="6662632632-3">MscmpSystError</span><span class="p" data-group-id="6662632632-3">{</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">                                   </span><span class="ss">code</span><span class="p">:</span><span class="w">    </span><span class="ss">:example_error</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">                                   </span><span class="ss">message</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Root error message&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">                                   </span><span class="ss">cause</span><span class="p">:</span><span class="w">    </span><span class="p" data-group-id="6662632632-4">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Example Error&quot;</span><span class="p" data-group-id="6662632632-4">}</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">                                 </span><span class="p" data-group-id="6662632632-3">}</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">                     </span><span class="p" data-group-id="6662632632-2">}</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="p" data-group-id="6662632632-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystError</span><span class="o">.</span><span class="n">get_root_cause</span><span class="p" data-group-id="6662632632-5">(</span><span class="n">my_err</span><span class="p" data-group-id="6662632632-5">)</span><span class="w">
-</span><span class="p" data-group-id="6662632632-6">%</span><span class="nc" data-group-id="6662632632-6">MscmpSystError</span><span class="p" data-group-id="6662632632-6">{</span><span class="w">
-  </span><span class="ss">code</span><span class="p">:</span><span class="w">     </span><span class="ss">:example_error</span><span class="p">,</span><span class="w">
-  </span><span class="ss">message</span><span class="p">:</span><span class="w">  </span><span class="s">&quot;Root error message&quot;</span><span class="p">,</span><span class="w">
-  </span><span class="ss">cause</span><span class="p">:</span><span class="w">    </span><span class="p" data-group-id="6662632632-7">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Example Error&quot;</span><span class="p" data-group-id="6662632632-7">}</span><span class="w">
-</span><span class="p" data-group-id="6662632632-6">}</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">my_err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="8541635195-1">%</span><span class="nc" data-group-id="8541635195-1">ExampleError</span><span class="p" data-group-id="8541635195-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">kind</span><span class="p">:</span><span class="w"> </span><span class="ss">:example_error</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">message</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Outer error message&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">mserror</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">component</span><span class="p">:</span><span class="w"> </span><span class="nc">ExampleError</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">cause</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8541635195-2">%</span><span class="nc" data-group-id="8541635195-2">ExampleError</span><span class="p" data-group-id="8541635195-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">kind</span><span class="p">:</span><span class="w"> </span><span class="ss">:example_error</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">message</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Intermediate error message&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">mserror</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">component</span><span class="p">:</span><span class="w"> </span><span class="nc">ExampleError</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">cause</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8541635195-3">%</span><span class="nc" data-group-id="8541635195-3">ExampleError</span><span class="p" data-group-id="8541635195-3">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">      </span><span class="ss">kind</span><span class="p">:</span><span class="w"> </span><span class="ss">:example_error</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">      </span><span class="ss">message</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Root error message&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">      </span><span class="ss">mserror</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">      </span><span class="ss">component</span><span class="p">:</span><span class="w"> </span><span class="nc">ExampleError</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">      </span><span class="ss">cause</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8541635195-4">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Example Error&quot;</span><span class="p" data-group-id="8541635195-4">}</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="p" data-group-id="8541635195-3">}</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8541635195-2">}</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="8541635195-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystError</span><span class="o">.</span><span class="n">get_root_cause</span><span class="p" data-group-id="8541635195-5">(</span><span class="n">my_err</span><span class="p" data-group-id="8541635195-5">)</span><span class="w">
+</span><span class="p" data-group-id="8541635195-6">%</span><span class="nc" data-group-id="8541635195-6">ExampleError</span><span class="p" data-group-id="8541635195-6">{</span><span class="w">
+  </span><span class="ss">kind</span><span class="p">:</span><span class="w"> </span><span class="ss">:example_error</span><span class="p">,</span><span class="w">
+  </span><span class="ss">message</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Root error message&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="ss">mserror</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">component</span><span class="p">:</span><span class="w"> </span><span class="nc">ExampleError</span><span class="p">,</span><span class="w">
+  </span><span class="ss">cause</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8541635195-7">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Example Error&quot;</span><span class="p" data-group-id="8541635195-7">}</span><span class="w">
+</span><span class="p" data-group-id="8541635195-6">}</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystError</span><span class="o">.</span><span class="n">get_root_cause</span><span class="p" data-group-id="6662632632-8">(</span><span class="p" data-group-id="6662632632-9">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Example Error&quot;</span><span class="p" data-group-id="6662632632-9">}</span><span class="p" data-group-id="6662632632-8">)</span><span class="w">
-</span><span class="p" data-group-id="6662632632-10">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Example Error&quot;</span><span class="p" data-group-id="6662632632-10">}</span></code></pre>
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystError</span><span class="o">.</span><span class="n">get_root_cause</span><span class="p" data-group-id="8541635195-8">(</span><span class="p" data-group-id="8541635195-9">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Example Error&quot;</span><span class="p" data-group-id="8541635195-9">}</span><span class="p" data-group-id="8541635195-8">)</span><span class="w">
+</span><span class="p" data-group-id="8541635195-10">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Example Error&quot;</span><span class="p" data-group-id="8541635195-10">}</span></code></pre>
   </section>
 </section>
 
     </div>
   </section>
 
-  <section id="types" class="details-list">
+  <section id="callbacks" class="details-list">
     <h1 class="section-heading">
-      <a class="hover-link" href="#types">
+      <a class="hover-link" href="#callbacks">
         <i class="ri-link-m" aria-hidden="true"></i>
       </a>
-      <span class="text">Types</span>
+      <span class="text">Callbacks</span>
     </h1>
-    <div class="types-list">
-<section class="detail" id="t:t/0">
+    <div class="callbacks-list">
+<section class="detail" id="c:new/3">
 
   <div class="detail-header">
-    <a href="#t:t/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#c:new/3" class="detail-link" data-no-tooltip title="Link to this callback">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature" translate="no">t()</h1>
+    <h1 class="signature" translate="no">new(kind, message, opts)</h1>
 
 
   </div>
@@ -262,22 +286,32 @@ return the value.</p><h2 id="get_root_cause/1-examples" class="section-heading">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> t() :: %MscmpSystError{
-  __exception__: true,
-  cause: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>(),
-  code: <a href="MscmpSystError.Types.html#t:mscmp_error/0">MscmpSystError.Types.mscmp_error</a>(),
-  message: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()
-}</pre>
+          <pre translate="no"><span class="attribute">@callback</span> new(kind :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), message :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), opts :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) :: <a href="https://hexdocs.pm/elixir/Exception.html#t:t/0">Exception.t</a>()</pre>
 
       </div>
 
-<p>Defines a nestable exception format for reporting MuseBMS application exceptions.</p><p>Fields in the exception are:</p><ul><li><p><code class="inline">code</code> - classifies the error into a specific kind of exception likely to be seen in
-application.  Useful for pattern matching, logging, and determining if any raised exception
-should be handled or not.</p></li><li><p><code class="inline">message</code> - the text description of the error condition.  This should be meaningful to
-humans.</p></li><li><p><code class="inline">cause</code> - includes information that may be helpful in understanding the cause of the error
-condition.  This could include nested <code class="inline">t:MscmpSystError/0</code> objects, exception data created
-outside of this exception framework, or pertinent data such as parameters and data that is
-directly related to the exception.</p></li></ul>
+<p>Defines the callback for creating a new error of the implementing module.</p><p>This function should be implemented by all modules using MscmpSystError.
+It creates a new error struct with the given kind, message, and options.</p><h2 id="c:new/3-parameters" class="section-heading">
+  <a href="#c:new/3-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><p><code class="inline">kind</code> - The kind of error, which should be one of the kinds defined in
+the implementing module.</p></li><li><p><code class="inline">message</code> - A string describing the error.</p></li><li><p><code class="inline">opts</code> - A keyword list of additional options.</p></li></ul><h2 id="c:new/3-options" class="section-heading">
+  <a href="#c:new/3-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options</span>
+</h2>
+<ul><li><p><code class="inline">:context</code> - A map containing additional context information for the error.</p></li><li><p><code class="inline">:cause</code> - The cause of the error, which can be an exception, an error tuple,
+or any other term.</p></li></ul><h2 id="c:new/3-returns" class="section-heading">
+  <a href="#c:new/3-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<p>Returns a struct of the implementing module with the error details.</p>
   </section>
 </section>
 

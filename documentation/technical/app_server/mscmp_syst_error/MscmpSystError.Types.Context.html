@@ -8,13 +8,13 @@
     <meta name="project" content="mscmp_syst_error v0.1.0">
 
 
-    <title>MscmpSystError.Types — mscmp_syst_error v0.1.0</title>
+    <title>MscmpSystError.Types.Context — mscmp_syst_error v0.1.0</title>
     <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
     <script src="dist/handlebars.templates-K7URE6B4.js"></script>
-    <script src="dist/sidebar_items-888A8F26.js"></script>
+    <script src="dist/sidebar_items-46A79B65.js"></script>
     <script src="docs_config.js"></script>
     <script async src="dist/html-YIPIRHGU.js"></script>
 
@@ -112,14 +112,17 @@ Pages
 <div id="top-content">
   <h1>
 
-    <span translate="no">MscmpSystError.Types</span> 
+    <span translate="no">MscmpSystError.Types.Context</span> 
     <small class="app-vsn" translate="no">(mscmp_syst_error v0.1.0)</small>
 
   </h1>
 
 
     <section id="moduledoc">
-<p>Defines the public types exposed by the MscmpSystError component.</p>
+<p>Defines the Context data which a MscmpSystError exception can be associated
+with in a standard way.</p><p>Note that one should not expect that any given exception will provide context
+data, but it is expected that any exception which does provide context data
+will use this module's definitions and structure.</p>
     </section>
 
 </div>
@@ -138,11 +141,11 @@ Pages
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:mscmp_error/0" data-no-tooltip translate="no">mscmp_error()</a>
+        <a href="#t:t/0" data-no-tooltip translate="no">t()</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>Categories or groups of error kinds which might be seen in the application.</p></div>
+        <div class="summary-synopsis"><p>Represents the context associated with a MscmpSystError exception.</p></div>
 
     </div>
 
@@ -159,14 +162,14 @@ Pages
       <span class="text">Types</span>
     </h1>
     <div class="types-list">
-<section class="detail" id="t:mscmp_error/0">
+<section class="detail" id="t:t/0">
 
   <div class="detail-header">
-    <a href="#t:mscmp_error/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:t/0" class="detail-link" data-no-tooltip title="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">mscmp_error()</h1>
+    <h1 class="signature" translate="no">t()</h1>
 
 
   </div>
@@ -175,22 +178,24 @@ Pages
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> mscmp_error() ::
-  :undefined_error
-  | :database_error
-  | :example_error
-  | :file_error
-  | :invalid_data
-  | :invalid_parameter
-  | :permission_denied
-  | :record_not_found
-  | :process_error</pre>
+          <pre translate="no"><span class="attribute">@type</span> t() :: %MscmpSystError.Types.Context{
+  origin: {<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">module</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">function</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">arity</a>()} | nil,
+  parameters: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>() | nil,
+  supporting_data: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>() | nil
+}</pre>
 
       </div>
 
-<p>Categories or groups of error kinds which might be seen in the application.</p><p>The level of granularity we're trying to achieve here is we want any logic
-that makes decisions on whether to handle an error/exception to be able to
-understand the nature of the error.</p>
+<p>Represents the context associated with a MscmpSystError exception.</p><h2 id="t:t/0-attributes" class="section-heading">
+  <a href="#t:t/0-attributes" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Attributes</span>
+</h2>
+<ul><li><p><code class="inline">:parameters</code>: A map of function parameters and their values which were
+in effect when the error was encountered.</p></li><li><p><code class="inline">:origin</code>: A tuple containing the module, function, and arity where the
+error originated, or <code class="inline">nil</code> if unknown.</p></li><li><p><code class="inline">:supporting_data</code>: Any additional data that might be relevant to the
+error or exception, or <code class="inline">nil</code> if not provided.</p></li></ul>
   </section>
 </section>
 

@@ -1,5 +1,5 @@
-# Source File: mscmp_error.ex
-# Location:    musebms/components/system/mscmp_syst_error/lib/impl/mscmp_error.ex
+# Source File: doctests_test.exs
+# Location:    musebms/components/system/mscmp_syst_error/test/doctests_test.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,14 +10,11 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MscmpSystError.Impl.MscmpError do
-  @moduledoc false
+defmodule DoctestsTest do
+  use ExUnit.Case, async: true
 
-  @spec get_root_cause(any()) :: any()
-  def get_root_cause(%MscmpSystError{cause: next_error = %MscmpSystError{}}) do
-    next_error
-    |> get_root_cause()
-  end
+  @moduletag :doctest
+  @moduletag :capture_log
 
-  def get_root_cause(last_error), do: last_error
+  doctest MscmpSystError
 end
