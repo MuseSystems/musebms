@@ -76,10 +76,10 @@ defmodule MscmpSystNetwork do
       iex> MscmpSystNetwork.parse("192.618.10.14/32")
       {:error,
         %Mserror.NetworkError{
-          kind: :parse_error,
+          kind: :parse,
           message: "Error parsing IP address or network",
           cause: %Mserror.NetworkError{
-            kind: :parse_error,
+            kind: :parse,
             message: "Error returned by :inet.parse_address/1",
             cause: {:error, :einval},
             context: %MscmpSystError.Types.Context{
@@ -136,10 +136,10 @@ defmodule MscmpSystNetwork do
       iex> MscmpSystNetwork.parse("fd9b:77f8:714d:qqqq::z")
       {:error,
         %Mserror.NetworkError{
-          kind: :parse_error,
+          kind: :parse,
           message: "Error parsing IP address or network",
           cause: %Mserror.NetworkError{
-            kind: :parse_error,
+            kind: :parse,
             message: "Error returned by :inet.parse_address/1",
             cause: {:error, :einval},
             context: %MscmpSystError.Types.Context{
@@ -159,7 +159,7 @@ defmodule MscmpSystNetwork do
   rescue
     error in Mserror.NetworkError ->
       {:error,
-       Mserror.NetworkError.new(:parse_error, "Error parsing IP address or network",
+       Mserror.NetworkError.new(:parse, "Error parsing IP address or network",
          cause: error,
          context: %MscmpSystError.Types.Context{parameters: %{addr_string: addr_string}}
        )}

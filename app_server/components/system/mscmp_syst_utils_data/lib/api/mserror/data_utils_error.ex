@@ -17,7 +17,7 @@ defmodule Mserror.DataUtilsError do
 
   use MscmpSystError,
     kinds: [
-      macro_error: """
+      macro: """
       Indicates that there were compilation errors in the macros provided by
       this Component.  This will often times be due to invalid parameters being
       passed to the macros.

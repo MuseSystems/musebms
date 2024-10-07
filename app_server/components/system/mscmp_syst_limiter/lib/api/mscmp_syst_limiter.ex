@@ -152,7 +152,7 @@ defmodule MscmpSystLimiter do
     case Impl.RateLimiter.check_rate(counter_type, counter_id, scale_ms, limit) do
       {:error, _} = error ->
         {:error,
-         Mserror.LimiterError.new(:check_counter_error, "Error returned from rate limiter check.",
+         Mserror.LimiterError.new(:check_counter, "Error returned from rate limiter check.",
            cause: error,
            context: %MscmpSystError.Types.Context{
              parameters: %{
@@ -240,7 +240,7 @@ defmodule MscmpSystLimiter do
       {:error, _} = error ->
         {:error,
          Mserror.LimiterError.new(
-           :check_counter_error,
+           :check_counter,
            "Error returned from rate limiter check with increment.",
            cause: error,
            context: %MscmpSystError.Types.Context{
@@ -300,7 +300,7 @@ defmodule MscmpSystLimiter do
       {:error, _} = error ->
         {:error,
          Mserror.LimiterError.new(
-           :inspect_counter_error,
+           :inspect_counter,
            "Error returned from rate limiter inspect.",
            cause: error,
            context: %MscmpSystError.Types.Context{
@@ -352,7 +352,7 @@ defmodule MscmpSystLimiter do
       {:error, _} = error ->
         {:error,
          Mserror.LimiterError.new(
-           :delete_counter_error,
+           :delete_counter,
            "Error returned from rate limiter delete.",
            cause: error,
            context: %MscmpSystError.Types.Context{

@@ -17,7 +17,7 @@ defmodule Mserror.NetworkError do
 
   use MscmpSystError,
     kinds: [
-      parse_error: """
+      parse: """
       Indicates that there were problems attempting to parse an IP Address or
       Network represented as a string.
       """,

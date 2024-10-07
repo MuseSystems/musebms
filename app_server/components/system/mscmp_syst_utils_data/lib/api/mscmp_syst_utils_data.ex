@@ -220,7 +220,7 @@ defmodule Msutils.Data do
 
           if invalid_selections != [] do
             raise Mserror.DataUtilsError,
-              kind: :macro_error,
+              kind: :macro,
               message: "Invalid changeset validator options were requested",
               context: %MscmpSystError.Types.Context{
                 origin: {__MODULE__, :common_validator_options, 1},
@@ -236,7 +236,7 @@ defmodule Msutils.Data do
 
         _ ->
           raise Mserror.DataUtilsError,
-            kind: :macro_error,
+            kind: :macro,
             message: """
               Invalid options selector provided.  Your selections should be a
               list of the validators you require.
