@@ -33,9 +33,6 @@ defmodule MscmpSystLimiter.Impl.RateLimiter do
   #
   #
 
-  # In this case we're calling the public API function since it returns the
-  # desired Mserror.LimiterError.t() based error tuple.
-
   @spec get_check_rate_function(Types.counter_type(), integer(), integer()) ::
           (counter_id :: Types.counter_id() ->
              {:allow, count :: integer()}
@@ -43,7 +40,7 @@ defmodule MscmpSystLimiter.Impl.RateLimiter do
              | {:error, Mserror.LimiterError.t()})
   def get_check_rate_function(counter_type, scale_ms, limit) do
     fn counter_id ->
-      MscmpSystLimiter.check_rate(counter_type, counter_id, scale_ms, limit)
+      check_rate(counter_type, counter_id, scale_ms, limit)
     end
   end
 
@@ -54,10 +51,30 @@ defmodule MscmpSystLimiter.Impl.RateLimiter do
   #
 
   @spec check_rate(Types.counter_type(), Types.counter_id(), integer(), integer()) ::
-          {:allow, count :: integer()} | {:deny, limit :: integer()} | {:error, any()}
+          {:allow, count :: integer()}
+          | {:deny, limit :: integer()}
+          | {:error, Mserror.LimiterError.t()}
   def check_rate(counter_type, counter_id, scale_ms, limit) do
-    get_counter_name(counter_type, counter_id)
-    |> Hammer.check_rate(scale_ms, limit)
+    with counter_name <- get_counter_name(counter_type, counter_id),
+         {result, value} when result in [:allow, :deny] <-
+           Hammer.check_rate(counter_name, scale_ms, limit) do
+      {result, value}
+    else
+      {:error, _} = error ->
+        {:error,
+         Mserror.LimiterError.new(:check_counter, "Failure checking the counter.",
+           cause: error,
+           context: %MscmpSystError.Types.Context{
+             origin: {__MODULE__, :check_rate, 4},
+             parameters: %{
+               counter_type: counter_type,
+               counter_id: counter_id,
+               scale_ms: scale_ms,
+               limit: limit
+             }
+           }
+         )}
+    end
   end
 
   ##############################################################################
@@ -72,10 +89,32 @@ defmodule MscmpSystLimiter.Impl.RateLimiter do
           integer(),
           integer(),
           integer()
-        ) :: {:allow, count :: integer()} | {:deny, limit :: integer()} | {:error, any()}
+        ) ::
+          {:allow, count :: integer()}
+          | {:deny, limit :: integer()}
+          | {:error, Mserror.LimiterError.t()}
   def check_rate_with_increment(counter_type, counter_id, scale_ms, limit, increment) do
-    get_counter_name(counter_type, counter_id)
-    |> Hammer.check_rate_inc(scale_ms, limit, increment)
+    with counter_name <- get_counter_name(counter_type, counter_id),
+         {result, value} when result in [:allow, :deny] <-
+           Hammer.check_rate_inc(counter_name, scale_ms, limit, increment) do
+      {result, value}
+    else
+      {:error, _} = error ->
+        {:error,
+         Mserror.LimiterError.new(:check_counter, "Failure checking the counter with increment.",
+           cause: error,
+           context: %MscmpSystError.Types.Context{
+             origin: {__MODULE__, :check_rate_with_increment, 5},
+             parameters: %{
+               counter_type: counter_type,
+               counter_id: counter_id,
+               scale_ms: scale_ms,
+               limit: limit,
+               increment: increment
+             }
+           }
+         )}
+    end
   end
 
   ##############################################################################
@@ -93,16 +132,48 @@ defmodule MscmpSystLimiter.Impl.RateLimiter do
              created_at :: integer() | nil,
              updated_at :: integer() | nil
            }}
-          | {:error, any()}
+          | {:error, Mserror.LimiterError.t()}
   def inspect_counter(counter_type, counter_id, scale_ms, limit) do
-    get_counter_name(counter_type, counter_id)
-    |> Hammer.inspect_bucket(scale_ms, limit)
+    with counter_name <- get_counter_name(counter_type, counter_id),
+         {:ok, result} <- Hammer.inspect_bucket(counter_name, scale_ms, limit) do
+      {:ok, result}
+    else
+      {:error, _} = error ->
+        {:error,
+         Mserror.LimiterError.new(:inspect_counter, "Failure inspecting the counter.",
+           cause: error,
+           context: %MscmpSystError.Types.Context{
+             origin: {__MODULE__, :inspect_counter, 4},
+             parameters: %{
+               counter_type: counter_type,
+               counter_id: counter_id,
+               scale_ms: scale_ms,
+               limit: limit
+             }
+           }
+         )}
+    end
   end
 
   @spec delete_counters(Types.counter_type(), Types.counter_id()) ::
-          {:ok, integer()} | {:error, any()}
+          {:ok, integer()} | {:error, Mserror.LimiterError.t()}
   def delete_counters(counter_type, counter_id) do
-    get_counter_name(counter_type, counter_id)
-    |> Hammer.delete_buckets()
+    with counter_name <- get_counter_name(counter_type, counter_id),
+         {:ok, result} <- Hammer.delete_buckets(counter_name) do
+      {:ok, result}
+    else
+      {:error, _} = error ->
+        {:error,
+         Mserror.LimiterError.new(:delete_counter, "Failure deleting the counter.",
+           cause: error,
+           context: %MscmpSystError.Types.Context{
+             origin: {__MODULE__, :delete_counters, 2},
+             parameters: %{
+               counter_type: counter_type,
+               counter_id: counter_id
+             }
+           }
+         )}
+    end
   end
 end

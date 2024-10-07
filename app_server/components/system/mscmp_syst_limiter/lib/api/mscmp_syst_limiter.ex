@@ -148,26 +148,7 @@ defmodule MscmpSystLimiter do
           {:allow, count :: integer()}
           | {:deny, limit :: integer()}
           | {:error, Mserror.LimiterError.t()}
-  def check_rate(counter_type, counter_id, scale_ms, limit) do
-    case Impl.RateLimiter.check_rate(counter_type, counter_id, scale_ms, limit) do
-      {:error, _} = error ->
-        {:error,
-         Mserror.LimiterError.new(:check_counter, "Error returned from rate limiter check.",
-           cause: error,
-           context: %MscmpSystError.Types.Context{
-             parameters: %{
-               counter_type: counter_type,
-               counter_id: counter_id,
-               scale_ms: scale_ms,
-               limit: limit
-             }
-           }
-         )}
-
-      result ->
-        result
-    end
-  end
+  defdelegate check_rate(counter_type, counter_id, scale_ms, limit), to: Impl.RateLimiter
 
   ##############################################################################
   #
@@ -226,38 +207,8 @@ defmodule MscmpSystLimiter do
           {:allow, count :: integer()}
           | {:deny, limit :: integer()}
           | {:error, Mserror.LimiterError.t()}
-  def check_rate_with_increment(counter_type, counter_id, scale_ms, limit, increment) do
-    native_result =
-      Impl.RateLimiter.check_rate_with_increment(
-        counter_type,
-        counter_id,
-        scale_ms,
-        limit,
-        increment
-      )
-
-    case native_result do
-      {:error, _} = error ->
-        {:error,
-         Mserror.LimiterError.new(
-           :check_counter,
-           "Error returned from rate limiter check with increment.",
-           cause: error,
-           context: %MscmpSystError.Types.Context{
-             parameters: %{
-               counter_type: counter_type,
-               counter_id: counter_id,
-               scale_ms: scale_ms,
-               limit: limit,
-               increment: increment
-             }
-           }
-         )}
-
-      result ->
-        result
-    end
-  end
+  defdelegate check_rate_with_increment(counter_type, counter_id, scale_ms, limit, increment),
+    to: Impl.RateLimiter
 
   ##############################################################################
   #
@@ -295,28 +246,7 @@ defmodule MscmpSystLimiter do
              updated_at :: integer() | nil
            }}
           | {:error, Mserror.LimiterError.t()}
-  def inspect_counter(counter_type, counter_id, scale_ms, limit) do
-    case Impl.RateLimiter.inspect_counter(counter_type, counter_id, scale_ms, limit) do
-      {:error, _} = error ->
-        {:error,
-         Mserror.LimiterError.new(
-           :inspect_counter,
-           "Error returned from rate limiter inspect.",
-           cause: error,
-           context: %MscmpSystError.Types.Context{
-             parameters: %{
-               counter_type: counter_type,
-               counter_id: counter_id,
-               scale_ms: scale_ms,
-               limit: limit
-             }
-           }
-         )}
-
-      result ->
-        result
-    end
-  end
+  defdelegate inspect_counter(counter_type, counter_id, scale_ms, limit), to: Impl.RateLimiter
 
   ##############################################################################
   #
@@ -347,24 +277,5 @@ defmodule MscmpSystLimiter do
 
   @spec delete_counters(Types.counter_type(), Types.counter_id()) ::
           {:ok, integer()} | {:error, Mserror.LimiterError.t()}
-  def delete_counters(counter_type, counter_id) do
-    case Impl.RateLimiter.delete_counters(counter_type, counter_id) do
-      {:error, _} = error ->
-        {:error,
-         Mserror.LimiterError.new(
-           :delete_counter,
-           "Error returned from rate limiter delete.",
-           cause: error,
-           context: %MscmpSystError.Types.Context{
-             parameters: %{
-               counter_type: counter_type,
-               counter_id: counter_id
-             }
-           }
-         )}
-
-      result ->
-        result
-    end
-  end
+  defdelegate delete_counters(counter_type, counter_id), to: Impl.RateLimiter
 end
