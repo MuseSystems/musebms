@@ -298,6 +298,45 @@ defmodule IntegrationTest do
     end
   end
 
+  describe "common_validator_options/1 macro" do
+    test "successfully compiles with valid options" do
+      test_module = """
+      defmodule TestModule do
+        import Msutils.Data
+        @options common_validator_options([:internal_name, :display_name])
+      end
+      """
+
+      assert [{TestModule, _}] = Code.compile_string(test_module)
+    end
+
+    test "raises error with invalid option" do
+      test_module = """
+      defmodule TestModule do
+        import Msutils.Data
+        @options common_validator_options([:invalid_option])
+      end
+      """
+
+      assert_raise Mserror.Msutils.Data.MacroError, fn ->
+        Code.compile_string(test_module)
+      end
+    end
+
+    test "raises error with invalid selector" do
+      test_module = """
+      defmodule TestModule do
+        import Msutils.Data
+        @options common_validator_options("invalid_selector")
+      end
+      """
+
+      assert_raise Mserror.Msutils.Data.MacroError, fn ->
+        Code.compile_string(test_module)
+      end
+    end
+  end
+
   defp errors_on(changeset) do
     Ecto.Changeset.traverse_errors(changeset, fn {message, opts} ->
       Regex.replace(~r"%{(\w+)}", message, fn _, key ->

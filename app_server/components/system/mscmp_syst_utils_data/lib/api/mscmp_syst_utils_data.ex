@@ -208,7 +208,6 @@ defmodule Msutils.Data do
 
   #{Enum.map_join(@common_validator_option_defs, "\n\n", fn {key, _} -> "  * `:#{key}`" end)}
 
-    * `:all` - selects all available common validator options for inclusion.
   """
   @spec common_validator_options(selected_options :: [Types.common_validators()]) ::
           Macro.t()
@@ -220,10 +219,13 @@ defmodule Msutils.Data do
           invalid_selections = selected_options -- valid_options
 
           if invalid_selections != [] do
-            raise MscmpSystError,
-              code: :undefined_error,
-              message: "The requested options: #{inspect(invalid_selections)} are invalid",
-              cause: %{parameters: %{selected_options: selected_options}}
+            raise Mserror.Msutils.Data.MacroError,
+              kind: :invalid_option,
+              message: "Invalid changeset validator options were requested",
+              context: %MscmpSystError.Types.Context{
+                origin: {__MODULE__, :common_validator_options, 1},
+                parameters: %{selected_options: selected_options}
+              }
           end
 
           @common_validator_option_defs
@@ -233,13 +235,16 @@ defmodule Msutils.Data do
           |> NimbleOptions.new!()
 
         _ ->
-          raise MscmpSystError,
-            code: :undefined_error,
+          raise Mserror.Msutils.Data.MacroError,
+            kind: :invalid_selector,
             message: """
-            Invalid options selector provided.  You must request `:all` or a
-            simple list of the options you require.
+              Invalid options selector provided.  Your selections should be a
+              list of the validators you require.
             """,
-            cause: %{parameters: %{selected_options: selected_options}}
+            context: %MscmpSystError.Types.Context{
+              origin: {__MODULE__, :common_validator_options, 1},
+              parameters: %{selected_options: selected_options}
+            }
       end
 
     quote do
