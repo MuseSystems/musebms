@@ -55,10 +55,14 @@ defmodule MscmpSystNetwork.Impl.Ip do
         to_ip_struct(address, mask)
 
       {:error, _} = error ->
-        raise MscmpSystError,
-          code: :parameter_error,
+        raise Mserror.NetworkError,
+          kind: :parse_error,
           message: "Error returned by :inet.parse_address/1",
-          cause: error
+          cause: error,
+          context: %MscmpSystError.Types.Context{
+            parameters: %{cidr_string: cidr_string},
+            origin: {__MODULE__, :parse, 1}
+          }
     end
   end
 
@@ -66,10 +70,13 @@ defmodule MscmpSystNetwork.Impl.Ip do
   defp parse_split([addr_str]), do: [addr_str, nil]
 
   defp parse_split(parse_chars) do
-    raise MscmpSystError,
-      code: :parameter_error,
+    raise Mserror.NetworkError,
+      kind: :parse_error,
       message: "Failure parsing IP address or subnet address string.",
-      cause: %{parse_chars: parse_chars}
+      context: %MscmpSystError.Types.Context{
+        parameters: %{parse_chars: parse_chars},
+        origin: {__MODULE__, :parse_split, 1}
+      }
   end
 
   defp parse_mask_str({_, _, _, _}, nil), do: 32
@@ -93,9 +100,12 @@ defmodule MscmpSystNetwork.Impl.Ip do
     do: %IpV6{address: address, mask: mask}
 
   defp to_ip_struct(address, mask) do
-    raise MscmpSystError,
-      code: :parameter_error,
-      message: "Invalid IP address or subnet address string.",
-      cause: %{address: address, mask: mask}
+    raise Mserror.NetworkError,
+      kind: :parse_error,
+      message: "Invalid IP address or subnet mask.",
+      context: %MscmpSystError.Types.Context{
+        parameters: %{address: address, mask: mask},
+        origin: {__MODULE__, :to_ip_struct, 2}
+      }
   end
 end

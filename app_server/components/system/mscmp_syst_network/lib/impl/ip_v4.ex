@@ -116,10 +116,13 @@ defmodule MscmpSystNetwork.Impl.IpV4 do
       when is_ipv4(target_addr) and is_ipv4(network_addr) do
     cond do
       not network?(network_addr) ->
-        raise MscmpSystError,
-          code: :undefined_error,
-          message: "No identifiable network was provided.",
-          cause: %{parameters: %{target_addr: target_addr, network_addr: network_addr}}
+        raise Mserror.NetworkError,
+          kind: :invalid_network,
+          message: "The network value provided does not represent a valid network.",
+          context: %MscmpSystError.Types.Context{
+            parameters: %{target_addr: target_addr, network_addr: network_addr},
+            origin: {__MODULE__, :in_network?, 2}
+          }
 
       target_addr.mask < network_addr.mask ->
         # a larger target_addr network cannot be contained by a smaller

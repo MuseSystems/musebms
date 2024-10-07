@@ -64,7 +64,8 @@ defmodule MscmpSystNetwork.MixProject do
             MscmpSystNetwork.Types,
             MscmpSystNetwork.Types.IpV4,
             MscmpSystNetwork.Types.IpV6
-          ]
+          ],
+          Exceptions: [Mserror.NetworkError]
         ]
       ]
     ]

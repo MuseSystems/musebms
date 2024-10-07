@@ -75,15 +75,23 @@ defmodule MscmpSystNetwork do
 
       iex> MscmpSystNetwork.parse("192.618.10.14/32")
       {:error,
-        %MscmpSystError{
-          code: :api_error,
-          message: "Public API MscmpSystNetwork.parse/1 call failed.",
-          cause: %MscmpSystError{
-            code: :parameter_error,
+        %Mserror.NetworkError{
+          kind: :parse_error,
+          message: "Error parsing IP address or network",
+          cause: %Mserror.NetworkError{
+            kind: :parse_error,
             message: "Error returned by :inet.parse_address/1",
-            cause: {:error, :einval}
+            cause: {:error, :einval},
+            context: %MscmpSystError.Types.Context{
+              parameters: %{cidr_string: "192.618.10.14/32"},
+              origin: {MscmpSystNetwork.Impl.Ip, :parse, 1}
+            }
+          },
+          context: %MscmpSystError.Types.Context{
+            parameters: %{addr_string: "192.618.10.14/32"}
           }
-      }}
+        }
+      }
 
     IPv6 addresses
 
@@ -127,27 +135,34 @@ defmodule MscmpSystNetwork do
 
       iex> MscmpSystNetwork.parse("fd9b:77f8:714d:qqqq::z")
       {:error,
-        %MscmpSystError{
-          code: :api_error,
-          message: "Public API MscmpSystNetwork.parse/1 call failed.",
-          cause: %MscmpSystError{
-            code: :parameter_error,
+        %Mserror.NetworkError{
+          kind: :parse_error,
+          message: "Error parsing IP address or network",
+          cause: %Mserror.NetworkError{
+            kind: :parse_error,
             message: "Error returned by :inet.parse_address/1",
-            cause: {:error, :einval}
+            cause: {:error, :einval},
+            context: %MscmpSystError.Types.Context{
+              parameters: %{cidr_string: "fd9b:77f8:714d:qqqq::z"},
+              origin: {MscmpSystNetwork.Impl.Ip, :parse, 1}
+            }
+          },
+          context: %MscmpSystError.Types.Context{
+            parameters: %{addr_string: "fd9b:77f8:714d:qqqq::z"}
           }
-      }}
+        }
+      }
   """
-  @spec parse(String.t()) :: {:ok, Types.addr_structs()} | {:error, MscmpSystError.t()}
+  @spec parse(String.t()) :: {:ok, Types.addr_structs()} | {:error, Mserror.NetworkError.t()}
   def parse(addr_string) do
     {:ok, parse!(addr_string)}
   rescue
-    error in MscmpSystError ->
+    error in Mserror.NetworkError ->
       {:error,
-       %MscmpSystError{
-         code: :api_error,
-         message: "Public API MscmpSystNetwork.parse/1 call failed.",
-         cause: error
-       }}
+       Mserror.NetworkError.new(:parse_error, "Error parsing IP address or network",
+         cause: error,
+         context: %MscmpSystError.Types.Context{parameters: %{addr_string: addr_string}}
+       )}
   end
 
   @doc section: :parse_api
@@ -177,7 +192,7 @@ defmodule MscmpSystNetwork do
 
       iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> MscmpSystNetwork.parse!("192.618.10.14/32")
-      ** (MscmpSystError) Error returned by :inet.parse_address/1
+      ** (Mserror.NetworkError) Error returned by :inet.parse_address/1
 
     IPv6 addresses
 
@@ -191,7 +206,7 @@ defmodule MscmpSystNetwork do
 
       iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> MscmpSystNetwork.parse!("fd9b:77f8:714d:qqqq::z")
-      ** (MscmpSystError) Error returned by :inet.parse_address/1
+      ** (Mserror.NetworkError) Error returned by :inet.parse_address/1
   """
   @spec parse!(String.t()) :: Types.addr_structs()
   defdelegate parse!(addr_string), to: Impl.Ip, as: :parse
@@ -234,7 +249,7 @@ defmodule MscmpSystNetwork do
 
       iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> ~i"192.618.10.14/32"
-      ** (MscmpSystError) Error returned by :inet.parse_address/1
+      ** (Mserror.NetworkError) Error returned by :inet.parse_address/1
 
     IPv6 Addresses
 
@@ -248,7 +263,7 @@ defmodule MscmpSystNetwork do
 
       iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> ~i"fd9b:77f8:714d:qqqq::z"
-      ** (MscmpSystError) Error returned by :inet.parse_address/1
+      ** (Mserror.NetworkError) Error returned by :inet.parse_address/1
   """
   @spec sigil_i(String.t(), list()) :: Types.addr_structs()
   defdelegate sigil_i(addr_string, modifiers), to: Impl.Ip, as: :parse
