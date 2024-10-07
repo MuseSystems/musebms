@@ -14,7 +14,7 @@ defmodule MscmpSystError.Impl.ErrorParser do
   @moduledoc false
 
   @spec get_root_cause(any()) :: any()
-  def get_root_cause(%_{mserror: true, cause: %_{mserror: true} = next_error}) do
+  def get_root_cause(%{__mserror__: true, cause: %_{__mserror__: true} = next_error}) do
     next_error
     |> get_root_cause()
   end

@@ -23,18 +23,12 @@ defmodule ErrorParserTest do
     test_err = %ExampleError{
       kind: :example_error,
       message: "Outer error message",
-      mserror: true,
-      component: ExampleError,
       cause: %ExampleError{
         kind: :example_error,
         message: "Intermediate error message",
-        mserror: true,
-        component: ExampleError,
         cause: %ExampleError{
           kind: :example_error,
           message: "Root error message",
-          mserror: true,
-          component: ExampleError,
           cause: {:error, "Example Error"}
         }
       }
@@ -45,8 +39,6 @@ defmodule ErrorParserTest do
     assert %ExampleError{
              kind: :example_error,
              message: "Root error message",
-             mserror: true,
-             component: ExampleError,
              cause: {:error, "Example Error"}
            } = root_err
 

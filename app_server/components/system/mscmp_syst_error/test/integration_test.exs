@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule IntegrationTest do
+  @moduledoc false
+
   use ExUnit.Case
 
   alias MscmpSystError
@@ -21,10 +23,10 @@ defmodule IntegrationTest do
   test "default implementation of new/2 function" do
     error = TestError.new(:test_error, "Test error message")
     assert %TestError{} = error
+    assert error.__mserror__ == true
+    assert error.__mscomponent__ == TestError
     assert error.kind == :test_error
     assert error.message == "Test error message"
-    assert error.mserror == true
-    assert error.component == TestError
     assert error.context == nil
     assert error.cause == nil
   end
@@ -42,10 +44,10 @@ defmodule IntegrationTest do
       TestError.new(:test_error, "Test error with options", context: context, cause: cause)
 
     assert %TestError{} = error_with_opts
+    assert error_with_opts.__mserror__ == true
+    assert error_with_opts.__mscomponent__ == TestError
     assert error_with_opts.kind == :test_error
     assert error_with_opts.message == "Test error with options"
-    assert error_with_opts.mserror == true
-    assert error_with_opts.component == TestError
     assert error_with_opts.context == context
     assert error_with_opts.cause == cause
   end
