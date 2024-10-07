@@ -64,7 +64,8 @@ defmodule MscmpSystLimiter.MixProject do
         ],
         groups_for_modules: [
           API: [MscmpSystLimiter],
-          "Supporting Types": [MscmpSystLimiter.Types]
+          "Supporting Types": [MscmpSystLimiter.Types],
+          Exceptions: [Mserror.LimiterError]
         ]
       ]
     ]

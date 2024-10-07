@@ -34,13 +34,13 @@ defmodule MscmpSystLimiter.Impl.RateLimiter do
   #
 
   # In this case we're calling the public API function since it returns the
-  # desired MscmpSystError.t() based error tuple.
+  # desired Mserror.LimiterError.t() based error tuple.
 
   @spec get_check_rate_function(Types.counter_type(), integer(), integer()) ::
           (counter_id :: Types.counter_id() ->
              {:allow, count :: integer()}
              | {:deny, limit :: integer()}
-             | {:error, MscmpSystError.t()})
+             | {:error, Mserror.LimiterError.t()})
   def get_check_rate_function(counter_type, scale_ms, limit) do
     fn counter_id ->
       MscmpSystLimiter.check_rate(counter_type, counter_id, scale_ms, limit)
