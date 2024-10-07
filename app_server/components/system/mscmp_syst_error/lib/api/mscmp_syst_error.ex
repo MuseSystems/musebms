@@ -113,6 +113,7 @@ defmodule MscmpSystError do
 
       Returns a struct of this error type with the error details.
       """
+      @impl true
       @spec new(kind :: kinds(), message :: String.t(), opts :: keyword()) :: t()
       def new(kind, message, opts \\ []) when kind in @kinds do
         %__MODULE__{
