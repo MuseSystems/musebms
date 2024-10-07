@@ -219,8 +219,8 @@ defmodule Msutils.Data do
           invalid_selections = selected_options -- valid_options
 
           if invalid_selections != [] do
-            raise Mserror.Msutils.Data.MacroError,
-              kind: :invalid_option,
+            raise Mserror.DataUtilsError,
+              kind: :macro_error,
               message: "Invalid changeset validator options were requested",
               context: %MscmpSystError.Types.Context{
                 origin: {__MODULE__, :common_validator_options, 1},
@@ -235,8 +235,8 @@ defmodule Msutils.Data do
           |> NimbleOptions.new!()
 
         _ ->
-          raise Mserror.Msutils.Data.MacroError,
-            kind: :invalid_selector,
+          raise Mserror.DataUtilsError,
+            kind: :macro_error,
             message: """
               Invalid options selector provided.  Your selections should be a
               list of the validators you require.

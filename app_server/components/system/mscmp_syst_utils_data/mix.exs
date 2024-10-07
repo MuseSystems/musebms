@@ -53,11 +53,15 @@ defmodule MscmpSystUtilsData.MixProject do
         name: "MscmpSystUtilsData",
         main: "Msutils.Data",
         output: "../../../../documentation/technical/app_server/mscmp_syst_utils_data",
+        deps: [
+          mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error"
+        ],
         groups_for_docs: [
           "Changeset Validators": &(&1[:section] == :changeset_validators)
         ],
         groups_for_modules: [
-          API: [Msutils.Data]
+          API: [Msutils.Data],
+          Exceptions: [Mserror.DataUtilsError]
         ]
       ]
     ]

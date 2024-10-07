@@ -1,5 +1,5 @@
-# Source File: macro_error.ex
-# Location:    musebms/app_server/components/system/mscmp_syst_utils_data/lib/api/mserror/msutils/data/macro_error.ex
+# Source File: data_utils_error.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_utils_data/lib/api/mserror/data_utils_error.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,19 +10,17 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule Mserror.Msutils.Data.MacroError do
+defmodule Mserror.DataUtilsError do
   @moduledoc """
   This module defines the macro related error types for the Msutils.Data module.
   """
 
   use MscmpSystError,
     kinds: [
-      invalid_option: """
-      Defines errors where the selected options are invalid even though they
-      are in the correct form.
-      """,
-      invalid_selector: """
-      Defines errors where the parameter value is of an invalid type.
+      macro_error: """
+      Indicates that there were compilation errors in the macros provided by
+      this Component.  This will often times be due to invalid parameters being
+      passed to the macros.
       """
     ],
     component: MscmpSystUtilsData

@@ -301,37 +301,40 @@ defmodule IntegrationTest do
   describe "common_validator_options/1 macro" do
     test "successfully compiles with valid options" do
       test_module = """
-      defmodule TestModule do
+      defmodule TestModule1 do
         import Msutils.Data
         @options common_validator_options([:internal_name, :display_name])
+        _ = @options
       end
       """
 
-      assert [{TestModule, _}] = Code.compile_string(test_module)
+      assert [{TestModule1, _}] = Code.compile_string(test_module)
     end
 
     test "raises error with invalid option" do
       test_module = """
-      defmodule TestModule do
+      defmodule TestModule2 do
         import Msutils.Data
         @options common_validator_options([:invalid_option])
+        _ = @options
       end
       """
 
-      assert_raise Mserror.Msutils.Data.MacroError, fn ->
+      assert_raise Mserror.DataUtilsError, fn ->
         Code.compile_string(test_module)
       end
     end
 
     test "raises error with invalid selector" do
       test_module = """
-      defmodule TestModule do
+      defmodule TestModule3 do
         import Msutils.Data
         @options common_validator_options("invalid_selector")
+        _ = @options
       end
       """
 
-      assert_raise Mserror.Msutils.Data.MacroError, fn ->
+      assert_raise Mserror.DataUtilsError, fn ->
         Code.compile_string(test_module)
       end
     end
