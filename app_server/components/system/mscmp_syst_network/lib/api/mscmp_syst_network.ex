@@ -74,74 +74,62 @@ defmodule MscmpSystNetwork do
     IPv4 Error Example
 
       iex> MscmpSystNetwork.parse("192.618.10.14/32")
-      {
-        :error,
-        %Mserror.NetworkError{
-          kind: :parse,
-          message: "Error encountered parsing string as IP address.",
-          cause: {:error, :einval},
-          context: %MscmpSystError.Types.Context{
-            origin: {MscmpSystNetwork, :parse, 1},
-            parameters: %{addr_string: "192.618.10.14/32"},
-            supporting_data: nil
-          }
-        }
-      }
+      {:error,
+       %Mserror.NetworkError{
+         kind: :parse,
+         message: "Error encountered parsing string as IP address.",
+         cause: {:error, :einval},
+         context: %MscmpSystError.Types.Context{
+           origin: {MscmpSystNetwork, :parse, 1},
+           parameters: %{addr_string: "192.618.10.14/32"},
+           supporting_data: nil
+         }
+       }}
 
     IPv6 addresses
 
       iex> MscmpSystNetwork.parse("fd9b:77f8:714d:cabb::1")
-      {
-        :ok,
-        %MscmpSystNetwork.Types.IpV6{
-          address: {64923, 30712, 29005, 51899, 0, 0, 0, 1},
-          mask: 128
-        }
-      }
+      {:ok,
+       %MscmpSystNetwork.Types.IpV6{
+         address: {64923, 30712, 29005, 51899, 0, 0, 0, 1},
+         mask: 128
+       }}
 
       iex> MscmpSystNetwork.parse("fd9b:77f8:714d:cabb::20/128")
-      {
-        :ok,
-        %MscmpSystNetwork.Types.IpV6{
-          address: {64923, 30712, 29005, 51899, 0, 0, 0, 32},
-          mask: 128
-        }
-      }
+      {:ok,
+       %MscmpSystNetwork.Types.IpV6{
+         address: {64923, 30712, 29005, 51899, 0, 0, 0, 32},
+         mask: 128
+       }}
 
       iex> MscmpSystNetwork.parse("fd9b:77f8:714d:cabb:0000:0000:ab67:12/64")
-      {
-        :ok,
-        %MscmpSystNetwork.Types.IpV6{
-          address: {64923, 30712, 29005, 51899, 0, 0, 43879, 18},
-          mask: 64
-        }
-      }
+      {:ok,
+       %MscmpSystNetwork.Types.IpV6{
+         address: {64923, 30712, 29005, 51899, 0, 0, 43879, 18},
+         mask: 64
+       }}
 
       iex> MscmpSystNetwork.parse("fd9b:77f8:714d:cabb::/64")
-      {
-        :ok,
-        %MscmpSystNetwork.Types.IpV6{
-          address: {64923, 30712, 29005, 51899, 0, 0, 0, 0},
-          mask: 64
-        }
-      }
+      {:ok,
+       %MscmpSystNetwork.Types.IpV6{
+         address: {64923, 30712, 29005, 51899, 0, 0, 0, 0},
+         mask: 64
+       }}
 
     IPv6 Error Example
 
       iex> MscmpSystNetwork.parse("fd9b:77f8:714d:qqqq::z")
-      {
-        :error,
-        %Mserror.NetworkError{
-          kind: :parse,
-          message: "Error encountered parsing string as IP address.",
-          cause: {:error, :einval},
-          context: %MscmpSystError.Types.Context{
-            origin: {MscmpSystNetwork, :parse, 1},
-            parameters: %{addr_string: "fd9b:77f8:714d:qqqq::z"},
-            supporting_data: nil
-          }
-        }
-      }
+      {:error,
+       %Mserror.NetworkError{
+         kind: :parse,
+         message: "Error encountered parsing string as IP address.",
+         cause: {:error, :einval},
+         context: %MscmpSystError.Types.Context{
+           origin: {MscmpSystNetwork, :parse, 1},
+           parameters: %{addr_string: "fd9b:77f8:714d:qqqq::z"},
+           supporting_data: nil
+         }
+       }}
   """
   @spec parse(String.t()) :: {:ok, Types.addr_structs()} | {:error, Mserror.NetworkError.t()}
   def parse(addr_string) do
@@ -314,20 +302,15 @@ defmodule MscmpSystNetwork do
     IPv4 Examples
 
       iex> MscmpSystNetwork.to_struct({10, 1, 1, 15})
-      {
-        :ok,
-        %MscmpSystNetwork.Types.IpV4{address: {10, 1, 1, 15}, mask: 32}
-      }
+      {:ok, %MscmpSystNetwork.Types.IpV4{address: {10, 1, 1, 15}, mask: 32}}
 
       iex> MscmpSystNetwork.to_struct({10, 1, 0, 0}, 16)
-      {
-        :ok,
-        %MscmpSystNetwork.Types.IpV4{address: {10, 1, 0, 0}, mask: 16}
-      }
+      {:ok, %MscmpSystNetwork.Types.IpV4{address: {10, 1, 0, 0}, mask: 16}}
+
+    IPv4 Error Example
 
       iex> MscmpSystNetwork.to_struct({10, 1, 1, 10}, 33)
-      {
-        :error,
+      { :error,
         %Mserror.NetworkError{
           kind: :parse,
           message: "Error encountered parsing IP address to struct.",
@@ -336,27 +319,22 @@ defmodule MscmpSystNetwork do
             origin: {MscmpSystNetwork, :to_struct, 2},
             parameters: %{addr: {10, 1, 1, 10}, mask: 33},
             supporting_data: nil
-          }
-        }
-      }
+          }}}
 
     IPv6 Examples
 
       iex> MscmpSystNetwork.to_struct({64923, 30712, 29005, 51899, 0, 0, 0, 1})
-      {
-        :ok,
-        %MscmpSystNetwork.Types.IpV6{address: {64923, 30712, 29005, 51899, 0, 0, 0, 1}, mask: 128}
-      }
+      { :ok,
+        %MscmpSystNetwork.Types.IpV6{address: {64923, 30712, 29005, 51899, 0, 0, 0, 1}, mask: 128}}
 
       iex> MscmpSystNetwork.to_struct({64923, 30712, 29005, 51899, 0, 0, 0, 0}, 64)
-      {
-        :ok,
-        %MscmpSystNetwork.Types.IpV6{address: {64923, 30712, 29005, 51899, 0, 0, 0, 0}, mask: 64}
-      }
+      { :ok,
+        %MscmpSystNetwork.Types.IpV6{address: {64923, 30712, 29005, 51899, 0, 0, 0, 0}, mask: 64}}
+
+    IPv6 Error Example
 
       iex> MscmpSystNetwork.to_struct({64923, 30712, 29005, 51899, 0, 0, 0, 1}, 129)
-      {
-        :error,
+      { :error,
         %Mserror.NetworkError{
           kind: :parse,
           message: "Error encountered parsing IP address to struct.",
@@ -365,9 +343,7 @@ defmodule MscmpSystNetwork do
             origin: {MscmpSystNetwork, :to_struct, 2},
             parameters: %{addr: {64923, 30712, 29005, 51899, 0, 0, 0, 1}, mask: 129},
             supporting_data: nil
-          }
-        }
-      }
+          }}}
   """
   @spec to_struct(Types.ipv4_addr(), Types.ipv4_mask() | nil) ::
           {:ok, Types.IpV4.t()} | {:error, Mserror.NetworkError.t()}
