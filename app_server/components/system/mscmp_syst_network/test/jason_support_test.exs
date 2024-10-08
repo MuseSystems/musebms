@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule JasonSupportTest do
+  @moduledoc false
+
   use ExUnit.Case, async: true
 
   import MscmpSystNetwork, only: [sigil_i: 2]

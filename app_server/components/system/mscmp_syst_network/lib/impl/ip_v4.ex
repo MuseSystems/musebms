@@ -15,7 +15,7 @@ defmodule MscmpSystNetwork.Impl.IpV4 do
 
   import Bitwise
 
-  import MscmpSystNetwork.Guards, only: [is_ipv4: 1, is_ipv4_tuple: 1]
+  import MscmpSystNetwork.Guards, only: [is_ipv4: 1, is_ipv4_tuple: 1, is_ipv4_mask: 1]
 
   alias MscmpSystNetwork.Types
   alias MscmpSystNetwork.Types.IpV4
@@ -183,9 +183,19 @@ defmodule MscmpSystNetwork.Impl.IpV4 do
   #
   #
 
-  @spec to_struct(Types.ipv4_addr(), Types.ipv4_mask() | nil) :: IpV4.t()
-  def to_struct(erlang_addr, mask) when is_ipv4_tuple(erlang_addr),
-    do: %IpV4{address: erlang_addr, mask: mask || 32}
+  @spec to_struct(Types.ipv4_addr(), Types.ipv4_mask() | nil) ::
+          {:ok, IpV4.t()} | {:error, :invalid_ipv4_address_or_mask}
+  def to_struct(erlang_addr, mask)
+      when is_ipv4_tuple(erlang_addr) and (is_ipv4_mask(mask) or is_nil(mask)),
+      do: {:ok, %IpV4{address: erlang_addr, mask: mask || 32}}
+
+  def to_struct(_, _), do: {:error, :invalid_ipv4_address_or_mask}
+
+  ##############################################################################
+  #
+  # General support functions
+  #
+  #
 
   defp to_integer({a, b, c, d} = ip) when is_ipv4_tuple(ip) do
     <<i::unsigned-integer-size(32)>> = <<a, b, c, d>>

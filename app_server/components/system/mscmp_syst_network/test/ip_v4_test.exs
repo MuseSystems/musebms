@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule IpV4Test do
+  @moduledoc false
+
   use ExUnit.Case, async: true
 
   import Bitwise
@@ -123,9 +125,14 @@ defmodule IpV4Test do
     Enum.each(1..1_000_000, fn _ ->
       {_, expected_result} = TestSupport.get_random_ipv4(:any, {15, 70})
 
-      assert expected_result ===
+      assert {:ok, expected_result} ===
                Impl.IpV4.to_struct(expected_result.address, expected_result.mask)
     end)
+
+    assert {:error, :invalid_ipv4_address_or_mask} = Impl.IpV4.to_struct({10, 1, 1, 10}, 33)
+    assert {:error, :invalid_ipv4_address_or_mask} = Impl.IpV4.to_struct({10, 1, 1, 10}, -8)
+    assert {:error, :invalid_ipv4_address_or_mask} = Impl.IpV4.to_struct({10, 1, 1, 10}, 128)
+    assert {:error, :invalid_ipv4_address_or_mask} = Impl.IpV4.to_struct({10, 1, 1, 10, 16}, 8)
   end
 
   #

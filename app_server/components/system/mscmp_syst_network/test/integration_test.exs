@@ -20,31 +20,110 @@ defmodule IntegrationTest do
 
   describe "Parse API" do
     test "Can convert Erlang tuples to IPv4 network structs" do
-      Enum.each(1..1_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {_, test_addr} = TestSupport.get_random_ipv4(:network)
-        assert test_addr === MscmpSystNetwork.to_struct(test_addr.address, test_addr.mask)
+        assert {:ok, test_addr} === MscmpSystNetwork.to_struct(test_addr.address, test_addr.mask)
+        assert test_addr === MscmpSystNetwork.to_struct!(test_addr.address, test_addr.mask)
       end)
     end
 
     test "Can convert Erlang tuples to IPv4 host structs" do
-      Enum.each(1..1_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {_, test_addr} = TestSupport.get_random_ipv4(:host)
-        assert test_addr === MscmpSystNetwork.to_struct(test_addr.address, nil)
+        assert {:ok, test_addr} === MscmpSystNetwork.to_struct(test_addr.address, nil)
+        assert test_addr === MscmpSystNetwork.to_struct!(test_addr.address, nil)
       end)
     end
 
     test "Can convert Erlang tuples to IPv6 network structs" do
-      Enum.each(1..1_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {_, test_addr} = TestSupport.get_random_ipv6(:network)
-        assert test_addr === MscmpSystNetwork.to_struct(test_addr.address, test_addr.mask)
+        assert {:ok, test_addr} === MscmpSystNetwork.to_struct(test_addr.address, test_addr.mask)
+        assert test_addr === MscmpSystNetwork.to_struct!(test_addr.address, test_addr.mask)
       end)
     end
 
     test "Can convert Erlang tuples to IPv6 host structs" do
-      Enum.each(1..1_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {_, test_addr} = TestSupport.get_random_ipv6(:host)
-        assert test_addr === MscmpSystNetwork.to_struct(test_addr.address, nil)
+        assert {:ok, test_addr} === MscmpSystNetwork.to_struct(test_addr.address, nil)
+        assert test_addr === MscmpSystNetwork.to_struct!(test_addr.address, nil)
       end)
+    end
+
+    test "Cannot convert invalid IPv4 tuples to structs" do
+      # Invalid address (octet out of range)
+      assert {:error, %Mserror.NetworkError{}} = MscmpSystNetwork.to_struct({256, 0, 0, 1})
+
+      # Invalid address (wrong tuple size)
+      assert {:error, %Mserror.NetworkError{}} = MscmpSystNetwork.to_struct({192, 168, 1})
+
+      # Invalid mask (out of range)
+      assert {:error, %Mserror.NetworkError{}} = MscmpSystNetwork.to_struct({192, 168, 0, 1}, 33)
+
+      # Invalid mask (negative)
+      assert {:error, %Mserror.NetworkError{}} = MscmpSystNetwork.to_struct({192, 168, 0, 1}, -1)
+    end
+
+    test "Cannot convert invalid IPv4 tuples to structs with to_struct!" do
+      # Invalid address (octet out of range)
+      assert_raise Mserror.NetworkError, fn ->
+        MscmpSystNetwork.to_struct!({256, 0, 0, 1})
+      end
+
+      # Invalid address (wrong tuple size)
+      assert_raise Mserror.NetworkError, fn ->
+        MscmpSystNetwork.to_struct!({192, 168, 1})
+      end
+
+      # Invalid mask (out of range)
+      assert_raise Mserror.NetworkError, fn ->
+        MscmpSystNetwork.to_struct!({192, 168, 0, 1}, 33)
+      end
+
+      # Invalid mask (negative)
+      assert_raise Mserror.NetworkError, fn ->
+        MscmpSystNetwork.to_struct!({192, 168, 0, 1}, -1)
+      end
+    end
+
+    test "Cannot convert invalid IPv6 tuples to structs" do
+      # Invalid address (element out of range)
+      assert {:error, %Mserror.NetworkError{}} =
+               MscmpSystNetwork.to_struct({65_536, 0, 0, 0, 0, 0, 0, 1})
+
+      # Invalid address (wrong tuple size)
+      assert {:error, %Mserror.NetworkError{}} = MscmpSystNetwork.to_struct({0, 0, 0, 0, 0, 0, 0})
+
+      # Invalid mask (out of range)
+      assert {:error, %Mserror.NetworkError{}} =
+               MscmpSystNetwork.to_struct({0, 0, 0, 0, 0, 0, 0, 1}, 129)
+
+      # Invalid mask (negative)
+      assert {:error, %Mserror.NetworkError{}} =
+               MscmpSystNetwork.to_struct({0, 0, 0, 0, 0, 0, 0, 1}, -1)
+    end
+
+    test "Cannot convert invalid IPv6 tuples to structs with to_struct!" do
+      # Invalid address (element out of range)
+      assert_raise Mserror.NetworkError, fn ->
+        MscmpSystNetwork.to_struct!({65_536, 0, 0, 0, 0, 0, 0, 1})
+      end
+
+      # Invalid address (wrong tuple size)
+      assert_raise Mserror.NetworkError, fn ->
+        MscmpSystNetwork.to_struct!({0, 0, 0, 0, 0, 0, 0})
+      end
+
+      # Invalid mask (out of range)
+      assert_raise Mserror.NetworkError, fn ->
+        MscmpSystNetwork.to_struct!({0, 0, 0, 0, 0, 0, 0, 1}, 129)
+      end
+
+      # Invalid mask (negative)
+      assert_raise Mserror.NetworkError, fn ->
+        MscmpSystNetwork.to_struct!({0, 0, 0, 0, 0, 0, 0, 1}, -1)
+      end
     end
 
     #
@@ -52,7 +131,7 @@ defmodule IntegrationTest do
     #
 
     test "Can parse! IPv4 simple IP address" do
-      Enum.each(1..500_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {:host, test_addr} = TestSupport.get_random_ipv4(:host)
         test_str = :inet.ntoa(test_addr.address) |> List.to_string()
 
@@ -61,7 +140,7 @@ defmodule IntegrationTest do
     end
 
     test "Can parse! IPv4 host address using CIDR notation" do
-      Enum.each(1..500_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {:host, test_addr} = TestSupport.get_random_ipv4(:host)
         test_str = MscmpSystNetwork.to_string(test_addr)
 
@@ -70,7 +149,7 @@ defmodule IntegrationTest do
     end
 
     test "Can parse! IPv4 subnet address using CIDR notation" do
-      Enum.each(1..500_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {:network, test_addr} = TestSupport.get_random_ipv4(:network)
         test_str = MscmpSystNetwork.to_string(test_addr)
 
@@ -90,7 +169,7 @@ defmodule IntegrationTest do
     #
 
     test "Can parse IPv4 simple IP address" do
-      Enum.each(1..10, fn _ ->
+      Enum.each(1..100, fn _ ->
         {:host, test_addr} = TestSupport.get_random_ipv4(:host)
         test_str = :inet.ntoa(test_addr.address) |> List.to_string()
 
@@ -99,7 +178,7 @@ defmodule IntegrationTest do
     end
 
     test "Can parse IPv4 host address using CIDR notation" do
-      Enum.each(1..10, fn _ ->
+      Enum.each(1..100, fn _ ->
         {:host, test_addr} = TestSupport.get_random_ipv4(:host)
         test_str = MscmpSystNetwork.to_string(test_addr)
 
@@ -108,7 +187,7 @@ defmodule IntegrationTest do
     end
 
     test "Can parse IPv4 subnet address using CIDR notation" do
-      Enum.each(1..10, fn _ ->
+      Enum.each(1..100, fn _ ->
         {:network, test_addr} = TestSupport.get_random_ipv4(:network)
         test_str = MscmpSystNetwork.to_string(test_addr)
 
@@ -117,16 +196,17 @@ defmodule IntegrationTest do
     end
 
     test "Cannot parse invalid IPv4 strings" do
-      assert {:error, %Mserror.NetworkError{kind: :parse}} =
+      assert {:error, %Mserror.NetworkError{kind: :parse, cause: {:error, :einval}}} =
                MscmpSystNetwork.parse("10.1.1.1.1")
 
-      assert {:error, %Mserror.NetworkError{kind: :parse}} =
+      assert {:error, %Mserror.NetworkError{kind: :parse, cause: {:error, :einval}}} =
                MscmpSystNetwork.parse("10.1.1.1.1/32")
 
-      assert {:error, %Mserror.NetworkError{kind: :parse}} =
+      assert {:error, %Mserror.NetworkError{kind: :parse, cause: {:error, :invalid_cidr_format}}} =
                MscmpSystNetwork.parse("10.1.1.1/32/32")
 
-      assert {:error, %Mserror.NetworkError{kind: :parse}} =
+      assert {:error,
+              %Mserror.NetworkError{kind: :parse, cause: {:error, :invalid_address_or_mask}}} =
                MscmpSystNetwork.parse("10.1.1.1/-32")
     end
 
@@ -135,7 +215,7 @@ defmodule IntegrationTest do
     #
 
     test "Can parse! IPv6 simple IP address" do
-      Enum.each(1..500_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {:host, test_addr} = TestSupport.get_random_ipv6(:host)
         test_str = :inet.ntoa(test_addr.address) |> List.to_string()
 
@@ -144,7 +224,7 @@ defmodule IntegrationTest do
     end
 
     test "Can parse! IPv6 host address using CIDR notation" do
-      Enum.each(1..500_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {:host, test_addr} = TestSupport.get_random_ipv6(:host)
         test_str = MscmpSystNetwork.to_string(test_addr)
 
@@ -153,7 +233,7 @@ defmodule IntegrationTest do
     end
 
     test "Can parse! IPv6 subnet address using CIDR notation" do
-      Enum.each(1..500_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {:network, test_addr} = TestSupport.get_random_ipv6(:network)
         test_str = MscmpSystNetwork.to_string(test_addr)
 
@@ -173,7 +253,7 @@ defmodule IntegrationTest do
     #
 
     test "Can parse IPv6 simple IP address" do
-      Enum.each(1..10, fn _ ->
+      Enum.each(1..100, fn _ ->
         {:host, test_addr} = TestSupport.get_random_ipv6(:host)
         test_str = :inet.ntoa(test_addr.address) |> List.to_string()
 
@@ -182,7 +262,7 @@ defmodule IntegrationTest do
     end
 
     test "Can parse IPv6 host address using CIDR notation" do
-      Enum.each(1..10, fn _ ->
+      Enum.each(1..100, fn _ ->
         {:host, test_addr} = TestSupport.get_random_ipv6(:host)
         test_str = MscmpSystNetwork.to_string(test_addr)
 
@@ -191,7 +271,7 @@ defmodule IntegrationTest do
     end
 
     test "Can parse IPv6 subnet address using CIDR notation" do
-      Enum.each(1..10, fn _ ->
+      Enum.each(1..100, fn _ ->
         {:network, test_addr} = TestSupport.get_random_ipv6(:network)
         test_str = MscmpSystNetwork.to_string(test_addr)
 
@@ -200,16 +280,17 @@ defmodule IntegrationTest do
     end
 
     test "Cannot parse invalid IPv6 strings" do
-      assert {:error, %Mserror.NetworkError{kind: :parse}} =
+      assert {:error, %Mserror.NetworkError{kind: :parse, cause: {:error, :einval}}} =
                MscmpSystNetwork.parse("2001::0010::abcd")
 
-      assert {:error, %Mserror.NetworkError{kind: :parse}} =
+      assert {:error, %Mserror.NetworkError{kind: :parse, cause: {:error, :einval}}} =
                MscmpSystNetwork.parse("2001::0010::abcd/128")
 
-      assert {:error, %Mserror.NetworkError{kind: :parse}} =
+      assert {:error, %Mserror.NetworkError{kind: :parse, cause: {:error, :invalid_cidr_format}}} =
                MscmpSystNetwork.parse("2001::0010:abcd/128/128")
 
-      assert {:error, %Mserror.NetworkError{kind: :parse}} =
+      assert {:error,
+              %Mserror.NetworkError{kind: :parse, cause: {:error, :invalid_address_or_mask}}} =
                MscmpSystNetwork.parse("2001::0010:abcd/-128")
     end
   end
@@ -235,7 +316,7 @@ defmodule IntegrationTest do
              }) == "172.16.0.0/16"
 
       # Test with random valid IPv4 addresses
-      Enum.each(1..500_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {type, addr} = TestSupport.get_random_ipv4(Enum.random([:host, :network]))
         str = MscmpSystNetwork.to_string(addr)
         assert {:ok, ^addr} = MscmpSystNetwork.parse(str)
@@ -278,7 +359,7 @@ defmodule IntegrationTest do
              }) == "2001:db8::/32"
 
       # Test with random valid IPv6 addresses
-      Enum.each(1..500_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {type, addr} = TestSupport.get_random_ipv6(Enum.random([:host, :network]))
         str = MscmpSystNetwork.to_string(addr)
         assert {:ok, ^addr} = MscmpSystNetwork.parse(str)
@@ -319,7 +400,7 @@ defmodule IntegrationTest do
              }) == {255, 255, 0, 0}
 
       # Test with random valid IPv4 addresses
-      Enum.each(1..500_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {_, test_addr} = TestSupport.get_random_ipv4(:network)
         expected_netmask = TestSupport.ipv4_mask_to_tuple(test_addr.mask)
         assert MscmpSystNetwork.get_netmask(test_addr) == expected_netmask
@@ -338,7 +419,7 @@ defmodule IntegrationTest do
              }) == {65_535, 65_535, 65_535, 65_535, 65_535, 65_535, 65_535, 65_535}
 
       # Test with random valid IPv6 addresses
-      Enum.each(1..500_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {_, test_addr} = TestSupport.get_random_ipv6(:any, 50)
         expected_netmask = TestSupport.ipv6_mask_to_tuple(test_addr.mask)
         assert MscmpSystNetwork.get_netmask(test_addr) == expected_netmask
@@ -366,7 +447,7 @@ defmodule IntegrationTest do
                mask: 16
              }) == {172, 16, 0, 0}
 
-      Enum.each(1..500_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {_, test_addr} = TestSupport.get_random_ipv4(:network)
         expected_network = TestSupport.ipv4_network_to_tuple(test_addr.address, test_addr.mask)
         assert MscmpSystNetwork.get_network(test_addr) == expected_network
@@ -385,7 +466,7 @@ defmodule IntegrationTest do
              }) == nil
 
       # Test with random valid IPv6 addresses
-      Enum.each(1..500_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {_, test_addr} = TestSupport.get_random_ipv6(:any, 50)
         expected_network = TestSupport.ipv6_network_to_tuple(test_addr.address, test_addr.mask)
         assert MscmpSystNetwork.get_network(test_addr) == expected_network
@@ -413,7 +494,7 @@ defmodule IntegrationTest do
                mask: 16
              }) == nil
 
-      Enum.each(1..500_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {kind, test_addr} = TestSupport.get_random_ipv4(:any)
 
         expected_result =
@@ -439,7 +520,7 @@ defmodule IntegrationTest do
              }) == {8193, 3512, 0, 0, 0, 0, 0, 1}
 
       # Test with random valid IPv6 addresses
-      Enum.each(1..500_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {kind, test_addr} = TestSupport.get_random_ipv6(:any, 50)
 
         expected_result =
@@ -474,7 +555,7 @@ defmodule IntegrationTest do
              })
 
       # Test with random valid IPv4 addresses
-      Enum.each(1..500_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {kind, test_addr} = TestSupport.get_random_ipv4(:any)
         assert MscmpSystNetwork.host?(test_addr) == (kind == :host)
       end)
@@ -492,7 +573,7 @@ defmodule IntegrationTest do
              })
 
       # Test with random valid IPv6 addresses
-      Enum.each(1..500_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {kind, test_addr} = TestSupport.get_random_ipv6(:any, 50)
         assert MscmpSystNetwork.host?(test_addr) == (kind == :host)
       end)
@@ -520,7 +601,7 @@ defmodule IntegrationTest do
              })
 
       # Test with random valid IPv4 addresses
-      Enum.each(1..500_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {kind, test_addr} = TestSupport.get_random_ipv4(:any)
         assert MscmpSystNetwork.network?(test_addr) == (kind == :network)
       end)
@@ -538,7 +619,7 @@ defmodule IntegrationTest do
              })
 
       # Test with random valid IPv6 addresses
-      Enum.each(1..500_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {kind, test_addr} = TestSupport.get_random_ipv6(:any, 50)
         assert MscmpSystNetwork.network?(test_addr) == (kind == :network)
       end)
@@ -568,7 +649,7 @@ defmodule IntegrationTest do
              )
 
       # Test with random valid IPv4 addresses
-      Enum.each(1..500_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {_, host} = TestSupport.get_random_ipv4(:host)
         {_, network} = TestSupport.get_random_ipv4(:network)
 
@@ -602,7 +683,7 @@ defmodule IntegrationTest do
              )
 
       # Test with random valid IPv6 addresses
-      Enum.each(1..500_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {_, host} = TestSupport.get_random_ipv6(:host)
         {_, network} = TestSupport.get_random_ipv6(:network)
 
@@ -659,7 +740,7 @@ defmodule IntegrationTest do
              )
 
       # Test with random valid IPv4 addresses
-      Enum.each(1..500_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {_, host} = TestSupport.get_random_ipv4(:host)
         {_, low} = TestSupport.get_random_ipv4(:any, {50, 50})
         {_, high} = TestSupport.get_random_ipv4(:any, {50, 50})
@@ -717,7 +798,7 @@ defmodule IntegrationTest do
              )
 
       # Test with random valid IPv6 addresses
-      Enum.each(1..500_000, fn _ ->
+      Enum.each(1..100, fn _ ->
         {_, host} = TestSupport.get_random_ipv6(:host)
         {_, low} = TestSupport.get_random_ipv6(:any, 50)
         {_, high} = TestSupport.get_random_ipv6(:any, 50)

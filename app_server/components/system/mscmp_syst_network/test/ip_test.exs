@@ -25,30 +25,30 @@ defmodule IpTest do
   #
 
   test "Can convert Erlang tuples to IPv4 network structs" do
-    Enum.each(1..1_000, fn _ ->
+    Enum.each(1..1_000_000, fn _ ->
       {_, test_addr} = TestSupport.get_random_ipv4(:network)
-      assert test_addr === Impl.Ip.to_struct(test_addr.address, test_addr.mask)
+      assert {:ok, test_addr} === Impl.Ip.to_struct(test_addr.address, test_addr.mask)
     end)
   end
 
   test "Can convert Erlang tuples to IPv4 host structs" do
-    Enum.each(1..1_000, fn _ ->
+    Enum.each(1..1_000_000, fn _ ->
       {_, test_addr} = TestSupport.get_random_ipv4(:host)
-      assert test_addr === Impl.Ip.to_struct(test_addr.address, nil)
+      assert {:ok, test_addr} === Impl.Ip.to_struct(test_addr.address, nil)
     end)
   end
 
   test "Can convert Erlang tuples to IPv6 network structs" do
-    Enum.each(1..1_000, fn _ ->
+    Enum.each(1..1_000_000, fn _ ->
       {_, test_addr} = TestSupport.get_random_ipv6(:network)
-      assert test_addr === Impl.Ip.to_struct(test_addr.address, test_addr.mask)
+      assert {:ok, test_addr} === Impl.Ip.to_struct(test_addr.address, test_addr.mask)
     end)
   end
 
   test "Can convert Erlang tuples to IPv6 host structs" do
-    Enum.each(1..1_000, fn _ ->
+    Enum.each(1..1_000_000, fn _ ->
       {_, test_addr} = TestSupport.get_random_ipv6(:host)
-      assert test_addr === Impl.Ip.to_struct(test_addr.address, nil)
+      assert {:ok, test_addr} === Impl.Ip.to_struct(test_addr.address, nil)
     end)
   end
 
@@ -57,58 +57,58 @@ defmodule IpTest do
   #
 
   test "Can parse IPv4 simple IP address" do
-    Enum.each(1..500_000, fn _ ->
+    Enum.each(1..1_000_000, fn _ ->
       {:host, test_addr} = TestSupport.get_random_ipv4(:host)
       test_str = :inet.ntoa(test_addr.address) |> List.to_string()
 
-      assert test_addr === Impl.Ip.parse(test_str, nil)
+      assert {:ok, test_addr} === Impl.Ip.parse(test_str, nil)
     end)
 
-    Enum.each(1..500_000, fn _ ->
+    Enum.each(1..1_000_000, fn _ ->
       {:host, test_addr} = TestSupport.get_random_ipv4(:host)
       test_str = :inet.ntoa(test_addr.address) |> List.to_string()
 
-      assert test_addr === Impl.Ip.parse(test_str)
+      assert {:ok, test_addr} === Impl.Ip.parse(test_str)
     end)
   end
 
   test "Can parse IPv4 host address using CIDR notation" do
-    Enum.each(1..500_000, fn _ ->
+    Enum.each(1..1_000_000, fn _ ->
       {:host, test_addr} = TestSupport.get_random_ipv4(:host)
       test_str = Impl.IpV4.to_string(test_addr)
 
-      assert test_addr === Impl.Ip.parse(test_str, nil)
+      assert {:ok, test_addr} === Impl.Ip.parse(test_str, nil)
     end)
 
-    Enum.each(1..500_000, fn _ ->
+    Enum.each(1..1_000_000, fn _ ->
       {:host, test_addr} = TestSupport.get_random_ipv4(:host)
       test_str = Impl.IpV4.to_string(test_addr)
 
-      assert test_addr === Impl.Ip.parse(test_str)
+      assert {:ok, test_addr} === Impl.Ip.parse(test_str)
     end)
   end
 
   test "Can parse IPv4 subnet address using CIDR notation" do
-    Enum.each(1..500_000, fn _ ->
+    Enum.each(1..1_000_000, fn _ ->
       {:network, test_addr} = TestSupport.get_random_ipv4(:network)
       test_str = Impl.IpV4.to_string(test_addr)
 
-      assert test_addr === Impl.Ip.parse(test_str, nil)
+      assert {:ok, test_addr} === Impl.Ip.parse(test_str, nil)
     end)
 
-    Enum.each(1..500_000, fn _ ->
+    Enum.each(1..1_000_000, fn _ ->
       {:network, test_addr} = TestSupport.get_random_ipv4(:network)
       test_str = Impl.IpV4.to_string(test_addr)
 
-      assert test_addr === Impl.Ip.parse(test_str)
+      assert {:ok, test_addr} === Impl.Ip.parse(test_str)
     end)
   end
 
   test "Cannot parse invalid IPv4 strings" do
-    assert catch_error(Impl.Ip.parse("10.1.1.1.1"))
-    assert catch_error(Impl.Ip.parse("10.1.1.1.1/32"))
-    assert catch_error(Impl.Ip.parse("10.1.1.1/32/32"))
-    assert catch_error(Impl.Ip.parse("10.1.1.1/-32"))
+    assert {:error, :einval} = Impl.Ip.parse("10.1.1.1.1")
+    assert {:error, :einval} = Impl.Ip.parse("10.1.1.1.1/32")
+    assert {:error, :invalid_cidr_format} = Impl.Ip.parse("10.1.1.1/32/32")
+    assert {:error, :invalid_address_or_mask} = Impl.Ip.parse("10.1.1.1/-32")
   end
 
   #
@@ -116,57 +116,57 @@ defmodule IpTest do
   #
 
   test "Can parse IPv6 simple IP address" do
-    Enum.each(1..500_000, fn _ ->
+    Enum.each(1..1_000_000, fn _ ->
       {:host, test_addr} = TestSupport.get_random_ipv6(:host)
       test_str = :inet.ntoa(test_addr.address) |> List.to_string()
 
-      assert test_addr === Impl.Ip.parse(test_str, nil)
+      assert {:ok, test_addr} === Impl.Ip.parse(test_str, nil)
     end)
 
-    Enum.each(1..500_000, fn _ ->
+    Enum.each(1..1_000_000, fn _ ->
       {:host, test_addr} = TestSupport.get_random_ipv6(:host)
       test_str = :inet.ntoa(test_addr.address) |> List.to_string()
 
-      assert test_addr === Impl.Ip.parse(test_str)
+      assert {:ok, test_addr} === Impl.Ip.parse(test_str)
     end)
   end
 
   test "Can parse IPv6 host address using CIDR notation" do
-    Enum.each(1..500_000, fn _ ->
+    Enum.each(1..1_000_000, fn _ ->
       {:host, test_addr} = TestSupport.get_random_ipv6(:host)
       test_str = Impl.IpV6.to_string(test_addr)
 
-      assert test_addr === Impl.Ip.parse(test_str, nil)
+      assert {:ok, test_addr} === Impl.Ip.parse(test_str, nil)
     end)
 
-    Enum.each(1..500_000, fn _ ->
+    Enum.each(1..1_000_000, fn _ ->
       {:host, test_addr} = TestSupport.get_random_ipv6(:host)
       test_str = Impl.IpV6.to_string(test_addr)
 
-      assert test_addr === Impl.Ip.parse(test_str)
+      assert {:ok, test_addr} === Impl.Ip.parse(test_str)
     end)
   end
 
   test "Can parse IPv6 subnet address using CIDR notation" do
-    Enum.each(1..500_000, fn _ ->
+    Enum.each(1..1_000_000, fn _ ->
       {:network, test_addr} = TestSupport.get_random_ipv6(:network)
       test_str = Impl.IpV6.to_string(test_addr)
 
-      assert test_addr === Impl.Ip.parse(test_str, nil)
+      assert {:ok, test_addr} === Impl.Ip.parse(test_str, nil)
     end)
 
-    Enum.each(1..500_000, fn _ ->
+    Enum.each(1..1_000_000, fn _ ->
       {:network, test_addr} = TestSupport.get_random_ipv6(:network)
       test_str = Impl.IpV6.to_string(test_addr)
 
-      assert test_addr === Impl.Ip.parse(test_str)
+      assert {:ok, test_addr} === Impl.Ip.parse(test_str)
     end)
   end
 
   test "Cannot parse invalid IPv6 strings" do
-    assert catch_error(Impl.Ip.parse("2001::0010::abcd"))
-    assert catch_error(Impl.Ip.parse("2001::0010::abcd/128"))
-    assert catch_error(Impl.Ip.parse("2001::0010:abcd/128/128"))
-    assert catch_error(Impl.Ip.parse("2001::0010:abcd/-128"))
+    assert {:error, :einval} = Impl.Ip.parse("2001::0010::abcd")
+    assert {:error, :einval} = Impl.Ip.parse("2001::0010::abcd/128")
+    assert {:error, :invalid_cidr_format} = Impl.Ip.parse("2001::0010:abcd/128/128")
+    assert {:error, :invalid_address_or_mask} = Impl.Ip.parse("2001::0010:abcd/-128")
   end
 end

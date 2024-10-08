@@ -13,6 +13,7 @@
 # credo:disable-for-this-file Credo.Check.Readability.LargeNumbers
 
 defmodule IpV6Test do
+  @moduledoc false
   use ExUnit.Case, async: true
 
   import Bitwise
@@ -150,9 +151,18 @@ defmodule IpV6Test do
     Enum.each(1..1_000_000, fn _ ->
       {_, expected_result} = TestSupport.get_random_ipv6(:any, 30)
 
-      assert expected_result ===
+      assert {:ok, expected_result} ===
                Impl.IpV6.to_struct(expected_result.address, expected_result.mask)
     end)
+
+    assert {:error, :invalid_ipv6_address_or_mask} =
+             Impl.IpV6.to_struct({0, 0, 0, 0, 0, 0, 0, 1}, 129)
+
+    assert {:error, :invalid_ipv6_address_or_mask} =
+             Impl.IpV6.to_struct({0, 0, 0, 0, 0, 0, 0, 1}, -8)
+
+    assert {:error, :invalid_ipv6_address_or_mask} =
+             Impl.IpV6.to_struct({0, 0, 0, 0, 0, 0, 0, 1, 0}, 64)
   end
 
   #

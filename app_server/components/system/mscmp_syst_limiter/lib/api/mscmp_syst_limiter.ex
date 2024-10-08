@@ -148,7 +148,29 @@ defmodule MscmpSystLimiter do
           {:allow, count :: integer()}
           | {:deny, limit :: integer()}
           | {:error, Mserror.LimiterError.t()}
-  defdelegate check_rate(counter_type, counter_id, scale_ms, limit), to: Impl.RateLimiter
+  def check_rate(counter_type, counter_id, scale_ms, limit) do
+    case Impl.RateLimiter.check_rate(counter_type, counter_id, scale_ms, limit) do
+      {response, _} = result when response in [:allow, :deny] ->
+        result
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.LimiterError.new(
+           :check_counter,
+           "Error encountered checking and incrementing the rate limit.",
+           cause: error,
+           context: %MscmpSystError.Types.Context{
+             origin: {__MODULE__, :check_rate, 4},
+             parameters: %{
+               counter_type: counter_type,
+               counter_id: counter_id,
+               scale_ms: scale_ms,
+               limit: limit
+             }
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -207,8 +229,36 @@ defmodule MscmpSystLimiter do
           {:allow, count :: integer()}
           | {:deny, limit :: integer()}
           | {:error, Mserror.LimiterError.t()}
-  defdelegate check_rate_with_increment(counter_type, counter_id, scale_ms, limit, increment),
-    to: Impl.RateLimiter
+  def check_rate_with_increment(counter_type, counter_id, scale_ms, limit, increment) do
+    case Impl.RateLimiter.check_rate_with_increment(
+           counter_type,
+           counter_id,
+           scale_ms,
+           limit,
+           increment
+         ) do
+      {response, _} = result when response in [:allow, :deny] ->
+        result
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.LimiterError.new(
+           :check_counter,
+           "Error encountered checking and incrementing the rate limit with a variable increment.",
+           cause: error,
+           context: %MscmpSystError.Types.Context{
+             origin: {__MODULE__, :check_rate_with_increment, 5},
+             parameters: %{
+               counter_type: counter_type,
+               counter_id: counter_id,
+               scale_ms: scale_ms,
+               limit: limit,
+               increment: increment
+             }
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -246,7 +296,29 @@ defmodule MscmpSystLimiter do
              updated_at :: integer() | nil
            }}
           | {:error, Mserror.LimiterError.t()}
-  defdelegate inspect_counter(counter_type, counter_id, scale_ms, limit), to: Impl.RateLimiter
+  def inspect_counter(counter_type, counter_id, scale_ms, limit) do
+    case Impl.RateLimiter.inspect_counter(counter_type, counter_id, scale_ms, limit) do
+      {:ok, _} = result ->
+        result
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.LimiterError.new(
+           :inspect_counter,
+           "Error encountered inspecting the rate limit counter.",
+           cause: error,
+           context: %MscmpSystError.Types.Context{
+             origin: {__MODULE__, :inspect_counter, 4},
+             parameters: %{
+               counter_type: counter_type,
+               counter_id: counter_id,
+               scale_ms: scale_ms,
+               limit: limit
+             }
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -277,5 +349,22 @@ defmodule MscmpSystLimiter do
 
   @spec delete_counters(Types.counter_type(), Types.counter_id()) ::
           {:ok, integer()} | {:error, Mserror.LimiterError.t()}
-  defdelegate delete_counters(counter_type, counter_id), to: Impl.RateLimiter
+  def delete_counters(counter_type, counter_id) do
+    case Impl.RateLimiter.delete_counters(counter_type, counter_id) do
+      {:ok, _} = result ->
+        result
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.LimiterError.new(
+           :delete_counter,
+           "Error encountered deleting the rate limit counter.",
+           cause: error,
+           context: %MscmpSystError.Types.Context{
+             origin: {__MODULE__, :delete_counters, 2},
+             parameters: %{counter_type: counter_type, counter_id: counter_id}
+           }
+         )}
+    end
+  end
 end

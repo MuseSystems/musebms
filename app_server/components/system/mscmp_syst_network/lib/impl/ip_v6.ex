@@ -15,7 +15,7 @@ defmodule MscmpSystNetwork.Impl.IpV6 do
 
   import Bitwise
 
-  import MscmpSystNetwork.Guards, only: [is_ipv6: 1, is_ipv6_tuple: 1]
+  import MscmpSystNetwork.Guards, only: [is_ipv6: 1, is_ipv6_tuple: 1, is_ipv6_mask: 1]
 
   alias MscmpSystNetwork.Types
   alias MscmpSystNetwork.Types.IpV6
@@ -170,9 +170,19 @@ defmodule MscmpSystNetwork.Impl.IpV6 do
   #
   #
 
-  @spec to_struct(Types.ipv6_addr(), Types.ipv6_mask() | nil) :: IpV6.t()
-  def to_struct(erlang_addr, mask) when is_ipv6_tuple(erlang_addr),
-    do: %IpV6{address: erlang_addr, mask: mask || 128}
+  @spec to_struct(Types.ipv6_addr(), Types.ipv6_mask() | nil) ::
+          {:ok, IpV6.t()} | {:error, :invalid_ipv6_address_or_mask}
+  def to_struct(erlang_addr, mask)
+      when is_ipv6_tuple(erlang_addr) and (is_ipv6_mask(mask) or is_nil(mask)),
+      do: {:ok, %IpV6{address: erlang_addr, mask: mask || 128}}
+
+  def to_struct(_, _), do: {:error, :invalid_ipv6_address_or_mask}
+
+  ##############################################################################
+  #
+  # General support functions
+  #
+  #
 
   defp to_integer({a, b, c, d, e, f, g, h} = ip) when is_ipv6_tuple(ip) do
     <<i::unsigned-integer-size(128)>> =
