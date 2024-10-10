@@ -1,5 +1,5 @@
 # Source File: dev.exs
-# Location:    musebms/components/system/mscmp_syst_utils_string/config/dev.exs
+# Location:    musebms/components/system/mscmp_syst_utils_data/config/dev.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
