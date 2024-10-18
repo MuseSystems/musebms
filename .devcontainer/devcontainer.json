@@ -1,0 +1,36 @@
+{
+    "name": "Muse Systems BMS Development Environment",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/musebms",
+    "forwardPorts": [
+        "app:4388",
+        "db:5432"
+    ],
+    "postCreateCommand": "sudo chown -R musedev:musedev /musebms",
+    "postStartCommand": "pwsh -c './tools/build_tools/Build-Msbms.ps1 -DepsGet' && pwsh -c '/tmp/run_bootstrap.ps1'",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "JakeBecker.elixir-ls",
+                "ms-vscode.powershell",
+                "pantajoe.vscode-elixir-credo"
+            ],
+            "settings": {
+                "terminal.integrated.profiles.linux": {
+                    "pwsh": {
+                        "path": "pwsh",
+                        "icon": "terminal-powershell"
+                    }
+                },
+                "terminal.integrated.defaultProfile.linux": "pwsh"
+            }
+        }
+    },
+    "remoteEnv": {
+        "POSH_THEME": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/clean-detailed.omp.json",
+        "USERNAME": "musedev",
+        "TZ": "America/Los_Angeles"
+    },
+    "remoteUser": "musedev"
+}
