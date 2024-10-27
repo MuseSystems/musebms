@@ -53,6 +53,7 @@ ENV POSH_THEME="https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main
 
 # Deploy oh-my-posh prompt to Powershell:
 COPY Microsoft.PowerShell_profile.ps1 /home/${USERNAME}/.config/powershell/Microsoft.PowerShell_profile.ps1
+COPY Microsoft.PowerShell_profile.ps1 /home/${USERNAME}/.config/powershell/Microsoft.VSCode_profile.ps1
 
 # Install PostgreSQL client tools
 # Add PostgreSQL repository

@@ -11,3 +11,6 @@ oh-my-posh init pwsh --config $env:POSH_THEME | Invoke-Expression
 
 # Aliases
 # Set-Alias -Name ac -Value Add-Content
+
+# Remove the iex alias that conflicts with the Elixir iex shell
+Remove-Item Alias:iex -Force

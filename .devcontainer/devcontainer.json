@@ -23,7 +23,10 @@
                         "icon": "terminal-powershell"
                     }
                 },
-                "terminal.integrated.defaultProfile.linux": "pwsh"
+                "terminal.integrated.defaultProfile.linux": "pwsh",
+                "terminal.integrated.tabs.defaultLocation": "editor",
+                "remote.extensionHost.logLevel": "debug",
+                "editor.formatOnSave": true
             }
         }
     },
