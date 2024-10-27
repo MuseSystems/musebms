@@ -18,16 +18,17 @@ defmodule MscmpSystForms.MixProject do
 
   @deps [
     # Third Party Dependencies
-    {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
-    {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
-    {:ex_doc, "~> 0.20", only: :dev, runtime: false},
+    {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+    {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
+    {:ex_doc, "~> 0.31", only: :dev, runtime: false},
     {:phoenix, "~> 1.7"},
     {:phoenix_live_view, "~> 0.19"},
     {:phoenix_ecto, "~> 4.0"},
     {:gettext, "~> 0.20"},
+    {:nimble_options, "~> 1.0"},
 
     # Muse Systems Business Management System Components
-    {:mscmp_syst_utils, path: "../mscmp_syst_utils"},
+    {:mscmp_syst_utils_string, path: "../mscmp_syst_utils_string"},
     {:mscmp_syst_error, path: "../mscmp_syst_error"},
     {:mscmp_syst_perms, path: "../mscmp_syst_perms"}
   ]
@@ -47,7 +48,7 @@ defmodule MscmpSystForms.MixProject do
     [
       app: @name,
       version: @version,
-      elixir: "~> 1.15",
+      elixir: "~> 1.17",
       deps: @deps,
       build_embedded: in_production,
       start_permanent: in_production,
@@ -58,12 +59,13 @@ defmodule MscmpSystForms.MixProject do
         main: "MscmpSystForms",
         output: "../../../../documentation/technical/app_server/mscmp_syst_forms",
         deps: [
-          mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils",
+          mscmp_syst_utils_string:
+            "../../../../documentation/technical/app_server/mscmp_syst_utils_string",
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
           mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db",
           mscmp_syst_perms: "../../../../documentation/technical/app_server/mscmp_syst_perms"
         ],
-        groups_for_functions: [
+        groups_for_docs: [
           Containers: &(&1[:section] == :container_components),
           Controls: &(&1[:section] == :control_components),
           Inputs: &(&1[:section] == :input_components),

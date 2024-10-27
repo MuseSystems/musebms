@@ -15,9 +15,34 @@ defmodule MscmpSystInteraction.Types do
   Simple types defined and used by the MscmpSystInteraction Component.
   """
 
+  alias MscmpSystInteraction.Types
+
   #
   # Note that the ordering of typespecs here is alphabetical.
   #
+
+  @type context_mode() :: :unlocked | {:locked, locking_agent()} | :maintenance
+
+  @typedoc """
+  The Internal Name of an Interaction Context.
+  """
+  @type context_name() :: String.t()
+
+  @type context_data() ::
+          {context_name(), context_mode(), Types.ContextConfig.t()}
+
+  @type locking_agent() :: :system | term() | nil
+
+  @typedoc """
+  The valid forms of service name acceptable to identify the Interaction Context
+  service.
+
+  Currently we expect the service name to be an atom, though we expect that any
+  of a simple local name, the :global registry, or the Registry module to be
+  used for service registration. Any registry compatible with those options
+  should also work.
+  """
+  @type service_name() :: GenServer.name() | nil
 
   @typedoc """
   The available modes in which instances of the Interaction State management
@@ -29,5 +54,5 @@ defmodule MscmpSystInteraction.Types do
   * `existing` - the data is based on preexisting data retrieved from the
   database or similar.
   """
-  @type state_modes() :: :new | :exisitng
+  @type state_modes() :: :new | :read | :change
 end

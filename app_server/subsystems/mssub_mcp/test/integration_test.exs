@@ -346,7 +346,7 @@ defmodule IntegrationTest do
         Enum.each(context_states, &assert(%{context: _, state: :ready} = &1))
 
         assert "instance_states_initialized" =
-                 MscmpSystEnums.get_functional_type_by_enum_item_id(
+                 MscmpSystEnums.get_functional_type_by_item_id(
                    "instance_states",
                    initialized_instance.instance_state_id
                  )
@@ -743,7 +743,7 @@ defmodule IntegrationTest do
     assert {:ok, %{status: :rejected_rate_limited}} =
              MssubMcp.authenticate_email_password(
                "owned.access.account@musesystems.com",
-               MscmpSystUtils.get_random_string(40),
+               Msutils.String.get_random_string(40),
                ~i"10.123.123.123",
                owning_owner_id: owner2_id
              )
@@ -753,7 +753,7 @@ defmodule IntegrationTest do
     assert {:ok, %{status: :rejected}} =
              MssubMcp.authenticate_email_password(
                "owned.access.account@musesystems.com",
-               MscmpSystUtils.get_random_string(40),
+               Msutils.String.get_random_string(40),
                ~i"10.123.123.123",
                owning_owner_id: owner2_id
              )
@@ -1120,7 +1120,7 @@ defmodule IntegrationTest do
     assert %Msdata.SystPermRoles{internal_name: "global_login"} =
              Enum.find(perm_roles, &(&1.internal_name == "global_login"))
 
-    assert {:ok, perm_roles} = MssubMcp.list_perm_grants(selector, include_perms: true)
+    assert {:ok, perm_roles} = MssubMcp.list_perm_grants(selector, preload_perms: true)
 
     assert 2 == length(perm_roles)
 
@@ -1304,8 +1304,8 @@ defmodule IntegrationTest do
   defp violate_host_rate_limit(host_addr, :rejected, limit) do
     {:ok, auth_state} =
       MssubMcp.authenticate_validation_token(
-        MscmpSystUtils.get_random_string(40),
-        MscmpSystUtils.get_random_string(40),
+        Msutils.String.get_random_string(40),
+        Msutils.String.get_random_string(40),
         host_addr
       )
 
@@ -1327,7 +1327,7 @@ defmodule IntegrationTest do
     {:ok, auth_state} =
       MssubMcp.authenticate_email_password(
         identifier,
-        MscmpSystUtils.get_random_string(40),
+        Msutils.String.get_random_string(40),
         host_addr,
         owning_owner_id: owner_id
       )

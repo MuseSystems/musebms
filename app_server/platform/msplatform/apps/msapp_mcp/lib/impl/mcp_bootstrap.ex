@@ -32,11 +32,11 @@ defmodule MsappMcp.Impl.McpBootstrap do
     starting_contexts = MssubMcp.start_mcp_service_context()
 
     active_state =
-      MscmpSystEnums.get_enum_item_by_name("mssub_mcp_states", "mssub_mcp_states_sysdef_active")
+      MscmpSystEnums.get_item_by_name("mssub_mcp_states", "mssub_mcp_states_sysdef_active")
 
     {:ok, result} =
       MscmpSystDb.transaction(fn ->
-        _ = MscmpSystSettings.set_setting_value("mssub_mcp_state", :setting_uuid, active_state.id)
+        _ = MscmpSystSettings.set_value("mssub_mcp_state", :setting_uuid, active_state.id)
 
         case validate_bootstrap_data(data) do
           :ok ->
@@ -91,7 +91,7 @@ defmodule MsappMcp.Impl.McpBootstrap do
 
   @dialyzer {:no_match, maybe_set_mcp_owner: 1}
   defp maybe_set_mcp_owner({:ok, values} = result) do
-    :ok = MscmpSystSettings.set_setting_value("mcp_owner", :setting_uuid, values.owner_id)
+    :ok = MscmpSystSettings.set_value("mcp_owner", :setting_uuid, values.owner_id)
     result
   end
 

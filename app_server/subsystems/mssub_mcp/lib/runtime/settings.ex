@@ -17,32 +17,32 @@ defmodule MssubMcp.Runtime.Settings do
 
   mcp_constants()
 
-  mcp_opfn get_setting_value(setting_name, setting_type) do
-    MscmpSystSettings.get_setting_value(setting_name, setting_type)
+  mcp_opfn get_value(setting_name, setting_type) do
+    MscmpSystSettings.get_value(setting_name, setting_type)
   end
 
-  mcp_opfn get_setting_values(setting_name) do
-    MscmpSystSettings.get_setting_values(setting_name)
+  mcp_opfn get_values(setting_name) do
+    MscmpSystSettings.get_values(setting_name)
   end
 
-  mcp_opfn list_all_settings() do
-    MscmpSystSettings.list_all_settings()
+  mcp_opfn list_all() do
+    MscmpSystSettings.list_all()
   end
 
-  @spec set_setting_value(
+  @spec set_value(
           MscmpSystSettings.Types.setting_name(),
           MscmpSystSettings.Types.setting_types(),
           any()
         ) :: :ok | {:error, MscmpSystError.t()}
-  mcp_opfn set_setting_value(setting_name, setting_type, setting_value) do
-    MscmpSystSettings.set_setting_value(setting_name, setting_type, setting_value)
+  mcp_opfn set_value(setting_name, setting_type, setting_value) do
+    MscmpSystSettings.set_value(setting_name, setting_type, setting_value)
   end
 
-  @spec set_setting_values(
+  @spec set_values(
           MscmpSystSettings.Types.setting_name(),
           MscmpSystSettings.Types.setting_service_params()
         ) :: :ok | {:error, MscmpSystError.t()}
-  mcp_opfn set_setting_values(setting_name, update_params) do
-    MscmpSystSettings.set_setting_values(setting_name, update_params)
+  mcp_opfn set_values(setting_name, update_params) do
+    MscmpSystSettings.set_values(setting_name, update_params)
   end
 end

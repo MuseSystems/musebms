@@ -52,9 +52,39 @@ defmodule Msdata.SystSessions do
             diag_update_count: integer() | nil
           }
 
+  ##############################################################################
+  #
+  # insert_changeset
+  #
+  #
+
+  @doc """
+  Creates a validated `Ecto.Changeset` struct for inserting into the database.
+
+  ## Parameters
+
+    * `insert_params` - the initial values with which to populate the new
+      record.
+  """
   @spec insert_changeset(Types.session_params()) :: Ecto.Changeset.t()
   defdelegate insert_changeset(insert_params), to: Validators
 
+  ##############################################################################
+  #
+  # update_changeset
+  #
+  #
+
+  @doc """
+  Creates a validated `Ecto.Changeset` struct for updating an existing database
+  record.
+
+  ## Parameters
+
+    * `session` - The `Msdata.SystSessions` record to update.
+
+    * `update_params` - the values with which to update the record.
+  """
   @spec update_changeset(Msdata.SystSessions.t(), Types.session_params()) :: Ecto.Changeset.t()
   defdelegate update_changeset(session, update_params), to: Validators
 end

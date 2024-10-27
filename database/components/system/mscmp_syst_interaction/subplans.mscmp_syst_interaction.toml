@@ -41,4 +41,7 @@ load_files = [
     "components/system/mscmp_syst_interaction/ms_syst/api_views/syst_interaction_actions/trig_i_u_syst_interaction_actions.eex.sql",
     "components/system/mscmp_syst_interaction/ms_syst/api_views/syst_interaction_actions/trig_i_d_syst_interaction_actions.eex.sql",
     "components/system/mscmp_syst_interaction/ms_syst/api_views/syst_interaction_actions/syst_interaction_actions.eex.sql",
+
+    "components/system/mscmp_syst_interaction/ms_syst_priv/functions/get_interaction_context_perms.eex.sql",
+    "components/system/mscmp_syst_interaction/ms_syst/functions/get_interaction_context_perms.eex.sql",
 ]

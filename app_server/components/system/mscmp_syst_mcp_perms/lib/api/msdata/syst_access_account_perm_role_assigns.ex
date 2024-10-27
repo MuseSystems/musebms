@@ -52,6 +52,20 @@ defmodule Msdata.SystAccessAccountPermRoleAssigns do
     belongs_to(:perm_role, Msdata.SystPermRoles)
   end
 
+  ##############################################################################
+  #
+  # insert_changeset
+  #
+  #
+
+  @doc """
+  Creates a validated `Ecto.Changeset` struct for inserting into the database.
+
+  ## Parameters
+
+    * `insert_params` - the initial values with which to populate the new
+      record.
+  """
   @spec insert_changeset(Types.access_account_perm_role_params()) :: Ecto.Changeset.t()
   defdelegate insert_changeset(insert_params), to: Validators
 end

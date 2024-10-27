@@ -20,21 +20,73 @@ defmodule DbSessionTest do
   @moduletag :unit
   @moduletag :capture_log
 
+  ##############################################################################
+  #
+  # Test Option Definitions
+  #
+  #
+
+  @test_options [
+    session_name_length: [
+      type: :pos_integer,
+      default: 16
+    ],
+    session_name_tokens: [
+      type: {:or, [{:list, :any}, {:in, [:alphanum, :mixed_alphanum, :b32e, :b32c]}]},
+      default: :mixed_alphanum
+    ],
+    session_name: [
+      type: :string
+    ],
+    expires_after: [
+      type: :non_neg_integer,
+      default: 3600
+    ],
+    db_timeout: [
+      type: :pos_integer,
+      default: 300
+    ]
+  ]
+
   test "Can generate Session Name" do
-    session_name = Impl.DbSession.generate_session_name()
+    opts =
+      @test_options
+      |> Keyword.take([
+        :session_name_length,
+        :session_name_tokens
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([], &1))
+
+    session_name = Impl.DbSession.generate_session_name(opts)
 
     assert String.length(session_name) == 16
   end
 
   test "Can create new Session with defaults" do
-    assert {:ok, _} = Impl.DbSession.create_session(%{new_key: "new_value"}, [])
+    opts =
+      @test_options
+      |> Keyword.take([
+        :session_name,
+        :expires_after
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([], &1))
+
+    assert {:ok, _} = Impl.DbSession.create_session(%{new_key: "new_value"}, opts)
   end
 
   test "Can create new Session with custom name" do
-    assert {:ok, _} =
-             Impl.DbSession.create_session(%{new_key: "new_value"},
-               session_name: "create_session_test"
-             )
+    opts =
+      @test_options
+      |> Keyword.take([
+        :session_name,
+        :expires_after
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([session_name: "create_session_test"], &1))
+
+    assert {:ok, _} = Impl.DbSession.create_session(%{new_key: "new_value"}, opts)
 
     found =
       from(s in Msdata.SystSessions, where: s.internal_name == "create_session_test")
@@ -53,8 +105,17 @@ defmodule DbSessionTest do
     a_little_after =
       DateTime.add(current_timestamp, expires_secs + 5) |> DateTime.truncate(:second)
 
+    opts =
+      @test_options
+      |> Keyword.take([
+        :session_name,
+        :expires_after
+      ])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([expires_after: expires_secs], &1))
+
     assert {:ok, session_name} =
-             Impl.DbSession.create_session(%{new_key: "new_value"}, expires_after: expires_secs)
+             Impl.DbSession.create_session(%{new_key: "new_value"}, opts)
 
     session =
       from(s in Msdata.SystSessions, where: s.internal_name == ^session_name)
@@ -65,8 +126,18 @@ defmodule DbSessionTest do
   end
 
   test "Can update existing Session with defaults" do
+    opts =
+      @test_options
+      |> Keyword.take([:expires_after])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([], &1))
+
     assert :ok =
-             Impl.DbSession.update_session("update_session", %{updated_key: "updated_value"}, [])
+             Impl.DbSession.update_session(
+               "update_session",
+               %{updated_key: "updated_value"},
+               opts
+             )
   end
 
   test "Can update existing Session with custom expires after" do
@@ -79,9 +150,17 @@ defmodule DbSessionTest do
     a_little_after =
       DateTime.add(current_timestamp, expires_secs + 5) |> DateTime.truncate(:second)
 
+    opts =
+      @test_options
+      |> Keyword.take([:expires_after])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([expires_after: expires_secs], &1))
+
     assert :ok =
-             Impl.DbSession.update_session("update_session_date", %{updated_key: "updated_value"},
-               expires_after: expires_secs
+             Impl.DbSession.update_session(
+               "update_session_date",
+               %{updated_key: "updated_value"},
+               opts
              )
 
     session =
@@ -93,12 +172,24 @@ defmodule DbSessionTest do
   end
 
   test "Cannot update expired Session" do
+    opts =
+      @test_options
+      |> Keyword.take([:expires_after])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([], &1))
+
     assert {:ok, :not_found} =
-             Impl.DbSession.update_session("expired_session", %{updated: "updated"}, [])
+             Impl.DbSession.update_session("expired_session", %{updated: "updated"}, opts)
   end
 
   test "Can get existing Session data with defaults" do
-    assert {:ok, %{"test_key" => "test_value"}} = Impl.DbSession.get_session("get_session", [])
+    opts =
+      @test_options
+      |> Keyword.take([:expires_after])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([], &1))
+
+    assert {:ok, %{"test_key" => "test_value"}} = Impl.DbSession.get_session("get_session", opts)
   end
 
   test "Can get existing Session data with custom expires after" do
@@ -111,8 +202,14 @@ defmodule DbSessionTest do
     a_little_after =
       DateTime.add(current_timestamp, expires_secs + 5) |> DateTime.truncate(:second)
 
+    opts =
+      @test_options
+      |> Keyword.take([:expires_after])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([expires_after: expires_secs], &1))
+
     assert {:ok, %{"test_key" => "test_value"}} =
-             Impl.DbSession.get_session("get_session", expires_after: expires_secs)
+             Impl.DbSession.get_session("get_session", opts)
 
     session =
       from(s in Msdata.SystSessions, where: s.internal_name == "get_session")
@@ -123,7 +220,13 @@ defmodule DbSessionTest do
   end
 
   test "Can refresh Session expiration date with defaults" do
-    assert :ok = Impl.DbSession.refresh_session_expiration("get_session", [])
+    opts =
+      @test_options
+      |> Keyword.take([:expires_after])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([], &1))
+
+    assert :ok = Impl.DbSession.refresh_session_expiration("get_session", opts)
   end
 
   test "Can refresh Session expiration date with custom expires after" do
@@ -136,8 +239,13 @@ defmodule DbSessionTest do
     a_little_after =
       DateTime.add(current_timestamp, expires_secs + 5) |> DateTime.truncate(:second)
 
-    assert :ok =
-             Impl.DbSession.refresh_session_expiration("get_session", expires_after: expires_secs)
+    opts =
+      @test_options
+      |> Keyword.take([:expires_after])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([expires_after: expires_secs], &1))
+
+    assert :ok = Impl.DbSession.refresh_session_expiration("get_session", opts)
 
     session =
       from(s in Msdata.SystSessions, where: s.internal_name == "get_session")
@@ -148,11 +256,23 @@ defmodule DbSessionTest do
   end
 
   test "Cannot refresh Session expiration date" do
-    assert {:ok, :not_found} = Impl.DbSession.refresh_session_expiration("expired_session", [])
+    opts =
+      @test_options
+      |> Keyword.take([:expires_after])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([], &1))
+
+    assert {:ok, :not_found} = Impl.DbSession.refresh_session_expiration("expired_session", opts)
   end
 
   test "Cannot get expired Session" do
-    assert {:ok, :not_found} = Impl.DbSession.get_session("expired_session", [])
+    opts =
+      @test_options
+      |> Keyword.take([:expires_after])
+      |> NimbleOptions.new!()
+      |> then(&NimbleOptions.validate!([], &1))
+
+    assert {:ok, :not_found} = Impl.DbSession.get_session("expired_session", opts)
   end
 
   test "Can delete existing Session" do

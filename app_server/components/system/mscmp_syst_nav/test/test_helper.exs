@@ -46,7 +46,7 @@ children =
   )
 
 MscmpSystDb.put_datastore_context(datastore_context_name)
-MscmpSystEnums.put_enums_service(TestSupport.get_enums_service_name())
+MscmpSystEnums.put_service(TestSupport.get_enums_service_name())
 
 ExUnit.after_suite(fn _suite_result ->
   TestSupport.cleanup_testing_database(test_kind, context_registry: test_registry)

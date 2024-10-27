@@ -66,7 +66,8 @@ defmodule AccessAccountPermRoleTest do
 
     # Right now this is effectively a no-op since no explicit permission
     # denial process exists for Access Accounts
-    assert {:ok, []} = Impl.AccessAccountPermRole.list_perm_denials(selector, [])
+    assert {:ok, []} =
+             Impl.AccessAccountPermRole.list_perm_denials(selector, preload_perms: false)
   end
 
   test "List Access Account Permission Role Grants" do
@@ -78,7 +79,8 @@ defmodule AccessAccountPermRoleTest do
       |> MscmpSystDb.one!()
       |> then(&%MscmpSystMcpPerms.Types.AccessAccountPermsSelector{access_account_id: &1})
 
-    assert {:ok, perm_roles} = Impl.AccessAccountPermRole.list_perm_grants(selector, [])
+    assert {:ok, perm_roles} =
+             Impl.AccessAccountPermRole.list_perm_grants(selector, preload_perms: false)
 
     assert 2 == length(perm_roles)
 
@@ -89,7 +91,7 @@ defmodule AccessAccountPermRoleTest do
              Enum.find(perm_roles, &(&1.internal_name == "global_login"))
 
     assert {:ok, perm_roles} =
-             Impl.AccessAccountPermRole.list_perm_grants(selector, include_perms: true)
+             Impl.AccessAccountPermRole.list_perm_grants(selector, preload_perms: true)
 
     assert 2 == length(perm_roles)
 
@@ -116,7 +118,7 @@ defmodule AccessAccountPermRoleTest do
       |> then(&%MscmpSystMcpPerms.Types.AccessAccountPermsSelector{access_account_id: &1})
 
     assert {:ok, %{} = all_grants} =
-             Impl.AccessAccountPermRole.get_effective_perm_grants(selector, [])
+             Impl.AccessAccountPermRole.get_effective_perm_grants(selector, permissions: :all)
 
     assert {
              "mcp_login",

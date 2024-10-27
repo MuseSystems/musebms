@@ -31,7 +31,7 @@ defmodule MsappMcp.Impl.Authentication do
           Keyword.t()
         ) :: MsappMcp.Types.login_result()
   def authenticate(%{} = params, host_addr, session_name, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, mode: :session)
+    opts = Msutils.String.resolve_options(opts, mode: :session)
 
     attempt_authentication(params["identifier"], params["credential"], host_addr)
     |> process_auth_result()
@@ -40,7 +40,7 @@ defmodule MsappMcp.Impl.Authentication do
   end
 
   defp attempt_authentication(identifier, credential, host_addr) do
-    owner_id = MssubMcp.get_setting_value("mcp_owner", :setting_uuid)
+    owner_id = MssubMcp.get_value("mcp_owner", :setting_uuid)
     resolved_host = MscmpSystNetwork.to_struct(host_addr)
 
     MssubMcp.authenticate_email_password(identifier, credential, resolved_host,

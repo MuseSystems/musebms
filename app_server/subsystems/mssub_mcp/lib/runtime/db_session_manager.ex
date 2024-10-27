@@ -25,9 +25,9 @@ defmodule MssubMcp.Runtime.DbSessionManager do
     opts =
       if opts[:expires_after] == nil do
         expires_after =
-          MscmpSystSettings.get_setting_value("mssub_mcp_session_expiration", :setting_integer)
+          MscmpSystSettings.get_value("mssub_mcp_session_expiration", :setting_integer)
 
-        MscmpSystUtils.resolve_options(opts, expires_after: expires_after)
+        Msutils.String.resolve_options(opts, expires_after: expires_after)
       else
         opts
       end
@@ -41,9 +41,9 @@ defmodule MssubMcp.Runtime.DbSessionManager do
     opts =
       if opts[:expires_after] == nil do
         expires_after =
-          MscmpSystSettings.get_setting_value("mssub_mcp_session_expiration", :setting_integer)
+          MscmpSystSettings.get_value("mssub_mcp_session_expiration", :setting_integer)
 
-        MscmpSystUtils.resolve_options(opts, expires_after: expires_after)
+        Msutils.String.resolve_options(opts, expires_after: expires_after)
       else
         opts
       end
@@ -57,9 +57,9 @@ defmodule MssubMcp.Runtime.DbSessionManager do
     opts =
       if opts[:expires_after] == nil do
         expires_after =
-          MscmpSystSettings.get_setting_value("mssub_mcp_session_expiration", :setting_integer)
+          MscmpSystSettings.get_value("mssub_mcp_session_expiration", :setting_integer)
 
-        MscmpSystUtils.resolve_options(opts, expires_after: expires_after)
+        Msutils.String.resolve_options(opts, expires_after: expires_after)
       else
         opts
       end
@@ -73,9 +73,9 @@ defmodule MssubMcp.Runtime.DbSessionManager do
     opts =
       if opts[:expires_after] == nil do
         expires_after =
-          MscmpSystSettings.get_setting_value("mssub_mcp_session_expiration", :setting_integer)
+          MscmpSystSettings.get_value("mssub_mcp_session_expiration", :setting_integer)
 
-        MscmpSystUtils.resolve_options(opts, expires_after: expires_after)
+        Msutils.String.resolve_options(opts, expires_after: expires_after)
       else
         opts
       end

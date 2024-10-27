@@ -40,7 +40,7 @@ defmodule MscmpSystDb.Impl.Migrations do
   #
 
   @spec build_migrations(String.t(), Keyword.t()) ::
-          {:ok, list(Path.t())} | {:error, MscmpSystError.t()}
+          {:ok, list(Path.t())} | {:error, term()}
   def build_migrations(datastore_type, opts) do
     migrations_path = Path.join([opts[:migrations_root_dir], datastore_type])
 
@@ -208,7 +208,7 @@ defmodule MscmpSystDb.Impl.Migrations do
   # clean_existing_migrations
   #
 
-  @spec clean_existing_migrations(String.t(), Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
+  @spec clean_existing_migrations(String.t(), Keyword.t()) :: :ok | {:error, term()}
   def clean_existing_migrations(datastore_type, opts)
       when is_binary(datastore_type) and is_list(opts) do
     :ok =
@@ -216,17 +216,7 @@ defmodule MscmpSystDb.Impl.Migrations do
       |> Path.join()
       |> clean_migrations()
   rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :database_error,
-          message: "Failure retrieving Datastore State.",
-          cause: error
-        }
-      }
+    error -> {:error, {:migration_clean, error}}
   end
 
   defp clean_migrations(dest_path) do
@@ -246,7 +236,7 @@ defmodule MscmpSystDb.Impl.Migrations do
   # get_datastore_version
   #
 
-  @spec get_datastore_version(Keyword.t()) :: {:ok, String.t()} | {:error, MscmpSystError.t()}
+  @spec get_datastore_version(Keyword.t()) :: {:ok, String.t()} | {:error, term()}
   def get_datastore_version(opts) do
     migration_table_exists? =
       query_table_exists(
@@ -264,17 +254,7 @@ defmodule MscmpSystDb.Impl.Migrations do
       {:ok, "00.00.000.000000.000"}
     end
   rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :database_error,
-          message: "Failure retrieving datastore version.",
-          cause: error
-        }
-      }
+    error -> {:error, {:datastore_version, error}}
   end
 
   defp query_table_exists(migrations_schema, migrations_table) do
@@ -317,7 +297,7 @@ defmodule MscmpSystDb.Impl.Migrations do
   # initialize_datastore
   #
 
-  @spec initialize_datastore(String.t(), Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
+  @spec initialize_datastore(String.t(), Keyword.t()) :: :ok | {:error, term()}
   def initialize_datastore(datastore_owner, opts) do
     bindings =
       [
@@ -336,17 +316,7 @@ defmodule MscmpSystDb.Impl.Migrations do
 
     :ok
   rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :database_error,
-          message: "Failure creating migrations management schema.",
-          cause: error
-        }
-      }
+    error -> {:error, {:datastore_initialize, error}}
   end
 
   ##############################################################################
@@ -355,7 +325,7 @@ defmodule MscmpSystDb.Impl.Migrations do
   #
 
   @spec apply_outstanding_migrations(String.t(), Keyword.t(), Keyword.t()) ::
-          {:error, MscmpSystError.t()} | {:ok, list}
+          {:error, term()} | {:ok, list}
   def apply_outstanding_migrations(datastore_type, migration_bindings, opts) do
     available_migrations =
       [opts[:migrations_root_dir], datastore_type]
@@ -385,17 +355,7 @@ defmodule MscmpSystDb.Impl.Migrations do
 
     {:ok, Enum.reverse(migrations_result.applied_migrations)}
   rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :database_error,
-          message: "Failure retrieving datastore version.",
-          cause: error
-        }
-      }
+    error -> {:error, {:migration_apply, error}}
   end
 
   defp maybe_apply_migration(candidate_migration_filename, migration_params) do
@@ -475,10 +435,7 @@ defmodule MscmpSystDb.Impl.Migrations do
         }
 
       error ->
-        raise MscmpSystError,
-          code: :file_error,
-          message: "Failed to parse migration version information from #{filename}",
-          cause: error
+        raise "Failed to parse migration version information from #{filename}"
     end
   end
 end

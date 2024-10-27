@@ -154,7 +154,7 @@ defmodule MssubMcp.Impl.Tenant do
     do: record_params
 
   defp resolve_internal_name(record_params),
-    do: Map.put(record_params, :internal_name, MscmpSystUtils.get_random_string(9, :b32c))
+    do: Map.put(record_params, :internal_name, Msutils.String.get_random_string(9, :b32c))
 
   defp parse_bootstrap_result({:ok, result}) do
     %{

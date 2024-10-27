@@ -23,19 +23,19 @@ defmodule MssubMcpTest do
     assert mcp_enums_service != nil
     assert mcp_settings_service != nil
 
-    assert MscmpSystEnums.get_enums_service() == nil
-    assert MscmpSystSettings.get_settings_service() == nil
+    assert MscmpSystEnums.get_service() == nil
+    assert MscmpSystSettings.get_service() == nil
 
-    assert MssubMcp.process_operation(&MscmpSystEnums.get_enums_service/0) == mcp_enums_service
+    assert MssubMcp.process_operation(&MscmpSystEnums.get_service/0) == mcp_enums_service
 
-    assert MssubMcp.process_operation(&MscmpSystSettings.get_settings_service/0) ==
+    assert MssubMcp.process_operation(&MscmpSystSettings.get_service
              mcp_settings_service
 
     assert {:ok, _owner_id} =
              MssubMcp.process_operation(fn -> MscmpSystInstance.get_owner_id_by_name("owner1") end)
 
-    assert MscmpSystEnums.get_enums_service() == nil
-    assert MscmpSystSettings.get_settings_service() == nil
+    assert MscmpSystEnums.get_service() == nil
+    assert MscmpSystSettings.get_service() == nil
   end
 
   test "Can start and stop MCP Service Context" do
@@ -45,17 +45,17 @@ defmodule MssubMcpTest do
     assert mcp_enums_service != nil
     assert mcp_settings_service != nil
 
-    assert MscmpSystEnums.get_enums_service() == nil
-    assert MscmpSystSettings.get_settings_service() == nil
+    assert MscmpSystEnums.get_service() == nil
+    assert MscmpSystSettings.get_service() == nil
 
     assert {datastore_context, nil, nil} = MssubMcp.start_mcp_service_context()
 
-    assert MscmpSystEnums.get_enums_service() == @mcp_enums_service_name
-    assert MscmpSystSettings.get_settings_service() == @mcp_settings_service_name
+    assert MscmpSystEnums.get_service() == @mcp_enums_service_name
+    assert MscmpSystSettings.get_service() == @mcp_settings_service_name
 
     assert :ok = MssubMcp.stop_mcp_service_context({datastore_context, nil, nil})
 
-    assert MscmpSystEnums.get_enums_service() == nil
-    assert MscmpSystSettings.get_settings_service() == nil
+    assert MscmpSystEnums.get_service() == nil
+    assert MscmpSystSettings.get_service() == nil
   end
 end

@@ -44,7 +44,7 @@ defmodule MssubMcp.Runtime.Options do
   @spec get_datastore_contexts(map(), Keyword.t()) :: [MscmpSystDb.Types.DatastoreContext.t()]
   def get_datastore_contexts(%{} = startup_options, opts) do
     opts =
-      MscmpSystUtils.resolve_options(opts,
+      Msutils.String.resolve_options(opts,
         owner_name: @mcp_db_owner_role,
         app_access_role_name: @mcp_db_app_access_role
       )

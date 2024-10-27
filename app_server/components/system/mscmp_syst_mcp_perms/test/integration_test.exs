@@ -171,7 +171,7 @@ defmodule IntegrationTest do
     assert %Msdata.SystPermRoles{internal_name: "global_login"} =
              Enum.find(perm_roles, &(&1.internal_name == "global_login"))
 
-    assert {:ok, perm_roles} = MscmpSystPerms.list_perm_grants(selector, include_perms: true)
+    assert {:ok, perm_roles} = MscmpSystPerms.list_perm_grants(selector, preload_perms: true)
 
     assert 2 == length(perm_roles)
 

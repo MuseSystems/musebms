@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule DoctestsTest do
+  @moduledoc false
+
   use InteractionTestCase, async: true
 
   @moduletag :doctest

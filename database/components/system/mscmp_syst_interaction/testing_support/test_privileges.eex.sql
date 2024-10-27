@@ -29,3 +29,5 @@ GRANT INSERT, SELECT, DELETE ON TABLE ms_syst.syst_interaction_actions TO <%= ms
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_interaction_actions() TO <%= ms_appusr %>;
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_interaction_actions() TO <%= ms_appusr %>;
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_interaction_actions() TO <%= ms_appusr %>;
+
+GRANT EXECUTE ON FUNCTION ms_syst.get_interaction_context_perms( uuid, text ) TO <%= ms_appusr %>;

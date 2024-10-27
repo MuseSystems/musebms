@@ -8,7 +8,7 @@ The only public API provided by this module are the selector structs which are
 used to identify the user context of various Permission related actions.  The
 currently defined structs are:
 
-  * `t:MscmpSystMcpPerms.Types.AccessAccountPermsSelector/0`
+  * `t:MscmpSystMcpPerms.Types.AccessAccountPermsSelector.t/0`
 
 These structs implement the `MscmpSystPerms.Protocol` and are usable via the
 Permissions Protocol API at `MscmpSystPerms`.

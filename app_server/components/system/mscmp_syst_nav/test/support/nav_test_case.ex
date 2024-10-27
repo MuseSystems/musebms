@@ -21,7 +21,7 @@ defmodule NavTestCase do
         MscmpSystDb.put_datastore_context(
           {:via, Registry, {MscmpSystNav.TestRegistry, TestSupport.get_datastore_context_name()}}
         ),
-      enums_service: MscmpSystEnums.put_enums_service(TestSupport.get_enums_service_name())
+      enums_service: MscmpSystEnums.put_service(TestSupport.get_enums_service_name())
     ]
   end
 end

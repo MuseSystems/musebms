@@ -50,24 +50,24 @@ BEGIN
           "user_maintainable": false,
           "syst_description": "A testing Interaction Context for Categorical Testing",
           "user_description": null,
-          "state": [
+          "fields": [
             {
-              "internal_name": "state_field_11",
+              "internal_name": "field_11",
               "perm_id": null,
               "interaction_category_id": null
             },
             {
-              "internal_name": "state_field_12",
+              "internal_name": "field_12",
               "perm_id": null,
               "interaction_category_id": null
             },
             {
-              "internal_name": "state_field_13",
-              "perm_id": "perm_03",
+              "internal_name": "field_13",
+              "perm_id": "perm_3",
               "interaction_category_id": null
             },
             {
-              "internal_name": "state_field_14",
+              "internal_name": "field_14",
               "perm_id": null,
               "interaction_category_id": "cat_02"
             }
@@ -85,7 +85,7 @@ BEGIN
             },
             {
               "internal_name": "action_13",
-              "perm_id": "perm_03",
+              "perm_id": "perm_3",
               "interaction_category_id": null
             },
             {
@@ -104,24 +104,24 @@ BEGIN
           "user_maintainable": false,
           "syst_description": "A testing Interaction Context for Perm Testing",
           "user_description": null,
-          "state": [
+          "fields": [
             {
-              "internal_name": "state_field_21",
+              "internal_name": "field_21",
               "perm_id": null,
               "interaction_category_id": null
             },
             {
-              "internal_name": "state_field_22",
+              "internal_name": "field_22",
               "perm_id": null,
               "interaction_category_id": null
             },
             {
-              "internal_name": "state_field_23",
-              "perm_id": "perm_03",
+              "internal_name": "field_23",
+              "perm_id": "perm_3",
               "interaction_category_id": null
             },
             {
-              "internal_name": "state_field_24",
+              "internal_name": "field_24",
               "perm_id": null,
               "interaction_category_id": "cat_02"
             }
@@ -139,7 +139,7 @@ BEGIN
             },
             {
               "internal_name": "action_23",
-              "perm_id": "perm_03",
+              "perm_id": "perm_3",
               "interaction_category_id": null
             },
             {
@@ -148,6 +148,7 @@ BEGIN
               "interaction_category_id": "cat_02"
             }
           ]
+
         }
       ]
     }
@@ -184,7 +185,7 @@ BEGIN
 
         DECLARE
             var_context_id uuid;
-            var_state      jsonb;
+            var_field      jsonb;
             var_action     jsonb;
 
         BEGIN
@@ -213,24 +214,24 @@ BEGIN
                 , var_context ->> 'user_description' )
             RETURNING id INTO var_context_id;
 
-            << states_loop >>
-            FOR var_state IN
-                SELECT q FROM jsonb_array_elements( var_context -> 'states' ) q
+            << fields_loop >>
+            FOR var_field IN
+                SELECT q FROM jsonb_array_elements( var_context -> 'fields' ) q
             LOOP
 
                 INSERT INTO ms_syst_data.syst_interaction_fields
                     (interaction_context_id, internal_name, perm_id, interaction_category_id)
                 VALUES
                     ( var_context_id
-                    , var_state ->> 'internal_name'
+                    , var_field ->> 'internal_name'
                     , ( SELECT id
                         FROM ms_syst_data.syst_perms
-                        WHERE internal_name = var_state ->> 'perm_id' )
+                        WHERE internal_name = var_field ->> 'perm_id' )
                     , ( SELECT id
                         FROM ms_syst_data.syst_interaction_categories
-                        WHERE internal_name = var_state ->> 'interaction_category_id' ));
+                        WHERE internal_name = var_field ->> 'interaction_category_id' ));
 
-            END LOOP states_loop;
+            END LOOP fields_loop;
 
             << actions_loop >>
             FOR var_action IN

@@ -9,7 +9,7 @@ defmodule MsappMcpWeb.MixProject do
       config_path: "../../config/config.exs",
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
-      elixir: "~> 1.15",
+      elixir: "~> 1.17",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
@@ -18,7 +18,7 @@ defmodule MsappMcpWeb.MixProject do
       docs: [
         output: "../../../../../documentation/technical/app_server/msapp_mcp_web",
         deps: [],
-        groups_for_functions: [],
+        groups_for_docs: [],
         nest_modules_by_prefix: [],
         groups_for_modules: []
       ]
@@ -59,7 +59,7 @@ defmodule MsappMcpWeb.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:ex_doc, "~> 0.20", only: :dev, runtime: false},
+      {:ex_doc, "~> 0.31", only: :dev, runtime: false},
 
       # Muse Systems Business Management System Dependencies
       {:msapp_mcp, in_umbrella: true},

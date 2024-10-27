@@ -19,9 +19,9 @@ defmodule Msplatform.MixProject do
   @deps [
     # Third Party Dependencies
     {:phoenix_live_view, "~> 0.19"},
-    {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
-    {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
-    {:ex_doc, "~> 0.20", only: :dev, runtime: false}
+    {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+    {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
+    {:ex_doc, "~> 0.31", only: :dev, runtime: false}
   ]
 
   @dialyzer_opts [
@@ -42,7 +42,7 @@ defmodule Msplatform.MixProject do
       name: "Msplatform",
       apps_path: @apps_path,
       version: @version,
-      elixir: "~> 1.15",
+      elixir: "~> 1.17",
       deps: @deps,
       aliases: @aliases,
       start_permanent: in_production,
@@ -50,7 +50,7 @@ defmodule Msplatform.MixProject do
       docs: [
         output: "../../../documentation/technical/app_server/msplatform",
         deps: [],
-        groups_for_functions: [],
+        groups_for_docs: [],
         nest_modules_by_prefix: [],
         groups_for_modules: []
       ],

@@ -39,7 +39,7 @@ defmodule MsappMcp.Impl.Msform.AuthPasswordReset.Actions do
       current_data = Map.from_struct(original_data)
 
       opts =
-        MscmpSystUtils.resolve_options(opts,
+        Msutils.String.resolve_options(opts,
           original_data: original_data,
           current_data: current_data
         )

@@ -43,7 +43,7 @@ defmodule MscmpSystForms.Impl.Forms do
         opts
       ) do
     opts =
-      MscmpSystUtils.resolve_options(opts,
+      Msutils.String.resolve_options(opts,
         module: module,
         original_data: struct(module),
         current_data: struct(module) |> Map.from_struct(),
@@ -56,7 +56,7 @@ defmodule MscmpSystForms.Impl.Forms do
     component_configs = get_render_configs(module, feature, mode, state, user_perms)
 
     base_render_config = %{
-      msrd_instance_id: MscmpSystUtils.get_random_string(16, :mixed_alphanum),
+      msrd_instance_id: Msutils.String.get_random_string(16, :mixed_alphanum),
       msrd_session_name: session_name,
       msrd_form_module: module,
       msrd_original_data: opts[:original_data],
@@ -354,7 +354,7 @@ defmodule MscmpSystForms.Impl.Forms do
   defp resolve_display_data(validator, user_perms, opts)
        when validator in [:save, :post] do
     opts =
-      MscmpSystUtils.resolve_options(opts,
+      Msutils.String.resolve_options(opts,
         original_data: nil,
         current_data: nil,
         module: nil
@@ -399,7 +399,7 @@ defmodule MscmpSystForms.Impl.Forms do
   end
 
   defp resolve_display_data(%Ecto.Changeset{} = changeset, user_perms, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, changeset_action: :validate)
+    opts = Msutils.String.resolve_options(opts, changeset_action: :validate)
 
     changeset
     |> Map.put(:action, opts[:changeset_action])

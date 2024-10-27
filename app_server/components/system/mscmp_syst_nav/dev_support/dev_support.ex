@@ -42,7 +42,7 @@ defmodule DevSupport do
 
 
     _ = MscmpSystDb.put_datastore_context(@datastore_context_name)
-    _ = MscmpSystEnums.put_enums_service(@enums_service_name)
+    _ = MscmpSystEnums.put_service(@enums_service_name)
 
     :ok
   end

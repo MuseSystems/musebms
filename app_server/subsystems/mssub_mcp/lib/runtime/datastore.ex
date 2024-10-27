@@ -43,7 +43,7 @@ defmodule MssubMcp.Runtime.Datastore do
   @spec datastore_update(Keyword.t()) :: :ok | {:error, MscmpSystError.t() | any()}
   def datastore_update(opts) do
     opts =
-      MscmpSystUtils.resolve_options(opts,
+      Msutils.String.resolve_options(opts,
         datastore_type: @default_datastore_type,
         owner_name: @default_owner_name,
         app_access_role_name: @default_app_access_role_name,

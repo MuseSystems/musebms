@@ -31,6 +31,7 @@ defmodule MscmpSystDb.MixProject do
     # Muse Systems Business Management System Components
     {:mscmp_syst_error, path: "../mscmp_syst_error"},
     {:mscmp_syst_utils_string, path: "../mscmp_syst_utils_string"},
+    {:mscmp_syst_utils_guards, path: "../mscmp_syst_utils_guards"},
     {:mscmp_syst_network, path: "../mscmp_syst_network"}
   ]
 
@@ -62,6 +63,8 @@ defmodule MscmpSystDb.MixProject do
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
           mscmp_syst_utils_string:
             "../../../../documentation/technical/app_server/mscmp_syst_utils_string",
+          mscmp_syst_utils_guards:
+            "../../../../documentation/technical/app_server/mscmp_syst_utils_guards",
           mscmp_syst_network: "../../../../documentation/technical/app_server/mscmp_syst_network"
         ],
         nest_modules_by_prefix: [MscmpSystDb.DbTypes, MscmpSystDb.Types],
@@ -92,7 +95,8 @@ defmodule MscmpSystDb.MixProject do
           ],
           "Datastore Service": [MscmpSystDb.Datastore],
           "Datastore Context Service": [MscmpSystDb.DatastoreContext],
-          Schema: [MscmpSystDb.Schema]
+          Schema: [MscmpSystDb.Schema],
+          Exceptions: [Mserror.DbError]
         ]
       ]
     ]

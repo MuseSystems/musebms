@@ -1081,7 +1081,7 @@ defmodule MscmpSystForms do
               Keyword.t()
             ) :: Types.socket_or_assigns()
       def update_display_data(socket_or_assigns, display_data, opts \\ []) do
-        opts = MscmpSystUtils.resolve_options(opts, module: __MODULE__)
+        opts = Msutils.String.resolve_options(opts, module: __MODULE__)
         MscmpSystForms.update_display_data(socket_or_assigns, display_data, opts)
       end
 

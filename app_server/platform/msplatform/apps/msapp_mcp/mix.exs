@@ -21,9 +21,9 @@ defmodule MsappMcp.MixProject do
     {:phoenix_pubsub, "~> 2.1"},
     {:swoosh, "~> 1.3"},
     {:finch, "~> 0.13"},
-    {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
-    {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
-    {:ex_doc, "~> 0.20", only: :dev, runtime: false},
+    {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+    {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
+    {:ex_doc, "~> 0.31", only: :dev, runtime: false},
 
     # Muse Systems Business Management System Components
     {:mscmp_syst_error, path: "../../../../components/system/mscmp_syst_error", override: true},
@@ -55,14 +55,14 @@ defmodule MsappMcp.MixProject do
       config_path: "../../config/config.exs",
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
-      elixir: "~> 1.15",
+      elixir: "~> 1.17",
       deps: @deps,
       start_permanent: in_production,
       dialyzer: @dialyzer_opts,
       docs: [
         output: "../../../../../documentation/technical/app_server/msapp_mcp",
         deps: [],
-        groups_for_functions: [],
+        groups_for_docs: [],
         nest_modules_by_prefix: [],
         groups_for_modules: []
       ],

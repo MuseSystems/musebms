@@ -46,18 +46,18 @@ defmodule MssubMcp.Macros do
   defmacro mcp_opfn(func_call, do: block) do
     quote do
       def unquote(func_call) do
-        starting_enums_service = MscmpSystEnums.put_enums_service(@mcp_enums_service_name)
+        starting_enums_service = MscmpSystEnums.put_service(@mcp_enums_service_name)
 
         starting_settings_service =
-          MscmpSystSettings.put_settings_service(@mcp_settings_service_name)
+          MscmpSystSettings.put_service(@mcp_settings_service_name)
 
         starting_datastore_context = MscmpSystDb.put_datastore_context(@mcp_db_app_access_context)
 
         result = unquote(block)
 
         _ = MscmpSystDb.put_datastore_context(starting_datastore_context)
-        _ = MscmpSystSettings.put_settings_service(starting_settings_service)
-        _ = MscmpSystEnums.put_enums_service(starting_enums_service)
+        _ = MscmpSystSettings.put_service(starting_settings_service)
+        _ = MscmpSystEnums.put_service(starting_enums_service)
 
         result
       end

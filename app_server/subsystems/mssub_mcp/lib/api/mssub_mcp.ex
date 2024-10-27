@@ -47,7 +47,7 @@ defmodule MssubMcp do
 
   ## Examples
 
-      iex> MssubMcp.get_setting_value(
+      iex> MssubMcp.get_value(
       ...>   "get_example_setting",
       ...>   :setting_decimal_range)
       %MscmpSystDb.DbTypes.DecimalRange{
@@ -57,8 +57,8 @@ defmodule MssubMcp do
         upper_inclusive: false
       }
   """
-  @spec get_setting_value(SettingTypes.setting_name(), SettingTypes.setting_types()) :: any()
-  defdelegate get_setting_value(setting_name, setting_type), to: Runtime.Settings
+  @spec get_value(SettingTypes.setting_name(), SettingTypes.setting_types()) :: any()
+  defdelegate get_value(setting_name, setting_type), to: Runtime.Settings
 
   @doc section: :settings_data
   @doc """
@@ -73,10 +73,10 @@ defmodule MssubMcp do
 
   ## Examples
 
-      iex> MssubMcp.get_setting_values("get_example_setting")
+      iex> MssubMcp.get_values("get_example_setting")
   """
-  @spec get_setting_values(SettingTypes.setting_name()) :: Msdata.SystSettings.t()
-  defdelegate get_setting_values(setting_name), to: Runtime.Settings
+  @spec get_values(SettingTypes.setting_name()) :: Msdata.SystSettings.t()
+  defdelegate get_values(setting_name), to: Runtime.Settings
 
   @doc section: :settings_data
   @doc """
@@ -87,10 +87,10 @@ defmodule MssubMcp do
 
   ## Examples
 
-      iex> MssubMcp.list_all_settings()
+      iex> MssubMcp.list_all()
   """
-  @spec list_all_settings() :: list(Msdata.SystSettings)
-  defdelegate list_all_settings(), to: Runtime.Settings
+  @spec list_all() :: list(Msdata.SystSettings)
+  defdelegate list_all(), to: Runtime.Settings
 
   @doc section: :settings_data
   @doc """
@@ -109,21 +109,21 @@ defmodule MssubMcp do
 
   ## Examples
 
-      iex> MssubMcp.set_setting_value(
+      iex> MssubMcp.set_value(
       ...>   "set_example_setting",
       ...>   :setting_decimal,
       ...>   Decimal.new("1029.3847"))
       :ok
   """
-  @spec set_setting_value(SettingTypes.setting_name(), SettingTypes.setting_types(), any()) ::
+  @spec set_value(SettingTypes.setting_name(), SettingTypes.setting_types(), any()) ::
           :ok | {:error, MscmpSystError.t()}
-  defdelegate set_setting_value(setting_name, setting_type, setting_value), to: Runtime.Settings
+  defdelegate set_value(setting_name, setting_type, setting_value), to: Runtime.Settings
 
   @doc section: :settings_data
   @doc """
   Sets one or more of the available setting types for the named setting.
 
-  This function is similar to `set_setting_values/4`, except that multiple
+  This function is similar to `set_values/4`, except that multiple
   setting types can have their values set at the same time.  In addition to the
   typed setting values, the setting display name and/or user description values
   may also be set.
@@ -149,14 +149,14 @@ defmodule MssubMcp do
       ...>        upper_inclusive: true
       ...>      }
       ...> }
-      iex> MssubMcp.set_setting_values(
+      iex> MssubMcp.set_values(
       ...>   "set_example_setting",
       ...>   update_values)
       :ok
   """
-  @spec set_setting_values(SettingTypes.setting_name(), SettingTypes.setting_service_params()) ::
+  @spec set_values(SettingTypes.setting_name(), SettingTypes.setting_service_params()) ::
           :ok | {:error, MscmpSystError.t()}
-  defdelegate set_setting_values(setting_name, update_params), to: Runtime.Settings
+  defdelegate set_values(setting_name, update_params), to: Runtime.Settings
 
   # ==============================================================================================
   #
@@ -3623,7 +3623,7 @@ defmodule MssubMcp do
 
       * `identity_tokens` - overrides the character set used to create the
       randomly generated Account Code Identifier.  The default value is `:b32c`.
-      See the `MscmpSystUtils.get_random_string/2` documentation for the
+      See the `Msutils.String.get_random_string/2` documentation for the
       `tokens` parameter which receives this option for more information
       regarding valid values for this setting.
   """
@@ -3783,20 +3783,20 @@ defmodule MssubMcp do
   The assumption is that a Password Credential already exists and that only the
   password itself is being changed from an old value to a new value.
 
-  This function ensures that the new password meets all applicable Password 
+  This function ensures that the new password meets all applicable Password
   Rules prior to completing the change.  This function will not allow you to set
   the password to an invalid value.
 
-  Finally, in the case of a user initiated password change, it is traditional 
-  that the user has to re-authenticate or provide their current password to 
-  verify they are, in fact, the person initiating the change.  This function 
-  does not try to achieve this goal.  The scope of this function assumes that 
-  any such confirmation of identity has been completed satisfactorily elsewhere. 
+  Finally, in the case of a user initiated password change, it is traditional
+  that the user has to re-authenticate or provide their current password to
+  verify they are, in fact, the person initiating the change.  This function
+  does not try to achieve this goal.  The scope of this function assumes that
+  any such confirmation of identity has been completed satisfactorily elsewhere.
 
   On successful Password Credential reset this function will return `:ok`.  If
-  the new credential fails to meet the Password Rule criteria that applies to 
-  it, the function will return a failure tuple of type 
-  `t:MscmpSystAuthn.Types.credential_set_failures/0`.  All other return 
+  the new credential fails to meet the Password Rule criteria that applies to
+  it, the function will return a failure tuple of type
+  `t:MscmpSystAuthn.Types.credential_set_failures/0`.  All other return
   conditions are errors and result in an error tuple.
 
   ## Parameters
@@ -3863,7 +3863,7 @@ defmodule MssubMcp do
 
       * `identity_tokens` - overrides the default character set to use in the
       generation of the Validation Token Identity identifier.  The default value
-      is `:mixed_alphanum`.  See the `MscmpSystUtils.get_random_string/2`
+      is `:mixed_alphanum`.  See the `Msutils.String.get_random_string/2`
       documentation for the `tokens` parameter which receives this option for
       more information regarding valid values for this setting.
 
@@ -3873,7 +3873,7 @@ defmodule MssubMcp do
 
       * `credential_tokens` - overrides the default character set to use in the
       generation of the Validation Token Credential.  The default value is
-      `:mixed_alphanum`.  See the `MscmpSystUtils.get_random_string/2`
+      `:mixed_alphanum`.  See the `Msutils.String.get_random_string/2`
       documentation for the `tokens` parameter which receives this option for
       more information regarding valid values for this setting.
 
@@ -3987,7 +3987,7 @@ defmodule MssubMcp do
 
       * `identity_tokens` - overrides the default character set to use in the
       generation of the Recovery Token Identity identifier.  The default value
-      is `:mixed_alphanum`.  See the `MscmpSystUtils.get_random_string/2`
+      is `:mixed_alphanum`.  See the `Msutils.String.get_random_string/2`
       documentation for the `tokens` parameter which receives this option for
       more information regarding valid values for this setting.
 
@@ -3997,7 +3997,7 @@ defmodule MssubMcp do
 
       * `credential_tokens` - overrides the default character set to use in the
       generation of the Recovery Token Credential.  The default value is
-      `:mixed_alphanum`.  See the `MscmpSystUtils.get_random_string/2`
+      `:mixed_alphanum`.  See the `Msutils.String.get_random_string/2`
       documentation for the `tokens` parameter which receives this option for
       more information regarding valid values for this setting.
 
@@ -4067,7 +4067,7 @@ defmodule MssubMcp do
 
       * `identity_tokens` - overrides the default character set to use in the
       generation of the API Token Identity identifier.  The default value is
-      `:mixed_alphanum`.  See the `MscmpSystUtils.get_random_string/2`
+      `:mixed_alphanum`.  See the `Msutils.String.get_random_string/2`
       documentation for the `tokens` parameter which receives this option for
       more information regarding valid values for this setting.
 
@@ -4083,7 +4083,7 @@ defmodule MssubMcp do
 
       * `credential_tokens` - overrides the default character set to use in the
       generation of the API Token Credential.  The default value is
-      `:mixed_alphanum`.  See the `MscmpSystUtils.get_random_string/2`
+      `:mixed_alphanum`.  See the `Msutils.String.get_random_string/2`
       documentation for the `tokens` parameter which receives this option for
       more information regarding valid values for this setting.
 
@@ -4558,7 +4558,7 @@ defmodule MssubMcp do
 
       * `expires_after` - the number of seconds for which the session will be
       considered valid.  The default value for this setting via this API is the
-      current value of the MCP integer setting `mssub_mcp_session_expiration`; 
+      current value of the MCP integer setting `mssub_mcp_session_expiration`;
       by default that value is 3,600 seconds (1 hour).
 
   ## Examples
@@ -4595,7 +4595,7 @@ defmodule MssubMcp do
 
       * `expires_after` - the number of seconds for which the session will be
       considered valid.  The default value for this setting via this API is the
-      current value of the MCP integer setting `mssub_mcp_session_expiration`; 
+      current value of the MCP integer setting `mssub_mcp_session_expiration`;
       by default that value is 3,600 seconds (1 hour).
 
   ## Examples
@@ -4638,7 +4638,7 @@ defmodule MssubMcp do
 
       * `expires_after` - the number of seconds for which the session will be
       considered valid.  The default value for this setting via this API is the
-      current value of the MCP integer setting `mssub_mcp_session_expiration`; 
+      current value of the MCP integer setting `mssub_mcp_session_expiration`;
       by default that value is 3,600 seconds (1 hour).
 
   ## Examples
@@ -4683,7 +4683,7 @@ defmodule MssubMcp do
 
       * `expires_after` - the number of seconds for which the session will be
       considered valid.  The default value for this setting via this API is the
-      current value of the MCP integer setting `mssub_mcp_session_expiration`; 
+      current value of the MCP integer setting `mssub_mcp_session_expiration`;
       by default that value is 3,600 seconds (1 hour).
 
   ## Examples
@@ -4861,7 +4861,7 @@ defmodule MssubMcp do
     function may extend the available options as appropriate to the
     implementation.
 
-      * `include_perms` - a boolean option which, when set `true`, will preload
+      * `preload_perms` - a boolean option which, when set `true`, will preload
       the `Msdata.SystPermRoleGrants` `perm` data.  The default value for this
       option is `false`.
   """

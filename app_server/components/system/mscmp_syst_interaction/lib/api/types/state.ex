@@ -21,12 +21,6 @@ defmodule MscmpSystInteraction.Types.State do
 
   alias MscmpSystInteraction.Types
 
-  defstruct [
-    :change_agent,
-    :mode,
-    :orig_data
-  ]
-
   @typedoc """
   The typing information defining the `MscmpSystInteraction.Types.State` struct.
 
@@ -50,8 +44,22 @@ defmodule MscmpSystInteraction.Types.State do
   """
 
   @type t() :: %__MODULE__{
-          change_agent: pid(),
-          mode: Types.state_modes(),
-          orig_data: struct()
+          context_name: Types.context_name(),
+          state_mode: Types.state_modes(),
+          base_id: Ecto.UUID.t(),
+          change_agent_name: String.t() | nil,
+          change_agent_id: Ecto.UUID.t() | nil,
+          change_agent_pid: pid() | nil,
+          original_data: struct() | nil
         }
+
+  defstruct [
+    :context_name,
+    :state_mode,
+    :base_id,
+    :change_agent_name,
+    :change_agent_id,
+    :change_agent_pid,
+    :original_data
+  ]
 end

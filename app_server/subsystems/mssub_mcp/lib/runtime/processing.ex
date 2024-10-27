@@ -26,8 +26,8 @@ defmodule MssubMcp.Runtime.Processing do
           {atom() | pid() | nil, MscmpSystEnums.Types.service_name() | nil,
            MscmpSystSettings.Types.service_name() | nil}
   def start_mcp_service_context do
-    start_enums_service = MscmpSystEnums.put_enums_service(@mcp_enums_service_name)
-    start_settings_service = MscmpSystSettings.put_settings_service(@mcp_settings_service_name)
+    start_enums_service = MscmpSystEnums.put_service(@mcp_enums_service_name)
+    start_settings_service = MscmpSystSettings.put_service(@mcp_settings_service_name)
     start_datastore_context = MscmpSystDb.put_datastore_context(@mcp_db_app_access_context)
 
     {start_datastore_context, start_enums_service, start_settings_service}
@@ -41,8 +41,8 @@ defmodule MssubMcp.Runtime.Processing do
         {datastore_context_name, enums_service_name, settings_service_name}
       ) do
     _ = MscmpSystDb.put_datastore_context(datastore_context_name)
-    _ = MscmpSystSettings.put_settings_service(settings_service_name)
-    _ = MscmpSystEnums.put_enums_service(enums_service_name)
+    _ = MscmpSystSettings.put_service(settings_service_name)
+    _ = MscmpSystEnums.put_service(enums_service_name)
     :ok
   end
 end

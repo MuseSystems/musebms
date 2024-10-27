@@ -18,13 +18,14 @@ defmodule MscmpSystMcpPerms.MixProject do
 
   @deps [
     # Third Party Dependencies
-    {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
-    {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
-    {:ex_doc, "~> 0.20", only: :dev, runtime: false},
+    {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+    {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
+    {:ex_doc, "~> 0.31", only: :dev, runtime: false},
+    {:nimble_options, "~> 1.0"},
 
     # Muse Systems Business Management System Components
     {:mscmp_syst_error, path: "../mscmp_syst_error"},
-    {:mscmp_syst_utils, path: "../mscmp_syst_utils"},
+    {:mscmp_syst_utils_string, path: "../mscmp_syst_utils_string"},
     {:mscmp_syst_db, path: "../mscmp_syst_db"},
     {:mscmp_syst_authn, path: "../mscmp_syst_authn"},
     {:mscmp_syst_perms, path: "../mscmp_syst_perms"}
@@ -45,7 +46,7 @@ defmodule MscmpSystMcpPerms.MixProject do
     [
       app: @name,
       version: @version,
-      elixir: "~> 1.15",
+      elixir: "~> 1.17",
       deps: @deps,
       build_embedded: in_production,
       start_permanent: in_production,
@@ -57,12 +58,13 @@ defmodule MscmpSystMcpPerms.MixProject do
         output: "../../../../documentation/technical/app_server/mscmp_syst_mcp_perms",
         deps: [
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
-          mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils",
+          mscmp_syst_utils_string:
+            "../../../../documentation/technical/app_server/mscmp_syst_utils_string",
           mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db",
           mscmp_syst_authn: "../../../../documentation/technical/app_server/mscmp_syst_authn",
           mscmp_syst_perms: "../../../../documentation/technical/app_server/mscmp_syst_perms"
         ],
-        groups_for_functions: [],
+        groups_for_docs: [],
         nest_modules_by_prefix: [Msdata],
         groups_for_modules: [
           API: [MscmpSystMcpPerms],

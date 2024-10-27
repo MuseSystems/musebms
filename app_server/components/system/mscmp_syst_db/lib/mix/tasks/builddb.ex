@@ -183,10 +183,11 @@ defmodule Mix.Tasks.Builddb do
       :ok
     else
       error ->
-        raise MscmpSystError,
-          code: :file_error,
-          message: "Failure building migrations.",
-          cause: error
+        raise Mserror.DbError.new(
+                kind: :migration_build,
+                message: "Failure building migrations.",
+                cause: error
+              )
     end
   end
 
@@ -203,12 +204,7 @@ defmodule Mix.Tasks.Builddb do
         {:ok, resolved_opts}
 
       invalid_type ->
-        {:error,
-         %MscmpSystError{
-           code: :invalid_parameter,
-           message: "The '--type' parameter was missing or invalid but is required.",
-           cause: invalid_type
-         }}
+        {:error, {:invalid_parameter, "The '--type' parameter was missing or invalid but is required."}}
     end
   end
 end

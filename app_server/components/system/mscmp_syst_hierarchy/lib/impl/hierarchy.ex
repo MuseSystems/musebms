@@ -149,8 +149,7 @@ defmodule MscmpSystHierarchy.Impl.Hierarchy do
 
   @spec get_hierarchy_state_default_id(Types.hierarchy_state_functional_types() | nil) ::
           Types.hierarchy_state_id()
-  def get_hierarchy_state_default_id(functional_type)
-      when is_atom(functional_type) or is_nil(functional_type) do
+  def get_hierarchy_state_default_id(functional_type) when is_atom(functional_type) do
     %Msdata.SystEnumItems{id: state_id} = get_hierarchy_state_default(functional_type)
     state_id
   end

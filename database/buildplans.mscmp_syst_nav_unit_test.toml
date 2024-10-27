@@ -29,14 +29,14 @@ load_files = [
 
 ]
 
-#[[build_plan]]
-#release              = 1
-#version              = 1
-#update               = 0
-#sponsor              = 821
-#sponsor_modification = 0
-#load_files = [
-#    "components/system/mscmp_syst_enums/testing_support/test_privileges.eex.sql",
-#    "components/system/mscmp_syst_nav/testing_support/test_privileges.eex.sql",
-#    "components/system/mscmp_syst_nav/testing_support/test_data_unit_test.eex.sql",
-#]
+[[build_plan]]
+release              = 1
+version              = 1
+update               = 0
+sponsor              = 821
+sponsor_modification = 0
+load_files = [
+    "components/system/mscmp_syst_enums/testing_support/test_privileges.eex.sql",
+    "components/system/mscmp_syst_nav/testing_support/test_privileges.eex.sql",
+    "components/system/mscmp_syst_nav/testing_support/test_data_unit_test.eex.sql",
+]

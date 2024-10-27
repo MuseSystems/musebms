@@ -19,6 +19,12 @@ defmodule MscmpSystMcpPerms.Impl.AccessAccountPermRole do
 
   require Logger
 
+  ##############################################################################
+  #
+  # get_effective_perm_grants
+  #
+  #
+
   @spec get_effective_perm_grants(Types.AccessAccountPermsSelector.t(), Keyword.t()) ::
           {:ok, MscmpSystPerms.Types.perm_grants()} | {:error, MscmpSystError.t()}
   def get_effective_perm_grants(selector, opts) do
@@ -81,8 +87,7 @@ defmodule MscmpSystMcpPerms.Impl.AccessAccountPermRole do
        }}
   end
 
-  defp maybe_filter_by_permissions(query, nil), do: query
-  defp maybe_filter_by_permissions(query, []), do: query
+  defp maybe_filter_by_permissions(query, :all), do: query
 
   defp maybe_filter_by_permissions(query, permission) when is_binary(permission),
     do: where(query, [perms: p], p.internal_name == ^permission)
@@ -90,11 +95,15 @@ defmodule MscmpSystMcpPerms.Impl.AccessAccountPermRole do
   defp maybe_filter_by_permissions(query, [_ | _] = permissions),
     do: where(query, [perms: p], p.internal_name in ^permissions)
 
+  ##############################################################################
+  #
+  # list_perm_grants
+  #
+  #
+
   @spec list_perm_grants(Types.AccessAccountPermsSelector.t(), Keyword.t()) ::
           {:ok, [Msdata.SystPermRoles.t()]} | {:error, MscmpSystError.t()}
   def list_perm_grants(selector, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, include_perms: false)
-
     from(pr in Msdata.SystPermRoles,
       as: :perm_roles,
       join: prg in assoc(pr, :perm_role_grants),
@@ -106,7 +115,7 @@ defmodule MscmpSystMcpPerms.Impl.AccessAccountPermRole do
       select: pr,
       order_by: pr.internal_name
     )
-    |> maybe_preload_perms(opts[:include_perms])
+    |> maybe_preload_perms(opts[:preload_perms])
     |> MscmpSystDb.all()
     |> then(&{:ok, &1})
   rescue
@@ -129,6 +138,12 @@ defmodule MscmpSystMcpPerms.Impl.AccessAccountPermRole do
   end
 
   defp maybe_preload_perms(query, false), do: query
+
+  ##############################################################################
+  #
+  # list_perm_denials
+  #
+  #
 
   @spec list_perm_denials(Types.AccessAccountPermsSelector.t(), Keyword.t()) ::
           {:ok, [Msdata.SystPerms.t()] | []} | {:error, MscmpSystError.t()}
@@ -163,6 +178,12 @@ defmodule MscmpSystMcpPerms.Impl.AccessAccountPermRole do
          cause: error
        }}
   end
+
+  ##############################################################################
+  #
+  # revoke_perm_role
+  #
+  #
 
   @spec revoke_perm_role(
           Types.AccessAccountPermsSelector.t(),

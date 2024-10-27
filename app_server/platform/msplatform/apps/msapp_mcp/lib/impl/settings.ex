@@ -25,8 +25,8 @@ defmodule MsappMcp.Impl.Settings do
   @spec get_mssub_mcp_state :: Types.mssub_mcp_states()
   mcp_opfn get_mssub_mcp_state do
     "mssub_mcp_state"
-    |> MscmpSystSettings.get_setting_value(:setting_uuid)
-    |> then(&MscmpSystEnums.get_enum_item_by_id("mssub_mcp_states", &1))
+    |> MscmpSystSettings.get_value(:setting_uuid)
+    |> then(&MscmpSystEnums.get_item_by_id("mssub_mcp_states", &1))
     |> case do
       %Msdata.SystEnumItems{internal_name: "mssub_mcp_states_sysdef_bootstrapping"} ->
         :platform_bootstrapping
