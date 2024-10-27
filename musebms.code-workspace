@@ -101,10 +101,6 @@
             "path": "tools"
         },
         {
-            "name": ".devcontainer",
-            "path": ".devcontainer"
-        },
-        {
             "name": ".github",
             "path": ".github"
         },
