@@ -1,0 +1,150 @@
+{
+    "folders": [
+        {
+            "name": "database",
+            "path": "database"
+        },
+        {
+            "name": "mscmp_syst_error",
+            "path": "app_server/components/system/mscmp_syst_error"
+        },
+        {
+            "name": "mscmp_syst_utils_string",
+            "path": "app_server/components/system/mscmp_syst_utils_string"
+        },
+        {
+            "name": "mscmp_syst_utils_data",
+            "path": "app_server/components/system/mscmp_syst_utils_data"
+        },
+        {
+            "name": "mscmp_syst_utils_guards",
+            "path": "app_server/components/system/mscmp_syst_utils_guards"
+        },
+        {
+            "name": "mscmp_syst_network",
+            "path": "app_server/components/system/mscmp_syst_network"
+        },
+        {
+            "name": "mscmp_syst_limiter",
+            "path": "app_server/components/system/mscmp_syst_limiter"
+        },
+        {
+            "name": "mscmp_syst_db",
+            "path": "app_server/components/system/mscmp_syst_db"
+        },
+        {
+            "name": "mscmp_syst_options",
+            "path": "app_server/components/system/mscmp_syst_options"
+        },
+        {
+            "name": "mscmp_syst_settings",
+            "path": "app_server/components/system/mscmp_syst_settings"
+        },
+        {
+            "name": "mscmp_syst_enums",
+            "path": "app_server/components/system/mscmp_syst_enums"
+        },
+        {
+            "name": "mscmp_syst_hierarchy",
+            "path": "app_server/components/system/mscmp_syst_hierarchy"
+        },
+        {
+            "name": "mscmp_syst_nav",
+            "path": "app_server/components/system/mscmp_syst_nav"
+        },
+        {
+            "name": "mscmp_syst_instance",
+            "path": "app_server/components/system/mscmp_syst_instance"
+        },
+        {
+            "name": "mscmp_syst_authn",
+            "path": "app_server/components/system/mscmp_syst_authn"
+        },
+        {
+            "name": "mscmp_syst_perms",
+            "path": "app_server/components/system/mscmp_syst_perms"
+        },
+        {
+            "name": "mscmp_syst_mcp_perms",
+            "path": "app_server/components/system/mscmp_syst_mcp_perms"
+        },
+        {
+            "name": "mscmp_syst_interaction",
+            "path": "app_server/components/system/mscmp_syst_interaction"
+        },
+        {
+            "name": "mscmp_syst_session",
+            "path": "app_server/components/system/mscmp_syst_session"
+        },
+        {
+            "name": "mscmp_syst_forms",
+            "path": "app_server/components/system/mscmp_syst_forms"
+        },
+        {
+            "name": "mssub_mcp",
+            "path": "app_server/subsystems/mssub_mcp"
+        },
+        {
+            "name": "mssub_bms",
+            "path": "app_server/subsystems/mssub_bms"
+        },
+        {
+            "name": "msplatform",
+            "path": "app_server/platform/msplatform"
+        },
+        {
+            "name": "documentation",
+            "path": "documentation"
+        },
+        {
+            "name": "tools",
+            "path": "tools"
+        },
+        {
+            "name": ".devcontainer",
+            "path": ".devcontainer"
+        },
+        {
+            "name": ".github",
+            "path": ".github"
+        },
+        {
+            "name": "musebms",
+            "path": "."
+        }
+    ],
+    "settings": {
+        "cSpell.words": [
+            "alphanum",
+            "canonicalize",
+            "childspec",
+            "dbserver",
+            "delctx",
+            "devspt",
+            "devsupport",
+            "idctx",
+            "Msapp",
+            "mscmp",
+            "Mscmp",
+            "Msdata",
+            "msplatform",
+            "mssub",
+            "musebms",
+            "Myapp",
+            "opfn",
+            "startable",
+            "sysdef",
+            "testsupport",
+            "tstspt",
+            "tstsupport",
+            "unstarted",
+            "updctx",
+            "Wunmatched"
+        ],
+        "search.exclude": {
+            "**/documentation/technical": true
+        },
+        "git.ignoreLimitWarning": true,
+        "editor.formatOnSave": true
+    }
+}
