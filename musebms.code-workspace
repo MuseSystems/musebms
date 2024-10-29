@@ -103,10 +103,6 @@
         {
             "name": ".github",
             "path": ".github"
-        },
-        {
-            "name": "musebms",
-            "path": "."
         }
     ],
     "settings": {
