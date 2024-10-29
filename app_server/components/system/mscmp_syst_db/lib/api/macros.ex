@@ -53,7 +53,7 @@ defmodule MscmpSystDb.Macros do
     ],
     dbadmin_password: [
       type: :string,
-      default: "musesystems.publicly.known.insecure.devsupport.password",
+      default: "musesystems-insecure-publicly-known-password",
       doc: """
       A string value for the standard `ms_syst_privileged` database role account
       created via the database bootstrapping script.

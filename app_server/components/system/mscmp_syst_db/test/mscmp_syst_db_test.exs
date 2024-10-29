@@ -50,7 +50,7 @@ defmodule MscmpSystDbTest do
       db_show_sensitive: true,
       db_max_instances: 1,
       server_salt: "test",
-      dbadmin_password: "musesystems.publicly.known.insecure.devsupport.password",
+      dbadmin_password: "musesystems-insecure-publicly-known-password",
       dbadmin_pool_size: 1
     }
   }
@@ -117,7 +117,7 @@ defmodule MscmpSystDbTest do
       db_show_sensitive: true,
       db_max_instances: 1,
       server_salt: "test",
-      dbadmin_password: "musesystems.publicly.known.insecure.devsupport.password",
+      dbadmin_password: "musesystems-insecure-publicly-known-password",
       dbadmin_pool_size: 1
     }
   }
