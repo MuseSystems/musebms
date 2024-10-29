@@ -173,7 +173,10 @@ defmodule MscmpSystDbTest do
       @datastore_options_type_one
       |> Map.update(:contexts, [], &(&1 ++ @context_type_one_group_two))
 
-    assert {:ok, :ready, context_states} = MscmpSystDb.get_datastore_state(new_datastore_options)
+    assert {:ok, :ready, context_states} =
+             MscmpSystDb.get_datastore_state(new_datastore_options,
+               context_registry: MscmpSystDb.TestRegistry
+             )
 
     assert 4 = length(context_states)
 
@@ -186,13 +189,17 @@ defmodule MscmpSystDbTest do
 
     # Get datastore state after added contexts dropped
     assert {:ok, :ready, context_states} =
-             MscmpSystDb.get_datastore_state(@datastore_options_type_one)
+             MscmpSystDb.get_datastore_state(@datastore_options_type_one,
+               context_registry: MscmpSystDb.TestRegistry
+             )
 
     assert 2 = length(context_states)
 
     # Get datastore context states
     assert {:ok, context_states} =
-             MscmpSystDb.get_datastore_context_states(@datastore_options_type_one)
+             MscmpSystDb.get_datastore_context_states(@datastore_options_type_one,
+               context_registry: MscmpSystDb.TestRegistry
+             )
 
     assert 2 = length(context_states)
 
@@ -201,7 +208,8 @@ defmodule MscmpSystDbTest do
              |> Enum.reduce(true, &(&1.state == :ready and &2))
 
     # Drop the datastore
-    assert :ok = MscmpSystDb.drop_datastore(@datastore_options_type_one)
+    assert :ok =
+             MscmpSystDb.drop_datastore(@datastore_options_type_one)
   end
 
   test "Migrations & Querying" do

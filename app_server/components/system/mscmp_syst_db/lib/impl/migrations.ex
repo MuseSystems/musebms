@@ -68,17 +68,7 @@ defmodule MscmpSystDb.Impl.Migrations do
 
     {:ok, newly_built_migrations}
   rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :file_error,
-          message: "Failure building migrations.",
-          cause: error
-        }
-      }
+    error -> {:error, {:build_migration_error, error}}
   end
 
   defp maybe_clean_migrations(dest_path, true), do: clean_migrations(dest_path)
@@ -167,10 +157,7 @@ defmodule MscmpSystDb.Impl.Migrations do
         :ok
       else
         error ->
-          raise MscmpSystError,
-            code: :file_error,
-            message: "Failure creating database migrations.",
-            cause: error
+          raise "Failure creating migration '#{migration_path}': #{inspect(error)}."
       end
     after
       :ok = File.close(target)
@@ -238,27 +225,17 @@ defmodule MscmpSystDb.Impl.Migrations do
 
   @spec get_datastore_version(Keyword.t()) :: {:ok, String.t()} | {:error, term()}
   def get_datastore_version(opts) do
-    migration_table_exists? =
-      query_table_exists(
-        opts[:migrations_schema],
-        opts[:migrations_table]
-      )
-
-    if migration_table_exists? do
-      {:ok,
-       query_datastore_version(
-         opts[:migrations_schema],
-         opts[:migrations_table]
-       )}
-    else
-      {:ok, "00.00.000.000000.000"}
+    with {:ok, migration_table_exists?} <-
+           query_table_exists(opts[:migrations_schema], opts[:migrations_table]) do
+      case migration_table_exists? do
+        true -> query_datastore_version(opts[:migrations_schema], opts[:migrations_table])
+        false -> {:ok, "00.00.000.000000.000"}
+      end
     end
-  rescue
-    error -> {:error, {:datastore_version, error}}
   end
 
   defp query_table_exists(migrations_schema, migrations_table) do
-    Datastore.query_for_value!(
+    Datastore.query_for_value(
       """
       SELECT exists(
         SELECT true
@@ -273,17 +250,20 @@ defmodule MscmpSystDb.Impl.Migrations do
   end
 
   defp query_datastore_version(migrations_schema, migrations_table) do
-    Datastore.query_for_value!(
-      """
-      SELECT
-        coalesce(
-          (SELECT max(migration_version) FROM #{migrations_schema}.#{migrations_table}),
-          '00.00.000.000000.000') AS max_migration_version;
-      """,
-      [],
-      []
-    )
-    |> String.upcase()
+    with {:ok, max_migration_version} <-
+           Datastore.query_for_value(
+             """
+             SELECT
+               coalesce(
+                 ( SELECT max(migration_version)
+                     FROM #{migrations_schema}.#{migrations_table}),
+                   '00.00.000.000000.000' ) AS max_migration_version;
+             """,
+             [],
+             []
+           ) do
+      {:ok, max_migration_version |> String.upcase()}
+    end
   end
 
   defp get_available_migrations(dest_path) do
@@ -312,11 +292,7 @@ defmodule MscmpSystDb.Impl.Migrations do
         bindings
       )
 
-    Datastore.query_for_none!(migration_schema_sql, [], [])
-
-    :ok
-  rescue
-    error -> {:error, {:datastore_initialize, error}}
+    Datastore.query_for_none(migration_schema_sql, [], [])
   end
 
   ##############################################################################
@@ -391,26 +367,30 @@ defmodule MscmpSystDb.Impl.Migrations do
       |> EEx.eval_file(migration_params.migration_bindings)
 
     trans_func = fn ->
-      {:ok, _result} = Datastore.query(migration_sql)
-
-      {:ok, _result} =
-        Datastore.query(
-          """
-          INSERT INTO #{migration_params.migrations_schema}.#{migration_params.migrations_table}
-            (release, version, update, sponsor, sponsor_modification, migration_version)
-          VALUES
-            ($1, $2, $3, $4, $5, $6)
-          RETURNING id;
-          """,
-          [
-            migration_metadata.release,
-            migration_metadata.version,
-            migration_metadata.update,
-            migration_metadata.sponsor,
-            migration_metadata.sponsor_modification,
-            migration_metadata.migration_version
-          ]
-        )
+      with {:ok, _} <- Datastore.query(migration_sql),
+           {:ok, _} <-
+             Datastore.query(
+               """
+               INSERT INTO #{migration_params.migrations_schema}.#{migration_params.migrations_table}
+                 (release, version, update, sponsor, sponsor_modification, migration_version)
+               VALUES
+                 ($1, $2, $3, $4, $5, $6)
+               RETURNING id;
+               """,
+               [
+                 migration_metadata.release,
+                 migration_metadata.version,
+                 migration_metadata.update,
+                 migration_metadata.sponsor,
+                 migration_metadata.sponsor_modification,
+                 migration_metadata.migration_version
+               ]
+             ) do
+        :ok
+      else
+        error ->
+          raise "Failure applying migration '#{candidate_migration_filename}': #{inspect(error)}."
+      end
     end
 
     Datastore.ecto_transaction(trans_func, [])
@@ -435,7 +415,7 @@ defmodule MscmpSystDb.Impl.Migrations do
         }
 
       error ->
-        raise "Failed to parse migration version information from #{filename}"
+        raise "Failed to parse migration version information from '#{filename}': #{inspect(error)}."
     end
   end
 end

@@ -188,19 +188,10 @@ defmodule MscmpSystDb.Runtime.Datastore do
         opts
       )
       when is_list(opts) do
-    {:ok, context} = validate_datastore_context(datastore_context)
-
-    start_datastore_context(datastore_options, context, opts)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure starting Datastore Context.",
-         cause: error
-       }}
+    case validate_datastore_context(datastore_context) do
+      {:ok, context} -> start_datastore_context(datastore_options, context, opts)
+      {:error, _} = error -> error
+    end
   end
 
   defp validate_datastore_context(
@@ -210,12 +201,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
        do: {:ok, datastore_context}
 
   defp validate_datastore_context(datastore_context) do
-    {:error,
-     %MscmpSystError{
-       code: :invalid_parameter,
-       message: "The datastore_context parameter must be provided and valid.",
-       cause: %{parameters: datastore_context}
-     }}
+    {:error, {:invalid_datastore_context, datastore_context}}
   end
 
   ##############################################################################
@@ -228,7 +214,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
           DatastoreOptions.t(),
           DatastoreContext.t() | Types.context_name(),
           Keyword.t()
-        ) :: {:ok, pid()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, pid()} | {:error, term()}
   def start_datastore_context(
         %DatastoreOptions{} = datastore_options,
         %DatastoreContext{} = context,
@@ -269,17 +255,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
   end
 
   defp maybe_context_start_result({:error, {:already_started, ds_pid}}), do: {:ok, ds_pid}
-
-  defp maybe_context_start_result({:error, reason}) do
-    {
-      :error,
-      %MscmpSystError{
-        code: :start_link_error,
-        message: "Failure starting datastore context.",
-        cause: reason
-      }
-    }
-  end
+  defp maybe_context_start_result({:error, _} = error), do: error
 
   ##############################################################################
   #
@@ -327,7 +303,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
       resolved_context =
         case lookup_context_pid(opts[:context_registry], context.context_name) do
           {:ok, found_context} -> found_context
-          {:error, :not_found} -> nil
+          {:error, {:not_found, _}} -> nil
         end
 
       running_repos = Ecto.Repo.all_running()
@@ -337,20 +313,6 @@ defmodule MscmpSystDb.Runtime.Datastore do
     contexts
     |> Enum.filter(&filter_fn.(&1))
     |> Enum.each(&stop_datastore_context(&1, opts))
-  catch
-    error ->
-      {
-        :error,
-        Mserror.DbError.new(
-          kind: :datastore_context,
-          message: "Failure stopping datastore contexts.",
-          cause: error,
-          context: %MscmpSystError.Types.Context{
-            origin: {__MODULE__, :stop_datastore, 2},
-            parameters: %{contexts: contexts, opts: opts}
-          }
-        )
-      }
   end
 
   ##############################################################################
@@ -360,7 +322,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
   #
 
   @spec stop_datastore_context(pid() | atom() | String.t() | DatastoreContext.t(), Keyword.t()) ::
-          :ok | {:error, reason :: term()}
+          :ok
   def stop_datastore_context(%DatastoreContext{} = context, opts) do
     context.context_name
     |> stop_datastore_context(opts)
@@ -372,23 +334,11 @@ defmodule MscmpSystDb.Runtime.Datastore do
     end
   end
 
-  def stop_datastore_context(context, opts) when is_pid(context) or is_reg_atom(context) do
-    case Supervisor.stop(context, :normal, opts[:db_shutdown_timeout]) do
-      :ok -> :ok
-      error -> {:error, error}
-    end
-  end
+  def stop_datastore_context(context, opts) when is_pid(context) or is_reg_atom(context),
+    do: Supervisor.stop(context, :normal, opts[:db_shutdown_timeout])
 
-  def stop_datastore_context(context, opts) do
-    raise Mserror.DbError,
-      kind: :datastore_context,
-      message: "The given Datastore Context is of an invalid type.",
-      cause: {:error, :invalid_parameter},
-      context: %MscmpSystError.Types.Context{
-        origin: {__MODULE__, :stop_datastore_context, 2},
-        parameters: %{context: context, opts: opts}
-      }
-  end
+  def stop_datastore_context(context, _opts),
+    do: raise("The given Datastore Context '#{inspect(context)}' is of an invalid type.")
 
   ##############################################################################
   #
@@ -519,7 +469,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
     end
   end
 
-  def put_datastore_context(nil, context_name) do
+  def put_datastore_context(nil, _context_name) do
     raise ArgumentError, "The Datastore Context Registry may not be nil."
   end
 
@@ -554,7 +504,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
   end
 
   @spec lookup_context_pid(atom() | nil, Types.context_name() | nil) ::
-          {:ok, pid()} | {:error, reason :: term()}
+          {:ok, pid()} | {:ok, nil} | {:error, reason :: term()}
   def lookup_context_pid(_, nil), do: {:ok, nil}
 
   def lookup_context_pid(:global, context_name) do
@@ -567,11 +517,19 @@ defmodule MscmpSystDb.Runtime.Datastore do
   def lookup_context_pid(context_registry, context_name) when is_reg_atom(context_registry) do
     case Registry.lookup(context_registry, context_name) do
       [{pid, _}] -> {:ok, pid}
-      _ -> {:error, {:not_found, context_registry}}
+      _ -> {:error, {:not_found, {context_registry, context_name}}}
     end
   end
 
-  def lookup_context_pid(nil, context_name), do: {:ok, context_name}
+  def lookup_context_pid(nil, context_name) when is_reg_atom(context_name),
+    do: {:ok, context_name}
+
+  def lookup_context_pid(nil, context_name),
+    do:
+      raise(
+        "Context names using types other than atoms must be registered in a " <>
+          "Registry. (#{inspect(context_name)})"
+      )
 
   ##############################################################################
   #

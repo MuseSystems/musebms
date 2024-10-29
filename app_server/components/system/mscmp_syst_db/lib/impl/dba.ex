@@ -45,7 +45,7 @@ defmodule MscmpSystDb.Impl.Dba do
   #
 
   @spec get_datastore_state(DatastoreOptions.t(), Keyword.t()) ::
-          {:ok, {Types.database_state_values(), list(ContextState.t())}}
+          {:ok, Types.database_state_values(), list(ContextState.t())}
           | {:error, reason :: term()}
   def get_datastore_state(datastore_options, opts) do
     starting_datastore_context = Datastore.current_datastore_context()
@@ -57,13 +57,13 @@ defmodule MscmpSystDb.Impl.Dba do
            {:ok, context_states} <-
              get_context_states(datastore_options.contexts, opts[:context_registry]),
            :ok <- stop_dba_connection(opts[:db_shutdown_timeout]) do
-        {:ok, {database_state, context_states}}
+        {:ok, database_state, context_states}
       else
         error ->
           {:error, {:datastore_state_error, error}}
       end
 
-    {:ok, _} = Datastore.put_datatore_context(starting_datastore_context)
+    {:ok, _} = Datastore.put_datastore_context(starting_datastore_context)
 
     result
   end
@@ -85,7 +85,7 @@ defmodule MscmpSystDb.Impl.Dba do
            {:ok, _} <- Datastore.put_datastore_context(dba_pid),
            {:ok, _} <- create_contexts(datastore_options.contexts),
            :ok <- create_database(datastore_options),
-           context_states <-
+           {:ok, context_states} <-
              apply_db_connect_privs(datastore_options.contexts, datastore_options.database_name),
            :ok <- stop_dba_connection(opts[:db_shutdown_timeout]),
            :ok <- Privileged.initialize_datastore(datastore_options, opts) do
@@ -95,7 +95,7 @@ defmodule MscmpSystDb.Impl.Dba do
           {:error, {:create_datastore_error, error}}
       end
 
-    _ = Datastore.put_datastore_context(starting_datastore_context)
+    {:ok, _} = Datastore.put_datastore_context(starting_datastore_context)
 
     result
   end
@@ -118,9 +118,13 @@ defmodule MscmpSystDb.Impl.Dba do
            :ok <- drop_database(datastore_options),
            :ok <- drop_contexts(datastore_options.contexts) do
         stop_dba_connection(opts[:db_shutdown_timeout])
+      else
+        error ->
+          stop_dba_connection(opts[:db_shutdown_timeout])
+          raise "Failed to drop Datastore: #{inspect(error)}."
       end
 
-    {:ok, _} = Datastore.put_datatore_context(starting_datastore_context)
+    {:ok, _} = Datastore.put_datastore_context(starting_datastore_context)
 
     result
   end
@@ -142,12 +146,12 @@ defmodule MscmpSystDb.Impl.Dba do
            {:ok, state_result} <-
              get_context_states(datastore_options.contexts, opts[:context_registry]),
            :ok <- stop_dba_connection(opts[:db_shutdown_timeout]) do
-        state_result
+        {:ok, state_result}
       end
 
-    _ = Datastore.put_datastore_context(starting_datastore_context)
+    {:ok, _} = Datastore.put_datastore_context(starting_datastore_context)
 
-    {:ok, result}
+    result
   end
 
   ##############################################################################
@@ -166,14 +170,21 @@ defmodule MscmpSystDb.Impl.Dba do
           Keyword.t()
         ) :: {:ok, nonempty_list(ContextState.t())} | {:error, term()}
   def create_datastore_contexts(datastore_options, new_contexts, opts \\ []) do
-    with {:ok, dba_pid} <- start_dba_connection(datastore_options),
-         _ = Datastore.put_datastore_context(dba_pid),
-         {:ok, _} <- create_contexts(new_contexts),
-         {:ok, context_states} <-
-           apply_db_connect_privs(new_contexts, datastore_options.database_name),
-         :ok <- stop_dba_connection(opts[:db_shutdown_timeout]) do
-      {:ok, context_states}
-    end
+    starting_datastore_context = Datastore.current_datastore_context()
+
+    result =
+      with {:ok, dba_pid} <- start_dba_connection(datastore_options),
+           {:ok, _} <- Datastore.put_datastore_context(dba_pid),
+           {:ok, _} <- create_contexts(new_contexts),
+           {:ok, context_states} <-
+             apply_db_connect_privs(new_contexts, datastore_options.database_name),
+           :ok <- stop_dba_connection(opts[:db_shutdown_timeout]) do
+        {:ok, context_states}
+      end
+
+    {:ok, _} = Datastore.put_datastore_context(starting_datastore_context)
+
+    result
   end
 
   ##############################################################################
@@ -196,13 +207,13 @@ defmodule MscmpSystDb.Impl.Dba do
 
     result =
       with {:ok, dba_pid} <- start_dba_connection(datastore_options),
-           _ <- Datastore.put_datastore_context(dba_pid),
+           {:ok, _} <- Datastore.put_datastore_context(dba_pid),
            :ok <- revoke_db_connect_privs(delete_contexts, datastore_options.database_name),
            :ok <- drop_contexts(delete_contexts) do
         stop_dba_connection(opts[:db_shutdown_timeout])
       end
 
-    {:ok, _} = Datastore.put_datatore_context(starting_datastore_context)
+    {:ok, _} = Datastore.put_datastore_context(starting_datastore_context)
 
     result
   end
@@ -242,7 +253,7 @@ defmodule MscmpSystDb.Impl.Dba do
     app_qry = "SET application_name = '#{dba_context.description}';"
 
     with {:ok, dba_pid} <- Datastore.start_datastore_context(dba_options, dba_context, []),
-         _ = Datastore.put_datastore_context(dba_pid),
+         {:ok, _} <- Datastore.put_datastore_context(dba_pid),
          :ok <- Datastore.query_for_none(app_qry, [], []) do
       {:ok, dba_pid}
     end
@@ -264,8 +275,8 @@ defmodule MscmpSystDb.Impl.Dba do
       )
 
     case result do
-      {:ok, nil} -> :not_found
-      {:ok, _} -> :ready
+      {:ok, nil} -> {:ok, :not_found}
+      {:ok, _} -> {:ok, :ready}
       {:error, _} = error -> error
     end
   end
@@ -333,9 +344,14 @@ defmodule MscmpSystDb.Impl.Dba do
 
         resolved_pid =
           case resolved_context do
-            {:ok, pid} when is_pid(pid) -> pid
-            {:error, _} = error -> raise "Failure checking if Datastore Context is started."
-            _ -> nil
+            {:ok, pid} when is_pid(pid) ->
+              pid
+
+            {:ok, nil} ->
+              nil
+
+            {:error, {:not_found, _}} ->
+              nil
           end
 
         state_running =
@@ -358,11 +374,13 @@ defmodule MscmpSystDb.Impl.Dba do
 
   defp create_contexts(contexts) do
     map_func = fn context ->
-      context
-      |> create_database_role()
-      |> parse_create_database_role_result()
+      case create_database_role(context) do
+        {:ok, _} ->
+          %ContextState{context: context.context_name, state: :not_ready}
 
-      %ContextState{context: context.context_name, state: :not_ready}
+        error ->
+          raise "Failed to create database role for context '#{context.context_name}': #{inspect(error)}."
+      end
     end
 
     try do
@@ -396,10 +414,6 @@ defmodule MscmpSystDb.Impl.Dba do
     )
   end
 
-  defp parse_create_database_role_result({:ok, _database_result}), do: :ok
-
-  defp parse_create_database_role_result({:error, _} = error), do: error
-
   defp create_database(datastore_options) do
     database_owner = Enum.find(datastore_options.contexts, &(&1.database_owner_context == true))
 
@@ -415,11 +429,13 @@ defmodule MscmpSystDb.Impl.Dba do
 
   defp apply_db_connect_privs(contexts, database_name) do
     map_func = fn context ->
-      context
-      |> maybe_apply_context_connect_priv(database_name)
-      |> parse_apply_connect_priv_result()
+      case maybe_apply_context_connect_priv(context, database_name) do
+        :ok ->
+          %ContextState{context: context.context_name, state: :ready}
 
-      %ContextState{context: context.context_name, state: :ready}
+        error ->
+          raise "Failed to apply database connect privileges for context '#{context.context_name}': #{inspect(error)}."
+      end
     end
 
     try do
@@ -441,10 +457,6 @@ defmodule MscmpSystDb.Impl.Dba do
   defp maybe_apply_context_connect_priv(%DatastoreContext{login_context: false}, _database_name),
     do: :ok
 
-  defp parse_apply_connect_priv_result(:ok), do: :ok
-
-  defp parse_apply_connect_priv_result({:error, _} = error), do: error
-
   defp drop_database(datastore_options) do
     database_owner = Enum.find(datastore_options.contexts, &(&1.database_owner_context == true))
 
@@ -463,7 +475,10 @@ defmodule MscmpSystDb.Impl.Dba do
       |> parse_drop_database_role_result()
     end
 
-    Datastore.transaction(fn -> contexts |> Enum.each(&each_func.(&1)) end)
+    case Datastore.transaction(fn -> contexts |> Enum.each(&each_func.(&1)) end) do
+      {:ok, _} -> :ok
+      error -> {:error, {:database_transaction_error, error}}
+    end
   end
 
   defp drop_database_role(%DatastoreContext{database_role: role_name}) do
@@ -476,12 +491,19 @@ defmodule MscmpSystDb.Impl.Dba do
 
   defp revoke_db_connect_privs(contexts, database_name) do
     each_func = fn context ->
-      context
-      |> maybe_revoke_context_connect_priv(database_name)
-      |> parse_revoke_connect_priv_result()
+      case maybe_revoke_context_connect_priv(context, database_name) do
+        :ok ->
+          :ok
+
+        error ->
+          raise "Failed to revoke database connect privileges for context '#{context.context_name}': #{inspect(error)}."
+      end
     end
 
-    Datastore.transaction(fn -> contexts |> Enum.each(&each_func.(&1)) end)
+    case Datastore.transaction(fn -> contexts |> Enum.each(&each_func.(&1)) end) do
+      {:ok, _} -> :ok
+      error -> {:error, {:database_transaction_error, error}}
+    end
   end
 
   defp maybe_revoke_context_connect_priv(
@@ -494,8 +516,4 @@ defmodule MscmpSystDb.Impl.Dba do
 
   defp maybe_revoke_context_connect_priv(%DatastoreContext{login_context: false}, _database_name),
     do: :ok
-
-  defp parse_revoke_connect_priv_result(:ok), do: :ok
-
-  defp parse_revoke_connect_priv_result({:error, _} = error), do: error
 end

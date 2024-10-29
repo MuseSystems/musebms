@@ -45,7 +45,7 @@ defmodule Mix.Tasks.Loaddb do
     * `--dbadmin-pwd` - a binary value for the standard `ms_syst_privileged`
       database role account created via the database bootstrapping script.  The
       default value is
-      "musesystems.publicly.known.insecure.devsupport.password".
+      "musesystems-insecure-publicly-known-password".
 
     * `--ds-name` - The Datastore Name used to identify the Datastore in the
       application.  Specifically references parts of the supervisory system

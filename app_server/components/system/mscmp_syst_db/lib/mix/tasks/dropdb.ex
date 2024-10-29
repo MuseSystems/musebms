@@ -64,7 +64,7 @@ defmodule Mix.Tasks.Dropdb do
 
     * `--dbadmin-pwd` - the password of the `ms_syst_privileged` database role
       on the target database.  This is an optional string value which defaults
-      to "musesystems.publicly.known.insecure.devsupport.password".
+      to "musesystems-insecure-publicly-known-password".
 
     * `--clean-all` - if this switch is set, this task will delete all Datastore
       migration files created for the Component, including those that might not

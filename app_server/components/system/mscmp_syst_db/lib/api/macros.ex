@@ -269,7 +269,7 @@ defmodule MscmpSystDb.Macros do
       end
 
       @spec load_database(MscmpSystDb.Types.DatastoreOptions.t(), String.t()) ::
-              {:ok, [String.t()]} | {:error, MscmpSystError.t()}
+              {:ok, [String.t()]} | {:error, Mserror.DbError.t()}
       def load_database(datastore_options, datastore_type) do
         database_owner =
           Enum.find(datastore_options.contexts, &(&1.database_owner_context == true))

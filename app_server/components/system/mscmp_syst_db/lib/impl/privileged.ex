@@ -48,31 +48,22 @@ defmodule MscmpSystDb.Impl.Privileged do
   #
 
   @spec get_datastore_version(DatastoreOptions.t(), Keyword.t()) ::
-          {:ok, String.t()} | {:error, MscmpSystError.t()}
+          {:ok, String.t()} | {:error, term()}
   def get_datastore_version(datastore_options, opts) do
     starting_datastore_context = Datastore.get_dynamic_repo()
 
-    :ok = start_priv_connection(datastore_options)
+    result =
+      with :ok <- start_priv_connection(datastore_options) do
+        Migrations.get_datastore_version(opts)
+      end
 
-    datastore_version = Migrations.get_datastore_version(opts)
+    # We want to ensure the privileged connection is closed even if there was
+    # an error, to the point of crashing the process if necessary.
+    :ok = stop_priv_connection(opts[:db_shutdown_timeout])
 
-    stop_priv_connection(opts[:db_shutdown_timeout])
+    {:ok, _} = Datastore.put_datastore_context(starting_datastore_context)
 
-    _ = Datastore.put_datastore_context(starting_datastore_context)
-
-    datastore_version
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :database_error,
-          message: "Failure retrieving datastore version.",
-          cause: error
-        }
-      }
+    result
   end
 
   ##############################################################################
@@ -82,29 +73,24 @@ defmodule MscmpSystDb.Impl.Privileged do
   #
 
   @spec initialize_datastore(DatastoreOptions.t(), Keyword.t()) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, term()}
   def initialize_datastore(datastore_options, opts) do
+    starting_datastore_context = Datastore.current_datastore_context()
     database_owner = Enum.find(datastore_options.contexts, &(&1.database_owner_context == true))
-
-    :ok = start_priv_connection(datastore_options)
-
     init_opts = Keyword.take(opts, [:migrations_schema, :migrations_table])
 
-    :ok = Migrations.initialize_datastore(database_owner.database_role, init_opts)
+    result =
+      with :ok <- start_priv_connection(datastore_options) do
+        :ok = Migrations.initialize_datastore(database_owner.database_role, init_opts)
+      end
 
-    stop_priv_connection(opts[:db_shutdown_timeout])
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+    # We want to ensure the privileged connection is closed even if there was
+    # an error, to the point of crashing the process if necessary.
+    :ok = stop_priv_connection(opts[:db_shutdown_timeout])
 
-      {
-        :error,
-        %MscmpSystError{
-          code: :database_error,
-          message: "Failure initializing datastore.",
-          cause: error
-        }
-      }
+    {:ok, _} = Datastore.put_datastore_context(starting_datastore_context)
+
+    result
   end
 
   ##############################################################################
@@ -113,39 +99,25 @@ defmodule MscmpSystDb.Impl.Privileged do
   #
 
   @spec upgrade_datastore(DatastoreOptions.t(), String.t(), Keyword.t(), Keyword.t()) ::
-          {:ok, [String.t()]} | {:error, MscmpSystError.t()}
+          {:ok, [String.t()]} | {:error, term()}
   def upgrade_datastore(datastore_options, datastore_type, migration_bindings, opts) do
     starting_datastore_context = Datastore.current_datastore_context()
-
-    :ok = start_priv_connection(datastore_options)
 
     upgrade_opts =
       Keyword.take(opts, [:migrations_root_dir, :migrations_schema, :migrations_table])
 
-    apply_migrations_result =
-      Migrations.apply_outstanding_migrations(
-        datastore_type,
-        migration_bindings,
-        upgrade_opts
-      )
+    result =
+      with :ok <- start_priv_connection(datastore_options) do
+        Migrations.apply_outstanding_migrations(datastore_type, migration_bindings, upgrade_opts)
+      end
 
-    stop_priv_connection(opts[:db_shutdown_timeout])
+    # We want to ensure the privileged connection is closed even if there was
+    # an error, to the point of crashing the process if necessary.
+    :ok = stop_priv_connection(opts[:db_shutdown_timeout])
 
-    _ = Datastore.put_datastore_context(starting_datastore_context)
+    {:ok, _} = Datastore.put_datastore_context(starting_datastore_context)
 
-    apply_migrations_result
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :database_error,
-          message: "Failure upgrading datastore.",
-          cause: error
-        }
-      }
+    result
   end
 
   defp get_priv_connection_options(%DatastoreOptions{
@@ -185,34 +157,16 @@ defmodule MscmpSystDb.Impl.Privileged do
 
     database_owner = Enum.find(datastore_options.contexts, &(&1.database_owner_context == true))
 
-    case Datastore.start_datastore_context(priv_options, priv_context, []) do
-      {:ok, priv_pid} ->
-        _ = Datastore.put_datastore_context(priv_pid)
-
-        Datastore.query_for_none!("SET ROLE #{database_owner.database_role};", [], [])
-
-        Datastore.query_for_none!("SET application_name = '#{priv_context.description}';", [], [])
-
-        :ok
-
-      error ->
-        {
-          :error,
-          %MscmpSystError{
-            code: :database_error,
-            message: "Failure starting privileged dataastore.",
-            cause: error
-          }
-        }
+    with {:ok, priv_pid} <- Datastore.start_datastore_context(priv_options, priv_context, []),
+         {:ok, _} <- Datastore.put_datastore_context(priv_pid),
+         :ok <- Datastore.query_for_none("SET ROLE #{database_owner.database_role};", [], []) do
+      Datastore.query_for_none("SET application_name = '#{priv_context.description}';", [], [])
     end
   end
 
   defp stop_priv_connection(db_shutdown_timeout) do
-    _context_action_result =
-      Datastore.stop_datastore_context(Datastore.current_datastore_context(),
-        db_shutdown_timeout: db_shutdown_timeout
-      )
-
-    :ok
+    Datastore.stop_datastore_context(Datastore.current_datastore_context(),
+      db_shutdown_timeout: db_shutdown_timeout
+    )
   end
 end

@@ -144,6 +144,7 @@ defmodule Mix.Tasks.Builddb do
   use Mix.Task
 
   alias MscmpSystDb.Impl.Migrations
+  alias MscmpSystError.Types.Context, as: ErrorContext
 
   require IEx
 
@@ -184,9 +185,13 @@ defmodule Mix.Tasks.Builddb do
     else
       error ->
         raise Mserror.DbError.new(
-                kind: :migration_build,
-                message: "Failure building migrations.",
-                cause: error
+                :migration_build,
+                "Failure building migrations.",
+                cause: error,
+                context: %ErrorContext{
+                  parameters: %{args: args},
+                  origin: {Mix.Tasks.Builddb, :run, 1}
+                }
               )
     end
   end
@@ -204,7 +209,15 @@ defmodule Mix.Tasks.Builddb do
         {:ok, resolved_opts}
 
       invalid_type ->
-        {:error, {:invalid_parameter, "The '--type' parameter was missing or invalid but is required."}}
+        case invalid_type do
+          nil ->
+            {:error, {:invalid_parameter, "The '--type' parameter is required."}}
+
+          _ ->
+            {:error,
+             {:invalid_parameter,
+              "The '--type' parameter value '#{inspect(invalid_type)}' is invalid."}}
+        end
     end
   end
 end
