@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule OptionsFileTest do
+  @moduledoc false
+
   use ExUnit.Case, async: true
 
   @default_path "testing_options.toml"
@@ -20,8 +22,8 @@ defmodule OptionsFileTest do
              MscmpSystOptions.get_options(@default_path)
   end
 
-  test "Can get_options/1 Return MscmpSystError Tuple" do
-    assert {:error, %MscmpSystError{}} = MscmpSystOptions.get_options("bad_path.toml")
+  test "Can get_options/1 Return Mserror.OptionsError Tuple" do
+    assert {:error, %Mserror.OptionsError{}} = MscmpSystOptions.get_options("bad_path.toml")
   end
 
   test "Can get_options!/1 Return Options" do
@@ -29,6 +31,6 @@ defmodule OptionsFileTest do
   end
 
   test "Does get_options!/1 Raise with Bad File" do
-    assert_raise MscmpSystError, fn -> MscmpSystOptions.get_options!("bad_path.toml") end
+    assert_raise Mserror.OptionsError, fn -> MscmpSystOptions.get_options!("bad_path.toml") end
   end
 end

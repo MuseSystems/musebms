@@ -17,6 +17,7 @@ defmodule MscmpSystOptions do
              |> String.split("<!-- MDOC !-->")
              |> Enum.fetch!(1)
 
+  alias MscmpSystError.Types.Context, as: ErrorContext
   alias MscmpSystOptions.Impl.OptionsFile
   alias MscmpSystOptions.Impl.OptionsParser
   alias MscmpSystOptions.Types
@@ -86,11 +87,26 @@ defmodule MscmpSystOptions do
 
   Called with bad parameters:
 
-      iex> {:error, %MscmpSystError{}} =
+      iex> {:error, %Mserror.OptionsError{}} =
       ...>   MscmpSystOptions.get_options("./bad_file_name.toml")
   """
-  @spec get_options(String.t()) :: {:ok, map()} | {:error, MscmpSystError.t()}
-  defdelegate get_options(options_file_path), to: OptionsFile
+  @spec get_options(String.t()) :: {:ok, map()} | {:error, Mserror.OptionsError.t()}
+  def get_options(options_file_path) do
+    case OptionsFile.get_options(options_file_path) do
+      {:ok, _} = result ->
+        result
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.OptionsError.new(:file, "Problem reading options file '#{options_file_path}'.",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :get_options, 1},
+             parameters: %{options_file_path: options_file_path}
+           }
+         )}
+    end
+  end
 
   @doc section: :file_handling
   @doc """
@@ -141,10 +157,15 @@ defmodule MscmpSystOptions do
   Called with bad parameters:
 
       iex> MscmpSystOptions.get_options!("./bad_file_name.toml")
-      ** (MscmpSystError) Problem reading options file './bad_file_name.toml'.
+      ** (Mserror.OptionsError) Problem reading options file './bad_file_name.toml'.
   """
   @spec get_options!(String.t()) :: map()
-  defdelegate get_options!(options_file_path), to: OptionsFile
+  def get_options!(options_file_path) do
+    case get_options(options_file_path) do
+      {:ok, result} -> result
+      {:error, error} -> raise error
+    end
+  end
 
   ##############################################################################
   #

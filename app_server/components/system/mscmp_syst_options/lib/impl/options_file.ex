@@ -21,56 +21,10 @@ defmodule MscmpSystOptions.Impl.OptionsFile do
   ######
 
   @spec get_options(options_file_path :: String.t()) ::
-          {:ok, map()} | {:error, MscmpSystError.t()}
+          {:ok, map()} | {:error, term()}
   def get_options(options_file_path) when is_binary(options_file_path) do
-    options_file_path
-    |> maybe_file_read()
-    |> maybe_file_decode()
-  end
-
-  defp maybe_file_read(options_file_path) do
-    with error = {:error, _reason} <- File.read(options_file_path) do
-      {
-        :error,
-        %MscmpSystError{
-          code: :file_error,
-          message: "Problem reading options file '#{options_file_path}'.",
-          cause: error
-        }
-      }
+    with {:ok, file_contents} <- File.read(options_file_path) do
+      Toml.decode(file_contents, keys: :atoms)
     end
-  end
-
-  defp maybe_file_decode({:ok, file_contents}) do
-    with error = {:error, _reason} <- Toml.decode(file_contents, keys: :atoms) do
-      {
-        :error,
-        %MscmpSystError{
-          code: :invalid_data,
-          message: "Problem decoding the options file.",
-          cause: error
-        }
-      }
-    end
-  end
-
-  defp maybe_file_decode({:error, _reason} = error), do: error
-
-  @spec get_options!(String.t()) :: map()
-  def get_options!(options_file_path) when is_binary(options_file_path) do
-    options_file_path
-    |> get_options()
-    |> extract_or_raise_options_map!()
-  end
-
-  defp extract_or_raise_options_map!({:ok, options_map}) do
-    options_map
-  end
-
-  defp extract_or_raise_options_map!({:error, mscmp_error = %MscmpSystError{}}) do
-    raise MscmpSystError,
-      message: mscmp_error.message,
-      code: mscmp_error.code,
-      cause: mscmp_error.cause
   end
 end
