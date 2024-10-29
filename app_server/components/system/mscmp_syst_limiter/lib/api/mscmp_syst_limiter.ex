@@ -17,6 +17,7 @@ defmodule MscmpSystLimiter do
              |> String.split("<!-- MDOC !-->")
              |> Enum.fetch!(1)
 
+  alias MscmpSystError.Types.Context, as: ErrorContext
   alias MscmpSystLimiter.Impl
   alias MscmpSystLimiter.Types
 
@@ -159,7 +160,7 @@ defmodule MscmpSystLimiter do
            :check_counter,
            "Error encountered checking and incrementing the rate limit.",
            cause: error,
-           context: %MscmpSystError.Types.Context{
+           context: %ErrorContext{
              origin: {__MODULE__, :check_rate, 4},
              parameters: %{
                counter_type: counter_type,
@@ -246,7 +247,7 @@ defmodule MscmpSystLimiter do
            :check_counter,
            "Error encountered checking and incrementing the rate limit with a variable increment.",
            cause: error,
-           context: %MscmpSystError.Types.Context{
+           context: %ErrorContext{
              origin: {__MODULE__, :check_rate_with_increment, 5},
              parameters: %{
                counter_type: counter_type,
@@ -307,7 +308,7 @@ defmodule MscmpSystLimiter do
            :inspect_counter,
            "Error encountered inspecting the rate limit counter.",
            cause: error,
-           context: %MscmpSystError.Types.Context{
+           context: %ErrorContext{
              origin: {__MODULE__, :inspect_counter, 4},
              parameters: %{
                counter_type: counter_type,
@@ -360,7 +361,7 @@ defmodule MscmpSystLimiter do
            :delete_counter,
            "Error encountered deleting the rate limit counter.",
            cause: error,
-           context: %MscmpSystError.Types.Context{
+           context: %ErrorContext{
              origin: {__MODULE__, :delete_counters, 2},
              parameters: %{counter_type: counter_type, counter_id: counter_id}
            }

@@ -17,6 +17,7 @@ defmodule MscmpSystNetwork do
              |> String.split("<!-- MDOC !-->")
              |> Enum.fetch!(1)
 
+  alias MscmpSystError.Types.Context, as: ErrorContext
   alias MscmpSystNetwork.Impl
   alias MscmpSystNetwork.Types
 
@@ -141,7 +142,7 @@ defmodule MscmpSystNetwork do
         {:error,
          Mserror.NetworkError.new(:parse, "Error encountered parsing string as IP address.",
            cause: error,
-           context: %MscmpSystError.Types.Context{
+           context: %ErrorContext{
              parameters: %{addr_string: addr_string},
              origin: {__MODULE__, :parse, 1}
            }
@@ -358,7 +359,7 @@ defmodule MscmpSystNetwork do
         {:error,
          Mserror.NetworkError.new(:parse, "Error encountered parsing IP address to struct.",
            cause: error,
-           context: %MscmpSystError.Types.Context{
+           context: %ErrorContext{
              parameters: %{addr: addr, mask: mask},
              origin: {__MODULE__, :to_struct, 2}
            }

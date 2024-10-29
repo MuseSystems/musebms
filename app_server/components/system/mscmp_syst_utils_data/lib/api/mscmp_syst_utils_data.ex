@@ -5,6 +5,7 @@ defmodule Msutils.Data do
              |> String.split("<!-- MDOC !-->")
              |> Enum.fetch!(1)
 
+  alias MscmpSystError.Types.Context, as: ErrorContext
   alias MscmpSystUtilsData.Impl
   alias Msutils.Data.Types
 
@@ -222,7 +223,7 @@ defmodule Msutils.Data do
             raise Mserror.DataUtilsError,
               kind: :macro,
               message: "Invalid changeset validator options were requested",
-              context: %MscmpSystError.Types.Context{
+              context: %ErrorContext{
                 origin: {__MODULE__, :common_validator_options, 1},
                 parameters: %{selected_options: selected_options}
               }
@@ -241,7 +242,7 @@ defmodule Msutils.Data do
               Invalid options selector provided.  Your selections should be a
               list of the validators you require.
             """,
-            context: %MscmpSystError.Types.Context{
+            context: %ErrorContext{
               origin: {__MODULE__, :common_validator_options, 1},
               parameters: %{selected_options: selected_options}
             }
