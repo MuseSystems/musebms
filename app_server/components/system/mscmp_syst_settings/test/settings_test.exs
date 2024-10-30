@@ -11,12 +11,20 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule SettingsTest do
+  @moduledoc false
+
   use SettingsTestCase, async: true
 
   alias MscmpSystSettings.Runtime.ProcessUtils
 
   @moduletag :unit
   @moduletag :capture_log
+
+  # TODO: These tests are not truly unit tests under our definition since we're
+  #       testing public API and not focusing on the impl/settings.ex code.
+  #       These tests pre-date our current unit test framework, but are still
+  #       useful for testing the implementation code.  At some point we should
+  #       refactor these to be more unit test like.
 
   test "Create/Delete User Defined Settings" do
     success_setting = %{
@@ -87,7 +95,7 @@ defmodule SettingsTest do
     assert %Msdata.SystSettings{internal_name: "test_success_setting"} =
              :ets.lookup_element(ProcessUtils.get_settings_table(), "test_success_setting", 2)
 
-    assert {:error, %MscmpSystError{}} = MscmpSystSettings.create(success_setting)
+    assert {:error, %Mserror.SettingsError{}} = MscmpSystSettings.create(success_setting)
 
     assert :ok = MscmpSystSettings.delete(success_setting.internal_name)
 
@@ -95,22 +103,22 @@ defmodule SettingsTest do
              :ets.lookup_element(ProcessUtils.get_settings_table(), "test_success_setting", 2)
            )
 
-    assert {:error, %MscmpSystError{}} = MscmpSystSettings.create(short_desc_setting)
+    assert {:error, %Mserror.SettingsError{}} = MscmpSystSettings.create(short_desc_setting)
 
-    assert {:error, %MscmpSystError{}} = MscmpSystSettings.create(long_desc_setting)
+    assert {:error, %Mserror.SettingsError{}} = MscmpSystSettings.create(long_desc_setting)
 
-    assert {:error, %MscmpSystError{}} = MscmpSystSettings.delete("test_setting_one")
+    assert {:error, %Mserror.SettingsError{}} = MscmpSystSettings.delete("test_setting_one")
 
-    assert {:error, %MscmpSystError{}} =
+    assert {:error, %Mserror.SettingsError{}} =
              MscmpSystSettings.create(short_internal_name_setting)
 
-    assert {:error, %MscmpSystError{}} =
+    assert {:error, %Mserror.SettingsError{}} =
              MscmpSystSettings.create(long_internal_name_setting)
 
-    assert {:error, %MscmpSystError{}} =
+    assert {:error, %Mserror.SettingsError{}} =
              MscmpSystSettings.create(short_display_name_setting)
 
-    assert {:error, %MscmpSystError{}} =
+    assert {:error, %Mserror.SettingsError{}} =
              MscmpSystSettings.create(long_display_name_setting)
   end
 
@@ -135,13 +143,13 @@ defmodule SettingsTest do
     assert %Msdata.SystSettings{display_name: "Updated Test Setting One"} =
              MscmpSystSettings.get_values("test_setting_one")
 
-    assert {:error, %MscmpSystError{}} =
+    assert {:error, %Mserror.SettingsError{}} =
              MscmpSystSettings.set_values(
                "test_setting_one",
                long_change
              )
 
-    assert {:error, %MscmpSystError{}} =
+    assert {:error, %Mserror.SettingsError{}} =
              MscmpSystSettings.set_values(
                "test_setting_one",
                short_change
@@ -194,13 +202,13 @@ defmodule SettingsTest do
     assert %Msdata.SystSettings{user_description: nil} =
              MscmpSystSettings.get_values("test_setting_one")
 
-    assert {:error, %MscmpSystError{}} =
+    assert {:error, %Mserror.SettingsError{}} =
              MscmpSystSettings.set_values(
                "test_setting_one",
                long_change
              )
 
-    assert {:error, %MscmpSystError{}} =
+    assert {:error, %Mserror.SettingsError{}} =
              MscmpSystSettings.set_values(
                "test_setting_one",
                short_change

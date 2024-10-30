@@ -77,89 +77,72 @@ defmodule MscmpSystSettings.Impl.Settings do
     ProcessUtils.get_settings_table() |> :ets.select([{{:_, :"$1"}, [], [:"$1"]}])
   end
 
-  @spec create(Types.setting_params()) :: :ok | {:error, MscmpSystError.t()}
+  @spec create(Types.setting_params()) :: :ok | {:error, term()}
   def create(creation_params) when is_map(creation_params),
     do: ProcessUtils.get_settings_table() |> create(creation_params)
 
-  @spec create(:ets.table(), Types.setting_params()) :: :ok | {:error, MscmpSystError.t()}
+  @spec create(:ets.table(), Types.setting_params()) :: :ok | {:error, term()}
   def create(settings_table, creation_params)
       when (is_atom(settings_table) or is_reference(settings_table)) and is_map(creation_params) do
-    creation_params
-    |> then(&Msdata.SystSettings.changeset(%Msdata.SystSettings{}, &1))
-    |> MscmpSystDb.insert!(returning: true)
-    |> then(&:ets.insert(settings_table, {&1.internal_name, &1}))
+    validated_changeset = Msdata.SystSettings.changeset(%Msdata.SystSettings{}, creation_params)
 
-    :ok
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+    with {:ok, updated_data} <- MscmpSystDb.insert(validated_changeset, returning: true),
+         true <-
+           :ets.insert(settings_table, {updated_data.internal_name, updated_data}) do
+      :ok
+    else
+      error when error === false ->
+        {:error, {:ets_insert_error, {settings_table, validated_changeset}}}
 
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure creating new setting.",
-          cause: error
-        }
-      }
+      error ->
+        {:error, {:unknown_error, error}}
+    end
   end
 
   @spec update_setting(Types.setting_name(), Types.setting_params()) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, term()}
   def update_setting(setting_name, update_params),
     do: ProcessUtils.get_settings_table() |> update_setting(setting_name, update_params)
 
   @spec update_setting(:ets.table(), Types.setting_name(), Types.setting_params()) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, term()}
   def update_setting(settings_table, setting_name, update_params)
       when (is_atom(settings_table) or is_reference(settings_table)) and
              is_binary(setting_name) and
              is_map(update_params) do
-    :ets.lookup_element(settings_table, setting_name, 2)
-    |> Msdata.SystSettings.changeset(update_params)
-    |> MscmpSystDb.update!(returning: true)
-    |> then(&:ets.update_element(settings_table, setting_name, {2, &1}))
-
-    :ok
+    with existing_data <- :ets.lookup_element(settings_table, setting_name, 2),
+         changeset <- Msdata.SystSettings.changeset(existing_data, update_params),
+         {:ok, updated_data} <- MscmpSystDb.update(changeset, returning: true),
+         true <- :ets.update_element(settings_table, setting_name, {2, updated_data}) do
+      :ok
+    else
+      error -> {:error, {:database_error, error}}
+    end
   rescue
     error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure updating setting.",
-          cause: error
-        }
-      }
+      {:error, {:ets_error, error}}
   end
 
-  @spec delete(Types.setting_name()) :: :ok | {:error, MscmpSystError.t()}
+  @spec delete(Types.setting_name()) :: :ok | {:error, term()}
   def delete(setting_name),
     do: ProcessUtils.get_settings_table() |> delete(setting_name)
 
-  @spec delete(:ets.table(), Types.setting_name()) :: :ok | {:error, MscmpSystError.t()}
+  @spec delete(:ets.table(), Types.setting_name()) :: :ok | {:error, term()}
   def delete(settings_table, setting_name)
       when (is_atom(settings_table) or is_reference(settings_table)) and is_binary(setting_name) do
     delete_qry = from(s in Msdata.SystSettings, where: s.internal_name == ^setting_name)
 
-    {1, _rows} = MscmpSystDb.delete_all(delete_qry)
-
-    true = :ets.delete(settings_table, setting_name)
-
-    :ok
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure deleting setting.",
-          cause: error
-        }
-      }
+    try do
+      with {1, _rows} <- MscmpSystDb.delete_all(delete_qry),
+           true <- :ets.delete(settings_table, setting_name) do
+        :ok
+      else
+        {0, _} ->
+          {:error, {:not_found, setting_name}}
+      end
+    rescue
+      error ->
+        {:error, {:database_error, error}}
+    end
   end
 end

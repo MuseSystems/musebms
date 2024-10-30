@@ -56,38 +56,16 @@ defmodule MscmpSystSettings.Runtime.Service do
   #
 
   @spec start_link(Types.service_name(), MscmpSystDb.Types.context_service_name(), Keyword.t()) ::
-          {:ok, pid()} | {:error, MscmpSystError.t()}
+          {:ok, pid()} | {:error, term()}
   def start_link(service_name, datastore_context_name, opts) do
     opts = Keyword.put(opts, :name, service_name)
 
     init_opts = [datastore_context_name: datastore_context_name]
 
     case GenServer.start_link(__MODULE__, init_opts, opts) do
-      {:ok, pid} ->
-        {:ok, pid}
-
-      abort_reason ->
-        {
-          :error,
-          %MscmpSystError{
-            code: :process_error,
-            message: "Settings Service start aborted.",
-            cause: abort_reason
-          }
-        }
+      {:ok, pid} -> {:ok, pid}
+      abort_reason -> {:error, {:start_link_error, abort_reason}}
     end
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :process_error,
-          message: "Failure starting Settings Service.",
-          cause: error
-        }
-      }
   end
 
   ##
@@ -101,7 +79,7 @@ defmodule MscmpSystSettings.Runtime.Service do
   #
 
   @impl true
-  @spec init(Keyword.t()) :: {:ok, map()} | {:stop, MscmpSystError.t()}
+  @spec init(Keyword.t()) :: {:ok, map()} | {:stop, term()}
   def init(opts) do
     settings_table = :ets.new(nil, [:set, :protected])
 
@@ -169,7 +147,7 @@ defmodule MscmpSystSettings.Runtime.Service do
   #
 
   @impl true
-  def terminate(:normal, state) do
+  def terminate(_reason, state) do
     :ets.delete(state.settings_table_tid)
     :ok
   end

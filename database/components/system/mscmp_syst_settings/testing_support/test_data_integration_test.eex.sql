@@ -14,4 +14,17 @@
 --  Primary Initialization -- Settings
 --------------------------------------------------------------------------------
 
-PERFORM 'No integration data required for this test.';
+INSERT INTO ms_syst_data.syst_settings
+    ( internal_name
+    , display_name
+    , syst_description
+    , syst_defined
+    , user_description
+    , setting_flag )
+VALUES
+    ( 'delete_test_setting'
+    , 'Delete Test Setting'
+    , 'A system-defined setting used for testing delete functionality'
+    , TRUE
+    , 'A user-defined setting used for testing delete functionality'
+    , TRUE );

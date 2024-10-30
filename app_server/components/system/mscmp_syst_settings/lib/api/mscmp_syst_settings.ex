@@ -17,6 +17,7 @@ defmodule MscmpSystSettings do
              |> String.split("<!-- MDOC !-->")
              |> Enum.fetch!(1)
 
+  alias MscmpSystError.Types.Context, as: ErrorContext
   alias MscmpSystSettings.Impl
   alias MscmpSystSettings.Runtime
   alias MscmpSystSettings.Types
@@ -152,21 +153,29 @@ defmodule MscmpSystSettings do
   #{NimbleOptions.docs(@start_link_opts)}
   """
   @spec start_link(Types.service_name(), MscmpSystDb.Types.context_service_name()) ::
-          {:ok, pid()} | {:error, MscmpSystError.t()}
+          {:ok, pid()} | {:error, Mserror.SettingsError.t()}
   @spec start_link(Types.service_name(), MscmpSystDb.Types.context_service_name(), Keyword.t()) ::
-          {:ok, pid()} | {:error, MscmpSystError.t()}
+          {:ok, pid()} | {:error, Mserror.SettingsError.t()}
   def start_link(service_name, datastore_context_name, opts \\ []) do
-    case NimbleOptions.validate(opts, @start_link_opts) do
-      {:ok, validated_opts} ->
-        Runtime.Service.start_link(service_name, datastore_context_name, validated_opts)
+    validated_opts = NimbleOptions.validate!(opts, @start_link_opts)
 
-      {:error, error} ->
+    case Runtime.Service.start_link(service_name, datastore_context_name, validated_opts) do
+      {:ok, _} = result ->
+        result
+
+      {:error, _} = error ->
         {:error,
-         %MscmpSystError{
-           code: :parameter_error,
-           message: "Option validation error",
-           cause: error
-         }}
+         Mserror.SettingsError.new(:service_management, "Failure starting Settings service.",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :start_link, 3},
+             parameters: %{
+               service_name: service_name,
+               datastore_context_name: datastore_context_name,
+               opts: opts
+             }
+           }
+         )}
     end
   end
 
@@ -310,9 +319,25 @@ defmodule MscmpSystSettings do
       :ok
   """
   @spec create(MscmpSystSettings.Types.setting_params()) ::
-          :ok | {:error, MscmpSystError.t()}
-  def create(creation_params),
-    do: Runtime.ProcessUtils.get_service() |> GenServer.call({:create, creation_params})
+          :ok | {:error, Mserror.SettingsError.t()}
+  def create(creation_params) do
+    call_result = GenServer.call(Runtime.ProcessUtils.get_service(), {:create, creation_params})
+
+    case call_result do
+      :ok ->
+        :ok
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.SettingsError.new(:settings_data, "Failure creating setting.",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :create, 1},
+             parameters: %{creation_params: creation_params}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -347,12 +372,31 @@ defmodule MscmpSystSettings do
           MscmpSystSettings.Types.setting_name(),
           MscmpSystSettings.Types.setting_types(),
           any()
-        ) :: :ok | {:error, MscmpSystError.t()}
+        ) :: :ok | {:error, Mserror.SettingsError.t()}
   def set_value(setting_name, setting_type, setting_value) do
     update_params = Map.put_new(%{}, setting_type, setting_value)
 
-    Runtime.ProcessUtils.get_service()
-    |> GenServer.call({:update, setting_name, update_params})
+    call_result =
+      GenServer.call(Runtime.ProcessUtils.get_service(), {:update, setting_name, update_params})
+
+    case call_result do
+      :ok ->
+        :ok
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.SettingsError.new(:settings_data, "Failure updating setting.",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :set_value, 3},
+             parameters: %{
+               setting_name: setting_name,
+               setting_type: setting_type,
+               setting_value: setting_value
+             }
+           }
+         )}
+    end
   end
 
   ##############################################################################
@@ -399,10 +443,28 @@ defmodule MscmpSystSettings do
   @spec set_values(
           MscmpSystSettings.Types.setting_name(),
           MscmpSystSettings.Types.setting_params()
-        ) :: :ok | {:error, MscmpSystError.t()}
+        ) :: :ok | {:error, Mserror.SettingsError.t()}
   def set_values(setting_name, update_params) do
-    Runtime.ProcessUtils.get_service()
-    |> GenServer.call({:update, setting_name, update_params})
+    call_result =
+      GenServer.call(Runtime.ProcessUtils.get_service(), {:update, setting_name, update_params})
+
+    case call_result do
+      :ok ->
+        :ok
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.SettingsError.new(:settings_data, "Failure updating setting.",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :set_values, 2},
+             parameters: %{
+               setting_name: setting_name,
+               update_params: update_params
+             }
+           }
+         )}
+    end
   end
 
   ##############################################################################
@@ -506,9 +568,25 @@ defmodule MscmpSystSettings do
       :ok
   """
   @spec delete(MscmpSystSettings.Types.setting_name()) ::
-          :ok | {:error, MscmpSystError.t()}
-  def delete(setting_name),
-    do: Runtime.ProcessUtils.get_service() |> GenServer.call({:delete, setting_name})
+          :ok | {:error, Mserror.SettingsError.t()}
+  def delete(setting_name) do
+    call_result = GenServer.call(Runtime.ProcessUtils.get_service(), {:delete, setting_name})
+
+    case call_result do
+      :ok ->
+        :ok
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.SettingsError.new(:settings_data, "Failure deleting setting.",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :delete, 1},
+             parameters: %{setting_name: setting_name}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #

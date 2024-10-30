@@ -1,5 +1,5 @@
-# Source File: doctests_test.exs
-# Location:    musebms/components/system/mscmp_syst_settings/test/doctests_test.exs
+# Source File: settings_error.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_settings/lib/api/mserror/settings_error.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,12 +10,13 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule DoctestsTest do
+defmodule Mserror.SettingsError do
   @moduledoc false
-  use SettingsTestCase, async: true
 
-  @moduletag :doctest
-  @moduletag :capture_log
-
-  doctest MscmpSystSettings, except: [terminate_service: 1]
+  use MscmpSystError,
+    component: MscmpSystSettings,
+    kinds: [
+      service_management: "Failure operating on a Settings service.",
+      settings_data: "Failure managing system Settings."
+    ]
 end
