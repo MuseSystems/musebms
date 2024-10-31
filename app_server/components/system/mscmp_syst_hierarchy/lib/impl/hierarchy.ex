@@ -19,22 +19,6 @@ defmodule MscmpSystHierarchy.Impl.Hierarchy do
 
   require Logger
 
-  ##############################################################################
-  #
-  # Options Definition
-  #
-  #
-
-  option_defs = [
-    sorted: [
-      type: :boolean,
-      default: true,
-      doc: """
-      When true, the hierarchy types will be returned in sorted order.
-      """
-    ]
-  ]
-
   #
   # Hierarchy Type
   #
@@ -70,34 +54,16 @@ defmodule MscmpSystHierarchy.Impl.Hierarchy do
   #
   #
 
-  @list_hierarchy_types_opts NimbleOptions.new!(Keyword.take(option_defs, [:sorted]))
-
-  @spec get_list_hierarchy_types_opts_docs() :: String.t()
-  def get_list_hierarchy_types_opts_docs, do: NimbleOptions.docs(@list_hierarchy_types_opts)
-
-  @spec list_hierarchy_types!(Keyword.t()) :: [Msdata.SystEnumItems.t()]
-  def list_hierarchy_types!(opts) do
-    opts = NimbleOptions.validate!(opts, @list_hierarchy_types_opts)
-
-    if opts[:sorted],
-      do: MscmpSystEnums.list_sorted_items("hierarchy_types"),
-      else: MscmpSystEnums.list_items("hierarchy_types")
-  end
-
-  @spec list_hierarchy_types(Keyword.t()) ::
-          {:ok, [Msdata.SystEnumItems.t()]} | {:error, MscmpSystError.t()}
+  @spec list_hierarchy_types(Keyword.t()) :: {:ok, [Msdata.SystEnumItems.t()]} | {:error, term()}
   def list_hierarchy_types(opts) do
-    {:ok, list_hierarchy_types!(opts)}
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+    list_items =
+      if opts[:sorted],
+        do: MscmpSystEnums.list_sorted_items("hierarchy_types"),
+        else: MscmpSystEnums.list_items("hierarchy_types")
 
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure retrieving Hierarchy Types List.",
-         cause: error
-       }}
+    {:ok, list_items}
+  rescue
+    error -> {:error, {:list_hierarchy_types_error, error}}
   end
 
   #
@@ -164,28 +130,17 @@ defmodule MscmpSystHierarchy.Impl.Hierarchy do
   #
   #
 
-  @spec get_hierarchy_id_by_name!(Types.hierarchy_name()) :: Types.hierarchy_id()
-  def get_hierarchy_id_by_name!(hierarchy_name) do
+  @spec get_hierarchy_id_by_name(Types.hierarchy_name()) ::
+          {:ok, Types.hierarchy_id()} | {:error, term()}
+  def get_hierarchy_id_by_name(hierarchy_name) do
     from(h in Msdata.SystHierarchies,
       select: h.id,
       where: h.internal_name == ^hierarchy_name
     )
-    |> MscmpSystDb.one!()
-  end
-
-  @spec get_hierarchy_id_by_name(Types.hierarchy_name()) ::
-          {:ok, Types.hierarchy_id()} | {:error, MscmpSystError.t()}
-  def get_hierarchy_id_by_name(hierarchy_name) do
-    {:ok, get_hierarchy_id_by_name!(hierarchy_name)}
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure retrieving Hierarchy ID by internal name.",
-         cause: error
-       }}
+    |> MscmpSystDb.one()
+    |> case do
+      nil -> {:error, {:not_found, hierarchy_name}}
+      hierarchy_id -> {:ok, hierarchy_id}
+    end
   end
 end

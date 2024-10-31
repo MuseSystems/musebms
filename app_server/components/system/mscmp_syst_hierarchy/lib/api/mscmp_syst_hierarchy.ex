@@ -17,6 +17,7 @@ defmodule MscmpSystHierarchy do
              |> String.split("<!-- MDOC !-->")
              |> Enum.fetch!(1)
 
+  alias MscmpSystError.Types.Context, as: ErrorContext
   alias MscmpSystHierarchy.Impl
   alias MscmpSystHierarchy.Types
 
@@ -156,8 +157,10 @@ defmodule MscmpSystHierarchy do
   @spec list_hierarchy_types!() :: [Msdata.SystEnumItems.t()]
   @spec list_hierarchy_types!(Keyword.t()) :: [Msdata.SystEnumItems.t()]
   def list_hierarchy_types!(opts \\ []) do
-    opts = NimbleOptions.validate!(opts, @list_hierarchy_types_opts)
-    Impl.Hierarchy.list_hierarchy_types!(opts)
+    case list_hierarchy_types(opts) do
+      {:ok, list} -> list
+      {:error, error} -> raise error
+    end
   end
 
   @doc section: :enumerations_data
@@ -187,12 +190,29 @@ defmodule MscmpSystHierarchy do
       iex> {:ok, [%Msdata.SystEnumItems{internal_name: "hierarchy_type_example"}]} =
       ...>   MscmpSystHierarchy.list_hierarchy_types()
   """
-  @spec list_hierarchy_types() :: {:ok, [Msdata.SystEnumItems.t()]} | {:error, MscmpSystError.t()}
+  @spec list_hierarchy_types() ::
+          {:ok, [Msdata.SystEnumItems.t()]} | {:error, Mserror.HierarchyError.t()}
   @spec list_hierarchy_types(Keyword.t()) ::
-          {:ok, [Msdata.SystEnumItems.t()]} | {:error, MscmpSystError.t()}
+          {:ok, [Msdata.SystEnumItems.t()]} | {:error, Mserror.HierarchyError.t()}
   def list_hierarchy_types(opts \\ []) do
     opts = NimbleOptions.validate!(opts, @list_hierarchy_types_opts)
-    Impl.Hierarchy.list_hierarchy_types(opts)
+
+    case Impl.Hierarchy.list_hierarchy_types(opts) do
+      {:ok, list} ->
+        {:ok, list}
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.HierarchyError.new(
+           :enumerations_data,
+           "Failure retrieving Hierarchy Types List.",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :list_hierarchy_types, 1},
+             parameters: %{opts: opts}
+           }
+         )}
+    end
   end
 
   ##############################################################################
@@ -388,7 +408,12 @@ defmodule MscmpSystHierarchy do
       true
   """
   @spec get_hierarchy_id_by_name!(Types.hierarchy_name()) :: Types.hierarchy_id()
-  defdelegate get_hierarchy_id_by_name!(hierarchy_name), to: Impl.Hierarchy
+  def get_hierarchy_id_by_name!(hierarchy_name) do
+    case get_hierarchy_id_by_name(hierarchy_name) do
+      {:ok, id} -> id
+      {:error, error} -> raise error
+    end
+  end
 
   @doc section: :hierarchy_data
   @doc """
@@ -397,7 +422,7 @@ defmodule MscmpSystHierarchy do
   On successful execution the Hierarchy record ID value is returned via a
   success tuple in the form `{:ok, <Hierarchy ID>}`.  If an error is encountered
   or the requested record does not exist an error tuple in the form
-  `{:error, %MscmpSystError{}}` is returned instead.
+  `{:error, %Mserror.HierarchyError{}}` is returned instead.
 
   ## Parameters
 
@@ -414,10 +439,27 @@ defmodule MscmpSystHierarchy do
 
   A failing call due to requesting a non-existent Hierarchy record.
 
-      iex> {:error, %MscmpSystError{}} =
+      iex> {:error, %Mserror.HierarchyError{}} =
       ...>   MscmpSystHierarchy.get_hierarchy_id_by_name("nonexistent_hierarchy")
   """
   @spec get_hierarchy_id_by_name(Types.hierarchy_name()) ::
-          {:ok, Types.hierarchy_id()} | {:error, MscmpSystError.t()}
-  defdelegate get_hierarchy_id_by_name(hierarchy_name), to: Impl.Hierarchy
+          {:ok, Types.hierarchy_id()} | {:error, Mserror.HierarchyError.t()}
+  def get_hierarchy_id_by_name(hierarchy_name) do
+    case Impl.Hierarchy.get_hierarchy_id_by_name(hierarchy_name) do
+      {:ok, id} ->
+        {:ok, id}
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.HierarchyError.new(
+           :hierarchy_data,
+           "Failure retrieving Hierarchy ID by internal name.",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :get_hierarchy_id_by_name, 1},
+             parameters: %{hierarchy_name: hierarchy_name}
+           }
+         )}
+    end
+  end
 end

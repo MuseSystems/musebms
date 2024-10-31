@@ -1,5 +1,5 @@
-# Source File: doctests_test.exs
-# Location:    musebms/app_server/components/system/mscmp_syst_hierarchy/test/doctests_test.exs
+# Source File: hierarchy_error.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_hierarchy/lib/api/mserror/hierarchy_error.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,12 +10,13 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule DoctestsTest do
+defmodule Mserror.HierarchyError do
   @moduledoc false
-  use HierarchyTestCase, async: true
 
-  @moduletag :doctest
-  @moduletag :capture_log
-
-  doctest MscmpSystHierarchy
+  use MscmpSystError,
+    component: MscmpSystHierarchy,
+    kinds: [
+      hierarchy_data: "Failure operating on Hierarchy data.",
+      enumerations_data: "Failure operating on Enumeration data."
+    ]
 end

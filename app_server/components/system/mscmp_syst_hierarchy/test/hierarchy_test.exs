@@ -11,6 +11,7 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule HierarchyTest do
+  @moduledoc false
   use HierarchyTestCase, async: true
 
   import Ecto.Query
@@ -62,22 +63,6 @@ defmodule HierarchyTest do
     assert control_id === success_id
 
     assert nil === Impl.Hierarchy.get_hierarchy_type_id_by_name("nonexistent_type")
-  end
-
-  test "Can list Hierarchy Types with Exceptions" do
-    ## No sort tests
-    assert unsorted_success_list = Impl.Hierarchy.list_hierarchy_types!(sorted: false)
-
-    assert Enum.all?(unsorted_success_list, &(&1.internal_name in @hierarchy_types))
-
-    ## Sorted tests
-    sorted_hierarchies = Enum.reverse(@hierarchy_types)
-
-    assert sorted_success_list = Impl.Hierarchy.list_hierarchy_types!([])
-
-    assert Enum.zip_reduce(sorted_hierarchies, sorted_success_list, true, fn a, b, acc ->
-             a === b.internal_name and acc
-           end)
   end
 
   test "Can list Hierarchy Types with Result Tuples" do
@@ -192,24 +177,6 @@ defmodule HierarchyTest do
     assert type_default_control_id === type_default_success_id
   end
 
-  test "Can get Hierarchy Record ID by Name with Exceptions" do
-    [hierarchy_internal_name] = Enum.take_random(@hierarchies, 1)
-
-    control_hierarchy_id =
-      from(h in Msdata.SystHierarchies,
-        select: h.id,
-        where: h.internal_name == ^hierarchy_internal_name
-      )
-      |> MscmpSystDb.one!()
-
-    assert success_hierarchy_id =
-             Impl.Hierarchy.get_hierarchy_id_by_name!(hierarchy_internal_name)
-
-    assert control_hierarchy_id === success_hierarchy_id
-
-    assert catch_error(Impl.Hierarchy.get_hierarchy_id_by_name!("nonexistent_hierarchy"))
-  end
-
   test "Can get Hierarchy Record ID by Name with Result Tuples" do
     [hierarchy_internal_name] = Enum.take_random(@hierarchies, 1)
 
@@ -225,7 +192,7 @@ defmodule HierarchyTest do
 
     assert control_hierarchy_id === success_hierarchy_id
 
-    assert {:error, %MscmpSystError{}} =
+    assert {:error, {:not_found, "nonexistent_hierarchy"}} =
              Impl.Hierarchy.get_hierarchy_id_by_name("nonexistent_hierarchy")
   end
 end
