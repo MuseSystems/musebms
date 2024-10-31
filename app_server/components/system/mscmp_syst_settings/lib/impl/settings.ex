@@ -18,8 +18,6 @@ defmodule MscmpSystSettings.Impl.Settings do
   alias MscmpSystSettings.Runtime.ProcessUtils
   alias MscmpSystSettings.Types
 
-  require Logger
-
   ######
   #
   # The application logic which is accessed via either the public API defined in
@@ -116,16 +114,8 @@ defmodule MscmpSystSettings.Impl.Settings do
       when (is_atom(settings_table) or is_reference(settings_table)) and is_map(creation_params) do
     validated_changeset = Msdata.SystSettings.changeset(%Msdata.SystSettings{}, creation_params)
 
-    with {:ok, updated_data} <- MscmpSystDb.insert(validated_changeset, returning: true),
-         true <-
-           :ets.insert(settings_table, {updated_data.internal_name, updated_data}) do
-      :ok
-    else
-      error when error === false ->
-        {:error, {:ets_insert_error, {settings_table, validated_changeset}}}
-
-      error ->
-        {:error, {:unknown_error, error}}
+    with {:ok, updated_data} <- MscmpSystDb.insert(validated_changeset, returning: true) do
+      Msutils.Data.ets_insert(settings_table, {updated_data.internal_name, updated_data})
     end
   end
 
@@ -146,17 +136,17 @@ defmodule MscmpSystSettings.Impl.Settings do
       when (is_atom(settings_table) or is_reference(settings_table)) and
              is_binary(setting_name) and
              is_map(update_params) do
-    with existing_data <- :ets.lookup_element(settings_table, setting_name, 2),
+    with {:ok, existing_data} <- Msutils.Data.ets_lookup_element(settings_table, setting_name, 2),
          changeset <- Msdata.SystSettings.changeset(existing_data, update_params),
-         {:ok, updated_data} <- MscmpSystDb.update(changeset, returning: true),
-         true <- :ets.update_element(settings_table, setting_name, {2, updated_data}) do
-      :ok
-    else
-      error -> {:error, {:database_error, error}}
+         {:ok, updated_data} <- db_update(changeset) do
+      Msutils.Data.ets_update_element(settings_table, setting_name, {2, updated_data})
     end
+  end
+
+  defp db_update(changeset) do
+    MscmpSystDb.update(changeset, returning: true)
   rescue
-    error ->
-      {:error, {:ets_error, error}}
+    error -> {:error, {:database_error, error}}
   end
 
   ##############################################################################
@@ -174,17 +164,16 @@ defmodule MscmpSystSettings.Impl.Settings do
       when (is_atom(settings_table) or is_reference(settings_table)) and is_binary(setting_name) do
     delete_qry = from(s in Msdata.SystSettings, where: s.internal_name == ^setting_name)
 
-    try do
-      with {1, _rows} <- MscmpSystDb.delete_all(delete_qry),
-           true <- :ets.delete(settings_table, setting_name) do
-        :ok
-      else
-        {0, _} ->
-          {:error, {:not_found, setting_name}}
-      end
-    rescue
-      error ->
-        {:error, {:database_error, error}}
+    case db_delete_all(delete_qry) do
+      {1, _rows} -> Msutils.Data.ets_delete(settings_table, setting_name)
+      {0, _} -> {:error, {:not_found, setting_name}}
+      error -> error
     end
+  end
+
+  defp db_delete_all(delete_qry) do
+    MscmpSystDb.delete_all(delete_qry)
+  rescue
+    error -> {:error, {:database_error, error}}
   end
 end

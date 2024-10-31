@@ -60,7 +60,9 @@ defmodule MscmpSystSettings.MixProject do
           mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db",
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
           mscmp_syst_utils_string:
-            "../../../../documentation/technical/app_server/mscmp_syst_utils_string"
+            "../../../../documentation/technical/app_server/mscmp_syst_utils_string",
+          mscmp_syst_utils_data:
+            "../../../../documentation/technical/app_server/mscmp_syst_utils_data"
         ],
         groups_for_docs: [
           Settings: &(&1[:section] == :settings_data),
