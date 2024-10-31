@@ -57,7 +57,8 @@ defmodule MscmpSystUtilsData.MixProject do
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error"
         ],
         groups_for_docs: [
-          "Changeset Validators": &(&1[:section] == :changeset_validators)
+          "Changeset Validators": &(&1[:section] == :changeset_validators),
+          "Ets Operations": &(&1[:section] == :ets_operations)
         ],
         groups_for_modules: [
           API: [Msutils.Data],

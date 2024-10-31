@@ -21,6 +21,9 @@ defmodule Mserror.DataUtilsError do
       Indicates that there were compilation errors in the macros provided by
       this Component.  This will often times be due to invalid parameters being
       passed to the macros.
+      """,
+      ets_operations: """
+      Indicates that there was an error in an ETS operation.
       """
     ],
     component: MscmpSystUtilsData

@@ -5,6 +5,18 @@
 This is a set of utilities for working with data which is generally
 useful across components.
 
+Currently included in these utilities are:
+
+* ETS operations
+
+  Functions wrap some typical ETS operations so that they return standard result 
+  tuples.
+
+* Changeset validators
+
+  Common validation functions which can be used to validate changesets across
+  Components.
+
 
 > #### Note {: .info}
 >

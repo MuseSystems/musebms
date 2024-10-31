@@ -11,6 +11,157 @@ defmodule Msutils.Data do
 
   ##############################################################################
   #
+  # ETS Operations
+  #
+  #
+
+  @doc section: :ets_operations
+  @doc """
+  Inserts data into an ETS table.
+
+  In this we wrap the ETS `:ets.insert/2` function in a function that returns
+  an Mserror.DataUtilsError if there is an error.
+
+  ## Parameters
+
+    * `table` - the ETS table to insert the data into.
+
+    * `data` - the data to insert into the ETS table.
+
+  ## Returns
+
+    * `:ok` - if the data was successfully inserted into the ETS table.
+
+    * `{:error, Mserror.DataUtilsError.t()}` - if there was an error inserting
+      the data into the ETS table.
+
+  """
+  @spec ets_insert(:ets.table(), term()) :: :ok | {:error, Mserror.DataUtilsError.t()}
+  def ets_insert(table, data) do
+    case Impl.Ets.ets_insert(table, data) do
+      :ok ->
+        :ok
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.DataUtilsError.new(:ets_operations, "Error inserting data into ETS table",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :ets_insert, 2},
+             parameters: %{table: table, data: data}
+           }
+         )}
+    end
+  end
+
+  @doc section: :ets_operations
+  @doc """
+  Looks up an element in an ETS table by key and position.
+
+  Wraps the ETS `:ets.lookup_element/3` function, returning a result tuple.
+
+  ## Parameters
+
+    * `table` - the ETS table to look up the element in
+    * `key` - the key to look up
+    * `element_index` - the position of the element to return
+
+  ## Returns
+
+    * `{:ok, term()}` - the element was found at the specified position
+    * `{:error, Mserror.DataUtilsError.t()}` - if there was an error during lookup
+  """
+  @spec ets_lookup_element(:ets.table(), term(), non_neg_integer()) ::
+          {:ok, term()} | {:error, Mserror.DataUtilsError.t()}
+  def ets_lookup_element(table, key, element_index) do
+    case Impl.Ets.ets_lookup_element(table, key, element_index) do
+      {:ok, value} ->
+        {:ok, value}
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.DataUtilsError.new(:ets_operations, "Error looking up element in ETS table",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :ets_lookup_element, 3},
+             parameters: %{table: table, key: key, element_index: element_index}
+           }
+         )}
+    end
+  end
+
+  @doc section: :ets_operations
+  @doc """
+  Updates an element in an ETS table.
+
+  Wraps the ETS `:ets.update_element/3` function.
+
+  ## Parameters
+
+    * `table` - the ETS table to update
+    * `key` - the key of the element to update
+    * `updated_data` - the new data to set
+
+  ## Returns
+
+    * `:ok` - if the update was successful
+    * `{:error, Mserror.DataUtilsError.t()}` - if there was an error during update
+  """
+  @spec ets_update_element(:ets.table(), term(), term()) ::
+          :ok | {:error, Mserror.DataUtilsError.t()}
+  def ets_update_element(table, key, updated_data) do
+    case Impl.Ets.ets_update_element(table, key, updated_data) do
+      :ok ->
+        :ok
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.DataUtilsError.new(:ets_operations, "Error updating element in ETS table",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :ets_update_element, 3},
+             parameters: %{table: table, key: key, updated_data: updated_data}
+           }
+         )}
+    end
+  end
+
+  @doc section: :ets_operations
+  @doc """
+  Deletes an entry from an ETS table.
+
+  Wraps the ETS `:ets.delete/2` function.
+
+  ## Parameters
+
+    * `table` - the ETS table to delete from
+    * `key` - the key of the entry to delete
+
+  ## Returns
+
+    * `:ok` - if the deletion was successful
+    * `{:error, Mserror.DataUtilsError.t()}` - if there was an error during deletion
+  """
+  @spec ets_delete(:ets.table(), term()) :: :ok | {:error, Mserror.DataUtilsError.t()}
+  def ets_delete(table, key) do
+    case Impl.Ets.ets_delete(table, key) do
+      :ok ->
+        :ok
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.DataUtilsError.new(:ets_operations, "Error deleting entry from ETS table",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :ets_delete, 2},
+             parameters: %{table: table, key: key}
+           }
+         )}
+    end
+  end
+
+  ##############################################################################
+  #
   # Common Validator Option Definitions
   #
   #
