@@ -13,8 +13,20 @@
 defmodule MscmpSystSettings.Runtime.ProcessUtils do
   @moduledoc false
 
+  ##############################################################################
+  #
+  # get_settings_table
+  #
+  #
+
   @spec get_settings_table() :: :ets.table() | nil
   def get_settings_table, do: Process.get(:"MscmpSystSettings.table_name")
+
+  ##############################################################################
+  #
+  # put_service
+  #
+  #
 
   @spec put_service(GenServer.name() | nil) :: GenServer.name() | nil
   def put_service(nil) do
@@ -27,6 +39,12 @@ defmodule MscmpSystSettings.Runtime.ProcessUtils do
     Process.put(:"MscmpSystSettings.table_name", settings_table)
     Process.put(:"MscmpSystSettings.service_name", settings_service_name)
   end
+
+  ##############################################################################
+  #
+  # get_service
+  #
+  #
 
   @spec get_service() :: GenServer.name() | nil
   def get_service, do: Process.get(:"MscmpSystSettings.service_name")

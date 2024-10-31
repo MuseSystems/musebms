@@ -32,6 +32,12 @@ defmodule MscmpSystSettings.Impl.Settings do
   # since we need to change data in the ets tables which are owned by the
   # GenServer and are in "protected" mode.
 
+  ##############################################################################
+  #
+  # refresh_from_database
+  #
+  #
+
   @spec refresh_from_database() :: :ok
   def refresh_from_database, do: ProcessUtils.get_settings_table() |> refresh_from_database()
 
@@ -44,9 +50,21 @@ defmodule MscmpSystSettings.Impl.Settings do
     |> Enum.each(&:ets.insert(settings_table, {&1.internal_name, &1}))
   end
 
+  ##############################################################################
+  #
+  # get_values
+  #
+  #
+
   @spec get_values(Types.setting_name()) :: Msdata.SystSettings.t()
   def get_values(setting_name),
     do: ProcessUtils.get_settings_table() |> :ets.lookup_element(setting_name, 2)
+
+  ##############################################################################
+  #
+  # get_value
+  #
+  #
 
   @spec get_value(Types.setting_name(), Types.setting_types()) :: any()
   def get_value(setting_name, setting_type)
@@ -71,11 +89,23 @@ defmodule MscmpSystSettings.Impl.Settings do
     |> Map.get(setting_type)
   end
 
+  ##############################################################################
+  #
+  # list_all
+  #
+  #
+
   @spec list_all() :: list(Msdata.SystSettings)
   def list_all do
     # Select query :ets.fun2ms(fn {_, setting_values} -> setting_values end)
     ProcessUtils.get_settings_table() |> :ets.select([{{:_, :"$1"}, [], [:"$1"]}])
   end
+
+  ##############################################################################
+  #
+  # create
+  #
+  #
 
   @spec create(Types.setting_params()) :: :ok | {:error, term()}
   def create(creation_params) when is_map(creation_params),
@@ -98,6 +128,12 @@ defmodule MscmpSystSettings.Impl.Settings do
         {:error, {:unknown_error, error}}
     end
   end
+
+  ##############################################################################
+  #
+  # update_setting
+  #
+  #
 
   @spec update_setting(Types.setting_name(), Types.setting_params()) ::
           :ok | {:error, term()}
@@ -122,6 +158,12 @@ defmodule MscmpSystSettings.Impl.Settings do
     error ->
       {:error, {:ets_error, error}}
   end
+
+  ##############################################################################
+  #
+  # delete
+  #
+  #
 
   @spec delete(Types.setting_name()) :: :ok | {:error, term()}
   def delete(setting_name),
