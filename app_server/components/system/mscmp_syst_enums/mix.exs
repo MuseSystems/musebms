@@ -78,7 +78,8 @@ defmodule MscmpSystEnums.MixProject do
             Msdata.SystEnumFunctionalTypes,
             Msdata.SystEnumItems
           ],
-          "Supporting Types": [MscmpSystEnums.Types]
+          "Supporting Types": [MscmpSystEnums.Types],
+          Exceptions: [Mserror.EnumsError]
         ]
       ]
     ]

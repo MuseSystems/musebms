@@ -62,7 +62,8 @@ defmodule MscmpSystOptions.MixProject do
         ],
         groups_for_modules: [
           API: [MscmpSystOptions],
-          "Supporting Types": [MscmpSystOptions.Types]
+          "Supporting Types": [MscmpSystOptions.Types],
+          Exceptions: [Mserror.OptionsError]
         ]
       ]
     ]

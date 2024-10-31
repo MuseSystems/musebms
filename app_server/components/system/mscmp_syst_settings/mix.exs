@@ -73,7 +73,8 @@ defmodule MscmpSystSettings.MixProject do
         groups_for_modules: [
           API: [MscmpSystSettings],
           Data: [Msdata.SystSettings],
-          "Supporting Types": [MscmpSystSettings.Types]
+          "Supporting Types": [MscmpSystSettings.Types],
+          Exceptions: [Mserror.SettingsError]
         ]
       ]
     ]

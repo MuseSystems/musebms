@@ -63,7 +63,8 @@ defmodule MscmpSystHierarchy.MixProject do
         groups_for_modules: [
           API: [MscmpSystHierarchy],
           Data: [Msdata.SystHierarchies, Msdata.SystHierarchyItems],
-          "Supporting Types": [MscmpSystHierarchy.Types]
+          "Supporting Types": [MscmpSystHierarchy.Types],
+          Exceptions: [Mserror.HierarchyError]
         ],
         deps: [
           mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db",
