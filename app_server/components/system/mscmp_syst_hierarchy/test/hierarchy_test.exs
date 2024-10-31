@@ -87,7 +87,7 @@ defmodule HierarchyTest do
     assert Enum.all?(unsorted_success_list, &(&1.internal_name in @hierarchy_types))
 
     ## Sorted tests
-    sorted_hierarchies = Enum.reverse(@hierarchy_types)
+    sorted_hierarchies = Enum.sort(@hierarchy_types)
 
     assert {:ok, sorted_success_list} = Impl.Hierarchy.list_hierarchy_types([])
 
