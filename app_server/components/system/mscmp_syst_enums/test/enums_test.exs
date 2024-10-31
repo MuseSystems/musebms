@@ -11,6 +11,7 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule EnumsTest do
+  @moduledoc false
   use EnumsTestCase, async: true
 
   @moduletag :unit

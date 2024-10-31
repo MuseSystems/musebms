@@ -51,16 +51,18 @@ defmodule MscmpSystEnums.MixProject do
       start_permanent: in_production,
       dialyzer: @dialyzer_opts,
       elixirc_paths: elixirc_paths(Mix.env()),
-      deps: [
-        mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db",
-        mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
-        mscmp_syst_utils_string:
-          "../../../../documentation/technical/app_server/mscmp_syst_utils_string"
-      ],
       docs: [
         name: "MscmpSystEnums",
         main: "MscmpSystEnums",
         output: "../../../../documentation/technical/app_server/mscmp_syst_enums",
+        deps: [
+          mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db",
+          mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
+          mscmp_syst_utils_string:
+            "../../../../documentation/technical/app_server/mscmp_syst_utils_string",
+          mscmp_syst_utils_data:
+            "../../../../documentation/technical/app_server/mscmp_syst_utils_data"
+        ],
         groups_for_docs: [
           Enumerations: &(&1[:section] == :enum_data),
           "Enumeration Functional Types": &(&1[:section] == :enum_functional_type_data),

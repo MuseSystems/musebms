@@ -65,34 +65,24 @@ defmodule MscmpSystEnums.Impl.Enums do
   # consider allowing an outright crash in this case since our state would be
   # invalid and perhaps not regularly recoverable.
 
-  @spec refresh_enum_from_database(Types.enum_name()) :: :ok | {:error, MscmpSystError.t()}
+  @spec refresh_enum_from_database(Types.enum_name()) :: :ok | {:error, term()}
   def refresh_enum_from_database(enum_name),
     do: ProcessUtils.get_enums_table() |> refresh_enum_from_database(enum_name)
 
   @spec refresh_enum_from_database(:ets.table(), Types.enum_name()) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, term()}
   def refresh_enum_from_database(enums_table, enum_name)
       when is_atom(enums_table) or is_reference(enums_table) do
-    from(e in Msdata.SystEnums,
-      preload: [enum_items: [:functional_type], functional_types: []],
-      where: e.internal_name == ^enum_name
-    )
-    |> MscmpSystDb.one!()
-    |> then(&:ets.insert(enums_table, {&1.internal_name, &1}))
+    enum_qry =
+      from(e in Msdata.SystEnums,
+        preload: [enum_items: [:functional_type], functional_types: []],
+        where: e.internal_name == ^enum_name
+      )
 
-    :ok
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure refreshing enumeration from database.",
-          cause: error
-        }
-      }
+    case MscmpSystDb.one(enum_qry) do
+      nil -> {:error, {:not_found, enum_name}}
+      result -> Msutils.Data.ets_insert(enums_table, {result.internal_name, result})
+    end
   end
 
   ##############################################################################
@@ -293,41 +283,31 @@ defmodule MscmpSystEnums.Impl.Enums do
   #
   #
 
-  @spec create(Types.enum_params()) :: :ok | {:error, MscmpSystError.t()}
+  @spec create(Types.enum_params()) :: :ok | {:error, term()}
   def create(enum_params),
     do: ProcessUtils.get_enums_table() |> create(enum_params)
 
-  @spec create(:ets.table(), Types.enum_params()) :: :ok | {:error, MscmpSystError.t()}
+  @spec create(:ets.table(), Types.enum_params()) :: :ok | {:error, term()}
   def create(enums_table, enum_params)
       when is_atom(enums_table) or is_reference(enums_table) do
-    {:ok, _} =
-      Ecto.Multi.new()
-      |> Ecto.Multi.insert(:enum, Msdata.SystEnums.changeset(%Msdata.SystEnums{}, enum_params),
-        returning: [:id]
-      )
-      |> Ecto.Multi.merge(fn %{enum: enum} ->
-        Ecto.Multi.new()
-        |> create_functional_types_for_enum(enum.id, enum_params)
-      end)
-      |> Ecto.Multi.merge(fn changes ->
-        Ecto.Multi.new()
-        |> create_items_for_enum(changes, enum_params)
-      end)
-      |> MscmpSystDb.transaction()
-
-    refresh_enum_from_database(enums_table, enum_params.internal_name)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure creating enumeration.",
-          cause: error
-        }
-      }
+    with {:ok, _result} <-
+           Ecto.Multi.new()
+           |> Ecto.Multi.insert(
+             :enum,
+             Msdata.SystEnums.changeset(%Msdata.SystEnums{}, enum_params),
+             returning: [:id]
+           )
+           |> Ecto.Multi.merge(fn %{enum: enum} ->
+             Ecto.Multi.new()
+             |> create_functional_types_for_enum(enum.id, enum_params)
+           end)
+           |> Ecto.Multi.merge(fn changes ->
+             Ecto.Multi.new()
+             |> create_items_for_enum(changes, enum_params)
+           end)
+           |> MscmpSystDb.transaction() do
+      refresh_enum_from_database(enums_table, enum_params.internal_name)
+    end
   end
 
   defp create_functional_types_for_enum(multi, enum_id, %{functional_types: functional_types}) do
@@ -379,7 +359,7 @@ defmodule MscmpSystEnums.Impl.Enums do
           Types.enum_name(),
           Types.enum_functional_type_params()
         ) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, term()}
   def create_functional_type(enum_name, functional_type_params),
     do:
       ProcessUtils.get_enums_table()
@@ -390,30 +370,19 @@ defmodule MscmpSystEnums.Impl.Enums do
           Types.enum_name(),
           Types.enum_functional_type_params()
         ) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, term()}
   def create_functional_type(enums_table, enum_name, functional_type_params)
       when is_atom(enums_table) or is_reference(enums_table) do
     %Msdata.SystEnums{id: enum_id} = get_values(enums_table, enum_name)
 
     resolved_functional_type = Map.put(functional_type_params, :enum_id, enum_id)
 
-    %Msdata.SystEnumFunctionalTypes{}
-    |> Msdata.SystEnumFunctionalTypes.changeset(resolved_functional_type)
-    |> MscmpSystDb.insert!()
-
-    refresh_enum_from_database(enums_table, enum_name)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure creating enumeration functional type.",
-          cause: error
-        }
-      }
+    with {:ok, _} <-
+           %Msdata.SystEnumFunctionalTypes{}
+           |> Msdata.SystEnumFunctionalTypes.changeset(resolved_functional_type)
+           |> db_insert() do
+      refresh_enum_from_database(enums_table, enum_name)
+    end
   end
 
   ##############################################################################
@@ -423,90 +392,59 @@ defmodule MscmpSystEnums.Impl.Enums do
   #
 
   @spec create_item(Types.enum_name(), Types.enum_item_params()) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, term()}
   def create_item(enum_name, enum_item_params),
     do: ProcessUtils.get_enums_table() |> create_item(enum_name, enum_item_params)
 
   @spec create_item(:ets.table(), Types.enum_name(), Types.enum_item_params()) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, term()}
   def create_item(enums_table, enum_name, enum_item_params)
       when is_atom(enums_table) or is_reference(enums_table) do
     %Msdata.SystEnums{id: enum_id, functional_types: functional_types} =
       get_values(enums_table, enum_name)
 
-    functional_type_id =
-      maybe_get_functional_type_id(
-        functional_types,
-        Map.get(enum_item_params, :functional_type_name)
-      )
-
-    resolved_enum_item_params =
-      Map.merge(enum_item_params, %{enum_id: enum_id, functional_type_id: functional_type_id})
-
-    %Msdata.SystEnumItems{}
-    |> Msdata.SystEnumItems.changeset(resolved_enum_item_params)
-    |> MscmpSystDb.insert!()
-
-    refresh_enum_from_database(enums_table, enum_name)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure creating enumeration item.",
-          cause: error
-        }
-      }
+    with {:ok, functional_type_id} <-
+           maybe_get_functional_type_id(
+             functional_types,
+             Map.get(enum_item_params, :functional_type_name)
+           ),
+         resolved_enum_item_params =
+           Map.merge(enum_item_params, %{
+             enum_id: enum_id,
+             functional_type_id: functional_type_id
+           }),
+         {:ok, _} <-
+           %Msdata.SystEnumItems{}
+           |> Msdata.SystEnumItems.changeset(resolved_enum_item_params)
+           |> db_insert() do
+      refresh_enum_from_database(enums_table, enum_name)
+    end
   end
 
   defp maybe_get_functional_type_id(functional_types, functional_type_name)
        when is_list(functional_types) and length(functional_types) > 0 and
               is_binary(functional_type_name) do
-    Enum.find(functional_types, fn func_type ->
-      func_type.internal_name == functional_type_name
-    end)
-    |> Map.get(:id)
-    |> validated_functional_type_id!()
+    case Enum.find(functional_types, fn func_type ->
+           func_type.internal_name == functional_type_name
+         end) do
+      %{id: id} when not is_nil(id) -> {:ok, id}
+      _ -> {:error, {:validation_error, :functional_type_not_found}}
+    end
   end
 
   defp maybe_get_functional_type_id(functional_types, functional_type_name)
        when (is_nil(functional_types) or functional_types == []) and
               is_binary(functional_type_name) do
-    raise MscmpSystError,
-      code: :undefined_error,
-      message: "New enum item requests a functional type but the enumeration has none.",
-      cause: %{
-        functional_types: functional_types,
-        functional_type_name: functional_type_name
-      }
+    {:error, {:validation_error, :no_functional_types_defined}}
   end
 
   defp maybe_get_functional_type_id(functional_types, functional_type_name)
        when is_list(functional_types) and length(functional_types) > 0 and
               is_nil(functional_type_name) do
-    raise MscmpSystError,
-      code: :undefined_error,
-      message: "New enum item for this enumeration must identify a functional type.",
-      cause: %{
-        functional_types: functional_types,
-        functional_type_name: functional_type_name
-      }
+    {:error, {:validation_error, :functional_type_required}}
   end
 
-  defp maybe_get_functional_type_id(_functional_types, _functional_type_name), do: nil
-
-  defp validated_functional_type_id!(functional_type_id) when is_binary(functional_type_id),
-    do: functional_type_id
-
-  defp validated_functional_type_id!(functional_type_id) do
-    raise MscmpSystError,
-      code: :undefined_error,
-      message: "Failed to resolve functional type ID.",
-      cause: %{functional_type_id: functional_type_id}
-  end
+  defp maybe_get_functional_type_id(_functional_types, _functional_type_name), do: {:ok, nil}
 
   ##############################################################################
   #
@@ -515,36 +453,29 @@ defmodule MscmpSystEnums.Impl.Enums do
   #
 
   @spec set_values(Types.enum_name(), Types.enum_params()) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, term()}
   def set_values(enum_name, enum_params),
     do: ProcessUtils.get_enums_table() |> set_values(enum_name, enum_params)
 
   @spec set_values(:ets.table(), Types.enum_name(), Types.enum_params()) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, term()}
   def set_values(enums_table, enum_name, enum_params)
       when is_atom(enums_table) or is_reference(enums_table) do
     resolved_internal_name = Map.get(enum_params, :internal_name, enum_name)
 
-    :ets.lookup_element(enums_table, enum_name, 2)
-    |> Msdata.SystEnums.changeset(enum_params)
-    |> MscmpSystDb.update!()
-
-    if enum_name != resolved_internal_name, do: :ets.delete(enums_table, enum_name)
-
-    refresh_enum_from_database(enums_table, resolved_internal_name)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure setting enumeration values.",
-          cause: error
-        }
-      }
+    with {:ok, current_enum} <- Msutils.Data.ets_lookup_element(enums_table, enum_name, 2),
+         changeset <- Msdata.SystEnums.changeset(current_enum, enum_params),
+         {:ok, _} <- db_update(changeset),
+         :ok <- maybe_delete_enum(enums_table, enum_name, resolved_internal_name) do
+      refresh_enum_from_database(enums_table, resolved_internal_name)
+    end
   end
+
+  defp maybe_delete_enum(enums_table, enum_name, resolved_internal_name)
+       when enum_name != resolved_internal_name,
+       do: Msutils.Data.ets_delete(enums_table, enum_name)
+
+  defp maybe_delete_enum(_enums_table, _enum_name, _resolved_internal_name), do: :ok
 
   ##############################################################################
   #
@@ -557,7 +488,7 @@ defmodule MscmpSystEnums.Impl.Enums do
           Types.enum_functional_type_name(),
           Types.enum_functional_type_params()
         ) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, term()}
   def set_functional_type_values(enum_name, functional_type_name, functional_type_params) do
     ProcessUtils.get_enums_table()
     |> set_functional_type_values(enum_name, functional_type_name, functional_type_params)
@@ -569,7 +500,7 @@ defmodule MscmpSystEnums.Impl.Enums do
           Types.enum_functional_type_name(),
           Types.enum_functional_type_params()
         ) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, term()}
   def set_functional_type_values(
         enums_table,
         enum_name,
@@ -577,25 +508,19 @@ defmodule MscmpSystEnums.Impl.Enums do
         functional_type_params
       )
       when is_atom(enums_table) or is_reference(enums_table) do
-    %{functional_types: functional_types} = :ets.lookup_element(enums_table, enum_name, 2)
-
-    Enum.find(functional_types, &(&1.internal_name == functional_type_name))
-    |> Msdata.SystEnumFunctionalTypes.changeset(functional_type_params)
-    |> MscmpSystDb.update!()
-
-    refresh_enum_from_database(enums_table, enum_name)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure setting enumeration functional type values.",
-          cause: error
-        }
-      }
+    with {:ok, %{functional_types: functional_types}} <-
+           Msutils.Data.ets_lookup_element(enums_table, enum_name, 2),
+         functional_type when not is_nil(functional_type) <-
+           Enum.find(functional_types, &(&1.internal_name == functional_type_name)),
+         {:ok, _} <-
+           functional_type
+           |> Msdata.SystEnumFunctionalTypes.changeset(functional_type_params)
+           |> db_update() do
+      refresh_enum_from_database(enums_table, enum_name)
+    else
+      {:error, _} = error -> error
+      nil -> {:error, {:not_found, functional_type_name}}
+    end
   end
 
   ##############################################################################
@@ -605,7 +530,7 @@ defmodule MscmpSystEnums.Impl.Enums do
   #
 
   @spec set_item_values(Types.enum_name(), Types.enum_item_name(), Types.enum_item_params()) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, term()}
   def set_item_values(enum_name, enum_item_name, enum_item_params) do
     ProcessUtils.get_enums_table()
     |> set_item_values(enum_name, enum_item_name, enum_item_params)
@@ -617,28 +542,22 @@ defmodule MscmpSystEnums.Impl.Enums do
           Types.enum_item_name(),
           Types.enum_item_params()
         ) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, term()}
   def set_item_values(enums_table, enum_name, enum_item_name, enum_item_params)
       when is_atom(enums_table) or is_reference(enums_table) do
-    %{enum_items: enum_items} = :ets.lookup_element(enums_table, enum_name, 2)
-
-    Enum.find(enum_items, &(&1.internal_name == enum_item_name))
-    |> Msdata.SystEnumItems.changeset(enum_item_params)
-    |> MscmpSystDb.update!()
-
-    refresh_enum_from_database(enums_table, enum_name)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure setting enumeration item values.",
-          cause: error
-        }
-      }
+    with {:ok, %{enum_items: enum_items}} <-
+           Msutils.Data.ets_lookup_element(enums_table, enum_name, 2),
+         enum_item when not is_nil(enum_item) <-
+           Enum.find(enum_items, &(&1.internal_name == enum_item_name)),
+         {:ok, _} <-
+           enum_item
+           |> Msdata.SystEnumItems.changeset(enum_item_params)
+           |> db_update() do
+      refresh_enum_from_database(enums_table, enum_name)
+    else
+      {:error, _} = error -> error
+      nil -> {:error, {:not_found, enum_item_name}}
+    end
   end
 
   ##############################################################################
@@ -647,31 +566,22 @@ defmodule MscmpSystEnums.Impl.Enums do
   #
   #
 
-  @spec delete(Types.enum_name()) :: :ok | {:error, MscmpSystError.t()}
+  @spec delete(Types.enum_name()) :: :ok | {:error, term()}
   def delete(enum_name), do: ProcessUtils.get_enums_table() |> delete(enum_name)
 
-  @spec delete(:ets.table(), Types.enum_name()) :: :ok | {:error, MscmpSystError.t()}
+  @spec delete(:ets.table(), Types.enum_name()) :: :ok | {:error, term()}
   def delete(enums_table, enum_name)
       when is_atom(enums_table) or is_reference(enums_table) do
-    delete_qry = from(e in Msdata.SystEnums, where: e.internal_name == ^enum_name)
+    delete_qry = from(s in Msdata.SystEnums, where: s.internal_name == ^enum_name)
 
-    {1, _rows} = MscmpSystDb.delete_all(delete_qry)
-
-    true = :ets.delete(enums_table, enum_name)
-
-    :ok
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure deleting an enumeration.",
-          cause: error
-        }
-      }
+    try do
+      case MscmpSystDb.delete_all(delete_qry) do
+        {1, _rows} -> Msutils.Data.ets_delete(enums_table, enum_name)
+        {0, _} -> {:error, {:not_found, enum_name}}
+      end
+    rescue
+      error -> {:error, {:database_error, error}}
+    end
   end
 
   ##############################################################################
@@ -681,7 +591,7 @@ defmodule MscmpSystEnums.Impl.Enums do
   #
 
   @spec delete_functional_type(Types.enum_name(), Types.enum_functional_type_name()) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, term()}
   def delete_functional_type(enum_name, functional_type_name),
     do:
       ProcessUtils.get_enums_table()
@@ -692,27 +602,20 @@ defmodule MscmpSystEnums.Impl.Enums do
           Types.enum_name(),
           Types.enum_functional_type_name()
         ) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, term()}
   def delete_functional_type(enums_table, enum_name, functional_type_name)
       when is_atom(enums_table) or is_reference(enums_table) do
     delete_qry =
       from(f in Msdata.SystEnumFunctionalTypes, where: f.internal_name == ^functional_type_name)
 
-    {1, _rows} = MscmpSystDb.delete_all(delete_qry)
-
-    refresh_enum_from_database(enums_table, enum_name)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure deleting an enumeration functional type.",
-          cause: error
-        }
-      }
+    try do
+      case MscmpSystDb.delete_all(delete_qry) do
+        {1, _rows} -> refresh_enum_from_database(enums_table, enum_name)
+        {0, _} -> {:error, {:not_found, functional_type_name}}
+      end
+    rescue
+      error -> {:error, {:database_error, error}}
+    end
   end
 
   ##############################################################################
@@ -722,31 +625,24 @@ defmodule MscmpSystEnums.Impl.Enums do
   #
 
   @spec delete_item(Types.enum_name(), Types.enum_item_name()) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, term()}
   def delete_item(enum_name, enum_item_name),
     do: ProcessUtils.get_enums_table() |> delete_item(enum_name, enum_item_name)
 
   @spec delete_item(:ets.table(), Types.enum_name(), Types.enum_item_name()) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, term()}
   def delete_item(enums_table, enum_name, enum_item_name)
       when is_atom(enums_table) or is_reference(enums_table) do
     delete_qry = from(f in Msdata.SystEnumItems, where: f.internal_name == ^enum_item_name)
 
-    {1, _rows} = MscmpSystDb.delete_all(delete_qry)
-
-    refresh_enum_from_database(enums_table, enum_name)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure deleting an enumeration item.",
-          cause: error
-        }
-      }
+    try do
+      case MscmpSystDb.delete_all(delete_qry) do
+        {1, _rows} -> refresh_enum_from_database(enums_table, enum_name)
+        {0, _} -> {:error, {:not_found, enum_item_name}}
+      end
+    rescue
+      error -> {:error, {:database_error, error}}
+    end
   end
 
   ##############################################################################
@@ -760,5 +656,28 @@ defmodule MscmpSystEnums.Impl.Enums do
   def get_functional_type_by_item_id(enum_name, enum_item_id) do
     enum_item = get_item_by_id(enum_name, enum_item_id)
     enum_item.functional_type.internal_name
+  end
+
+  ##############################################################################
+  #
+  # shared private functions
+  #
+  #
+
+  # We need to wrap the database insert and update calls in a rescue because the
+  # database may return an error if the record being updated is a system defined
+  # record and the change is found invalid at the database.  In these cases, the
+  # database triggers will raise an exception which becomes a hard error in Ecto.
+
+  defp db_insert(changeset) do
+    MscmpSystDb.insert(changeset)
+  rescue
+    error -> {:error, {:database_error, error}}
+  end
+
+  defp db_update(changeset) do
+    MscmpSystDb.update(changeset)
+  rescue
+    error -> {:error, {:database_error, error}}
   end
 end

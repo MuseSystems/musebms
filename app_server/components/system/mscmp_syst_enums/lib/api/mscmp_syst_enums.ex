@@ -21,6 +21,7 @@ defmodule MscmpSystEnums do
   alias MscmpSystEnums.Runtime
   alias MscmpSystEnums.Runtime.ProcessUtils
   alias MscmpSystEnums.Types
+  alias MscmpSystError.Types.Context, as: ErrorContext
 
   ##############################################################################
   #
@@ -158,21 +159,29 @@ defmodule MscmpSystEnums do
     #{NimbleOptions.docs(@start_link_opts)}
   """
   @spec start_link(Types.service_name(), MscmpSystDb.Types.context_service_name()) ::
-          {:ok, pid()} | {:error, MscmpSystError.t()}
+          {:ok, pid()} | {:error, Mserror.EnumsError.t()}
   @spec start_link(Types.service_name(), MscmpSystDb.Types.context_service_name(), Keyword.t()) ::
-          {:ok, pid()} | {:error, MscmpSystError.t()}
+          {:ok, pid()} | {:error, Mserror.EnumsError.t()}
   def start_link(service_name, datastore_context_name, opts \\ []) do
-    case NimbleOptions.validate(opts, @start_link_opts) do
-      {:ok, validated_opts} ->
-        Runtime.Service.start_link(service_name, datastore_context_name, validated_opts)
+    validated_opts = NimbleOptions.validate!(opts, @start_link_opts)
 
-      {:error, error} ->
+    case Runtime.Service.start_link(service_name, datastore_context_name, validated_opts) do
+      {:ok, pid} ->
+        {:ok, pid}
+
+      {:error, _} = error ->
         {:error,
-         %MscmpSystError{
-           code: :parameter_error,
-           message: "Option validation error",
-           cause: error
-         }}
+         Mserror.EnumsError.new(:service_management, "Failed to start Enumerations Service",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :start_link, 3},
+             parameters: %{
+               service_name: service_name,
+               datastore_context_name: datastore_context_name,
+               opts: validated_opts
+             }
+           }
+         )}
     end
   end
 
@@ -589,7 +598,7 @@ defmodule MscmpSystEnums do
       iex> MscmpSystEnums.create(example_enumeration)
       :ok
   """
-  @spec create(Types.enum_params()) :: :ok | {:error, MscmpSystError.t()}
+  @spec create(Types.enum_params()) :: :ok | {:error, Mserror.EnumsError.t()}
   def create(enum_params),
     do: ProcessUtils.get_service() |> GenServer.call({:create, enum_params})
 
@@ -615,10 +624,28 @@ defmodule MscmpSystEnums do
 
   """
   @spec create_functional_type(Types.enum_name(), Types.enum_functional_type_params()) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, Mserror.EnumsError.t()}
   def create_functional_type(enum_name, functional_type_params) do
-    ProcessUtils.get_service()
-    |> GenServer.call({:create_functional_type, enum_name, functional_type_params})
+    call_result =
+      GenServer.call(
+        ProcessUtils.get_service(),
+        {:create_functional_type, enum_name, functional_type_params}
+      )
+
+    case call_result do
+      :ok ->
+        :ok
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.EnumsError.new(:enum_functional_type_data, "Failed to create functional type",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :create_functional_type, 2},
+             parameters: %{enum_name: enum_name, functional_type_params: functional_type_params}
+           }
+         )}
+    end
   end
 
   ##############################################################################
@@ -645,10 +672,28 @@ defmodule MscmpSystEnums do
       values for the new enumeration item.
   """
   @spec create_item(Types.enum_name(), Types.enum_item_params()) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, Mserror.EnumsError.t()}
   def create_item(enum_name, enum_item_params) do
-    ProcessUtils.get_service()
-    |> GenServer.call({:create_item, enum_name, enum_item_params})
+    call_result =
+      GenServer.call(
+        ProcessUtils.get_service(),
+        {:create_item, enum_name, enum_item_params}
+      )
+
+    case call_result do
+      :ok ->
+        :ok
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.EnumsError.new(:enum_item_data, "Failed to create enumeration item",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :create_item, 2},
+             parameters: %{enum_name: enum_name, enum_item_params: enum_item_params}
+           }
+         )}
+    end
   end
 
   ##############################################################################
@@ -686,10 +731,28 @@ defmodule MscmpSystEnums do
 
   """
   @spec set_values(Types.enum_name(), Types.enum_params()) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, Mserror.EnumsError.t()}
   def set_values(enum_name, enum_params) do
-    ProcessUtils.get_service()
-    |> GenServer.call({:set_values, enum_name, enum_params})
+    call_result =
+      GenServer.call(
+        ProcessUtils.get_service(),
+        {:set_values, enum_name, enum_params}
+      )
+
+    case call_result do
+      :ok ->
+        :ok
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.EnumsError.new(:enum_data, "Failed to set enumeration values",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :set_values, 2},
+             parameters: %{enum_name: enum_name, enum_params: enum_params}
+           }
+         )}
+    end
   end
 
   ##############################################################################
@@ -733,16 +796,38 @@ defmodule MscmpSystEnums do
           Types.enum_name(),
           Types.enum_functional_type_name(),
           Types.enum_functional_type_params()
-        ) :: :ok | {:error, MscmpSystError.t()}
+        ) :: :ok | {:error, Mserror.EnumsError.t()}
   def set_functional_type_values(
         enum_name,
         functional_type_name,
         functional_type_params
       ) do
-    ProcessUtils.get_service()
-    |> GenServer.call(
-      {:set_functional_type_values, enum_name, functional_type_name, functional_type_params}
-    )
+    call_result =
+      GenServer.call(
+        ProcessUtils.get_service(),
+        {:set_functional_type_values, enum_name, functional_type_name, functional_type_params}
+      )
+
+    case call_result do
+      :ok ->
+        :ok
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.EnumsError.new(
+           :enum_functional_type_data,
+           "Failed to set functional type values",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :set_functional_type_values, 3},
+             parameters: %{
+               enum_name: enum_name,
+               functional_type_name: functional_type_name,
+               functional_type_params: functional_type_params
+             }
+           }
+         )}
+    end
   end
 
   ##############################################################################
@@ -788,14 +873,36 @@ defmodule MscmpSystEnums do
       which are to be changed.
   """
   @spec set_item_values(Types.enum_name(), Types.enum_item_name(), Types.enum_item_params()) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, Mserror.EnumsError.t()}
   def set_item_values(
         enum_name,
         enum_item_name,
         enum_item_params
       ) do
-    ProcessUtils.get_service()
-    |> GenServer.call({:set_item_values, enum_name, enum_item_name, enum_item_params})
+    call_result =
+      GenServer.call(
+        ProcessUtils.get_service(),
+        {:set_item_values, enum_name, enum_item_name, enum_item_params}
+      )
+
+    case call_result do
+      :ok ->
+        :ok
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.EnumsError.new(:enum_item_data, "Failed to set enumeration item values",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :set_item_values, 3},
+             parameters: %{
+               enum_name: enum_name,
+               enum_item_name: enum_item_name,
+               enum_item_params: enum_item_params
+             }
+           }
+         )}
+    end
   end
 
   ##############################################################################
@@ -816,10 +923,28 @@ defmodule MscmpSystEnums do
 
     * `enum_name` - the enumeration which is to be deleted by the function.
   """
-  @spec delete(Types.enum_name()) :: :ok | {:error, MscmpSystError.t()}
+  @spec delete(Types.enum_name()) :: :ok | {:error, Mserror.EnumsError.t()}
   def delete(enum_name) do
-    ProcessUtils.get_service()
-    |> GenServer.call({:delete, enum_name})
+    call_result =
+      GenServer.call(
+        ProcessUtils.get_service(),
+        {:delete, enum_name}
+      )
+
+    case call_result do
+      :ok ->
+        :ok
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.EnumsError.new(:enum_data, "Failed to delete enumeration",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :delete, 1},
+             parameters: %{enum_name: enum_name}
+           }
+         )}
+    end
   end
 
   ##############################################################################
@@ -844,10 +969,28 @@ defmodule MscmpSystEnums do
       operation.
   """
   @spec delete_functional_type(Types.enum_name(), Types.enum_functional_type_name()) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, Mserror.EnumsError.t()}
   def delete_functional_type(enum_name, functional_type_name) do
-    ProcessUtils.get_service()
-    |> GenServer.call({:delete_functional_type, enum_name, functional_type_name})
+    call_result =
+      GenServer.call(
+        ProcessUtils.get_service(),
+        {:delete_functional_type, enum_name, functional_type_name}
+      )
+
+    case call_result do
+      :ok ->
+        :ok
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.EnumsError.new(:enum_functional_type_data, "Failed to delete functional type",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :delete_functional_type, 2},
+             parameters: %{enum_name: enum_name, functional_type_name: functional_type_name}
+           }
+         )}
+    end
   end
 
   ##############################################################################
@@ -871,9 +1014,27 @@ defmodule MscmpSystEnums do
     * `enum_item_name` - the target functional type of the delete operation.
   """
   @spec delete_item(Types.enum_name(), Types.enum_item_name()) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, Mserror.EnumsError.t()}
   def delete_item(enum_name, enum_item_name) do
-    ProcessUtils.get_service()
-    |> GenServer.call({:delete_item, enum_name, enum_item_name})
+    call_result =
+      GenServer.call(
+        ProcessUtils.get_service(),
+        {:delete_item, enum_name, enum_item_name}
+      )
+
+    case call_result do
+      :ok ->
+        :ok
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.EnumsError.new(:enum_item_data, "Failed to delete enumeration item",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :delete_item, 2},
+             parameters: %{enum_name: enum_name, enum_item_name: enum_item_name}
+           }
+         )}
+    end
   end
 end
