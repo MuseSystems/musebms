@@ -164,16 +164,13 @@ defmodule MscmpSystSettings.Impl.Settings do
       when (is_atom(settings_table) or is_reference(settings_table)) and is_binary(setting_name) do
     delete_qry = from(s in Msdata.SystSettings, where: s.internal_name == ^setting_name)
 
-    case db_delete_all(delete_qry) do
-      {1, _rows} -> Msutils.Data.ets_delete(settings_table, setting_name)
-      {0, _} -> {:error, {:not_found, setting_name}}
-      error -> error
+    try do
+      case MscmpSystDb.delete_all(delete_qry) do
+        {1, _rows} -> Msutils.Data.ets_delete(settings_table, setting_name)
+        {0, _} -> {:error, {:not_found, setting_name}}
+      end
+    rescue
+      error -> {:error, {:database_error, error}}
     end
-  end
-
-  defp db_delete_all(delete_qry) do
-    MscmpSystDb.delete_all(delete_qry)
-  rescue
-    error -> {:error, {:database_error, error}}
   end
 end
