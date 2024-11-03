@@ -13,6 +13,8 @@
 defmodule MscmpSystDb.Impl.Dba do
   @moduledoc false
 
+  use Msutils.Guards
+
   alias MscmpSystDb.Impl.Privileged
   alias MscmpSystDb.Runtime.Datastore
   alias MscmpSystDb.Types
@@ -344,8 +346,8 @@ defmodule MscmpSystDb.Impl.Dba do
 
         resolved_pid =
           case resolved_context do
-            {:ok, pid} when is_pid(pid) ->
-              pid
+            {:ok, pid_or_atom} when is_pid(pid_or_atom) or is_reg_atom(pid_or_atom) ->
+              pid_or_atom
 
             {:ok, nil} ->
               nil

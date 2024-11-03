@@ -498,13 +498,15 @@ defmodule MscmpSystDb.Runtime.Datastore do
   def lookup_context_pid({:via, Registry, {registry_name, context_name}}),
     do: lookup_context_pid(registry_name, context_name)
 
+  def lookup_context_pid(context_name) when is_reg_atom(context_name), do: {:ok, context_name}
+
   def lookup_context_pid(context_name) do
     raise ArgumentError,
           "The given Datastore Context name '#{inspect(context_name)}' is not in a recognized format."
   end
 
   @spec lookup_context_pid(atom() | nil, Types.context_name() | nil) ::
-          {:ok, pid()} | {:ok, nil} | {:error, reason :: term()}
+          {:ok, pid()} | {:ok, atom()} | {:ok, nil} | {:error, reason :: term()}
   def lookup_context_pid(_, nil), do: {:ok, nil}
 
   def lookup_context_pid(:global, context_name) do
