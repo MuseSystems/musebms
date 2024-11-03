@@ -18,6 +18,30 @@
 \set ON_ERROR_STOP true
 \c postgres
 
+\echo '\n=== Starting drop objects... ===\n'
+
+------------------------------------------------------------------------------
+-- Drop the database objects created for mscmp_syst_db testing.
+------------------------------------------------------------------------------
+
+\echo '\n=== Dropping mscmp_syst_db testing objects ===\n'
+
+\ir ../../app_server/components/system/mscmp_syst_db/database/utility/reset_mscmp_syst_db.psql
+
+------------------------------------------------------------------------------
+-- Drop the database objects created for mscmp_syst_instance testing.
+------------------------------------------------------------------------------
+
+\echo '\n=== Dropping mscmp_syst_instance testing objects ===\n'
+
+\ir ../../app_server/components/system/mscmp_syst_instance/database_utils/reset_mscmp_syst_instance.psql
+
+------------------------------------------------------------------------------
+-- Drop the database objects created for standard test and development support.
+------------------------------------------------------------------------------
+
+\echo '\n=== Dropping standard test and development support objects ===\n'
+
 DROP DATABASE IF EXISTS ms_devsupport_database;
 
 DROP ROLE IF EXISTS ms_devsupport_context;
@@ -27,6 +51,12 @@ DROP DATABASE IF EXISTS ms_testsupport_database;
 
 DROP ROLE IF EXISTS ms_testsupport_context;
 DROP ROLE IF EXISTS ms_testsupport_owner;
+
+------------------------------------------------------------------------------
+-- Drop the database objects created by the bootstrap script.
+------------------------------------------------------------------------------
+
+\echo '\n=== Dropping bootstrap script objects ===\n'
 
 DROP FUNCTION IF EXISTS ms_syst.create_login_role(text, text, text);
 DROP FUNCTION IF EXISTS ms_syst.create_nonlogin_role(text, text);
@@ -38,3 +68,5 @@ DROP ROLE IF EXISTS ms_syst_access;
 DROP ROLE IF EXISTS ms_syst_privileged;
 DROP ROLE IF EXISTS ms_syst_managable;
 DROP ROLE IF EXISTS ms_syst_owner;
+
+\echo '\n=== Drop objects script complete. ===\n'

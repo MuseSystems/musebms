@@ -16,8 +16,13 @@
 --
 -- Do not use this script to setup a production environment.
 
+\set QUIET on
 \set ON_ERROR_STOP true
 \c postgres
+
+\echo '\n=== Muse Systems Business Management System :: Bootstrap Script ===\n'
+\echo '\n=== Starting bootstrap at ' `date '+%Y-%m-%d %H:%M:%S'` ' ===\n'
+
 
 SET SESSION muse.privileged_password TO :'dbadmin_password';
 
@@ -271,3 +276,7 @@ automated processes from being capable of creating arbitrarily powerful database
 
     END;
 $BOOTSTRAPDB$;
+
+\echo '\n=== Bootstrap script complete at ' `date '+%Y-%m-%d %H:%M:%S'` ' ===\n'
+
+\set QUIET off

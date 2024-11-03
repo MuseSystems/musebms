@@ -1,5 +1,5 @@
--- File:        reset_dev_database.psql
--- Location:    musebms/app_server/components/system/mscmp_syst_instance/database_utils/reset_dev_database.psql
+-- File:        reset_mscmp_syst_instance.psql
+-- Location:    musebms/app_server/components/system/mscmp_syst_instance/database_utils/reset_mscmp_syst_instance.psql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -16,12 +16,8 @@
 -- user.
 --
 -- Do not use this script to setup a production environment.
-\set ON_ERROR_STOP true
-\c postgres
 
 DROP DATABASE IF EXISTS mscmp_syst_instance;
-
-\ir ../../../../../tools/database_scripts/reset_dev_database.psql
 
 DROP ROLE IF EXISTS mscmp_syst_instance_owner;
 DROP ROLE IF EXISTS mscmp_syst_instance_app_user;
@@ -49,5 +45,3 @@ DROP DATABASE IF EXISTS app2_owner2;
 DROP ROLE IF EXISTS app2_owner2_app2_owner;
 DROP ROLE IF EXISTS app2_owner2_app2_appusr;
 DROP ROLE IF EXISTS app2_owner2_app2_apiusr;
-
-\ir ../../../../../tools/database_scripts/bootstrap_database.psql

@@ -1,5 +1,5 @@
--- File:        reset_dev_database.psql
--- Location:    musebms/tools/database_scripts/reset_dev_database.psql
+-- File:        reset_mscmp_syst_db.psql
+-- Location:    musebms/app_server/components/system/mscmp_syst_db/database/utility/reset_mscmp_syst_db.psql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -12,20 +12,19 @@
 
 -- Note that this script currently exists to support CI testing
 -- A more robust script should be produced to walk users though
--- the initial setup of the starting database objects.
+-- the initial setup of the global database and ms_sys_login
+-- user.
 --
 -- Do not use this script to setup a production environment.
-\set QUIET on
-\set ON_ERROR_STOP true
-\c postgres 
 
-\echo '\n=== Muse Systems Business Management System :: Reset Script ===\n'
-\echo '\n=== Starting reset script at ' `date '+%Y-%m-%d %H:%M:%S'` ' ===\n'
+DROP DATABASE IF EXISTS ms_test_type_one;
+DROP DATABASE IF EXISTS ms_test_type_four;
 
-\ir drop_devtest_db_objects.psql
+DROP ROLE IF EXISTS ms_type_one_role_01;
+DROP ROLE IF EXISTS ms_type_one_role_02;
+DROP ROLE IF EXISTS ms_type_one_role_03;
+DROP ROLE IF EXISTS ms_type_one_role_04;
+DROP ROLE IF EXISTS ms_test_type_one_owner;
 
-\ir bootstrap_database.psql
-\set QUIET on
-
-\echo '\n=== Reset script complete at ' `date '+%Y-%m-%d %H:%M:%S'` ' ===\n'
-\set QUIET off
+DROP ROLE IF EXISTS ms_type_four_role_01;
+DROP ROLE IF EXISTS ms_test_type_four_owner;
