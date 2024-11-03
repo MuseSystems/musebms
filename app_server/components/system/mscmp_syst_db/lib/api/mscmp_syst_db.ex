@@ -144,7 +144,7 @@ defmodule MscmpSystDb do
   @spec get_datastore_state(DatastoreOptions.t(), Keyword.t()) ::
           {:ok, Types.database_state_values(), list(ContextState.t())}
           | {:error, Mserror.DbError.t()}
-  def get_datastore_state(datastore_options, opts \\ []) do
+  def get_datastore_state(%DatastoreOptions{} = datastore_options, opts \\ []) do
     validated_opts = NimbleOptions.validate!(opts, @get_datastore_state_opts)
 
     case Dba.get_datastore_state(datastore_options, validated_opts) do
@@ -219,7 +219,7 @@ defmodule MscmpSystDb do
   @spec create_datastore(DatastoreOptions.t(), Keyword.t()) ::
           {:ok, Types.database_state_values(), list(ContextState.t())}
           | {:error, Mserror.DbError.t()}
-  def create_datastore(datastore_options, opts \\ []) do
+  def create_datastore(%DatastoreOptions{} = datastore_options, opts \\ []) do
     validated_opts = NimbleOptions.validate!(opts, @create_datastore_opts)
 
     case Dba.create_datastore(datastore_options, validated_opts) do
@@ -1323,10 +1323,10 @@ defmodule MscmpSystDb do
   A convenience function that currently wraps the `c:Ecto.Repo.transaction/2`
   function.
   """
-  @spec transaction(fun | Ecto.Multi.t()) :: {:ok, any()} | {:error, Mserror.DbError.t()}
-  @spec transaction(fun | Ecto.Multi.t(), Keyword.t()) ::
+  @spec transaction((-> any()) | Ecto.Multi.t()) :: {:ok, any()} | {:error, Mserror.DbError.t()}
+  @spec transaction((-> any()) | Ecto.Multi.t(), Keyword.t()) ::
           {:ok, any()} | {:error, Mserror.DbError.t()}
-  def transaction(job, opts \\ []) do
+  def transaction(job, opts \\ []) when is_function(job, 0) or is_struct(job, Ecto.Multi) do
     case Datastore.transaction(job, opts) do
       {:ok, result} ->
         {:ok, result}
