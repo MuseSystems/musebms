@@ -24,25 +24,12 @@ defmodule MscmpSystInstance.Impl.InstanceTypeApplication do
   #
 
   @spec create_instance_type_application(Types.instance_type_id(), Types.application_id()) ::
-          {:ok, Msdata.SystInstanceTypeApplications.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystInstanceTypeApplications.t()} | {:error, term()}
   def create_instance_type_application(instance_type_id, application_id)
       when is_binary(instance_type_id) and is_binary(application_id) do
     %{instance_type_id: instance_type_id, application_id: application_id}
     |> Msdata.SystInstanceTypeApplications.insert_changeset()
-    |> MscmpSystDb.insert!(returning: true)
-    |> then(&{:ok, &1})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure creating Instance Type Application association.",
-          cause: error
-        }
-      }
+    |> MscmpSystDb.insert(returning: true)
   end
 
   ##############################################################################
@@ -54,47 +41,29 @@ defmodule MscmpSystInstance.Impl.InstanceTypeApplication do
   @spec delete_instance_type_application(
           Types.instance_type_application_id()
           | Msdata.SystInstanceTypeApplications.t()
-        ) :: :ok | {:error, MscmpSystError.t()}
+        ) :: :ok | {:error, term()}
   def delete_instance_type_application(instance_type_application_id)
       when is_binary(instance_type_application_id) do
-    MscmpSystDb.get!(Msdata.SystInstanceTypeApplications, instance_type_application_id)
-    |> delete_instance_type_application()
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+    case MscmpSystDb.get(Msdata.SystInstanceTypeApplications, instance_type_application_id) do
+      nil ->
+        {:error, {:not_found, instance_type_application_id}}
 
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure deleting Instance Type Application association by ID.",
-          cause: error
-        }
-      }
+      instance_type_application ->
+        delete_instance_type_application(instance_type_application)
+    end
   end
-
-  ##############################################################################
-  #
-  # delete_instance_type_application
-  #
-  #
 
   def delete_instance_type_application(
         %Msdata.SystInstanceTypeApplications{} = instance_type_application
       ) do
-    MscmpSystDb.delete!(instance_type_application)
-    :ok
+    with {:ok, _} <- MscmpSystDb.delete(instance_type_application) do
+      :ok
+    end
   rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+    Ecto.StaleEntryError ->
+      {:error, {:not_found, instance_type_application}}
 
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure deleting Instance Type Application association.",
-          cause: error
-        }
-      }
+    error ->
+      reraise error, __STACKTRACE__
   end
 end

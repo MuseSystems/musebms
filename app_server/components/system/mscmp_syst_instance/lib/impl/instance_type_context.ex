@@ -26,30 +26,17 @@ defmodule MscmpSystInstance.Impl.InstanceTypeContext do
   @spec update_instance_type_context(
           Types.instance_type_context_id() | Msdata.SystInstanceTypeContexts.t(),
           Types.instance_type_context_params()
-        ) :: {:ok, Msdata.SystInstanceTypeContexts.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, Msdata.SystInstanceTypeContexts.t()} | {:error, term()}
   def update_instance_type_context(instance_type_context_id, instance_type_context_params)
       when is_binary(instance_type_context_id) do
-    MscmpSystDb.get!(Msdata.SystInstanceTypeContexts, instance_type_context_id)
-    |> update_instance_type_context(instance_type_context_params)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+    case MscmpSystDb.get(Msdata.SystInstanceTypeContexts, instance_type_context_id) do
+      nil ->
+        {:error, {:not_found, instance_type_context_id}}
 
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure updating Instance Type Context by ID.",
-          cause: error
-        }
-      }
+      instance_type_context ->
+        update_instance_type_context(instance_type_context, instance_type_context_params)
+    end
   end
-
-  ##############################################################################
-  #
-  # update_instance_type_context
-  #
-  #
 
   def update_instance_type_context(
         %Msdata.SystInstanceTypeContexts{} = instance_type_context,
@@ -57,19 +44,6 @@ defmodule MscmpSystInstance.Impl.InstanceTypeContext do
       ) do
     instance_type_context
     |> Msdata.SystInstanceTypeContexts.update_changeset(instance_type_context_params)
-    |> MscmpSystDb.update!(returning: true)
-    |> then(&{:ok, &1})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure updating Instance Type Context.",
-          cause: error
-        }
-      }
+    |> MscmpSystDb.update(returning: true)
   end
 end

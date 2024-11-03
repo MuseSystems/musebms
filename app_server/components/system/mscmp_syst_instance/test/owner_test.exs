@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule OwnerTest do
+  @moduledoc false
+
   use InstanceMgrTestCase, async: true
 
   import Ecto.Query

@@ -33,22 +33,11 @@ defmodule MscmpSystInstance.Impl.Instance do
   #
 
   @spec create_instance(Types.instance_params()) ::
-          {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystInstances.t()} | {:error, term()}
   def create_instance(instance_params) do
     instance_params
     |> Msdata.SystInstances.insert_changeset()
-    |> MscmpSystDb.insert!(returning: true)
-    |> then(&{:ok, &1})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure creating new Instance.",
-         cause: error
-       }}
+    |> MscmpSystDb.insert(returning: true)
   end
 
   ##############################################################################
@@ -64,21 +53,25 @@ defmodule MscmpSystInstance.Impl.Instance do
           Types.instance_id() | Msdata.SystInstances.t(),
           startup_options :: map()
         ) ::
-          MscmpSystDb.Types.DatastoreOptions.t()
+          {:ok, MscmpSystDb.Types.DatastoreOptions.t()} | {:error, term()}
   def get_instance_datastore_options(instance_id, startup_options) when is_binary(instance_id) do
-    from(i in Msdata.SystInstances,
-      as: :instances,
-      join: a in assoc(i, :application),
-      as: :applications,
-      join: ic in assoc(i, :instance_contexts),
-      as: :instance_contexts,
-      join: ac in assoc(ic, :application_context),
-      as: :application_contexts,
-      where: i.id == ^instance_id,
-      preload: [application: a, instance_contexts: {ic, application_context: ac}]
-    )
-    |> MscmpSystDb.one!()
-    |> get_instance_datastore_options(startup_options)
+    instance_qry =
+      from(i in Msdata.SystInstances,
+        as: :instances,
+        join: a in assoc(i, :application),
+        as: :applications,
+        join: ic in assoc(i, :instance_contexts),
+        as: :instance_contexts,
+        join: ac in assoc(ic, :application_context),
+        as: :application_contexts,
+        where: i.id == ^instance_id,
+        preload: [application: a, instance_contexts: {ic, application_context: ac}]
+      )
+
+    case db_one(instance_qry) do
+      {:ok, instance} -> get_instance_datastore_options(instance, startup_options)
+      error -> error
+    end
   end
 
   def get_instance_datastore_options(
@@ -97,13 +90,14 @@ defmodule MscmpSystInstance.Impl.Instance do
         &get_instance_context_datastore_options(&1, instance, instance_dbserver, startup_options)
       )
 
-    %MscmpSystDb.Types.DatastoreOptions{
-      database_name: instance.internal_name,
-      datastore_code: global_pepper,
-      datastore_name: String.to_atom(instance.internal_name),
-      contexts: contexts,
-      db_server: instance_dbserver
-    }
+    {:ok,
+     %MscmpSystDb.Types.DatastoreOptions{
+       database_name: instance.internal_name,
+       datastore_code: global_pepper,
+       datastore_name: String.to_atom(instance.internal_name),
+       contexts: contexts,
+       db_server: instance_dbserver
+     }}
   end
 
   def get_instance_datastore_options(%Msdata.SystInstances{id: instance_id}, startup_options) do
@@ -151,35 +145,21 @@ defmodule MscmpSystInstance.Impl.Instance do
   #
 
   @spec initialize_instance(Types.instance_id(), startup_options :: map(), opts :: Keyword.t()) ::
-          {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystInstances.t()} | {:error, term()}
   def initialize_instance(instance_id, startup_options, opts) do
     opts = Keyword.merge(opts, get_default_instance_state_ids())
-
-    {:ok, initializing_instance} =
-      from(i in Msdata.SystInstances, where: i.id == ^instance_id)
-      |> MscmpSystDb.one!()
-      |> verify_initialization_eligibility()
-      |> set_instance_state(opts[:initializing_state_id])
-
-    datastore_options = get_instance_datastore_options(initializing_instance.id, startup_options)
-
     create_datastore_opts = Keyword.take(opts, [:db_shutdown_timeout])
 
-    datastore_options
-    |> MscmpSystDb.create_datastore(create_datastore_opts)
-    |> process_create_datastore_result(initializing_instance, datastore_options, opts)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure initializing Instance.",
-          cause: error
-        }
-      }
+    with {:ok, instance} <- db_one(from(i in Msdata.SystInstances, where: i.id == ^instance_id)),
+         {:ok, eligible_instance} <- verify_initialization_eligibility(instance),
+         {:ok, initializing_instance} <-
+           set_instance_state(eligible_instance, opts[:initializing_state_id]),
+         {:ok, datastore_options} <-
+           get_instance_datastore_options(initializing_instance.id, startup_options) do
+      datastore_options
+      |> MscmpSystDb.create_datastore(create_datastore_opts)
+      |> process_create_datastore_result(initializing_instance, datastore_options, opts)
+    end
   end
 
   defp verify_initialization_eligibility(
@@ -191,14 +171,24 @@ defmodule MscmpSystInstance.Impl.Instance do
     verify_initialization_eligibility(functional_type_name, instance)
   end
 
-  defp verify_initialization_eligibility("instance_states_uninitialized", instance), do: instance
+  defp verify_initialization_eligibility("instance_states_uninitialized", instance),
+    do: {:ok, instance}
 
-  defp verify_initialization_eligibility(state_functional_type, instance)
-       when is_binary(state_functional_type) do
-    raise MscmpSystError,
-      code: :invalid_parameter,
-      message: "The requested Instance is not in a valid state for initialization.",
-      cause: %{instance_state_functional_type_name: state_functional_type, instance: instance}
+  defp verify_initialization_eligibility(state_functional_type, _instance)
+       when is_binary(state_functional_type),
+       do: {:error, {:ineligible_state, state_functional_type}}
+
+  defp process_create_datastore_result({:ok, :ready, _context_states}, instance, _, opts) do
+    set_instance_state(instance, opts[:initialized_state_id])
+  end
+
+  defp process_create_datastore_result(error, instance, datastore_options, opts) do
+    with :ok <- MscmpSystDb.drop_datastore(datastore_options),
+         {:ok, _} <- set_instance_state(instance, opts[:failed_state_id]) do
+      {:error, {:datastore_creation_failure, error}}
+    else
+      error -> raise "Instance creation failure handling failed: #{inspect(error)}"
+    end
   end
 
   ##############################################################################
@@ -212,41 +202,11 @@ defmodule MscmpSystInstance.Impl.Instance do
   #       disallowed state transitions.  Battle for a different day.
 
   @spec set_instance_state(Msdata.SystInstances.t(), Types.instance_state_id()) ::
-          {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystInstances.t()} | {:error, term()}
   def set_instance_state(instance, instance_state_id) do
     instance
     |> Msdata.SystInstances.update_changeset(%{instance_state_id: instance_state_id})
-    |> MscmpSystDb.update!(returning: true)
-    |> then(&{:ok, &1})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure setting Instance State.",
-          cause: error
-        }
-      }
-  end
-
-  defp process_create_datastore_result({:ok, :ready, _context_states}, instance, _, opts) do
-    set_instance_state(instance, opts[:initialized_state_id])
-  end
-
-  defp process_create_datastore_result(error, instance, datastore_options, opts) do
-    :ok = MscmpSystDb.drop_datastore(datastore_options)
-
-    {:ok, _} = set_instance_state(instance, opts[:failed_state_id])
-
-    {:error,
-     %MscmpSystError{
-       code: :undefined_error,
-       message: "Instance initialization error found.",
-       cause: error
-     }}
+    |> MscmpSystDb.update(returning: true)
   end
 
   ##############################################################################
@@ -318,7 +278,7 @@ defmodule MscmpSystInstance.Impl.Instance do
   # Populated in this case means that statusing information is populated.
 
   @spec get_instance_by_name(Types.instance_name()) ::
-          {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystInstances.t()} | {:error, term()}
   def get_instance_by_name(instance_name) when is_binary(instance_name) do
     from(
       i in Msdata.SystInstances,
@@ -327,20 +287,7 @@ defmodule MscmpSystInstance.Impl.Instance do
       where: i.internal_name == ^instance_name,
       preload: [instance_state: {is, functional_type: isft}]
     )
-    |> MscmpSystDb.one!()
-    |> then(&{:ok, &1})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure retrieving Instance by internal name.",
-          cause: error
-        }
-      }
+    |> db_one()
   end
 
   ##############################################################################
@@ -352,24 +299,12 @@ defmodule MscmpSystInstance.Impl.Instance do
   # Returns the ID of a SystInstances record as looked up by its internal name.
 
   @spec get_instance_id_by_name(Types.instance_name()) ::
-          {:ok, Types.instance_id()} | {:error, MscmpSystError.t()}
-  def get_instance_id_by_name(instance_name) do
-    from(i in Msdata.SystInstances, select: i.id, where: i.internal_name == ^instance_name)
-    |> MscmpSystDb.one!()
-    |> then(&{:ok, &1})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure retrieving Instance ID by internal name.",
-          cause: error
-        }
-      }
-  end
+          {:ok, Types.instance_id()} | {:error, term()}
+  def get_instance_id_by_name(instance_name),
+    do:
+      db_one(
+        from(i in Msdata.SystInstances, select: i.id, where: i.internal_name == ^instance_name)
+      )
 
   ##############################################################################
   #
@@ -378,71 +313,60 @@ defmodule MscmpSystInstance.Impl.Instance do
   #
 
   @spec purge_instance(Types.instance_id() | Msdata.SystInstances.t(), startup_options :: map()) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, term()}
   def purge_instance(instance_id, startup_options) when is_binary(instance_id) do
-    from(
-      i in Msdata.SystInstances,
-      join: is in assoc(i, :instance_state),
-      join: isft in assoc(is, :functional_type),
-      where: i.id == ^instance_id,
-      preload: [instance_state: {is, functional_type: isft}]
-    )
-    |> MscmpSystDb.one!()
-    |> purge_instance(startup_options)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+    purge_candidate_qry =
+      from(
+        i in Msdata.SystInstances,
+        join: is in assoc(i, :instance_state),
+        join: isft in assoc(is, :functional_type),
+        where: i.id == ^instance_id,
+        preload: [instance_state: {is, functional_type: isft}]
+      )
 
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure deleting Instance by ID.",
-          cause: error
-        }
-      }
+    case db_one(purge_candidate_qry) do
+      {:ok, instance} -> purge_instance(instance, startup_options)
+      error -> error
+    end
   end
 
-  def purge_instance(
-        %Msdata.SystInstances{
-          instance_state: %Msdata.SystEnumItems{
-            functional_type: %Msdata.SystEnumFunctionalTypes{
-              internal_name: functional_type
-            }
-          }
-        } = instance,
-        startup_options
-      ) do
+  def purge_instance(%Msdata.SystInstances{} = instance, startup_options) do
+    functional_type = instance.instance_state.functional_type.internal_name
     maybe_perform_instance_purge(functional_type, instance, startup_options)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure purging Instance.",
-          cause: error
-        }
-      }
   end
 
   def purge_instance(%Msdata.SystInstances{id: instance_id}, startup_options),
     do: purge_instance(instance_id, startup_options)
 
   defp maybe_perform_instance_purge("instance_states_purge_eligible", instance, startup_options) do
-    datastore_options = get_instance_datastore_options(instance, startup_options)
-    :ok = MscmpSystDb.drop_datastore(datastore_options)
-    _ = MscmpSystDb.delete!(instance)
-    :ok
+    with {:ok, datastore_options} <- get_instance_datastore_options(instance, startup_options),
+         :ok <- MscmpSystDb.drop_datastore(datastore_options),
+         {:ok, _} <- MscmpSystDb.delete(instance) do
+      :ok
+    end
+  rescue
+    Ecto.StaleEntryError ->
+      {:error, {:not_found, instance}}
+
+    error ->
+      reraise error, __STACKTRACE__
   end
 
   defp maybe_perform_instance_purge(functional_type, _instance, _startup_options),
-    do:
-      raise(MscmpSystError,
-        code: :invalid_parameter,
-        message: "Invalid Instance State Functional Type for purge.",
-        cause: %{parameters: [functional_type: functional_type]}
-      )
+    do: {:error, {:ineligible_state, functional_type}}
+
+  ##############################################################################
+  #
+  # General Private Functions
+  #
+  #
+
+  def db_one(query) do
+    query
+    |> MscmpSystDb.one()
+    |> case do
+      nil -> {:error, :not_found}
+      result -> {:ok, result}
+    end
+  end
 end

@@ -17,6 +17,7 @@ defmodule MscmpSystInstance do
              |> String.split("<!-- MDOC !-->")
              |> Enum.fetch!(1)
 
+  alias MscmpSystError.Types.Context, as: ErrorContext
   alias MscmpSystInstance.Impl
   alias MscmpSystInstance.Types
 
@@ -149,8 +150,23 @@ defmodule MscmpSystInstance do
 
   """
   @spec create_application(Types.application_params()) ::
-          {:ok, Msdata.SystApplications.t()} | {:error, MscmpSystError.t()}
-  defdelegate create_application(application_params), to: Impl.Application
+          {:ok, Msdata.SystApplications.t()} | {:error, Mserror.InstanceError.t()}
+  def create_application(application_params) do
+    case Impl.Application.create_application(application_params) do
+      {:ok, application} ->
+        {:ok, application}
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.InstanceError.new(:application_data, "Error creating application",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :create_application, 1},
+             parameters: %{application_params: application_params}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -205,8 +221,23 @@ defmodule MscmpSystInstance do
   @spec update_application(
           Types.application_id() | Msdata.SystApplications.t(),
           Types.application_params()
-        ) :: {:ok, Msdata.SystApplications.t()} | {:error, MscmpSystError.t()}
-  defdelegate update_application(application, application_params), to: Impl.Application
+        ) :: {:ok, Msdata.SystApplications.t()} | {:error, Mserror.InstanceError.t()}
+  def update_application(application, application_params) do
+    case Impl.Application.update_application(application, application_params) do
+      {:ok, application} ->
+        {:ok, application}
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.InstanceError.new(:application_data, "Error updating application",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :update_application, 2},
+             parameters: %{application: application, application_params: application_params}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -380,8 +411,23 @@ defmodule MscmpSystInstance do
 
   """
   @spec create_application_context(Types.application_context_params()) ::
-          {:ok, Msdata.SystApplicationContexts.t()} | {:error, MscmpSystError.t()}
-  defdelegate create_application_context(application_context_params), to: Impl.ApplicationContexts
+          {:ok, Msdata.SystApplicationContexts.t()} | {:error, Mserror.InstanceError.t()}
+  def create_application_context(application_context_params) do
+    case Impl.ApplicationContexts.create_application_context(application_context_params) do
+      {:ok, application_context} ->
+        {:ok, application_context}
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.InstanceError.new(:application_data, "Error creating application context",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :create_application_context, 1},
+             parameters: %{application_context_params: application_context_params}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -438,8 +484,23 @@ defmodule MscmpSystInstance do
     returned.
   """
   @spec list_application_contexts(Types.application_id() | nil) ::
-          {:ok, list(Msdata.SystApplicationContexts.t())} | {:error, MscmpSystError.t()}
-  defdelegate list_application_contexts(application_id \\ nil), to: Impl.ApplicationContexts
+          {:ok, list(Msdata.SystApplicationContexts.t())} | {:error, Mserror.InstanceError.t()}
+  def list_application_contexts(application_id \\ nil) do
+    case Impl.ApplicationContexts.list_application_contexts(application_id) do
+      {:ok, application_contexts} ->
+        {:ok, application_contexts}
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.InstanceError.new(:application_data, "Error listing application contexts",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :list_application_contexts, 1},
+             parameters: %{application_id: application_id}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -511,9 +572,29 @@ defmodule MscmpSystInstance do
   @spec update_application_context(
           Types.application_context_id() | Msdata.SystApplicationContexts.t(),
           Types.application_context_params()
-        ) :: {:ok, Msdata.SystApplicationContexts.t()} | {:error, MscmpSystError.t()}
-  defdelegate update_application_context(application_context, application_context_params),
-    to: Impl.ApplicationContexts
+        ) :: {:ok, Msdata.SystApplicationContexts.t()} | {:error, Mserror.InstanceError.t()}
+  def update_application_context(application_context, application_context_params) do
+    case Impl.ApplicationContexts.update_application_context(
+           application_context,
+           application_context_params
+         ) do
+      {:ok, application_context} ->
+        {:ok, application_context}
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.InstanceError.new(:application_data, "Error updating application context",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :update_application_context, 2},
+             parameters: %{
+               application_context: application_context,
+               application_context_params: application_context_params
+             }
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -544,10 +625,8 @@ defmodule MscmpSystInstance do
   > verification of extended clean-up activities is therefore the responsibility
   > of the caller.
 
-  On successful delete of the record, a success tuple is returned to the caller
-  (`{:ok, :deleted}`).  If the requested record is not found in the database,
-  the returned value is `{:ok, :not_found}`.  Any other outcome is returned via
-  an error tuple.
+  On successful delete of the record, a value of `:ok` is returned.  If the
+  record is not found or other errors occur, an error tuple is returned.
 
   ## Parameters
 
@@ -560,17 +639,34 @@ defmodule MscmpSystInstance do
 
       iex> record_id = MscmpSystInstance.get_application_context_id_by_name("ex_app2_delctx")
       iex> MscmpSystInstance.delete_application_context(record_id)
-      {:ok, :deleted}
+      :ok
 
   Attempting to delete a non-existent record.
 
       iex> record_id = "00000000-0000-0000-0000-000000000000"
-      iex> MscmpSystInstance.delete_application_context(record_id)
-      {:ok, :not_found}
+      iex> {:error, result} = MscmpSystInstance.delete_application_context(record_id)
+      iex> %Mserror.InstanceError{kind: :application_data, cause: example_cause} = result
+      iex> example_cause
+      {:error, {:not_found, "00000000-0000-0000-0000-000000000000"}}
   """
   @spec delete_application_context(Types.application_context_id()) ::
-          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
-  defdelegate delete_application_context(application_context_id), to: Impl.ApplicationContexts
+          :ok | {:error, Mserror.InstanceError.t()}
+  def delete_application_context(application_context_id) do
+    case Impl.ApplicationContexts.delete_application_context(application_context_id) do
+      :ok ->
+        :ok
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.InstanceError.new(:application_data, "Error deleting application context",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :delete_application_context, 1},
+             parameters: %{application_context_id: application_context_id}
+           }
+         )}
+    end
+  end
 
   # ==============================================================================================
   #
@@ -596,8 +692,23 @@ defmodule MscmpSystInstance do
     for Instance Type creation.
   """
   @spec create_instance_type(Types.instance_type_params()) ::
-          {:ok, Msdata.SystEnumItems.t()} | {:error, MscmpSystError.t()}
-  defdelegate create_instance_type(instance_type_params), to: Impl.InstanceType
+          {:ok, Msdata.SystEnumItems.t()} | {:error, Mserror.InstanceError.t()}
+  def create_instance_type(instance_type_params) do
+    case Impl.InstanceType.create_instance_type(instance_type_params) do
+      {:ok, instance_type} ->
+        {:ok, instance_type}
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.InstanceError.new(:instance_type_data, "Error creating instance type",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :create_instance_type, 1},
+             parameters: %{instance_type_params: instance_type_params}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -672,11 +783,28 @@ defmodule MscmpSystInstance do
     contexts.
   """
   @spec update_instance_type(Types.instance_type_name()) ::
-          {:ok, Msdata.SystEnumItems.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystEnumItems.t()} | {:error, Mserror.InstanceError.t()}
   @spec update_instance_type(Types.instance_type_name(), Types.instance_type_params() | %{}) ::
-          {:ok, Msdata.SystEnumItems.t()} | {:error, MscmpSystError.t()}
-  defdelegate update_instance_type(instance_type_name, instance_type_params \\ %{}),
-    to: Impl.InstanceType
+          {:ok, Msdata.SystEnumItems.t()} | {:error, Mserror.InstanceError.t()}
+  def update_instance_type(instance_type_name, instance_type_params \\ %{}) do
+    case Impl.InstanceType.update_instance_type(instance_type_name, instance_type_params) do
+      {:ok, instance_type} ->
+        {:ok, instance_type}
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.InstanceError.new(:instance_type_data, "Error updating instance type",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :update_instance_type, 2},
+             parameters: %{
+               instance_type_name: instance_type_name,
+               instance_type_params: instance_type_params
+             }
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -697,8 +825,23 @@ defmodule MscmpSystInstance do
     from the system.
   """
   @spec delete_instance_type(Types.instance_type_name()) ::
-          :ok | {:error, MscmpSystError.t()}
-  defdelegate delete_instance_type(instance_type_name), to: Impl.InstanceType
+          :ok | {:error, Mserror.InstanceError.t()}
+  def delete_instance_type(instance_type_name) do
+    case Impl.InstanceType.delete_instance_type(instance_type_name) do
+      :ok ->
+        :ok
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.InstanceError.new(:instance_type_data, "Error deleting instance type",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :delete_instance_type, 1},
+             parameters: %{instance_type_name: instance_type_name}
+           }
+         )}
+    end
+  end
 
   #
   # Instance Type Applications
@@ -728,9 +871,28 @@ defmodule MscmpSystInstance do
   @spec create_instance_type_application(
           Types.instance_type_id(),
           Types.application_id()
-        ) :: {:ok, Msdata.SystInstanceTypeApplications.t()} | {:error, MscmpSystError.t()}
-  defdelegate create_instance_type_application(instance_type_id, application_id),
-    to: Impl.InstanceTypeApplication
+        ) :: {:ok, Msdata.SystInstanceTypeApplications.t()} | {:error, Mserror.InstanceError.t()}
+  def create_instance_type_application(instance_type_id, application_id) do
+    case Impl.InstanceTypeApplication.create_instance_type_application(
+           instance_type_id,
+           application_id
+         ) do
+      {:ok, instance_type_application} ->
+        {:ok, instance_type_application}
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.InstanceError.new(
+           :instance_type_data,
+           "Error creating instance type application",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :create_instance_type_application, 2},
+             parameters: %{instance_type_id: instance_type_id, application_id: application_id}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -757,9 +919,25 @@ defmodule MscmpSystInstance do
           Types.instance_type_application_id()
           | Msdata.SystInstanceTypeApplications.t()
         ) ::
-          :ok | {:error, MscmpSystError.t()}
-  defdelegate delete_instance_type_application(instance_type_application),
-    to: Impl.InstanceTypeApplication
+          :ok | {:error, Mserror.InstanceError.t()}
+  def delete_instance_type_application(instance_type_application) do
+    case Impl.InstanceTypeApplication.delete_instance_type_application(instance_type_application) do
+      :ok ->
+        :ok
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.InstanceError.new(
+           :instance_type_data,
+           "Error deleting instance type application",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :delete_instance_type_application, 1},
+             parameters: %{instance_type_application: instance_type_application}
+           }
+         )}
+    end
+  end
 
   #
   # Instance Type Contexts
@@ -809,17 +987,37 @@ defmodule MscmpSystInstance do
   @spec update_instance_type_context(
           Types.instance_type_context_id()
           | Msdata.SystInstanceTypeContexts.t()
-        ) :: {:ok, Msdata.SystInstanceTypeContexts.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, Msdata.SystInstanceTypeContexts.t()} | {:error, Mserror.InstanceError.t()}
   @spec update_instance_type_context(
           Types.instance_type_context_id()
           | Msdata.SystInstanceTypeContexts.t(),
           Types.instance_type_context_params() | %{}
-        ) :: {:ok, Msdata.SystInstanceTypeContexts.t()} | {:error, MscmpSystError.t()}
-  defdelegate update_instance_type_context(
-                instance_type_context,
-                instance_type_context_params \\ %{}
-              ),
-              to: Impl.InstanceTypeContext
+        ) :: {:ok, Msdata.SystInstanceTypeContexts.t()} | {:error, Mserror.InstanceError.t()}
+  def update_instance_type_context(
+        instance_type_context,
+        instance_type_context_params \\ %{}
+      ) do
+    case Impl.InstanceTypeContext.update_instance_type_context(
+           instance_type_context,
+           instance_type_context_params
+         ) do
+      {:ok, instance_type_context} ->
+        {:ok, instance_type_context}
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.InstanceError.new(:instance_type_data, "Error updating instance type context",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :update_instance_type_context, 2},
+             parameters: %{
+               instance_type_context: instance_type_context,
+               instance_type_context_params: instance_type_context_params
+             }
+           }
+         )}
+    end
+  end
 
   # ==============================================================================================
   #
@@ -927,8 +1125,23 @@ defmodule MscmpSystInstance do
 
   """
   @spec create_owner(Types.owner_params()) ::
-          {:ok, Msdata.SystOwners.t()} | {:error, MscmpSystError.t()}
-  defdelegate create_owner(owner_params), to: Impl.Owner
+          {:ok, Msdata.SystOwners.t()} | {:error, Mserror.InstanceError.t()}
+  def create_owner(owner_params) do
+    case Impl.Owner.create_owner(owner_params) do
+      {:ok, owner} ->
+        {:ok, owner}
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.InstanceError.new(:owner_data, "Error creating owner",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :create_owner, 1},
+             parameters: %{owner_params: owner_params}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -962,8 +1175,23 @@ defmodule MscmpSystInstance do
       an error will result.
   """
   @spec update_owner(Types.owner_id() | Msdata.SystOwners.t(), Types.owner_params()) ::
-          {:ok, Msdata.SystOwners.t()} | {:error, MscmpSystError.t()}
-  defdelegate update_owner(owner, update_params), to: Impl.Owner
+          {:ok, Msdata.SystOwners.t()} | {:error, Mserror.InstanceError.t()}
+  def update_owner(owner, update_params) do
+    case Impl.Owner.update_owner(owner, update_params) do
+      {:ok, owner} ->
+        {:ok, owner}
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.InstanceError.new(:owner_data, "Error updating owner",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :update_owner, 2},
+             parameters: %{owner: owner, update_params: update_params}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -984,8 +1212,23 @@ defmodule MscmpSystInstance do
     ...>   MscmpSystInstance.get_owner_by_name("owner1")
   """
   @spec get_owner_by_name(Types.owner_name()) ::
-          {:ok, Msdata.SystOwners.t()} | {:error, MscmpSystError.t()}
-  defdelegate get_owner_by_name(owner_name), to: Impl.Owner
+          {:ok, Msdata.SystOwners.t()} | {:error, Mserror.InstanceError.t()}
+  def get_owner_by_name(owner_name) do
+    case Impl.Owner.get_owner_by_name(owner_name) do
+      {:ok, owner} ->
+        {:ok, owner}
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.InstanceError.new(:owner_data, "Error getting owner by name",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :get_owner_by_name, 1},
+             parameters: %{owner_name: owner_name}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -1004,11 +1247,25 @@ defmodule MscmpSystInstance do
     true
   """
   @spec get_owner_id_by_name(Types.owner_name()) ::
-          {:ok, Types.owner_id()} | {:error, MscmpSystError.t()}
-  defdelegate get_owner_id_by_name(owner_name), to: Impl.Owner
+          {:ok, Types.owner_id()} | {:error, Mserror.InstanceError.t()}
+  def get_owner_id_by_name(owner_name) do
+    case Impl.Owner.get_owner_id_by_name(owner_name) do
+      {:ok, owner_id} ->
+        {:ok, owner_id}
 
-  ##############################################################################
-  #
+      {:error, _} = error ->
+        {:error,
+         Mserror.InstanceError.new(:owner_data, "Error getting owner ID by name",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :get_owner_id_by_name, 1},
+             parameters: %{owner_name: owner_name}
+           }
+         )}
+    end
+  end
+
+  ############################################################################# #
   # purge_owner
   #
   #
@@ -1027,8 +1284,23 @@ defmodule MscmpSystInstance do
     purge.
   """
   @spec purge_owner(Types.owner_id() | Msdata.SystOwners.t()) ::
-          :ok | {:error, MscmpSystError.t()}
-  defdelegate purge_owner(owner), to: Impl.Owner
+          :ok | {:error, Mserror.InstanceError.t()}
+  def purge_owner(owner) do
+    case Impl.Owner.purge_owner(owner) do
+      :ok ->
+        :ok
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.InstanceError.new(:owner_data, "Error purging owner",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :purge_owner, 1},
+             parameters: %{owner: owner}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -1050,7 +1322,7 @@ defmodule MscmpSystInstance do
       iex> MscmpSystInstance.owners_exist?()
       true
   """
-  @spec owners_exist?() :: boolean() | {:error, MscmpSystError.t()}
+  @spec owners_exist?() :: boolean()
   defdelegate owners_exist?(), to: Impl.Owner
 
   ##############################################################################
@@ -1084,7 +1356,7 @@ defmodule MscmpSystInstance do
       iex> MscmpSystInstance.owner_id_exists?(nonexistent_owner_id)
       false
   """
-  @spec owner_id_exists?(Types.owner_id()) :: boolean() | {:error, MscmpSystError.t()}
+  @spec owner_id_exists?(Types.owner_id()) :: boolean()
   defdelegate owner_id_exists?(owner_id), to: Impl.Owner
 
   ##############################################################################
@@ -1116,7 +1388,7 @@ defmodule MscmpSystInstance do
       iex> MscmpSystInstance.owner_name_exists?("nonexistent_owner")
       false
   """
-  @spec owner_name_exists?(Types.owner_name()) :: boolean() | {:error, MscmpSystError.t()}
+  @spec owner_name_exists?(Types.owner_name()) :: boolean()
   defdelegate owner_name_exists?(owner_name), to: Impl.Owner
 
   # ==============================================================================================
@@ -1281,8 +1553,23 @@ defmodule MscmpSystInstance do
 
   """
   @spec create_instance(Types.instance_params()) ::
-          {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
-  defdelegate create_instance(instance_params), to: Impl.Instance
+          {:ok, Msdata.SystInstances.t()} | {:error, Mserror.InstanceError.t()}
+  def create_instance(instance_params) do
+    case Impl.Instance.create_instance(instance_params) do
+      {:ok, instance} ->
+        {:ok, instance}
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.InstanceError.new(:instance_data, "Error creating instance",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :create_instance, 1},
+             parameters: %{instance_params: instance_params}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -1305,8 +1592,23 @@ defmodule MscmpSystInstance do
     obtained from the `MscmpSystOptions` component.
   """
   @spec get_instance_datastore_options(Types.instance_id() | Msdata.SystInstances.t(), map()) ::
-          MscmpSystDb.Types.DatastoreOptions.t()
-  defdelegate get_instance_datastore_options(instance, startup_options), to: Impl.Instance
+          {:ok, MscmpSystDb.Types.DatastoreOptions.t()} | {:error, Mserror.InstanceError.t()}
+  def get_instance_datastore_options(instance, startup_options) do
+    case Impl.Instance.get_instance_datastore_options(instance, startup_options) do
+      {:ok, datastore_options} ->
+        {:ok, datastore_options}
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.InstanceError.new(:instance_data, "Error getting instance datastore options",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :get_instance_datastore_options, 2},
+             parameters: %{instance: instance, startup_options: startup_options}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -1357,21 +1659,29 @@ defmodule MscmpSystInstance do
     #{NimbleOptions.docs(@initialize_instance_opts)}
   """
   @spec initialize_instance(Types.instance_id(), map()) ::
-          {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystInstances.t()} | {:error, Mserror.InstanceError.t()}
   @spec initialize_instance(Types.instance_id(), map(), Keyword.t()) ::
-          {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystInstances.t()} | {:error, Mserror.InstanceError.t()}
   def initialize_instance(instance_id, startup_options, opts \\ []) do
-    case NimbleOptions.validate(opts, @initialize_instance_opts) do
-      {:ok, validated_opts} ->
-        Impl.Instance.initialize_instance(instance_id, startup_options, validated_opts)
+    validated_opts = NimbleOptions.validate!(opts, @initialize_instance_opts)
 
-      {:error, error} ->
+    case Impl.Instance.initialize_instance(instance_id, startup_options, validated_opts) do
+      {:ok, instance} ->
+        {:ok, instance}
+
+      {:error, _} = error ->
         {:error,
-         %MscmpSystError{
-           code: :parameter_error,
-           message: "Option validation error",
-           cause: error
-         }}
+         Mserror.InstanceError.new(:instance_data, "Error initializing instance",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :initialize_instance, 3},
+             parameters: %{
+               instance_id: instance_id,
+               startup_options: startup_options,
+               opts: validated_opts
+             }
+           }
+         )}
     end
   end
 
@@ -1394,8 +1704,23 @@ defmodule MscmpSystInstance do
     which to place the Instance record.
   """
   @spec set_instance_state(Msdata.SystInstances.t(), Types.instance_state_id()) ::
-          {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
-  defdelegate set_instance_state(instance, instance_state_id), to: Impl.Instance
+          {:ok, Msdata.SystInstances.t()} | {:error, Mserror.InstanceError.t()}
+  def set_instance_state(instance, instance_state_id) do
+    case Impl.Instance.set_instance_state(instance, instance_state_id) do
+      {:ok, instance} ->
+        {:ok, instance}
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.InstanceError.new(:instance_data, "Error setting instance state",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :set_instance_state, 2},
+             parameters: %{instance: instance, instance_state_id: instance_state_id}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -1435,8 +1760,23 @@ defmodule MscmpSystInstance do
       ...>   MscmpSystInstance.get_instance_by_name("app1_owner1_instance_types_sml")
   """
   @spec get_instance_by_name(Types.instance_name()) ::
-          {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
-  defdelegate get_instance_by_name(instance_name), to: Impl.Instance
+          {:ok, Msdata.SystInstances.t()} | {:error, Mserror.InstanceError.t()}
+  def get_instance_by_name(instance_name) do
+    case Impl.Instance.get_instance_by_name(instance_name) do
+      {:ok, instance} ->
+        {:ok, instance}
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.InstanceError.new(:instance_data, "Error getting instance by name",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :get_instance_by_name, 1},
+             parameters: %{instance_name: instance_name}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -1460,8 +1800,23 @@ defmodule MscmpSystInstance do
       true
   """
   @spec get_instance_id_by_name(Types.instance_name()) ::
-          {:ok, Types.instance_id()} | {:error, MscmpSystError.t()}
-  defdelegate get_instance_id_by_name(instance_name), to: Impl.Instance
+          {:ok, Types.instance_id()} | {:error, Mserror.InstanceError.t()}
+  def get_instance_id_by_name(instance_name) do
+    case Impl.Instance.get_instance_id_by_name(instance_name) do
+      {:ok, instance_id} ->
+        {:ok, instance_id}
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.InstanceError.new(:instance_data, "Error getting instance ID by name",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :get_instance_id_by_name, 1},
+             parameters: %{instance_name: instance_name}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -1493,6 +1848,21 @@ defmodule MscmpSystInstance do
     obtained from the `MscmpSystOptions` component.
   """
   @spec purge_instance(Types.instance_id() | Msdata.SystInstances.t(), map()) ::
-          :ok | {:error, MscmpSystError.t()}
-  defdelegate purge_instance(instance, startup_options), to: Impl.Instance
+          :ok | {:error, Mserror.InstanceError.t()}
+  def purge_instance(instance, startup_options) do
+    case Impl.Instance.purge_instance(instance, startup_options) do
+      :ok ->
+        :ok
+
+      {:error, _} = error ->
+        {:error,
+         Mserror.InstanceError.new(:instance_data, "Error purging instance",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :purge_instance, 2},
+             parameters: %{instance: instance, startup_options: startup_options}
+           }
+         )}
+    end
+  end
 end

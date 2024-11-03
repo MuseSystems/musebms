@@ -30,22 +30,11 @@ defmodule MscmpSystInstance.Impl.Application do
   #
 
   @spec create_application(Types.application_params()) ::
-          {:ok, Msdata.SystApplications.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystApplications.t()} | {:error, term()}
   def create_application(application_params) do
     application_params
     |> Msdata.SystApplications.insert_changeset(min_internal_name_length: 3)
-    |> MscmpSystDb.insert!(returning: true)
-    |> then(&{:ok, &1})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure creating new Application.",
-         cause: error
-       }}
+    |> MscmpSystDb.insert(returning: true)
   end
 
   ##############################################################################
@@ -57,37 +46,21 @@ defmodule MscmpSystInstance.Impl.Application do
   @spec update_application(
           Types.application_id() | Msdata.SystApplications.t(),
           Types.application_params()
-        ) :: {:ok, Msdata.SystApplications.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, Msdata.SystApplications.t()} | {:error, term()}
   def update_application(application_id, application_params) when is_binary(application_id) do
-    MscmpSystDb.get!(Msdata.SystApplications, application_id)
-    |> update_application(application_params)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+    case MscmpSystDb.get(Msdata.SystApplications, application_id) do
+      nil ->
+        {:error, {:not_found, application_id}}
 
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure updating Application record by ID.",
-         cause: error
-       }}
+      application ->
+        update_application(application, application_params)
+    end
   end
 
   def update_application(%Msdata.SystApplications{} = application, application_params) do
     application
     |> Msdata.SystApplications.update_changeset(application_params)
-    |> MscmpSystDb.update!(returning: true)
-    |> then(&{:ok, &1})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure updating new Application.",
-         cause: error
-       }}
+    |> MscmpSystDb.update(returning: true)
   end
 
   ##############################################################################

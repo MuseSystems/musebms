@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule InstanceTypeTest do
+  @moduledoc false
+
   use InstanceMgrTestCase, async: true
 
   @moduletag :unit

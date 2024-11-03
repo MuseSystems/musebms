@@ -76,7 +76,7 @@ defmodule MscmpSystInstance.Application do
               startup_options :: MscmpSystOptions.Types.options()
             ) ::
               {:ok, list(MscmpSystInstance.Types.target_instance_result())}
-              | {:error, MscmpSystError.t()}
+              | {:error, Exception.t()}
 
   @doc """
   Stops the identified running Application Instances.
@@ -87,7 +87,7 @@ defmodule MscmpSystInstance.Application do
   """
   @callback stop_instances(instances :: MscmpSystInstance.Types.target_instances()) ::
               {:ok, list(MscmpSystInstance.Types.target_instance_result())}
-              | {:error, MscmpSystError.t()}
+              | {:error, Exception.t()}
 
   @doc """
   Retrieves the runtime state of the requested Application Instances.
@@ -158,5 +158,5 @@ defmodule MscmpSystInstance.Application do
               startup_options :: MscmpSystOptions.Types.options()
             ) ::
               {:ok, list(MscmpSystInstance.Types.target_instance_result())}
-              | {:error, MscmpSystError.t()}
+              | {:error, Exception.t()}
 end

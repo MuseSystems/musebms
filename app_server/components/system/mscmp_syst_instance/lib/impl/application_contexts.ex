@@ -26,22 +26,11 @@ defmodule MscmpSystInstance.Impl.ApplicationContexts do
   #
 
   @spec create_application_context(Types.application_context_params()) ::
-          {:ok, Msdata.SystApplicationContexts.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystApplicationContexts.t()} | {:error, term()}
   def create_application_context(application_context_params) do
     application_context_params
     |> Msdata.SystApplicationContexts.insert_changeset()
-    |> MscmpSystDb.insert!(returning: true)
-    |> then(&{:ok, &1})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure creating new Application Context.",
-         cause: error
-       }}
+    |> MscmpSystDb.insert(returning: true)
   end
 
   ##############################################################################
@@ -70,21 +59,16 @@ defmodule MscmpSystInstance.Impl.ApplicationContexts do
   @spec update_application_context(
           Types.application_context_id() | Msdata.SystApplicationContexts.t(),
           Types.application_context_params()
-        ) :: {:ok, Msdata.SystApplicationContexts.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, Msdata.SystApplicationContexts.t()} | {:error, term()}
   def update_application_context(application_context_id, application_context_params)
       when is_binary(application_context_id) do
-    MscmpSystDb.get!(Msdata.SystApplicationContexts, application_context_id)
-    |> update_application_context(application_context_params)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+    case MscmpSystDb.get(Msdata.SystApplicationContexts, application_context_id) do
+      nil ->
+        {:error, {:not_found, application_context_id}}
 
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure updating Application Context by ID.",
-         cause: error
-       }}
+      application_context ->
+        update_application_context(application_context, application_context_params)
+    end
   end
 
   def update_application_context(
@@ -93,18 +77,7 @@ defmodule MscmpSystInstance.Impl.ApplicationContexts do
       ) do
     application_context
     |> Msdata.SystApplicationContexts.update_changeset(application_context_params)
-    |> MscmpSystDb.update!(returning: true)
-    |> then(&{:ok, &1})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure updating Application Context.",
-         cause: error
-       }}
+    |> MscmpSystDb.update(returning: true)
   end
 
   ##############################################################################
@@ -114,35 +87,15 @@ defmodule MscmpSystInstance.Impl.ApplicationContexts do
   #
 
   @spec delete_application_context(Types.application_context_id()) ::
-          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
+          :ok | {:error, term()}
   def delete_application_context(application_context_id) do
     from(ac in Msdata.SystApplicationContexts, where: ac.id == ^application_context_id)
     |> MscmpSystDb.delete_all()
     |> case do
-      {0, _} ->
-        {:ok, :not_found}
-
-      {1, _} ->
-        {:ok, :deleted}
-
-      error ->
-        {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Unexpected result while deleting Application Context.",
-           cause: error
-         }}
+      {0, _} -> {:error, {:not_found, application_context_id}}
+      {1, _} -> :ok
+      error -> {:error, {:database_error, error}}
     end
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure deleting Application Context.",
-         cause: error
-       }}
   end
 
   ##############################################################################
@@ -152,22 +105,15 @@ defmodule MscmpSystInstance.Impl.ApplicationContexts do
   #
 
   @spec list_application_contexts(Types.application_id() | nil) ::
-          {:ok, list(Msdata.SystApplicationContexts.t())} | {:error, MscmpSystError.t()}
+          {:ok, list(Msdata.SystApplicationContexts.t())} | {:error, term()}
   def list_application_contexts(application_id) do
     from(ac in Msdata.SystApplicationContexts)
     |> maybe_filter_by_application_id(application_id)
     |> MscmpSystDb.all()
-    |> then(&{:ok, &1})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure retrieving Application Contexts list.",
-         cause: error
-       }}
+    |> case do
+      [] -> {:error, {:not_found, application_id}}
+      application_contexts -> {:ok, application_contexts}
+    end
   end
 
   defp maybe_filter_by_application_id(query, nil), do: query

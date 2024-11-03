@@ -400,7 +400,7 @@ defmodule IntegrationTest do
       assert {:ok, initialized_instance} =
                MscmpSystInstance.initialize_instance(test_instance.id, @startup_options)
 
-      datastore_options =
+      {:ok, datastore_options} =
         MscmpSystInstance.get_instance_datastore_options(
           initialized_instance.id,
           @startup_options
@@ -442,11 +442,13 @@ defmodule IntegrationTest do
     assert app_context3_id = MscmpSystInstance.get_application_context_id_by_name("app2_apiusr")
     assert app_context4_id = MscmpSystInstance.get_application_context_id_by_name("app2_appusr")
 
-    assert {:ok, :deleted} = MscmpSystInstance.delete_application_context(app_context1_id)
-    assert {:ok, :not_found} = MscmpSystInstance.delete_application_context(app_context1_id)
+    assert :ok = MscmpSystInstance.delete_application_context(app_context1_id)
 
-    assert {:ok, :deleted} = MscmpSystInstance.delete_application_context(app_context2_id)
-    assert {:ok, :deleted} = MscmpSystInstance.delete_application_context(app_context3_id)
-    assert {:ok, :deleted} = MscmpSystInstance.delete_application_context(app_context4_id)
+    assert {:error, %Mserror.InstanceError{cause: {:error, {:not_found, ^app_context1_id}}}} =
+             MscmpSystInstance.delete_application_context(app_context1_id)
+
+    assert :ok = MscmpSystInstance.delete_application_context(app_context2_id)
+    assert :ok = MscmpSystInstance.delete_application_context(app_context3_id)
+    assert :ok = MscmpSystInstance.delete_application_context(app_context4_id)
   end
 end

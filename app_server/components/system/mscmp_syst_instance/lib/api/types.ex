@@ -121,7 +121,7 @@ defmodule MscmpSystInstance.Types do
   its runtime state.
   """
   @type instance_state() ::
-          {instance_name(), {:ok, instance_runtime_state()} | {:error, MscmpSystError.t()}}
+          {instance_name(), {:ok, instance_runtime_state()} | {:error, Mserror.InstanceError.t()}}
 
   @typedoc """
   Establishes the available Instance state functional types understood by the
@@ -379,5 +379,7 @@ defmodule MscmpSystInstance.Types do
   """
   @type target_instance_result() ::
           {instance_name(),
-           {:ok, :upgraded} | {:ok, instance_runtime_state()} | {:error, MscmpSystError.t()}}
+           {:ok, :upgraded}
+           | {:ok, instance_runtime_state()}
+           | {:error, Mserror.InstanceError.t()}}
 end

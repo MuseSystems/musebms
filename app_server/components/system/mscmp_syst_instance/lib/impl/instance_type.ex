@@ -24,22 +24,14 @@ defmodule MscmpSystInstance.Impl.InstanceType do
   #
 
   @spec create_instance_type(Types.instance_type_params()) ::
-          {:ok, Msdata.SystEnumItems.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystEnumItems.t()} | {:error, term()}
   def create_instance_type(instance_type_params) do
-    create_item_result =
-      MscmpSystEnums.create_item("instance_types", instance_type_params)
-
-    get_change_return_value(instance_type_params.internal_name, create_item_result)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure creating Instance Type.",
-         cause: error
-       }}
+    with :ok <- MscmpSystEnums.create_item("instance_types", instance_type_params) do
+      case MscmpSystEnums.get_item_by_name("instance_types", instance_type_params.internal_name) do
+        nil -> {:error, {:not_found, instance_type_params.internal_name}}
+        instance_type -> {:ok, instance_type}
+      end
+    end
   end
 
   ##############################################################################
@@ -52,40 +44,38 @@ defmodule MscmpSystInstance.Impl.InstanceType do
   def get_instance_type_by_name(instance_type_name),
     do: MscmpSystEnums.get_item_by_name("instance_types", instance_type_name)
 
+  ##############################################################################
+  #
+  # get_instance_type_default
+  #
+  #
+
   @spec get_instance_type_default :: Msdata.SystEnumItems.t()
   def get_instance_type_default, do: MscmpSystEnums.get_default_item("instance_types")
 
+  ##############################################################################
+  #
+  # update_instance_type
+  #
+  #
+
   @spec update_instance_type(Types.instance_type_name(), Types.instance_type_params()) ::
-          {:ok, Msdata.SystEnumItems.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystEnumItems.t()} | {:error, term()}
   def update_instance_type(instance_type_name, instance_type_params) do
-    update_enum_item_result =
-      MscmpSystEnums.set_item_values(
-        "instance_types",
-        instance_type_name,
-        instance_type_params
-      )
+    resolved_final_name = Map.get(instance_type_params, :internal_name, instance_type_name)
 
-    instance_type_name = Map.get(instance_type_params, :internal_name, instance_type_name)
-
-    get_change_return_value(instance_type_name, update_enum_item_result)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure updating Instance Type.",
-         cause: error
-       }}
+    with :ok <-
+           MscmpSystEnums.set_item_values(
+             "instance_types",
+             instance_type_name,
+             instance_type_params
+           ) do
+      case MscmpSystEnums.get_item_by_name("instance_types", resolved_final_name) do
+        nil -> {:error, {:not_found, instance_type_name}}
+        instance_type -> {:ok, instance_type}
+      end
+    end
   end
-
-  defp get_change_return_value(instance_type_name, :ok) do
-    instance_type = MscmpSystEnums.get_item_by_name("instance_types", instance_type_name)
-    {:ok, instance_type}
-  end
-
-  defp get_change_return_value(_instance_type_name, result), do: result
 
   ##############################################################################
   #
@@ -93,18 +83,7 @@ defmodule MscmpSystInstance.Impl.InstanceType do
   #
   #
 
-  @spec delete_instance_type(Types.instance_type_name()) :: :ok | {:error, MscmpSystError.t()}
-  def delete_instance_type(instance_type_name) do
-    MscmpSystEnums.delete_item("instance_types", instance_type_name)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure deleting Instance Type.",
-         cause: error
-       }}
-  end
+  @spec delete_instance_type(Types.instance_type_name()) :: :ok | {:error, term()}
+  def delete_instance_type(instance_type_name),
+    do: MscmpSystEnums.delete_item("instance_types", instance_type_name)
 end

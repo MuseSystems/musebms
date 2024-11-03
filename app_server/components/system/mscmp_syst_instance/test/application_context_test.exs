@@ -11,6 +11,7 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule ApplicationContextTest do
+  @moduledoc false
   use InstanceMgrTestCase, async: true
 
   alias MscmpSystInstance.Impl
@@ -105,8 +106,10 @@ defmodule ApplicationContextTest do
   test "Can delete an Application Context record" do
     app_context_id = Impl.ApplicationContexts.get_application_context_id_by_name("app3_delctx")
 
-    assert {:ok, :deleted} = Impl.ApplicationContexts.delete_application_context(app_context_id)
-    assert {:ok, :not_found} = Impl.ApplicationContexts.delete_application_context(app_context_id)
+    assert :ok = Impl.ApplicationContexts.delete_application_context(app_context_id)
+
+    assert {:error, {:not_found, _}} =
+             Impl.ApplicationContexts.delete_application_context(app_context_id)
   end
 
   test "Can list Application Context records" do

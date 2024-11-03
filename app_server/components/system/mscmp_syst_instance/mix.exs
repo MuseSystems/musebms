@@ -83,7 +83,8 @@ defmodule MscmpSystInstance.MixProject do
             Msdata.SystInstances,
             Msdata.SystOwners
           ],
-          "Supporting Types": [MscmpSystInstance.Types]
+          "Supporting Types": [MscmpSystInstance.Types],
+          Exceptions: [Mserror.InstanceError]
         ]
       ]
     ]
