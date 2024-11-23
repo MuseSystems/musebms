@@ -151,7 +151,7 @@ defmodule MscmpSystDb do
       {:ok, _, _} = result ->
         result
 
-      {:error, _} = error ->
+      {:error, error} ->
         {:error,
          Mserror.DbError.new(:datastore, "Failure retrieving Datastore State",
            cause: error,
@@ -355,7 +355,7 @@ defmodule MscmpSystDb do
       {:ok, _} = result ->
         result
 
-      {:error, _} = error ->
+      {:error, error} ->
         {:error,
          Mserror.DbError.new(:datastore_context, "Failure getting datastore context states.",
            cause: error,
@@ -425,7 +425,7 @@ defmodule MscmpSystDb do
       {:ok, _} = result ->
         result
 
-      {:error, _} = error ->
+      {:error, error} ->
         {:error,
          Mserror.DbError.new(:datastore_context, "Failure creating datastore contexts.",
            cause: error,
@@ -496,7 +496,7 @@ defmodule MscmpSystDb do
       :ok ->
         :ok
 
-      {:error, _} = error ->
+      {:error, error} ->
         {:error,
          Mserror.DbError.new(:datastore_context, "Failure dropping datastore contexts.",
            cause: error,
@@ -574,7 +574,7 @@ defmodule MscmpSystDb do
       {:ok, _} = result ->
         result
 
-      {:error, _} = error ->
+      {:error, error} ->
         {:error,
          Mserror.DbError.new(:migrations, "Failure getting datastore version.",
            cause: error,
@@ -654,7 +654,7 @@ defmodule MscmpSystDb do
       {:ok, _} = result ->
         result
 
-      {:error, _} = error ->
+      {:error, error} ->
         {:error,
          Mserror.DbError.new(:migrations, "Failure upgrading datastore.",
            cause: error,
@@ -721,7 +721,7 @@ defmodule MscmpSystDb do
       {:ok, _, _} = result ->
         result
 
-      {:error, _} = error ->
+      {:error, error} ->
         {:error,
          Mserror.DbError.new(:datastore, "Failure starting datastore.",
            cause: error,
@@ -788,7 +788,7 @@ defmodule MscmpSystDb do
       {:ok, _} = result ->
         result
 
-      {:error, _} = error ->
+      {:error, error} ->
         {:error,
          Mserror.DbError.new(:datastore_context, "Failure starting datastore context.",
            cause: error,
@@ -971,7 +971,7 @@ defmodule MscmpSystDb do
       {:ok, _} = result ->
         result
 
-      {:error, _} = error ->
+      {:error, error} ->
         {:error,
          Mserror.DbError.new(:datastore_context, "Failed to set datastore context",
            cause: error,
@@ -1052,7 +1052,7 @@ defmodule MscmpSystDb do
       {:ok, _} = result ->
         result
 
-      {:error, _} = error ->
+      {:error, error} ->
         {:error,
          Mserror.DbError.new(:datastore_context, "Failed to set datastore context",
            cause: error,
@@ -1109,7 +1109,7 @@ defmodule MscmpSystDb do
       :ok ->
         :ok
 
-      {:error, _} = error ->
+      {:error, error} ->
         {:error,
          Mserror.DbError.new(:datastore_context, "Failed to execute query for none",
            cause: error,
@@ -1157,7 +1157,7 @@ defmodule MscmpSystDb do
       {:ok, result} ->
         {:ok, result}
 
-      {:error, _} = error ->
+      {:error, error} ->
         {:error,
          Mserror.DbError.new(:datastore_context, "Failed to execute query for value",
            cause: error,
@@ -1204,7 +1204,7 @@ defmodule MscmpSystDb do
       {:ok, result} ->
         {:ok, result}
 
-      {:error, _} = error ->
+      {:error, error} ->
         {:error,
          Mserror.DbError.new(:datastore_context, "Failed to execute query for one",
            cause: error,
@@ -1269,7 +1269,7 @@ defmodule MscmpSystDb do
       {:ok, result} ->
         {:ok, result}
 
-      {:error, _} = error ->
+      {:error, error} ->
         {:error,
          Mserror.DbError.new(:datastore_context, "Failed to execute query for many",
            cause: error,
@@ -1331,7 +1331,7 @@ defmodule MscmpSystDb do
       {:ok, result} ->
         {:ok, result}
 
-      {:error, _} = error ->
+      {:error, error} ->
         {:error,
          Mserror.DbError.new(:datastore_context, "Failed to execute transaction",
            cause: error,
