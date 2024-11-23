@@ -259,6 +259,10 @@ defmodule MscmpSystEnums.Impl.Enums do
     |> Enum.find(fn enum_item ->
       default_enum_item_found?(enum_item, opts[:functional_type_name])
     end)
+    |> case do
+      enum_item when not is_nil(enum_item) -> enum_item
+      _ -> raise "No default enum item found for #{inspect(enum_name)}"
+    end
   end
 
   ##############################################################################
