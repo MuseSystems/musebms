@@ -144,8 +144,7 @@ defmodule MscmpSystNetwork.Guards do
       false
   """
   defguard is_ipv4(addr)
-           when is_struct(addr) and
-                  :erlang.map_get(:__struct__, addr) == MscmpSystNetwork.Types.IpV4 and
+           when is_struct(addr, MscmpSystNetwork.Types.IpV4) and
                   is_ipv4_tuple(:erlang.map_get(:address, addr)) and
                   is_ipv4_mask(:erlang.map_get(:mask, addr))
 
@@ -172,8 +171,7 @@ defmodule MscmpSystNetwork.Guards do
       false
   """
   defguard is_ipv6(addr)
-           when is_struct(addr) and
-                  :erlang.map_get(:__struct__, addr) == MscmpSystNetwork.Types.IpV6 and
+           when is_struct(addr, MscmpSystNetwork.Types.IpV6) and
                   is_ipv6_tuple(:erlang.map_get(:address, addr)) and
                   is_ipv6_mask(:erlang.map_get(:mask, addr))
 
