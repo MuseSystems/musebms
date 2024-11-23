@@ -53,4 +53,49 @@ defmodule Msutils.Guards do
   """
   @spec is_reg_atom(term()) :: Macro.t()
   defguard is_reg_atom(value) when is_atom(value) and value not in [nil, true, false]
+
+  ##############################################################################
+  #
+  # is_uuid
+  #
+  #
+
+  @doc """
+  Returns `true` when the passed value is a binary string is in a format that
+  is consistent with the standard "8-4-4-4-12" textual representation of a UUID.
+
+  > #### Limitation {: .warning}
+  >
+  > This guard does not validate that the characters are valid hex digits and thus
+  > it will return `true` even in cases where the value is not a valid UUID. In
+  > this regard, this guard acts more as a sanity check than a true validation.
+
+  For a more complete check, consider using `Ecto.UUID.dump/1` rather than a
+  guard.
+
+  ## Examples
+
+  Proper UUIDs are validated as expected.
+
+      iex> is_uuid("123e4567-e89b-12d3-a456-426614174000")
+      true
+
+  Non-UUID binaries are rejected.
+
+      iex> is_uuid("not a uuid")
+      false
+
+  Non-UUIDs that happen to have the same format of a UUID are also validated.
+
+      iex> is_uuid("zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz")
+      true
+
+  """
+  @spec is_uuid(term()) :: Macro.t()
+  defguard is_uuid(value)
+           when is_binary(value) and byte_size(value) == 36 and
+                  binary_part(value, 8, 1) == "-" and
+                  binary_part(value, 13, 1) == "-" and
+                  binary_part(value, 18, 1) == "-" and
+                  binary_part(value, 23, 1) == "-"
 end

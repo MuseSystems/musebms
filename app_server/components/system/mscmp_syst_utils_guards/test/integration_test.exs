@@ -64,4 +64,34 @@ defmodule MscmpSystUtilsGuardsTest do
       refute is_reg_atom(fn -> :ok end)
     end
   end
+
+  describe "is_uuid/1" do
+    test "returns true for valid UUIDs" do
+      for _ <- 1..1_000_000 do
+        uuid =
+          [
+            String.pad_leading(Integer.to_string(:rand.uniform(0xFFFFFFFF), 16), 8, "0"),
+            String.pad_leading(Integer.to_string(:rand.uniform(0xFFFF), 16), 4, "0"),
+            String.pad_leading(Integer.to_string(:rand.uniform(0xFFFF), 16), 4, "0"),
+            String.pad_leading(Integer.to_string(:rand.uniform(0xFFFF), 16), 4, "0"),
+            String.pad_leading(Integer.to_string(:rand.uniform(0xFFFFFFFFFFFF), 16), 12, "0")
+          ]
+          |> Enum.join("-")
+
+        assert is_uuid(uuid)
+      end
+    end
+
+    test "returns false for a non-UUID" do
+      refute is_uuid(nil)
+
+      for _ <- 1..1_000_000 do
+        str =
+          1..Enum.random(1..256)
+          |> Enum.map_join(fn _ -> <<Enum.random(?a..?z)>> end)
+
+        refute is_uuid(str)
+      end
+    end
+  end
 end
