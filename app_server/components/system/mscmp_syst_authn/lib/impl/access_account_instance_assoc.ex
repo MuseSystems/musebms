@@ -13,6 +13,8 @@
 defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
   @moduledoc false
 
+  use Msutils.Guards
+
   import Ecto.Query
 
   alias MscmpSystAuthn.Types
@@ -29,17 +31,17 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
           Types.access_account_id(),
           MscmpSystInstance.Types.instance_id(),
           Keyword.t()
-        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, term()}
   def invite_to_instance(access_account_id, instance_id, opts)
-      when is_binary(access_account_id) and is_binary(instance_id) do
+      when is_uuid(access_account_id) and is_uuid(instance_id) do
     date_now = DateTime.now!("Etc/UTC")
     date_invitation = date_now
     date_accepted = if opts[:create_accepted], do: date_now, else: nil
 
     date_expire =
-      unless opts[:create_accepted],
-        do: DateTime.add(date_now, opts[:expiration_days] * 24 * 60 * 60, :second),
-        else: nil
+      if opts[:create_accepted],
+        do: nil,
+        else: DateTime.add(date_now, opts[:expiration_days] * 24 * 60 * 60, :second)
 
     invite_params = %{
       access_account_id: access_account_id,
@@ -49,32 +51,19 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
       invitation_expires: date_expire
     }
 
-    target_record = get_access_account_instance_assoc(access_account_id, instance_id)
-
-    invite_or_reinvite(target_record, invite_params)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure inviting Access Account to Instance.",
-          cause: error
-        }
-      }
+    case get_access_account_instance_assoc(access_account_id, instance_id) do
+      {:ok, target_record} -> reinvite(target_record, invite_params)
+      {:error, :not_found} -> create_record(invite_params)
+    end
   end
 
-  defp invite_or_reinvite(nil = _target_record, invite_params), do: create_record(invite_params)
-
-  defp invite_or_reinvite(
+  defp reinvite(
          %Msdata.SystAccessAccountInstanceAssocs{} = target_record,
          invite_params
        ) do
-    target_record
-    |> verify_not_accepted()
-    |> update_record(invite_params)
+    with :ok <- verify_not_accepted(target_record) do
+      update_record(target_record, invite_params)
+    end
   end
 
   ##############################################################################
@@ -86,69 +75,36 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
   @spec accept_instance_invite(
           Types.access_account_id(),
           MscmpSystInstance.Types.instance_id()
-        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
+        ) ::
+          {:ok, Msdata.SystAccessAccountInstanceAssocs.t()}
+          | {:error, :not_found}
+          | {:error, term()}
   def accept_instance_invite(access_account_id, instance_id)
-      when is_binary(access_account_id) and is_binary(instance_id) do
-    get_access_account_instance_assoc(access_account_id, instance_id)
-    |> accept_instance_invite()
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure accepting Access Account invitation to Instance by composite key.",
-          cause: error
-        }
-      }
+      when is_uuid(access_account_id) and is_uuid(instance_id) do
+    with {:ok, assoc} <- get_access_account_instance_assoc(access_account_id, instance_id) do
+      accept_instance_invite(assoc)
+    end
   end
 
   @spec accept_instance_invite(
           Types.access_account_instance_assoc_id()
           | Msdata.SystAccessAccountInstanceAssocs.t()
         ) ::
-          {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
-  def accept_instance_invite(access_account_instance_assoc_id)
-      when is_binary(access_account_instance_assoc_id) do
-    access_account_instance_assoc_id
-    |> get_access_account_instance_assoc()
-    |> accept_instance_invite()
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure accepting Access Account invitation to Instance by ID.",
-          cause: error
-        }
-      }
+          {:ok, Msdata.SystAccessAccountInstanceAssocs.t()}
+          | {:error, :not_found}
+          | {:error, term()}
+  def accept_instance_invite(assoc_id) when is_uuid(assoc_id) do
+    with {:ok, assoc} <- get_access_account_instance_assoc(assoc_id) do
+      accept_instance_invite(assoc)
+    end
   end
 
-  def accept_instance_invite(
-        %Msdata.SystAccessAccountInstanceAssocs{} = access_account_instance_assoc
-      ) do
-    access_account_instance_assoc
-    |> verify_not_accepted()
-    |> verify_not_declined()
-    |> verify_not_expired()
-    |> update_record(%{access_granted: DateTime.now!("Etc/UTC")})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure accepting Access Account invitation to Instance.",
-          cause: error
-        }
-      }
+  def accept_instance_invite(%Msdata.SystAccessAccountInstanceAssocs{} = assoc) do
+    with :ok <- verify_not_accepted(assoc),
+         :ok <- verify_not_declined(assoc),
+         :ok <- verify_not_expired(assoc) do
+      update_record(assoc, %{access_granted: DateTime.now!("Etc/UTC")})
+    end
   end
 
   ##############################################################################
@@ -179,69 +135,35 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
   @spec decline_instance_invite(
           Types.access_account_id(),
           MscmpSystInstance.Types.instance_id()
-        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
-  def decline_instance_invite(access_account_id, instance_id)
-      when is_binary(access_account_id) and is_binary(instance_id) do
-    get_access_account_instance_assoc(access_account_id, instance_id)
-    |> decline_instance_invite()
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure declining Access Account invitation to Instance by composite key.",
-          cause: error
-        }
-      }
+        ) ::
+          {:ok, Msdata.SystAccessAccountInstanceAssocs.t()}
+          | {:error, :not_found}
+          | {:error, term()}
+  def decline_instance_invite(access_account_id, instance_id) do
+    with {:ok, assoc} <- get_access_account_instance_assoc(access_account_id, instance_id) do
+      decline_instance_invite(assoc)
+    end
   end
 
   @spec decline_instance_invite(
           Types.access_account_instance_assoc_id()
           | Msdata.SystAccessAccountInstanceAssocs.t()
         ) ::
-          {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
-  def decline_instance_invite(access_account_instance_assoc_id)
-      when is_binary(access_account_instance_assoc_id) do
-    access_account_instance_assoc_id
-    |> get_access_account_instance_assoc()
-    |> decline_instance_invite()
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure declining Access Account invitation to Instance by ID.",
-          cause: error
-        }
-      }
+          {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, term()}
+  def decline_instance_invite(assoc_id) when is_uuid(assoc_id) do
+    with {:ok, assoc} <- get_access_account_instance_assoc(assoc_id) do
+      decline_instance_invite(assoc)
+    end
   end
 
-  def decline_instance_invite(
-        %Msdata.SystAccessAccountInstanceAssocs{} = access_account_instance_assoc
-      ) do
-    access_account_instance_assoc
-    |> verify_not_accepted()
-    |> verify_not_declined()
-    |> verify_not_expired()
-    |> update_record(%{invitation_declined: DateTime.now!("Etc/UTC")})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure declining Access Account invitation to Instance.",
-          cause: error
-        }
-      }
+  def decline_instance_invite(%Msdata.SystAccessAccountInstanceAssocs{} = assoc) do
+    with :ok <- verify_not_accepted(assoc),
+         :ok <- verify_not_declined(assoc),
+         :ok <- verify_not_expired(assoc) do
+      update_record(assoc, %{
+        invitation_declined: DateTime.now!("Etc/UTC")
+      })
+    end
   end
 
   ##############################################################################
@@ -250,149 +172,104 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
   #
   #
 
-  @spec revoke_instance_access(
-          Types.access_account_id(),
-          MscmpSystInstance.Types.instance_id()
-        ) :: :ok | {:error, MscmpSystError.t()}
-  def revoke_instance_access(access_account_id, instance_id)
-      when is_binary(access_account_id) and is_binary(instance_id) do
-    get_access_account_instance_assoc(access_account_id, instance_id)
-    |> revoke_instance_access()
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure revoking Access Account invitation to Instance by composite key.",
-          cause: error
-        }
-      }
+  @spec revoke_instance_access(Types.access_account_id(), MscmpSystInstance.Types.instance_id()) ::
+          :ok | {:error, :not_found} | {:error, term()}
+  def revoke_instance_access(access_account_id, instance_id) do
+    with {:ok, assoc} <- get_access_account_instance_assoc(access_account_id, instance_id) do
+      revoke_instance_access(assoc)
+    end
   end
 
   @spec revoke_instance_access(
           Types.access_account_instance_assoc_id()
           | Msdata.SystAccessAccountInstanceAssocs.t()
-        ) ::
-          :ok | {:error, MscmpSystError.t()}
-  def revoke_instance_access(access_account_instance_assoc_id)
-      when is_binary(access_account_instance_assoc_id) do
-    access_account_instance_assoc_id
-    |> get_access_account_instance_assoc()
-    |> revoke_instance_access()
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure revoking Access Account invitation to Instance by ID.",
-          cause: error
-        }
-      }
+        ) :: :ok | {:error, :not_found} | {:error, term()}
+  def revoke_instance_access(assoc_id) when is_uuid(assoc_id) do
+    with {:ok, assoc} <- get_access_account_instance_assoc(assoc_id) do
+      revoke_instance_access(assoc)
+    end
   end
 
-  def revoke_instance_access(
-        %Msdata.SystAccessAccountInstanceAssocs{} = access_account_instance_assoc
-      ) do
-    delete_record(access_account_instance_assoc)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+  def revoke_instance_access(%Msdata.SystAccessAccountInstanceAssocs{} = assoc),
+    do: delete_record(assoc)
 
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure revoking Access Account invitation to Instance.",
-          cause: error
-        }
-      }
-  end
+  ##############################################################################
+  #
+  # General Use Private Functions
+  #
+  #
 
   defp get_access_account_instance_assoc(access_account_id, instance_id) do
     from(aaia in Msdata.SystAccessAccountInstanceAssocs,
       where: aaia.access_account_id == ^access_account_id and aaia.instance_id == ^instance_id
     )
     |> MscmpSystDb.one()
+    |> case do
+      nil -> {:error, :not_found}
+      record -> {:ok, record}
+    end
   end
 
-  defp get_access_account_instance_assoc(record_id) when is_binary(record_id) do
-    MscmpSystDb.get!(Msdata.SystAccessAccountInstanceAssocs, record_id)
+  defp get_access_account_instance_assoc(record_id) when is_uuid(record_id) do
+    case MscmpSystDb.get(Msdata.SystAccessAccountInstanceAssocs, record_id) do
+      nil -> {:error, :not_found}
+      record -> {:ok, record}
+    end
   end
 
   defp verify_not_accepted(
          %Msdata.SystAccessAccountInstanceAssocs{access_granted: access_granted} = record
        )
-       when not is_nil(access_granted) do
-    raise MscmpSystError,
-      message: """
-      The requested action may not be taken on an Access Account/Instance Assoc.
-      record which has already been accepted."
-      """,
-      code: :undefined_error,
-      cause: %{parameters: [access_account_instance_assoc: record]}
-  end
+       when not is_nil(access_granted),
+       do: {:error, {:accepted, record}}
 
-  defp verify_not_accepted(record), do: record
+  defp verify_not_accepted(_), do: :ok
 
   defp verify_not_expired(
          %Msdata.SystAccessAccountInstanceAssocs{invitation_expires: invitation_expires} = record
        )
        when not is_nil(invitation_expires) do
     case DateTime.diff(invitation_expires, DateTime.now!("Etc/UTC")) < 0 do
-      true ->
-        raise MscmpSystError,
-          message: """
-          The requested action may not be taken on an Access Account/Instance Assoc.
-          record which has expired."
-          """,
-          code: :undefined_error,
-          cause: %{parameters: [access_account_instance_assoc: record]}
-
-      false ->
-        record
+      true -> {:error, {:expired, record}}
+      false -> :ok
     end
   end
 
-  defp verify_not_expired(record), do: record
+  defp verify_not_expired(_), do: :ok
 
   defp verify_not_declined(
          %Msdata.SystAccessAccountInstanceAssocs{invitation_declined: invitation_declined} =
            record
        )
-       when not is_nil(invitation_declined) do
-    raise MscmpSystError,
-      message: """
-      The requested action may not be taken on an Access Account/Instance Assoc.
-      record which has been declined."
-      """,
-      code: :undefined_error,
-      cause: %{parameters: [access_account_instance_assoc: record]}
-  end
+       when not is_nil(invitation_declined),
+       do: {:error, {:declined, record}}
 
-  defp verify_not_declined(record), do: record
+  defp verify_not_declined(_), do: :ok
 
   defp create_record(insert_params) do
     insert_params
     |> Msdata.SystAccessAccountInstanceAssocs.insert_changeset()
-    |> MscmpSystDb.insert!(returning: true)
-    |> then(&{:ok, &1})
+    |> MscmpSystDb.insert(returning: true)
+    |> case do
+      {:ok, _} = result -> result
+      error -> {:error, {:database_error, error}}
+    end
   end
 
   defp update_record(target_record, update_params) do
     target_record
     |> Msdata.SystAccessAccountInstanceAssocs.update_changeset(update_params)
-    |> MscmpSystDb.update!(returning: true)
-    |> then(&{:ok, &1})
+    |> MscmpSystDb.update(returning: true)
+    |> case do
+      {:ok, _} = result -> result
+      error -> {:error, {:database_error, error}}
+    end
   end
 
   defp delete_record(target_record) do
-    MscmpSystDb.delete!(target_record)
-    :ok
+    case MscmpSystDb.delete(target_record) do
+      {:ok, _} -> :ok
+      error -> {:error, {:database_error, error}}
+    end
   end
 end

@@ -122,7 +122,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
           NetTypes.addr_structs(),
           Keyword.t()
         ) ::
-          {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
+          {:ok, AuthenticationState.t()}
   def authenticate_email_password(email_addr, pwd_text, host_addr, opts) do
     authentication_deadline = DateTime.utc_now() |> DateTime.add(opts[:deadline_minutes], :minute)
 
@@ -167,30 +167,20 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
       end
 
     authenticate_email_password(initial_auth_state, opts)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure authenticating Email/Password.",
-         cause: error
-       }}
   end
 
   @spec authenticate_email_password(AuthenticationState.t(), Keyword.t()) ::
-          {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
+          {:ok, AuthenticationState.t()}
   def authenticate_email_password(auth_state, opts) do
     identifier_rate_limit_opts = Keyword.take(opts, [:identifier_rate_limit])
     host_rate_limit_opts = Keyword.take(opts, [:host_ban_rate_limit])
 
     preliminary_auth_state =
-      auth_state
-      |> struct!(
-        instance_id: auth_state.instance_id || opts[:instance_id],
-        owning_owner_id: auth_state.owning_owner_id || opts[:owning_owner_id]
-      )
+      %{
+        auth_state
+        | instance_id: auth_state.instance_id || opts[:instance_id],
+          owning_owner_id: auth_state.owning_owner_id || opts[:owning_owner_id]
+      }
       |> maybe_start_email_password_authentication()
       |> confirm_deadline()
       |> confirm_instance_identified()
@@ -211,16 +201,6 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
       |> cleanse_auth_state()
       |> then(&{:ok, &1})
     end
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure authenticating Email/Password via Authentication State.",
-         cause: error
-       }}
   end
 
   defp maybe_start_email_password_authentication(
@@ -262,13 +242,15 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
 
   defp confirm_email_identity(auth_state) do
     if :check_identity in auth_state.pending_operations do
-      identity =
-        Impl.Identity.Email.identify_access_account(
-          auth_state.identifier,
-          auth_state.owning_owner_id
-        )
-
-      process_identity(auth_state, identity)
+      Impl.Identity.Email.identify_access_account(
+        auth_state.identifier,
+        auth_state.owning_owner_id
+      )
+      |> case do
+        {:ok, identity} -> process_identity(auth_state, identity)
+        {:error, :not_found} -> process_identity(auth_state, nil)
+        _error -> raise "Failure confirming Email identity."
+      end
     else
       auth_state
     end
@@ -276,15 +258,18 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
 
   defp confirm_password_credential(auth_state) do
     if :check_credential in auth_state.pending_operations do
-      confirm_result =
-        Impl.Credential.Password.confirm_credential!(
-          auth_state.access_account_id,
-          auth_state.identity_id,
-          auth_state.plaintext_credential
-        )
+      Impl.Credential.Password.confirm_credential(
+        auth_state.access_account_id,
+        auth_state.identity_id,
+        auth_state.plaintext_credential
+      )
+      |> case do
+        {:ok, result} ->
+          process_credential_result(%{auth_state | plaintext_credential: nil}, result)
 
-      %AuthenticationState{auth_state | plaintext_credential: nil}
-      |> process_credential_result(confirm_result)
+        _error ->
+          raise "Failure confirming Password credential."
+      end
     else
       %AuthenticationState{auth_state | plaintext_credential: nil}
     end
@@ -302,8 +287,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
           NetTypes.addr_structs(),
           MscmpSystInstance.Types.instance_id(),
           Keyword.t()
-        ) ::
-          {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, AuthenticationState.t()}
 
   def authenticate_api_token(identifier, token, host_addr, instance_id, opts) do
     authentication_deadline = DateTime.utc_now() |> DateTime.add(opts[:deadline_minutes], :minute)
@@ -328,7 +312,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   end
 
   @spec authenticate_api_token(AuthenticationState.t(), Keyword.t()) ::
-          {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
+          {:ok, AuthenticationState.t()}
   def authenticate_api_token(auth_state, opts) do
     identifier_rate_limit_opts = Keyword.take(opts, [:identifier_rate_limit])
     host_rate_limit_opts = Keyword.take(opts, [:host_ban_rate_limit])
@@ -347,16 +331,6 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     |> maybe_reset_rate_limits()
     |> cleanse_auth_state()
     |> then(&{:ok, &1})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure authenticating API Token.",
-         cause: error
-       }}
   end
 
   defp resolve_api_token_operations(:bypass), do: @api_token_instance_bypass_operations
@@ -364,13 +338,14 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
 
   defp confirm_api_token_identity(auth_state) do
     if :check_identity in auth_state.pending_operations do
-      identity =
-        Impl.Identity.ApiToken.identify_access_account(
-          auth_state.identifier,
-          auth_state.owning_owner_id
-        )
-
-      process_identity(auth_state, identity)
+      Impl.Identity.ApiToken.identify_access_account(
+        auth_state.identifier,
+        auth_state.owning_owner_id
+      )
+      |> case do
+        {:ok, identity} -> process_identity(auth_state, identity)
+        _error -> raise "Failure confirming API Token identity."
+      end
     else
       auth_state
     end
@@ -378,18 +353,20 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
 
   defp confirm_api_token_credential(auth_state) do
     if :check_credential in auth_state.pending_operations do
-      confirm_result =
-        Impl.Credential.ApiToken.confirm_credential!(
-          auth_state.access_account_id,
-          auth_state.identity_id,
-          auth_state.plaintext_credential
-        )
+      Impl.Credential.ApiToken.confirm_credential(
+        auth_state.access_account_id,
+        auth_state.identity_id,
+        auth_state.plaintext_credential
+      )
+      |> case do
+        {:ok, result} ->
+          process_credential_result(%{auth_state | plaintext_credential: nil}, result)
 
-      auth_state
-      |> struct!(plaintext_credential: nil)
-      |> process_credential_result(confirm_result)
+        _error ->
+          raise "Failure confirming API Token credential."
+      end
     else
-      %AuthenticationState{auth_state | plaintext_credential: nil}
+      %{auth_state | plaintext_credential: nil}
     end
   end
 
@@ -404,8 +381,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
           Types.credential(),
           NetTypes.addr_structs(),
           Keyword.t()
-        ) ::
-          {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, AuthenticationState.t()}
 
   def authenticate_validation_token(identifier, token, host_addr, opts) do
     authentication_deadline = DateTime.utc_now() |> DateTime.add(opts[:deadline_minutes], :minute)
@@ -431,7 +407,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   end
 
   @spec authenticate_validation_token(AuthenticationState.t(), Keyword.t()) ::
-          {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
+          {:ok, AuthenticationState.t()}
   def authenticate_validation_token(auth_state, opts) do
     identifier_rate_limit_opts = Keyword.take(opts, [:identifier_rate_limit])
     host_rate_limit_opts = Keyword.take(opts, [:host_ban_rate_limit])
@@ -448,27 +424,18 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     |> maybe_reset_rate_limits()
     |> cleanse_auth_state()
     |> then(&{:ok, &1})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure authenticating Validation Token.",
-         cause: error
-       }}
   end
 
   defp confirm_validation_identity(auth_state) do
     if :check_identity in auth_state.pending_operations do
-      identity =
-        Impl.Identity.Validation.identify_access_account(
-          auth_state.identifier,
-          auth_state.owning_owner_id
-        )
-
-      process_identity(auth_state, identity, true)
+      Impl.Identity.Validation.identify_access_account(
+        auth_state.identifier,
+        auth_state.owning_owner_id
+      )
+      |> case do
+        {:ok, identity} -> process_identity(auth_state, identity, true)
+        _error -> process_identity(auth_state, nil, true)
+      end
     else
       auth_state
     end
@@ -476,30 +443,27 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
 
   defp confirm_validation_credential(auth_state) do
     if :check_credential in auth_state.pending_operations do
-      confirm_result =
-        Impl.Credential.Validation.confirm_credential!(
-          auth_state.access_account_id,
-          auth_state.identity_id,
-          auth_state.plaintext_credential
-        )
+      Impl.Credential.Validation.confirm_credential(
+        auth_state.access_account_id,
+        auth_state.identity_id,
+        auth_state.plaintext_credential
+      )
+      |> case do
+        {:ok, result} ->
+          process_credential_result(%{auth_state | plaintext_credential: nil}, result)
 
-      %AuthenticationState{auth_state | plaintext_credential: nil}
-      |> process_credential_result(confirm_result)
+        _error ->
+          raise "Failure confirming Validation Token credential."
+      end
     else
-      %AuthenticationState{auth_state | plaintext_credential: nil}
+      %{auth_state | plaintext_credential: nil}
     end
   end
 
   defp confirm_successful_validation(%{status: :authenticated} = auth_state) do
     case Impl.Identity.Validation.confirm_identity_validation(auth_state.identity) do
-      {:ok, _identity} ->
-        auth_state
-
-      error ->
-        raise MscmpSystError,
-          code: :undefined_error,
-          message: "Failure confirming Validation success.",
-          error: error
+      {:ok, _validated_identity} -> auth_state
+      _error -> raise "Failure confirming Validation success."
     end
   end
 
@@ -516,8 +480,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
           Types.credential(),
           NetTypes.addr_structs(),
           Keyword.t()
-        ) ::
-          {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, AuthenticationState.t()} | {:error, term()}
   def authenticate_recovery_token(identifier, token, host_addr, opts) do
     authentication_deadline = DateTime.utc_now() |> DateTime.add(opts[:deadline_minutes], :minute)
 
@@ -542,7 +505,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   end
 
   @spec authenticate_recovery_token(AuthenticationState.t(), Keyword.t()) ::
-          {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
+          {:ok, AuthenticationState.t()} | {:error, term()}
   def authenticate_recovery_token(auth_state, opts) do
     identifier_rate_limit_opts = Keyword.take(opts, [:identifier_rate_limit])
     host_rate_limit_opts = Keyword.take(opts, [:host_ban_rate_limit])
@@ -560,26 +523,19 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     |> cleanse_auth_state()
     |> then(&{:ok, &1})
   rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure authenticating Recovery Token.",
-         cause: error
-       }}
+    error -> {:error, {:authenticate_recovery_token, error}}
   end
 
   defp confirm_credential_recovery(auth_state) do
     if :check_identity in auth_state.pending_operations do
-      identity =
-        Impl.Identity.Recovery.identify_access_account(
-          auth_state.identifier,
-          auth_state.owning_owner_id
-        )
-
-      process_identity(auth_state, identity, true)
+      Impl.Identity.Recovery.identify_access_account(
+        auth_state.identifier,
+        auth_state.owning_owner_id
+      )
+      |> case do
+        {:ok, identity} -> process_identity(auth_state, identity, true)
+        {:error, :not_found} -> process_identity(auth_state, nil, nil)
+      end
     else
       auth_state
     end
@@ -587,30 +543,27 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
 
   defp confirm_recovery_credential(auth_state) do
     if :check_credential in auth_state.pending_operations do
-      confirm_result =
-        Impl.Credential.Recovery.confirm_credential!(
-          auth_state.access_account_id,
-          auth_state.identity_id,
-          auth_state.plaintext_credential
-        )
+      Impl.Credential.Recovery.confirm_credential(
+        auth_state.access_account_id,
+        auth_state.identity_id,
+        auth_state.plaintext_credential
+      )
+      |> case do
+        {:ok, result} ->
+          process_credential_result(%{auth_state | plaintext_credential: nil}, result)
 
-      %AuthenticationState{auth_state | plaintext_credential: nil}
-      |> process_credential_result(confirm_result)
+        _error ->
+          raise "Failure confirming Recovery Token credential."
+      end
     else
-      %AuthenticationState{auth_state | plaintext_credential: nil}
+      %{auth_state | plaintext_credential: nil}
     end
   end
 
   defp confirm_successful_recovery(%{status: :authenticated} = auth_state) do
     case Impl.Identity.Recovery.confirm_credential_recovery(auth_state.identity) do
-      :ok ->
-        auth_state
-
-      error ->
-        raise MscmpSystError,
-          code: :undefined_error,
-          message: "Failure confirming Validation success.",
-          error: error
+      :ok -> auth_state
+      _error -> raise "Failure confirming Recovery success."
     end
   end
 
@@ -626,27 +579,9 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
           Types.account_identifier(),
           MscmpSystInstance.Types.owner_id() | nil
         ) ::
-          {:ok, Msdata.SystIdentities.t() | :not_found} | {:error, MscmpSystError.t()}
-  def identify_access_account_by_code(account_code, owner_id) when is_binary(account_code) do
-    account_code
-    |> Impl.Identity.AccountCode.identify_access_account(owner_id)
-    |> process_identify_account_code_result()
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure identifying Account Code.",
-         cause: error
-       }}
-  end
-
-  defp process_identify_account_code_result(%Msdata.SystIdentities{} = identity),
-    do: {:ok, identity}
-
-  defp process_identify_account_code_result(nil), do: {:ok, :not_found}
+          {:ok, Msdata.SystIdentities.t()} | {:error, :not_found} | {:error, term()}
+  def identify_access_account_by_code(account_code, owner_id),
+    do: Impl.Identity.AccountCode.identify_access_account(account_code, owner_id)
 
   #
   # General Functionality
@@ -806,9 +741,10 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
 
   defp confirm_global_network_rules(auth_state) do
     if :check_global_network_rules in auth_state.pending_operations do
-      auth_state.host_address
-      |> Impl.NetworkRules.get_applied_network_rule!()
-      |> process_network_rule_result(auth_state, :check_global_network_rules)
+      with {:ok, net_rule} <-
+             Impl.NetworkRules.get_applied_network_rule(auth_state.host_address) do
+        process_network_rule_result(net_rule, auth_state, :check_global_network_rules)
+      end
     else
       auth_state
     end
@@ -816,9 +752,13 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
 
   defp confirm_instance_network_rules(auth_state) do
     if :check_instance_network_rules in auth_state.pending_operations do
-      auth_state.host_address
-      |> Impl.NetworkRules.get_applied_network_rule!(auth_state.instance_id)
-      |> process_network_rule_result(auth_state, :check_instance_network_rules)
+      with {:ok, net_rule} <-
+             Impl.NetworkRules.get_applied_network_rule(
+               auth_state.host_address,
+               auth_state.instance_id
+             ) do
+        process_network_rule_result(net_rule, auth_state, :check_instance_network_rules)
+      end
     else
       auth_state
     end
@@ -863,12 +803,8 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   defp process_identifier_rate_limit_result({:deny, _}, auth_state),
     do: %AuthenticationState{auth_state | status: :rejected_rate_limited, pending_operations: []}
 
-  defp process_identifier_rate_limit_result(error, _auth_state) do
-    raise MscmpSystError,
-      code: :undefined_error,
-      message: "Error processing Identifier Rate Limit",
-      cause: error
-  end
+  defp process_identifier_rate_limit_result(_error, _auth_state),
+    do: raise("Error processing Identifier Rate Limit")
 
   # Getting to where confirm_host_rate_limit/2 actually performs a host rate
   # limit check means that something earlier has gone wrong and that the
@@ -911,12 +847,8 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     %AuthenticationState{auth_state | status: :rejected, pending_operations: []}
   end
 
-  defp process_host_rate_limit_result(error, _auth_state) do
-    raise MscmpSystError,
-      code: :undefined_error,
-      message: "Error processing Host Rate Limit",
-      cause: error
-  end
+  defp process_host_rate_limit_result(_error, _auth_state),
+    do: raise("Error processing Host Rate Limit")
 
   defp check_identifier_rate_limit(identifier, opts),
     do: check_rate_limit(:identifier, identifier, opts[:identifier_rate_limit])

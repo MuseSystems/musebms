@@ -17,8 +17,13 @@ defmodule MscmpSystAuthn do
              |> String.split("<!-- MDOC !-->")
              |> Enum.fetch!(1)
 
+  use Msutils.Guards
+
+  import MscmpSystNetwork.Guards
+
   alias MscmpSystAuthn.Impl
   alias MscmpSystAuthn.Types
+  alias MscmpSystError.Types.Context, as: ErrorContext
   alias MscmpSystNetwork.Types, as: NetTypes
 
   ##############################################################################
@@ -168,7 +173,7 @@ defmodule MscmpSystAuthn do
       type: {:or, [:string, nil]},
       doc: """
       if the Access Account is an Owned Access Account, this value must be set
-      to the record ID of the Access Account's Owner. Otherwise it must be set
+      to the record ID of the Access Account's Owner.Otherwise it must be set
       `nil` or not provided.
       """
     ],
@@ -259,7 +264,8 @@ defmodule MscmpSystAuthn do
       nil
   """
   @spec get_identity_type_by_name(Types.identity_type_name()) :: Msdata.SystEnumItems.t() | nil
-  defdelegate get_identity_type_by_name(identity_type_name), to: Impl.Identity
+  def get_identity_type_by_name(identity_type_name) when is_binary(identity_type_name),
+    do: Impl.Identity.get_identity_type_by_name(identity_type_name)
 
   ##############################################################################
   #
@@ -297,7 +303,9 @@ defmodule MscmpSystAuthn do
   @spec get_identity_type_default() :: Msdata.SystEnumItems.t()
   @spec get_identity_type_default(Types.identity_type_functional_types() | nil) ::
           Msdata.SystEnumItems.t()
-  defdelegate get_identity_type_default(functional_type \\ nil), to: Impl.Identity
+  def get_identity_type_default(functional_type \\ nil)
+      when is_reg_atom(functional_type) or is_nil(functional_type),
+      do: Impl.Identity.get_identity_type_default(functional_type)
 
   ##############################################################################
   #
@@ -331,7 +339,8 @@ defmodule MscmpSystAuthn do
   """
   @spec get_credential_type_by_name(Types.credential_type_name()) ::
           Msdata.SystEnumItems.t() | nil
-  defdelegate get_credential_type_by_name(credential_type_name), to: Impl.Credential
+  def get_credential_type_by_name(credential_type_name) when is_binary(credential_type_name),
+    do: Impl.Credential.get_credential_type_by_name(credential_type_name)
 
   ##############################################################################
   #
@@ -369,7 +378,9 @@ defmodule MscmpSystAuthn do
   @spec get_credential_type_default() :: Msdata.SystEnumItems.t()
   @spec get_credential_type_default(Types.credential_type_functional_types() | nil) ::
           Msdata.SystEnumItems.t()
-  defdelegate get_credential_type_default(functional_type \\ nil), to: Impl.Credential
+  def get_credential_type_default(functional_type \\ nil)
+      when is_reg_atom(functional_type) or is_nil(functional_type),
+      do: Impl.Credential.get_credential_type_default(functional_type)
 
   # ==============================================================================================
   # ==============================================================================================
@@ -412,7 +423,9 @@ defmodule MscmpSystAuthn do
   """
   @spec get_access_account_state_by_name(Types.access_account_state_name()) ::
           Msdata.SystEnumItems.t() | nil
-  defdelegate get_access_account_state_by_name(access_account_state_name), to: Impl.AccessAccount
+  def get_access_account_state_by_name(access_account_state_name)
+      when is_binary(access_account_state_name),
+      do: Impl.AccessAccount.get_access_account_state_by_name(access_account_state_name)
 
   ##############################################################################
   #
@@ -451,7 +464,9 @@ defmodule MscmpSystAuthn do
   @spec get_access_account_state_default() :: Msdata.SystEnumItems.t()
   @spec get_access_account_state_default(Types.access_account_state_functional_types() | nil) ::
           Msdata.SystEnumItems.t()
-  defdelegate get_access_account_state_default(functional_type \\ nil), to: Impl.AccessAccount
+  def get_access_account_state_default(functional_type \\ nil)
+      when is_reg_atom(functional_type) or is_nil(functional_type),
+      do: Impl.AccessAccount.get_access_account_state_default(functional_type)
 
   ##############################################################################
   #
@@ -485,8 +500,23 @@ defmodule MscmpSystAuthn do
   """
 
   @spec create_access_account(Types.access_account_params()) ::
-          {:ok, Msdata.SystAccessAccounts.t()} | {:error, MscmpSystError.t()}
-  defdelegate create_access_account(access_account_params), to: Impl.AccessAccount
+          {:ok, Msdata.SystAccessAccounts.t()} | {:error, Mserror.AuthnError.t()}
+  def create_access_account(access_account_params) when is_map(access_account_params) do
+    case Impl.AccessAccount.create_access_account(access_account_params) do
+      {:ok, access_account} ->
+        {:ok, access_account}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:access_account_data, "Error creating access account",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :create_access_account, 1},
+             parameters: %{access_account_params: access_account_params}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -512,8 +542,23 @@ defmodule MscmpSystAuthn do
   """
 
   @spec get_access_account_id_by_name(Types.access_account_name()) ::
-          {:ok, Types.access_account_id()} | {:error, MscmpSystError.t()}
-  defdelegate get_access_account_id_by_name(access_account_name), to: Impl.AccessAccount
+          {:ok, Types.access_account_id()} | {:error, Mserror.AuthnError.t()}
+  def get_access_account_id_by_name(access_account_name) when is_binary(access_account_name) do
+    case Impl.AccessAccount.get_access_account_id_by_name(access_account_name) do
+      {:ok, access_account_id} ->
+        {:ok, access_account_id}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:access_account_data, "Error getting access account ID by name",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :get_access_account_id_by_name, 1},
+             parameters: %{access_account_name: access_account_name}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -544,8 +589,23 @@ defmodule MscmpSystAuthn do
   """
 
   @spec get_access_account_by_name(Types.access_account_name()) ::
-          Msdata.SystAccessAccounts.t() | {:error, MscmpSystError.t()}
-  defdelegate get_access_account_by_name(access_account_name), to: Impl.AccessAccount
+          {:ok, Msdata.SystAccessAccounts.t()} | {:error, Mserror.AuthnError.t()}
+  def get_access_account_by_name(access_account_name) when is_binary(access_account_name) do
+    case Impl.AccessAccount.get_access_account_by_name(access_account_name) do
+      {:ok, access_account} ->
+        {:ok, access_account}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:access_account_data, "Error getting access account by name",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :get_access_account_by_name, 1},
+             parameters: %{access_account_name: access_account_name}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -584,8 +644,28 @@ defmodule MscmpSystAuthn do
           Types.access_account_id() | Msdata.SystAccessAccounts.t(),
           Types.access_account_params()
         ) ::
-          {:ok, Msdata.SystAccessAccounts.t()} | {:error, MscmpSystError.t()}
-  defdelegate update_access_account(access_account, access_account_params), to: Impl.AccessAccount
+          {:ok, Msdata.SystAccessAccounts.t()} | {:error, Mserror.AuthnError.t()}
+  def update_access_account(access_account, access_account_params)
+      when (is_uuid(access_account) or is_struct(access_account, Msdata.SystAccessAccounts)) and
+             is_map(access_account_params) do
+    case Impl.AccessAccount.update_access_account(access_account, access_account_params) do
+      {:ok, access_account} ->
+        {:ok, access_account}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:access_account_data, "Error updating access account",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :update_access_account, 2},
+             parameters: %{
+               access_account: access_account,
+               access_account_params: access_account_params
+             }
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -604,6 +684,22 @@ defmodule MscmpSystAuthn do
     or the populated `Msdata.SystAccessAccounts` struct
     representing the record to purge.
 
+  ## Returns
+
+    * `:ok` - The Access Account was successfully purged
+
+    * `{:error, %Mserror.AuthnError{cause: <cause>}}` - The purge operation failed.
+
+  Common error causes include:
+
+    * `:not_found` - The specified Access Account ID does not exist
+
+    * `{:purge_ineligible, functional_type}` - The Access Account's state is not
+      eligible for purging (functional type is not
+      "access_account_states_purge_eligible")
+
+    * `{:database_error, error}` - An error occurred during the database delete operation
+
   ## Example
 
       iex> {:ok, target_access_account} =
@@ -612,8 +708,24 @@ defmodule MscmpSystAuthn do
       :ok
   """
   @spec purge_access_account(Types.access_account_id() | Msdata.SystAccessAccounts.t()) ::
-          :ok | {:error, MscmpSystError.t()}
-  defdelegate purge_access_account(access_account), to: Impl.AccessAccount
+          :ok | {:error, Mserror.AuthnError.t()}
+  def purge_access_account(access_account)
+      when is_uuid(access_account) or is_struct(access_account, Msdata.SystAccessAccounts) do
+    case Impl.AccessAccount.purge_access_account(access_account) do
+      :ok ->
+        :ok
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:access_account_data, "Error purging access account",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :purge_access_account, 1},
+             parameters: %{access_account: access_account}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -638,8 +750,8 @@ defmodule MscmpSystAuthn do
       true
 
   """
-  @spec access_accounts_exist?() :: boolean() | {:error, MscmpSystError.t()}
-  defdelegate access_accounts_exist?(), to: Impl.AccessAccount
+  @spec access_accounts_exist?() :: boolean()
+  defdelegate access_accounts_exist?, to: Impl.AccessAccount
 
   ##############################################################################
   #
@@ -669,9 +781,9 @@ defmodule MscmpSystAuthn do
       iex> MscmpSystAuthn.access_account_name_exists?("nonexistent_access_account")
       false
   """
-  @spec access_account_name_exists?(Types.access_account_name()) ::
-          boolean() | {:error, MscmpSystError.t()}
-  defdelegate access_account_name_exists?(access_account_name), to: Impl.AccessAccount
+  @spec access_account_name_exists?(Types.access_account_name()) :: boolean()
+  def access_account_name_exists?(access_account_name) when is_binary(access_account_name),
+    do: Impl.AccessAccount.access_account_name_exists?(access_account_name)
 
   ##############################################################################
   #
@@ -704,9 +816,9 @@ defmodule MscmpSystAuthn do
       iex> MscmpSystAuthn.access_account_id_exists?("00000000-0000-0000-0000-000000000000")
       false
   """
-  @spec access_account_id_exists?(Types.access_account_name()) ::
-          boolean() | {:error, MscmpSystError.t()}
-  defdelegate access_account_id_exists?(access_account_name), to: Impl.AccessAccount
+  @spec access_account_id_exists?(Types.access_account_id()) :: boolean()
+  def access_account_id_exists?(access_account_id) when is_uuid(access_account_id),
+    do: Impl.AccessAccount.access_account_id_exists?(access_account_id)
 
   # ==============================================================================================
   # ==============================================================================================
@@ -762,32 +874,39 @@ defmodule MscmpSystAuthn do
   @spec invite_to_instance(
           Types.access_account_id(),
           MscmpSystInstance.Types.instance_id()
-        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, Mserror.AuthnError.t()}
   @spec invite_to_instance(
           Types.access_account_id(),
           MscmpSystInstance.Types.instance_id(),
           Keyword.t()
-        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
-  def invite_to_instance(
-        access_account_id,
-        instance_id,
-        opts \\ []
-      ) do
-    case NimbleOptions.validate(opts, @invite_to_instance_opts) do
-      {:ok, validated_opts} ->
-        Impl.AccessAccountInstanceAssoc.invite_to_instance(
-          access_account_id,
-          instance_id,
-          validated_opts
-        )
+        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, Mserror.AuthnError.t()}
+  def invite_to_instance(access_account_id, instance_id, opts \\ [])
+      when is_uuid(access_account_id) and is_uuid(instance_id) do
+    validated_opts = NimbleOptions.validate!(opts, @invite_to_instance_opts)
+
+    case Impl.AccessAccountInstanceAssoc.invite_to_instance(
+           access_account_id,
+           instance_id,
+           validated_opts
+         ) do
+      {:ok, assoc} ->
+        {:ok, assoc}
 
       {:error, error} ->
         {:error,
-         %MscmpSystError{
-           code: :parameter_error,
-           message: "Option validation error",
-           cause: error
-         }}
+         Mserror.AuthnError.new(
+           :access_account_instance_assoc_data,
+           "Error inviting access account to instance",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :invite_to_instance, 3},
+             parameters: %{
+               access_account_id: access_account_id,
+               instance_id: instance_id,
+               opts: opts
+             }
+           }
+         )}
     end
   end
 
@@ -820,9 +939,27 @@ defmodule MscmpSystAuthn do
   @spec accept_instance_invite(
           Types.access_account_instance_assoc_id()
           | Msdata.SystAccessAccountInstanceAssocs.t()
-        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
-  defdelegate accept_instance_invite(access_account_instance_assoc),
-    to: Impl.AccessAccountInstanceAssoc
+        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, Mserror.AuthnError.t()}
+  def accept_instance_invite(access_account_instance_assoc)
+      when is_uuid(access_account_instance_assoc) or
+             is_struct(access_account_instance_assoc, Msdata.SystAccessAccountInstanceAssocs) do
+    case Impl.AccessAccountInstanceAssoc.accept_instance_invite(access_account_instance_assoc) do
+      {:ok, assoc} ->
+        {:ok, assoc}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(
+           :access_account_instance_assoc_data,
+           "Error accepting instance invite",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :accept_instance_invite, 1},
+             parameters: %{access_account_instance_assoc: access_account_instance_assoc}
+           }
+         )}
+    end
+  end
 
   @doc section: :access_account_instance_assoc_data
   @doc """
@@ -844,9 +981,26 @@ defmodule MscmpSystAuthn do
   @spec accept_instance_invite(
           Types.access_account_id(),
           MscmpSystInstance.Types.instance_id()
-        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
-  defdelegate accept_instance_invite(access_account_id, instance_id),
-    to: Impl.AccessAccountInstanceAssoc
+        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, Mserror.AuthnError.t()}
+  def accept_instance_invite(access_account_id, instance_id)
+      when is_uuid(access_account_id) and is_uuid(instance_id) do
+    case Impl.AccessAccountInstanceAssoc.accept_instance_invite(access_account_id, instance_id) do
+      {:ok, assoc} ->
+        {:ok, assoc}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(
+           :access_account_instance_assoc_data,
+           "Error accepting instance invite",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :accept_instance_invite, 2},
+             parameters: %{access_account_id: access_account_id, instance_id: instance_id}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -878,9 +1032,27 @@ defmodule MscmpSystAuthn do
   @spec decline_instance_invite(
           Types.access_account_instance_assoc_id()
           | Msdata.SystAccessAccountInstanceAssocs.t()
-        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
-  defdelegate decline_instance_invite(access_account_instance_assoc),
-    to: Impl.AccessAccountInstanceAssoc
+        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, Mserror.AuthnError.t()}
+  def decline_instance_invite(access_account_instance_assoc)
+      when is_uuid(access_account_instance_assoc) or
+             is_struct(access_account_instance_assoc, Msdata.SystAccessAccountInstanceAssocs) do
+    case Impl.AccessAccountInstanceAssoc.decline_instance_invite(access_account_instance_assoc) do
+      {:ok, assoc} ->
+        {:ok, assoc}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(
+           :access_account_instance_assoc_data,
+           "Error declining instance invite",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :decline_instance_invite, 1},
+             parameters: %{access_account_instance_assoc: access_account_instance_assoc}
+           }
+         )}
+    end
+  end
 
   @doc section: :access_account_instance_assoc_data
   @doc """
@@ -902,9 +1074,26 @@ defmodule MscmpSystAuthn do
   @spec decline_instance_invite(
           Types.access_account_id(),
           MscmpSystInstance.Types.instance_id()
-        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
-  defdelegate decline_instance_invite(access_account_id, instance_id),
-    to: Impl.AccessAccountInstanceAssoc
+        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, Mserror.AuthnError.t()}
+  def decline_instance_invite(access_account_id, instance_id)
+      when is_uuid(access_account_id) and is_uuid(instance_id) do
+    case Impl.AccessAccountInstanceAssoc.decline_instance_invite(access_account_id, instance_id) do
+      {:ok, assoc} ->
+        {:ok, assoc}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(
+           :access_account_instance_assoc_data,
+           "Error declining instance invite",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :decline_instance_invite, 2},
+             parameters: %{access_account_id: access_account_id, instance_id: instance_id}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -936,9 +1125,27 @@ defmodule MscmpSystAuthn do
   @spec revoke_instance_access(
           Types.access_account_instance_assoc_id()
           | Msdata.SystAccessAccountInstanceAssocs.t()
-        ) :: :ok | {:error, MscmpSystError.t()}
-  defdelegate revoke_instance_access(access_account_instance_assoc),
-    to: Impl.AccessAccountInstanceAssoc
+        ) :: :ok | {:error, Mserror.AuthnError.t()}
+  def revoke_instance_access(access_account_instance_assoc)
+      when is_uuid(access_account_instance_assoc) or
+             is_struct(access_account_instance_assoc, Msdata.SystAccessAccountInstanceAssocs) do
+    case Impl.AccessAccountInstanceAssoc.revoke_instance_access(access_account_instance_assoc) do
+      :ok ->
+        :ok
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(
+           :access_account_instance_assoc_data,
+           "Error revoking instance access",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :revoke_instance_access, 1},
+             parameters: %{access_account_instance_assoc: access_account_instance_assoc}
+           }
+         )}
+    end
+  end
 
   @doc section: :access_account_instance_assoc_data
   @doc """
@@ -961,9 +1168,26 @@ defmodule MscmpSystAuthn do
   @spec revoke_instance_access(
           Types.access_account_id(),
           MscmpSystInstance.Types.instance_id()
-        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
-  defdelegate revoke_instance_access(access_account_id, instance_id),
-    to: Impl.AccessAccountInstanceAssoc
+        ) :: :ok | {:error, Mserror.AuthnError.t()}
+  def revoke_instance_access(access_account_id, instance_id)
+      when is_uuid(access_account_id) and is_uuid(instance_id) do
+    case Impl.AccessAccountInstanceAssoc.revoke_instance_access(access_account_id, instance_id) do
+      :ok ->
+        :ok
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(
+           :access_account_instance_assoc_data,
+           "Error revoking instance access",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :revoke_instance_access, 2},
+             parameters: %{access_account_id: access_account_id, instance_id: instance_id}
+           }
+         )}
+    end
+  end
 
   # ==============================================================================================
   # ==============================================================================================
@@ -1049,21 +1273,26 @@ defmodule MscmpSystAuthn do
       iex> MscmpSystAuthn.password_disallowed?("example_pg_disallowed")
       true
   """
-  @spec load_disallowed_passwords(Enumerable.t()) :: :ok | {:error, MscmpSystError.t()}
+  @spec load_disallowed_passwords(Enumerable.t()) :: :ok | {:error, Mserror.AuthnError.t()}
   @spec load_disallowed_passwords(Enumerable.t(), Keyword.t()) ::
-          :ok | {:error, MscmpSystError.t()}
-  def load_disallowed_passwords(password_list, opts \\ []) do
-    case NimbleOptions.validate(opts, @load_disallowed_passwords_opts) do
-      {:ok, validated_opts} ->
-        Impl.PasswordRules.load_disallowed_passwords(password_list, validated_opts)
+          :ok | {:error, Mserror.AuthnError.t()}
+  def load_disallowed_passwords(password_list, opts \\ [])
+      when not is_nil(password_list) and is_list(opts) do
+    validated_opts = NimbleOptions.validate!(opts, @load_disallowed_passwords_opts)
+
+    case Impl.PasswordRules.load_disallowed_passwords(password_list, validated_opts) do
+      :ok ->
+        :ok
 
       {:error, error} ->
         {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Options validation error",
-           cause: error
-         }}
+         Mserror.AuthnError.new(:password_rule_data, "Error loading disallowed passwords",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :load_disallowed_passwords, 2},
+             parameters: %{password_list: password_list, opts: opts}
+           }
+         )}
     end
   end
 
@@ -1086,7 +1315,7 @@ defmodule MscmpSystAuthn do
       true
   """
   @spec disallowed_passwords_populated?() :: boolean()
-  defdelegate disallowed_passwords_populated?(), to: Impl.PasswordRules
+  defdelegate disallowed_passwords_populated?, to: Impl.PasswordRules
 
   ##############################################################################
   #
@@ -1126,46 +1355,29 @@ defmodule MscmpSystAuthn do
       iex> MscmpSystAuthn.create_disallowed_password("Example Disallowed Password")
       :ok
   """
-  @spec create_disallowed_password(Types.credential()) :: :ok | {:error, MscmpSystError.t()}
-  defdelegate create_disallowed_password(password), to: Impl.PasswordRules
+  @spec create_disallowed_password(Types.credential()) :: :ok | {:error, Mserror.AuthnError.t()}
+  def create_disallowed_password(password) when is_binary(password) do
+    case Impl.PasswordRules.create_disallowed_password(password) do
+      :ok ->
+        :ok
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:password_rule_data, "Error creating disallowed password",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :create_disallowed_password, 1},
+             parameters: %{password: password}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
   # password_disallowed
   #
   #
-
-  @doc section: :password_rule_data
-  @doc """
-  Indicates whether the requested password is disallowed.
-
-  This function returns a tuple in the form of `{:ok, <disallowed>}` where the
-  `disallowed` value is either `true` meaning that the requested password is
-  disallowed or `false` if the password is available for use.
-
-  Regardless of the return of this function, disallowed passwords are only
-  prevented for use if the effective `disallow_compromised` Password Rule for
-  the Access Account attempting authentication is set.
-
-  ## Parameters
-
-    * `password` - the plaintext password to test for disallowed status.
-
-  ## Examples
-
-    When a password has been previously disallowed and cannot be used as a
-    user credential.
-
-      iex> MscmpSystAuthn.password_disallowed("Is Disallowed")
-      {:ok, true}
-
-    When a password has not been previously disallowed.
-
-      iex> MscmpSystAuthn.password_disallowed("Is Not Disallowed")
-      {:ok, false}
-  """
-  @spec password_disallowed(Types.credential()) :: {:ok, boolean()} | {:error, MscmpSystError.t()}
-  defdelegate password_disallowed(password), to: Impl.PasswordRules
 
   @doc section: :password_rule_data
   @doc """
@@ -1194,7 +1406,9 @@ defmodule MscmpSystAuthn do
 
   """
   @spec password_disallowed?(Types.credential()) :: boolean()
-  defdelegate password_disallowed?(password), to: Impl.PasswordRules
+  def password_disallowed?(password) when is_binary(password) do
+    Impl.PasswordRules.password_disallowed?(password)
+  end
 
   ##############################################################################
   #
@@ -1206,10 +1420,8 @@ defmodule MscmpSystAuthn do
   @doc """
   Removes a password from the disallowed passwords list.
 
-  On success, this function will return a success tuple indicating if the
-  requested password was deleted from the disallowed passwords list
-  (`{:ok, :deleted}`) or if the password simply wasn't found in the list
-  (`{:ok, :not_found}`).
+  On success a success tuple in the form `:ok` is returned.  In all other cases
+  an error tuple is returned.
 
   ## Parameters
 
@@ -1221,16 +1433,31 @@ defmodule MscmpSystAuthn do
     Result when deleting a record from the list.
 
       iex> MscmpSystAuthn.delete_disallowed_password("No Longer Disallowed")
-      {:ok, :deleted}
+      :ok
 
     Result when trying to delete a record not already on the list.
 
-      iex> MscmpSystAuthn.delete_disallowed_password("Not on List")
-      {:ok, :not_found}
+      iex> {:error, %Mserror.AuthnError{cause: :not_found}} =
+      ...>   MscmpSystAuthn.delete_disallowed_password("Not on List")
   """
   @spec delete_disallowed_password(Types.credential()) ::
-          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
-  defdelegate delete_disallowed_password(password), to: Impl.PasswordRules
+          :ok | {:error, Mserror.AuthnError.t()}
+  def delete_disallowed_password(password) when is_binary(password) do
+    case Impl.PasswordRules.delete_disallowed_password(password) do
+      :ok ->
+        :ok
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:password_rule_data, "Error deleting disallowed password",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :delete_disallowed_password, 1},
+             parameters: %{password: password}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -1263,8 +1490,25 @@ defmodule MscmpSystAuthn do
           MscmpSystInstance.Types.owner_id(),
           Types.password_rule_params()
         ) ::
-          {:ok, Msdata.SystOwnerPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate create_owner_password_rules(owner_id, insert_params), to: Impl.PasswordRules
+          {:ok, Msdata.SystOwnerPasswordRules.t()}
+          | {:error, Mserror.AuthnError.t()}
+  def create_owner_password_rules(owner_id, insert_params)
+      when is_uuid(owner_id) and is_map(insert_params) do
+    case Impl.PasswordRules.create_owner_password_rules(owner_id, insert_params) do
+      {:ok, result} ->
+        {:ok, result}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:password_rule_data, "Error creating Owner Password Rules",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :create_owner_password_rules, 2},
+             parameters: %{owner_id: owner_id, insert_params: insert_params}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -1292,14 +1536,24 @@ defmodule MscmpSystAuthn do
     regarding the available attributes.
   """
   @spec update_global_password_rules(Types.password_rule_params()) ::
-          {:ok, Msdata.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate update_global_password_rules(update_params), to: Impl.PasswordRules
+          {:ok, Msdata.SystGlobalPasswordRules.t()}
+          | {:error, Mserror.AuthnError.t()}
+  def update_global_password_rules(update_params) when is_map(update_params) do
+    case Impl.PasswordRules.update_global_password_rules(update_params) do
+      {:ok, result} ->
+        {:ok, result}
 
-  ##############################################################################
-  #
-  # update_global_password_rules
-  #
-  #
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:password_rule_data, "Error updating Global Password Rules",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :update_global_password_rules, 1},
+             parameters: %{update_params: update_params}
+           }
+         )}
+    end
+  end
 
   @doc section: :password_rule_data
   @doc """
@@ -1326,9 +1580,31 @@ defmodule MscmpSystAuthn do
           Msdata.SystGlobalPasswordRules.t(),
           Types.password_rule_params()
         ) ::
-          {:ok, Msdata.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate update_global_password_rules(global_password_rules, update_params),
-    to: Impl.PasswordRules
+          {:ok, Msdata.SystGlobalPasswordRules.t()}
+          | {:error, Mserror.AuthnError.t()}
+  def update_global_password_rules(
+        %Msdata.SystGlobalPasswordRules{} = global_password_rules,
+        update_params
+      )
+      when is_map(update_params) do
+    case Impl.PasswordRules.update_global_password_rules(global_password_rules, update_params) do
+      {:ok, result} ->
+        {:ok, result}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:password_rule_data, "Error updating Global Password Rules",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :update_global_password_rules, 2},
+             parameters: %{
+               global_password_rules: global_password_rules,
+               update_params: update_params
+             }
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -1359,8 +1635,26 @@ defmodule MscmpSystAuthn do
           MscmpSystInstance.Types.owner_id() | Msdata.SystOwnerPasswordRules.t(),
           Types.password_rule_params()
         ) ::
-          {:ok, Msdata.SystOwnerPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate update_owner_password_rules(owner, update_params), to: Impl.PasswordRules
+          {:ok, Msdata.SystOwnerPasswordRules.t()}
+          | {:error, Mserror.AuthnError.t()}
+  def update_owner_password_rules(owner, update_params)
+      when (is_uuid(owner) or is_struct(owner, Msdata.SystOwnerPasswordRules)) and
+             is_map(update_params) do
+    case Impl.PasswordRules.update_owner_password_rules(owner, update_params) do
+      {:ok, result} ->
+        {:ok, result}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:password_rule_data, "Error updating Owner Password Rules",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :update_owner_password_rules, 2},
+             parameters: %{owner: owner, update_params: update_params}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -1377,24 +1671,25 @@ defmodule MscmpSystAuthn do
   struct.  Any exceptions are returned via an error tuple.
   """
   @spec get_global_password_rules() ::
-          {:ok, Msdata.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t()}
-  defdelegate get_global_password_rules, to: Impl.PasswordRules
+          {:ok, Msdata.SystGlobalPasswordRules.t()}
+          | {:error, :not_found}
+          | {:error, Mserror.AuthnError.t()}
+  def get_global_password_rules do
+    case Impl.PasswordRules.get_global_password_rules() do
+      {:ok, result} ->
+        {:ok, result}
 
-  ##############################################################################
-  #
-  # get_global_password_rules
-  #
-  #
-
-  @doc section: :password_rule_data
-  @doc """
-  Retrieves the currently active Global Password Rules, raising on error.
-
-  This function works the same as `get_global_password_rules/0` except that
-  any errors cause an exception to be raised.
-  """
-  @spec get_global_password_rules!() :: Msdata.SystGlobalPasswordRules.t()
-  defdelegate get_global_password_rules!, to: Impl.PasswordRules
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:password_rule_data, "Error retrieving Global Password Rules",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :get_global_password_rules, 0},
+             parameters: %{}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -1417,26 +1712,23 @@ defmodule MscmpSystAuthn do
     * `owner_id` - the Owner record ID for whom to retrieve Password Rules.
   """
   @spec get_owner_password_rules(MscmpSystInstance.Types.owner_id()) ::
-          {:ok, Msdata.SystOwnerPasswordRules.t()}
-          | {:ok, :not_found}
-          | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate get_owner_password_rules(owner_id), to: Impl.PasswordRules
+          {:ok, Msdata.SystOwnerPasswordRules.t()} | {:error, Mserror.AuthnError.t()}
+  def get_owner_password_rules(owner_id) when is_uuid(owner_id) do
+    case Impl.PasswordRules.get_owner_password_rules(owner_id) do
+      {:ok, result} ->
+        {:ok, result}
 
-  @doc section: :password_rule_data
-  @doc """
-  Retrieves the currently active Owner Password Rules for the requested Owner,
-  raising on error.
-
-  This function works the same as `get_owner_password_rules/1` except that
-  any errors cause an exception to be raised.
-
-  ## Parameters
-
-    * `owner_id` - the Owner record ID for whom to retrieve Password Rules.
-  """
-  @spec get_owner_password_rules!(MscmpSystInstance.Types.owner_id()) ::
-          Msdata.SystOwnerPasswordRules.t() | :not_found
-  defdelegate get_owner_password_rules!(owner_id), to: Impl.PasswordRules
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:password_rule_data, "Error retrieving Owner Password Rules",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :get_owner_password_rules, 1},
+             parameters: %{owner_id: owner_id}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -1465,8 +1757,12 @@ defmodule MscmpSystAuthn do
           Msdata.SystGlobalPasswordRules.t() | Msdata.SystOwnerPasswordRules.t(),
           Types.access_account_id() | nil
         ) :: Types.PasswordRules.t() | nil
-  defdelegate get_generic_password_rules(pwd_rules_struct, access_account_id \\ nil),
-    to: Impl.PasswordRules
+  def get_generic_password_rules(pwd_rules_struct, access_account_id \\ nil)
+      when (is_struct(pwd_rules_struct, Msdata.SystGlobalPasswordRules) or
+              is_struct(pwd_rules_struct, Msdata.SystOwnerPasswordRules)) and
+             (is_uuid(access_account_id) or is_nil(access_account_id)) do
+    Impl.PasswordRules.get_generic_password_rules(pwd_rules_struct, access_account_id)
+  end
 
   ##############################################################################
   #
@@ -1496,8 +1792,25 @@ defmodule MscmpSystAuthn do
     * `access_account_id` - the Access Account record ID of the user.
   """
   @spec get_access_account_password_rule(Types.access_account_id()) ::
-          {:ok, Types.PasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate get_access_account_password_rule(access_account_id), to: Impl.PasswordRules
+          {:ok, Types.PasswordRules.t()} | {:error, Mserror.AuthnError.t()}
+  def get_access_account_password_rule(access_account_id) when is_uuid(access_account_id) do
+    case Impl.PasswordRules.get_access_account_password_rule(access_account_id) do
+      {:ok, result} ->
+        {:ok, result}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(
+           :password_rule_data,
+           "Error retrieving Access Account Password Rules",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :get_access_account_password_rule, 1},
+             parameters: %{access_account_id: access_account_id}
+           }
+         )}
+    end
+  end
 
   @doc section: :password_rule_data
   @doc """
@@ -1512,7 +1825,12 @@ defmodule MscmpSystAuthn do
     * `access_account_id` - the Access Account record ID of the user.
   """
   @spec get_access_account_password_rule!(Types.access_account_id()) :: Types.PasswordRules.t()
-  defdelegate get_access_account_password_rule!(access_account_id), to: Impl.PasswordRules
+  def get_access_account_password_rule!(access_account_id) when is_uuid(access_account_id) do
+    case Impl.PasswordRules.get_access_account_password_rule(access_account_id) do
+      {:ok, result} -> result
+      {:error, error} -> raise error
+    end
+  end
 
   ##############################################################################
   #
@@ -1530,13 +1848,12 @@ defmodule MscmpSystAuthn do
   ("Test" Rules) compare against the Global Password Rules ("Standard" Rules),
   but the function can compare any two rules.
 
-  The return value of this function is wrapped in a result tuple. A result of
-  `{:ok, <rule violations>}` is returned on success and an error tuple in the
-  form of `{:error, <exception>}` is returned on error.  The `<rule violations>`
-  value is a Keyword List where each tuple's key represents the rule violated
-  and the tuple's value is the required value for that rule; whether the
-  required value is a minimum or maximum depends on the nature of the specific
-  rule being reported.
+  The function returns `:ok` if all rules pass validation, or
+  `{:error, %Mserror.AuthnError{cause: {:invalid_password_rules, violations}}}`
+  if any rules are violated. The violations will be a keyword list where each
+  key represents the rule violated and the value that is the required value for
+  the violated rule; whether the required value is a minimum or maximum depends
+  on the nature of the specific rule being reported.
 
   ## Parameters
 
@@ -1551,48 +1868,31 @@ defmodule MscmpSystAuthn do
     or a populated `Msdata.SystGlobalPasswordRules` data
     struct may be provided.
   """
-  @spec verify_password_rules(Types.PasswordRules.t()) ::
-          {:ok, Keyword.t(Types.password_rule_violations())}
-          | {:error, MscmpSystError.t() | Exception.t()}
+  @spec verify_password_rules(Types.PasswordRules.t()) :: :ok | {:error, Mserror.AuthnError.t()}
   @spec verify_password_rules(
           Types.PasswordRules.t(),
           Msdata.SystGlobalPasswordRules.t() | Types.PasswordRules.t() | nil
-        ) ::
-          {:ok, Keyword.t(Types.password_rule_violations())}
-          | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate verify_password_rules(test_rules, standard_rules \\ nil), to: Impl.PasswordRules
+        ) :: :ok | {:error, Mserror.AuthnError.t()}
+  def verify_password_rules(test_rules, standard_rules \\ nil)
+      when (is_struct(test_rules, Msdata.SystGlobalPasswordRules) or
+              is_struct(test_rules, Types.PasswordRules)) and
+             (is_struct(standard_rules, Msdata.SystGlobalPasswordRules) or
+                is_struct(standard_rules, Types.PasswordRules) or is_nil(standard_rules)) do
+    case Impl.PasswordRules.verify_password_rules(test_rules, standard_rules) do
+      :ok ->
+        :ok
 
-  @doc section: :password_rule_data
-  @doc """
-  Compares a "Test" set of Password Rules against a "Standard" set of Password
-  Rules and reports on which of the "Test" Rules are considered less stringent
-  than the "Standard" Rules, raising on error.
-
-  This function works the same as `verify_password_rules/2` except that any
-  errors cause an exception to be raised.
-
-  ## Parameters
-
-    * `test_rules` - a Password Rule which will be tested against the value
-    of the `standard_rules`.  Where the `test_rules` are less stringent than the
-    `standard_rules`, a violation is reported in the result.
-
-    * `standard_rules` - the "Standard" against which the `test_rules` are
-    judged.  This parameter is optional and when nil the Global Password
-    Rule is retrieved and used as the default "Standard" Rules.  Otherwise
-    either a generic `t:MscmpSystAuthn.Types.PasswordRules.t/0` value
-    or a populated `Msdata.SystGlobalPasswordRules` data
-    struct may be provided.
-  """
-  @spec verify_password_rules!(Types.PasswordRules.t()) ::
-          Keyword.t(Types.password_rule_violations())
-  @spec verify_password_rules!(
-          Types.PasswordRules.t(),
-          Msdata.SystGlobalPasswordRules.t() | Types.PasswordRules.t() | nil
-        ) ::
-          Keyword.t(Types.password_rule_violations())
-  defdelegate verify_password_rules!(test_rules, standard_rules \\ nil),
-    to: Impl.PasswordRules
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:password_rule_data, "Password rule verification error",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :verify_password_rules, 2},
+             parameters: %{test_rules: test_rules, standard_rules: standard_rules}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -1609,8 +1909,23 @@ defmodule MscmpSystAuthn do
     * `owner_id` - the Owner record ID whose Password Rules are to be deleted.
   """
   @spec delete_owner_password_rules(MscmpSystInstance.Types.owner_id()) ::
-          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate delete_owner_password_rules(owner_id), to: Impl.PasswordRules
+          :ok | {:error, Mserror.AuthnError.t()}
+  def delete_owner_password_rules(owner_id) when is_uuid(owner_id) do
+    case Impl.PasswordRules.delete_owner_password_rules(owner_id) do
+      :ok ->
+        :ok
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:password_rule_data, "Error deleting Owner Password Rules",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :delete_owner_password_rules, 1},
+             parameters: %{owner_id: owner_id}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -1650,20 +1965,39 @@ defmodule MscmpSystAuthn do
       iex> {:ok, access_account_id} =
       ...>   MscmpSystAuthn.get_access_account_id_by_name("example_accnt")
       iex> MscmpSystAuthn.test_credential(access_account_id, "A Passing Password.")
-      {:ok, []}
+      :ok
 
     An invalid password test.
 
       iex> {:ok, access_account_id} =
       ...>   MscmpSystAuthn.get_access_account_id_by_name("example_accnt")
-      iex> MscmpSystAuthn.test_credential(access_account_id, "short")
-      {:ok, [password_rule_length_min: 8]}
+      iex> {:error, %Mserror.AuthnError{cause: {:invalid_credential, [password_rule_length_min: 8]}}} =
+      ...>   MscmpSystAuthn.test_credential(access_account_id, "short")
   """
   @spec test_credential(Types.access_account_id() | Types.PasswordRules.t(), Types.credential()) ::
-          {:ok, Keyword.t(Types.password_rule_violations())}
-          | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate test_credential(pwd_rules_or_access_account_id, plaintext_pwd),
-    to: Impl.Credential.Password
+          :ok | {:error, Mserror.AuthnError.t()}
+  def test_credential(pwd_rules_or_access_account_id, plaintext_pwd)
+      when (is_uuid(pwd_rules_or_access_account_id) or
+              is_struct(pwd_rules_or_access_account_id, Types.PasswordRules)) and
+             is_binary(plaintext_pwd) do
+    case Impl.Credential.Password.test_credential(pwd_rules_or_access_account_id, plaintext_pwd) do
+      :ok ->
+        :ok
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:password_rule_data, "Password testing error",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :test_credential, 2},
+             parameters: %{
+               pwd_rules_or_access_account_id: pwd_rules_or_access_account_id,
+               plaintext_pwd: "(Redacted)"
+             }
+           }
+         )}
+    end
+  end
 
   # ==============================================================================================
   # ==============================================================================================
@@ -1678,38 +2012,6 @@ defmodule MscmpSystAuthn do
   # host_disallowed
   #
   #
-
-  @doc section: :network_rule_data
-  @doc """
-  Indicates whether the provided host IP address is to be denied access to the
-  system.
-
-  This function returns a tuple in the form of `{:ok, <disallowed>}` where the
-  `disallowed` value is either `true` meaning that the requested host is
-  disallowed from authenticating with the system or `false` if the host is
-  permitted to attempt an authentication.
-
-  ## Parameters
-
-    * `host_address` - the host IP address to test.  Typically this will be the
-    host address of a user wishing to authenticate with the system.
-
-  ## Examples
-
-    An allowed host will return a `false` result tuple.
-
-      iex> import MscmpSystNetwork, only: [sigil_i: 2]
-      iex> MscmpSystAuthn.host_disallowed(~i"10.150.150.10")
-      {:ok, false}
-
-    A disallowed host returns a `true` result tuple.
-
-      iex> import MscmpSystNetwork, only: [sigil_i: 2]
-      iex> MscmpSystAuthn.host_disallowed(~i"10.123.123.5")
-      {:ok, true}
-  """
-  @spec host_disallowed(Types.host_address()) :: {:ok, boolean()} | {:error, MscmpSystError.t()}
-  defdelegate host_disallowed(host_address), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
   @doc """
@@ -1740,7 +2042,8 @@ defmodule MscmpSystAuthn do
       true
   """
   @spec host_disallowed?(Types.host_address()) :: boolean()
-  defdelegate host_disallowed?(host_address), to: Impl.NetworkRules
+  def host_disallowed?(host_addr) when is_ip(host_addr),
+    do: Impl.NetworkRules.host_disallowed?(host_addr)
 
   ##############################################################################
   #
@@ -1771,20 +2074,37 @@ defmodule MscmpSystAuthn do
     Adding a new host to the list.
 
       iex> import MscmpSystNetwork, only: [sigil_i: 2]
-      iex> {:ok, false} = MscmpSystAuthn.host_disallowed(~i"10.123.123.20")
-      iex> {:ok, %Msdata.SystDisallowedHosts{}} =
+      iex> false = MscmpSystAuthn.host_disallowed?(~i"10.123.123.20")
+      iex> {:ok, {:disallowed, %Msdata.SystDisallowedHosts{}}} =
       ...>   MscmpSystAuthn.create_disallowed_host(~i"10.123.123.20")
 
     Attempting to add a host already on the list.
 
       iex> import MscmpSystNetwork, only: [sigil_i: 2]
-      iex> {:ok, true} = MscmpSystAuthn.host_disallowed(~i"10.123.123.3")
-      iex> {:ok, nil} =
+      iex> true = MscmpSystAuthn.host_disallowed?(~i"10.123.123.3")
+      iex> {:ok, :already_disallowed} =
       ...>   MscmpSystAuthn.create_disallowed_host(~i"10.123.123.3")
   """
   @spec create_disallowed_host(Types.host_address()) ::
-          {:ok, Msdata.SystDisallowedHosts.t()} | {:error, MscmpSystError.t()}
-  defdelegate create_disallowed_host(host_address), to: Impl.NetworkRules
+          {:ok, :already_disallowed}
+          | {:ok, {:disallowed, Msdata.SystDisallowedHosts.t()}}
+          | {:error, Mserror.AuthnError.t()}
+  def create_disallowed_host(host_addr) when is_ip(host_addr) do
+    case Impl.NetworkRules.create_disallowed_host(host_addr) do
+      {:ok, result} ->
+        {:ok, result}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:network_rule_data, "Error creating Disallowed Host",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :create_disallowed_host, 1},
+             parameters: %{host_addr: host_addr}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -1801,23 +2121,40 @@ defmodule MscmpSystAuthn do
 
     * `host_address` - the IP address of the disallowed host record to retrieve.
 
-  ## Example
+  ## Examples
 
     Retrieving a Disallowed Host record by IP address.
 
       iex> import MscmpSystNetwork, only: [sigil_i: 2]
-      iex> {:ok, %Msdata.SystDisallowedHosts{}} =
+      iex> {:ok, {:disallowed, %Msdata.SystDisallowedHosts{}}} =
       ...>   MscmpSystAuthn.get_disallowed_host_record_by_host(~i"10.123.123.4")
 
     Attempting to retrieve a record for a host not on the list.
 
       iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> MscmpSystAuthn.get_disallowed_host_record_by_host(~i"10.125.120.20")
-      {:ok, nil}
+      {:ok, :allowed}
   """
   @spec get_disallowed_host_record_by_host(Types.host_address()) ::
-          {:ok, Msdata.SystDisallowedHosts.t() | nil} | {:error, MscmpSystError.t()}
-  defdelegate get_disallowed_host_record_by_host(host_addr), to: Impl.NetworkRules
+          {:ok, :allowed}
+          | {:ok, {:disallowed, Msdata.SystDisallowedHosts.t()}}
+          | {:error, Mserror.AuthnError.t()}
+  def get_disallowed_host_record_by_host(host_addr) when is_ip(host_addr) do
+    case Impl.NetworkRules.get_disallowed_host_record_by_host(host_addr) do
+      {:ok, result} ->
+        {:ok, result}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:network_rule_data, "Error retrieving Disallowed Host",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :get_disallowed_host_record_by_host, 1},
+             parameters: %{host_addr: host_addr}
+           }
+         )}
+    end
+  end
 
   @doc section: :network_rule_data
   @doc """
@@ -1837,18 +2174,23 @@ defmodule MscmpSystAuthn do
     Retrieving a Disallowed Host record by IP address.
 
       iex> import MscmpSystNetwork, only: [sigil_i: 2]
-      iex> %Msdata.SystDisallowedHosts{} =
+      iex> {:disallowed, %Msdata.SystDisallowedHosts{}} =
       ...>   MscmpSystAuthn.get_disallowed_host_record_by_host!(~i"10.123.123.4")
 
     Attempting to retrieve a record for a host not on the list.
 
       iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> MscmpSystAuthn.get_disallowed_host_record_by_host!(~i"10.125.120.20")
-      nil
+      :allowed
   """
   @spec get_disallowed_host_record_by_host!(Types.host_address()) ::
-          Msdata.SystDisallowedHosts.t() | nil
-  defdelegate get_disallowed_host_record_by_host!(host_addr), to: Impl.NetworkRules
+          :allowed | {:disallowed, Msdata.SystDisallowedHosts.t()}
+  def get_disallowed_host_record_by_host!(host_addr) do
+    case get_disallowed_host_record_by_host(host_addr) do
+      {:ok, result} -> result
+      {:error, error} -> raise error
+    end
+  end
 
   ##############################################################################
   #
@@ -1861,9 +2203,8 @@ defmodule MscmpSystAuthn do
   Deletes a host IP address from the Disallowed Hosts list as looked up by the
   host IP address.
 
-  If the record is found and deleted a success tuple in the form `{:ok, :deleted}`
-  is returned.  If the record is not found the success tuple `{:ok, :not_found}`
-  is returned.  Any other condition would cause an error tuple to be returned.
+  If the record is found and deleted a success tuple in the form `:ok` is
+  returned.  Any other condition would cause an error tuple to be returned.
 
   Once a host is removed from the Disallowed Hosts list, users are allowed to
   authenticate from the host, so long as no other effective Network Rule
@@ -1879,21 +2220,35 @@ defmodule MscmpSystAuthn do
     Deleting a host that does exist in the list.
 
       iex> import MscmpSystNetwork, only: [sigil_i: 2]
-      iex> {:ok, true} = MscmpSystAuthn.host_disallowed(~i"10.10.251.1")
-      iex> {:ok, :deleted} =
-      ...>   MscmpSystAuthn.delete_disallowed_host_addr(~i"10.10.251.1")
-      iex> {:ok, false} = MscmpSystAuthn.host_disallowed(~i"10.10.251.1")
+      iex> true = MscmpSystAuthn.host_disallowed?(~i"10.10.251.1")
+      iex> :ok = MscmpSystAuthn.delete_disallowed_host_addr(~i"10.10.251.1")
+      iex> false = MscmpSystAuthn.host_disallowed?(~i"10.10.251.1")
 
     Attempting to delete a host not already on the list.
 
       iex> import MscmpSystNetwork, only: [sigil_i: 2]
-      iex> {:ok, false} = MscmpSystAuthn.host_disallowed(~i"10.10.251.10")
-      iex> {:ok, :not_found} =
+      iex> false = MscmpSystAuthn.host_disallowed?(~i"10.10.251.10")
+      iex> {:error, %Mserror.AuthnError{cause: :not_found}} =
       ...>   MscmpSystAuthn.delete_disallowed_host_addr(~i"10.10.251.10")
   """
   @spec delete_disallowed_host_addr(Types.host_address()) ::
-          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
-  defdelegate delete_disallowed_host_addr(host_addr), to: Impl.NetworkRules
+          :ok | {:error, Mserror.AuthnError.t()}
+  def delete_disallowed_host_addr(host_addr) when is_ip(host_addr) do
+    case Impl.NetworkRules.delete_disallowed_host_addr(host_addr) do
+      :ok ->
+        :ok
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:network_rule_data, "Error deleting Disallowed Host",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :delete_disallowed_host_addr, 1},
+             parameters: %{host_addr: host_addr}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -1923,8 +2278,23 @@ defmodule MscmpSystAuthn do
     ```
   """
   @spec get_disallowed_host_record_by_id(Types.disallowed_host_id()) ::
-          {:ok, Msdata.SystDisallowedHosts.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate get_disallowed_host_record_by_id(disallowed_host_id), to: Impl.NetworkRules
+          {:ok, Msdata.SystDisallowedHosts.t()} | {:error, Mserror.AuthnError.t()}
+  def get_disallowed_host_record_by_id(disallowed_host_id) when is_uuid(disallowed_host_id) do
+    case Impl.NetworkRules.get_disallowed_host_record_by_id(disallowed_host_id) do
+      {:ok, record} ->
+        {:ok, record}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:network_rule_data, "Error retrieving Disallowed Host",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :get_disallowed_host_record_by_id, 1},
+             parameters: %{disallowed_host_id: disallowed_host_id}
+           }
+         )}
+    end
+  end
 
   @doc section: :network_rule_data
   @doc """
@@ -1951,7 +2321,13 @@ defmodule MscmpSystAuthn do
   """
   @spec get_disallowed_host_record_by_id!(Types.disallowed_host_id()) ::
           Msdata.SystDisallowedHosts.t()
-  defdelegate get_disallowed_host_record_by_id!(disallowed_host_id), to: Impl.NetworkRules
+  def get_disallowed_host_record_by_id!(disallowed_host_id)
+      when is_uuid(disallowed_host_id) do
+    case get_disallowed_host_record_by_id(disallowed_host_id) do
+      {:ok, record} -> record
+      {:error, error} -> raise error
+    end
+  end
 
   ##############################################################################
   #
@@ -1965,9 +2341,8 @@ defmodule MscmpSystAuthn do
   `Msdata.SystDisallowedHosts` record or the ID of such a
   record.
 
-  If the record is found and deleted a success tuple in the form `{:ok, :deleted}`
-  is returned.  If the record is not found the success tuple `{:ok, :not_found}`
-  is returned.
+  If the record is found and deleted a success tuple in the form `:ok` is
+  returned.  An error tuple is returned in any other circumstance.
 
   Once a host is removed from the Disallowed Hosts list, users are allowed to
   authenticate from the host, so long as no other effective Network Rule
@@ -1986,32 +2361,49 @@ defmodule MscmpSystAuthn do
     Deleting a host by record ID.
 
       iex> import MscmpSystNetwork, only: [sigil_i: 2]
-      iex> {:ok, target_host_record} =
+      iex> {:ok, {:disallowed, target_host_record}} =
       ...>   MscmpSystAuthn.get_disallowed_host_record_by_host(~i"10.10.250.4")
       iex> MscmpSystAuthn.delete_disallowed_host(target_host_record.id)
-      {:ok, :deleted}
+      :ok
 
     Deleting a host by record struct.
 
       iex> import MscmpSystNetwork, only: [sigil_i: 2]
-      iex> {:ok, target_host_record} =
+      iex> {:ok, {:disallowed, target_host_record}} =
       ...>   MscmpSystAuthn.get_disallowed_host_record_by_host(~i"10.10.250.5")
       iex> MscmpSystAuthn.delete_disallowed_host(target_host_record)
-      {:ok, :deleted}
+      :ok
 
     Deleting a struct for a no longer existent record.
 
       iex> import MscmpSystNetwork, only: [sigil_i: 2]
-      iex> {:ok, target_host_record} =
+      iex> {:ok, {:disallowed, target_host_record}} =
       ...>   MscmpSystAuthn.get_disallowed_host_record_by_host(~i"10.10.250.6")
       iex> MscmpSystAuthn.delete_disallowed_host(target_host_record)
-      {:ok, :deleted}
-      iex> MscmpSystAuthn.delete_disallowed_host(target_host_record)
-      {:ok, :not_found}
+      :ok
+      iex> {:error, %Mserror.AuthnError{cause: :not_found}} =
+      ...>   MscmpSystAuthn.delete_disallowed_host(target_host_record)
+
   """
   @spec delete_disallowed_host(Types.disallowed_host_id() | Msdata.SystDisallowedHosts.t()) ::
-          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
-  defdelegate delete_disallowed_host(disallowed_host), to: Impl.NetworkRules
+          :ok | {:error, Mserror.AuthnError.t()}
+  def delete_disallowed_host(disallowed_host)
+      when is_uuid(disallowed_host) or is_struct(disallowed_host, Msdata.SystDisallowedHosts) do
+    case Impl.NetworkRules.delete_disallowed_host(disallowed_host) do
+      :ok ->
+        :ok
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:network_rule_data, "Error deleting Disallowed Host",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :delete_disallowed_host, 1},
+             parameters: %{disallowed_host: disallowed_host}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -2121,22 +2513,38 @@ defmodule MscmpSystAuthn do
 
   """
   @spec get_applied_network_rule(Types.host_address()) ::
-          {:ok, Types.AppliedNetworkRule.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Types.AppliedNetworkRule.t()} | {:error, Mserror.AuthnError.t()}
   @spec get_applied_network_rule(
           Types.host_address(),
           MscmpSystInstance.Types.instance_id() | nil
-        ) :: {:ok, Types.AppliedNetworkRule.t()} | {:error, MscmpSystError.t() | Exception.t()}
+        ) :: {:ok, Types.AppliedNetworkRule.t()} | {:error, Mserror.AuthnError.t()}
   @spec get_applied_network_rule(
           Types.host_address(),
           MscmpSystInstance.Types.instance_id() | nil,
           MscmpSystInstance.Types.owner_id() | nil
-        ) :: {:ok, Types.AppliedNetworkRule.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate get_applied_network_rule(
-                host_address,
-                instance_id \\ nil,
-                instance_owner_id \\ nil
-              ),
-              to: Impl.NetworkRules
+        ) :: {:ok, Types.AppliedNetworkRule.t()} | {:error, Mserror.AuthnError.t()}
+  def get_applied_network_rule(host_addr, instance_id \\ nil, instance_owner_id \\ nil)
+      when is_ip(host_addr) and (is_uuid(instance_id) or is_nil(instance_id)) and
+             (is_uuid(instance_owner_id) or is_nil(instance_owner_id)) do
+    case Impl.NetworkRules.get_applied_network_rule(host_addr, instance_id, instance_owner_id) do
+      {:ok, record} ->
+        {:ok, record}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:network_rule_data, "Error getting Applied Network Rule",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :get_applied_network_rule, 3},
+             parameters: %{
+               host_addr: host_addr,
+               instance_id: instance_id,
+               instance_owner_id: instance_owner_id
+             }
+           }
+         )}
+    end
+  end
 
   @doc section: :network_rule_data
   @doc """
@@ -2208,12 +2616,12 @@ defmodule MscmpSystAuthn do
           MscmpSystInstance.Types.instance_id() | nil,
           MscmpSystInstance.Types.owner_id() | nil
         ) :: Types.AppliedNetworkRule.t()
-  defdelegate get_applied_network_rule!(
-                host_address,
-                instance_id \\ nil,
-                instance_owner_id \\ nil
-              ),
-              to: Impl.NetworkRules
+  def get_applied_network_rule!(host_addr, instance_id \\ nil, instance_owner_id \\ nil) do
+    case get_applied_network_rule(host_addr, instance_id, instance_owner_id) do
+      {:ok, record} -> record
+      {:error, error} -> raise error
+    end
+  end
 
   ##############################################################################
   #
@@ -2268,8 +2676,23 @@ defmodule MscmpSystAuthn do
       ...>   MscmpSystAuthn.create_global_network_rule(new_global_rule)
   """
   @spec create_global_network_rule(Types.global_network_rule_params()) ::
-          {:ok, Msdata.SystGlobalNetworkRules.t()} | {:error, MscmpSystError.t()}
-  defdelegate create_global_network_rule(insert_params), to: Impl.NetworkRules
+          {:ok, Msdata.SystGlobalNetworkRules.t()} | {:error, Mserror.AuthnError.t()}
+  def create_global_network_rule(insert_params) when is_map(insert_params) do
+    case Impl.NetworkRules.create_global_network_rule(insert_params) do
+      {:ok, record} ->
+        {:ok, record}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:network_rule_data, "Error creating Global Network Rule",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :create_global_network_rule, 1},
+             parameters: %{insert_params: insert_params}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -2332,9 +2755,24 @@ defmodule MscmpSystAuthn do
   @spec create_owner_network_rule(
           MscmpSystInstance.Types.owner_id(),
           Types.owner_network_rule_params()
-        ) ::
-          {:ok, Msdata.SystOwnerNetworkRules.t()} | {:error, MscmpSystError.t()}
-  defdelegate create_owner_network_rule(owner_id, insert_params), to: Impl.NetworkRules
+        ) :: {:ok, Msdata.SystOwnerNetworkRules.t()} | {:error, Mserror.AuthnError.t()}
+  def create_owner_network_rule(owner_id, insert_params)
+      when is_uuid(owner_id) and is_map(insert_params) do
+    case Impl.NetworkRules.create_owner_network_rule(owner_id, insert_params) do
+      {:ok, record} ->
+        {:ok, record}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:network_rule_data, "Error creating Owner Network Rule",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :create_owner_network_rule, 2},
+             parameters: %{owner_id: owner_id, insert_params: insert_params}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -2399,9 +2837,24 @@ defmodule MscmpSystAuthn do
   @spec create_instance_network_rule(
           MscmpSystInstance.Types.instance_id(),
           Types.instance_network_rule_params()
-        ) ::
-          {:ok, Msdata.SystInstanceNetworkRules.t()} | {:error, MscmpSystError.t()}
-  defdelegate create_instance_network_rule(instance_id, insert_params), to: Impl.NetworkRules
+        ) :: {:ok, Msdata.SystInstanceNetworkRules.t()} | {:error, Mserror.AuthnError.t()}
+  def create_instance_network_rule(instance_id, insert_params)
+      when is_uuid(instance_id) and is_map(insert_params) do
+    case Impl.NetworkRules.create_instance_network_rule(instance_id, insert_params) do
+      {:ok, record} ->
+        {:ok, record}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:network_rule_data, "Error creating Instance Network Rule",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :create_instance_network_rule, 2},
+             parameters: %{instance_id: instance_id, insert_params: insert_params}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -2438,10 +2891,26 @@ defmodule MscmpSystAuthn do
   @spec update_global_network_rule(
           Ecto.UUID.t() | Msdata.SystGlobalNetworkRules.t(),
           Types.global_network_rule_params()
-        ) ::
-          {:ok, Msdata.SystGlobalNetworkRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate update_global_network_rule(global_network_rule, update_params),
-    to: Impl.NetworkRules
+        ) :: {:ok, Msdata.SystGlobalNetworkRules.t()} | {:error, Mserror.AuthnError.t()}
+  def update_global_network_rule(global_network_rule, update_params)
+      when (is_uuid(global_network_rule) or
+              is_struct(global_network_rule, Msdata.SystGlobalNetworkRules)) and
+             is_map(update_params) do
+    case Impl.NetworkRules.update_global_network_rule(global_network_rule, update_params) do
+      {:ok, record} ->
+        {:ok, record}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:network_rule_data, "Error updating Global Network Rule",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :update_global_network_rule, 2},
+             parameters: %{global_network_rule: global_network_rule, update_params: update_params}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -2477,9 +2946,26 @@ defmodule MscmpSystAuthn do
   @spec update_owner_network_rule(
           Ecto.UUID.t() | Msdata.SystOwnerNetworkRules.t(),
           Types.owner_network_rule_params()
-        ) ::
-          {:ok, Msdata.SystOwnerNetworkRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate update_owner_network_rule(owner_network_rule, update_params), to: Impl.NetworkRules
+        ) :: {:ok, Msdata.SystOwnerNetworkRules.t()} | {:error, Mserror.AuthnError.t()}
+  def update_owner_network_rule(owner_network_rule, update_params)
+      when (is_uuid(owner_network_rule) or
+              is_struct(owner_network_rule, Msdata.SystOwnerNetworkRules)) and
+             is_map(update_params) do
+    case Impl.NetworkRules.update_owner_network_rule(owner_network_rule, update_params) do
+      {:ok, record} ->
+        {:ok, record}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:network_rule_data, "Error updating Owner Network Rule",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :update_owner_network_rule, 2},
+             parameters: %{owner_network_rule: owner_network_rule, update_params: update_params}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -2516,11 +3002,29 @@ defmodule MscmpSystAuthn do
   @spec update_instance_network_rule(
           Ecto.UUID.t() | Msdata.SystInstanceNetworkRules.t(),
           Types.instance_network_rule_params()
-        ) ::
-          {:ok, Msdata.SystInstanceNetworkRules.t()}
-          | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate update_instance_network_rule(instance_network_rule, update_params),
-    to: Impl.NetworkRules
+        ) :: {:ok, Msdata.SystInstanceNetworkRules.t()} | {:error, Mserror.AuthnError.t()}
+  def update_instance_network_rule(instance_network_rule, update_params)
+      when (is_uuid(instance_network_rule) or
+              is_struct(instance_network_rule, Msdata.SystInstanceNetworkRules)) and
+             is_map(update_params) do
+    case Impl.NetworkRules.update_instance_network_rule(instance_network_rule, update_params) do
+      {:ok, record} ->
+        {:ok, record}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:network_rule_data, "Error updating Instance Network Rule",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :update_instance_network_rule, 2},
+             parameters: %{
+               instance_network_rule: instance_network_rule,
+               update_params: update_params
+             }
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -2544,10 +3048,23 @@ defmodule MscmpSystAuthn do
   record.
   """
   @spec get_global_network_rule(Ecto.UUID.t()) ::
-          {:ok, Msdata.SystGlobalNetworkRules.t()}
-          | {:ok, :not_found}
-          | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate get_global_network_rule(global_network_rule_id), to: Impl.NetworkRules
+          {:ok, Msdata.SystGlobalNetworkRules.t()} | {:error, Mserror.AuthnError.t()}
+  def get_global_network_rule(global_network_rule_id) when is_uuid(global_network_rule_id) do
+    case Impl.NetworkRules.get_global_network_rule(global_network_rule_id) do
+      {:ok, record} ->
+        {:ok, record}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:network_rule_data, "Error retrieving Global Network Rule",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :get_global_network_rule, 1},
+             parameters: %{global_network_rule_id: global_network_rule_id}
+           }
+         )}
+    end
+  end
 
   @doc section: :network_rule_data
   @doc """
@@ -2564,8 +3081,13 @@ defmodule MscmpSystAuthn do
   * `global_network_rule_id` - the record ID of the desired Global Network Rule
   record.
   """
-  @spec get_global_network_rule!(Ecto.UUID.t()) :: Msdata.SystGlobalNetworkRules.t() | :not_found
-  defdelegate get_global_network_rule!(global_network_rule_id), to: Impl.NetworkRules
+  @spec get_global_network_rule!(Ecto.UUID.t()) :: Msdata.SystGlobalNetworkRules.t()
+  def get_global_network_rule!(global_network_rule_id) do
+    case get_global_network_rule(global_network_rule_id) do
+      {:ok, record} -> record
+      {:error, error} -> raise error
+    end
+  end
 
   ##############################################################################
   #
@@ -2589,10 +3111,23 @@ defmodule MscmpSystAuthn do
   record.
   """
   @spec get_owner_network_rule(Ecto.UUID.t()) ::
-          {:ok, Msdata.SystOwnerNetworkRules.t()}
-          | {:ok, :not_found}
-          | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate get_owner_network_rule(owner_network_rule_id), to: Impl.NetworkRules
+          {:ok, Msdata.SystOwnerNetworkRules.t()} | {:error, Mserror.AuthnError.t()}
+  def get_owner_network_rule(owner_network_rule_id) when is_uuid(owner_network_rule_id) do
+    case Impl.NetworkRules.get_owner_network_rule(owner_network_rule_id) do
+      {:ok, record} ->
+        {:ok, record}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:network_rule_data, "Error retrieving Owner Network Rule",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :get_owner_network_rule, 1},
+             parameters: %{owner_network_rule_id: owner_network_rule_id}
+           }
+         )}
+    end
+  end
 
   @doc section: :network_rule_data
   @doc """
@@ -2609,8 +3144,13 @@ defmodule MscmpSystAuthn do
   * `owner_network_rule_id` - the record ID of the desired Owner Network Rule
   record.
   """
-  @spec get_owner_network_rule!(Ecto.UUID.t()) :: Msdata.SystOwnerNetworkRules.t() | :not_found
-  defdelegate get_owner_network_rule!(owner_network_rule_id), to: Impl.NetworkRules
+  @spec get_owner_network_rule!(Ecto.UUID.t()) :: Msdata.SystOwnerNetworkRules.t()
+  def get_owner_network_rule!(owner_network_rule_id) do
+    case get_owner_network_rule(owner_network_rule_id) do
+      {:ok, record} -> record
+      {:error, error} -> raise error
+    end
+  end
 
   ##############################################################################
   #
@@ -2634,10 +3174,24 @@ defmodule MscmpSystAuthn do
   Rule record.
   """
   @spec get_instance_network_rule(Ecto.UUID.t()) ::
-          {:ok, Msdata.SystInstanceNetworkRules.t()}
-          | {:ok, :not_found}
-          | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate get_instance_network_rule(instance_network_rule_id), to: Impl.NetworkRules
+          {:ok, Msdata.SystInstanceNetworkRules.t()} | {:error, Mserror.AuthnError.t()}
+  def get_instance_network_rule(instance_network_rule_id)
+      when is_uuid(instance_network_rule_id) do
+    case Impl.NetworkRules.get_instance_network_rule(instance_network_rule_id) do
+      {:ok, record} ->
+        {:ok, record}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:network_rule_data, "Error retrieving Instance Network Rule",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :get_instance_network_rule, 1},
+             parameters: %{instance_network_rule_id: instance_network_rule_id}
+           }
+         )}
+    end
+  end
 
   @doc section: :network_rule_data
   @doc """
@@ -2654,9 +3208,13 @@ defmodule MscmpSystAuthn do
   * `instance_network_rule_id` - the record ID of the desired Instance Network
   Rule record.
   """
-  @spec get_instance_network_rule!(Ecto.UUID.t()) ::
-          Msdata.SystInstanceNetworkRules.t() | :not_found
-  defdelegate get_instance_network_rule!(instance_network_rule_id), to: Impl.NetworkRules
+  @spec get_instance_network_rule!(Ecto.UUID.t()) :: Msdata.SystInstanceNetworkRules.t()
+  def get_instance_network_rule!(instance_network_rule_id) do
+    case get_instance_network_rule(instance_network_rule_id) do
+      {:ok, record} -> record
+      {:error, error} -> raise error
+    end
+  end
 
   ##############################################################################
   #
@@ -2676,9 +3234,23 @@ defmodule MscmpSystAuthn do
     * `global_network_rule_id` - The record ID of the Global Network Rule record
     to delete.
   """
-  @spec delete_global_network_rule(Ecto.UUID.t()) ::
-          :ok | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate delete_global_network_rule(global_network_rule_id), to: Impl.NetworkRules
+  @spec delete_global_network_rule(Ecto.UUID.t()) :: :ok | {:error, Mserror.AuthnError.t()}
+  def delete_global_network_rule(global_network_rule_id) when is_uuid(global_network_rule_id) do
+    case Impl.NetworkRules.delete_global_network_rule(global_network_rule_id) do
+      :ok ->
+        :ok
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:network_rule_data, "Error deleting Global Network Rule",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :delete_global_network_rule, 1},
+             parameters: %{global_network_rule_id: global_network_rule_id}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -2698,9 +3270,23 @@ defmodule MscmpSystAuthn do
     * `owner_network_rule_id` - The record ID of the Owner Network Rule record
     to delete.
   """
-  @spec delete_owner_network_rule(Ecto.UUID.t()) ::
-          :ok | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate delete_owner_network_rule(owner_network_rule_id), to: Impl.NetworkRules
+  @spec delete_owner_network_rule(Ecto.UUID.t()) :: :ok | {:error, Mserror.AuthnError.t()}
+  def delete_owner_network_rule(owner_network_rule_id) when is_uuid(owner_network_rule_id) do
+    case Impl.NetworkRules.delete_owner_network_rule(owner_network_rule_id) do
+      :ok ->
+        :ok
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:network_rule_data, "Error deleting Owner Network Rule",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :delete_owner_network_rule, 1},
+             parameters: %{owner_network_rule_id: owner_network_rule_id}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -2721,9 +3307,24 @@ defmodule MscmpSystAuthn do
     * `instance_network_rule_id` - The record ID of the Instance Network Rule
     record to delete.
   """
-  @spec delete_instance_network_rule(Ecto.UUID.t()) ::
-          :ok | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate delete_instance_network_rule(instance_network_rule_id), to: Impl.NetworkRules
+  @spec delete_instance_network_rule(Ecto.UUID.t()) :: :ok | {:error, Mserror.AuthnError.t()}
+  def delete_instance_network_rule(instance_network_rule_id)
+      when is_uuid(instance_network_rule_id) do
+    case Impl.NetworkRules.delete_instance_network_rule(instance_network_rule_id) do
+      :ok ->
+        :ok
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:network_rule_data, "Error deleting Instance Network Rule",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :delete_instance_network_rule, 1},
+             parameters: %{instance_network_rule_id: instance_network_rule_id}
+           }
+         )}
+    end
+  end
 
   # ==============================================================================================
   # ==============================================================================================
@@ -2779,22 +3380,35 @@ defmodule MscmpSystAuthn do
 
     #{NimbleOptions.docs(@create_or_reset_account_code_opts)}
   """
+
+  # TODO: Dialyzer cannot match the success tuple even through in tests it
+  #       works.  There is almost certainly something wrong in our code that
+  #       is causing the problem and should be resolved.
+
+  @dialyzer {:no_match, create_or_reset_account_code: 2}
   @spec create_or_reset_account_code(Types.access_account_id()) ::
-          {:ok, Types.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Types.AuthenticatorResult.t()} | {:error, Mserror.AuthnError.t()}
   @spec create_or_reset_account_code(Types.access_account_id(), Keyword.t()) ::
-          {:ok, Types.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  def create_or_reset_account_code(access_account_id, opts \\ []) do
-    case NimbleOptions.validate(opts, @create_or_reset_account_code_opts) do
-      {:ok, validated_opts} ->
-        Impl.ExtendedMgmtLogic.create_or_reset_account_code(access_account_id, validated_opts)
+          {:ok, Types.AuthenticatorResult.t()} | {:error, Mserror.AuthnError.t()}
+  def create_or_reset_account_code(access_account_id, opts \\ [])
+      when is_uuid(access_account_id) and is_list(opts) do
+    validated_opts = NimbleOptions.validate!(opts, @create_or_reset_account_code_opts)
+
+    case Impl.ExtendedMgmtLogic.create_or_reset_account_code(access_account_id, validated_opts) do
+      {:ok, result} ->
+        {:ok, result}
 
       {:error, error} ->
         {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Option validation failure.",
-           cause: error
-         }}
+         Mserror.AuthnError.new(
+           :account_code,
+           "Error creating or resetting Account Code Identity",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :create_or_reset_account_code, 2},
+             parameters: %{access_account_id: access_account_id, opts: validated_opts}
+           }
+         )}
     end
   end
 
@@ -2808,10 +3422,9 @@ defmodule MscmpSystAuthn do
   @doc """
   Identifies an Access Account by its Account Code identifier.
 
-  On successful identification, the Account Code Identity record which was found
-  based on the supplied parameters is returned via a success tuple.  If the
-  function completes successfully but no Identity record is found for the
-  Identifier a value of `{:ok, :not_found}` is returned.
+  The Account Code can represent an Access Account which is either Unowned or
+  Owned by an Owner.  The `owner_id` parameter is used to differentiate between
+  these two cases.
 
   ## Parameters
 
@@ -2825,9 +3438,26 @@ defmodule MscmpSystAuthn do
   @spec identify_access_account_by_code(
           Types.account_identifier(),
           MscmpSystInstance.Types.owner_id() | nil
-        ) ::
-          {:ok, Msdata.SystIdentities.t() | :not_found} | {:error, MscmpSystError.t()}
-  defdelegate identify_access_account_by_code(account_code, owner_id), to: Impl.ExtendedAuthLogic
+        ) :: {:ok, Msdata.SystIdentities.t()} | {:error, Mserror.AuthnError.t()}
+  def identify_access_account_by_code(account_code, owner_id)
+      when is_binary(account_code) and (is_uuid(owner_id) or is_nil(owner_id)) do
+    case Impl.ExtendedAuthLogic.identify_access_account_by_code(account_code, owner_id) do
+      {:ok, identity} ->
+        {:ok, identity}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(
+           :account_code,
+           "Error identifying Access Account by Account Code",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :identify_access_account_by_code, 2},
+             parameters: %{account_code: account_code, owner_id: owner_id}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -2849,9 +3479,25 @@ defmodule MscmpSystAuthn do
     the Account Code Identity.
   """
   @spec get_account_code_by_access_account_id(Types.access_account_id()) ::
-          {:ok, Msdata.SystIdentities.t() | :not_found} | {:error, MscmpSystError.t()}
-  defdelegate get_account_code_by_access_account_id(access_account_id),
-    to: Impl.Identity.AccountCode
+          {:ok, Msdata.SystIdentities.t()} | {:error, Mserror.AuthnError.t()}
+  def get_account_code_by_access_account_id(access_account_id) when is_uuid(access_account_id) do
+    case Impl.Identity.AccountCode.get_account_code_by_access_account_id(access_account_id) do
+      {:ok, identity} ->
+        {:ok, identity}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(
+           :account_code,
+           "Error retrieving Account Code Identity",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :get_account_code_by_access_account_id, 1},
+             parameters: %{access_account_id: access_account_id}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -2864,19 +3510,31 @@ defmodule MscmpSystAuthn do
   Revokes a previously create Account Code Identity from an Access Account,
   deleting it from the system.
 
-  On successful deletion a success tuple in the form `{:ok, :deleted}` is
-  returned.  If no existing Account Code Identity is found a tuple in this form
-  `{:ok, :not_found}` is returned.  All other outcomes are error conditions
-  resulting in the return of an error tuple.
-
   ## Parameters
 
     * `access_account_id` - the Access Account record ID from which to revoke
     the Account Code Identity.
   """
   @spec revoke_account_code(Types.access_account_id()) ::
-          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
-  defdelegate revoke_account_code(access_account_id), to: Impl.ExtendedMgmtLogic
+          :ok | {:error, Mserror.AuthnError.t()}
+  def revoke_account_code(access_account_id) when is_uuid(access_account_id) do
+    case Impl.ExtendedMgmtLogic.revoke_account_code(access_account_id) do
+      :ok ->
+        :ok
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(
+           :account_code,
+           "Error revoking Account Code Identity",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :revoke_account_code, 1},
+             parameters: %{access_account_id: access_account_id}
+           }
+         )}
+    end
+  end
 
   # ==============================================================================================
   # ==============================================================================================
@@ -2975,39 +3633,48 @@ defmodule MscmpSystAuthn do
           Types.access_account_id(),
           Types.account_identifier(),
           Types.credential()
-        ) ::
-          {:ok, Types.AuthenticatorResult.t()}
-          | {:error, MscmpSystError.t() | Exception.t()}
+        ) :: {:ok, Types.AuthenticatorResult.t()} | {:error, Mserror.AuthnError.t()}
   @spec create_authenticator_email_password(
           Types.access_account_id(),
           Types.account_identifier(),
           Types.credential(),
           Keyword.t()
-        ) ::
-          {:ok, Types.AuthenticatorResult.t()}
-          | {:error, MscmpSystError.t() | Exception.t()}
+        ) :: {:ok, Types.AuthenticatorResult.t()} | {:error, Mserror.AuthnError.t()}
   def create_authenticator_email_password(
         access_account_id,
-        email_address,
+        email_addr,
         plaintext_pwd,
         opts \\ []
-      ) do
-    case NimbleOptions.validate(opts, @create_authenticator_email_password_opts) do
-      {:ok, validated_opts} ->
-        Impl.ExtendedMgmtLogic.create_authenticator_email_password(
-          access_account_id,
-          email_address,
-          plaintext_pwd,
-          validated_opts
-        )
+      )
+      when is_uuid(access_account_id) and is_binary(email_addr) and is_binary(plaintext_pwd) and
+             is_list(opts) do
+    validated_opts = NimbleOptions.validate!(opts, @create_authenticator_email_password_opts)
+
+    case Impl.ExtendedMgmtLogic.create_authenticator_email_password(
+           access_account_id,
+           email_addr,
+           plaintext_pwd,
+           validated_opts
+         ) do
+      {:ok, result} ->
+        {:ok, result}
 
       {:error, error} ->
         {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Option validation failure.",
-           cause: error
-         }}
+         Mserror.AuthnError.new(
+           :authenticator_management,
+           "Error creating Email/Password Authenticator",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :create_authenticator_email_password, 4},
+             parameters: %{
+               access_account_id: access_account_id,
+               email_addr: email_addr,
+               plaintext_pwd: "(Redacted)",
+               opts: validated_opts
+             }
+           }
+         )}
     end
   end
 
@@ -3036,9 +3703,9 @@ defmodule MscmpSystAuthn do
 
   On successful Password Credential reset this function will return `:ok`.  If
   the new credential fails to meet the Password Rule criteria that applies to
-  it, the function will return a failure tuple of type
-  `t:MscmpSystAuthn.Types.credential_set_failures/0`.  All other return
-  conditions are errors and result in an error tuple.
+  it, the function will return an error tuple with a cause of type
+  `{:invalid_credential, t:MscmpSystAuthn.Types.credential_set_failures/0}`.  All
+  other return conditions are errors and result in an error tuple.
 
   ## Parameters
 
@@ -3049,9 +3716,24 @@ defmodule MscmpSystAuthn do
     the successful completion of the function.
   """
   @spec reset_password_credential(Types.access_account_id(), Types.credential()) ::
-          :ok | Types.credential_set_failures() | {:error, MscmpSystError.t()}
-  defdelegate reset_password_credential(access_account_id, new_credential),
-    to: Impl.ExtendedMgmtLogic
+          :ok | {:error, Mserror.AuthnError.t()}
+  def reset_password_credential(access_account_id, new_credential)
+      when is_uuid(access_account_id) and is_binary(new_credential) do
+    case Impl.ExtendedMgmtLogic.reset_password_credential(access_account_id, new_credential) do
+      {:ok, _credential} ->
+        :ok
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:authenticator_management, "Error resetting password credential",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :reset_password_credential, 2},
+             parameters: %{access_account_id: access_account_id, new_credential: "(Redacted)"}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -3117,22 +3799,34 @@ defmodule MscmpSystAuthn do
 
     #{NimbleOptions.docs(@request_identity_validation)}
   """
+
+  # TODO: Dialyzer cannot match the success tuple even through in tests it
+  #       works.  There is almost certainly something wrong in our code that
+  #       is causing the problem and should be resolved.
+
+  @dialyzer {:no_match, request_identity_validation: 2}
   @spec request_identity_validation(Types.identity_id() | Msdata.SystIdentities.t()) ::
-          {:ok, Types.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Types.AuthenticatorResult.t()} | {:error, Mserror.AuthnError.t()}
   @spec request_identity_validation(Types.identity_id() | Msdata.SystIdentities.t(), Keyword.t()) ::
-          {:ok, Types.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  def request_identity_validation(target_identity, opts \\ []) do
-    case NimbleOptions.validate(opts, @request_identity_validation) do
-      {:ok, validated_opts} ->
-        Impl.ExtendedMgmtLogic.request_identity_validation(target_identity, validated_opts)
+          {:ok, Types.AuthenticatorResult.t()} | {:error, Mserror.AuthnError.t()}
+  def request_identity_validation(target_identity, opts \\ [])
+      when (is_struct(target_identity, Msdata.SystIdentities) or is_uuid(target_identity)) and
+             is_list(opts) do
+    validated_opts = NimbleOptions.validate!(opts, @request_identity_validation)
+
+    case Impl.ExtendedMgmtLogic.request_identity_validation(target_identity, validated_opts) do
+      {:ok, result} ->
+        {:ok, result}
 
       {:error, error} ->
         {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Option validation failure.",
-           cause: error
-         }}
+         Mserror.AuthnError.new(:authenticator_management, "Error requesting identity validation",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :request_identity_validation, 2},
+             parameters: %{target_identity: target_identity, opts: validated_opts}
+           }
+         )}
     end
   end
 
@@ -3152,9 +3846,8 @@ defmodule MscmpSystAuthn do
   Validator communication to the user has been lost and a new Validator needs to
   be generated.
 
-  The return value is a result tuple which indicates whether or not the
-  revocation happened (`{:ok, :deleted}`), if the Validator was not found
-  (`{:ok, :not_found}`), or an error tuple in any other circumstance.
+  If the Validator is successfully revoked, `:ok` is returned.  In any other
+  circumstance an error tuple is returned.
 
   ## Parameters
 
@@ -3164,8 +3857,25 @@ defmodule MscmpSystAuthn do
     Validation Identity.
   """
   @spec revoke_validator_for_identity_id(Types.identity_id()) ::
-          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate revoke_validator_for_identity_id(target_identity_id), to: Impl.ExtendedMgmtLogic
+          :ok | {:error, Mserror.AuthnError.t()}
+  def revoke_validator_for_identity_id(target_identity_id) when is_uuid(target_identity_id) do
+    case Impl.ExtendedMgmtLogic.revoke_validator_for_identity_id(target_identity_id) do
+      :ok ->
+        :ok
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(
+           :authenticator_management,
+           "Error revoking validator for identity",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :revoke_validator_for_identity_id, 1},
+             parameters: %{target_identity_id: target_identity_id}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -3178,22 +3888,39 @@ defmodule MscmpSystAuthn do
   Indicates if an Access Account's Password Credential is recoverable or not.
 
   Access Account Password Credentials are only recoverable when they: 1) exist,
-  and 2) are not already awaiting recovery.  When the Password Credential is
-  recoverable this function will return a simple `:ok` value.  If the Access
-  Account's Password Credential already has an issued recovery underway, the
-  value `:existing_recovery` is returned.  If the Access Account lacks a
-  Password Credential record to recover, the value `:not_found` is returned. Any
-  errors encountered cause the function to raise an exception.
+  and 2) are not already awaiting recovery. The function returns a result tuple
+  with one of three possible values:
+
+  - `{:ok, :recoverable}` - The Password Credential exists and can be recovered
+  - `{:ok, :existing_recovery}` - A recovery process is already underway
+  - `{:error, error}` - An error occurred while checking recoverability
 
   ## Parameters
 
     * `access_account_id` - the record ID of the Access Account which owns the
     Password Credential to test for recoverability.
   """
-  @spec access_account_credential_recoverable!(Types.access_account_id()) ::
-          :ok | :not_found | :existing_recovery
-  defdelegate access_account_credential_recoverable!(access_account_id),
-    to: Impl.Identity.Recovery
+  @spec access_account_credential_recoverable(Types.access_account_id()) ::
+          {:ok, :recoverable} | {:ok, :existing_recovery} | {:error, Mserror.AuthnError.t()}
+  def access_account_credential_recoverable(access_account_id)
+      when is_uuid(access_account_id) do
+    case Impl.Identity.Recovery.access_account_credential_recoverable(access_account_id) do
+      {:ok, result} ->
+        {:ok, result}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(
+           :authenticator_management,
+           "Error determining if Access Account Password Credential is recoverable",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :access_account_credential_recoverable, 1},
+             parameters: %{access_account_id: access_account_id}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -3261,21 +3988,26 @@ defmodule MscmpSystAuthn do
     #{NimbleOptions.docs(@request_password_recovery)}
   """
   @spec request_password_recovery(Types.access_account_id()) ::
-          {:ok, Types.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Types.AuthenticatorResult.t()} | {:error, Mserror.AuthnError.t()}
   @spec request_password_recovery(Types.access_account_id(), Keyword.t()) ::
-          {:ok, Types.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  def request_password_recovery(access_account_id, opts \\ []) do
-    case NimbleOptions.validate(opts, @request_password_recovery) do
-      {:ok, validated_opts} ->
-        Impl.ExtendedMgmtLogic.request_password_recovery(access_account_id, validated_opts)
+          {:ok, Types.AuthenticatorResult.t()} | {:error, Mserror.AuthnError.t()}
+  def request_password_recovery(access_account_id, opts \\ [])
+      when is_uuid(access_account_id) and is_list(opts) do
+    validated_opts = NimbleOptions.validate!(opts, @request_password_recovery)
+
+    case Impl.ExtendedMgmtLogic.request_password_recovery(access_account_id, validated_opts) do
+      {:ok, result} ->
+        {:ok, result}
 
       {:error, error} ->
         {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Option validation failure.",
-           cause: error
-         }}
+         Mserror.AuthnError.new(:authenticator_management, "Error requesting password recovery",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :request_password_recovery, 2},
+             parameters: %{access_account_id: access_account_id, opts: validated_opts}
+           }
+         )}
     end
   end
 
@@ -3294,12 +4026,8 @@ defmodule MscmpSystAuthn do
   they may also explicitly be revoked.  In reality this means simply deleting
   the Recovery Token Authenticator from the system.
 
-  The return value of this function on successful execution will be the success
-  tuple `{:ok, :deleted}`.  If a recovery is not already underway for the
-  requested Access Account, the function will return successfully but will
-  indicate that no action took place with a return of `{:ok, :not_found}`.  Any
-  other condition is an error condition and the return value will be an error
-  tuple indicating the nature of the issue.
+  If the Validator is successfully revoked, `:ok` is returned.  In any other
+  circumstance an error tuple is returned.
 
   ## Parameters
 
@@ -3308,8 +4036,23 @@ defmodule MscmpSystAuthn do
     of the Access Account.
   """
   @spec revoke_password_recovery(Types.access_account_id()) ::
-          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate revoke_password_recovery(access_account_id), to: Impl.ExtendedMgmtLogic
+          :ok | {:error, Mserror.AuthnError.t()}
+  def revoke_password_recovery(access_account_id) when is_uuid(access_account_id) do
+    case Impl.ExtendedMgmtLogic.revoke_password_recovery(access_account_id) do
+      :ok ->
+        :ok
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:authenticator_management, "Error revoking password recovery",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :revoke_password_recovery, 1},
+             parameters: %{access_account_id: access_account_id}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -3363,21 +4106,28 @@ defmodule MscmpSystAuthn do
     #{NimbleOptions.docs(@create_authenticator_api_token)}
   """
   @spec create_authenticator_api_token(Types.access_account_id()) ::
-          {:ok, Types.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Types.AuthenticatorResult.t()} | {:error, Mserror.AuthnError.t()}
   @spec create_authenticator_api_token(Types.access_account_id(), Keyword.t()) ::
-          {:ok, Types.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  def create_authenticator_api_token(access_account_id, opts \\ []) do
-    case NimbleOptions.validate(opts, @create_authenticator_api_token) do
-      {:ok, validated_opts} ->
-        Impl.ExtendedMgmtLogic.create_authenticator_api_token(access_account_id, validated_opts)
+          {:ok, Types.AuthenticatorResult.t()} | {:error, Mserror.AuthnError.t()}
+  def create_authenticator_api_token(access_account_id, opts \\ [])
+      when is_uuid(access_account_id) and is_list(opts) do
+    validated_opts = NimbleOptions.validate!(opts, @create_authenticator_api_token)
+
+    case Impl.ExtendedMgmtLogic.create_authenticator_api_token(access_account_id, validated_opts) do
+      {:ok, result} ->
+        {:ok, result}
 
       {:error, error} ->
         {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Option validation failure.",
-           cause: error
-         }}
+         Mserror.AuthnError.new(
+           :authenticator_management,
+           "Error creating API Token Authenticator",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :create_authenticator_api_token, 2},
+             parameters: %{access_account_id: access_account_id, opts: validated_opts}
+           }
+         )}
     end
   end
 
@@ -3412,8 +4162,27 @@ defmodule MscmpSystAuthn do
           Types.identity_id() | Msdata.SystIdentities.t(),
           String.t() | nil
         ) ::
-          {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t()}
-  defdelegate update_api_token_external_name(identity, external_name), to: Impl.ExtendedMgmtLogic
+          {:ok, Msdata.SystIdentities.t()} | {:error, Mserror.AuthnError.t()}
+  def update_api_token_external_name(identity, external_name)
+      when (is_struct(identity, Msdata.SystIdentities) or is_uuid(identity)) and
+             (is_binary(external_name) or is_nil(external_name)) do
+    case Impl.ExtendedMgmtLogic.update_api_token_external_name(identity, external_name) do
+      {:ok, result} ->
+        {:ok, result}
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(
+           :authenticator_management,
+           "Error updating API Token external name",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :update_api_token_external_name, 2},
+             parameters: %{identity: identity, external_name: external_name}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -3429,10 +4198,8 @@ defmodule MscmpSystAuthn do
   system by the Access Account holders they represent.  By revoking an API
   Token it is deleted from system.
 
-  A successful deletion will return a success tuple if the form
-  `{:ok, :deleted}`.  If the API Token Identity is not found this function will
-  return a success tuple of `{:ok, :not_found}`.  Any other outcome is an error
-  and results in an error tuple being returned.
+  If the API Token Identity is successfully revoked, `:ok` is returned.  In any
+  other circumstance an error tuple is returned.
 
   ## Parameters
 
@@ -3441,8 +4208,24 @@ defmodule MscmpSystAuthn do
     that record.
   """
   @spec revoke_api_token(Types.identity_id() | Msdata.SystIdentities.t()) ::
-          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
-  defdelegate revoke_api_token(identity), to: Impl.ExtendedMgmtLogic
+          :ok | {:error, Mserror.AuthnError.t()}
+  def revoke_api_token(identity)
+      when is_struct(identity, Msdata.SystIdentities) or is_uuid(identity) do
+    case Impl.ExtendedMgmtLogic.revoke_api_token(identity) do
+      :ok ->
+        :ok
+
+      {:error, error} ->
+        {:error,
+         Mserror.AuthnError.new(:authenticator_management, "Error revoking API Token",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :revoke_api_token, 1},
+             parameters: %{identity: identity}
+           }
+         )}
+    end
+  end
 
   # ==============================================================================================
   # ==============================================================================================
@@ -3521,32 +4304,24 @@ defmodule MscmpSystAuthn do
           Types.account_identifier(),
           Types.credential(),
           NetTypes.addr_structs()
-        ) :: {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, Types.AuthenticationState.t()}
   @spec authenticate_email_password(
           Types.account_identifier(),
           Types.credential(),
           NetTypes.addr_structs(),
           Keyword.t()
-        ) ::
-          {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
-  def authenticate_email_password(email_address, plaintext_pwd, host_address, opts \\ []) do
-    case NimbleOptions.validate(opts, @authenticate_email_password_opts) do
-      {:ok, validated_opts} ->
-        Impl.ExtendedAuthLogic.authenticate_email_password(
-          email_address,
-          plaintext_pwd,
-          host_address,
-          validated_opts
-        )
+        ) :: {:ok, Types.AuthenticationState.t()}
+  def authenticate_email_password(email_address, plaintext_pwd, host_addr, opts \\ [])
+      when is_binary(email_address) and is_binary(plaintext_pwd) and is_ip(host_addr) and
+             is_list(opts) do
+    validated_opts = NimbleOptions.validate!(opts, @authenticate_email_password_opts)
 
-      {:error, error} ->
-        {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Option validation failure.",
-           cause: error
-         }}
-    end
+    Impl.ExtendedAuthLogic.authenticate_email_password(
+      email_address,
+      plaintext_pwd,
+      host_addr,
+      validated_opts
+    )
   end
 
   @doc section: :authentication
@@ -3574,22 +4349,14 @@ defmodule MscmpSystAuthn do
   values.
   """
   @spec authenticate_email_password(Types.AuthenticationState.t()) ::
-          {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
+          {:ok, Types.AuthenticationState.t()}
   @spec authenticate_email_password(Types.AuthenticationState.t(), Keyword.t()) ::
-          {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
-  def authenticate_email_password(authentication_state, opts \\ []) do
-    case NimbleOptions.validate(opts, @authenticate_email_password_opts) do
-      {:ok, validated_opts} ->
-        Impl.ExtendedAuthLogic.authenticate_email_password(authentication_state, validated_opts)
+          {:ok, Types.AuthenticationState.t()}
+  def authenticate_email_password(%Types.AuthenticationState{} = authentication_state, opts \\ [])
+      when is_list(opts) do
+    validated_opts = NimbleOptions.validate!(opts, @authenticate_email_password_opts)
 
-      {:error, error} ->
-        {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Option validation failure.",
-           cause: error
-         }}
-    end
+    Impl.ExtendedAuthLogic.authenticate_email_password(authentication_state, validated_opts)
   end
 
   ##############################################################################
@@ -3656,38 +4423,24 @@ defmodule MscmpSystAuthn do
           Types.account_identifier(),
           Types.credential(),
           NetTypes.addr_structs()
-        ) ::
-          {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, Types.AuthenticationState.t()}
   @spec authenticate_validation_token(
           Types.account_identifier(),
           Types.credential(),
           NetTypes.addr_structs(),
           Keyword.t()
-        ) ::
-          {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
-  def authenticate_validation_token(
-        identifier,
-        plaintext_token,
-        host_address,
-        opts \\ []
-      ) do
-    case NimbleOptions.validate(opts, @authenticate_validation_token_opts) do
-      {:ok, validated_opts} ->
-        Impl.ExtendedAuthLogic.authenticate_validation_token(
-          identifier,
-          plaintext_token,
-          host_address,
-          validated_opts
-        )
+        ) :: {:ok, Types.AuthenticationState.t()}
+  def authenticate_validation_token(identifier, plaintext_token, host_addr, opts \\ [])
+      when is_binary(identifier) and is_binary(plaintext_token) and is_ip(host_addr) and
+             is_list(opts) do
+    validated_opts = NimbleOptions.validate!(opts, @authenticate_validation_token_opts)
 
-      {:error, error} ->
-        {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Option validation failure.",
-           cause: error
-         }}
-    end
+    Impl.ExtendedAuthLogic.authenticate_validation_token(
+      identifier,
+      plaintext_token,
+      host_addr,
+      validated_opts
+    )
   end
 
   ##############################################################################
@@ -3754,31 +4507,42 @@ defmodule MscmpSystAuthn do
           Types.account_identifier(),
           Types.credential(),
           NetTypes.addr_structs()
-        ) :: {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, Types.AuthenticationState.t()} | {:error, Mserror.AuthnError.t()}
   @spec authenticate_recovery_token(
           Types.account_identifier(),
           Types.credential(),
           NetTypes.addr_structs(),
           Keyword.t()
-        ) ::
-          {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
-  def authenticate_recovery_token(identifier, plaintext_token, host_addr, opts \\ []) do
-    case NimbleOptions.validate(opts, @authenticate_recovery_token_opts) do
-      {:ok, validated_opts} ->
-        Impl.ExtendedAuthLogic.authenticate_recovery_token(
-          identifier,
-          plaintext_token,
-          host_addr,
-          validated_opts
-        )
+        ) :: {:ok, Types.AuthenticationState.t()} | {:error, Mserror.AuthnError.t()}
+  def authenticate_recovery_token(identifier, plaintext_token, host_addr, opts \\ [])
+      when is_binary(identifier) and is_binary(plaintext_token) and is_ip(host_addr) and
+             is_list(opts) do
+    validated_opts = NimbleOptions.validate!(opts, @authenticate_recovery_token_opts)
+
+    Impl.ExtendedAuthLogic.authenticate_recovery_token(
+      identifier,
+      plaintext_token,
+      host_addr,
+      validated_opts
+    )
+    |> case do
+      {:ok, result} ->
+        {:ok, result}
 
       {:error, error} ->
         {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Option validation failure.",
-           cause: error
-         }}
+         Mserror.AuthnError.new(:authentication, "Recovery Token Authentication failed",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :authenticate_recovery_token, 4},
+             parameters: %{
+               identifier: identifier,
+               plaintext_token: "(redacted)",
+               host_addr: host_addr,
+               opts: validated_opts
+             }
+           }
+         )}
     end
   end
 
@@ -3842,41 +4606,26 @@ defmodule MscmpSystAuthn do
           Types.credential(),
           NetTypes.addr_structs(),
           MscmpSystInstance.Types.instance_id()
-        ) ::
-          {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, Types.AuthenticationState.t()}
   @spec authenticate_api_token(
           Types.account_identifier(),
           Types.credential(),
           NetTypes.addr_structs(),
           MscmpSystInstance.Types.instance_id(),
           Keyword.t()
-        ) ::
-          {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, Types.AuthenticationState.t()}
 
-  def authenticate_api_token(
-        identifier,
-        plaintext_token,
-        host_addr,
-        instance_id,
-        opts \\ []
-      ) do
-    case NimbleOptions.validate(opts, @authenticate_api_token_opts) do
-      {:ok, validated_opts} ->
-        Impl.ExtendedAuthLogic.authenticate_api_token(
-          identifier,
-          plaintext_token,
-          host_addr,
-          instance_id,
-          validated_opts
-        )
+  def authenticate_api_token(identifier, plaintext_token, host_addr, instance_id, opts \\ [])
+      when is_binary(identifier) and is_binary(plaintext_token) and is_ip(host_addr) and
+             (is_uuid(instance_id) or instance_id === :bypass) and is_list(opts) do
+    validated_opts = NimbleOptions.validate!(opts, @authenticate_api_token_opts)
 
-      {:error, error} ->
-        {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Option validation failure.",
-           cause: error
-         }}
-    end
+    Impl.ExtendedAuthLogic.authenticate_api_token(
+      identifier,
+      plaintext_token,
+      host_addr,
+      instance_id,
+      validated_opts
+    )
   end
 end

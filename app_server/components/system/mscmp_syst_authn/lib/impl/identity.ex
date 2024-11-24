@@ -27,12 +27,12 @@ defmodule MscmpSystAuthn.Impl.Identity do
   #
 
   @callback create_identity(Types.access_account_id(), Types.account_identifier(), Keyword.t()) ::
-              {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
+              {:ok, Msdata.SystIdentities.t()} | {:error, term()}
 
   @callback identify_access_account(
               Types.account_identifier(),
               MscmpSystInstance.Types.owner_id() | nil
-            ) :: Msdata.SystIdentities.t() | nil
+            ) :: {:ok, Msdata.SystIdentities.t()} | {:error, :not_found} | {:error, term()}
 
   ##############################################################################
   #
@@ -67,41 +67,16 @@ defmodule MscmpSystAuthn.Impl.Identity do
   #
 
   @spec set_identity_expiration(Types.identity_id() | Msdata.SystIdentities.t(), DateTime.t()) ::
-          {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystIdentities.t()} | {:error, term()}
   def set_identity_expiration(identity_id, %DateTime{} = expires_date)
       when is_binary(identity_id) do
-    identity_id
-    |> get_identity_record()
-    |> set_identity_expiration(expires_date)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure setting Identity expiration by ID.",
-          cause: error
-        }
-      }
+    with {:ok, identity} <- get_identity_record(identity_id) do
+      Helpers.update_identity(identity, %{identity_expires: expires_date})
+    end
   end
 
-  def set_identity_expiration(%Msdata.SystIdentities{} = identity, %DateTime{} = expires_date) do
-    {:ok, Helpers.update_record(identity, %{identity_expires: expires_date})}
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure setting Identity expiration.",
-          cause: error
-        }
-      }
-  end
+  def set_identity_expiration(%Msdata.SystIdentities{} = identity, %DateTime{} = expires_date),
+    do: Helpers.update_identity(identity, %{identity_expires: expires_date})
 
   ##############################################################################
   #
@@ -110,126 +85,68 @@ defmodule MscmpSystAuthn.Impl.Identity do
   #
 
   @spec clear_identity_expiration(Types.identity_id() | Msdata.SystIdentities.t()) ::
-          {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t()}
-
+          {:ok, Msdata.SystIdentities.t()} | {:error, term()}
   def clear_identity_expiration(identity_id) when is_binary(identity_id) do
-    identity_id
-    |> get_identity_record()
-    |> clear_identity_expiration()
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure clearing Identity expiration by ID.",
-          cause: error
-        }
-      }
+    with {:ok, identity} <- get_identity_record(identity_id) do
+      Helpers.update_identity(identity, %{identity_expires: nil})
+    end
   end
 
-  def clear_identity_expiration(%Msdata.SystIdentities{} = identity) do
-    {:ok, Helpers.update_record(identity, %{identity_expires: nil})}
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure clearing Identity expiration.",
-          cause: error
-        }
-      }
-  end
+  def clear_identity_expiration(%Msdata.SystIdentities{} = identity),
+    do: Helpers.update_identity(identity, %{identity_expires: nil})
 
   ##############################################################################
   #
-  # identity_expired?
+  # identity_expired
   #
   #
 
-  @spec identity_expired?(Types.identity_id() | Msdata.SystIdentities.t()) ::
-          {:ok, boolean()} | {:error, MscmpSystError.t()}
-  def identity_expired?(identity) when is_binary(identity) do
+  @spec identity_expired(Types.identity_id() | Msdata.SystIdentities.t()) ::
+          {:ok, boolean()} | {:error, :not_found} | {:error, term()}
+  def identity_expired(identity) when is_binary(identity) do
     from(i in Msdata.SystIdentities,
       where: i.id == ^identity,
       select: struct(i, [:identity_expires])
     )
-    |> MscmpSystDb.one!()
-    |> identity_expired?()
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure testing identity expiration by ID.",
-          cause: error
-        }
-      }
+    |> MscmpSystDb.one()
+    |> case do
+      nil -> {:error, :not_found}
+      result -> identity_expired(result)
+    end
   end
 
-  def identity_expired?(%Msdata.SystIdentities{} = identity) do
-    expired =
-      if identity.identity_expires == nil,
-        do: false,
-        else: DateTime.compare(DateTime.utc_now(), identity.identity_expires) == :gt
-
-    {:ok, expired}
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure testing identity expiration.",
-          cause: error
-        }
-      }
+  def identity_expired(%Msdata.SystIdentities{} = identity) do
+    case identity.identity_expires do
+      nil -> {:ok, false}
+      expires_date -> {:ok, DateTime.compare(DateTime.utc_now(), expires_date) == :gt}
+    end
   end
 
   ##############################################################################
   #
-  # identity_validated?
+  # identity_validated
   #
   #
 
-  @spec identity_validated?(Types.identity_id() | Msdata.SystIdentities.t()) ::
-          {:ok, boolean()} | {:error, MscmpSystError.t()}
-  def identity_validated?(identity) when is_binary(identity) do
+  @spec identity_validated(Types.identity_id() | Msdata.SystIdentities.t()) ::
+          {:ok, boolean()} | {:error, :not_found} | {:error, term()}
+  def identity_validated(identity) when is_binary(identity) do
     from(i in Msdata.SystIdentities,
       where: i.id == ^identity,
       select: struct(i, [:validated])
     )
-    |> MscmpSystDb.one!()
-    |> identity_validated?()
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure testing identity validated by ID.",
-          cause: error
-        }
-      }
+    |> MscmpSystDb.one()
+    |> case do
+      nil -> {:error, :not_found}
+      result -> identity_validated(result)
+    end
   end
 
-  def identity_validated?(%Msdata.SystIdentities{validated: validated})
+  def identity_validated(%Msdata.SystIdentities{validated: validated})
       when not is_nil(validated),
       do: {:ok, true}
 
-  def identity_validated?(%Msdata.SystIdentities{}), do: {:ok, false}
+  def identity_validated(%Msdata.SystIdentities{}), do: {:ok, false}
 
   ##############################################################################
   #
@@ -241,7 +158,7 @@ defmodule MscmpSystAuthn.Impl.Identity do
           Types.identity_id() | Msdata.SystIdentities.t(),
           Types.identity_type_name()
         ) ::
-          :deleted | :not_found
+          :ok | {:error, :not_found} | {:error, term()}
   def delete_identity(identity_id, identity_type_name)
       when is_binary(identity_id) and is_binary(identity_type_name) do
     from(i in Msdata.SystIdentities,
@@ -250,17 +167,9 @@ defmodule MscmpSystAuthn.Impl.Identity do
     )
     |> MscmpSystDb.delete_all()
     |> case do
-      {0, _} ->
-        :not_found
-
-      {1, _} ->
-        :deleted
-
-      error ->
-        raise MscmpSystError,
-          code: :undefined_error,
-          message: "Failure deleting Identity.",
-          cause: error
+      {0, _} -> {:error, :not_found}
+      {1, _} -> :ok
+      error -> {:error, {:database_error, error}}
     end
   end
 
@@ -273,9 +182,14 @@ defmodule MscmpSystAuthn.Impl.Identity do
   #
   #
 
-  @spec get_identity_record(Types.identity_id()) :: Msdata.SystIdentities.t()
-  def get_identity_record(identity_id) when is_binary(identity_id) do
+  @spec get_identity_record(Types.identity_id()) ::
+          {:ok, Msdata.SystIdentities.t()} | {:error, :not_found} | {:error, term()}
+  def get_identity_record(identity_id) do
     from(i in Msdata.SystIdentities, where: i.id == ^identity_id)
-    |> MscmpSystDb.one!()
+    |> MscmpSystDb.one()
+    |> case do
+      nil -> {:error, :not_found}
+      record -> {:ok, record}
+    end
   end
 end

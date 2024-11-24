@@ -34,31 +34,17 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
   #
 
   @spec test_credential(Types.access_account_id() | Types.PasswordRules.t(), Types.credential()) ::
-          {:ok, Keyword.t(Types.password_rule_violations())}
-          | {:error, MscmpSystError.t() | Exception.t()}
-  def test_credential(access_account_id, plaintext_pwd) do
-    {:ok, test_credential!(access_account_id, plaintext_pwd)}
-  rescue
-    error -> {:error, error}
+          :ok
+          | {:error, {:invalid_credential, Keyword.t(Types.password_rule_violations())}}
+          | {:error, term()}
+  def test_credential(access_account_id, plaintext_pwd) when is_binary(access_account_id) do
+    with {:ok, pwd_rules} <-
+           Impl.PasswordRules.get_access_account_password_rule(access_account_id) do
+      test_credential(pwd_rules, plaintext_pwd)
+    end
   end
 
-  @spec test_credential!(Types.access_account_id() | Types.PasswordRules.t(), Types.credential()) ::
-          Keyword.t(Types.password_rule_violations())
-  def test_credential!(access_account_id, plaintext_pwd) when is_binary(access_account_id) do
-    access_account_id
-    |> Impl.PasswordRules.get_access_account_password_rule!()
-    |> test_credential!(plaintext_pwd)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      reraise MscmpSystError,
-        code: :undefined_error,
-        message: "Failure testing Password Credential.",
-        cause: error
-  end
-
-  def test_credential!(%{access_account_id: _} = pwd_rules, plaintext_pwd) do
+  def test_credential(pwd_rules, plaintext_pwd) when is_map_key(pwd_rules, :access_account_id) do
     []
     |> verify_password_length(pwd_rules, plaintext_pwd)
     |> verify_password_req_upper_case(pwd_rules, plaintext_pwd)
@@ -67,14 +53,10 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
     |> verify_password_req_symbols(pwd_rules, plaintext_pwd)
     |> verify_password_no_compromised(pwd_rules, plaintext_pwd)
     |> verify_password_recently_used(pwd_rules, plaintext_pwd)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      reraise MscmpSystError,
-        code: :undefined_error,
-        message: "Failure testing Password Credential.",
-        cause: error
+    |> case do
+      [] -> :ok
+      [_ | _] = violations -> {:error, {:invalid_credential, violations}}
+    end
   end
 
   defp verify_password_length(violations_list, pwd_rules, pwd_text) do
@@ -210,55 +192,36 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
           Types.access_account_id(),
           Types.identity_id() | nil,
           Types.credential()
-        ) ::
-          {:ok, Types.credential_confirm_result()} | {:error, MscmpSystError.t() | Exception.t()}
+        ) :: {:ok, Types.credential_confirm_result()} | {:error, term()}
   def confirm_credential(access_account_id, _identity_id \\ nil, pwd_text) do
-    {:ok, confirm_credential!(access_account_id, pwd_text)}
-  rescue
-    error -> {:error, error}
-  end
-
-  @spec confirm_credential!(
-          Types.access_account_id(),
-          Types.identity_id() | nil,
-          Types.credential()
-        ) ::
-          Types.credential_confirm_result()
-  def confirm_credential!(access_account_id, _identity_id \\ nil, pwd_text) do
-    cred = get_credential_record!(access_account_id)
-
-    credential_state = get_credential_state(cred, pwd_text)
-
-    credential_extended_state =
-      maybe_get_extended_confirmation_state(credential_state, cred, pwd_text)
-
-    {credential_state, credential_extended_state}
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      reraise MscmpSystError,
-        code: :undefined_error,
-        message: "Failure setting Password Credential.",
-        cause: error
+    with {:ok, cred} <- maybe_get_credential_record(access_account_id),
+         {:ok, credential_state} <- get_credential_state(cred, pwd_text),
+         {:ok, credential_extended_state} <-
+           maybe_get_extended_confirmation_state(credential_state, cred, pwd_text) do
+      {:ok, {credential_state, credential_extended_state}}
+    else
+      {:error, :no_credential} -> {:ok, {:no_credential, []}}
+      {:error, :wrong_credential} -> {:ok, {:wrong_credential, []}}
+      error -> error
+    end
   end
 
   defp get_credential_state(cred, pwd_text) do
     with :ok <- maybe_confirm_credential_exists(cred),
          :ok <- maybe_confirm_password_hash(cred, pwd_text) do
-      :confirmed
+      {:ok, :confirmed}
     end
   end
 
   defp maybe_get_extended_confirmation_state(:confirmed = _credential_state, cred, pwd_text) do
-    pwd_rules = Impl.PasswordRules.get_access_account_password_rule!(cred.access_account_id)
-
-    []
-    |> maybe_require_mfa(pwd_rules)
-    |> maybe_get_reset_reason(cred, pwd_rules, pwd_text)
+    with {:ok, pwd_rules} <-
+           Impl.PasswordRules.get_access_account_password_rule(cred.access_account_id) do
+      []
+      |> maybe_require_mfa(pwd_rules)
+      |> maybe_get_reset_reason(cred, pwd_rules, pwd_text)
+      |> then(&{:ok, &1})
+    end
   end
-
-  defp maybe_get_extended_confirmation_state(_credential_state, _cred, _pwd_text), do: []
 
   defp maybe_get_reset_reason(extended_state, cred, pwd_rules, pwd_text) do
     # Checks below are ordered by cost; only return the cheapest reset reason
@@ -276,12 +239,12 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
   # pending.  The principle should be that we only disclose a more detailed
   # result once we have some sort of positive authentication.
   defp maybe_confirm_credential_exists(%Msdata.SystCredentials{}), do: :ok
-  defp maybe_confirm_credential_exists(_), do: :no_credential
+  defp maybe_confirm_credential_exists(_), do: {:error, :no_credential}
 
   defp maybe_confirm_password_hash(cred, pwd_text) do
     hash_verified = Impl.Hash.verify_credential_hash(cred.credential_data, pwd_text)
 
-    if hash_verified, do: :ok, else: :wrong_credential
+    if hash_verified, do: :ok, else: {:error, :wrong_credential}
   end
 
   defp maybe_confirm_force_reset(%{force_reset: force_reset}) when is_nil(force_reset), do: :ok
@@ -327,45 +290,21 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
           Types.access_account_id(),
           Types.credential(),
           Keyword.t()
-        ) ::
-          :ok | Types.credential_set_failures() | {:error, MscmpSystError.t()}
+        ) :: {:ok, Types.credential()} | {:error, term()}
   @spec set_credential(
           Types.access_account_id(),
           nil,
           Types.credential(),
           Keyword.t()
-        ) ::
-          :ok | Types.credential_set_failures() | {:error, MscmpSystError.t()}
+        ) :: {:ok, Types.credential()} | {:error, term()}
   def set_credential(access_account_id, _identity_id \\ nil, pwd_text, _opts) do
     with {:ok, pwd_rules} <-
            Impl.PasswordRules.get_access_account_password_rule(access_account_id),
-         :ok <- maybe_test_credential(pwd_rules, pwd_text) do
-      cred = get_credential_record!(access_account_id)
+         :ok <- test_credential(pwd_rules, pwd_text),
+         {:ok, cred} <- maybe_get_credential_record(access_account_id) do
       set_credential_data(cred, pwd_rules, pwd_text)
     end
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure setting Password Credential.",
-         cause: error
-       }}
   end
-
-  defp maybe_test_credential(pwd_rules, pwd_text) do
-    test_result = test_credential!(pwd_rules, pwd_text)
-
-    if test_result == [], do: :ok, else: {:invalid_credential, test_result}
-  end
-
-  # TODO: set_credential_data/3 could be simplified via an upsert type
-  #       DML action, but currently PostgreSQL 14 doesn't allow us to create the
-  #       correct uniqueness constraint.  PostgreSQL 15 is suppose to add a
-  #       feature which would make this possible and so the function below may
-  #       be worth revisiting at that time.
 
   defp set_credential_data(nil = _cred, pwd_rules, pwd_text) do
     %{id: credential_type_id} =
@@ -373,35 +312,37 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
 
     pwd_hash = Impl.Hash.create_credential_hash(pwd_text)
 
-    {:ok, _} =
-      MscmpSystDb.transaction(fn ->
-        _ = update_password_history(pwd_rules, pwd_hash)
+    MscmpSystDb.transaction(fn ->
+      :ok = update_password_history(pwd_rules, pwd_hash)
 
-        %{
-          access_account_id: pwd_rules.access_account_id,
-          credential_type_id: credential_type_id,
-          credential_data: pwd_hash
-        }
-        |> Msdata.SystCredentials.insert_changeset()
-        |> MscmpSystDb.insert!()
-      end)
-
-    :ok
+      %{
+        access_account_id: pwd_rules.access_account_id,
+        credential_type_id: credential_type_id,
+        credential_data: pwd_hash
+      }
+      |> Msdata.SystCredentials.insert_changeset()
+      |> MscmpSystDb.insert(returning: true)
+      |> case do
+        {:ok, cred} -> cred
+        error -> MscmpSystDb.rollback(error)
+      end
+    end)
   end
 
   defp set_credential_data(cred, pwd_rules, pwd_text) do
     pwd_hash = Impl.Hash.create_credential_hash(pwd_text)
 
-    {:ok, _} =
-      MscmpSystDb.transaction(fn ->
-        _ = update_password_history(pwd_rules, pwd_hash)
+    MscmpSystDb.transaction(fn ->
+      :ok = update_password_history(pwd_rules, pwd_hash)
 
-        cred
-        |> Msdata.SystCredentials.update_changeset(%{credential_data: pwd_hash})
-        |> MscmpSystDb.update!()
-      end)
-
-    :ok
+      cred
+      |> Msdata.SystCredentials.update_changeset(%{credential_data: pwd_hash})
+      |> MscmpSystDb.update(returning: true)
+      |> case do
+        {:ok, cred} -> cred
+        error -> MscmpSystDb.rollback(error)
+      end
+    end)
   end
 
   defp update_password_history(pwd_rules, pwd_hash) do
@@ -428,7 +369,9 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
         where: oq.recency > ^pwd_retention
       )
 
-    MscmpSystDb.delete_all(delete_qry)
+    {_, _} = MscmpSystDb.delete_all(delete_qry)
+
+    :ok
   end
 
   ##############################################################################
@@ -438,16 +381,8 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
   #
 
   @spec get_credential_record(Types.access_account_id(), Types.identity_id() | nil) ::
-          {:ok, Msdata.SystCredentials.t() | nil} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystCredentials.t()} | {:error, :not_found} | {:error, term()}
   def get_credential_record(access_account_id, _identity_id \\ nil) do
-    {:ok, get_credential_record!(access_account_id)}
-  rescue
-    error -> {:error, error}
-  end
-
-  @spec get_credential_record!(Types.access_account_id(), Types.identity_id() | nil) ::
-          Msdata.SystCredentials.t() | nil
-  def get_credential_record!(access_account_id, _identity_id \\ nil) do
     from(
       c in Msdata.SystCredentials,
       join: ct in assoc(c, :credential_type),
@@ -457,14 +392,10 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
       select: c
     )
     |> MscmpSystDb.one()
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      reraise MscmpSystError,
-        code: :undefined_error,
-        message: "Failure retrieving Password Credential record.",
-        cause: error
+    |> case do
+      nil -> {:error, :not_found}
+      cred -> {:ok, cred}
+    end
   end
 
   ##############################################################################
@@ -474,15 +405,8 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
   #
 
   @spec delete_credential(Types.credential_id() | Msdata.SystCredentials.t()) ::
-          :ok | {:error, MscmpSystError.t() | Exception.t()}
-  def delete_credential(credential) do
-    delete_credential!(credential)
-  rescue
-    error -> {:error, error}
-  end
-
-  @spec delete_credential!(Types.credential_id() | Msdata.SystCredentials.t()) :: :ok
-  def delete_credential!(access_account_id) when is_binary(access_account_id) do
+          :ok | {:error, :not_found} | {:error, term()}
+  def delete_credential(access_account_id) when is_binary(access_account_id) do
     from(c in Msdata.SystCredentials,
       join: ei in assoc(c, :credential_type),
       where:
@@ -491,35 +415,29 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
     )
     |> MscmpSystDb.delete_all()
     |> case do
-      {count, _} when count in [0, 1] ->
-        :ok
-
-      error_result ->
-        raise MscmpSystError,
-          code: :undefined_error,
-          message: "Delete Credential; bad database result.",
-          cause: error_result
+      {0, _} -> {:error, :not_found}
+      {1, _} -> :ok
+      error -> {:error, {:database_error, error}}
     end
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      reraise MscmpSystError,
-        code: :undefined_error,
-        message: "Failure deleting Password Credential by ID.",
-        cause: error
   end
 
-  def delete_credential!(%Msdata.SystCredentials{} = credential) do
-    MscmpSystDb.delete!(credential)
-    :ok
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+  def delete_credential(%Msdata.SystCredentials{} = credential) do
+    case MscmpSystDb.delete(credential) do
+      {:ok, _} -> :ok
+      error -> {:error, {:database_error, error}}
+    end
+  end
 
-      reraise MscmpSystError,
-        code: :undefined_error,
-        message: "Failure deleting Password Credential.",
-        cause: error
+  ##############################################################################
+  #
+  # General Use Private Functions
+  #
+  #
+
+  defp maybe_get_credential_record(access_account_id) do
+    case get_credential_record(access_account_id) do
+      {:ok, cred} -> {:ok, cred}
+      {:error, :not_found} -> {:ok, nil}
+    end
   end
 end

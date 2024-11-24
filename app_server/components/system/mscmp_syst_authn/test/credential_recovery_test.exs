@@ -44,217 +44,186 @@ defmodule CredentialRecoveryTest do
     ]
   ]
 
-  test "Can confirm Recovery Credential" do
-    test_account = get_account_data("credential_recovery_confirm_test_accnt")
+  describe "credential confirmation" do
+    test "Can confirm Recovery Credential" do
+      test_account = get_account_data("credential_recovery_confirm_test_accnt")
 
-    assert {:ok, {:confirmed, []}} =
-             Impl.Credential.Recovery.confirm_credential(
-               test_account.access_account_id,
-               test_account.identity_id,
-               "xSU8rjv2JvFwoQF4C6FIoveFylNYwHYhv6myz7lZRkrrJL9i"
-             )
+      assert {:ok, {:confirmed, []}} =
+               Impl.Credential.Recovery.confirm_credential(
+                 test_account.access_account_id,
+                 test_account.identity_id,
+                 "xSU8rjv2JvFwoQF4C6FIoveFylNYwHYhv6myz7lZRkrrJL9i"
+               )
 
-    assert {:ok, {:wrong_credential, []}} =
-             Impl.Credential.Recovery.confirm_credential(
-               test_account.access_account_id,
-               test_account.identity_id,
-               Msutils.String.get_random_string(48)
-             )
+      assert {:ok, {:wrong_credential, []}} =
+               Impl.Credential.Recovery.confirm_credential(
+                 test_account.access_account_id,
+                 test_account.identity_id,
+                 Msutils.String.get_random_string(48)
+               )
 
-    assert {:ok, {:no_credential, []}} =
-             Impl.Credential.Recovery.confirm_credential(
-               test_account.access_account_id,
-               nil,
-               "xSU8rjv2JvFwoQF4C6FIoveFylNYwHYhv6myz7lZRkrrJL9i"
-             )
+      assert {:ok, {:no_credential, []}} =
+               Impl.Credential.Recovery.confirm_credential(
+                 test_account.access_account_id,
+                 "00000000-0000-0000-0000-000000000000",
+                 "xSU8rjv2JvFwoQF4C6FIoveFylNYwHYhv6myz7lZRkrrJL9i"
+               )
 
-    assert {:confirmed, []} =
-             Impl.Credential.Recovery.confirm_credential!(
-               test_account.access_account_id,
-               test_account.identity_id,
-               "xSU8rjv2JvFwoQF4C6FIoveFylNYwHYhv6myz7lZRkrrJL9i"
-             )
-
-    assert {:wrong_credential, []} =
-             Impl.Credential.Recovery.confirm_credential!(
-               test_account.access_account_id,
-               test_account.identity_id,
-               Msutils.String.get_random_string(48)
-             )
-
-    assert {:no_credential, []} =
-             Impl.Credential.Recovery.confirm_credential!(
-               test_account.access_account_id,
-               nil,
-               "xSU8rjv2JvFwoQF4C6FIoveFylNYwHYhv6myz7lZRkrrJL9i"
-             )
+      assert {:error, :invalid_request} =
+               Impl.Credential.Recovery.confirm_credential(
+                 test_account.access_account_id,
+                 nil,
+                 "xSU8rjv2JvFwoQF4C6FIoveFylNYwHYhv6myz7lZRkrrJL9i"
+               )
+    end
   end
 
-  test "Can Insert new Recovery Credentials" do
-    # Default
+  describe "credential creation and modification" do
+    test "Can Insert new Recovery Credentials" do
+      # Default
 
-    test_account = get_account_data("credential_recovery_create1_test_accnt")
+      test_account = get_account_data("credential_recovery_create1_test_accnt")
 
-    default_opts =
-      @test_options
-      |> Keyword.take([
-        :credential_token_length,
-        :credential_tokens
-      ])
-      |> NimbleOptions.new!()
-      |> then(&NimbleOptions.validate!([], &1))
+      default_opts =
+        @test_options
+        |> Keyword.take([
+          :credential_token_length,
+          :credential_tokens
+        ])
+        |> NimbleOptions.new!()
+        |> then(&NimbleOptions.validate!([], &1))
 
-    assert {:ok, returned_credential} =
-             Impl.Credential.Recovery.set_credential(
-               test_account.access_account_id,
-               test_account.identity_id,
-               nil,
-               default_opts
-             )
+      assert {:ok, returned_credential} =
+               Impl.Credential.Recovery.set_credential(
+                 test_account.access_account_id,
+                 test_account.identity_id,
+                 nil,
+                 default_opts
+               )
 
-    assert String.length(returned_credential) == 40
+      assert String.length(returned_credential) == 40
 
-    # Specified Token
+      # Specified Token
 
-    test_account = get_account_data("credential_recovery_create2_test_accnt")
+      test_account = get_account_data("credential_recovery_create2_test_accnt")
 
-    specified_token = Msutils.String.get_random_string(40)
+      specified_token = Msutils.String.get_random_string(40)
 
-    assert {:ok, ^specified_token} =
-             Impl.Credential.Recovery.set_credential(
-               test_account.access_account_id,
-               test_account.identity_id,
-               specified_token,
-               default_opts
-             )
+      assert {:ok, ^specified_token} =
+               Impl.Credential.Recovery.set_credential(
+                 test_account.access_account_id,
+                 test_account.identity_id,
+                 specified_token,
+                 default_opts
+               )
 
-    # credential_token_length
+      # credential_token_length
 
-    test_account = get_account_data("credential_recovery_create3_test_accnt")
+      test_account = get_account_data("credential_recovery_create3_test_accnt")
 
-    opts =
-      @test_options
-      |> Keyword.take([
-        :credential_token_length,
-        :credential_tokens
-      ])
-      |> NimbleOptions.new!()
-      |> then(&NimbleOptions.validate!([credential_token_length: 20], &1))
+      opts =
+        @test_options
+        |> Keyword.take([
+          :credential_token_length,
+          :credential_tokens
+        ])
+        |> NimbleOptions.new!()
+        |> then(&NimbleOptions.validate!([credential_token_length: 20], &1))
 
-    assert {:ok, returned_credential} =
-             Impl.Credential.Recovery.set_credential(
-               test_account.access_account_id,
-               test_account.identity_id,
-               nil,
-               opts
-             )
+      assert {:ok, returned_credential} =
+               Impl.Credential.Recovery.set_credential(
+                 test_account.access_account_id,
+                 test_account.identity_id,
+                 nil,
+                 opts
+               )
 
-    assert String.length(returned_credential) == 20
+      assert String.length(returned_credential) == 20
 
-    # credential_tokens
+      # credential_tokens
 
-    test_account = get_account_data("credential_recovery_create4_test_accnt")
+      test_account = get_account_data("credential_recovery_create4_test_accnt")
 
-    opts =
-      @test_options
-      |> Keyword.take([
-        :credential_token_length,
-        :credential_tokens
-      ])
-      |> NimbleOptions.new!()
-      |> then(&NimbleOptions.validate!([credential_tokens: ~c"XYZ"], &1))
+      opts =
+        @test_options
+        |> Keyword.take([
+          :credential_token_length,
+          :credential_tokens
+        ])
+        |> NimbleOptions.new!()
+        |> then(&NimbleOptions.validate!([credential_tokens: ~c"XYZ"], &1))
 
-    assert {:ok, returned_credential} =
-             Impl.Credential.Recovery.set_credential(
-               test_account.access_account_id,
-               test_account.identity_id,
-               nil,
-               opts
-             )
+      assert {:ok, returned_credential} =
+               Impl.Credential.Recovery.set_credential(
+                 test_account.access_account_id,
+                 test_account.identity_id,
+                 nil,
+                 opts
+               )
 
-    assert String.length(returned_credential) == 40
+      assert String.length(returned_credential) == 40
 
-    assert not (returned_credential =~ ~r/[^X-Z]/)
+      assert not (returned_credential =~ ~r/[^X-Z]/)
+    end
+
+    test "Cannot replace a Recovery Credential record" do
+      test_account = get_account_data("credential_recovery_retrieval_test_accnt")
+
+      opts =
+        @test_options
+        |> Keyword.take([
+          :credential_token_length,
+          :credential_tokens
+        ])
+        |> NimbleOptions.new!()
+        |> then(&NimbleOptions.validate!([], &1))
+
+      assert {:error, _} =
+               Impl.Credential.Recovery.set_credential(
+                 test_account.access_account_id,
+                 test_account.identity_id,
+                 nil,
+                 opts
+               )
+    end
   end
 
-  test "Can retrieve a Recovery Credential record / Success Tuple" do
-    test_account = get_account_data("credential_recovery_retrieval_test_accnt")
+  describe "credential retrieval" do
+    test "Can retrieve a Recovery Credential record" do
+      test_account = get_account_data("credential_recovery_retrieval_test_accnt")
 
-    assert {:ok, %Msdata.SystCredentials{}} =
-             Impl.Credential.Recovery.get_credential_record(
-               test_account.access_account_id,
-               test_account.identity_id
-             )
+      assert {:ok, %Msdata.SystCredentials{}} =
+               Impl.Credential.Recovery.get_credential_record(
+                 test_account.access_account_id,
+                 test_account.identity_id
+               )
+    end
   end
 
-  test "Can retrieve a Recovery Credential record / Raise on Error" do
-    test_account = get_account_data("credential_recovery_retrieval_test_accnt")
+  describe "credential deletion" do
+    test "Can delete Recovery Credential record by ID" do
+      test_account = get_account_data("credential_recovery_delete_id_test_accnt")
 
-    assert %Msdata.SystCredentials{} =
-             Impl.Credential.Recovery.get_credential_record!(
-               test_account.access_account_id,
-               test_account.identity_id
-             )
-  end
+      {:ok, cred_record} =
+        Impl.Credential.Recovery.get_credential_record(
+          test_account.access_account_id,
+          test_account.identity_id
+        )
 
-  test "Cannot replace a Recovery Credential record" do
-    test_account = get_account_data("credential_recovery_retrieval_test_accnt")
+      assert :ok = Impl.Credential.Recovery.delete_credential(cred_record.id)
+    end
 
-    assert {:error, _} =
-             Impl.Credential.Recovery.set_credential(
-               test_account.access_account_id,
-               test_account.identity_id,
-               nil,
-               []
-             )
-  end
+    test "Can delete Recovery Credential record" do
+      test_account = get_account_data("credential_recovery_delete_test_accnt")
 
-  test "Can delete Recovery Credential record by ID / Success Tuple" do
-    test_account = get_account_data("credential_recovery_delete_id_test_accnt")
+      {:ok, cred_record} =
+        Impl.Credential.Recovery.get_credential_record(
+          test_account.access_account_id,
+          test_account.identity_id
+        )
 
-    cred_record =
-      Impl.Credential.Recovery.get_credential_record!(
-        test_account.access_account_id,
-        test_account.identity_id
-      )
-
-    assert :ok = Impl.Credential.Recovery.delete_credential(cred_record.id)
-  end
-
-  test "Can delete Recovery Credential record by ID / Raise on Error" do
-    test_account = get_account_data("credential_recovery_delete1_id_test_accnt")
-
-    cred_record =
-      Impl.Credential.Recovery.get_credential_record!(
-        test_account.access_account_id,
-        test_account.identity_id
-      )
-
-    assert :ok = Impl.Credential.Recovery.delete_credential!(cred_record.id)
-  end
-
-  test "Can delete Recovery Credential record / Success Tuple" do
-    test_account = get_account_data("credential_recovery_delete_test_accnt")
-
-    cred_record =
-      Impl.Credential.Recovery.get_credential_record!(
-        test_account.access_account_id,
-        test_account.identity_id
-      )
-
-    assert :ok = Impl.Credential.Recovery.delete_credential(cred_record)
-  end
-
-  test "Can delete Recovery Credential record / Raise on Error" do
-    test_account = get_account_data("credential_recovery_delete1_test_accnt")
-
-    cred_record =
-      Impl.Credential.Recovery.get_credential_record!(
-        test_account.access_account_id,
-        test_account.identity_id
-      )
-
-    assert :ok = Impl.Credential.Recovery.delete_credential!(cred_record)
+      assert :ok = Impl.Credential.Recovery.delete_credential(cred_record)
+    end
   end
 
   defp get_account_data(access_account_name) do

@@ -54,691 +54,727 @@ defmodule IdentityValidationTest do
     ]
   ]
 
-  test "Request Identity Validation by target Identity ID" do
-    target_identity =
-      from(
-        aa in Msdata.SystAccessAccounts,
-        join: i in assoc(aa, :identities),
-        join: ei in assoc(i, :identity_type),
-        select: i,
-        where:
-          aa.internal_name == "identity_validation_request_test_accnt" and
-            ei.internal_name == "identity_types_sysdef_email"
-      )
-      |> MscmpSystDb.one!()
+  describe "request_identity_validation/2" do
+    test "Request Identity Validation by target Identity ID" do
+      target_identity =
+        from(
+          aa in Msdata.SystAccessAccounts,
+          join: i in assoc(aa, :identities),
+          join: ei in assoc(i, :identity_type),
+          select: i,
+          where:
+            aa.internal_name == "identity_validation_request_test_accnt" and
+              ei.internal_name == "identity_types_sysdef_email"
+        )
+        |> MscmpSystDb.one!()
 
-    # Note that the DateTime comparisons are given a generous tolerance of
-    # +/- 30 seconds since we really can't test an exact value.  The tolerance
-    # is almost certainly unnecessarily wide, but small enough that any passing
-    # value would be sufficient for the expiration business requirement.
+      # Note that the DateTime comparisons are given a generous tolerance of
+      # +/- 30 seconds since we really can't test an exact value.  The tolerance
+      # is almost certainly unnecessarily wide, but small enough that any passing
+      # value would be sufficient for the expiration business requirement.
 
-    # default
+      # default
 
-    requested_start_time = DateTime.add(DateTime.utc_now(), -30)
-    requested_end_time = DateTime.add(requested_start_time, 60)
+      requested_start_time = DateTime.add(DateTime.utc_now(), -30)
+      requested_end_time = DateTime.add(requested_start_time, 60)
 
-    requested_datetime_range = %DbTypes.DateTimeRange{
-      lower: requested_start_time,
-      upper: requested_end_time
-    }
+      requested_datetime_range = %DbTypes.DateTimeRange{
+        lower: requested_start_time,
+        upper: requested_end_time
+      }
 
-    expires_start_time = DateTime.add(requested_start_time, 24 * 60 * 60)
-    expires_end_time = DateTime.add(requested_end_time, 24 * 60 * 60)
+      expires_start_time = DateTime.add(requested_start_time, 24 * 60 * 60)
+      expires_end_time = DateTime.add(requested_end_time, 24 * 60 * 60)
 
-    expires_datetime_range = %DbTypes.DateTimeRange{
-      lower: expires_start_time,
-      upper: expires_end_time
-    }
+      expires_datetime_range = %DbTypes.DateTimeRange{
+        lower: expires_start_time,
+        upper: expires_end_time
+      }
 
-    opts =
-      @test_options
-      |> Keyword.take([
-        :identity_tokens,
-        :identity_token_length,
-        :expiration_hours,
-        :create_validated
-      ])
-      |> NimbleOptions.new!()
-      |> then(&NimbleOptions.validate!([], &1))
+      opts =
+        @test_options
+        |> Keyword.take([
+          :identity_tokens,
+          :identity_token_length,
+          :expiration_hours,
+          :create_validated
+        ])
+        |> NimbleOptions.new!()
+        |> then(&NimbleOptions.validate!([], &1))
 
-    assert {:ok, validation_identity} =
-             Impl.Identity.Validation.request_identity_validation(target_identity.id, opts)
+      assert {:ok, validation_identity} =
+               Impl.Identity.Validation.request_identity_validation(target_identity.id, opts)
 
-    updated_target_identity =
-      from(
-        aa in Msdata.SystAccessAccounts,
-        join: i in assoc(aa, :identities),
-        join: ei in assoc(i, :identity_type),
-        select: i,
-        where:
-          aa.internal_name == "identity_validation_request_test_accnt" and
-            ei.internal_name == "identity_types_sysdef_email"
-      )
-      |> MscmpSystDb.one!()
+      updated_target_identity =
+        from(
+          aa in Msdata.SystAccessAccounts,
+          join: i in assoc(aa, :identities),
+          join: ei in assoc(i, :identity_type),
+          select: i,
+          where:
+            aa.internal_name == "identity_validation_request_test_accnt" and
+              ei.internal_name == "identity_types_sysdef_email"
+        )
+        |> MscmpSystDb.one!()
 
-    assert {:ok, false} = Impl.Identity.identity_validated?(updated_target_identity)
+      assert {:ok, false} = Impl.Identity.identity_validated(updated_target_identity)
 
-    assert :rcl =
-             DbTypes.compare(
-               updated_target_identity.validation_requested,
-               requested_datetime_range
-             )
+      assert :rcl =
+               DbTypes.compare(
+                 updated_target_identity.validation_requested,
+                 requested_datetime_range
+               )
 
-    assert :rcl = DbTypes.compare(validation_identity.identity_expires, expires_datetime_range)
+      assert :rcl = DbTypes.compare(validation_identity.identity_expires, expires_datetime_range)
 
-    assert String.length(validation_identity.account_identifier) == 40
+      assert String.length(validation_identity.account_identifier) == 40
 
-    :deleted =
-      Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
+      :ok =
+        Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
 
-    # expiration_hours
+      # expiration_hours
 
-    requested_start_time = DateTime.add(DateTime.utc_now(), -30)
-    requested_end_time = DateTime.add(requested_start_time, 60)
+      requested_start_time = DateTime.add(DateTime.utc_now(), -30)
+      requested_end_time = DateTime.add(requested_start_time, 60)
 
-    requested_datetime_range = %DbTypes.DateTimeRange{
-      lower: requested_start_time,
-      upper: requested_end_time
-    }
+      requested_datetime_range = %DbTypes.DateTimeRange{
+        lower: requested_start_time,
+        upper: requested_end_time
+      }
 
-    hours_before_expire = :rand.uniform(60)
+      hours_before_expire = :rand.uniform(60)
 
-    expires_start_time = DateTime.add(requested_start_time, hours_before_expire * 60 * 60)
-    expires_end_time = DateTime.add(requested_end_time, hours_before_expire * 60 * 60)
+      expires_start_time = DateTime.add(requested_start_time, hours_before_expire * 60 * 60)
+      expires_end_time = DateTime.add(requested_end_time, hours_before_expire * 60 * 60)
 
-    expires_datetime_range = %DbTypes.DateTimeRange{
-      lower: expires_start_time,
-      upper: expires_end_time
-    }
+      expires_datetime_range = %DbTypes.DateTimeRange{
+        lower: expires_start_time,
+        upper: expires_end_time
+      }
 
-    opts =
-      @test_options
-      |> Keyword.take([
-        :identity_tokens,
-        :identity_token_length,
-        :expiration_hours,
-        :create_validated
-      ])
-      |> NimbleOptions.new!()
-      |> then(&NimbleOptions.validate!([expiration_hours: hours_before_expire], &1))
+      opts =
+        @test_options
+        |> Keyword.take([
+          :identity_tokens,
+          :identity_token_length,
+          :expiration_hours,
+          :create_validated
+        ])
+        |> NimbleOptions.new!()
+        |> then(&NimbleOptions.validate!([expiration_hours: hours_before_expire], &1))
 
-    assert {:ok, validation_identity} =
-             Impl.Identity.Validation.request_identity_validation(
-               target_identity.id,
-               opts
-             )
+      assert {:ok, validation_identity} =
+               Impl.Identity.Validation.request_identity_validation(
+                 target_identity.id,
+                 opts
+               )
 
-    updated_target_identity =
-      from(
-        aa in Msdata.SystAccessAccounts,
-        join: i in assoc(aa, :identities),
-        join: ei in assoc(i, :identity_type),
-        select: i,
-        where:
-          aa.internal_name == "identity_validation_request_test_accnt" and
-            ei.internal_name == "identity_types_sysdef_email"
-      )
-      |> MscmpSystDb.one!()
+      updated_target_identity =
+        from(
+          aa in Msdata.SystAccessAccounts,
+          join: i in assoc(aa, :identities),
+          join: ei in assoc(i, :identity_type),
+          select: i,
+          where:
+            aa.internal_name == "identity_validation_request_test_accnt" and
+              ei.internal_name == "identity_types_sysdef_email"
+        )
+        |> MscmpSystDb.one!()
 
-    assert {:ok, false} = Impl.Identity.identity_validated?(updated_target_identity)
+      assert {:ok, false} = Impl.Identity.identity_validated(updated_target_identity)
 
-    assert :rcl =
-             DbTypes.compare(
-               updated_target_identity.validation_requested,
-               requested_datetime_range
-             )
+      assert :rcl =
+               DbTypes.compare(
+                 updated_target_identity.validation_requested,
+                 requested_datetime_range
+               )
 
-    assert :rcl = DbTypes.compare(validation_identity.identity_expires, expires_datetime_range)
+      assert :rcl = DbTypes.compare(validation_identity.identity_expires, expires_datetime_range)
 
-    assert String.length(validation_identity.account_identifier) == 40
+      assert String.length(validation_identity.account_identifier) == 40
 
-    :deleted =
-      Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
+      :ok =
+        Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
 
-    # identity_token_length
+      # identity_token_length
 
-    requested_start_time = DateTime.add(DateTime.utc_now(), -30)
-    requested_end_time = DateTime.add(requested_start_time, 60)
+      requested_start_time = DateTime.add(DateTime.utc_now(), -30)
+      requested_end_time = DateTime.add(requested_start_time, 60)
 
-    requested_datetime_range = %DbTypes.DateTimeRange{
-      lower: requested_start_time,
-      upper: requested_end_time
-    }
+      requested_datetime_range = %DbTypes.DateTimeRange{
+        lower: requested_start_time,
+        upper: requested_end_time
+      }
 
-    expires_start_time = DateTime.add(requested_start_time, 24 * 60 * 60)
-    expires_end_time = DateTime.add(requested_end_time, 24 * 60 * 60)
+      expires_start_time = DateTime.add(requested_start_time, 24 * 60 * 60)
+      expires_end_time = DateTime.add(requested_end_time, 24 * 60 * 60)
 
-    expires_datetime_range = %DbTypes.DateTimeRange{
-      lower: expires_start_time,
-      upper: expires_end_time
-    }
+      expires_datetime_range = %DbTypes.DateTimeRange{
+        lower: expires_start_time,
+        upper: expires_end_time
+      }
 
-    token_length_override = :rand.uniform(60) + 10
+      token_length_override = :rand.uniform(60) + 10
 
-    opts =
-      @test_options
-      |> Keyword.take([
-        :identity_tokens,
-        :identity_token_length,
-        :expiration_hours,
-        :create_validated
-      ])
-      |> NimbleOptions.new!()
-      |> then(&NimbleOptions.validate!([identity_token_length: token_length_override], &1))
+      opts =
+        @test_options
+        |> Keyword.take([
+          :identity_tokens,
+          :identity_token_length,
+          :expiration_hours,
+          :create_validated
+        ])
+        |> NimbleOptions.new!()
+        |> then(&NimbleOptions.validate!([identity_token_length: token_length_override], &1))
 
-    assert {:ok, validation_identity} =
-             Impl.Identity.Validation.request_identity_validation(
-               target_identity.id,
-               opts
-             )
+      assert {:ok, validation_identity} =
+               Impl.Identity.Validation.request_identity_validation(
+                 target_identity.id,
+                 opts
+               )
 
-    updated_target_identity =
-      from(
-        aa in Msdata.SystAccessAccounts,
-        join: i in assoc(aa, :identities),
-        join: ei in assoc(i, :identity_type),
-        select: i,
-        where:
-          aa.internal_name == "identity_validation_request_test_accnt" and
-            ei.internal_name == "identity_types_sysdef_email"
-      )
-      |> MscmpSystDb.one!()
+      updated_target_identity =
+        from(
+          aa in Msdata.SystAccessAccounts,
+          join: i in assoc(aa, :identities),
+          join: ei in assoc(i, :identity_type),
+          select: i,
+          where:
+            aa.internal_name == "identity_validation_request_test_accnt" and
+              ei.internal_name == "identity_types_sysdef_email"
+        )
+        |> MscmpSystDb.one!()
 
-    assert {:ok, false} = Impl.Identity.identity_validated?(updated_target_identity)
+      assert {:ok, false} = Impl.Identity.identity_validated(updated_target_identity)
 
-    assert :rcl =
-             DbTypes.compare(
-               updated_target_identity.validation_requested,
-               requested_datetime_range
-             )
+      assert :rcl =
+               DbTypes.compare(
+                 updated_target_identity.validation_requested,
+                 requested_datetime_range
+               )
 
-    assert :rcl = DbTypes.compare(validation_identity.identity_expires, expires_datetime_range)
+      assert :rcl = DbTypes.compare(validation_identity.identity_expires, expires_datetime_range)
 
-    assert String.length(validation_identity.account_identifier) == token_length_override
+      assert String.length(validation_identity.account_identifier) == token_length_override
 
-    :deleted =
-      Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
+      :ok =
+        Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
 
-    # identity_tokens
+      # identity_tokens
 
-    requested_start_time = DateTime.add(DateTime.utc_now(), -30)
-    requested_end_time = DateTime.add(requested_start_time, 60)
+      requested_start_time = DateTime.add(DateTime.utc_now(), -30)
+      requested_end_time = DateTime.add(requested_start_time, 60)
 
-    requested_datetime_range = %DbTypes.DateTimeRange{
-      lower: requested_start_time,
-      upper: requested_end_time
-    }
+      requested_datetime_range = %DbTypes.DateTimeRange{
+        lower: requested_start_time,
+        upper: requested_end_time
+      }
 
-    expires_start_time = DateTime.add(requested_start_time, 24 * 60 * 60)
-    expires_end_time = DateTime.add(requested_end_time, 24 * 60 * 60)
+      expires_start_time = DateTime.add(requested_start_time, 24 * 60 * 60)
+      expires_end_time = DateTime.add(requested_end_time, 24 * 60 * 60)
 
-    expires_datetime_range = %DbTypes.DateTimeRange{
-      lower: expires_start_time,
-      upper: expires_end_time
-    }
+      expires_datetime_range = %DbTypes.DateTimeRange{
+        lower: expires_start_time,
+        upper: expires_end_time
+      }
 
-    opts =
-      @test_options
-      |> Keyword.take([
-        :identity_tokens,
-        :identity_token_length,
-        :expiration_hours,
-        :create_validated
-      ])
-      |> NimbleOptions.new!()
-      |> then(&NimbleOptions.validate!([identity_tokens: ~c"ABC"], &1))
+      opts =
+        @test_options
+        |> Keyword.take([
+          :identity_tokens,
+          :identity_token_length,
+          :expiration_hours,
+          :create_validated
+        ])
+        |> NimbleOptions.new!()
+        |> then(&NimbleOptions.validate!([identity_tokens: ~c"ABC"], &1))
 
-    assert {:ok, validation_identity} =
-             Impl.Identity.Validation.request_identity_validation(
-               target_identity.id,
-               opts
-             )
+      assert {:ok, validation_identity} =
+               Impl.Identity.Validation.request_identity_validation(
+                 target_identity.id,
+                 opts
+               )
 
-    updated_target_identity =
-      from(
-        aa in Msdata.SystAccessAccounts,
-        join: i in assoc(aa, :identities),
-        join: ei in assoc(i, :identity_type),
-        select: i,
-        where:
-          aa.internal_name == "identity_validation_request_test_accnt" and
-            ei.internal_name == "identity_types_sysdef_email"
-      )
-      |> MscmpSystDb.one!()
+      updated_target_identity =
+        from(
+          aa in Msdata.SystAccessAccounts,
+          join: i in assoc(aa, :identities),
+          join: ei in assoc(i, :identity_type),
+          select: i,
+          where:
+            aa.internal_name == "identity_validation_request_test_accnt" and
+              ei.internal_name == "identity_types_sysdef_email"
+        )
+        |> MscmpSystDb.one!()
 
-    assert {:ok, false} = Impl.Identity.identity_validated?(updated_target_identity)
+      assert {:ok, false} = Impl.Identity.identity_validated(updated_target_identity)
 
-    assert :rcl =
-             DbTypes.compare(
-               updated_target_identity.validation_requested,
-               requested_datetime_range
-             )
+      assert :rcl =
+               DbTypes.compare(
+                 updated_target_identity.validation_requested,
+                 requested_datetime_range
+               )
 
-    assert :rcl = DbTypes.compare(validation_identity.identity_expires, expires_datetime_range)
+      assert :rcl = DbTypes.compare(validation_identity.identity_expires, expires_datetime_range)
 
-    assert String.length(validation_identity.account_identifier) == 40
+      assert String.length(validation_identity.account_identifier) == 40
 
-    assert not (validation_identity.account_identifier =~ ~r/[^A-C]/)
+      assert not (validation_identity.account_identifier =~ ~r/[^A-C]/)
 
-    :deleted =
-      Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
+      :ok =
+        Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
+    end
+
+    test "Request Identity Validation by target Identity" do
+      target_identity =
+        from(
+          aa in Msdata.SystAccessAccounts,
+          join: i in assoc(aa, :identities),
+          join: ei in assoc(i, :identity_type),
+          select: i,
+          where:
+            aa.internal_name == "identity_validation_request_test_accnt" and
+              ei.internal_name == "identity_types_sysdef_email"
+        )
+        |> MscmpSystDb.one!()
+
+      # Note that the DateTime comparisons are given a generous tolerance of
+      # +/- 30 seconds since we really can't test an exact value.  The tolerance
+      # is almost certainly unnecessarily wide, but small enough that any passing
+      # value would be sufficient for the expiration business requirement.
+
+      # default
+
+      requested_start_time = DateTime.add(DateTime.utc_now(), -30)
+      requested_end_time = DateTime.add(requested_start_time, 60)
+
+      requested_datetime_range = %DbTypes.DateTimeRange{
+        lower: requested_start_time,
+        upper: requested_end_time
+      }
+
+      expires_start_time = DateTime.add(requested_start_time, 24 * 60 * 60)
+      expires_end_time = DateTime.add(requested_end_time, 24 * 60 * 60)
+
+      expires_datetime_range = %DbTypes.DateTimeRange{
+        lower: expires_start_time,
+        upper: expires_end_time
+      }
+
+      opts =
+        @test_options
+        |> Keyword.take([
+          :identity_tokens,
+          :identity_token_length,
+          :expiration_hours,
+          :create_validated
+        ])
+        |> NimbleOptions.new!()
+        |> then(&NimbleOptions.validate!([], &1))
+
+      assert {:ok, validation_identity} =
+               Impl.Identity.Validation.request_identity_validation(target_identity, opts)
+
+      updated_target_identity =
+        from(
+          aa in Msdata.SystAccessAccounts,
+          join: i in assoc(aa, :identities),
+          join: ei in assoc(i, :identity_type),
+          select: i,
+          where:
+            aa.internal_name == "identity_validation_request_test_accnt" and
+              ei.internal_name == "identity_types_sysdef_email"
+        )
+        |> MscmpSystDb.one!()
+
+      assert {:ok, false} = Impl.Identity.identity_validated(updated_target_identity)
+
+      assert :rcl =
+               DbTypes.compare(
+                 updated_target_identity.validation_requested,
+                 requested_datetime_range
+               )
+
+      assert :rcl = DbTypes.compare(validation_identity.identity_expires, expires_datetime_range)
+
+      assert String.length(validation_identity.account_identifier) == 40
+
+      :ok =
+        Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
+
+      # expiration_hours
+
+      requested_start_time = DateTime.add(DateTime.utc_now(), -30)
+      requested_end_time = DateTime.add(requested_start_time, 60)
+
+      requested_datetime_range = %DbTypes.DateTimeRange{
+        lower: requested_start_time,
+        upper: requested_end_time
+      }
+
+      expires_start_time = DateTime.add(requested_start_time, 48 * 60 * 60)
+      expires_end_time = DateTime.add(requested_end_time, 48 * 60 * 60)
+
+      expires_datetime_range = %DbTypes.DateTimeRange{
+        lower: expires_start_time,
+        upper: expires_end_time
+      }
+
+      opts =
+        @test_options
+        |> Keyword.take([
+          :identity_tokens,
+          :identity_token_length,
+          :expiration_hours,
+          :create_validated
+        ])
+        |> NimbleOptions.new!()
+        |> then(&NimbleOptions.validate!([expiration_hours: 48], &1))
+
+      assert {:ok, validation_identity} =
+               Impl.Identity.Validation.request_identity_validation(
+                 updated_target_identity,
+                 opts
+               )
+
+      updated_target_identity =
+        from(
+          aa in Msdata.SystAccessAccounts,
+          join: i in assoc(aa, :identities),
+          join: ei in assoc(i, :identity_type),
+          select: i,
+          where:
+            aa.internal_name == "identity_validation_request_test_accnt" and
+              ei.internal_name == "identity_types_sysdef_email"
+        )
+        |> MscmpSystDb.one!()
+
+      assert {:ok, false} = Impl.Identity.identity_validated(updated_target_identity)
+
+      assert :rcl =
+               DbTypes.compare(
+                 updated_target_identity.validation_requested,
+                 requested_datetime_range
+               )
+
+      assert :rcl = DbTypes.compare(validation_identity.identity_expires, expires_datetime_range)
+
+      assert String.length(validation_identity.account_identifier) == 40
+
+      :ok =
+        Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
+
+      # identity_token_length
+
+      requested_start_time = DateTime.add(DateTime.utc_now(), -30)
+      requested_end_time = DateTime.add(requested_start_time, 60)
+
+      requested_datetime_range = %DbTypes.DateTimeRange{
+        lower: requested_start_time,
+        upper: requested_end_time
+      }
+
+      expires_start_time = DateTime.add(requested_start_time, 24 * 60 * 60)
+      expires_end_time = DateTime.add(requested_end_time, 24 * 60 * 60)
+
+      expires_datetime_range = %DbTypes.DateTimeRange{
+        lower: expires_start_time,
+        upper: expires_end_time
+      }
+
+      opts =
+        @test_options
+        |> Keyword.take([
+          :identity_tokens,
+          :identity_token_length,
+          :expiration_hours,
+          :create_validated
+        ])
+        |> NimbleOptions.new!()
+        |> then(&NimbleOptions.validate!([identity_token_length: 20], &1))
+
+      assert {:ok, validation_identity} =
+               Impl.Identity.Validation.request_identity_validation(
+                 updated_target_identity,
+                 opts
+               )
+
+      updated_target_identity =
+        from(
+          aa in Msdata.SystAccessAccounts,
+          join: i in assoc(aa, :identities),
+          join: ei in assoc(i, :identity_type),
+          select: i,
+          where:
+            aa.internal_name == "identity_validation_request_test_accnt" and
+              ei.internal_name == "identity_types_sysdef_email"
+        )
+        |> MscmpSystDb.one!()
+
+      assert {:ok, false} = Impl.Identity.identity_validated(updated_target_identity)
+
+      assert :rcl =
+               DbTypes.compare(
+                 updated_target_identity.validation_requested,
+                 requested_datetime_range
+               )
+
+      assert :rcl = DbTypes.compare(validation_identity.identity_expires, expires_datetime_range)
+
+      assert String.length(validation_identity.account_identifier) == 20
+
+      :ok =
+        Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
+
+      # identity_tokens
+
+      requested_start_time = DateTime.add(DateTime.utc_now(), -30)
+      requested_end_time = DateTime.add(requested_start_time, 60)
+
+      requested_datetime_range = %DbTypes.DateTimeRange{
+        lower: requested_start_time,
+        upper: requested_end_time
+      }
+
+      expires_start_time = DateTime.add(requested_start_time, 24 * 60 * 60)
+      expires_end_time = DateTime.add(requested_end_time, 24 * 60 * 60)
+
+      expires_datetime_range = %DbTypes.DateTimeRange{
+        lower: expires_start_time,
+        upper: expires_end_time
+      }
+
+      opts =
+        @test_options
+        |> Keyword.take([
+          :identity_tokens,
+          :identity_token_length,
+          :expiration_hours,
+          :create_validated
+        ])
+        |> NimbleOptions.new!()
+        |> then(&NimbleOptions.validate!([identity_tokens: ~c"ABC"], &1))
+
+      assert {:ok, validation_identity} =
+               Impl.Identity.Validation.request_identity_validation(
+                 updated_target_identity,
+                 opts
+               )
+
+      updated_target_identity =
+        from(
+          aa in Msdata.SystAccessAccounts,
+          join: i in assoc(aa, :identities),
+          join: ei in assoc(i, :identity_type),
+          select: i,
+          where:
+            aa.internal_name == "identity_validation_request_test_accnt" and
+              ei.internal_name == "identity_types_sysdef_email"
+        )
+        |> MscmpSystDb.one!()
+
+      assert {:ok, false} = Impl.Identity.identity_validated(updated_target_identity)
+
+      assert :rcl =
+               DbTypes.compare(
+                 updated_target_identity.validation_requested,
+                 requested_datetime_range
+               )
+
+      assert :rcl = DbTypes.compare(validation_identity.identity_expires, expires_datetime_range)
+
+      assert String.length(validation_identity.account_identifier) == 40
+
+      assert not (validation_identity.account_identifier =~ ~r/[^A-C]/)
+
+      :ok =
+        Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
+    end
   end
 
-  test "Request Identity Validation by target Identity" do
-    target_identity =
-      from(
-        aa in Msdata.SystAccessAccounts,
-        join: i in assoc(aa, :identities),
-        join: ei in assoc(i, :identity_type),
-        select: i,
-        where:
-          aa.internal_name == "identity_validation_request_test_accnt" and
-            ei.internal_name == "identity_types_sysdef_email"
-      )
-      |> MscmpSystDb.one!()
+  describe "identify_access_account/2" do
+    test "Identify Owned Access Account" do
+      validation_identity =
+        from(
+          i in Msdata.SystIdentities,
+          join: ei in assoc(i, :identity_type),
+          join: aa in assoc(i, :access_account),
+          where:
+            aa.internal_name == "identity_validation_identify_test_accnt" and
+              ei.internal_name == "identity_types_sysdef_validation",
+          preload: [access_account: aa]
+        )
+        |> MscmpSystDb.one!()
 
-    # Note that the DateTime comparisons are given a generous tolerance of
-    # +/- 30 seconds since we really can't test an exact value.  The tolerance
-    # is almost certainly unnecessarily wide, but small enough that any passing
-    # value would be sufficient for the expiration business requirement.
+      validation_identity_id = validation_identity.id
 
-    # default
+      assert {:ok, %Msdata.SystIdentities{id: ^validation_identity_id}} =
+               Impl.Identity.Validation.identify_access_account(
+                 validation_identity.account_identifier,
+                 validation_identity.access_account.owning_owner_id
+               )
 
-    requested_start_time = DateTime.add(DateTime.utc_now(), -30)
-    requested_end_time = DateTime.add(requested_start_time, 60)
+      assert {:error, :not_found} =
+               Impl.Identity.Validation.identify_access_account(
+                 validation_identity.account_identifier,
+                 nil
+               )
+    end
 
-    requested_datetime_range = %DbTypes.DateTimeRange{
-      lower: requested_start_time,
-      upper: requested_end_time
-    }
+    test "Identify Unowned Access Account" do
+      validation_identity =
+        from(
+          i in Msdata.SystIdentities,
+          join: ei in assoc(i, :identity_type),
+          join: aa in assoc(i, :access_account),
+          where:
+            aa.internal_name == "identity_validation_identify_unowned_test_accnt" and
+              ei.internal_name == "identity_types_sysdef_validation",
+          preload: [access_account: aa]
+        )
+        |> MscmpSystDb.one!()
 
-    expires_start_time = DateTime.add(requested_start_time, 24 * 60 * 60)
-    expires_end_time = DateTime.add(requested_end_time, 24 * 60 * 60)
+      validation_identity_id = validation_identity.id
 
-    expires_datetime_range = %DbTypes.DateTimeRange{
-      lower: expires_start_time,
-      upper: expires_end_time
-    }
-
-    opts =
-      @test_options
-      |> Keyword.take([
-        :identity_tokens,
-        :identity_token_length,
-        :expiration_hours,
-        :create_validated
-      ])
-      |> NimbleOptions.new!()
-      |> then(&NimbleOptions.validate!([], &1))
-
-    assert {:ok, validation_identity} =
-             Impl.Identity.Validation.request_identity_validation(target_identity, opts)
-
-    updated_target_identity =
-      from(
-        aa in Msdata.SystAccessAccounts,
-        join: i in assoc(aa, :identities),
-        join: ei in assoc(i, :identity_type),
-        select: i,
-        where:
-          aa.internal_name == "identity_validation_request_test_accnt" and
-            ei.internal_name == "identity_types_sysdef_email"
-      )
-      |> MscmpSystDb.one!()
-
-    assert {:ok, false} = Impl.Identity.identity_validated?(updated_target_identity)
-
-    assert :rcl =
-             DbTypes.compare(
-               updated_target_identity.validation_requested,
-               requested_datetime_range
-             )
-
-    assert :rcl = DbTypes.compare(validation_identity.identity_expires, expires_datetime_range)
-
-    assert String.length(validation_identity.account_identifier) == 40
-
-    :deleted =
-      Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
-
-    # expiration_hours
-
-    requested_start_time = DateTime.add(DateTime.utc_now(), -30)
-    requested_end_time = DateTime.add(requested_start_time, 60)
-
-    requested_datetime_range = %DbTypes.DateTimeRange{
-      lower: requested_start_time,
-      upper: requested_end_time
-    }
-
-    expires_start_time = DateTime.add(requested_start_time, 48 * 60 * 60)
-    expires_end_time = DateTime.add(requested_end_time, 48 * 60 * 60)
-
-    expires_datetime_range = %DbTypes.DateTimeRange{
-      lower: expires_start_time,
-      upper: expires_end_time
-    }
-
-    opts =
-      @test_options
-      |> Keyword.take([
-        :identity_tokens,
-        :identity_token_length,
-        :expiration_hours,
-        :create_validated
-      ])
-      |> NimbleOptions.new!()
-      |> then(&NimbleOptions.validate!([expiration_hours: 48], &1))
-
-    assert {:ok, validation_identity} =
-             Impl.Identity.Validation.request_identity_validation(
-               updated_target_identity,
-               opts
-             )
-
-    updated_target_identity =
-      from(
-        aa in Msdata.SystAccessAccounts,
-        join: i in assoc(aa, :identities),
-        join: ei in assoc(i, :identity_type),
-        select: i,
-        where:
-          aa.internal_name == "identity_validation_request_test_accnt" and
-            ei.internal_name == "identity_types_sysdef_email"
-      )
-      |> MscmpSystDb.one!()
-
-    assert {:ok, false} = Impl.Identity.identity_validated?(updated_target_identity)
-
-    assert :rcl =
-             DbTypes.compare(
-               updated_target_identity.validation_requested,
-               requested_datetime_range
-             )
-
-    assert :rcl = DbTypes.compare(validation_identity.identity_expires, expires_datetime_range)
-
-    assert String.length(validation_identity.account_identifier) == 40
-
-    :deleted =
-      Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
-
-    # identity_token_length
-
-    requested_start_time = DateTime.add(DateTime.utc_now(), -30)
-    requested_end_time = DateTime.add(requested_start_time, 60)
-
-    requested_datetime_range = %DbTypes.DateTimeRange{
-      lower: requested_start_time,
-      upper: requested_end_time
-    }
-
-    expires_start_time = DateTime.add(requested_start_time, 24 * 60 * 60)
-    expires_end_time = DateTime.add(requested_end_time, 24 * 60 * 60)
-
-    expires_datetime_range = %DbTypes.DateTimeRange{
-      lower: expires_start_time,
-      upper: expires_end_time
-    }
-
-    opts =
-      @test_options
-      |> Keyword.take([
-        :identity_tokens,
-        :identity_token_length,
-        :expiration_hours,
-        :create_validated
-      ])
-      |> NimbleOptions.new!()
-      |> then(&NimbleOptions.validate!([identity_token_length: 20], &1))
-
-    assert {:ok, validation_identity} =
-             Impl.Identity.Validation.request_identity_validation(
-               updated_target_identity,
-               opts
-             )
-
-    updated_target_identity =
-      from(
-        aa in Msdata.SystAccessAccounts,
-        join: i in assoc(aa, :identities),
-        join: ei in assoc(i, :identity_type),
-        select: i,
-        where:
-          aa.internal_name == "identity_validation_request_test_accnt" and
-            ei.internal_name == "identity_types_sysdef_email"
-      )
-      |> MscmpSystDb.one!()
-
-    assert {:ok, false} = Impl.Identity.identity_validated?(updated_target_identity)
-
-    assert :rcl =
-             DbTypes.compare(
-               updated_target_identity.validation_requested,
-               requested_datetime_range
-             )
-
-    assert :rcl = DbTypes.compare(validation_identity.identity_expires, expires_datetime_range)
-
-    assert String.length(validation_identity.account_identifier) == 20
-
-    :deleted =
-      Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
-
-    # identity_tokens
-
-    requested_start_time = DateTime.add(DateTime.utc_now(), -30)
-    requested_end_time = DateTime.add(requested_start_time, 60)
-
-    requested_datetime_range = %DbTypes.DateTimeRange{
-      lower: requested_start_time,
-      upper: requested_end_time
-    }
-
-    expires_start_time = DateTime.add(requested_start_time, 24 * 60 * 60)
-    expires_end_time = DateTime.add(requested_end_time, 24 * 60 * 60)
-
-    expires_datetime_range = %DbTypes.DateTimeRange{
-      lower: expires_start_time,
-      upper: expires_end_time
-    }
-
-    opts =
-      @test_options
-      |> Keyword.take([
-        :identity_tokens,
-        :identity_token_length,
-        :expiration_hours,
-        :create_validated
-      ])
-      |> NimbleOptions.new!()
-      |> then(&NimbleOptions.validate!([identity_tokens: ~c"ABC"], &1))
-
-    assert {:ok, validation_identity} =
-             Impl.Identity.Validation.request_identity_validation(
-               updated_target_identity,
-               opts
-             )
-
-    updated_target_identity =
-      from(
-        aa in Msdata.SystAccessAccounts,
-        join: i in assoc(aa, :identities),
-        join: ei in assoc(i, :identity_type),
-        select: i,
-        where:
-          aa.internal_name == "identity_validation_request_test_accnt" and
-            ei.internal_name == "identity_types_sysdef_email"
-      )
-      |> MscmpSystDb.one!()
-
-    assert {:ok, false} = Impl.Identity.identity_validated?(updated_target_identity)
-
-    assert :rcl =
-             DbTypes.compare(
-               updated_target_identity.validation_requested,
-               requested_datetime_range
-             )
-
-    assert :rcl = DbTypes.compare(validation_identity.identity_expires, expires_datetime_range)
-
-    assert String.length(validation_identity.account_identifier) == 40
-
-    assert not (validation_identity.account_identifier =~ ~r/[^A-C]/)
-
-    :deleted =
-      Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
+      assert {:ok, %Msdata.SystIdentities{id: ^validation_identity_id}} =
+               Impl.Identity.Validation.identify_access_account(
+                 validation_identity.account_identifier,
+                 nil
+               )
+    end
   end
 
-  test "Identify Owned Access Account" do
-    validation_identity =
-      from(
-        i in Msdata.SystIdentities,
-        join: ei in assoc(i, :identity_type),
-        join: aa in assoc(i, :access_account),
-        where:
-          aa.internal_name == "identity_validation_identify_test_accnt" and
-            ei.internal_name == "identity_types_sysdef_validation",
-        preload: [access_account: aa]
-      )
-      |> MscmpSystDb.one!()
+  describe "validation management" do
+    test "Can Confirm Validation for Identity" do
+      # The DateTime.truncate/2 call is needed here since DateTime.utc_now/0
+      # produces a timestamp with a greater resolution than that returned from the
+      # database. This can lead to validation_time seemingly being later than the
+      # record validated time which in this test isn't possible.
 
-    validation_identity_id = validation_identity.id
+      validation_time = DateTime.utc_now() |> DateTime.truncate(:second)
 
-    assert %Msdata.SystIdentities{id: ^validation_identity_id} =
-             Impl.Identity.Validation.identify_access_account(
-               validation_identity.account_identifier,
-               validation_identity.access_account.owning_owner_id
-             )
+      target_identity =
+        from(
+          aa in Msdata.SystAccessAccounts,
+          join: i in assoc(aa, :identities),
+          join: ei in assoc(i, :identity_type),
+          select: i,
+          where:
+            aa.internal_name == "identity_validation_confirm_test_accnt" and
+              ei.internal_name == "identity_types_sysdef_validation"
+        )
+        |> MscmpSystDb.one!()
 
-    assert Impl.Identity.Validation.identify_access_account(
-             validation_identity.account_identifier,
-             nil
-           ) == nil
-  end
+      assert {:ok, validated_identity} =
+               Impl.Identity.Validation.confirm_identity_validation(target_identity)
 
-  test "Identify Unowned Access Account" do
-    validation_identity =
-      from(
-        i in Msdata.SystIdentities,
-        join: ei in assoc(i, :identity_type),
-        join: aa in assoc(i, :access_account),
-        where:
-          aa.internal_name == "identity_validation_identify_unowned_test_accnt" and
-            ei.internal_name == "identity_types_sysdef_validation",
-        preload: [access_account: aa]
-      )
-      |> MscmpSystDb.one!()
+      assert DateTime.compare(validated_identity.validated, validation_time) in [:gt, :eq]
 
-    validation_identity_id = validation_identity.id
+      no_identity =
+        from(
+          aa in Msdata.SystAccessAccounts,
+          join: i in assoc(aa, :identities),
+          join: ei in assoc(i, :identity_type),
+          select: i,
+          where:
+            aa.internal_name == "identity_validation_confirm_test_accnt" and
+              ei.internal_name == "identity_types_sysdef_validation"
+        )
+        |> MscmpSystDb.one()
 
-    assert %Msdata.SystIdentities{id: ^validation_identity_id} =
-             Impl.Identity.Validation.identify_access_account(
-               validation_identity.account_identifier,
-               nil
-             )
-  end
+      assert no_identity == nil
+    end
 
-  test "Can Confirm Validation for Identity" do
-    # The DateTime.truncate/2 call is needed here since DateTime.utc_now/0
-    # produces a timestamp with a greater resolution than that returned from the
-    # database. This can lead to validation_time seemingly being later than the
-    # record validated time which in this test isn't possible.
+    test "Can Revoke Validation for Identity" do
+      target_identity =
+        from(
+          aa in Msdata.SystAccessAccounts,
+          join: i in assoc(aa, :identities),
+          join: ei in assoc(i, :identity_type),
+          select: i,
+          where:
+            aa.internal_name == "identity_validation_revoke_test_accnt" and
+              ei.internal_name == "identity_types_sysdef_validation"
+        )
+        |> MscmpSystDb.one!()
 
-    validation_time = DateTime.utc_now() |> DateTime.truncate(:second)
+      assert {:ok, revoked_identity} =
+               Impl.Identity.Validation.revoke_identity_validation(target_identity)
 
-    target_identity =
-      from(
-        aa in Msdata.SystAccessAccounts,
-        join: i in assoc(aa, :identities),
-        join: ei in assoc(i, :identity_type),
-        select: i,
-        where:
-          aa.internal_name == "identity_validation_confirm_test_accnt" and
-            ei.internal_name == "identity_types_sysdef_validation"
-      )
-      |> MscmpSystDb.one!()
+      assert revoked_identity.validated == nil
+      assert revoked_identity.validation_requested == nil
 
-    assert {:ok, validated_identity} =
-             Impl.Identity.Validation.confirm_identity_validation(target_identity)
+      no_identity =
+        from(
+          aa in Msdata.SystAccessAccounts,
+          join: i in assoc(aa, :identities),
+          join: ei in assoc(i, :identity_type),
+          select: i,
+          where:
+            aa.internal_name == "identity_validation_revoke_test_accnt" and
+              ei.internal_name == "identity_types_sysdef_validation"
+        )
+        |> MscmpSystDb.one()
 
-    assert DateTime.compare(validated_identity.validated, validation_time) in [:gt, :eq]
+      assert no_identity == nil
+    end
 
-    no_identity =
-      from(
-        aa in Msdata.SystAccessAccounts,
-        join: i in assoc(aa, :identities),
-        join: ei in assoc(i, :identity_type),
-        select: i,
-        where:
-          aa.internal_name == "identity_validation_confirm_test_accnt" and
-            ei.internal_name == "identity_types_sysdef_validation"
-      )
-      |> MscmpSystDb.one()
+    test "Can get Validation Identity for Identity ID" do
+      validation_identity_id =
+        from(
+          aa in Msdata.SystAccessAccounts,
+          join: i in assoc(aa, :identities),
+          join: ei in assoc(i, :identity_type),
+          select: i.id,
+          where:
+            aa.internal_name == "identity_validation_identify_test_accnt" and
+              ei.internal_name == "identity_types_sysdef_validation"
+        )
+        |> MscmpSystDb.one!()
 
-    assert no_identity == nil
-  end
+      target_identity_id =
+        from(
+          aa in Msdata.SystAccessAccounts,
+          join: i in assoc(aa, :identities),
+          join: ei in assoc(i, :identity_type),
+          select: i.id,
+          where:
+            aa.internal_name == "identity_validation_identify_test_accnt" and
+              ei.internal_name == "identity_types_sysdef_email"
+        )
+        |> MscmpSystDb.one!()
 
-  test "Can Revoke Validation for Identity" do
-    target_identity =
-      from(
-        aa in Msdata.SystAccessAccounts,
-        join: i in assoc(aa, :identities),
-        join: ei in assoc(i, :identity_type),
-        select: i,
-        where:
-          aa.internal_name == "identity_validation_revoke_test_accnt" and
-            ei.internal_name == "identity_types_sysdef_validation"
-      )
-      |> MscmpSystDb.one!()
+      assert {:ok, %Msdata.SystIdentities{id: ^validation_identity_id}} =
+               Impl.Identity.Validation.get_validator_identity(target_identity_id)
+    end
 
-    assert {:ok, revoked_identity} =
-             Impl.Identity.Validation.revoke_identity_validation(target_identity)
+    test "Can get Validation Target Identity for Validation Identity ID" do
+      validation_identity_id =
+        from(
+          aa in Msdata.SystAccessAccounts,
+          join: i in assoc(aa, :identities),
+          join: ei in assoc(i, :identity_type),
+          select: i.id,
+          where:
+            aa.internal_name == "identity_validation_identify_test_accnt" and
+              ei.internal_name == "identity_types_sysdef_validation"
+        )
+        |> MscmpSystDb.one!()
 
-    assert revoked_identity.validated == nil
-    assert revoked_identity.validation_requested == nil
+      target_identity_id =
+        from(
+          aa in Msdata.SystAccessAccounts,
+          join: i in assoc(aa, :identities),
+          join: ei in assoc(i, :identity_type),
+          select: i.id,
+          where:
+            aa.internal_name == "identity_validation_identify_test_accnt" and
+              ei.internal_name == "identity_types_sysdef_email"
+        )
+        |> MscmpSystDb.one!()
 
-    no_identity =
-      from(
-        aa in Msdata.SystAccessAccounts,
-        join: i in assoc(aa, :identities),
-        join: ei in assoc(i, :identity_type),
-        select: i,
-        where:
-          aa.internal_name == "identity_validation_revoke_test_accnt" and
-            ei.internal_name == "identity_types_sysdef_validation"
-      )
-      |> MscmpSystDb.one()
-
-    assert no_identity == nil
-  end
-
-  test "Can get Validation Identity for Identity ID" do
-    validation_identity_id =
-      from(
-        aa in Msdata.SystAccessAccounts,
-        join: i in assoc(aa, :identities),
-        join: ei in assoc(i, :identity_type),
-        select: i.id,
-        where:
-          aa.internal_name == "identity_validation_identify_test_accnt" and
-            ei.internal_name == "identity_types_sysdef_validation"
-      )
-      |> MscmpSystDb.one!()
-
-    target_identity_id =
-      from(
-        aa in Msdata.SystAccessAccounts,
-        join: i in assoc(aa, :identities),
-        join: ei in assoc(i, :identity_type),
-        select: i.id,
-        where:
-          aa.internal_name == "identity_validation_identify_test_accnt" and
-            ei.internal_name == "identity_types_sysdef_email"
-      )
-      |> MscmpSystDb.one!()
-
-    assert {:ok, %Msdata.SystIdentities{id: ^validation_identity_id}} =
-             Impl.Identity.Validation.get_validation_identity_for_identity_id(target_identity_id)
+      assert {:ok, %Msdata.SystIdentities{id: ^target_identity_id}} =
+               Impl.Identity.Validation.get_validation_target_identity(validation_identity_id)
+    end
   end
 end

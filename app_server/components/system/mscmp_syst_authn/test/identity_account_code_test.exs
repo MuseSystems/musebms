@@ -48,257 +48,274 @@ defmodule IdentityAccountCodeTest do
     ]
   ]
 
-  test "Can create Account Code Identity" do
-    {:ok, access_account_id} =
-      Impl.AccessAccount.get_access_account_id_by_name("identity_account_code_create_test_accnt")
+  describe "account code creation" do
+    test "Can create Account Code Identity" do
+      {:ok, access_account_id} =
+        Impl.AccessAccount.get_access_account_id_by_name(
+          "identity_account_code_create_test_accnt"
+        )
 
-    # Default Options
+      # Default Options
 
-    opts =
-      @test_options
-      |> Keyword.take([
-        :identity_tokens,
-        :identity_token_length,
-        :create_validated
-      ])
-      |> NimbleOptions.new!()
-      |> then(&NimbleOptions.validate!([], &1))
+      opts =
+        @test_options
+        |> Keyword.take([
+          :identity_tokens,
+          :identity_token_length,
+          :create_validated
+        ])
+        |> NimbleOptions.new!()
+        |> then(&NimbleOptions.validate!([], &1))
 
-    assert {:ok, default_identity} =
-             Impl.Identity.AccountCode.create_identity(access_account_id, nil, opts)
+      assert {:ok, default_identity} =
+               Impl.Identity.AccountCode.create_identity(access_account_id, nil, opts)
 
-    assert %Msdata.SystIdentities{validated: val_date, account_identifier: identifier} =
-             default_identity
+      assert %Msdata.SystIdentities{validated: val_date, account_identifier: identifier} =
+               default_identity
 
-    assert val_date != nil
+      assert val_date != nil
 
-    assert String.length(identifier) == 12
+      assert String.length(identifier) == 12
 
-    :deleted = Impl.Identity.delete_identity(default_identity.id, "identity_types_sysdef_account")
+      :ok = Impl.Identity.delete_identity(default_identity.id, "identity_types_sysdef_account")
 
-    # Specific account_code value
+      # Specific account_code value
 
-    opts =
-      @test_options
-      |> Keyword.take([
-        :identity_tokens,
-        :identity_token_length,
-        :create_validated
-      ])
-      |> NimbleOptions.new!()
-      |> then(&NimbleOptions.validate!([], &1))
+      opts =
+        @test_options
+        |> Keyword.take([
+          :identity_tokens,
+          :identity_token_length,
+          :create_validated
+        ])
+        |> NimbleOptions.new!()
+        |> then(&NimbleOptions.validate!([], &1))
 
-    assert {:ok, specific_token_identity} =
-             Impl.Identity.AccountCode.create_identity(access_account_id, "This Is A Test", opts)
+      assert {:ok, specific_token_identity} =
+               Impl.Identity.AccountCode.create_identity(
+                 access_account_id,
+                 "This Is A Test",
+                 opts
+               )
 
-    assert %Msdata.SystIdentities{} = specific_token_identity
+      assert %Msdata.SystIdentities{} = specific_token_identity
 
-    assert specific_token_identity.account_identifier == "This Is A Test"
+      assert specific_token_identity.account_identifier == "This Is A Test"
 
-    :deleted =
-      Impl.Identity.delete_identity(specific_token_identity.id, "identity_types_sysdef_account")
+      :ok =
+        Impl.Identity.delete_identity(specific_token_identity.id, "identity_types_sysdef_account")
 
-    # identity_token_length
+      # identity_token_length
 
-    opts =
-      @test_options
-      |> Keyword.take([
-        :identity_tokens,
-        :identity_token_length,
-        :create_validated
-      ])
-      |> NimbleOptions.new!()
-      |> then(&NimbleOptions.validate!([identity_token_length: 40], &1))
+      opts =
+        @test_options
+        |> Keyword.take([
+          :identity_tokens,
+          :identity_token_length,
+          :create_validated
+        ])
+        |> NimbleOptions.new!()
+        |> then(&NimbleOptions.validate!([identity_token_length: 40], &1))
 
-    assert {:ok, token_length_identity} =
-             Impl.Identity.AccountCode.create_identity(access_account_id, nil, opts)
+      assert {:ok, token_length_identity} =
+               Impl.Identity.AccountCode.create_identity(access_account_id, nil, opts)
 
-    assert %Msdata.SystIdentities{validated: val_date, account_identifier: identifier} =
-             token_length_identity
+      assert %Msdata.SystIdentities{validated: val_date, account_identifier: identifier} =
+               token_length_identity
 
-    assert val_date != nil
+      assert val_date != nil
 
-    assert String.length(identifier) == 40
+      assert String.length(identifier) == 40
 
-    :deleted =
-      Impl.Identity.delete_identity(token_length_identity.id, "identity_types_sysdef_account")
+      :ok =
+        Impl.Identity.delete_identity(token_length_identity.id, "identity_types_sysdef_account")
 
-    # identity_tokens
+      # identity_tokens
 
-    opts =
-      @test_options
-      |> Keyword.take([
-        :identity_tokens,
-        :identity_token_length,
-        :create_validated
-      ])
-      |> NimbleOptions.new!()
-      |> then(&NimbleOptions.validate!([identity_tokens: ~c"ABC"], &1))
+      opts =
+        @test_options
+        |> Keyword.take([
+          :identity_tokens,
+          :identity_token_length,
+          :create_validated
+        ])
+        |> NimbleOptions.new!()
+        |> then(&NimbleOptions.validate!([identity_tokens: ~c"ABC"], &1))
 
-    assert {:ok, tokens_identity} =
-             Impl.Identity.AccountCode.create_identity(access_account_id, nil, opts)
+      assert {:ok, tokens_identity} =
+               Impl.Identity.AccountCode.create_identity(access_account_id, nil, opts)
 
-    assert %Msdata.SystIdentities{validated: val_date, account_identifier: identifier} =
-             tokens_identity
+      assert %Msdata.SystIdentities{validated: val_date, account_identifier: identifier} =
+               tokens_identity
 
-    assert val_date != nil
+      assert val_date != nil
 
-    assert not (identifier =~ ~r/[^A-C]/)
+      assert not (identifier =~ ~r/[^A-C]/)
 
-    :deleted = Impl.Identity.delete_identity(tokens_identity.id, "identity_types_sysdef_account")
+      :ok = Impl.Identity.delete_identity(tokens_identity.id, "identity_types_sysdef_account")
+    end
   end
 
-  test "Can identify Owned Access Account" do
-    target =
-      from(
-        aa in Msdata.SystAccessAccounts,
-        join: i in assoc(aa, :identities),
-        join: ei in assoc(i, :identity_type),
-        select: %{account_identifier: i.account_identifier, owning_owner_id: aa.owning_owner_id},
-        where:
-          aa.internal_name == "owned_all_access" and
-            ei.internal_name == "identity_types_sysdef_account"
-      )
-      |> MscmpSystDb.one!()
+  describe "account identification" do
+    test "Can identify Owned Access Account" do
+      target =
+        from(
+          aa in Msdata.SystAccessAccounts,
+          join: i in assoc(aa, :identities),
+          join: ei in assoc(i, :identity_type),
+          select: %{account_identifier: i.account_identifier, owning_owner_id: aa.owning_owner_id},
+          where:
+            aa.internal_name == "owned_all_access" and
+              ei.internal_name == "identity_types_sysdef_account"
+        )
+        |> MscmpSystDb.one!()
 
-    assert %Msdata.SystIdentities{} =
-             Impl.Identity.AccountCode.identify_access_account(
-               target.account_identifier,
-               target.owning_owner_id
-             )
+      assert {:ok, %Msdata.SystIdentities{}} =
+               Impl.Identity.AccountCode.identify_access_account(
+                 target.account_identifier,
+                 target.owning_owner_id
+               )
 
-    assert Impl.Identity.AccountCode.identify_access_account(target.account_identifier, nil) ==
-             nil
+      assert {:error, :not_found} =
+               Impl.Identity.AccountCode.identify_access_account(target.account_identifier, nil)
+    end
+
+    test "Can identify Unowned Access Account" do
+      good_target =
+        from(
+          aa in Msdata.SystAccessAccounts,
+          join: i in assoc(aa, :identities),
+          join: ei in assoc(i, :identity_type),
+          select: %{account_identifier: i.account_identifier},
+          where:
+            aa.internal_name == "unowned_all_access" and
+              ei.internal_name == "identity_types_sysdef_account"
+        )
+        |> MscmpSystDb.one!()
+
+      assert {:ok, %Msdata.SystIdentities{}} =
+               Impl.Identity.AccountCode.identify_access_account(
+                 good_target.account_identifier,
+                 nil
+               )
+
+      bad_target =
+        from(
+          aa in Msdata.SystAccessAccounts,
+          join: i in assoc(aa, :identities),
+          join: ei in assoc(i, :identity_type),
+          select: %{account_identifier: i.account_identifier},
+          where:
+            aa.internal_name == "owned_all_access" and
+              ei.internal_name == "identity_types_sysdef_account"
+        )
+        |> MscmpSystDb.one!()
+
+      assert {:error, :not_found} =
+               Impl.Identity.AccountCode.identify_access_account(
+                 bad_target.account_identifier,
+                 nil
+               )
+    end
   end
 
-  test "Can identify Unowned Access Account" do
-    good_target =
-      from(
-        aa in Msdata.SystAccessAccounts,
-        join: i in assoc(aa, :identities),
-        join: ei in assoc(i, :identity_type),
-        select: %{account_identifier: i.account_identifier},
-        where:
-          aa.internal_name == "unowned_all_access" and
-            ei.internal_name == "identity_types_sysdef_account"
-      )
-      |> MscmpSystDb.one!()
+  describe "account code management" do
+    test "Can reset Account Code for Access Account" do
+      target =
+        from(
+          aa in Msdata.SystAccessAccounts,
+          join: i in assoc(aa, :identities),
+          join: ei in assoc(i, :identity_type),
+          select: i,
+          where:
+            aa.internal_name == "unowned_all_access" and
+              ei.internal_name == "identity_types_sysdef_account"
+        )
+        |> MscmpSystDb.one!()
 
-    assert %Msdata.SystIdentities{} =
-             Impl.Identity.AccountCode.identify_access_account(
-               good_target.account_identifier,
-               nil
-             )
+      # Default Options
 
-    bad_target =
-      from(
-        aa in Msdata.SystAccessAccounts,
-        join: i in assoc(aa, :identities),
-        join: ei in assoc(i, :identity_type),
-        select: %{account_identifier: i.account_identifier},
-        where:
-          aa.internal_name == "owned_all_access" and
-            ei.internal_name == "identity_types_sysdef_account"
-      )
-      |> MscmpSystDb.one!()
+      opts =
+        @test_options
+        |> Keyword.take([
+          :identity_tokens,
+          :identity_token_length,
+          :create_validated
+        ])
+        |> NimbleOptions.new!()
+        |> then(&NimbleOptions.validate!([], &1))
 
-    assert Impl.Identity.AccountCode.identify_access_account(bad_target.account_identifier, nil) ==
-             nil
-  end
+      assert {:ok, %Msdata.SystIdentities{} = default_identity} =
+               Impl.Identity.AccountCode.reset_identity_for_access_account_id(
+                 target.access_account_id,
+                 opts
+               )
 
-  test "Can reset Account Code for Access Account" do
-    target =
-      from(
-        aa in Msdata.SystAccessAccounts,
-        join: i in assoc(aa, :identities),
-        join: ei in assoc(i, :identity_type),
-        select: i,
-        where:
-          aa.internal_name == "unowned_all_access" and
-            ei.internal_name == "identity_types_sysdef_account"
-      )
-      |> MscmpSystDb.one!()
+      assert String.length(default_identity.account_identifier) == 12
+      assert target.account_identifier != default_identity.account_identifier
 
-    # Default Options
+      # identity_token_length
 
-    opts =
-      @test_options
-      |> Keyword.take([
-        :identity_tokens,
-        :identity_token_length,
-        :create_validated
-      ])
-      |> NimbleOptions.new!()
-      |> then(&NimbleOptions.validate!([], &1))
+      opts =
+        @test_options
+        |> Keyword.take([
+          :identity_tokens,
+          :identity_token_length,
+          :create_validated
+        ])
+        |> NimbleOptions.new!()
+        |> then(&NimbleOptions.validate!([identity_token_length: 40], &1))
 
-    assert {:ok, %Msdata.SystIdentities{} = default_identity} =
-             Impl.Identity.AccountCode.reset_identity_for_access_account_id(
-               target.access_account_id,
-               opts
-             )
+      assert {:ok, %Msdata.SystIdentities{} = token_length_identity} =
+               Impl.Identity.AccountCode.reset_identity_for_access_account_id(
+                 target.access_account_id,
+                 opts
+               )
 
-    assert String.length(default_identity.account_identifier) == 12
-    assert target.account_identifier != default_identity.account_identifier
+      assert String.length(token_length_identity.account_identifier) == 40
+      assert default_identity.account_identifier != token_length_identity.account_identifier
 
-    # identity_token_length
+      # identity_tokens
 
-    opts =
-      @test_options
-      |> Keyword.take([
-        :identity_tokens,
-        :identity_token_length,
-        :create_validated
-      ])
-      |> NimbleOptions.new!()
-      |> then(&NimbleOptions.validate!([identity_token_length: 40], &1))
+      opts =
+        @test_options
+        |> Keyword.take([
+          :identity_tokens,
+          :identity_token_length,
+          :create_validated
+        ])
+        |> NimbleOptions.new!()
+        |> then(&NimbleOptions.validate!([identity_tokens: ~c"ABC"], &1))
 
-    assert {:ok, %Msdata.SystIdentities{} = token_length_identity} =
-             Impl.Identity.AccountCode.reset_identity_for_access_account_id(
-               target.access_account_id,
-               opts
-             )
+      assert {:ok, %Msdata.SystIdentities{} = tokens_identity} =
+               Impl.Identity.AccountCode.reset_identity_for_access_account_id(
+                 target.access_account_id,
+                 opts
+               )
 
-    assert String.length(token_length_identity.account_identifier) == 40
-    assert default_identity.account_identifier != token_length_identity.account_identifier
+      assert String.length(tokens_identity.account_identifier) == 12
+      assert token_length_identity.account_identifier != tokens_identity.account_identifier
+      assert not (tokens_identity.account_identifier =~ ~r/[^A-C]/)
+    end
 
-    # identity_tokens
+    test "Can get existing Account Code by Access Account ID" do
+      {:ok, found_access_account_id} =
+        Impl.AccessAccount.get_access_account_id_by_name("owned_all_access")
 
-    opts =
-      @test_options
-      |> Keyword.take([
-        :identity_tokens,
-        :identity_token_length,
-        :create_validated
-      ])
-      |> NimbleOptions.new!()
-      |> then(&NimbleOptions.validate!([identity_tokens: ~c"ABC"], &1))
+      assert {:ok, %Msdata.SystIdentities{}} =
+               Impl.Identity.AccountCode.get_account_code_by_access_account_id(
+                 found_access_account_id
+               )
 
-    assert {:ok, %Msdata.SystIdentities{} = tokens_identity} =
-             Impl.Identity.AccountCode.reset_identity_for_access_account_id(
-               target.access_account_id,
-               opts
-             )
+      {:ok, no_code_access_account_id} =
+        Impl.AccessAccount.get_access_account_id_by_name(
+          "identity_account_code_no_code_test_accnt"
+        )
 
-    assert String.length(tokens_identity.account_identifier) == 12
-    assert token_length_identity.account_identifier != tokens_identity.account_identifier
-    assert not (tokens_identity.account_identifier =~ ~r/[^A-C]/)
-  end
-
-  test "Can get existing Account Code by Access Account ID" do
-    {:ok, found_access_account_id} =
-      Impl.AccessAccount.get_access_account_id_by_name("owned_all_access")
-
-    assert {:ok, %Msdata.SystIdentities{}} =
-             Impl.Identity.AccountCode.get_account_code_by_access_account_id(
-               found_access_account_id
-             )
-
-    {:ok, no_code_access_account_id} =
-      Impl.AccessAccount.get_access_account_id_by_name("identity_account_code_no_code_test_accnt")
-
-    assert {:ok, :not_found} =
-             Impl.Identity.AccountCode.get_account_code_by_access_account_id(
-               no_code_access_account_id
-             )
+      assert {:error, :not_found} =
+               Impl.Identity.AccountCode.get_account_code_by_access_account_id(
+                 no_code_access_account_id
+               )
+    end
   end
 end

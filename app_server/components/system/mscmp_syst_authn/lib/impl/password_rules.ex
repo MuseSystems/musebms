@@ -30,30 +30,16 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   #
   #
 
-  @spec create_disallowed_password(Types.credential()) ::
-          :ok | {:error, MscmpSystError.t() | Exception.t()}
+  @spec create_disallowed_password(Types.credential()) :: :ok | {:error, term()}
   def create_disallowed_password(password) do
-    create_disallowed_password!(password)
-  rescue
-    error -> {:error, error}
-  end
-
-  @spec create_disallowed_password!(Types.credential()) :: :ok
-  def create_disallowed_password!(password) when is_binary(password) do
     password
     |> Impl.Hash.weak_hash()
     |> Msdata.SystDisallowedPasswords.insert_changeset()
-    |> MscmpSystDb.insert!()
-
-    :ok
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      reraise MscmpSystError,
-        code: :undefined_error,
-        message: "Failure adding Disallowed Password.",
-        cause: error
+    |> MscmpSystDb.insert()
+    |> case do
+      {:ok, _} -> :ok
+      error -> {:error, {:database_error, error}}
+    end
   end
 
   ##############################################################################
@@ -62,28 +48,16 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   #
   #
 
-  @spec password_disallowed(Types.credential()) ::
-          {:ok, boolean()} | {:error, MscmpSystError.t()}
-  def password_disallowed(password) when is_binary(password) do
-    {:ok, password_disallowed?(password)}
-  rescue
-    error -> {:error, error}
-  end
-
   @spec password_disallowed?(Types.credential()) :: boolean()
-  def password_disallowed?(password) when is_binary(password) do
+  def password_disallowed?(password) do
     pwd_hash = Impl.Hash.weak_hash(password)
 
     from(dp in Msdata.SystDisallowedPasswords, where: dp.password_hash == ^pwd_hash)
     |> MscmpSystDb.exists?()
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      reraise MscmpSystError,
-        code: :undefined_error,
-        message: "Failure testing if password is disallowed.",
-        cause: error
+    |> case do
+      true -> true
+      false -> false
+    end
   end
 
   ##############################################################################
@@ -92,41 +66,22 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   #
   #
 
-  @spec delete_disallowed_password(Types.credential()) ::
-          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
+  @spec delete_disallowed_password(Types.credential()) :: :ok | {:error, term()}
   def delete_disallowed_password(password) do
-    {:ok, delete_disallowed_password!(password)}
-  rescue
-    error -> {:error, error}
-  end
-
-  @spec delete_disallowed_password!(Types.credential()) :: :deleted | :not_found
-  def delete_disallowed_password!(password) when is_binary(password) do
     pwd_hash = Impl.Hash.weak_hash(password)
 
     from(dp in Msdata.SystDisallowedPasswords, where: dp.password_hash == ^pwd_hash)
     |> MscmpSystDb.delete_all()
     |> case do
       {1, _} ->
-        :deleted
+        :ok
 
       {0, _} ->
-        :not_found
+        {:error, :not_found}
 
       error ->
-        raise MscmpSystError,
-          code: :undefined_error,
-          message: "Unexpected result from delete of disallowed password.",
-          cause: error
+        {:error, {:database_error, error}}
     end
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      reraise MscmpSystError,
-        code: :undefined_error,
-        message: "Failure deleting Disallowed Password.",
-        cause: error
   end
 
   ##############################################################################
@@ -139,34 +94,17 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
           MscmpSystInstance.Types.owner_id(),
           Types.password_rule_params()
         ) ::
-          {:ok, Msdata.SystOwnerPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  def create_owner_password_rules(owner_id, insert_params) when is_binary(owner_id) do
-    {:ok, create_owner_password_rules!(owner_id, insert_params)}
-  rescue
-    error -> {:error, error}
-  end
+          {:ok, Msdata.SystOwnerPasswordRules.t()} | {:error, term()}
+  def create_owner_password_rules(owner_id, insert_params) do
+    with {:ok, default_rules} <- get_global_password_rules() do
+      default_rules_map = Map.from_struct(default_rules)
 
-  @spec create_owner_password_rules!(
-          MscmpSystInstance.Types.owner_id(),
-          Types.password_rule_params()
-        ) ::
-          Msdata.SystOwnerPasswordRules.t()
-  def create_owner_password_rules!(owner_id, insert_params) when is_binary(owner_id) do
-    default_rules = get_global_password_rules!() |> Map.from_struct()
-
-    insert_params
-    |> Map.put(:owner_id, owner_id)
-    |> Map.merge(default_rules, fn _k, v1, v2 -> if v1 != nil, do: v1, else: v2 end)
-    |> Msdata.SystOwnerPasswordRules.insert_changeset()
-    |> MscmpSystDb.insert!(returning: true)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      reraise MscmpSystError,
-        code: :undefined_error,
-        message: "Failure creating Owner Password Rules.",
-        cause: error
+      insert_params
+      |> Map.put(:owner_id, owner_id)
+      |> Map.merge(default_rules_map, fn _k, v1, v2 -> if v1 != nil, do: v1, else: v2 end)
+      |> Msdata.SystOwnerPasswordRules.insert_changeset()
+      |> MscmpSystDb.insert(returning: true)
+    end
   end
 
   ##############################################################################
@@ -176,56 +114,22 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   #
 
   @spec update_global_password_rules(Types.password_rule_params()) ::
-          {:ok, Msdata.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystGlobalPasswordRules.t()} | {:error, term()}
   def update_global_password_rules(update_params) do
-    {:ok, update_global_password_rules!(update_params)}
-  rescue
-    error -> {:error, error}
-  end
-
-  @spec update_global_password_rules!(Types.password_rule_params()) ::
-          Msdata.SystGlobalPasswordRules.t()
-  def update_global_password_rules!(update_params) do
-    get_global_password_rules!()
-    |> update_global_password_rules!(update_params)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      reraise MscmpSystError,
-        code: :undefined_error,
-        message: "Failure retrieving or updating Global Password Rules.",
-        cause: error
+    with {:ok, global_password_rules} <- get_global_password_rules() do
+      update_global_password_rules(global_password_rules, update_params)
+    end
   end
 
   @spec update_global_password_rules(
           Msdata.SystGlobalPasswordRules.t(),
           Types.password_rule_params()
         ) ::
-          {:ok, Msdata.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystGlobalPasswordRules.t()} | {:error, term()}
   def update_global_password_rules(global_password_rules, update_params) do
-    {:ok, update_global_password_rules!(global_password_rules, update_params)}
-  rescue
-    error -> {:error, error}
-  end
-
-  @spec update_global_password_rules!(
-          Msdata.SystGlobalPasswordRules.t(),
-          Types.password_rule_params()
-        ) ::
-          Msdata.SystGlobalPasswordRules.t()
-  def update_global_password_rules!(global_password_rules, update_params) do
     global_password_rules
     |> Msdata.SystGlobalPasswordRules.update_changeset(update_params)
-    |> MscmpSystDb.update!(returning: true)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      reraise MscmpSystError,
-        code: :undefined_error,
-        message: "Failure updating Global Password Rules.",
-        cause: error
+    |> MscmpSystDb.update(returning: true)
   end
 
   ##############################################################################
@@ -238,44 +142,24 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
           MscmpSystInstance.Types.owner_id() | Msdata.SystOwnerPasswordRules.t(),
           Types.password_rule_params()
         ) ::
-          {:ok, Msdata.SystOwnerPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  def update_owner_password_rules(owner, update_params) do
-    {:ok, update_owner_password_rules!(owner, update_params)}
-  rescue
-    error -> {:error, error}
+          {:ok, Msdata.SystOwnerPasswordRules.t()} | {:error, term()}
+  def update_owner_password_rules(owner_id, update_params) when is_binary(owner_id) do
+    owner_rules_qry =
+      from(opwr in Msdata.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
+
+    case MscmpSystDb.one(owner_rules_qry) do
+      %Msdata.SystOwnerPasswordRules{} = owner_rules ->
+        update_owner_password_rules(owner_rules, update_params)
+
+      nil ->
+        {:error, :not_found}
+    end
   end
 
-  @spec update_owner_password_rules!(
-          MscmpSystInstance.Types.owner_id() | Msdata.SystOwnerPasswordRules.t(),
-          Types.password_rule_params()
-        ) ::
-          Msdata.SystOwnerPasswordRules.t()
-  def update_owner_password_rules!(owner_id, update_params) when is_binary(owner_id) do
-    from(opwr in Msdata.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
-    |> MscmpSystDb.one!()
-    |> update_owner_password_rules!(update_params)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      reraise MscmpSystError,
-        code: :undefined_error,
-        message: "Failure updating Owner Password Rules.",
-        cause: error
-  end
-
-  def update_owner_password_rules!(%Msdata.SystOwnerPasswordRules{} = owner, update_params) do
+  def update_owner_password_rules(%Msdata.SystOwnerPasswordRules{} = owner, update_params) do
     owner
     |> Msdata.SystOwnerPasswordRules.update_changeset(update_params)
-    |> MscmpSystDb.update!(returning: true)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      reraise MscmpSystError,
-        code: :undefined_error,
-        message: "Failure updating Owner Password Rules.",
-        cause: error
+    |> MscmpSystDb.update(returning: true)
   end
 
   ##############################################################################
@@ -285,27 +169,16 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   #
 
   @spec get_global_password_rules() ::
-          {:ok, Msdata.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystGlobalPasswordRules.t()} | {:error, :not_found} | {:error, term()}
   def get_global_password_rules do
-    {:ok, get_global_password_rules!()}
-  rescue
-    error -> {:error, error}
-  end
-
-  @spec get_global_password_rules!() :: Msdata.SystGlobalPasswordRules.t()
-  def get_global_password_rules! do
     # There should only ever be one SystGlobalPasswordRules record and always
     # one.
     from(gpwr in Msdata.SystGlobalPasswordRules)
-    |> MscmpSystDb.one!()
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      reraise MscmpSystError,
-        code: :undefined_error,
-        message: "Failure retrieving Global Password Rules.",
-        cause: error
+    |> MscmpSystDb.one()
+    |> case do
+      %Msdata.SystGlobalPasswordRules{} = result -> {:ok, result}
+      nil -> {:error, :not_found}
+    end
   end
 
   ##############################################################################
@@ -316,31 +189,15 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
 
   @spec get_owner_password_rules(MscmpSystInstance.Types.owner_id()) ::
           {:ok, Msdata.SystOwnerPasswordRules.t()}
-          | {:ok, :not_found}
-          | {:error, MscmpSystError.t() | Exception.t()}
+          | {:error, :not_found}
+          | {:error, Mserror.AuthnError.t()}
   def get_owner_password_rules(owner_id) do
-    {:ok, get_owner_password_rules!(owner_id)}
-  rescue
-    error -> {:error, error}
-  end
-
-  @spec get_owner_password_rules!(MscmpSystInstance.Types.owner_id()) ::
-          Msdata.SystOwnerPasswordRules.t() | :not_found
-  def get_owner_password_rules!(owner_id) do
     from(opwr in Msdata.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
     |> MscmpSystDb.one()
     |> case do
-      %Msdata.SystOwnerPasswordRules{} = result -> result
-      nil -> :not_found
+      %Msdata.SystOwnerPasswordRules{} = result -> {:ok, result}
+      nil -> {:error, :not_found}
     end
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      reraise MscmpSystError,
-        code: :undefined_error,
-        message: "Failure retrieving Owner Password Rules.",
-        cause: error
   end
 
   ##############################################################################
@@ -350,32 +207,18 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   #
 
   @spec get_access_account_password_rule(Types.access_account_id()) ::
-          {:ok, PasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  def get_access_account_password_rule(access_account_id) when is_binary(access_account_id) do
-    {:ok, get_access_account_password_rule!(access_account_id)}
-  rescue
-    error -> {:error, error}
-  end
-
-  @spec get_access_account_password_rule!(Types.access_account_id()) :: PasswordRules.t()
-  def get_access_account_password_rule!(access_account_id) when is_binary(access_account_id) do
-    global_rule =
-      get_global_password_rules!() |> parse_data_struct_to_generic_rule(access_account_id)
-
-    owner_rule = maybe_get_owner_rule(access_account_id) || global_rule
-
-    verify_password_rules!(owner_rule, global_rule)
-    |> Enum.reduce(owner_rule, fn {rule_violation, required_value}, result_rule ->
-      set_required_rule_value(rule_violation, required_value, result_rule)
-    end)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      reraise MscmpSystError,
-        code: :undefined_error,
-        message: "Failure retrieving Access Account effective Password Rules.",
-        cause: error
+          {:ok, PasswordRules.t()} | {:error, term()}
+  def get_access_account_password_rule(access_account_id) do
+    with {:ok, global_rule} <- get_global_password_rules(),
+         parsed_rule <- parse_data_struct_to_generic_rule(global_rule, access_account_id),
+         owner_rule <- maybe_get_owner_rule(access_account_id) || parsed_rule,
+         {:ok, rule_violations} <- get_owner_rule_violations(owner_rule, parsed_rule) do
+      rule_violations
+      |> Enum.reduce(owner_rule, fn {violation, required_value}, result_rule ->
+        set_required_rule_value(violation, required_value, result_rule)
+      end)
+      |> then(&{:ok, &1})
+    end
   end
 
   defp maybe_get_owner_rule(access_account_id) do
@@ -388,6 +231,14 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
     )
     |> MscmpSystDb.one()
     |> parse_data_struct_to_generic_rule(access_account_id)
+  end
+
+  defp get_owner_rule_violations(owner_rule, global_rule) do
+    case verify_password_rules(owner_rule, global_rule) do
+      :ok -> {:ok, []}
+      {:error, {:invalid_password_rules, violations}} -> {:ok, violations}
+      _error -> raise "Unexpected result while verifying owner password rules."
+    end
   end
 
   ##############################################################################
@@ -480,34 +331,16 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
           PasswordRules.t(),
           Msdata.SystGlobalPasswordRules.t() | PasswordRules.t() | nil
         ) ::
-          {:ok, Keyword.t(Types.password_rule_violations())}
-          | {:error, MscmpSystError.t() | Exception.t()}
-  def verify_password_rules(test_rules, standard_rules) do
-    verify_password_rules!(test_rules, standard_rules)
-    |> then(&{:ok, &1})
-  rescue
-    error -> {:error, error}
+          :ok
+          | {:error, {:invalid_password, Keyword.t(Types.password_rule_violations())}}
+          | {:error, term()}
+  def verify_password_rules(test_rules, nil) do
+    with {:ok, standard_rules} <- get_global_password_rules() do
+      verify_password_rules(test_rules, standard_rules)
+    end
   end
 
-  @spec verify_password_rules!(
-          PasswordRules.t(),
-          Msdata.SystGlobalPasswordRules.t() | PasswordRules.t() | nil
-        ) ::
-          Keyword.t(Types.password_rule_violations())
-  def verify_password_rules!(%PasswordRules{} = test_rules, nil = _standard_rules) do
-    {:ok, standard_rules} = get_global_password_rules()
-    verify_password_rules!(test_rules, standard_rules)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      reraise MscmpSystError,
-        code: :undefined_error,
-        message: "Failure verifying Password Rules or retrieving system Standard Rules.",
-        cause: error
-  end
-
-  def verify_password_rules!(%PasswordRules{} = test_rules, %{} = standard_rules) do
+  def verify_password_rules(%PasswordRules{} = test_rules, %{} = standard_rules) do
     []
     |> verify_password_rule_length(test_rules, standard_rules)
     |> verify_password_rule_max_age(test_rules, standard_rules)
@@ -518,14 +351,13 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
     |> verify_password_rule_recently_used(test_rules, standard_rules)
     |> verify_password_rule_no_compromised(test_rules, standard_rules)
     |> verify_password_rule_require_mfa(test_rules, standard_rules)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+    |> case do
+      [] ->
+        :ok
 
-      reraise MscmpSystError,
-        code: :undefined_error,
-        message: "Failure verifying Test Password Rules against Standard Password Rules.",
-        cause: error
+      [_ | _] = violations ->
+        {:error, {:invalid_password_rules, violations}}
+    end
   end
 
   defp verify_password_rule_length(failure_list, test_rules, std_rules) do
@@ -674,40 +506,15 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   #
   #
 
-  @spec delete_owner_password_rules(MscmpSystInstance.Types.owner_id()) ::
-          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
+  @spec delete_owner_password_rules(MscmpSystInstance.Types.owner_id()) :: :ok | {:error, term()}
   def delete_owner_password_rules(owner_id) do
-    {:ok, delete_owner_password_rules!(owner_id)}
-  rescue
-    error -> {:error, error}
-  end
-
-  @spec delete_owner_password_rules!(MscmpSystInstance.Types.owner_id()) ::
-          :deleted | :not_found
-  def delete_owner_password_rules!(owner_id) do
     from(opwr in Msdata.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
     |> MscmpSystDb.delete_all()
     |> case do
-      {1, _} ->
-        :deleted
-
-      {0, _} ->
-        :not_found
-
-      error ->
-        raise MscmpSystError,
-          code: :undefined_error,
-          message: "Unknown error deleting Owner Password Rules",
-          cause: error
+      {1, _} -> :ok
+      {0, _} -> {:error, :not_found}
+      error -> {:error, {:database_error, error}}
     end
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      reraise MscmpSystError,
-        code: :undefined_error,
-        message: "Failure deleting Owner Password Rules.",
-        cause: error
   end
 
   ##############################################################################
@@ -717,7 +524,7 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   #
 
   @spec load_disallowed_passwords(Enumerable.t(), Keyword.t()) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | {:error, term()}
   def load_disallowed_passwords(password_list, opts) do
     transform_func = get_disallowed_passwords_transform(opts[:pg_format])
 
@@ -741,27 +548,9 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
       timeout: opts[:timeout]
     )
     |> case do
-      {:ok, _} ->
-        :ok
-
-      error ->
-        {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Failure while loading Disallowed Passwords list.",
-           cause: error
-         }}
+      {:ok, _} -> :ok
+      error -> error
     end
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure loading Disallowed Passwords list.",
-         cause: error
-       }}
   end
 
   defp get_disallowed_passwords_transform(:bytea), do: fn bytea_hash -> bytea_hash end

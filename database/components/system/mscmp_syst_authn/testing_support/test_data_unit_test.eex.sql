@@ -496,6 +496,17 @@ $AUTHENTICATION_TESTING_INIT$
               "password_history": []
             },
             {
+              "access_account_name": "instance_access_granted_test_accnt",
+              "external_name": "Instance Access Granted Test Account",
+              "owning_owner_name": "owner1",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [],
+              "identities": [],
+              "credentials": [],
+              "password_history": []
+            },
+            {
               "access_account_name": "decline_account_to_instance_test_accnt",
               "external_name": "Decline Access Account/Instance Invite Test Account",
               "owning_owner_name": null,
@@ -1007,7 +1018,8 @@ $AUTHENTICATION_TESTING_INIT$
                   "validation": {
                     "identity": {
                       "account_identifier_length": 40,
-                      "identity_expires_days": 1
+                      "identity_expires_days": 1,
+                      "validated": false
                     },
                     "credential": {
                       "credential_plaintext": "Jt0hF7uCt6ILonJGxHhtxPchHKWzk3NjgLvaYXBF",
@@ -1047,7 +1059,8 @@ $AUTHENTICATION_TESTING_INIT$
                   "validation": {
                     "identity": {
                       "account_identifier_length": 40,
-                      "identity_expires_days": 1
+                      "identity_expires_days": 1,
+                      "validated": false
                     },
                     "credential": {
                       "credential_plaintext": "RLOoCQHdMBKXCyYvF7wvJdaaqWSjJ3iw8QzKoRvR",
@@ -3055,7 +3068,14 @@ $AUTHENTICATION_TESTING_INIT$
                                         ( var_identity_data.validation #>>
                                           '{identity, account_identifier_length}' )::integer ) )
                         , var_primary_identity_id
-                        , now( )
+                        , CASE
+                            WHEN 
+                                coalesce( 
+                                    ( var_identity_data.validation #>> '{identity, validated}' )::boolean, 
+                                    TRUE ) 
+                            THEN
+                                now()
+                          END
                         , now( ) +
                           make_interval(
                               days => ( var_identity_data.validation #>>

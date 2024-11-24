@@ -27,41 +27,19 @@ defmodule MscmpSystAuthn.Impl.Identity.Email do
   #
 
   @spec create_identity(Types.access_account_id(), Types.account_identifier(), Keyword.t()) ::
-          {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  def create_identity(access_account_id, email_address, opts)
-      when is_binary(access_account_id) and is_binary(email_address) do
-    case verify_email_address(email_address) do
-      {:ok, valid_email} ->
-        normalized_email = normalize_email_address(valid_email)
+          {:ok, Msdata.SystIdentities.t()} | {:error, term()}
+  def create_identity(access_account_id, email_address, opts) do
+    with {:ok, valid_email} <- verify_email_address(email_address) do
+      normalized_email = normalize_email_address(valid_email)
 
-        identity_params = %{
-          access_account_id: access_account_id,
-          identity_type_name: "identity_types_sysdef_email",
-          account_identifier: normalized_email
-        }
+      identity_params = %{
+        access_account_id: access_account_id,
+        identity_type_name: "identity_types_sysdef_email",
+        account_identifier: normalized_email
+      }
 
-        created_identity = Helpers.create_identity(identity_params, opts)
-
-        {:ok, created_identity}
-
-      {:error, _} = error ->
-        {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Failure creating Email Identity.",
-           cause: error
-         }}
+      Helpers.create_identity(identity_params, opts)
     end
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure creating Email Identity.",
-         cause: error
-       }}
   end
 
   ##############################################################################
@@ -73,17 +51,17 @@ defmodule MscmpSystAuthn.Impl.Identity.Email do
   @spec identify_access_account(
           Types.account_identifier(),
           MscmpSystInstance.Types.owner_id() | nil
-        ) :: Msdata.SystIdentities.t() | nil
-  def identify_access_account(email_address, owner_id) when is_binary(email_address) do
-    case verify_email_address(email_address) do
-      {:ok, valid_email} ->
-        valid_email
-        |> normalize_email_address()
-        |> Helpers.get_identification_query("identity_types_sysdef_email", owner_id)
-        |> MscmpSystDb.one()
-
-      _ ->
-        nil
+        ) :: {:ok, Msdata.SystIdentities.t()} | {:error, :not_found} | {:error, term()}
+  def identify_access_account(email_address, owner_id) do
+    with {:ok, valid_email} <- verify_email_address(email_address) do
+      valid_email
+      |> normalize_email_address()
+      |> Helpers.get_identification_query("identity_types_sysdef_email", owner_id)
+      |> MscmpSystDb.one()
+      |> case do
+        nil -> {:error, :not_found}
+        identity -> {:ok, identity}
+      end
     end
   end
 
@@ -101,17 +79,12 @@ defmodule MscmpSystAuthn.Impl.Identity.Email do
   # unreliable).
 
   @spec verify_email_address(Types.account_identifier()) ::
-          {:ok, Types.account_identifier()} | {:error, MscmpSystError.t()}
-  def verify_email_address(email_address) when is_binary(email_address) do
+          {:ok, Types.account_identifier()} | {:error, term()}
+  def verify_email_address(email_address) do
     if Regex.match?(~r/.+@.+/, email_address) do
       {:ok, email_address}
     else
-      {:error,
-       %MscmpSystError{
-         message: "The value passed was not a valid email address.",
-         code: :undefined_error,
-         cause: %{parameters: [email_address: email_address]}
-       }}
+      {:error, {:invalid_email_address, email_address}}
     end
   end
 
@@ -122,7 +95,7 @@ defmodule MscmpSystAuthn.Impl.Identity.Email do
   #
 
   @spec normalize_email_address(Types.account_identifier()) :: Types.account_identifier()
-  def normalize_email_address(email_address) when is_binary(email_address) do
+  def normalize_email_address(email_address) do
     Regex.replace(~r/(.+)@(.+)$/, email_address, fn _, local_part, domain_part ->
       local_part <> "@" <> String.downcase(domain_part)
     end)

@@ -37,9 +37,10 @@ defmodule IntegrationTest do
 
     assert :ok = MscmpSystAuthn.create_disallowed_password("IntegrationDeleteTest")
 
-    assert {:ok, :deleted} = MscmpSystAuthn.delete_disallowed_password("IntegrationDeleteTest")
+    assert :ok = MscmpSystAuthn.delete_disallowed_password("IntegrationDeleteTest")
 
-    assert {:ok, :not_found} = MscmpSystAuthn.delete_disallowed_password("IntegrationDeleteTest")
+    assert {:error, %Mserror.AuthnError{cause: :not_found}} =
+             MscmpSystAuthn.delete_disallowed_password("IntegrationDeleteTest")
 
     assert :ok =
              Path.join(["database", "test_pg_disallowed_passwords.txt"])
@@ -60,7 +61,7 @@ defmodule IntegrationTest do
   end
 
   test "Step 1.02: Manage Global Network Rules" do
-    orig_pwd_rules = MscmpSystAuthn.get_global_password_rules!()
+    {:ok, orig_pwd_rules} = MscmpSystAuthn.get_global_password_rules()
 
     new_rule_params = %{
       password_length: %DbTypes.IntegerRange{lower: 12, upper: 64, upper_inclusive: true},
@@ -189,26 +190,28 @@ defmodule IntegrationTest do
   end
 
   test "Step 1.04: Manage Disallowed Host" do
-    assert {:ok, %Msdata.SystDisallowedHosts{}} =
+    assert {:ok, {:disallowed, %Msdata.SystDisallowedHosts{}}} =
              MscmpSystAuthn.create_disallowed_host(~i"10.10.10.2")
 
-    assert {:ok, :deleted} = MscmpSystAuthn.delete_disallowed_host_addr(~i"10.10.10.2")
+    assert :ok = MscmpSystAuthn.delete_disallowed_host_addr(~i"10.10.10.2")
 
-    assert {:ok, :not_found} = MscmpSystAuthn.delete_disallowed_host_addr(~i"10.10.10.2")
+    assert {:error, %Mserror.AuthnError{cause: :not_found}} =
+             MscmpSystAuthn.delete_disallowed_host_addr(~i"10.10.10.2")
 
-    assert {:ok, %Msdata.SystDisallowedHosts{id: delete_id}} =
+    assert {:ok, {:disallowed, %Msdata.SystDisallowedHosts{id: delete_id}}} =
              MscmpSystAuthn.create_disallowed_host(~i"10.10.10.3")
 
-    assert {:ok, :deleted} = MscmpSystAuthn.delete_disallowed_host(delete_id)
+    assert :ok = MscmpSystAuthn.delete_disallowed_host(delete_id)
 
-    assert {:ok, :not_found} = MscmpSystAuthn.delete_disallowed_host(delete_id)
+    assert {:error, %Mserror.AuthnError{cause: :not_found}} =
+             MscmpSystAuthn.delete_disallowed_host(delete_id)
 
     # Disallowed Host for later tests
 
-    assert {:ok, %Msdata.SystDisallowedHosts{}} =
+    assert {:ok, {:disallowed, %Msdata.SystDisallowedHosts{}}} =
              MscmpSystAuthn.create_disallowed_host(~i"10.10.10.1")
 
-    assert {:ok, true} = MscmpSystAuthn.host_disallowed(~i"10.10.10.1")
+    assert true == MscmpSystAuthn.host_disallowed?(~i"10.10.10.1")
     assert false == MscmpSystAuthn.host_disallowed?(~i"10.10.10.2")
   end
 
@@ -359,19 +362,29 @@ defmodule IntegrationTest do
     disallowed_pgload_pwd = "load_test_password_" <> Integer.to_string(:rand.uniform(100))
     disallowed_plain_pwd = "plain_load_test_password_" <> Integer.to_string(:rand.uniform(100))
 
-    assert {:ok, [password_rule_length_min: 8]} =
+    assert {:error,
+            %Mserror.AuthnError{cause: {:invalid_credential, [password_rule_length_min: 8]}}} =
              MscmpSystAuthn.test_credential(access_account_id, "short")
 
-    assert {:ok, [password_rule_disallowed_password: true]} =
+    assert {:error,
+            %Mserror.AuthnError{
+              cause: {:invalid_credential, [password_rule_disallowed_password: true]}
+            }} =
              MscmpSystAuthn.test_credential(access_account_id, "DisallowedPassword#123#")
 
-    assert {:ok, [password_rule_disallowed_password: true]} =
+    assert {:error,
+            %Mserror.AuthnError{
+              cause: {:invalid_credential, [password_rule_disallowed_password: true]}
+            }} =
              MscmpSystAuthn.test_credential(access_account_id, disallowed_pgload_pwd)
 
-    assert {:ok, [password_rule_disallowed_password: true]} =
+    assert {:error,
+            %Mserror.AuthnError{
+              cause: {:invalid_credential, [password_rule_disallowed_password: true]}
+            }} =
              MscmpSystAuthn.test_credential(access_account_id, disallowed_plain_pwd)
 
-    assert {:ok, []} = MscmpSystAuthn.test_credential(access_account_id, "A valid password.")
+    assert :ok = MscmpSystAuthn.test_credential(access_account_id, "A valid password.")
   end
 
   test "Step 2.03: Attempt Bad Password for Unowned Access Account" do
@@ -382,7 +395,7 @@ defmodule IntegrationTest do
     {:ok, access_account_id} =
       MscmpSystAuthn.get_access_account_id_by_name("unowned_access_account")
 
-    assert {:error, %MscmpSystError{cause: cause}} =
+    assert {:error, %Mserror.AuthnError{cause: cause}} =
              MscmpSystAuthn.create_authenticator_email_password(
                access_account_id,
                "UnownedAccessAccount@MuseSystems.Com",
@@ -449,9 +462,10 @@ defmodule IntegrationTest do
       )
       |> MscmpSystDb.one!()
 
-    assert {:ok, :deleted} = MscmpSystAuthn.revoke_validator_for_identity_id(email_identity_id)
+    assert :ok = MscmpSystAuthn.revoke_validator_for_identity_id(email_identity_id)
 
-    assert {:ok, :not_found} = MscmpSystAuthn.revoke_validator_for_identity_id(email_identity_id)
+    assert {:error, %Mserror.AuthnError{cause: :not_found}} =
+             MscmpSystAuthn.revoke_validator_for_identity_id(email_identity_id)
   end
 
   test "Step 2.07: Try to set Email/Password again for Unowned Access Account" do
@@ -461,7 +475,7 @@ defmodule IntegrationTest do
     {:ok, access_account_id} =
       MscmpSystAuthn.get_access_account_id_by_name("unowned_access_account")
 
-    assert {:error, %MscmpSystError{}} =
+    assert {:error, %Mserror.AuthnError{}} =
              MscmpSystAuthn.create_authenticator_email_password(
                access_account_id,
                "UnownedAccessAccount@MuseSystems.Com",
@@ -791,14 +805,16 @@ defmodule IntegrationTest do
     {:ok, access_account_id} =
       MscmpSystAuthn.get_access_account_id_by_name("unowned_access_account")
 
-    assert :ok = MscmpSystAuthn.access_account_credential_recoverable!(access_account_id)
+    assert {:ok, :recoverable} =
+             MscmpSystAuthn.access_account_credential_recoverable(access_account_id)
   end
 
   test "Step 2.22: Create Unowned Access Account Email/Password Recovery Authenticator" do
     {:ok, access_account_id} =
       MscmpSystAuthn.get_access_account_id_by_name("unowned_access_account")
 
-    assert :ok = MscmpSystAuthn.access_account_credential_recoverable!(access_account_id)
+    assert {:ok, :recoverable} =
+             MscmpSystAuthn.access_account_credential_recoverable(access_account_id)
 
     assert {:ok, recovery_result} =
              MscmpSystAuthn.request_password_recovery(access_account_id,
@@ -814,10 +830,10 @@ defmodule IntegrationTest do
     {:ok, access_account_id} =
       MscmpSystAuthn.get_access_account_id_by_name("unowned_access_account")
 
-    assert :existing_recovery =
-             MscmpSystAuthn.access_account_credential_recoverable!(access_account_id)
+    assert {:ok, :existing_recovery} =
+             MscmpSystAuthn.access_account_credential_recoverable(access_account_id)
 
-    assert {:error, %MscmpSystError{cause: :existing_recovery}} =
+    assert {:error, %Mserror.AuthnError{cause: :existing_recovery}} =
              MscmpSystAuthn.request_password_recovery(access_account_id,
                credential_token: "My Known Token"
              )
@@ -827,12 +843,16 @@ defmodule IntegrationTest do
     {:ok, access_account_id} =
       MscmpSystAuthn.get_access_account_id_by_name("unowned_access_account")
 
-    assert :existing_recovery =
-             MscmpSystAuthn.access_account_credential_recoverable!(access_account_id)
+    assert {:ok, :existing_recovery} =
+             MscmpSystAuthn.access_account_credential_recoverable(access_account_id)
 
-    assert {:ok, :deleted} = MscmpSystAuthn.revoke_password_recovery(access_account_id)
-    assert {:ok, :not_found} = MscmpSystAuthn.revoke_password_recovery(access_account_id)
-    assert :ok = MscmpSystAuthn.access_account_credential_recoverable!(access_account_id)
+    assert :ok = MscmpSystAuthn.revoke_password_recovery(access_account_id)
+
+    assert {:error, %Mserror.AuthnError{cause: :not_found}} =
+             MscmpSystAuthn.revoke_password_recovery(access_account_id)
+
+    assert {:ok, :recoverable} =
+             MscmpSystAuthn.access_account_credential_recoverable(access_account_id)
   end
 
   test "Step 2.25: Confirm Unowned Access Account Email/Password Recovery Authenticator" do
@@ -845,8 +865,8 @@ defmodule IntegrationTest do
         credential_token: "My Known Token"
       )
 
-    assert :existing_recovery =
-             MscmpSystAuthn.access_account_credential_recoverable!(access_account_id)
+    assert {:ok, :existing_recovery} =
+             MscmpSystAuthn.access_account_credential_recoverable(access_account_id)
 
     # Some failure modes
     assert {:ok, disallowed_host_state} =
@@ -889,7 +909,8 @@ defmodule IntegrationTest do
 
     assert %{status: :authenticated} = auth_state
 
-    assert :ok = MscmpSystAuthn.access_account_credential_recoverable!(access_account_id)
+    assert {:ok, :recoverable} =
+             MscmpSystAuthn.access_account_credential_recoverable(access_account_id)
   end
 
   test "Step 2.26: Reset Password for Unowned Access Account" do
@@ -940,6 +961,11 @@ defmodule IntegrationTest do
     {:ok, access_account_id} =
       MscmpSystAuthn.get_access_account_id_by_name("unowned_access_account")
 
+    assert {:error, %Mserror.AuthnError{cause: %Mserror.DbError{cause: {:database_error, _}}}} =
+             MscmpSystAuthn.create_or_reset_account_code(Ecto.UUID.generate(),
+               account_code: "Unowned Access Account Code"
+             )
+
     assert {:ok, authenticator_result} =
              MscmpSystAuthn.create_or_reset_account_code(access_account_id,
                account_code: "Unowned Access Account Code"
@@ -950,7 +976,8 @@ defmodule IntegrationTest do
   end
 
   test "Step 2.28: Identify Unowned Access Account by Account Code" do
-    assert {:ok, :not_found} = MscmpSystAuthn.identify_access_account_by_code("A Bad Code", nil)
+    assert {:error, %Mserror.AuthnError{cause: :not_found}} =
+             MscmpSystAuthn.identify_access_account_by_code("A Bad Code", nil)
 
     assert {:ok, %Msdata.SystIdentities{}} =
              MscmpSystAuthn.identify_access_account_by_code(
@@ -977,7 +1004,7 @@ defmodule IntegrationTest do
     {:ok, access_account_id} =
       MscmpSystAuthn.get_access_account_id_by_name("unowned_access_account")
 
-    assert {:ok, :not_found} =
+    assert {:error, %Mserror.AuthnError{cause: :not_found}} =
              MscmpSystAuthn.get_account_code_by_access_account_id(Ecto.UUID.generate())
 
     assert {:ok, %Msdata.SystIdentities{}} =
@@ -988,9 +1015,10 @@ defmodule IntegrationTest do
     {:ok, access_account_id} =
       MscmpSystAuthn.get_access_account_id_by_name("unowned_access_account")
 
-    assert {:ok, :not_found} = MscmpSystAuthn.revoke_account_code(Ecto.UUID.generate())
+    assert {:error, %Mserror.AuthnError{cause: :not_found}} =
+             MscmpSystAuthn.revoke_account_code(Ecto.UUID.generate())
 
-    assert {:ok, :deleted} = MscmpSystAuthn.revoke_account_code(access_account_id)
+    assert :ok = MscmpSystAuthn.revoke_account_code(access_account_id)
   end
 
   test "Step 2.32: Create API Token for Unowned Access Account" do
@@ -1007,7 +1035,8 @@ defmodule IntegrationTest do
     assert authenticator_result.account_identifier == "unowned_api_token_identity"
     assert authenticator_result.credential == "unowned_api_token_credential"
 
-    assert {:error, _} =
+    assert {:error,
+            %Mserror.AuthnError{cause: %Mserror.DbError{cause: {:error, %Postgrex.Error{}}}}} =
              MscmpSystAuthn.create_authenticator_api_token(access_account_id,
                identity_token: "unowned_api_token_identity",
                credential_token: "unowned_api_token_credential"
@@ -1023,12 +1052,21 @@ defmodule IntegrationTest do
 
     # Some failure modes
 
+    assert_raise FunctionClauseError, fn ->
+      MscmpSystAuthn.authenticate_api_token(
+        "unowned_api_token_identity",
+        "unowned_api_token_credential",
+        ~i"10.100.170.10",
+        nil
+      )
+    end
+
     assert {:ok, bad_instance_state} =
              MscmpSystAuthn.authenticate_api_token(
                "unowned_api_token_identity",
                "unowned_api_token_credential",
                ~i"10.100.170.10",
-               nil
+               Ecto.UUID.generate()
              )
 
     assert bad_instance_state.status == :rejected
@@ -1122,8 +1160,10 @@ defmodule IntegrationTest do
       )
       |> MscmpSystDb.one!()
 
-    assert {:ok, :deleted} = MscmpSystAuthn.revoke_api_token(target_identity.id)
-    assert {:ok, :not_found} = MscmpSystAuthn.revoke_api_token(target_identity.id)
+    assert :ok = MscmpSystAuthn.revoke_api_token(target_identity.id)
+
+    assert {:error, %Mserror.AuthnError{cause: :not_found}} =
+             MscmpSystAuthn.revoke_api_token(target_identity.id)
   end
 
   # ==============================================================================================
@@ -1187,27 +1227,34 @@ defmodule IntegrationTest do
     {:ok, owner1_access_account_id} =
       MscmpSystAuthn.get_access_account_id_by_name("owner1_access_account")
 
-    assert {:ok, [password_rule_length_min: 8]} =
+    assert {:error,
+            %Mserror.AuthnError{cause: {:invalid_credential, [password_rule_length_min: 8]}}} =
              MscmpSystAuthn.test_credential(owner1_access_account_id, "short")
 
-    assert {:ok, [password_rule_disallowed_password: true]} =
+    assert {:error,
+            %Mserror.AuthnError{
+              cause: {:invalid_credential, [password_rule_disallowed_password: true]}
+            }} =
              MscmpSystAuthn.test_credential(
                owner1_access_account_id,
                "DisallowedPassword#123#"
              )
 
-    assert {:ok, []} = MscmpSystAuthn.test_credential(owner1_access_account_id, "a1b2c3d4")
+    assert :ok = MscmpSystAuthn.test_credential(owner1_access_account_id, "a1b2c3d4")
 
     {:ok, owner2_access_account_id} =
       MscmpSystAuthn.get_access_account_id_by_name("owner2_access_account")
 
-    assert {:ok, [password_rule_disallowed_password: true]} =
+    assert {:error,
+            %Mserror.AuthnError{
+              cause: {:invalid_credential, [password_rule_disallowed_password: true]}
+            }} =
              MscmpSystAuthn.test_credential(
                owner2_access_account_id,
                "DisallowedPassword#123#"
              )
 
-    assert {:ok, owner2_violations} =
+    assert {:error, %Mserror.AuthnError{cause: {:invalid_credential, owner2_violations}}} =
              MscmpSystAuthn.test_credential(owner2_access_account_id, "a1b2c3d4")
 
     assert Enum.member?(owner2_violations, {:password_rule_length_min, 12})
@@ -1393,9 +1440,10 @@ defmodule IntegrationTest do
   test "Step 3.09: Identify Owned Access Account by Account Code" do
     {:ok, owner1_id} = MscmpSystInstance.get_owner_id_by_name("owner1")
 
-    assert {:ok, :not_found} = MscmpSystAuthn.identify_access_account_by_code("A Bad Code", nil)
+    assert {:error, %Mserror.AuthnError{cause: :not_found}} =
+             MscmpSystAuthn.identify_access_account_by_code("A Bad Code", nil)
 
-    assert {:ok, :not_found} =
+    assert {:error, %Mserror.AuthnError{cause: :not_found}} =
              MscmpSystAuthn.identify_access_account_by_code(
                "Owner1 Access Account Code",
                nil
@@ -1434,12 +1482,22 @@ defmodule IntegrationTest do
 
     # Some failure modes
 
+    assert_raise FunctionClauseError, fn ->
+      MscmpSystAuthn.authenticate_api_token(
+        "owner1_api_token_identity",
+        "owner1_api_token_credential",
+        ~i"10.100.170.10",
+        nil,
+        owning_owner_id: owner1_id
+      )
+    end
+
     assert {:ok, bad_instance_state} =
              MscmpSystAuthn.authenticate_api_token(
                "owner1_api_token_identity",
                "owner1_api_token_credential",
                ~i"10.100.170.10",
-               nil,
+               Ecto.UUID.generate(),
                owning_owner_id: owner1_id
              )
 

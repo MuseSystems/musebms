@@ -33,20 +33,8 @@ defmodule MscmpSystAuthn.Impl.Credential.Validation do
           Types.identity_id() | nil,
           Types.credential()
         ) ::
-          {:ok, Types.credential_confirm_result()} | {:error, MscmpSystError.t() | Exception.t()}
-  def confirm_credential(access_account_id, identity_id, token) do
-    {:ok, confirm_credential!(access_account_id, identity_id, token)}
-  rescue
-    error -> {:error, error}
-  end
-
-  @spec confirm_credential!(
-          Types.access_account_id(),
-          Types.identity_id() | nil,
-          Types.credential()
-        ) ::
-          Types.credential_confirm_result()
-  def confirm_credential!(access_account_id, identity_id, token),
+          {:ok, Types.credential_confirm_result()} | {:error, term()}
+  def confirm_credential(access_account_id, identity_id, token),
     do: GenericToken.confirm_credential(@token_type, access_account_id, identity_id, token)
 
   ##############################################################################
@@ -61,9 +49,7 @@ defmodule MscmpSystAuthn.Impl.Credential.Validation do
           Types.credential() | nil,
           Keyword.t()
         ) ::
-          {:ok, Types.credential()}
-          | Types.credential_set_failures()
-          | {:error, MscmpSystError.t()}
+          {:ok, Types.credential()} | {:error, term()}
   def set_credential(access_account_id, identity_id, token, opts),
     do: GenericToken.set_credential(@token_type, access_account_id, identity_id, token, opts)
 
@@ -74,16 +60,8 @@ defmodule MscmpSystAuthn.Impl.Credential.Validation do
   #
 
   @spec get_credential_record(Types.access_account_id(), Types.identity_id() | nil) ::
-          {:ok, Msdata.SystCredentials.t() | nil} | {:error, MscmpSystError.t() | Exception.t()}
-  def get_credential_record(access_account_id, identity_id) do
-    {:ok, get_credential_record!(access_account_id, identity_id)}
-  rescue
-    error -> {:error, error}
-  end
-
-  @spec get_credential_record!(Types.access_account_id(), Types.identity_id() | nil) ::
-          Msdata.SystCredentials.t() | nil
-  def get_credential_record!(access_account_id, identity_id),
+          {:ok, Msdata.SystCredentials.t()} | {:error, :not_found} | {:error, term()}
+  def get_credential_record(access_account_id, identity_id),
     do: GenericToken.get_credential_record(@token_type, access_account_id, identity_id)
 
   ##############################################################################
@@ -93,13 +71,6 @@ defmodule MscmpSystAuthn.Impl.Credential.Validation do
   #
 
   @spec delete_credential(Types.credential_id() | Msdata.SystCredentials.t()) ::
-          :ok | {:error, MscmpSystError.t() | Exception.t()}
-  def delete_credential(credential) do
-    delete_credential!(credential)
-  rescue
-    error -> {:error, error}
-  end
-
-  @spec delete_credential!(Types.credential_id() | Msdata.SystCredentials.t()) :: :ok
-  def delete_credential!(credential), do: GenericToken.delete_credential(@token_type, credential)
+          :ok | {:error, :not_found} | {:error, term()}
+  def delete_credential(credential), do: GenericToken.delete_credential(@token_type, credential)
 end

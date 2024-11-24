@@ -15,6 +15,8 @@ defmodule MscmpSystAuthn.Impl.Identity.AccountCode do
 
   @behaviour MscmpSystAuthn.Impl.Identity
 
+  use Msutils.Guards
+
   import Ecto.Query
 
   alias MscmpSystAuthn.Impl
@@ -29,7 +31,7 @@ defmodule MscmpSystAuthn.Impl.Identity.AccountCode do
   #
 
   @spec create_identity(Types.access_account_id(), Types.account_identifier() | nil, Keyword.t()) ::
-          {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystIdentities.t()} | {:error, term()}
   def create_identity(access_account_id, account_code, opts)
       when is_binary(access_account_id) do
     account_code =
@@ -42,17 +44,7 @@ defmodule MscmpSystAuthn.Impl.Identity.AccountCode do
       account_identifier: account_code
     }
 
-    {:ok, Impl.Identity.Helpers.create_identity(identity_params, opts)}
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure creating Account Code Identity.",
-         cause: error
-       }}
+    Impl.Identity.Helpers.create_identity(identity_params, opts)
   end
 
   ##############################################################################
@@ -64,68 +56,55 @@ defmodule MscmpSystAuthn.Impl.Identity.AccountCode do
   @spec identify_access_account(
           Types.account_identifier(),
           MscmpSystInstance.Types.owner_id() | nil
-        ) :: Msdata.SystIdentities.t() | nil
+        ) :: {:ok, Msdata.SystIdentities.t()} | {:error, :not_found} | {:error, term()}
   def identify_access_account(account_code, owner_id) when is_binary(account_code) do
     account_code
     |> Impl.Identity.Helpers.get_identification_query("identity_types_sysdef_account", owner_id)
     |> MscmpSystDb.one()
+    |> case do
+      nil -> {:error, :not_found}
+      identity -> {:ok, identity}
+    end
   end
 
+  ##############################################################################
+  #
+  # reset_identity_for_access_account_id
+  #
+  #
+
   @spec reset_identity_for_access_account_id(Types.access_account_id(), Keyword.t()) ::
-          {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystIdentities.t()} | {:error, term()}
   def reset_identity_for_access_account_id(access_account_id, opts) do
     reset_func = fn ->
-      from(i in Msdata.SystIdentities,
-        join: ei in assoc(i, :identity_type),
-        where:
-          i.access_account_id == ^access_account_id and
-            ei.internal_name == "identity_types_sysdef_account",
-        select: i.id
-      )
-      |> MscmpSystDb.one()
-      |> maybe_delete_identity()
-      |> maybe_create_identity_after_delete(access_account_id, opts)
-      |> case do
-        {:ok, new_identity} ->
-          new_identity
-
-        error ->
-          MscmpSystDb.rollback(%MscmpSystError{
-            code: :undefined_error,
-            message: "Failure resetting Account Code Identity.",
-            cause: error
-          })
+      with identity_id when is_uuid(identity_id) or is_nil(identity_id) <-
+             maybe_get_account_code_identity(access_account_id),
+           :ok <- maybe_delete_account_code_identity(identity_id),
+           {:ok, identity} <- create_identity(access_account_id, opts[:account_code], opts) do
+        identity
+      else
+        {:error, error} -> MscmpSystDb.rollback(error)
       end
     end
 
     MscmpSystDb.transaction(reset_func)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Exception while resetting Account Code Identity.",
-         cause: error
-       }}
   end
 
-  defp maybe_delete_identity(identity_id) when is_binary(identity_id),
+  defp maybe_get_account_code_identity(access_account_id) do
+    from(i in Msdata.SystIdentities,
+      join: ei in assoc(i, :identity_type),
+      where:
+        i.access_account_id == ^access_account_id and
+          ei.internal_name == "identity_types_sysdef_account",
+      select: i.id
+    )
+    |> MscmpSystDb.one()
+  end
+
+  defp maybe_delete_account_code_identity(identity_id) when is_uuid(identity_id),
     do: Impl.Identity.delete_identity(identity_id, "identity_types_sysdef_account")
 
-  defp maybe_delete_identity(nil = _identity_id), do: :not_found
-
-  defp maybe_create_identity_after_delete(delete_result, access_account_id, opts)
-       when delete_result in [:deleted, :not_found],
-       do: create_identity(access_account_id, opts[:account_code], opts)
-
-  defp maybe_create_identity_after_delete(delete_result, _access_account_id, _opts) do
-    raise MscmpSystError,
-      code: :undefined_error,
-      message: "Unexpected Account Code Identity deletion result.",
-      cause: delete_result
-  end
+  defp maybe_delete_account_code_identity(nil), do: :ok
 
   ##############################################################################
   #
@@ -134,7 +113,7 @@ defmodule MscmpSystAuthn.Impl.Identity.AccountCode do
   #
 
   @spec get_account_code_by_access_account_id(Types.access_account_id()) ::
-          {:ok, Msdata.SystIdentities.t() | :not_found} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystIdentities.t()} | {:error, :not_found} | {:error, term()}
   def get_account_code_by_access_account_id(access_account_id)
       when is_binary(access_account_id) do
     from(i in Msdata.SystIdentities,
@@ -144,28 +123,10 @@ defmodule MscmpSystAuthn.Impl.Identity.AccountCode do
           ei.internal_name == "identity_types_sysdef_account"
     )
     |> MscmpSystDb.one()
-    |> process_account_code_lookup_result()
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure retrieving Account Code.",
-         cause: error
-       }}
-  end
-
-  defp process_account_code_lookup_result(%Msdata.SystIdentities{} = identity),
-    do: {:ok, identity}
-
-  defp process_account_code_lookup_result(nil), do: {:ok, :not_found}
-
-  defp process_account_code_lookup_result(error) do
-    raise MscmpSystError,
-      code: :undefined_error,
-      message: "Exception retrieving Account Code.",
-      cause: error
+    |> case do
+      %Msdata.SystIdentities{} = identity -> {:ok, identity}
+      nil -> {:error, :not_found}
+      error -> {:error, {:database_error, error}}
+    end
   end
 end

@@ -13,10 +13,20 @@
 defmodule MscmpSystAuthn.Impl.Identity.Helpers do
   @moduledoc false
 
+  use Msutils.Guards
+
   import Ecto.Query
 
-  require Logger
+  alias MscmpSystAuthn.Types
 
+  ##############################################################################
+  #
+  # create_identity
+  #
+  #
+
+  @spec create_identity(map(), Keyword.t()) ::
+          {:ok, Msdata.SystIdentities.t()} | {:error, term()}
   def create_identity(create_params, opts) do
     create_params
     |> maybe_add_validated_date(opts[:create_validated])
@@ -28,28 +38,81 @@ defmodule MscmpSystAuthn.Impl.Identity.Helpers do
 
   defp maybe_add_validated_date(create_params, false), do: create_params
 
-  def delete_identity(identity_id) when is_binary(identity_id) do
-    from(i in Msdata.SystIdentities, where: i.id == ^identity_id)
-    |> MscmpSystDb.one!()
-    |> delete_identity()
-  end
-
-  def create_record(insert_params) do
+  defp create_record(insert_params) do
     insert_params
     |> Msdata.SystIdentities.insert_changeset()
-    |> MscmpSystDb.insert!(returning: true)
+    |> MscmpSystDb.insert(returning: true)
+    |> case do
+      {:ok, identity} -> {:ok, identity}
+      {:error, error} -> {:error, {:database_error, error}}
+    end
+  rescue
+    error -> {:error, error}
   end
 
-  def update_record(identity, update_params) do
+  ##############################################################################
+  #
+  # update_identity
+  #
+  #
+
+  @spec update_identity(Types.identity_id() | Msdata.SystIdentities.t(), map()) ::
+          {:ok, Msdata.SystIdentities.t()} | {:error, :not_found} | {:error, term()}
+  def update_identity(identity_id, update_params) when is_uuid(identity_id) do
+    from(i in Msdata.SystIdentities, where: i.id == ^identity_id)
+    |> MscmpSystDb.one()
+    |> case do
+      nil -> {:error, :not_found}
+      identity -> update_record(identity, update_params)
+    end
+  end
+
+  def update_identity(%Msdata.SystIdentities{} = identity, update_params),
+    do: update_record(identity, update_params)
+
+  defp update_record(identity, update_params) do
     identity
     |> Msdata.SystIdentities.update_changeset(update_params)
-    |> MscmpSystDb.update!(returning: true)
+    |> MscmpSystDb.update(returning: true)
+    |> case do
+      {:ok, identity} -> {:ok, identity}
+      {:error, error} -> {:error, {:database_error, error}}
+    end
+  rescue
+    error -> {:error, error}
   end
 
-  def delete_record(identity) do
-    MscmpSystDb.delete!(identity)
-    :ok
+  ##############################################################################
+  #
+  # delete_identity
+  #
+  #
+
+  @spec delete_identity(Types.identity_id() | Msdata.SystIdentities.t()) ::
+          :ok | {:error, :not_found} | {:error, term()}
+  def delete_identity(identity_id) when is_uuid(identity_id) do
+    from(i in Msdata.SystIdentities, where: i.id == ^identity_id)
+    |> MscmpSystDb.one()
+    |> case do
+      nil -> {:error, :not_found}
+      identity -> delete_identity(identity)
+    end
   end
+
+  def delete_identity(%Msdata.SystIdentities{} = identity) do
+    case MscmpSystDb.delete(identity) do
+      {:ok, _} -> :ok
+      {:error, error} -> {:error, {:database_error, error}}
+    end
+  rescue
+    error -> {:error, error}
+  end
+
+  ##############################################################################
+  #
+  # get_identification_query
+  #
+  #
 
   def get_identification_query(
         account_identifier,
@@ -72,7 +135,7 @@ defmodule MscmpSystAuthn.Impl.Identity.Helpers do
     |> get_ident_query_validation_predicate(allow_unvalidated)
   end
 
-  defp get_ident_query_owner_predicate(query, owner_id) when is_binary(owner_id),
+  defp get_ident_query_owner_predicate(query, owner_id) when is_uuid(owner_id),
     do: where(query, [access_account: aa], aa.owning_owner_id == ^owner_id)
 
   defp get_ident_query_owner_predicate(query, owner_id) when is_nil(owner_id),

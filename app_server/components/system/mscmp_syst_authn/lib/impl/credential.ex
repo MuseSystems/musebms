@@ -29,35 +29,21 @@ defmodule MscmpSystAuthn.Impl.Credential do
             ) ::
               :ok
               | {:ok, Types.credential()}
-              | Types.credential_set_failures()
-              | {:error, MscmpSystError.t()}
-
-  @callback confirm_credential!(
-              Types.access_account_id(),
-              Types.identity_id() | nil,
-              Types.credential()
-            ) ::
-              Types.credential_confirm_result()
+              | {:error, Types.credential_set_failures()}
+              | {:error, term()}
 
   @callback confirm_credential(
               Types.access_account_id(),
               Types.identity_id() | nil,
               Types.credential()
             ) ::
-              {:ok, Types.credential_confirm_result()}
-              | {:error, MscmpSystError.t() | Exception.t()}
-
-  @callback get_credential_record!(Types.access_account_id(), Types.identity_id() | nil) ::
-              Msdata.SystCredentials.t() | nil
+              {:ok, Types.credential_confirm_result()} | {:error, term()}
 
   @callback get_credential_record(Types.access_account_id(), Types.identity_id() | nil) ::
-              {:ok, Msdata.SystCredentials.t() | nil}
-              | {:error, MscmpSystError.t() | Exception.t()}
+              {:ok, Msdata.SystCredentials.t()} | {:error, :not_found} | {:error, term()}
 
   @callback delete_credential(Types.credential_id() | Msdata.SystCredentials.t()) ::
-              :ok | {:error, MscmpSystError.t() | Exception.t()}
-
-  @callback delete_credential!(Types.credential_id() | Msdata.SystCredentials.t()) :: :ok
+              :ok | {:error, term()}
 
   ##############################################################################
   #

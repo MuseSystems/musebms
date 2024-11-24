@@ -32,55 +32,33 @@ defmodule MscmpSystAuthn.Impl.Identity.Validation do
   #
 
   @spec request_identity_validation(Types.identity_id() | Msdata.SystIdentities.t(), Keyword.t()) ::
-          {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystIdentities.t()} | {:error, term()}
   def request_identity_validation(target_identity_id, opts) when is_binary(target_identity_id) do
     from(i in Msdata.SystIdentities, where: i.id == ^target_identity_id)
-    |> MscmpSystDb.one!()
-    |> request_identity_validation(opts)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure creating Validation Identity by ID.",
-          cause: error
-        }
-      }
+    |> MscmpSystDb.one()
+    |> case do
+      nil -> {:error, :not_found}
+      target_identity -> request_identity_validation(target_identity, opts)
+    end
   end
 
   def request_identity_validation(%Msdata.SystIdentities{} = target_identity, opts) do
     MscmpSystDb.transaction(fn ->
-      target_identity
-      |> reset_validation_target_identity(opts)
-      |> create_validation_identity(opts)
+      with {:ok, reset_identity} <-
+             reset_validation_target_identity(target_identity, opts),
+           {:ok, validation_identity} <- create_validation_identity(reset_identity, opts) do
+        validation_identity
+      else
+        {:error, error} -> MscmpSystDb.rollback(error)
+      end
     end)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure creating Validation Identity.",
-          cause: error
-        }
-      }
   end
 
   defp reset_validation_target_identity(target_identity, _opts) do
-    date_now = DateTime.now!("Etc/UTC")
-
-    reset_target_identity =
-      Helpers.update_record(target_identity, %{
-        validated: nil,
-        validation_requested: date_now
-      })
-
-    reset_target_identity
+    Helpers.update_identity(target_identity, %{
+      validated: nil,
+      validation_requested: DateTime.now!("Etc/UTC")
+    })
   end
 
   defp create_validation_identity(target_identity, opts) do
@@ -110,11 +88,15 @@ defmodule MscmpSystAuthn.Impl.Identity.Validation do
   @spec identify_access_account(
           Types.account_identifier(),
           MscmpSystInstance.Types.owner_id() | nil
-        ) :: Msdata.SystIdentities.t() | nil
-  def identify_access_account(validation_token, owner_id) when is_binary(validation_token) do
+        ) :: {:ok, Msdata.SystIdentities.t()} | {:error, :not_found} | {:error, term()}
+  def identify_access_account(validation_token, owner_id) do
     validation_token
     |> Helpers.get_identification_query("identity_types_sysdef_validation", owner_id)
     |> MscmpSystDb.one()
+    |> case do
+      nil -> {:error, :not_found}
+      identity -> {:ok, identity}
+    end
   end
 
   ##############################################################################
@@ -124,36 +106,22 @@ defmodule MscmpSystAuthn.Impl.Identity.Validation do
   #
 
   @spec confirm_identity_validation(Msdata.SystIdentities.t()) ::
-          {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystIdentities.t()} | {:error, term()}
   def confirm_identity_validation(validation_identity) do
     MscmpSystDb.transaction(fn ->
       date_now = DateTime.now!("Etc/UTC")
 
-      validated_identity =
-        from(i in Msdata.SystIdentities,
-          where: i.id == ^validation_identity.validates_identity_id
-        )
-        |> MscmpSystDb.one!()
-        |> verify_not_expired()
-        |> verify_not_validated()
-        |> Helpers.update_record(%{validated: date_now})
-
-      :ok = Helpers.delete_record(validation_identity)
-
-      validated_identity
+      with {:ok, subject_identity} <- get_validation_target_identity(validation_identity),
+           :ok <- verify_not_expired(subject_identity),
+           :ok <- verify_not_validated(subject_identity),
+           {:ok, validated_identity} <-
+             Helpers.update_identity(subject_identity, %{validated: date_now}),
+           :ok <- Helpers.delete_identity(validation_identity) do
+        validated_identity
+      else
+        {:error, error} -> MscmpSystDb.rollback(error)
+      end
     end)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure confirming Identity validation.",
-          cause: error
-        }
-      }
   end
 
   ##############################################################################
@@ -163,91 +131,88 @@ defmodule MscmpSystAuthn.Impl.Identity.Validation do
   #
 
   @spec revoke_identity_validation(Msdata.SystIdentities.t()) ::
-          {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystIdentities.t()} | {:error, term()}
   def revoke_identity_validation(validation_identity) do
     MscmpSystDb.transaction(fn ->
-      revoked_identity =
-        from(i in Msdata.SystIdentities,
-          where: i.id == ^validation_identity.validates_identity_id
-        )
-        |> MscmpSystDb.one!()
-        |> verify_not_validated()
-        |> Helpers.update_record(%{validation_requested: nil})
-
-      :ok = Helpers.delete_record(validation_identity)
-
-      revoked_identity
+      with {:ok, to_revoke_identity} <-
+             get_validation_target_identity(validation_identity),
+           :ok <- verify_not_validated(to_revoke_identity),
+           {:ok, revoked_identity} <-
+             Helpers.update_identity(to_revoke_identity, %{validation_requested: nil}),
+           :ok <- Helpers.delete_identity(validation_identity) do
+        revoked_identity
+      else
+        {:error, error} -> MscmpSystDb.rollback(error)
+      end
     end)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure revoking Identity validation.",
-          cause: error
-        }
-      }
   end
-
-  defp verify_not_expired(
-         %Msdata.SystIdentities{identity_expires: identity_expires} = target_identity
-       )
-       when not is_nil(identity_expires) do
-    case DateTime.diff(identity_expires, DateTime.now!("Etc/UTC")) < 0 do
-      true ->
-        raise MscmpSystError,
-          message: """
-          The requested action may not be taken on a validation Identity
-          record which has expired."
-          """,
-          code: :undefined_error,
-          cause: %{parameters: [identity: target_identity]}
-
-      false ->
-        target_identity
-    end
-  end
-
-  defp verify_not_expired(target_identity), do: target_identity
-
-  defp verify_not_validated(%Msdata.SystIdentities{validated: validated} = target_identity)
-       when not is_nil(validated) do
-    # Getting here really shouldn't be possible, but just in case...
-
-    raise MscmpSystError,
-      message: "Operation not valid for an already Validated Identity.",
-      code: :undefined_error,
-      cause: %{parameters: [identity: target_identity]}
-  end
-
-  defp verify_not_validated(target_identity), do: target_identity
 
   ##############################################################################
   #
-  # get_validation_identity_for_identity_id
+  # get_validation_target_identity
   #
   #
 
-  @spec get_validation_identity_for_identity_id(Types.identity_id()) ::
-          {:ok, Msdata.SystIdentities.t() | nil} | {:error, MscmpSystError.t()}
-  def get_validation_identity_for_identity_id(target_identity_id) do
+  @spec get_validation_target_identity(Msdata.SystIdentities.t() | Types.identity_id()) ::
+          {:ok, Msdata.SystIdentities.t()} | {:error, :not_found} | {:error, term()}
+  def get_validation_target_identity(%Msdata.SystIdentities{} = validation_identity),
+    do: get_validation_target_identity(validation_identity.id)
+
+  def get_validation_target_identity(validation_identity_id) do
+    from(
+      vi in Msdata.SystIdentities,
+      join: ti in assoc(vi, :validates_identity),
+      where: vi.id == ^validation_identity_id,
+      select: ti
+    )
+    |> MscmpSystDb.one()
+    |> case do
+      nil -> {:error, :not_found}
+      identity -> {:ok, identity}
+    end
+  end
+
+  ##############################################################################
+  #
+  # get_validator_identity
+  #
+  #
+
+  @spec get_validator_identity(Msdata.SystIdentities.t() | Types.identity_id()) ::
+          {:ok, Msdata.SystIdentities.t()} | {:error, :not_found} | {:error, term()}
+  def get_validator_identity(%Msdata.SystIdentities{} = target_identity),
+    do: get_validator_identity(target_identity.id)
+
+  def get_validator_identity(target_identity_id) do
     from(i in Msdata.SystIdentities, where: i.validates_identity_id == ^target_identity_id)
     |> MscmpSystDb.one()
-    |> then(&{:ok, &1})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure retrieving Validation Identity by Target Identity ID.",
-          cause: error
-        }
-      }
+    |> case do
+      nil -> {:error, :not_found}
+      identity -> {:ok, identity}
+    end
   end
+
+  ##############################################################################
+  #
+  # General Use Private Functions
+  #
+  #
+
+  defp verify_not_expired(
+         %Msdata.SystIdentities{identity_expires: identity_expires} = _target_identity
+       )
+       when not is_nil(identity_expires) do
+    case DateTime.diff(identity_expires, DateTime.now!("Etc/UTC")) < 0 do
+      true -> {:error, :expired}
+      false -> :ok
+    end
+  end
+
+  defp verify_not_expired(_target_identity), do: :ok
+
+  defp verify_not_validated(%Msdata.SystIdentities{validated: validated})
+       when not is_nil(validated),
+       do: {:error, :already_validated}
+
+  defp verify_not_validated(_target_identity), do: :ok
 end

@@ -93,12 +93,8 @@ defmodule MscmpSystAuthn.Impl.Msdata.Helpers do
 
   defp process_owner_id_by_name_result({:ok, owner_id}), do: owner_id
 
-  defp process_owner_id_by_name_result(error) do
-    raise MscmpSystError,
-      code: :undefined_error,
-      message: "Failure resolving Owning Owner ID from Owner Name",
-      cause: error
-  end
+  defp process_owner_id_by_name_result({:error, %{__exception__: true} = error}),
+    do: raise(error)
 
   @spec resolve_instance_id(term()) :: term()
   def resolve_instance_id(%{instance_name: instance_name} = change_params)

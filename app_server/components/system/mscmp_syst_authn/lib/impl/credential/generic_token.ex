@@ -13,6 +13,8 @@
 defmodule MscmpSystAuthn.Impl.Credential.GenericToken do
   @moduledoc false
 
+  use Msutils.Guards
+
   import Ecto.Query
 
   alias MscmpSystAuthn.Impl
@@ -43,35 +45,23 @@ defmodule MscmpSystAuthn.Impl.Credential.GenericToken do
           Types.access_account_id(),
           Types.identity_id() | nil,
           Types.credential()
-        ) ::
-          Types.credential_confirm_result()
+        ) :: {:ok, Types.credential_confirm_result()} | {:error, term()}
   def confirm_credential(credential_type, access_account_id, identity_id, token)
       when credential_type in @token_types do
-    cred = get_credential_record(credential_type, access_account_id, identity_id)
-
-    credential_state =
-      with :ok <- maybe_confirm_credential_exists(cred) do
-        maybe_confirm_api_token_hash(cred, token)
-      end
-
-    {credential_state, []}
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      reraise MscmpSystError,
-        code: :undefined_error,
-        message: "Failure confirming Token Credential.",
-        cause: error
+    with {:ok, cred} <- get_credential_record(credential_type, access_account_id, identity_id),
+         :ok <- maybe_confirm_api_token_hash(cred, token) do
+      {:ok, {:confirmed, []}}
+    else
+      {:error, :not_found} -> {:ok, {:no_credential, []}}
+      {:error, :wrong_credential} -> {:ok, {:wrong_credential, []}}
+      error -> error
+    end
   end
 
-  defp maybe_confirm_credential_exists(%Msdata.SystCredentials{}), do: :ok
-  defp maybe_confirm_credential_exists(_), do: :no_credential
-
   defp maybe_confirm_api_token_hash(cred, token) do
-    hash_verified = Impl.Hash.verify_credential_hash(cred.credential_data, token)
-
-    if hash_verified, do: :confirmed, else: :wrong_credential
+    if Impl.Hash.verify_credential_hash(cred.credential_data, token),
+      do: :ok,
+      else: {:error, :wrong_credential}
   end
 
   ##############################################################################
@@ -86,42 +76,28 @@ defmodule MscmpSystAuthn.Impl.Credential.GenericToken do
           Types.identity_id() | nil,
           Types.credential() | nil,
           Keyword.t()
-        ) ::
-          {:ok, Types.credential()}
-          | Types.credential_set_failures()
-          | {:error, MscmpSystError.t()}
+        ) :: {:ok, Types.credential()} | {:error, term()}
   def set_credential(credential_type, access_account_id, identity_id, token, opts)
       when credential_type in @token_types do
-    identity_ownership_confirmed = identity_ownership_confirmed?(access_account_id, identity_id)
+    token =
+      token ||
+        Msutils.String.get_random_string(
+          opts[:credential_token_length],
+          opts[:credential_tokens]
+        )
 
-    if identity_ownership_confirmed do
-      token =
-        token ||
-          Msutils.String.get_random_string(
-            opts[:credential_token_length],
-            opts[:credential_tokens]
-          )
-
-      cred = get_credential_record(credential_type, access_account_id, identity_id)
+    with :ok <- confirm_identity_ownership(access_account_id, identity_id),
+         {:ok, cred} <-
+           maybe_get_credential_record(credential_type, access_account_id, identity_id) do
       set_credential_data(credential_type, cred, access_account_id, identity_id, token)
-    else
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Identity for this Credential is owned by a different Access Account.",
-         cause: %{parameters: %{access_account_id: access_account_id, identity_id: identity_id}}
-       }}
     end
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+  end
 
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure setting APi Token Credential.",
-         cause: error
-       }}
+  defp maybe_get_credential_record(credential_type, access_account_id, identity_id) do
+    case get_credential_record(credential_type, access_account_id, identity_id) do
+      {:ok, cred} -> {:ok, cred}
+      {:error, :not_found} -> {:ok, nil}
+    end
   end
 
   defp set_credential_data(credential_type, nil = _cred, access_account_id, identity_id, token) do
@@ -139,25 +115,25 @@ defmodule MscmpSystAuthn.Impl.Credential.GenericToken do
       credential_for_identity_id: identity_id
     }
     |> Msdata.SystCredentials.insert_changeset()
-    |> MscmpSystDb.insert!()
-
-    {:ok, token}
+    |> MscmpSystDb.insert()
+    |> case do
+      {:ok, _} -> {:ok, token}
+      error -> {:error, {:token_set_error, error}}
+    end
   end
 
-  defp set_credential_data(_credential_type, _cred, _access_account_id, _identity_id, _api_token) do
-    {:error,
-     %MscmpSystError{
-       code: :undefined_error,
-       message: "Token Credential records may not be updated.",
-       cause: nil
-     }}
-  end
+  defp set_credential_data(_credential_type, _cred, _access_account_id, _identity_id, _api_token),
+    do: {:error, :invalid_token_set}
 
-  defp identity_ownership_confirmed?(access_account_id, identity_id) do
+  defp confirm_identity_ownership(access_account_id, identity_id) do
     from(i in Msdata.SystIdentities,
       where: i.id == ^identity_id and i.access_account_id == ^access_account_id
     )
     |> MscmpSystDb.exists?()
+    |> case do
+      true -> :ok
+      false -> {:error, :identity_ownership_mismatch}
+    end
   end
 
   ##############################################################################
@@ -171,7 +147,7 @@ defmodule MscmpSystAuthn.Impl.Credential.GenericToken do
           Types.access_account_id(),
           Types.identity_id() | nil
         ) ::
-          Msdata.SystCredentials.t() | nil
+          {:ok, Msdata.SystCredentials.t()} | {:error, :not_found} | {:error, term()}
   def get_credential_record(credential_type, access_account_id, identity_id)
       when is_atom(credential_type) and is_binary(access_account_id) and is_binary(identity_id) do
     credential_type = Atom.to_string(credential_type)
@@ -186,17 +162,14 @@ defmodule MscmpSystAuthn.Impl.Credential.GenericToken do
       select: c
     )
     |> MscmpSystDb.one()
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      reraise MscmpSystError,
-        code: :undefined_error,
-        message: "Failure retrieving Token Credential.",
-        cause: error
+    |> case do
+      nil -> {:error, :not_found}
+      cred -> {:ok, cred}
+    end
   end
 
-  def get_credential_record(_credential_type, _access_account_id, _identity_id), do: nil
+  def get_credential_record(_credential_type, _access_account_id, _identity_id),
+    do: {:error, :invalid_request}
 
   ##############################################################################
   #
@@ -213,7 +186,7 @@ defmodule MscmpSystAuthn.Impl.Credential.GenericToken do
           Types.credential_types(),
           Types.credential_id() | Msdata.SystCredentials.t()
         ) ::
-          :ok
+          :ok | {:error, :not_found} | {:error, term()}
 
   def delete_credential(credential_type, credential_id)
       when credential_type in @token_types and is_binary(credential_id) do
@@ -224,16 +197,11 @@ defmodule MscmpSystAuthn.Impl.Credential.GenericToken do
       select: c,
       where: c.id == ^credential_id and ct.internal_name == ^cred_type_param
     )
-    |> MscmpSystDb.one!()
-    |> then(&delete_credential(credential_type, &1))
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      reraise MscmpSystError,
-        code: :undefined_error,
-        message: "Failure deleting API Token Credential.",
-        cause: error
+    |> MscmpSystDb.one()
+    |> case do
+      nil -> {:error, :not_found}
+      cred -> delete_credential(credential_type, cred)
+    end
   end
 
   def delete_credential(credential_type, %Msdata.SystCredentials{} = cred) do
@@ -241,16 +209,13 @@ defmodule MscmpSystAuthn.Impl.Credential.GenericToken do
       MscmpSystEnums.get_item_by_id("credential_types", cred.credential_type_id)
 
     if target_cred_type_name == Atom.to_string(credential_type) do
-      MscmpSystDb.delete!(cred)
-      :ok
+      MscmpSystDb.delete(cred)
+      |> case do
+        {:ok, _} -> :ok
+        error -> {:error, error}
+      end
     else
-      raise MscmpSystError,
-        code: :undefined_error,
-        message: "Incorrect Credential Type for Credential record delete.",
-        cause: %{
-          parameters: [credential_type: credential_type, cred: cred],
-          target_cred_type_name: target_cred_type_name
-        }
+      raise "Incorrect Credential Type for Credential record delete."
     end
   end
 end

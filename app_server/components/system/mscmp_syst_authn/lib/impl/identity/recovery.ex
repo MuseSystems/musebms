@@ -13,6 +13,8 @@
 defmodule MscmpSystAuthn.Impl.Identity.Recovery do
   @moduledoc false
 
+  use Msutils.Guards
+
   import Ecto.Query
 
   alias MscmpSystAuthn.Impl.Identity.Helpers
@@ -37,77 +39,43 @@ defmodule MscmpSystAuthn.Impl.Identity.Recovery do
   #
 
   @spec request_credential_recovery(Types.access_account_id(), Keyword.t()) ::
-          {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
-  def request_credential_recovery(access_account_id, opts) when is_binary(access_account_id) do
-    access_account_id
-    |> access_account_credential_recoverable!()
-    |> maybe_create_recovery_identity(access_account_id, opts)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+          {:ok, Msdata.SystIdentities.t()} | {:error, term()}
+  def request_credential_recovery(access_account_id, opts) do
+    with :ok <- test_recoverability(access_account_id) do
+      generated_account_identifier =
+        Msutils.String.get_random_string(opts[:identity_token_length], opts[:identity_tokens])
 
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure creating Recovery Identity.",
-          cause: error
-        }
+      date_now = DateTime.now!("Etc/UTC")
+      date_expires = DateTime.add(date_now, opts[:expiration_hours] * 60 * 60)
+
+      recovery_identity_params = %{
+        access_account_id: access_account_id,
+        identity_type_name: "identity_types_sysdef_password_recovery",
+        account_identifier: generated_account_identifier,
+        identity_expires: date_expires
       }
+
+      Helpers.create_identity(recovery_identity_params, opts)
+    end
   end
 
-  defp maybe_create_recovery_identity(:ok, access_account_id, opts),
-    do: {:ok, create_recovery_identity(access_account_id, opts)}
-
-  defp maybe_create_recovery_identity(:not_found, _, _) do
-    {
-      :error,
-      %MscmpSystError{
-        code: :undefined_error,
-        message: "Password Credential unrecoverable because it doesn't exist.",
-        cause: :not_found
-      }
-    }
-  end
-
-  defp maybe_create_recovery_identity(:existing_recovery, _, _) do
-    {
-      :error,
-      %MscmpSystError{
-        code: :undefined_error,
-        message: "Password Credential is already being recovered.",
-        cause: :existing_recovery
-      }
-    }
-  end
-
-  defp create_recovery_identity(access_account_id, opts) do
-    generated_account_identifier =
-      Msutils.String.get_random_string(opts[:identity_token_length], opts[:identity_tokens])
-
-    date_now = DateTime.now!("Etc/UTC")
-    date_expires = DateTime.add(date_now, opts[:expiration_hours] * 60 * 60)
-
-    recovery_identity_params = %{
-      access_account_id: access_account_id,
-      identity_type_name: "identity_types_sysdef_password_recovery",
-      account_identifier: generated_account_identifier,
-      identity_expires: date_expires
-    }
-
-    Helpers.create_identity(recovery_identity_params, opts)
+  defp test_recoverability(access_account_id) do
+    case access_account_credential_recoverable(access_account_id) do
+      {:ok, :recoverable} -> :ok
+      {:ok, :existing_recovery} -> {:error, :existing_recovery}
+      {:error, :not_found} -> {:error, :not_found}
+    end
   end
 
   ##############################################################################
   #
-  # access_account_credential_recoverable!
+  # access_account_credential_recoverable
   #
   #
 
-  @spec access_account_credential_recoverable!(Types.access_account_id()) ::
-          :ok | :not_found | :existing_recovery
-  def access_account_credential_recoverable!(access_account_id)
-      when is_binary(access_account_id) do
+  @spec access_account_credential_recoverable(Types.access_account_id()) ::
+          {:ok, :recoverable} | {:ok, :existing_recovery} | {:error, :not_found}
+  def access_account_credential_recoverable(access_account_id) do
     identity_qry =
       from(i in Msdata.SystIdentities,
         join: ei in assoc(i, :identity_type),
@@ -137,11 +105,12 @@ defmodule MscmpSystAuthn.Impl.Identity.Recovery do
         recovery_underway: not is_nil(i.identity_access_account_id)
       }
     )
-    |> MscmpSystDb.one!()
+    |> MscmpSystDb.one()
     |> case do
-      %{recovery_underway: true} -> :existing_recovery
-      %{password_credential_exists: false} -> :not_found
-      _ -> :ok
+      %{recovery_underway: true} -> {:ok, :existing_recovery}
+      %{password_credential_exists: true} -> {:ok, :recoverable}
+      %{password_credential_exists: false} -> {:error, :not_found}
+      nil -> {:error, :not_found}
     end
   end
 
@@ -154,30 +123,26 @@ defmodule MscmpSystAuthn.Impl.Identity.Recovery do
   @spec identify_access_account(
           Types.account_identifier(),
           MscmpSystInstance.Types.owner_id() | nil
-        ) :: Msdata.SystIdentities.t() | nil
+        ) :: {:ok, Msdata.SystIdentities.t()} | {:error, :not_found} | {:error, term()}
   def identify_access_account(recovery_token, owner_id) when is_binary(recovery_token) do
     recovery_token
     |> Helpers.get_identification_query("identity_types_sysdef_password_recovery", owner_id)
     |> MscmpSystDb.one()
+    |> case do
+      nil -> {:error, :not_found}
+      identity -> {:ok, identity}
+    end
   end
+
+  ##############################################################################
+  #
+  # confirm_credential_recovery
+  #
+  #
 
   @spec confirm_credential_recovery(Msdata.SystIdentities.t()) ::
-          :ok | {:error, MscmpSystError.t()}
-  def confirm_credential_recovery(recovery_identity) do
-    :ok = Helpers.delete_record(recovery_identity)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure confirming Recovery Identity.",
-          cause: error
-        }
-      }
-  end
+          :ok | {:error, :not_found} | {:error, term()}
+  def confirm_credential_recovery(identity), do: Helpers.delete_identity(identity)
 
   ##############################################################################
   #
@@ -186,22 +151,8 @@ defmodule MscmpSystAuthn.Impl.Identity.Recovery do
   #
 
   @spec revoke_credential_recovery(Msdata.SystIdentities.t()) ::
-          :ok | {:error, MscmpSystError.t()}
-  def revoke_credential_recovery(recovery_identity) do
-    :ok = Helpers.delete_record(recovery_identity)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure revoking Recovery Identity.",
-          cause: error
-        }
-      }
-  end
+          :ok | {:error, :not_found} | {:error, term()}
+  def revoke_credential_recovery(identity), do: Helpers.delete_identity(identity)
 
   ##############################################################################
   #
@@ -210,7 +161,7 @@ defmodule MscmpSystAuthn.Impl.Identity.Recovery do
   #
 
   @spec get_recovery_identity_for_access_account_id(Types.access_account_id()) ::
-          {:ok, Msdata.SystIdentities.t() | nil} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystIdentities.t()} | {:error, :not_found} | {:error, term()}
   def get_recovery_identity_for_access_account_id(access_account_id) do
     from(i in Msdata.SystIdentities,
       join: ei in assoc(i, :identity_type),
@@ -219,18 +170,9 @@ defmodule MscmpSystAuthn.Impl.Identity.Recovery do
           ei.internal_name == "identity_types_sysdef_password_recovery"
     )
     |> MscmpSystDb.one()
-    |> then(&{:ok, &1})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure retrieving Recovery Identity by Access Account ID.",
-          cause: error
-        }
-      }
+    |> case do
+      nil -> {:error, :not_found}
+      identity -> {:ok, identity}
+    end
   end
 end

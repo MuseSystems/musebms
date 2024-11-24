@@ -29,7 +29,7 @@ defmodule MscmpSystAuthn.Impl.Identity.ApiToken do
   #
 
   @spec create_identity(Types.access_account_id(), Types.account_identifier() | nil, Keyword.t()) ::
-          {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystIdentities.t()} | {:error, term()}
   def create_identity(access_account_id, api_token, opts)
       when is_binary(access_account_id) do
     api_token =
@@ -43,19 +43,7 @@ defmodule MscmpSystAuthn.Impl.Identity.ApiToken do
       external_name: opts[:external_name]
     }
 
-    {:ok, Helpers.create_identity(identity_params, opts)}
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure creating API Token Identity.",
-          cause: error
-        }
-      }
+    Helpers.create_identity(identity_params, opts)
   end
 
   ##############################################################################
@@ -67,11 +55,15 @@ defmodule MscmpSystAuthn.Impl.Identity.ApiToken do
   @spec identify_access_account(
           Types.account_identifier(),
           MscmpSystInstance.Types.owner_id() | nil
-        ) :: Msdata.SystIdentities.t() | nil
+        ) :: {:ok, Msdata.SystIdentities.t()} | {:error, :not_found} | {:error, term()}
   def identify_access_account(api_token, owner_id) when is_binary(api_token) do
     api_token
     |> Helpers.get_identification_query("identity_types_sysdef_api", owner_id)
     |> MscmpSystDb.one()
+    |> case do
+      nil -> {:error, :not_found}
+      identity -> {:ok, identity}
+    end
   end
 
   ##############################################################################
@@ -83,21 +75,19 @@ defmodule MscmpSystAuthn.Impl.Identity.ApiToken do
   @spec update_identity_external_name(
           Types.identity_id() | Msdata.SystIdentities.t(),
           String.t() | nil
-        ) :: Msdata.SystIdentities.t()
+        ) :: {:ok, Msdata.SystIdentities.t()} | {:error, :not_found} | {:error, term()}
   def update_identity_external_name(identity_id, external_name) when is_binary(identity_id) do
     from(i in Msdata.SystIdentities,
       join: ei in assoc(i, :identity_type),
       where: ei.internal_name == "identity_types_sysdef_api" and i.id == ^identity_id
     )
-    |> MscmpSystDb.one!()
-    |> update_identity_external_name(external_name)
+    |> MscmpSystDb.one()
+    |> case do
+      nil -> {:error, :not_found}
+      identity -> update_identity_external_name(identity, external_name)
+    end
   end
 
-  def update_identity_external_name(%Msdata.SystIdentities{} = identity, external_name) do
-    update_params = %{
-      external_name: external_name
-    }
-
-    Helpers.update_record(identity, update_params)
-  end
+  def update_identity_external_name(%Msdata.SystIdentities{} = identity, external_name),
+    do: Helpers.update_identity(identity, %{external_name: external_name})
 end
