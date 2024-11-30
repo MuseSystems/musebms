@@ -183,7 +183,7 @@ defmodule Mix.Tasks.Builddb do
 
       :ok
     else
-      error ->
+      {:error, error} ->
         raise Mserror.DbError.new(
                 :migration_build,
                 "Failure building migrations.",
