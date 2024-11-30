@@ -39,7 +39,7 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
 BEGIN
 
@@ -47,18 +47,18 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst';
-    var_comments_config.function_name   := 'trig_i_d_syst_disallowed_passwords';
+    v_comments_config.function_schema := 'ms_syst';
+    v_comments_config.function_name   := 'trig_i_d_syst_disallowed_passwords';
 
-    var_comments_config.trigger_function := TRUE;
-    var_comments_config.trigger_timing   := ARRAY [ 'i' ]::text[ ];
-    var_comments_config.trigger_ops      := ARRAY [ 'd' ]::text[ ];
+    v_comments_config.trigger_function := TRUE;
+    v_comments_config.trigger_timing   := ARRAY [ 'i' ]::text[ ];
+    v_comments_config.trigger_ops      := ARRAY [ 'd' ]::text[ ];
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Processes incoming API View requests according to globally applicable business
 rules and data validation requirements.$DOC$;
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

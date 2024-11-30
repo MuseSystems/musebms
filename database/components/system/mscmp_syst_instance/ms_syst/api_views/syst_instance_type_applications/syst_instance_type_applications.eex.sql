@@ -44,11 +44,11 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- View
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
     -- View Columns
-    var_instance_type_id ms_syst_priv.comments_config_apiview_column;
-    var_application_id   ms_syst_priv.comments_config_apiview_column;
+    v_instance_type_id ms_syst_priv.comments_config_apiview_column;
+    v_application_id   ms_syst_priv.comments_config_apiview_column;
 
 BEGIN
 
@@ -56,31 +56,31 @@ BEGIN
     -- API View Config
     --
 
-    var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_instance_type_applications';
-    var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_instance_type_applications';
-    var_view_config.user_update  := FALSE;
+    v_view_config.table_schema := 'ms_syst_data';
+    v_view_config.table_name   := 'syst_instance_type_applications';
+    v_view_config.view_schema  := 'ms_syst';
+    v_view_config.view_name    := 'syst_instance_type_applications';
+    v_view_config.user_update  := FALSE;
 
     --
     -- Column Configs
     --
 
-    var_instance_type_id.column_name      := 'instance_type_id';
-    var_instance_type_id.required         := TRUE;
-    var_instance_type_id.user_update      := FALSE;
+    v_instance_type_id.column_name      := 'instance_type_id';
+    v_instance_type_id.required         := TRUE;
+    v_instance_type_id.user_update      := FALSE;
 
-    var_application_id.column_name      := 'application_id';
-    var_application_id.required         := TRUE;
-    var_application_id.user_update      := FALSE;
+    v_application_id.column_name      := 'application_id';
+    v_application_id.required         := TRUE;
+    v_application_id.user_update      := FALSE;
 
-    var_view_config.columns :=
+    v_view_config.columns :=
         ARRAY [
-              var_instance_type_id
-            , var_application_id
+              v_instance_type_id
+            , v_application_id
             ]::ms_syst_priv.comments_config_apiview_column[];
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

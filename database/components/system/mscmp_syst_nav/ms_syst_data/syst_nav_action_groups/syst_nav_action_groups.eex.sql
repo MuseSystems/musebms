@@ -99,19 +99,19 @@ CREATE INDEX syst_nav_action_groups_command_search_idx
 DO
 $DOCUMENTATION$
 DECLARE
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
-    var_command          ms_syst_priv.comments_config_table_column;
-    var_command_config   ms_syst_priv.comments_config_table_column;
-    var_command_aliases  ms_syst_priv.comments_config_table_column;
-    var_command_search   ms_syst_priv.comments_config_table_column;
+    v_command          ms_syst_priv.comments_config_table_column;
+    v_command_config   ms_syst_priv.comments_config_table_column;
+    v_command_aliases  ms_syst_priv.comments_config_table_column;
+    v_command_search   ms_syst_priv.comments_config_table_column;
 
 BEGIN
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_nav_action_groups';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_nav_action_groups';
 
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Defines groups of actions which can be associated with an invoking primary
 command.
 
@@ -129,8 +129,8 @@ system function: "new purchase order", "new sales order", "open sales order",
 "display report" are examples showing how the generalized commands (Action
 Group) are tied to specific Action commands (Actions).$DOC$;
 
-    var_command.column_name := 'command';
-    var_command.description :=
+    v_command.column_name := 'command';
+    v_command.description :=
 $DOC$Provides the primary text "Command" used for identifying the Action Group.
 
 Commands associated with Action Groups are used for commandline-like input by
@@ -139,7 +139,7 @@ may designate a class of Actions which all deal with record or transaction
 creation; secondary Commands at the Action level would delineate which specific
 creation action to take.$DOC$;
 
-    var_command.general_usage :=
+    v_command.general_usage :=
 $DOC$When the value of this column is `NULL`, the Action Group is not searchable or
 available to the user using command line interfaces.  Such Action Groups exist
 to organize Actions which are only accessible via menu interfaces (or similar).
@@ -148,51 +148,51 @@ Note that if this value is `NULL` other `command_*` columns must also be `NULL`.
 `command` designated Commands have priority over similar "Command Aliases"
 defined in the `command_aliases` column.$DOC$;
 
-    var_command_config.column_name := 'command_config';
-    var_command_config.description :=
+    v_command_config.column_name := 'command_config';
+    v_command_config.description :=
 $DOC$Establishes the PostgresSQL text search configuration to use when parsing the
 Command strings.  The primary use of this column is to set the value of the
 generated column `command_search`, though establishing the appropriate
 configuration for use with the record may be useful elsewhere.$DOC$;
 
-    var_command_config.general_usage :=
+    v_command_config.general_usage :=
 $DOC$The null/not null state of this column must match the null/not null state of the
 `command` column.$DOC$;
 
-    var_command_aliases.column_name := 'command_aliases';
-    var_command_aliases.description :=
+    v_command_aliases.column_name := 'command_aliases';
+    v_command_aliases.description :=
 $DOC$An array of strings which designate alternate, possibly non-unique values which
 may be used in addition to the `command` value in identifying the record.  In
 searched results, `command_aliases` received a reduced priority vs. `command`
 values.$DOC$;
 
 
-    var_command_aliases.general_usage :=
+    v_command_aliases.general_usage :=
 $DOC$The null/not null state of this column must match the null/not null state of the
 `command` column.$DOC$;
 
-    var_command_search.column_name := 'command_search';
-    var_command_search.description :=
+    v_command_search.column_name := 'command_search';
+    v_command_search.description :=
 $DOC$A generated column containing the PostgreSQL tsvector value used when resolving
 an Action Group Command.  Being a generated column, the system will
 automatically update this column when its source columns are updated.$DOC$;
 
-    var_command_search.general_usage :=
+    v_command_search.general_usage :=
 $DOC$Being a generated column, the system will automatically update this column when
 its source columns are updated.  The null/not null state of this column will
 match the null/not null state of the `command` column.$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY
             [
-              var_command
-            , var_command_config
-            , var_command_aliases
-            , var_command_search
+              v_command
+            , v_command_config
+            , v_command_aliases
+            , v_command_search
             ]::ms_syst_priv.comments_config_table_column[];
 
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

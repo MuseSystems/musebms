@@ -94,15 +94,15 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_access_account_id          ms_syst_priv.comments_config_table_column;
-    var_credential_type_id         ms_syst_priv.comments_config_table_column;
-    var_credential_for_identity_id ms_syst_priv.comments_config_table_column;
-    var_credential_data            ms_syst_priv.comments_config_table_column;
-    var_last_updated               ms_syst_priv.comments_config_table_column;
-    var_force_reset                ms_syst_priv.comments_config_table_column;
+    v_access_account_id          ms_syst_priv.comments_config_table_column;
+    v_credential_type_id         ms_syst_priv.comments_config_table_column;
+    v_credential_for_identity_id ms_syst_priv.comments_config_table_column;
+    v_credential_data            ms_syst_priv.comments_config_table_column;
+    v_last_updated               ms_syst_priv.comments_config_table_column;
+    v_force_reset                ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -110,13 +110,13 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_credentials';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_credentials';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Hosts the Credentials by which a user or external system will prove its
 Identity.$DOC$;
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$Note that not all Credential types are available for authentication with all
 Identity types.$DOC$;
 
@@ -124,20 +124,20 @@ Identity types.$DOC$;
     -- Column Configs
     --
 
-    var_access_account_id.column_name := 'access_account_id';
-    var_access_account_id.description :=
+    v_access_account_id.column_name := 'access_account_id';
+    v_access_account_id.description :=
 $DOC$The Access Account for which the Credential is to be used.$DOC$;
 
-    var_credential_type_id.column_name := 'credential_type_id';
-    var_credential_type_id.description :=
+    v_credential_type_id.column_name := 'credential_type_id';
+    v_credential_type_id.description :=
 $DOC$The kind of Credential that the record represents.$DOC$;
-    var_credential_type_id.general_usage :=
+    v_credential_type_id.general_usage :=
 $DOC$Note that the behavior and use cases of the Credential may have specific
 processing and handling requirements based on the Functional Type of the
 Credential ype.$DOC$;
 
-    var_credential_for_identity_id.column_name := 'credential_for_identity_id';
-    var_credential_for_identity_id.description :=
+    v_credential_for_identity_id.column_name := 'credential_for_identity_id';
+    v_credential_for_identity_id.description :=
 $DOC$When an Access Account Identity is created for either Identity Validation or
 Access Account recovery, a single use Identity is created as well as a single
 use Credential.  In this specific case, the one time use Credential and the one
@@ -149,40 +149,40 @@ Credential.
 For regular use Identities, there are no special Credential requirements that
 would be needed to for a link and the value in this column should be null.$DOC$;
 
-    var_credential_data.column_name := 'credential_data';
-    var_credential_data.description :=
+    v_credential_data.column_name := 'credential_data';
+    v_credential_data.description :=
 $DOC$The actual data which supports verifying the presented Identity in relation to
 the Access Account.$DOC$;
 
-    var_last_updated.column_name := 'last_updated';
-    var_last_updated.description :=
+    v_last_updated.column_name := 'last_updated';
+    v_last_updated.description :=
 $DOC$For Credential types where rules regarding updating may apply, such as common
 passwords, this column indicates when the Credential was last updated (timestamp
 of last password change, for example).$DOC$;
-    var_last_updated.general_usage :=
+    v_last_updated.general_usage :=
 $DOC$This field is explicitly not for dating trivial or administrative changes
 which don't actually materially change the Credential data; please consult the
 appropriate diagnostic fields for those use cases.$DOC$;
 
-    var_force_reset.column_name := 'force_reset';
-    var_force_reset.description :=
+    v_force_reset.column_name := 'force_reset';
+    v_force_reset.description :=
 $DOC$Indicates whether or not certain Credential types, such as passwords, must be
 updated.$DOC$;
-    var_force_reset.general_usage :=
+    v_force_reset.general_usage :=
 $DOC$When `NOT NULL`, the user must update their Credential on the next login; when
 `NULL` updating the Credential is not being administratively forced.$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_access_account_id
-            , var_credential_type_id
-            , var_credential_for_identity_id
-            , var_credential_data
-            , var_last_updated
-            , var_force_reset
+              v_access_account_id
+            , v_credential_type_id
+            , v_credential_for_identity_id
+            , v_credential_data
+            , v_last_updated
+            , v_force_reset
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

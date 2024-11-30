@@ -47,10 +47,10 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- View
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
     -- View Columns
-    var_perm_functional_type_id ms_syst_priv.comments_config_apiview_column;
+    v_perm_functional_type_id ms_syst_priv.comments_config_apiview_column;
 
 BEGIN
 
@@ -58,25 +58,25 @@ BEGIN
     -- API View Config
     --
 
-    var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_perm_roles';
-    var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_perm_roles';
-    var_view_config.syst_records := TRUE;
-    var_view_config.syst_update  := TRUE;
+    v_view_config.table_schema := 'ms_syst_data';
+    v_view_config.table_name   := 'syst_perm_roles';
+    v_view_config.view_schema  := 'ms_syst';
+    v_view_config.view_name    := 'syst_perm_roles';
+    v_view_config.syst_records := TRUE;
+    v_view_config.syst_update  := TRUE;
 
     --
     -- Column Configs
     --
 
-    var_perm_functional_type_id.column_name      := 'perm_functional_type_id';
-    var_perm_functional_type_id.required         := TRUE;
-    var_perm_functional_type_id.user_update      := FALSE;
+    v_perm_functional_type_id.column_name      := 'perm_functional_type_id';
+    v_perm_functional_type_id.required         := TRUE;
+    v_perm_functional_type_id.user_update      := FALSE;
 
-    var_view_config.columns :=
-        ARRAY [ var_perm_functional_type_id ]::ms_syst_priv.comments_config_apiview_column[];
+    v_view_config.columns :=
+        ARRAY [ v_perm_functional_type_id ]::ms_syst_priv.comments_config_apiview_column[];
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

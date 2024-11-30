@@ -61,100 +61,100 @@ CREATE TRIGGER a50_trig_i_d_syst_settings
 DO
 $DOCUMENTATION$
 DECLARE
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
-    var_setting_flag            ms_syst_priv.comments_config_apiview_column;
-    var_setting_integer         ms_syst_priv.comments_config_apiview_column;
-    var_setting_integer_range   ms_syst_priv.comments_config_apiview_column;
-    var_setting_decimal         ms_syst_priv.comments_config_apiview_column;
-    var_setting_decimal_range   ms_syst_priv.comments_config_apiview_column;
-    var_setting_interval        ms_syst_priv.comments_config_apiview_column;
-    var_setting_date            ms_syst_priv.comments_config_apiview_column;
-    var_setting_date_range      ms_syst_priv.comments_config_apiview_column;
-    var_setting_time            ms_syst_priv.comments_config_apiview_column;
-    var_setting_timestamp       ms_syst_priv.comments_config_apiview_column;
-    var_setting_timestamp_range ms_syst_priv.comments_config_apiview_column;
-    var_setting_json            ms_syst_priv.comments_config_apiview_column;
-    var_setting_text            ms_syst_priv.comments_config_apiview_column;
-    var_setting_uuid            ms_syst_priv.comments_config_apiview_column;
-    var_setting_blob            ms_syst_priv.comments_config_apiview_column;
+    v_setting_flag            ms_syst_priv.comments_config_apiview_column;
+    v_setting_integer         ms_syst_priv.comments_config_apiview_column;
+    v_setting_integer_range   ms_syst_priv.comments_config_apiview_column;
+    v_setting_decimal         ms_syst_priv.comments_config_apiview_column;
+    v_setting_decimal_range   ms_syst_priv.comments_config_apiview_column;
+    v_setting_interval        ms_syst_priv.comments_config_apiview_column;
+    v_setting_date            ms_syst_priv.comments_config_apiview_column;
+    v_setting_date_range      ms_syst_priv.comments_config_apiview_column;
+    v_setting_time            ms_syst_priv.comments_config_apiview_column;
+    v_setting_timestamp       ms_syst_priv.comments_config_apiview_column;
+    v_setting_timestamp_range ms_syst_priv.comments_config_apiview_column;
+    v_setting_json            ms_syst_priv.comments_config_apiview_column;
+    v_setting_text            ms_syst_priv.comments_config_apiview_column;
+    v_setting_uuid            ms_syst_priv.comments_config_apiview_column;
+    v_setting_blob            ms_syst_priv.comments_config_apiview_column;
 
 BEGIN
 
-    var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_settings';
-    var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_settings';
-    var_view_config.syst_records := TRUE;
-    var_view_config.syst_update  := TRUE;
-    var_view_config.syst_delete  := FALSE;
+    v_view_config.table_schema := 'ms_syst_data';
+    v_view_config.table_name   := 'syst_settings';
+    v_view_config.view_schema  := 'ms_syst';
+    v_view_config.view_name    := 'syst_settings';
+    v_view_config.syst_records := TRUE;
+    v_view_config.syst_update  := TRUE;
+    v_view_config.syst_delete  := FALSE;
 
-    var_setting_flag.column_name := 'setting_flag';
-    var_setting_flag.syst_update_mode := 'always';
+    v_setting_flag.column_name := 'setting_flag';
+    v_setting_flag.syst_update_mode := 'always';
 
-    var_setting_integer.column_name := 'setting_integer';
-    var_setting_integer.syst_update_mode := 'always';
+    v_setting_integer.column_name := 'setting_integer';
+    v_setting_integer.syst_update_mode := 'always';
 
-    var_setting_integer_range.column_name := 'setting_integer_range';
-    var_setting_integer_range.syst_update_mode := 'always';
+    v_setting_integer_range.column_name := 'setting_integer_range';
+    v_setting_integer_range.syst_update_mode := 'always';
 
-    var_setting_decimal.column_name := 'setting_decimal';
-    var_setting_decimal.syst_update_mode := 'always';
+    v_setting_decimal.column_name := 'setting_decimal';
+    v_setting_decimal.syst_update_mode := 'always';
 
-    var_setting_decimal_range.column_name := 'setting_decimal_range';
-    var_setting_decimal_range.syst_update_mode := 'always';
+    v_setting_decimal_range.column_name := 'setting_decimal_range';
+    v_setting_decimal_range.syst_update_mode := 'always';
 
-    var_setting_interval.column_name := 'setting_interval';
-    var_setting_interval.syst_update_mode := 'always';
+    v_setting_interval.column_name := 'setting_interval';
+    v_setting_interval.syst_update_mode := 'always';
 
-    var_setting_date.column_name := 'setting_date';
-    var_setting_date.syst_update_mode := 'always';
+    v_setting_date.column_name := 'setting_date';
+    v_setting_date.syst_update_mode := 'always';
 
-    var_setting_date_range.column_name := 'setting_date_range';
-    var_setting_date_range.syst_update_mode := 'always';
+    v_setting_date_range.column_name := 'setting_date_range';
+    v_setting_date_range.syst_update_mode := 'always';
 
-    var_setting_time.column_name := 'setting_time';
-    var_setting_time.syst_update_mode := 'always';
+    v_setting_time.column_name := 'setting_time';
+    v_setting_time.syst_update_mode := 'always';
 
-    var_setting_timestamp.column_name := 'setting_timestamp';
-    var_setting_timestamp.syst_update_mode := 'always';
+    v_setting_timestamp.column_name := 'setting_timestamp';
+    v_setting_timestamp.syst_update_mode := 'always';
 
-    var_setting_timestamp_range.column_name := 'setting_timestamp_range';
-    var_setting_timestamp_range.syst_update_mode := 'always';
+    v_setting_timestamp_range.column_name := 'setting_timestamp_range';
+    v_setting_timestamp_range.syst_update_mode := 'always';
 
-    var_setting_json.column_name := 'setting_json';
-    var_setting_json.syst_update_mode := 'always';
+    v_setting_json.column_name := 'setting_json';
+    v_setting_json.syst_update_mode := 'always';
 
-    var_setting_text.column_name := 'setting_text';
-    var_setting_text.syst_update_mode := 'always';
+    v_setting_text.column_name := 'setting_text';
+    v_setting_text.syst_update_mode := 'always';
 
-    var_setting_uuid.column_name := 'setting_uuid';
-    var_setting_uuid.syst_update_mode := 'always';
+    v_setting_uuid.column_name := 'setting_uuid';
+    v_setting_uuid.syst_update_mode := 'always';
 
-    var_setting_blob.column_name := 'setting_blob';
-    var_setting_blob.syst_update_mode := 'always';
+    v_setting_blob.column_name := 'setting_blob';
+    v_setting_blob.syst_update_mode := 'always';
 
 
-    var_view_config.columns :=
+    v_view_config.columns :=
         ARRAY [
-              var_setting_flag
-            , var_setting_integer
-            , var_setting_integer_range
-            , var_setting_decimal
-            , var_setting_decimal_range
-            , var_setting_interval
-            , var_setting_date
-            , var_setting_date_range
-            , var_setting_time
-            , var_setting_timestamp
-            , var_setting_timestamp_range
-            , var_setting_json
-            , var_setting_text
-            , var_setting_uuid
-            , var_setting_blob
+              v_setting_flag
+            , v_setting_integer
+            , v_setting_integer_range
+            , v_setting_decimal
+            , v_setting_decimal_range
+            , v_setting_interval
+            , v_setting_date
+            , v_setting_date_range
+            , v_setting_time
+            , v_setting_timestamp
+            , v_setting_timestamp_range
+            , v_setting_json
+            , v_setting_text
+            , v_setting_uuid
+            , v_setting_blob
             ]::ms_syst_priv.comments_config_apiview_column[];
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

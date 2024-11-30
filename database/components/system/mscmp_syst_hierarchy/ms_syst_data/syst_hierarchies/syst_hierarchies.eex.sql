@@ -125,23 +125,23 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
-    
+    v_comments_config ms_syst_priv.comments_config_table;
+
     -- Columns
-    var_hierarchy_type_id  ms_syst_priv.comments_config_table_column;
-    var_hierarchy_state_id ms_syst_priv.comments_config_table_column;
-    var_structured         ms_syst_priv.comments_config_table_column;
-    
+    v_hierarchy_type_id  ms_syst_priv.comments_config_table_column;
+    v_hierarchy_state_id ms_syst_priv.comments_config_table_column;
+    v_structured         ms_syst_priv.comments_config_table_column;
+
 BEGIN
-    
+
     --
     -- Table Config
     --
-    
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_hierarchies';
 
-    var_comments_config.description :=
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_hierarchies';
+
+    v_comments_config.description :=
 $DOC$Establishes a hierarchical template for parent/child relationships to
 follow. The `hierarchies` relation creates a type of hierarchy which is linked
 to a specific feature or functional area of the application via a record's
@@ -149,7 +149,7 @@ to a specific feature or functional area of the application via a record's
 Hierarchy Items relation (`ms_syst_data.syst_hierarchy_items`)
 records where each Hierarchy Items record represents a level of the
 hierarchy.$DOC$;
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$Note that once the Hierarchy is active and in use by Hierarchy implementing
 Components, most changes to the Hierarchy records will not be allowed to ensure
 the consistency of currently used data.$DOC$;
@@ -158,42 +158,42 @@ the consistency of currently used data.$DOC$;
     -- Column Configs
     --
 
-    var_hierarchy_type_id.column_name := 'hierarchy_type_id';
-    var_hierarchy_type_id.description :=
+    v_hierarchy_type_id.column_name := 'hierarchy_type_id';
+    v_hierarchy_type_id.description :=
 $DOC$A reference indicating in which specific functional area or with which feature
 of the application the Hierarchy is associated with.$DOC$;
 
-    var_hierarchy_state_id.column_name := 'hierarchy_state_id';
-    var_hierarchy_state_id.description :=
+    v_hierarchy_state_id.column_name := 'hierarchy_state_id';
+    v_hierarchy_state_id.description :=
 $DOC$A reference indicating at which point in the Hierarchy life-cycle the record
 sits.$DOC$;
-    var_hierarchy_state_id.general_usage :=
+    v_hierarchy_state_id.general_usage :=
 $DOC$The record may only be set in an `active` state if the record and any associated
 Hierarchy Item records are in a consistent, valid state.  Similarly, the record
 may only be set to an `inactive` state if the Hierarchy record is not in use,
 which is defined as the record being referenced by an Hierarchy implementing
 Component's records.$DOC$;
 
-    var_structured.column_name := 'structured';
-    var_structured.description :=
+    v_structured.column_name := 'structured';
+    v_structured.description :=
 $DOC$A flag indicating whether or not the Hierarchy actually defines a structure, or
 if the any implementations allow fully ad hoc structuring within the
 implementing Component.$DOC$;
-    var_structured.general_usage :=
+    v_structured.general_usage :=
 $DOC$This configuration exists for cases where a Component implements Hierarchy
 functionality, but can also operate while bypassing any hierarchy checks at all;
 this way we can still require a Hierarchy record reference in the implementation
 while allowing the Hierarchy definition itself be the configuration point for
 determining whether or not hierarchical structure is required.$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_hierarchy_type_id
-            , var_hierarchy_state_id
-            , var_structured
+              v_hierarchy_type_id
+            , v_hierarchy_state_id
+            , v_structured
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

@@ -52,17 +52,17 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- View
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
     -- View Columns
-    var_application_id     ms_syst_priv.comments_config_apiview_column;
-    var_instance_type_id   ms_syst_priv.comments_config_apiview_column;
-    var_instance_state_id  ms_syst_priv.comments_config_apiview_column;
-    var_owner_id           ms_syst_priv.comments_config_apiview_column;
-    var_owning_instance_id ms_syst_priv.comments_config_apiview_column;
-    var_dbserver_name      ms_syst_priv.comments_config_apiview_column;
-    var_instance_code      ms_syst_priv.comments_config_apiview_column;
-    var_instance_options   ms_syst_priv.comments_config_apiview_column;
+    v_application_id     ms_syst_priv.comments_config_apiview_column;
+    v_instance_type_id   ms_syst_priv.comments_config_apiview_column;
+    v_instance_state_id  ms_syst_priv.comments_config_apiview_column;
+    v_owner_id           ms_syst_priv.comments_config_apiview_column;
+    v_owning_instance_id ms_syst_priv.comments_config_apiview_column;
+    v_dbserver_name      ms_syst_priv.comments_config_apiview_column;
+    v_instance_code      ms_syst_priv.comments_config_apiview_column;
+    v_instance_options   ms_syst_priv.comments_config_apiview_column;
 
 BEGIN
 
@@ -70,55 +70,55 @@ BEGIN
     -- API View Config
     --
 
-    var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_instances';
-    var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_instances';
+    v_view_config.table_schema := 'ms_syst_data';
+    v_view_config.table_name   := 'syst_instances';
+    v_view_config.view_schema  := 'ms_syst';
+    v_view_config.view_name    := 'syst_instances';
 
     --
     -- Column Configs
     --
 
-    var_application_id.column_name := 'application_id';
-    var_application_id.required    := TRUE;
-    var_application_id.user_update := FALSE;
+    v_application_id.column_name := 'application_id';
+    v_application_id.required    := TRUE;
+    v_application_id.user_update := FALSE;
 
-    var_instance_type_id.column_name := 'instance_type_id';
-    var_instance_type_id.required    := TRUE;
-    var_instance_type_id.user_update := FALSE;
+    v_instance_type_id.column_name := 'instance_type_id';
+    v_instance_type_id.required    := TRUE;
+    v_instance_type_id.user_update := FALSE;
 
-    var_instance_state_id.column_name := 'instance_state_id';
-    var_instance_state_id.required    := TRUE;
+    v_instance_state_id.column_name := 'instance_state_id';
+    v_instance_state_id.required    := TRUE;
 
-    var_owner_id.column_name := 'owner_id';
-    var_owner_id.required    := TRUE;
-    var_owner_id.user_update := FALSE;
+    v_owner_id.column_name := 'owner_id';
+    v_owner_id.required    := TRUE;
+    v_owner_id.user_update := FALSE;
 
-    var_owning_instance_id.column_name      := 'owning_instance_id';
-    var_owning_instance_id.required         := TRUE;
-    var_owning_instance_id.user_update      := FALSE;
+    v_owning_instance_id.column_name      := 'owning_instance_id';
+    v_owning_instance_id.required         := TRUE;
+    v_owning_instance_id.user_update      := FALSE;
 
-    var_dbserver_name.column_name      := 'dbserver_name';
-    var_dbserver_name.required         := TRUE;
+    v_dbserver_name.column_name      := 'dbserver_name';
+    v_dbserver_name.required         := TRUE;
 
-    var_instance_code.column_name      := 'instance_code';
-    var_instance_code.required         := TRUE;
+    v_instance_code.column_name      := 'instance_code';
+    v_instance_code.required         := TRUE;
 
-    var_instance_options.column_name      := 'instance_options';
+    v_instance_options.column_name      := 'instance_options';
 
-    var_view_config.columns :=
+    v_view_config.columns :=
         ARRAY [
-              var_application_id
-            , var_instance_type_id
-            , var_instance_state_id
-            , var_owner_id
-            , var_owning_instance_id
-            , var_dbserver_name
-            , var_instance_code
-            , var_instance_options
+              v_application_id
+            , v_instance_type_id
+            , v_instance_state_id
+            , v_owner_id
+            , v_owning_instance_id
+            , v_dbserver_name
+            , v_instance_code
+            , v_instance_options
             ]::ms_syst_priv.comments_config_apiview_column[];
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

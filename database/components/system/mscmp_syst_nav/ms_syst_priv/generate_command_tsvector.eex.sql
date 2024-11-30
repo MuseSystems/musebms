@@ -52,27 +52,27 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
     -- Parameters
-    var_p_config          ms_syst_priv.comments_config_function_param;
-    var_p_command         ms_syst_priv.comments_config_function_param;
-    var_p_command_aliases ms_syst_priv.comments_config_function_param;
+    v_p_config          ms_syst_priv.comments_config_function_param;
+    v_p_command         ms_syst_priv.comments_config_function_param;
+    v_p_command_aliases ms_syst_priv.comments_config_function_param;
 BEGIN
 
     --
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_priv';
-    var_comments_config.function_name   := 'generate_command_tsvector';
+    v_comments_config.function_schema := 'ms_syst_priv';
+    v_comments_config.function_name   := 'generate_command_tsvector';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Generates a tsvector value for relations which implement the "searchable
 command" pattern.  Searchable commands are typically searched for the purpose of
 performing user interface autocomplete operations.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$This function is expected to be used in table definitions by generated columns
 containing `tsvector` values.
 
@@ -83,34 +83,34 @@ exist.$DOC$;
     -- Parameter Configs
     --
 
-    var_p_config.param_name := 'p_config';
-    var_p_config.required := TRUE;
-    var_p_config.description :=
+    v_p_config.param_name := 'p_config';
+    v_p_config.required := TRUE;
+    v_p_config.description :=
 $DOC$The name of the PostgreSQL text search configuration to apply to the generation
 of `tsvector` values by this function.
 
 See [the PostgreSQL documentation](https://www.postgresql.org/docs/current/textsearch-intro.html#TEXTSEARCH-INTRO-CONFIGURATIONS)
 for more.$DOC$;
 
-    var_p_command.param_name := 'p_command';
-    var_p_command.description :=
+    v_p_command.param_name := 'p_command';
+    v_p_command.description :=
 $DOC$The primary Action Group or Action Command which receives priority in full text
 navigation related searches.$DOC$;
 
-    var_p_command_aliases.param_name := 'p_command_aliases';
-    var_p_command_aliases.required := TRUE;
-    var_p_command_aliases.description :=
+    v_p_command_aliases.param_name := 'p_command_aliases';
+    v_p_command_aliases.required := TRUE;
+    v_p_command_aliases.description :=
 $DOC$The Command Alias of the Action Group or Action which serve as secondary lookups
 for the navigation related text search.$DOC$;
 
-    var_comments_config.params :=
+    v_comments_config.params :=
         ARRAY [
-              var_p_config
-            , var_p_command
-            , var_p_command_aliases
+              v_p_config
+            , v_p_command
+            , v_p_command_aliases
             ]::ms_syst_priv.comments_config_function_param[];
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

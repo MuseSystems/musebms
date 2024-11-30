@@ -49,33 +49,33 @@ CREATE TRIGGER a50_trig_i_d_syst_enums
 DO
 $DOCUMENTATION$
 DECLARE
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
-    var_default_syst_options ms_syst_priv.comments_config_apiview_column;
-    var_default_user_options ms_syst_priv.comments_config_apiview_column;
+    v_default_syst_options ms_syst_priv.comments_config_apiview_column;
+    v_default_user_options ms_syst_priv.comments_config_apiview_column;
 
 BEGIN
 
-    var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_enums';
-    var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_enums';
-    var_view_config.syst_records := TRUE;
-    var_view_config.syst_update  := TRUE;
-    var_view_config.syst_delete  := FALSE;
+    v_view_config.table_schema := 'ms_syst_data';
+    v_view_config.table_name   := 'syst_enums';
+    v_view_config.view_schema  := 'ms_syst';
+    v_view_config.view_name    := 'syst_enums';
+    v_view_config.syst_records := TRUE;
+    v_view_config.syst_update  := TRUE;
+    v_view_config.syst_delete  := FALSE;
 
-    var_default_syst_options.column_name := 'default_syst_options';
-    var_default_syst_options.user_insert := FALSE;
-    var_default_syst_options.user_update := FALSE;
+    v_default_syst_options.column_name := 'default_syst_options';
+    v_default_syst_options.user_insert := FALSE;
+    v_default_syst_options.user_update := FALSE;
 
-    var_default_user_options.column_name := 'default_user_options';
+    v_default_user_options.column_name := 'default_user_options';
 
-    var_view_config.columns :=
+    v_view_config.columns :=
         ARRAY [
-              var_default_user_options
-            , var_default_syst_options
+              v_default_user_options
+            , v_default_syst_options
             ]::ms_syst_priv.comments_config_apiview_column[];
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 END;
 $DOCUMENTATION$;

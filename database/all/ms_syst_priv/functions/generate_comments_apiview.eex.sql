@@ -17,17 +17,17 @@ $BODY$
 -- muse.information@musesystems.com :: https://muse.systems
 
 DECLARE
-    var_src_table regclass;
-    var_dst_view  regclass;
+    v_src_table regclass;
+    v_dst_view  regclass;
 
-    var_resolved_view_desc text;
-    var_resolved_view_sops text := '';
-    var_resolved_view_uops text := '';
-    var_resolved_view_supp text;
+    v_resolved_view_desc text;
+    v_resolved_view_sops text := '';
+    v_resolved_view_uops text := '';
+    v_resolved_view_supp text;
 
-    var_view_comment text;
+    v_view_comment text;
 
-    var_working_config ms_syst_priv.comments_config_apiview;
+    v_working_config ms_syst_priv.comments_config_apiview;
 
 BEGIN
 
@@ -35,7 +35,7 @@ BEGIN
       API View Comment Generation
      **************************************************************************/
 
-    var_src_table :=
+    v_src_table :=
         CASE
             WHEN
                 p_comments_config.table_schema IS NOT NULL AND
@@ -48,51 +48,51 @@ BEGIN
                 NULL::regclass
         END;
 
-    var_dst_view :=
+    v_dst_view :=
         ((p_comments_config.view_schema) ||
             '.' ||
             (p_comments_config.view_name))::regclass;
 
-    var_working_config.table_schema := p_comments_config.table_schema;
-    var_working_config.table_name   := p_comments_config.table_name;
-    var_working_config.view_schema  := p_comments_config.view_schema;
-    var_working_config.view_name    := p_comments_config.view_name;
+    v_working_config.table_schema := p_comments_config.table_schema;
+    v_working_config.table_name   := p_comments_config.table_name;
+    v_working_config.view_schema  := p_comments_config.view_schema;
+    v_working_config.view_name    := p_comments_config.view_name;
 
-    var_working_config.user_records :=
+    v_working_config.user_records :=
         coalesce( p_comments_config.user_records, TRUE );
 
-    var_working_config.user_insert :=
-        var_working_config.user_records AND
+    v_working_config.user_insert :=
+        v_working_config.user_records AND
         coalesce( p_comments_config.user_insert, TRUE );
 
-    var_working_config.user_select :=
-        var_working_config.user_records AND
+    v_working_config.user_select :=
+        v_working_config.user_records AND
         coalesce( p_comments_config.user_select, TRUE );
 
-    var_working_config.user_update :=
-        var_working_config.user_records AND
+    v_working_config.user_update :=
+        v_working_config.user_records AND
         coalesce( p_comments_config.user_update, TRUE );
 
-    var_working_config.user_delete :=
-        var_working_config.user_records AND
+    v_working_config.user_delete :=
+        v_working_config.user_records AND
         coalesce( p_comments_config.user_delete, TRUE );
 
-    var_working_config.syst_records :=
+    v_working_config.syst_records :=
         coalesce( p_comments_config.syst_records, FALSE );
 
-    var_working_config.syst_select :=
-        var_working_config.syst_records AND
+    v_working_config.syst_select :=
+        v_working_config.syst_records AND
         coalesce( p_comments_config.syst_select, TRUE );
 
-    var_working_config.syst_update :=
-        var_working_config.syst_records AND
+    v_working_config.syst_update :=
+        v_working_config.syst_records AND
         coalesce( p_comments_config.syst_update, FALSE );
 
-    var_working_config.syst_delete :=
-        var_working_config.syst_records AND
+    v_working_config.syst_delete :=
+        v_working_config.syst_records AND
         coalesce( p_comments_config.syst_delete, FALSE );
 
-    var_working_config.generate_common :=
+    v_working_config.generate_common :=
         CASE
             WHEN
                 p_comments_config.table_schema IS NOT NULL AND
@@ -103,7 +103,7 @@ BEGIN
                 FALSE
         END;
 
-    var_resolved_view_desc :=
+    v_resolved_view_desc :=
             coalesce(
                 p_comments_config.override_description,
                 ( SELECT
@@ -113,30 +113,30 @@ BEGIN
                           1, 1 )
                   FROM pg_catalog.pg_description pd
                   WHERE
-                        pd.objoid = var_src_table
+                        pd.objoid = v_src_table
                     AND pd.classoid = 'pg_class'::regclass
                     AND pd.objsubid = 0 ),
                 '( Source Data is not documented. )' );
 
-    IF var_working_config.syst_records THEN
+    IF v_working_config.syst_records THEN
 
-        var_resolved_view_sops :=
+        v_resolved_view_sops :=
             E'**System Defined Record Supported Operations**\n\n' ||
                 CASE
-                    WHEN var_working_config.syst_select THEN
+                    WHEN v_working_config.syst_select THEN
                         E'  * `SELECT`\n'
                     ELSE
                         ''
                 END ||
                 CASE
-                    WHEN var_working_config.syst_update THEN
+                    WHEN v_working_config.syst_update THEN
                         E'  * `UPDATE` - See column comments for applicable' ||
                             E' restrictions.\n'
                     ELSE
                         ''
                 END ||
                 CASE
-                    WHEN var_working_config.syst_delete THEN
+                    WHEN v_working_config.syst_delete THEN
                         E'  * `DELETE` - Only user maintainable records.\n'
                     ELSE
                         ''
@@ -144,30 +144,30 @@ BEGIN
 
     END IF;
 
-    IF var_working_config.user_records THEN
+    IF v_working_config.user_records THEN
 
-        var_resolved_view_uops :=
+        v_resolved_view_uops :=
             E'**User Defined Record Supported Operations**\n\n' ||
                 CASE
-                    WHEN var_working_config.user_insert THEN
+                    WHEN v_working_config.user_insert THEN
                         E'  * `INSERT`\n'
                     ELSE
                         ''
                 END ||
                 CASE
-                    WHEN var_working_config.user_select THEN
+                    WHEN v_working_config.user_select THEN
                         E'  * `SELECT`\n'
                     ELSE
                         ''
                 END ||
                 CASE
-                    WHEN var_working_config.user_update THEN
+                    WHEN v_working_config.user_update THEN
                         E'  * `UPDATE`\n'
                     ELSE
                         ''
                 END ||
                 CASE
-                    WHEN var_working_config.user_delete THEN
+                    WHEN v_working_config.user_delete THEN
                         E'  * `DELETE`\n'
                     ELSE
                         ''
@@ -175,39 +175,39 @@ BEGIN
 
     END IF;
 
-    var_resolved_view_supp :=
+    v_resolved_view_supp :=
         E'**Supplemental Notes**\n\n' ||
         p_comments_config.supplemental;
 
-    var_view_comment :=
+    v_view_comment :=
         regexp_replace(
-            var_resolved_view_desc || E'\n' ||
-            var_resolved_view_uops || E'\n' ||
-            var_resolved_view_sops || E'\n' ||
-            coalesce(var_resolved_view_supp || E'\n', ''),
+            v_resolved_view_desc || E'\n' ||
+            v_resolved_view_uops || E'\n' ||
+            v_resolved_view_sops || E'\n' ||
+            coalesce(v_resolved_view_supp || E'\n', ''),
             '[\n\r\f\u000B\u0085\u2028\u2029]{3,}',
             E'\n\n' );
 
     EXECUTE format( 'COMMENT ON VIEW %1$I.%2$I IS %3$L;',
-                    var_working_config.view_schema,
-                    var_working_config.view_name,
-                    var_view_comment);
+                    v_working_config.view_schema,
+                    v_working_config.view_name,
+                    v_view_comment);
 
     /***************************************************************************
       Column Comment Generation
      **************************************************************************/
 
-    IF var_working_config.generate_common THEN
+    IF v_working_config.generate_common THEN
 
         PERFORM
             ms_syst_priv.generate_comments_apiview_common_columns(
-                p_view_config => var_working_config );
+                p_view_config => v_working_config );
 
     END IF;
 
     PERFORM
         ms_syst_priv.generate_comments_apiview_column(
-            p_view_config   => var_working_config,
+            p_view_config   => v_working_config,
             p_column_config => c )
     FROM
         unnest( p_comments_config.columns ) c;
@@ -236,10 +236,10 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
     -- Parameters
-    var_p_comments_config ms_syst_priv.comments_config_function_param;
+    v_p_comments_config ms_syst_priv.comments_config_function_param;
 
 BEGIN
 
@@ -247,10 +247,10 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_priv';
-    var_comments_config.function_name   := 'generate_comments_apiview';
+    v_comments_config.function_schema := 'ms_syst_priv';
+    v_comments_config.function_name   := 'generate_comments_apiview';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Generates API View comments as well as comments for any requested columns.
 
 API Views are typically closely associated with specific Data Tables.  While
@@ -265,17 +265,17 @@ configurations passed in the `p_comments_config` parameter.$DOC$;
     -- Parameter Configs
     --
 
-    var_p_comments_config.param_name := 'p_comments_config';
-    var_p_comments_config.description :=
+    v_p_comments_config.param_name := 'p_comments_config';
+    v_p_comments_config.description :=
 $DOC$A `ms_syst_priv.comments_config_apiview` value which provides the configuration
 and texts from which to generate the API View documentation.  See the
 documentation of that database type for more information.$DOC$;
 
 
-    var_comments_config.params :=
-        ARRAY [ var_p_comments_config ]::ms_syst_priv.comments_config_function_param[];
+    v_comments_config.params :=
+        ARRAY [ v_p_comments_config ]::ms_syst_priv.comments_config_function_param[];
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

@@ -67,12 +67,12 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_interaction_context_id  ms_syst_priv.comments_config_table_column;
-    var_perm_id                 ms_syst_priv.comments_config_table_column;
-    var_interaction_category_id ms_syst_priv.comments_config_table_column;
+    v_interaction_context_id  ms_syst_priv.comments_config_table_column;
+    v_perm_id                 ms_syst_priv.comments_config_table_column;
+    v_interaction_category_id ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -80,15 +80,15 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_interaction_fields';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_interaction_fields';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Defines specific state fields which require a different designation of either
 primary permission, categorical permission, or both as compared to Interaction
 Context.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$Whether or not records in this table are considered 'System Defined' is
 determined by the `ms_syst_data.syst_interaction_contexts.syst_defined` value of
 the parent Interaction Context record.$DOC$;
@@ -97,35 +97,35 @@ the parent Interaction Context record.$DOC$;
     -- Column Configs
     --
 
-    var_interaction_context_id.column_name := 'interaction_context_id';
-    var_interaction_context_id.description :=
+    v_interaction_context_id.column_name := 'interaction_context_id';
+    v_interaction_context_id.description :=
 $DOC$The parent Interaction Context to which this state field permission specification
 belongs.$DOC$;
 
-    var_perm_id.column_name := 'perm_id';
-    var_perm_id.description :=
+    v_perm_id.column_name := 'perm_id';
+    v_perm_id.description :=
 $DOC$Assigns a specific permission for the state field which overrides the default
 primary permission otherwise inherited from the Interaction Context.$DOC$;
-    var_perm_id.general_usage :=
+    v_perm_id.general_usage :=
 $DOC$Leave this value `NULL` for the primary permission of the Interaction
 Context to apply, if one is defined.$DOC$;
 
-    var_interaction_category_id.column_name := 'interaction_category_id';
-    var_interaction_category_id.description :=
+    v_interaction_category_id.column_name := 'interaction_category_id';
+    v_interaction_category_id.description :=
 $DOC$Assigns a specific permission for the state field which overrides the default
 categorical permission otherwise inherited from the Interaction Context.$DOC$;
-    var_interaction_category_id.general_usage :=
+    v_interaction_category_id.general_usage :=
 $DOC$Leave this value `NULL` for the categorical permission of the Interaction
 Context to apply, if one is defined.$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-            var_interaction_context_id
-            ,var_perm_id
-            ,var_interaction_category_id
+            v_interaction_context_id
+            ,v_perm_id
+            ,v_interaction_category_id
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

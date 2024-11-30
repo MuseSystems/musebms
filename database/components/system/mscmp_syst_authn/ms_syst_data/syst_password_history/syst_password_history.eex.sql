@@ -61,11 +61,11 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_access_account_id ms_syst_priv.comments_config_table_column;
-    var_credential_data   ms_syst_priv.comments_config_table_column;
+    v_access_account_id ms_syst_priv.comments_config_table_column;
+    v_credential_data   ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -73,10 +73,10 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_password_history';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_password_history';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Keeps the history of access account prior passwords for enforcing the reuse
 password rule.$DOC$;
 
@@ -84,23 +84,23 @@ password rule.$DOC$;
     -- Column Configs
     --
 
-    var_access_account_id.column_name := 'access_account_id';
-    var_access_account_id.description :=
+    v_access_account_id.column_name := 'access_account_id';
+    v_access_account_id.description :=
         $DOC$The Access Account to which the password history record belongs.$DOC$;
 
-    var_credential_data.column_name := 'credential_data';
-    var_credential_data.description :=
+    v_credential_data.column_name := 'credential_data';
+    v_credential_data.description :=
         $DOC$The previously hashed password recorded for reuse comparisons.$DOC$;
-    var_credential_data.general_usage :=
+    v_credential_data.general_usage :=
         $DOC$This is the same format as the existing active password credential.$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_access_account_id
-            , var_credential_data
+              v_access_account_id
+            , v_credential_data
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

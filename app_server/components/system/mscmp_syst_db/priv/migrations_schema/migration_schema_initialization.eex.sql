@@ -182,9 +182,9 @@ $DOC$;
 
         BEGIN
             DECLARE
-                var_jsonb_new        jsonb;
-                var_jsonb_old        jsonb;
-                var_jsonb_final      jsonb;
+                v_jsonb_new        jsonb;
+                v_jsonb_old        jsonb;
+                v_jsonb_final      jsonb;
 
                 bypass_change_fields boolean;
 
@@ -204,10 +204,10 @@ $DOC$;
                 -- Let's turn the new and old records into hstores so we can arbitrarily
                 -- get their columns.  We also need to make the final hstore look a lot
                 -- like NEW.
-                var_jsonb_new := to_jsonb( new );
-                var_jsonb_old := to_jsonb( old );
+                v_jsonb_new := to_jsonb( new );
+                v_jsonb_old := to_jsonb( old );
 
-                var_jsonb_final := var_jsonb_new - ARRAY [ 'diag_timestamp_created'
+                v_jsonb_final := v_jsonb_new - ARRAY [ 'diag_timestamp_created'
                                                         ,'diag_role_created'
                                                         ,'diag_timestamp_modified'
                                                         ,'diag_wallclock_modified'
@@ -218,51 +218,51 @@ $DOC$;
                 -- Now we can get some work done.
                 CASE tg_op
                     WHEN 'INSERT' THEN
-                        var_jsonb_final :=
-                            var_jsonb_final ||
+                        v_jsonb_final :=
+                            v_jsonb_final ||
                             jsonb_build_object( 'diag_timestamp_created', now( ) );
-                        var_jsonb_final :=
-                            var_jsonb_final ||
+                        v_jsonb_final :=
+                            v_jsonb_final ||
                             jsonb_build_object( 'diag_role_created', session_user );
-                        var_jsonb_final :=
-                            var_jsonb_final ||
+                        v_jsonb_final :=
+                            v_jsonb_final ||
                             jsonb_build_object( 'diag_timestamp_modified', now( ) );
-                        var_jsonb_final :=
-                            var_jsonb_final ||
+                        v_jsonb_final :=
+                            v_jsonb_final ||
                             jsonb_build_object( 'diag_wallclock_modified',
                                                 clock_timestamp( ) );
-                        var_jsonb_final :=
-                            var_jsonb_final ||
+                        v_jsonb_final :=
+                            v_jsonb_final ||
                             jsonb_build_object( 'diag_role_modified', session_user );
-                        var_jsonb_final :=
-                            var_jsonb_final ||
+                        v_jsonb_final :=
+                            v_jsonb_final ||
                             jsonb_build_object( 'diag_row_version', 1 );
-                        var_jsonb_final :=
-                            var_jsonb_final ||
+                        v_jsonb_final :=
+                            v_jsonb_final ||
                             jsonb_build_object( 'diag_update_count', 0 );
 
                     WHEN 'UPDATE' THEN
                         IF NOT bypass_change_fields THEN
-                            var_jsonb_final :=
-                                var_jsonb_final ||
+                            v_jsonb_final :=
+                                v_jsonb_final ||
                                 jsonb_build_object( 'diag_timestamp_modified', now( ) );
-                            var_jsonb_final :=
-                                var_jsonb_final ||
+                            v_jsonb_final :=
+                                v_jsonb_final ||
                                 jsonb_build_object( 'diag_wallclock_modified',
                                                     clock_timestamp( ) );
-                            var_jsonb_final :=
-                                var_jsonb_final ||
+                            v_jsonb_final :=
+                                v_jsonb_final ||
                                 jsonb_build_object( 'diag_role_modified', session_user );
-                            var_jsonb_final :=
-                                var_jsonb_final ||
+                            v_jsonb_final :=
+                                v_jsonb_final ||
                                 jsonb_build_object( 'diag_row_version',
-                                                    ( var_jsonb_old -> 'diag_row_version' )::bigint  + 1 );
+                                                    ( v_jsonb_old -> 'diag_row_version' )::bigint  + 1 );
                         END IF;
 
-                        var_jsonb_final :=
-                            var_jsonb_final ||
+                        v_jsonb_final :=
+                            v_jsonb_final ||
                             jsonb_build_object( 'diag_update_count',
-                                                ( var_jsonb_old -> 'diag_update_count' )::bigint  + 1 );
+                                                ( v_jsonb_old -> 'diag_update_count' )::bigint  + 1 );
 
                 ELSE
                     RAISE EXCEPTION
@@ -289,7 +289,7 @@ $DOC$;
                 END CASE;
 
                 -- We've done our jsonb magic, lets actually get a record to return...
-                new := jsonb_populate_record( new, var_jsonb_final );
+                new := jsonb_populate_record( new, v_jsonb_final );
 
                 RETURN new;
 

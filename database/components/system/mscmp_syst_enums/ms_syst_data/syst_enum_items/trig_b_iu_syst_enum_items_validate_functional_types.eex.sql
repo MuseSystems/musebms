@@ -32,8 +32,6 @@ BEGIN
                 DETAIL  = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst_data'
                             ,p_proc_name      => 'trig_b_iu_syst_enum_items_validate_functional_types'
-                            ,p_exception_name => 'invalid_functional_type'
-                            ,p_errcode        => 'PM003'
                             ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -41,7 +39,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM003',
+                ERRCODE = 'PM104',
                 SCHEMA  = tg_table_schema,
                 TABLE   = tg_table_name;
 
@@ -62,7 +60,7 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
     -- Parameters
 
@@ -72,19 +70,19 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_data';
-    var_comments_config.function_name   := 'trig_b_iu_syst_enum_items_validate_functional_types';
+    v_comments_config.function_schema := 'ms_syst_data';
+    v_comments_config.function_name   := 'trig_b_iu_syst_enum_items_validate_functional_types';
 
-    var_comments_config.trigger_function := TRUE;
-    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
-    var_comments_config.trigger_ops      := ARRAY [ 'i', 'u' ]::text[ ];
+    v_comments_config.trigger_function := TRUE;
+    v_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    v_comments_config.trigger_ops      := ARRAY [ 'i', 'u' ]::text[ ];
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Ensures that if the parent syst_enums record has syst_enum_functional_types
 records defined, a syst_enum_items record will reference one of those
 functional types.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$Note that this trigger function is intended to be use by
 constraint triggers.$DOC$;
 
@@ -94,10 +92,10 @@ constraint triggers.$DOC$;
 
 
 
-    var_comments_config.params :=
+    v_comments_config.params :=
         ARRAY [ ]::ms_syst_priv.comments_config_function_param[];
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

@@ -46,7 +46,7 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- View
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
 BEGIN
 
@@ -54,16 +54,16 @@ BEGIN
     -- API View Config
     --
 
-    var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_perm_functional_types';
-    var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_perm_functional_types';
-    var_view_config.user_records := FALSE;
-    var_view_config.syst_records := TRUE;
-    var_view_config.syst_select  := TRUE;
-    var_view_config.syst_update  := TRUE;
+    v_view_config.table_schema := 'ms_syst_data';
+    v_view_config.table_name   := 'syst_perm_functional_types';
+    v_view_config.view_schema  := 'ms_syst';
+    v_view_config.view_name    := 'syst_perm_functional_types';
+    v_view_config.user_records := FALSE;
+    v_view_config.syst_records := TRUE;
+    v_view_config.syst_select  := TRUE;
+    v_view_config.syst_update  := TRUE;
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

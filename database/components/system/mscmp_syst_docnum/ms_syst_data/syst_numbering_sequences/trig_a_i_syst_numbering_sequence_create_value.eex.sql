@@ -40,7 +40,7 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
 BEGIN
 
@@ -48,24 +48,24 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_data';
-    var_comments_config.function_name   := 'trig_a_i_syst_numbering_sequence_create_value';
+    v_comments_config.function_schema := 'ms_syst_data';
+    v_comments_config.function_name   := 'trig_a_i_syst_numbering_sequence_create_value';
 
-    var_comments_config.trigger_function := TRUE;
-    var_comments_config.trigger_timing   := ARRAY [ 'a' ]::text[ ];
-    var_comments_config.trigger_ops      := ARRAY [ 'i' ]::text[ ];
+    v_comments_config.trigger_function := TRUE;
+    v_comments_config.trigger_timing   := ARRAY [ 'a' ]::text[ ];
+    v_comments_config.trigger_ops      := ARRAY [ 'i' ]::text[ ];
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Automatically creates a ms_syst_data.syst_numbering_sequence_values record
 based on the configuration of the sequence in the syst_numbering_sequences
 record.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$If a sequence is incrementing, the minimum value is used set as the
 next value; if the sequence is decrementing, the maximum value is used to set
 the starting value.$DOC$;
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

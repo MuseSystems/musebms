@@ -102,12 +102,12 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_owning_entity_id ms_syst_priv.comments_config_table_column;
-    var_entity_type_id   ms_syst_priv.comments_config_table_column;
-    var_entity_state_id  ms_syst_priv.comments_config_table_column;
+    v_owning_entity_id ms_syst_priv.comments_config_table_column;
+    v_entity_type_id   ms_syst_priv.comments_config_table_column;
+    v_entity_state_id  ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -115,16 +115,16 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_appl_data';
-    var_comments_config.table_name   := 'mstr_entities';
+    v_comments_config.table_schema := 'ms_appl_data';
+    v_comments_config.table_name   := 'mstr_entities';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Master list of legal entities with whom the business interacts.
 
 All legal entities are represented by this table, including the business using
 this application itself.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$The information stored in this record represents general information about the
 entity that is broadly applicable in all contexts which might use the entity.$DOC$;
 
@@ -132,11 +132,11 @@ entity that is broadly applicable in all contexts which might use the entity.$DO
     -- Column Configs
     --
 
-    var_owning_entity_id.column_name := 'owning_entity_id';
-    var_owning_entity_id.description :=
+    v_owning_entity_id.column_name := 'owning_entity_id';
+    v_owning_entity_id.description :=
 $DOC$Indicates which managing entity is the owning entity for purposes of default
 visibility and usage limitations.$DOC$;
-    var_owning_entity_id.general_usage :=
+    v_owning_entity_id.general_usage :=
 $DOC$The limited cases are primarily evident in searches and lists.
 
 Explicit assignment of rights to entities, persons, facilities, etc. that are
@@ -153,31 +153,31 @@ owns the MSBMS Instance or it may a purely administrative construct for managing
 the system.$DOC$;
 
 
-    var_entity_type_id.column_name := 'entity_type_id';
-    var_entity_type_id.description :=
+    v_entity_type_id.column_name := 'entity_type_id';
+    v_entity_type_id.description :=
 $DOC$Defines the kind of entity that is being represented by the record and by
 extension the kinds of uses in which the entity may be used.$DOC$;
-    var_entity_type_id.general_usage :=
+    v_entity_type_id.general_usage :=
 $DOC$Application functionality is determined in part by the configuration of the
 selected type.$DOC$;
 
-    var_entity_state_id.column_name := 'entity_state_id';
-    var_entity_state_id.description :=
+    v_entity_state_id.column_name := 'entity_state_id';
+    v_entity_state_id.description :=
 $DOC$Establishes current state of the entity in the established lifecycle of
 entity records.$DOC$;
-    var_entity_state_id.general_usage :=
+    v_entity_state_id.general_usage :=
 $DOC$Certain application features and behaviors will depend on the configuration
 of the state value selected for a entity record.$DOC$;
 
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_owning_entity_id
-            , var_entity_type_id
-            , var_entity_state_id
+              v_owning_entity_id
+            , v_entity_type_id
+            , v_entity_state_id
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

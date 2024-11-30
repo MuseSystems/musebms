@@ -64,11 +64,11 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_entity_id        ms_syst_priv.comments_config_table_column;
-    var_owning_entity_id ms_syst_priv.comments_config_table_column;
+    v_entity_id        ms_syst_priv.comments_config_table_column;
+    v_owning_entity_id ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -76,14 +76,14 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_appl_data';
-    var_comments_config.table_name   := 'mstr_entity_purchasing_entities';
+    v_comments_config.table_schema := 'ms_appl_data';
+    v_comments_config.table_name   := 'mstr_entity_purchasing_entities';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Establishes a vendor relationship between an Owning Entity and its vendor
 Entity.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$This record, or its children, will define purchasing behavior when the
 transaction entity is the owning entity.$DOC$;
 
@@ -91,23 +91,23 @@ transaction entity is the owning entity.$DOC$;
     -- Column Configs
     --
 
-    var_entity_id.column_name := 'entity_id';
-    var_entity_id.description :=
+    v_entity_id.column_name := 'entity_id';
+    v_entity_id.description :=
 $DOC$Identifies the Entity which is the "vendor" in the relationship.$DOC$;
 
-    var_owning_entity_id.column_name := 'owning_entity_id';
-    var_owning_entity_id.description :=
+    v_owning_entity_id.column_name := 'owning_entity_id';
+    v_owning_entity_id.description :=
 $DOC$Identifies the Entity that will purchase goods and services from the vendor
 Entity.$DOC$;
 
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_entity_id
-            , var_owning_entity_id
+              v_entity_id
+            , v_owning_entity_id
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

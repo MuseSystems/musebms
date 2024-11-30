@@ -22,27 +22,27 @@ $BODY$
 -- The original code is believed to be copyright David Sanabria.
 
 DECLARE
-    var_token_array text[]  := string_to_array(p_tokens, NULL );
-    var_remainder   integer;
-    var_interim     bigint;
-    var_return_text text    := '';
+    v_token_array text[]  := string_to_array(p_tokens, NULL );
+    v_remainder   integer;
+    v_interim     bigint;
+    v_return_text text    := '';
 
 
 BEGIN
 
-    var_interim := abs( p_value );
+    v_interim := abs( p_value );
 
     << conversion_loop >>
     LOOP
-        var_remainder   := var_interim % p_base;
-        var_interim     := var_interim / p_base;
-        var_return_text := '' || var_token_array[( var_remainder + 1 )] || var_return_text;
+        v_remainder   := v_interim % p_base;
+        v_interim     := v_interim / p_base;
+        v_return_text := '' || v_token_array[( v_remainder + 1 )] || v_return_text;
 
-        EXIT WHEN var_interim <= 0;
+        EXIT WHEN v_interim <= 0;
 
     END LOOP conversion_loop;
 
-    RETURN var_return_text;
+    RETURN v_return_text;
 
 END;
 $BODY$
@@ -62,26 +62,26 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
     -- Parameters
-    var_p_base   ms_syst_priv.comments_config_function_param;
-    var_p_tokens ms_syst_priv.comments_config_function_param;
-    var_p_value  ms_syst_priv.comments_config_function_param;
+    v_p_base   ms_syst_priv.comments_config_function_param;
+    v_p_tokens ms_syst_priv.comments_config_function_param;
+    v_p_value  ms_syst_priv.comments_config_function_param;
 BEGIN
 
     --
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_priv';
-    var_comments_config.function_name   := 'nonstandard_encode';
+    v_comments_config.function_schema := 'ms_syst_priv';
+    v_comments_config.function_name   := 'nonstandard_encode';
 
-    var_comments_config.trigger_function := FALSE;
-    var_comments_config.trigger_timing   := ARRAY [ ]::text[ ];
-    var_comments_config.trigger_ops      := ARRAY [ ]::text[ ];
+    v_comments_config.trigger_function := FALSE;
+    v_comments_config.trigger_timing   := ARRAY [ ]::text[ ];
+    v_comments_config.trigger_ops      := ARRAY [ ]::text[ ];
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Performs an encode operation, similar to the standard encode function, but for
 non-standard encoding schemes such as Base32 or Base36.$DOC$;
 
@@ -89,28 +89,28 @@ non-standard encoding schemes such as Base32 or Base36.$DOC$;
     -- Parameter Configs
     --
 
-    var_p_base.param_name := 'p_base';
-    var_p_base.description :=
+    v_p_base.param_name := 'p_base';
+    v_p_base.description :=
 $DOC$The number base that the encoding system is expecting.  For example, Base36
 the `p_base` value is `36`.$DOC$;
 
-    var_p_tokens.param_name := 'p_tokens';
-    var_p_tokens.description :=
+    v_p_tokens.param_name := 'p_tokens';
+    v_p_tokens.description :=
 $DOC$The tokens to use in representing the numbering scheme.  The count of
 characters passed in this parameter should match the `p_base` parameter.$DOC$;
 
-    var_p_value.param_name := 'p_value';
-    var_p_value.description :=
+    v_p_value.param_name := 'p_value';
+    v_p_value.description :=
 $DOC$The decimal value to encode in the requested base.$DOC$;
 
-    var_comments_config.params :=
+    v_comments_config.params :=
         ARRAY [
-              var_p_base
-            , var_p_tokens
-            , var_p_value
+              v_p_base
+            , v_p_tokens
+            , v_p_value
             ]::ms_syst_priv.comments_config_function_param[];
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

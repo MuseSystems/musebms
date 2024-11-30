@@ -13,9 +13,9 @@
 DO
 $DOCUMENTATION$
 DECLARE
-    var_current_database text := current_database();
+    v_current_database text := current_database();
 
-    var_comment_text text :=
+    v_comment_text text :=
 $LICENSE$
 __Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems__
 
@@ -37,8 +37,8 @@ BEGIN
 
     EXECUTE format(
         'COMMENT ON DATABASE %1$I IS %2$L;',
-        var_current_database,
-        var_comment_text);
+        v_current_database,
+        v_comment_text);
 
 END;
 $DOCUMENTATION$;

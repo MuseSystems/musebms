@@ -59,11 +59,11 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_session_data    ms_syst_priv.comments_config_table_column;
-    var_session_expires ms_syst_priv.comments_config_table_column;
+    v_session_data    ms_syst_priv.comments_config_table_column;
+    v_session_expires ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -71,38 +71,38 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_sessions';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_sessions';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Database persistence of user interface related session data.$DOC$;
 
     --
     -- Column Configs
     --
 
-    var_session_data.column_name := 'session_data';
-    var_session_data.description :=
+    v_session_data.column_name := 'session_data';
+    v_session_data.description :=
 $DOC$A binary representation of user session data.  The data itself will vary
 depending on the specific needs of user interface interactions.$DOC$;
 
-    var_session_expires.column_name := 'session_expires';
-    var_session_expires.description :=
+    v_session_expires.column_name := 'session_expires';
+    v_session_expires.description :=
 $DOC$A Timestamp indicating the Date/Time at which the session will no longer be
 considered valid and will eligible for purging from the system.$DOC$;
-    var_session_expires.general_usage :=
+    v_session_expires.general_usage :=
 $DOC$Prior to the expiration time, the session may be renewed and the session_expires
 time may be updated to a later time.  After the session_expires timestamp is
 past, however, the session may not be updated and a new session will need to be
 established, typically via a new user authentication process.$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_session_data
-            , var_session_expires
+              v_session_data
+            , v_session_expires
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

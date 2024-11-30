@@ -18,9 +18,9 @@ $BODY$
 -- muse.information@musesystems.com :: https://muse.systems
 
 DECLARE
-    var_table regclass := ( p_table_schema || '.' || p_table_name )::regclass;
+    v_table regclass := ( p_table_schema || '.' || p_table_name )::regclass;
 
-    var_common_col_names text[] :=
+    v_common_col_names text[] :=
         ARRAY [
               'id'
             , 'internal_name'
@@ -38,29 +38,29 @@ DECLARE
             , 'diag_row_version'
             , 'diag_update_count']::text[];
 
-    var_id text :=
+    v_id text :=
 $DOC$The record's primary key.  The definitive identifier of the record in the
 system.$DOC$;
 
-    var_internal_name text :=
+    v_internal_name text :=
 $DOC$A candidate key useful for programmatic references to individual records.$DOC$;
 
-    var_display_name text :=
+    v_display_name text :=
 $DOC$A friendly name and candidate key for the record, suitable for use in user
 interactions$DOC$;
 
-    var_external_name text :=
+    v_external_name text :=
 $DOC$A non-unique/non-key value used to display to users and external parties where
 uniqueness is less of a concern than specific end user presentation.$DOC$;
 
-    var_syst_defined text :=
+    v_syst_defined text :=
 $DOC$Values of `TRUE` in this column indicate that the record is considered a
 "System Defined" record, a record which is created and primarily maintained by
 the system using automated processes.  A value of `FALSE` indicates that the
 record is considered a "User Defined" record which is maintained by user actions
 in the application.$DOC$;
 
-    var_user_maintainable text :=
+    v_user_maintainable text :=
 $DOC$If a record is system defined (see the `syst_defined` column), there may be
 some user data maintenance operations permitted in some cases.  If the value of
 this column for a record is `TRUE` and the record is also "System Defined", then
@@ -71,44 +71,44 @@ column will have no meaning or effect; user defined records may set this value
 `TRUE` as a simple information point indicating that the record is user
 maintainable.$DOC$;
 
-    var_syst_description text :=
+    v_syst_description text :=
 $DOC$A system defined description indicating the purpose and use cases of a given
 record.  Text defined in this column is system maintained and should not be
 changed under normal circumstances.$DOC$;
 
-    var_user_description text :=
+    v_user_description text :=
 $DOC$An optional user defined description of the record and its use cases.  If this
 value is not `NULL`, the value will override any `syst_description` defined text
 in application user interfaces and other presentations.$DOC$;
 
-    var_diag_timestamp_created text :=
+    v_diag_timestamp_created text :=
 $DOC$The database server date/time when the transaction which created the record
 started.$DOC$;
 
-    var_diag_role_created text :=
+    v_diag_role_created text :=
 $DOC$The database role which created the record.$DOC$;
 
-    var_diag_timestamp_modified text :=
+    v_diag_timestamp_modified text :=
 $DOC$The database server date/time when the transaction which modified the record
 started.  This field will be the same as diag_timestamp_created for inserted
 records.$DOC$;
 
-    var_diag_wallclock_modified text :=
+    v_diag_wallclock_modified text :=
 $DOC$The database server date/time at the moment the record was actually modified.
 For long running transactions this time may be significantly later than the
 value of diag_timestamp_modified.$DOC$;
 
-    var_diag_role_modified text :=
+    v_diag_role_modified text :=
 $DOC$The database role which modified the record.$DOC$;
 
-    var_diag_row_version text :=
+    v_diag_row_version text :=
 $DOC$The current version of the row.  The value here indicates how many actual
 data changes have been made to the row.  If an update of the row leaves all data
 fields the same, disregarding the updates to the diag_* columns, the row version
 is not updated, nor are any updates made to the other diag_* columns other than
 diag_update_count.$DOC$;
 
-    var_diag_update_count text :=
+    v_diag_update_count text :=
 $DOC$Records the number of times the record has been updated regardless as to if
 the update actually changed any data.  In this way needless or redundant record
 updates can be found.  This row starts at 0 and therefore may be the same as the
@@ -127,35 +127,35 @@ BEGIN
                 --description
                 , CASE
                     WHEN pa.attname = 'id' THEN
-                        var_id
+                        v_id
                     WHEN pa.attname = 'internal_name' THEN
-                        var_internal_name
+                        v_internal_name
                     WHEN pa.attname = 'display_name' THEN
-                        var_display_name
+                        v_display_name
                     WHEN pa.attname = 'external_name' THEN
-                        var_external_name
+                        v_external_name
                     WHEN pa.attname = 'syst_defined' THEN
-                        var_syst_defined
+                        v_syst_defined
                     WHEN pa.attname = 'user_maintainable' THEN
-                        var_user_maintainable
+                        v_user_maintainable
                     WHEN pa.attname = 'syst_description' THEN
-                        var_syst_description
+                        v_syst_description
                     WHEN pa.attname = 'user_description' THEN
-                        var_user_description
+                        v_user_description
                     WHEN pa.attname = 'diag_timestamp_created' THEN
-                        var_diag_timestamp_created
+                        v_diag_timestamp_created
                     WHEN pa.attname = 'diag_role_created' THEN
-                        var_diag_role_created
+                        v_diag_role_created
                     WHEN pa.attname = 'diag_timestamp_modified' THEN
-                        var_diag_timestamp_modified
+                        v_diag_timestamp_modified
                     WHEN pa.attname = 'diag_wallclock_modified' THEN
-                        var_diag_wallclock_modified
+                        v_diag_wallclock_modified
                     WHEN pa.attname = 'diag_role_modified' THEN
-                        var_diag_role_modified
+                        v_diag_role_modified
                     WHEN pa.attname = 'diag_row_version' THEN
-                        var_diag_row_version
+                        v_diag_row_version
                     WHEN pa.attname = 'diag_update_count' THEN
-                        var_diag_update_count
+                        v_diag_update_count
                     ELSE
                         NULL::text
                   END
@@ -192,9 +192,9 @@ BEGIN
         )
     FROM pg_attribute pa
     WHERE
-          pa.attrelid = var_table
+          pa.attrelid = v_table
       AND pa.attnum > 0
-      AND pa.attname::text = ANY (var_common_col_names)
+      AND pa.attname::text = ANY (v_common_col_names)
       AND NOT pa.attisdropped;
 
 END;
@@ -223,26 +223,26 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
     -- Parameters
-    var_p_table_schema ms_syst_priv.comments_config_function_param;
-    var_p_table_name   ms_syst_priv.comments_config_function_param;
+    v_p_table_schema ms_syst_priv.comments_config_function_param;
+    v_p_table_name   ms_syst_priv.comments_config_function_param;
 BEGIN
 
     --
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_priv';
-    var_comments_config.function_name   := 'generate_comments_table_common_columns';
+    v_comments_config.function_schema := 'ms_syst_priv';
+    v_comments_config.function_name   := 'generate_comments_table_common_columns';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Provides boilerplate column comment configurations for columns which are common
 to many columns and applies these comment configurations to any table columns
 which are found to be in the set of common columns.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$Note that if there are customizations or overrides desired when documenting
 these common columns for a given table, such overrides should appear in the
 columns list passed to `ms_syst_priv.generate_comments_table`, directly by
@@ -253,22 +253,22 @@ on the desired column directly.$DOC$;
     -- Parameter Configs
     --
 
-    var_p_table_schema.param_name := 'p_table_schema';
-    var_p_table_schema.description :=
+    v_p_table_schema.param_name := 'p_table_schema';
+    v_p_table_schema.description :=
 $DOC$The name of the schema which hosts the table.$DOC$;
 
-    var_p_table_name.param_name := 'p_table_name';
-    var_p_table_name.description :=
+    v_p_table_name.param_name := 'p_table_name';
+    v_p_table_name.description :=
 $DOC$The name of the table for which common column comments should be added.$DOC$;
 
 
-    var_comments_config.params :=
+    v_comments_config.params :=
         ARRAY [
-              var_p_table_schema
-            , var_p_table_name
+              v_p_table_schema
+            , v_p_table_name
             ]::ms_syst_priv.comments_config_function_param[];
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

@@ -46,12 +46,12 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- View
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
     -- View Columns
-    var_interaction_context_id  ms_syst_priv.comments_config_apiview_column;
-    var_perm_id                 ms_syst_priv.comments_config_apiview_column;
-    var_interaction_category_id ms_syst_priv.comments_config_apiview_column;
+    v_interaction_context_id  ms_syst_priv.comments_config_apiview_column;
+    v_perm_id                 ms_syst_priv.comments_config_apiview_column;
+    v_interaction_category_id ms_syst_priv.comments_config_apiview_column;
 
 BEGIN
 
@@ -59,17 +59,17 @@ BEGIN
     -- API View Config
     --
 
-    var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_interaction_actions';
-    var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_interaction_actions';
-    var_view_config.user_records := FALSE;
-    var_view_config.syst_records := TRUE;
-    var_view_config.syst_select  := TRUE;
-    var_view_config.syst_update  := TRUE;
-    var_view_config.syst_delete  := FALSE;
-    var_view_config.generate_common := TRUE;
-    var_view_config.supplemental :=
+    v_view_config.table_schema := 'ms_syst_data';
+    v_view_config.table_name   := 'syst_interaction_actions';
+    v_view_config.view_schema  := 'ms_syst';
+    v_view_config.view_name    := 'syst_interaction_actions';
+    v_view_config.user_records := FALSE;
+    v_view_config.syst_records := TRUE;
+    v_view_config.syst_select  := TRUE;
+    v_view_config.syst_update  := TRUE;
+    v_view_config.syst_delete  := FALSE;
+    v_view_config.generate_common := TRUE;
+    v_view_config.supplemental :=
 $DOC$While this API View doesn't currently allow the creation of strictly "User
 Defined" records, if the parent Integration Context record is user maintainable,
 this API view will allow the creation of new records.  These user added records,
@@ -82,24 +82,24 @@ record would not be deletable.$DOC$;
     -- Column Configs
     --
 
-    var_interaction_context_id.column_name      := 'interaction_context_id';
-    var_interaction_context_id.required         := TRUE;
-    var_interaction_context_id.user_update      := FALSE;
+    v_interaction_context_id.column_name      := 'interaction_context_id';
+    v_interaction_context_id.required         := TRUE;
+    v_interaction_context_id.user_update      := FALSE;
 
-    var_perm_id.column_name      := 'perm_id';
-    var_perm_id.syst_update_mode := 'maint';
+    v_perm_id.column_name      := 'perm_id';
+    v_perm_id.syst_update_mode := 'maint';
 
-    var_interaction_category_id.column_name      := 'interaction_category_id';
-    var_interaction_category_id.syst_update_mode := 'maint';
+    v_interaction_category_id.column_name      := 'interaction_category_id';
+    v_interaction_category_id.syst_update_mode := 'maint';
 
-    var_view_config.columns :=
+    v_view_config.columns :=
         ARRAY [
-            var_interaction_context_id
-            ,var_perm_id
-            ,var_interaction_category_id
+            v_interaction_context_id
+            ,v_perm_id
+            ,v_interaction_category_id
             ]::ms_syst_priv.comments_config_apiview_column[];
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

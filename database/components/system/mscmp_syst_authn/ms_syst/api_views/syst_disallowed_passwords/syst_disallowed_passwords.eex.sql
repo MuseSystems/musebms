@@ -33,10 +33,10 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- View
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
     -- View Columns
-    var_password_hash ms_syst_priv.comments_config_apiview_column;
+    v_password_hash ms_syst_priv.comments_config_apiview_column;
 
 BEGIN
 
@@ -44,30 +44,30 @@ BEGIN
     -- API View Config
     --
 
-    var_view_config.table_schema    := 'ms_syst_data';
-    var_view_config.table_name      := 'syst_disallowed_passwords';
-    var_view_config.view_schema     := 'ms_syst';
-    var_view_config.view_name       := 'syst_disallowed_passwords';
-    var_view_config.user_update     := FALSE;
-    var_view_config.generate_common := FALSE;
+    v_view_config.table_schema    := 'ms_syst_data';
+    v_view_config.table_name      := 'syst_disallowed_passwords';
+    v_view_config.view_schema     := 'ms_syst';
+    v_view_config.view_name       := 'syst_disallowed_passwords';
+    v_view_config.user_update     := FALSE;
+    v_view_config.generate_common := FALSE;
 
     --
     -- Column Configs
     --
 
-    var_password_hash.column_name      := 'password_hash';
-    var_password_hash.required         := TRUE;
-    var_password_hash.unique_values    := TRUE;
-    var_password_hash.supplemental     :=
+    v_password_hash.column_name      := 'password_hash';
+    v_password_hash.required         := TRUE;
+    v_password_hash.unique_values    := TRUE;
+    v_password_hash.supplemental     :=
 $DOC$Attempting to `INSERT` a duplicate disallowed password using this API View
 will simply result in the inserted record being silently ignored in favor of the
 existing record.$DOC$;
 
 
-    var_view_config.columns :=
-        ARRAY [ var_password_hash ]::ms_syst_priv.comments_config_apiview_column[];
+    v_view_config.columns :=
+        ARRAY [ v_password_hash ]::ms_syst_priv.comments_config_apiview_column[];
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

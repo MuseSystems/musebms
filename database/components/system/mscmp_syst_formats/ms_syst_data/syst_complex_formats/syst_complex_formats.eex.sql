@@ -71,7 +71,7 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
 BEGIN
 
@@ -79,10 +79,10 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_complex_formats';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_complex_formats';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Establishes definitions for complex data types and their user interface related
 formatting.
 
@@ -91,7 +91,7 @@ names, and phone numbers; in each of these cases there are typically multiple
 fields, but internationally there is no consistent definition of what fields are
 available and how they should be ordered or arranged.$DOC$;
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

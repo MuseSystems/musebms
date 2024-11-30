@@ -74,39 +74,39 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
 DO
 $DOCUMENTATION$
 DECLARE
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
-    var_default_syst_options ms_syst_priv.comments_config_table_column;
-    var_default_user_options ms_syst_priv.comments_config_table_column;
+    v_default_syst_options ms_syst_priv.comments_config_table_column;
+    v_default_user_options ms_syst_priv.comments_config_table_column;
 BEGIN
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_enums';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_enums';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Enumerates the enumerations known to the system along with additional metadata
 useful in applying them appropriately.$DOC$;
 
-    var_default_syst_options.column_name := 'default_syst_options';
-    var_default_syst_options.description :=
+    v_default_syst_options.column_name := 'default_syst_options';
+    v_default_syst_options.description :=
 $DOC$Establishes the expected extended system options along with default values if
 applicable.$DOC$;
 
-    var_default_syst_options.general_usage :=
+    v_default_syst_options.general_usage :=
 $DOC$Note that this setting is used to both validate and set defaults in the
 `syst_enum_items.syst_options` column.$DOC$;
 
-    var_default_user_options.column_name := 'default_user_options';
-    var_default_user_options.description :=
+    v_default_user_options.column_name := 'default_user_options';
+    v_default_user_options.description :=
 $DOC$Allows a user to set the definition of syst_enum_items.user_options values and
 provide defaults for those values if appropriate.$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_default_syst_options
-            , var_default_user_options]::ms_syst_priv.comments_config_table_column[];
+              v_default_syst_options
+            , v_default_user_options]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config);
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config);
 
 END;
 $DOCUMENTATION$;

@@ -107,14 +107,14 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_owning_entity_id ms_syst_priv.comments_config_table_column;
-    var_contact_type_id  ms_syst_priv.comments_config_table_column;
-    var_contact_state_id ms_syst_priv.comments_config_table_column;
-    var_contact_data     ms_syst_priv.comments_config_table_column;
-    var_contact_notes    ms_syst_priv.comments_config_table_column;
+    v_owning_entity_id ms_syst_priv.comments_config_table_column;
+    v_contact_type_id  ms_syst_priv.comments_config_table_column;
+    v_contact_state_id ms_syst_priv.comments_config_table_column;
+    v_contact_data     ms_syst_priv.comments_config_table_column;
+    v_contact_notes    ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -122,14 +122,14 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_appl_data';
-    var_comments_config.table_name   := 'mstr_contacts';
+    v_comments_config.table_schema := 'ms_appl_data';
+    v_comments_config.table_name   := 'mstr_contacts';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Represents a single method of contact for a person, entity, place, or other
 contextually relevant association.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$Note that there is a weakness in this part of the schema design in that contact
 information doesn't make sense outside of assignment to a person, facility, or
 entity, but such assignment is indirect through role assignments.  This means it
@@ -141,10 +141,10 @@ association.$DOC$;
     -- Column Configs
     --
 
-    var_owning_entity_id.column_name := 'owning_entity_id';
-    var_owning_entity_id.description :=
+    v_owning_entity_id.column_name := 'owning_entity_id';
+    v_owning_entity_id.description :=
 $DOC$Indicates the entity which is the owner or "controlling".$DOC$;
-    var_owning_entity_id.general_usage :=
+    v_owning_entity_id.general_usage :=
 $DOC$There are a couple of ways this can be used.  The first case is illustrated by
 the example of a managed entity and an staffing entity that is an individual.
 The owning entity in this case will be the managed entity for contacts such as
@@ -155,39 +155,39 @@ In this case the owning entity is the entity with which the managed entity has a
 relationship since a customer, vendor, or bank determines their own contact
 details.$DOC$;
 
-    var_contact_state_id.column_name := 'contact_state_id';
-    var_contact_state_id.description :=
+    v_contact_state_id.column_name := 'contact_state_id';
+    v_contact_state_id.description :=
 $DOC$Establishes the current life-cycle state of the contact record, such as
 whether the record is active or not.$DOC$;
 
-    var_contact_type_id.column_name := 'contact_type_id';
-    var_contact_type_id.description :=
+    v_contact_type_id.column_name := 'contact_type_id';
+    v_contact_type_id.description :=
 $DOC$Indicates the type of the contact record.  Contact records store inforamtion of
 varying types such as phone numbers, physical addresses, email addresses, etc.
 The value in this column establishes which kind of contact data is being stored
 and indicates the data processing rules to apply.$DOC$;
 
-    var_contact_data.column_name := 'contact_data';
-    var_contact_data.description :=
+    v_contact_data.column_name := 'contact_data';
+    v_contact_data.description :=
 $DOC$Contains the actual contact data being stored by the record as well as
 associated metadata such as specialized data fields, mapping of the specialized
 fields to standard representation for data maintenance, display, printing, and
 integration.$DOC$;
 
-    var_contact_notes.column_name := 'contact_notes';
-    var_contact_notes.description :=
+    v_contact_notes.column_name := 'contact_notes';
+    v_contact_notes.description :=
 $DOC$Optional user provided notes related to the Contact record.$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_owning_entity_id
-            , var_contact_type_id
-            , var_contact_state_id
-            , var_contact_data
-            , var_contact_notes
+              v_owning_entity_id
+            , v_contact_type_id
+            , v_contact_state_id
+            , v_contact_data
+            , v_contact_notes
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

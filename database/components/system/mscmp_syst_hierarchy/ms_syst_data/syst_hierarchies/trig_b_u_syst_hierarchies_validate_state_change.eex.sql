@@ -16,7 +16,7 @@ $BODY$
 
 DECLARE
 
-    var_context_data record;
+    v_context_data record;
 
 BEGIN
 
@@ -24,7 +24,7 @@ BEGIN
         RETURN new;
     END IF;
 
-    SELECT INTO var_context_data
+    SELECT INTO v_context_data
         eft.internal_name AS new_state_name
     FROM
         ms_syst_data.syst_enum_items ei
@@ -32,7 +32,7 @@ BEGIN
                  ON eft.id = ei.functional_type_id
     WHERE ei.id = new.hierarchy_state_id;
 
-    CASE var_context_data.new_state_name
+    CASE v_context_data.new_state_name
         WHEN 'hierarchy_states_active' THEN
 
             IF NOT ms_syst_priv.is_hierarchy_config_valid( new ) THEN
@@ -47,8 +47,6 @@ BEGIN
                                      p_proc_schema    => 'ms_appl_data'
                                     ,p_proc_name      =>
                                         'trig_b_u_syst_hierarchies_validate_state_change'
-                                    ,p_exception_name => 'invalid_state'
-                                    ,p_errcode        => 'PM003'
                                     ,p_param_data     =>
                                         jsonb_build_object('new', new, 'old', old)
                                     ,p_context_data   =>
@@ -57,7 +55,7 @@ BEGIN
                                             ,'tg_when',       tg_when
                                             ,'tg_schema',     tg_table_schema
                                             ,'tg_table_name', tg_table_name)),
-                        ERRCODE = 'PM003',
+                        ERRCODE = 'PM108',
                         SCHEMA  = tg_table_schema,
                         TABLE   = tg_table_name;
 
@@ -81,8 +79,6 @@ BEGIN
                                      p_proc_schema    => 'ms_appl_data'
                                     ,p_proc_name      =>
                                         'trig_b_u_syst_hierarchies_validate_state_change'
-                                    ,p_exception_name => 'invalid_state'
-                                    ,p_errcode        => 'PM003'
                                     ,p_param_data     =>
                                         jsonb_build_object('new', new, 'old', old)
                                     ,p_context_data   =>
@@ -91,7 +87,7 @@ BEGIN
                                             ,'tg_when',       tg_when
                                             ,'tg_schema',     tg_table_schema
                                             ,'tg_table_name', tg_table_name)),
-                        ERRCODE = 'PM003',
+                        ERRCODE = 'PM108',
                         SCHEMA  = tg_table_schema,
                         TABLE   = tg_table_name;
 
@@ -118,7 +114,7 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
 BEGIN
 
@@ -126,25 +122,25 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_data';
-    var_comments_config.function_name   := 'trig_b_u_syst_hierarchies_validate_state_change';
+    v_comments_config.function_schema := 'ms_syst_data';
+    v_comments_config.function_name   := 'trig_b_u_syst_hierarchies_validate_state_change';
 
-    var_comments_config.trigger_function := TRUE;
-    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
-    var_comments_config.trigger_ops      := ARRAY [ 'u' ]::text[ ];
+    v_comments_config.trigger_function := TRUE;
+    v_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    v_comments_config.trigger_ops      := ARRAY [ 'u' ]::text[ ];
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Checks that a Hierarchy record's state may be changed while ensuring that
 such a change doesn't allow for data inconsistencies with either of the
 Hierarchy or the data of Hierarchy implementing Components.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$Setting the Hierarchy to an "active" state requires that the Hierarchy and its
 associated Hierarchy Items are complete and fully self-consistent.  For the
 "inactive" check, the Hierarchy may not be in use which is defined as being
 referenced in the data of Hierarchy implementing Components.$DOC$;
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

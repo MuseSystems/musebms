@@ -13,14 +13,14 @@
 DO
 $INTERACTION_INTEGRATION_TEST_INIT$
 DECLARE
-    var_data jsonb;
+    v_data jsonb;
 
-    var_category jsonb;
-    var_context  jsonb;
+    v_category jsonb;
+    v_context  jsonb;
 
 BEGIN
 
-    var_data := $TEST_DATA$
+    v_data := $TEST_DATA$
     {
       "interaction_categories": [
         {
@@ -154,8 +154,8 @@ BEGIN
     $TEST_DATA$;
 
     << interaction_catagories_loop >>
-    FOR var_category IN
-        SELECT q FROM jsonb_array_elements( var_data -> 'interaction_categories') q
+    FOR v_category IN
+        SELECT q FROM jsonb_array_elements( v_data -> 'interaction_categories') q
     LOOP
 
         INSERT INTO ms_syst_data.syst_interaction_categories
@@ -166,26 +166,26 @@ BEGIN
             , syst_description
             , user_description )
         VALUES
-            ( var_category ->> 'internal_name'
-            , var_category ->> 'display_name'
+            ( v_category ->> 'internal_name'
+            , v_category ->> 'display_name'
             , ( SELECT id
                 FROM ms_syst_data.syst_perms
-                WHERE internal_name = var_category ->> 'perm_id' )
-            , (var_category ->> 'syst_defined')::boolean
-            , var_category ->> 'syst_description'
-            , var_category ->> 'user_description' );
+                WHERE internal_name = v_category ->> 'perm_id' )
+            , (v_category ->> 'syst_defined')::boolean
+            , v_category ->> 'syst_description'
+            , v_category ->> 'user_description' );
 
     END LOOP interaction_catagories_loop;
 
     << interaction_contexts_loop >>
-    FOR var_context IN
-        SELECT q FROM jsonb_array_elements( var_data -> 'interaction_contexts') q
+    FOR v_context IN
+        SELECT q FROM jsonb_array_elements( v_data -> 'interaction_contexts') q
     LOOP
 
         DECLARE
-            var_context_id uuid;
-            var_state      jsonb;
-            var_action     jsonb;
+            v_context_id uuid;
+            v_state      jsonb;
+            v_action     jsonb;
 
         BEGIN
 
@@ -199,55 +199,55 @@ BEGIN
                 , syst_description
                 , user_description )
             VALUES
-                ( var_context ->> 'internal_name'
-                , var_context ->> 'display_name'
+                ( v_context ->> 'internal_name'
+                , v_context ->> 'display_name'
                 , ( SELECT id
                     FROM ms_syst_data.syst_interaction_categories
-                    WHERE internal_name = var_context ->> 'interaction_category_id' )
+                    WHERE internal_name = v_context ->> 'interaction_category_id' )
                 , ( SELECT id
                     FROM ms_syst_data.syst_perms
-                    WHERE internal_name = var_context ->> 'perm_id' )
-                , (var_context ->> 'syst_defined')::boolean
-                , (var_context ->> 'user_maintainable')::boolean
-                , var_context ->> 'syst_description'
-                , var_context ->> 'user_description' )
-            RETURNING id INTO var_context_id;
+                    WHERE internal_name = v_context ->> 'perm_id' )
+                , (v_context ->> 'syst_defined')::boolean
+                , (v_context ->> 'user_maintainable')::boolean
+                , v_context ->> 'syst_description'
+                , v_context ->> 'user_description' )
+            RETURNING id INTO v_context_id;
 
             << states_loop >>
-            FOR var_state IN
-                SELECT q FROM jsonb_array_elements( var_context -> 'states' ) q
+            FOR v_state IN
+                SELECT q FROM jsonb_array_elements( v_context -> 'states' ) q
             LOOP
 
                 INSERT INTO ms_syst_data.syst_interaction_fields
                     (interaction_context_id, internal_name, perm_id, interaction_category_id)
                 VALUES
-                    ( var_context_id
-                    , var_state ->> 'internal_name'
+                    ( v_context_id
+                    , v_state ->> 'internal_name'
                     , ( SELECT id
                         FROM ms_syst_data.syst_perms
-                        WHERE internal_name = var_state ->> 'perm_id' )
+                        WHERE internal_name = v_state ->> 'perm_id' )
                     , ( SELECT id
                         FROM ms_syst_data.syst_interaction_categories
-                        WHERE internal_name = var_state ->> 'interaction_category_id' ));
+                        WHERE internal_name = v_state ->> 'interaction_category_id' ));
 
             END LOOP states_loop;
 
             << actions_loop >>
-            FOR var_action IN
-                SELECT q FROM jsonb_array_elements( var_context -> 'actions' ) q
+            FOR v_action IN
+                SELECT q FROM jsonb_array_elements( v_context -> 'actions' ) q
             LOOP
 
                 INSERT INTO ms_syst_data.syst_interaction_actions
                     (interaction_context_id, internal_name, perm_id, interaction_category_id)
                 VALUES
-                    ( var_context_id
-                    , var_action ->> 'internal_name'
+                    ( v_context_id
+                    , v_action ->> 'internal_name'
                     , ( SELECT id
                         FROM ms_syst_data.syst_perms
-                        WHERE internal_name = var_action ->> 'perm_id' )
+                        WHERE internal_name = v_action ->> 'perm_id' )
                     , ( SELECT id
                         FROM ms_syst_data.syst_interaction_categories
-                        WHERE internal_name = var_action ->> 'interaction_category_id' ));
+                        WHERE internal_name = v_action ->> 'interaction_category_id' ));
 
             END LOOP actions_loop;
 

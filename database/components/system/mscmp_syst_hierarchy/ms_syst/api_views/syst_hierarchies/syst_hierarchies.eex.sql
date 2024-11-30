@@ -51,12 +51,12 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- View
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
     -- View Columns
-    var_hierarchy_type_id  ms_syst_priv.comments_config_apiview_column;
-    var_hierarchy_state_id ms_syst_priv.comments_config_apiview_column;
-    var_structured         ms_syst_priv.comments_config_apiview_column;
+    v_hierarchy_type_id  ms_syst_priv.comments_config_apiview_column;
+    v_hierarchy_state_id ms_syst_priv.comments_config_apiview_column;
+    v_structured         ms_syst_priv.comments_config_apiview_column;
 
 BEGIN
 
@@ -64,34 +64,34 @@ BEGIN
     -- API View Config
     --
 
-    var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_hierarchies';
-    var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_hierarchies';
-    var_view_config.syst_records := TRUE;
-    var_view_config.syst_update  := TRUE;
+    v_view_config.table_schema := 'ms_syst_data';
+    v_view_config.table_name   := 'syst_hierarchies';
+    v_view_config.view_schema  := 'ms_syst';
+    v_view_config.view_name    := 'syst_hierarchies';
+    v_view_config.syst_records := TRUE;
+    v_view_config.syst_update  := TRUE;
 
     --
     -- Column Configs
     --
 
-    var_hierarchy_type_id.column_name      := 'hierarchy_type_id';
-    var_hierarchy_type_id.required         := TRUE;
-    var_hierarchy_type_id.user_update      := FALSE;
-    
-    var_hierarchy_state_id.column_name      := 'hierarchy_state_id';
-    var_hierarchy_state_id.required         := TRUE;
-    
-    var_structured.column_name      := 'structured';
+    v_hierarchy_type_id.column_name      := 'hierarchy_type_id';
+    v_hierarchy_type_id.required         := TRUE;
+    v_hierarchy_type_id.user_update      := FALSE;
 
-    var_view_config.columns :=
+    v_hierarchy_state_id.column_name      := 'hierarchy_state_id';
+    v_hierarchy_state_id.required         := TRUE;
+
+    v_structured.column_name      := 'structured';
+
+    v_view_config.columns :=
         ARRAY [
-              var_hierarchy_type_id
-            , var_hierarchy_state_id
-            , var_structured
+              v_hierarchy_type_id
+            , v_hierarchy_state_id
+            , v_structured
             ]::ms_syst_priv.comments_config_apiview_column[];
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

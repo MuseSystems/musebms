@@ -77,12 +77,12 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_country_id             ms_syst_priv.comments_config_table_column;
-    var_address_format_id      ms_syst_priv.comments_config_table_column;
-    var_is_default_for_country ms_syst_priv.comments_config_table_column;
+    v_country_id             ms_syst_priv.comments_config_table_column;
+    v_address_format_id      ms_syst_priv.comments_config_table_column;
+    v_is_default_for_country ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -90,10 +90,10 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_appl_data';
-    var_comments_config.table_name   := 'mstr_country_address_format_assocs';
+    v_comments_config.table_schema := 'ms_appl_data';
+    v_comments_config.table_name   := 'mstr_country_address_format_assocs';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Establishes relationships between address format records and country records and
 allows recognizing an address format as the default format for the country.$DOC$;
 
@@ -101,27 +101,27 @@ allows recognizing an address format as the default format for the country.$DOC$
     -- Column Configs
     --
 
-    var_country_id.column_name := 'country_id';
-    var_country_id.description :=
+    v_country_id.column_name := 'country_id';
+    v_country_id.description :=
 $DOC$Identifies the country with with the address format is being associated.$DOC$;
 
-    var_address_format_id.column_name := 'address_format_id';
-    var_address_format_id.description :=
+    v_address_format_id.column_name := 'address_format_id';
+    v_address_format_id.description :=
 $DOC$Identifies the address format which is to be associated with the country.$DOC$;
 
-    var_is_default_for_country.column_name := 'is_default_for_country';
-    var_is_default_for_country.description :=
+    v_is_default_for_country.column_name := 'is_default_for_country';
+    v_is_default_for_country.description :=
 $DOC$If true, this format should be used as the default format for the country. There
 should only ever be one default for any one country_id.$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_country_id
-            , var_address_format_id
-            , var_is_default_for_country
+              v_country_id
+            , v_address_format_id
+            , v_is_default_for_country
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

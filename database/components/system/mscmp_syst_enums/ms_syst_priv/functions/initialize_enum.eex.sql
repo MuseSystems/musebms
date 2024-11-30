@@ -15,9 +15,9 @@ $BODY$
 -- muse.information@musesystems.com  :: https://muse.systems
 
 DECLARE
-    var_new_enum             ms_syst_data.syst_enums;
-    var_curr_functional_type jsonb;
-    var_curr_enum_item      jsonb;
+    v_new_enum             ms_syst_data.syst_enums;
+    v_curr_functional_type jsonb;
+    v_curr_enum_item      jsonb;
 
 BEGIN
 
@@ -39,10 +39,10 @@ BEGIN
           ,( p_enum_def -> 'user_maintainable' )::boolean
           ,p_enum_def -> 'default_syst_options'
         )
-    RETURNING * INTO var_new_enum;
+    RETURNING * INTO v_new_enum;
 
     << functional_type_loop >>
-    FOR var_curr_functional_type IN
+    FOR v_curr_functional_type IN
         SELECT jsonb_array_elements(p_enum_def -> 'functional_types')
     LOOP
 
@@ -56,17 +56,17 @@ BEGIN
             )
         VALUES
             (
-              var_curr_functional_type ->> 'internal_name'
-             ,var_curr_functional_type ->> 'display_name'
-             ,var_curr_functional_type ->> 'external_name'
-             ,var_new_enum.id
-             ,var_curr_functional_type ->> 'syst_description'
+              v_curr_functional_type ->> 'internal_name'
+             ,v_curr_functional_type ->> 'display_name'
+             ,v_curr_functional_type ->> 'external_name'
+             ,v_new_enum.id
+             ,v_curr_functional_type ->> 'syst_description'
             );
 
     END LOOP functional_type_loop;
 
     << enum_item_loop >>
-    FOR var_curr_enum_item IN
+    FOR v_curr_enum_item IN
         SELECT jsonb_array_elements(p_enum_def -> 'enum_items')
     LOOP
 
@@ -87,25 +87,25 @@ BEGIN
             )
         VALUES
             (
-                var_curr_enum_item ->> 'internal_name'
-               ,var_curr_enum_item ->> 'display_name'
-               ,var_curr_enum_item ->> 'external_name'
-               ,var_new_enum.id
+                v_curr_enum_item ->> 'internal_name'
+               ,v_curr_enum_item ->> 'display_name'
+               ,v_curr_enum_item ->> 'external_name'
+               ,v_new_enum.id
                ,( SELECT id
                   FROM ms_syst_data.syst_enum_functional_types
-                  WHERE internal_name = var_curr_enum_item ->> 'functional_type_name')
-               ,( var_curr_enum_item -> 'enum_default' )::boolean
-               ,( var_curr_enum_item -> 'functional_type_default' )::boolean
-               ,( var_curr_enum_item -> 'syst_defined' )::boolean
-               ,( var_curr_enum_item -> 'user_maintainable' )::boolean
-               ,var_curr_enum_item ->> 'syst_description'
+                  WHERE internal_name = v_curr_enum_item ->> 'functional_type_name')
+               ,( v_curr_enum_item -> 'enum_default' )::boolean
+               ,( v_curr_enum_item -> 'functional_type_default' )::boolean
+               ,( v_curr_enum_item -> 'syst_defined' )::boolean
+               ,( v_curr_enum_item -> 'user_maintainable' )::boolean
+               ,v_curr_enum_item ->> 'syst_description'
                ,coalesce(
                    (SELECT max(sort_order) + 1
                     FROM ms_syst_data.syst_enum_items
-                    WHERE enum_id = var_new_enum.id),
+                    WHERE enum_id = v_new_enum.id),
                    1
                     )
-               ,var_curr_enum_item -> 'syst_options'
+               ,v_curr_enum_item -> 'syst_options'
             );
 
     END LOOP enum_item_loop;

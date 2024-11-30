@@ -90,15 +90,15 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_perm_role_id ms_syst_priv.comments_config_table_column;
-    var_perm_id      ms_syst_priv.comments_config_table_column;
-    var_view_scope   ms_syst_priv.comments_config_table_column;
-    var_maint_scope  ms_syst_priv.comments_config_table_column;
-    var_admin_scope  ms_syst_priv.comments_config_table_column;
-    var_ops_scope    ms_syst_priv.comments_config_table_column;
+    v_perm_role_id ms_syst_priv.comments_config_table_column;
+    v_perm_id      ms_syst_priv.comments_config_table_column;
+    v_view_scope   ms_syst_priv.comments_config_table_column;
+    v_maint_scope  ms_syst_priv.comments_config_table_column;
+    v_admin_scope  ms_syst_priv.comments_config_table_column;
+    v_ops_scope    ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -106,13 +106,13 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_perm_role_grants';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_perm_role_grants';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Establishes the individual permissions which are granted by the given permission
 role.$DOC$;
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$Note that the absence of an explicit permission grant to a role is an implicit
 denial of that permission.$DOC$;
 
@@ -120,52 +120,52 @@ denial of that permission.$DOC$;
     -- Column Configs
     --
 
-    var_perm_role_id.column_name := 'perm_role_id';
-    var_perm_role_id.description :=
+    v_perm_role_id.column_name := 'perm_role_id';
+    v_perm_role_id.description :=
 $DOC$Identifies the role to which the permission grant is being made.$DOC$;
 
-    var_perm_id.column_name := 'perm_id';
-    var_perm_id.description :=
+    v_perm_id.column_name := 'perm_id';
+    v_perm_id.description :=
 $DOC$The permission being granted by the role.$DOC$;
 
-    var_view_scope.column_name := 'view_scope';
-    var_view_scope.description :=
+    v_view_scope.column_name := 'view_scope';
+    v_view_scope.description :=
 $DOC$Assigns the Scope of the Permission's View Right being granted by the Role.$DOC$;
-    var_view_scope.general_usage :=
+    v_view_scope.general_usage :=
 $DOC$The valid Scope options are defined by the Permission record.$DOC$;
 
-    var_maint_scope.column_name := 'maint_scope';
-    var_maint_scope.description :=
+    v_maint_scope.column_name := 'maint_scope';
+    v_maint_scope.description :=
 $DOC$Assigns the Scope of the Permission's Maintenance Right being granted by the
 Role.$DOC$;
-    var_maint_scope.general_usage :=
+    v_maint_scope.general_usage :=
 $DOC$The valid Scope options are defined by the Permission record.$DOC$;
 
-    var_admin_scope.column_name := 'admin_scope';
-    var_admin_scope.description :=
+    v_admin_scope.column_name := 'admin_scope';
+    v_admin_scope.description :=
 $DOC$Assigns the Scope of the Permission's Data Administration Right being granted by
 the Role.$DOC$;
-    var_admin_scope.general_usage :=
+    v_admin_scope.general_usage :=
 $DOC$The valid Scope options are defined by the Permission record.$DOC$;
 
-    var_ops_scope.column_name := 'ops_scope';
-    var_ops_scope.description :=
+    v_ops_scope.column_name := 'ops_scope';
+    v_ops_scope.description :=
 $DOC$Assigns the Scope of the Permission's Operations Right being granted by the
 Role.$DOC$;
-    var_ops_scope.general_usage :=
+    v_ops_scope.general_usage :=
 $DOC$The valid Scope options are defined by the Permission record.$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_perm_role_id
-            , var_perm_id
-            , var_view_scope
-            , var_maint_scope
-            , var_admin_scope
-            , var_ops_scope
+              v_perm_role_id
+            , v_perm_id
+            , v_view_scope
+            , v_maint_scope
+            , v_admin_scope
+            , v_ops_scope
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

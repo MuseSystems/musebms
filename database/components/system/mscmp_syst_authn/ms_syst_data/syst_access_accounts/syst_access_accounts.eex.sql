@@ -84,12 +84,12 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_owning_owner_id         ms_syst_priv.comments_config_table_column;
-    var_allow_global_logins     ms_syst_priv.comments_config_table_column;
-    var_access_account_state_id ms_syst_priv.comments_config_table_column;
+    v_owning_owner_id         ms_syst_priv.comments_config_table_column;
+    v_allow_global_logins     ms_syst_priv.comments_config_table_column;
+    v_access_account_state_id ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -97,10 +97,10 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_access_accounts';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_access_accounts';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Contains the known login accounts which are used solely for the purpose of
 authentication of users.  Authorization is handled on a per-Instance basis
 within the application.$DOC$;
@@ -109,17 +109,17 @@ within the application.$DOC$;
     -- Column Configs
     --
 
-    var_owning_owner_id.column_name := 'owning_owner_id';
-    var_owning_owner_id.description :=
+    v_owning_owner_id.column_name := 'owning_owner_id';
+    v_owning_owner_id.description :=
 $DOC$Associates the Access Account with a specific Owner.  This allows for access
 accounts which are identified and managed exclusively by a given Owner.$DOC$;
-    var_owning_owner_id.general_usage :=
+    v_owning_owner_id.general_usage :=
 $DOC$When this field is NULL, the assumption is that it's an independent access
 account.  An independent Access Account may be used, for example, by third party
 accountants that need to access the Instances of different Owners.$DOC$;
 
-    var_allow_global_logins.column_name := 'allow_global_logins';
-    var_allow_global_logins.description :=
+    v_allow_global_logins.column_name := 'allow_global_logins';
+    v_allow_global_logins.description :=
 $DOC$Indicates whether or not an Access Account may be used to login outside of the
 context of a specific Owner or Instance.  This use case supports Access Accounts
 which are independently managed, such as might be the case for external
@@ -139,24 +139,24 @@ global login interface may present the user with a choice of Instance Owners and
 then their Instances whereas the non-global login user must go directly to the
 login interface for a specific Owner (be that URL or other client-side specific
 identification.)$DOC$;
-    var_allow_global_logins.general_usage :=
+    v_allow_global_logins.general_usage :=
 $DOC$When true, allows an Access Account to log into the system without having an
 Owner or Instance specified in the login process.  When false, the Access
 Account is more tightly bound to a specific Owner and so only a specific Owner
 and Instances should be evaluated at login time.$DOC$;
 
-var_access_account_state_id.column_name := 'access_account_state_id';
-    var_access_account_state_id.description :=
+v_access_account_state_id.column_name := 'access_account_state_id';
+    v_access_account_state_id.description :=
 $DOC$The current life-cycle state of the Access Account.$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_owning_owner_id
-            , var_allow_global_logins
-            , var_access_account_state_id
+              v_owning_owner_id
+            , v_allow_global_logins
+            , v_access_account_state_id
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

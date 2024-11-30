@@ -35,8 +35,6 @@ BEGIN
                                  p_proc_schema    => 'ms_appl_data'
                                 ,p_proc_name      =>
                                     'trig_b_u_syst_hierarchies_validate_structured'
-                                ,p_exception_name => 'invalid_state'
-                                ,p_errcode        => 'PM003'
                                 ,p_param_data     =>
                                     jsonb_build_object('new', new, 'old', old)
                                 ,p_context_data   =>
@@ -45,7 +43,7 @@ BEGIN
                                         ,'tg_when',       tg_when
                                         ,'tg_schema',     tg_table_schema
                                         ,'tg_table_name', tg_table_name)),
-                    ERRCODE = 'PM003',
+                    ERRCODE = 'PM106',
                     SCHEMA  = tg_table_schema,
                     TABLE   = tg_table_name;
 
@@ -65,8 +63,6 @@ BEGIN
                                  p_proc_schema    => 'ms_appl_data'
                                 ,p_proc_name      =>
                                     'trig_b_u_syst_hierarchies_validate_structured'
-                                ,p_exception_name => 'invalid_state'
-                                ,p_errcode        => 'PM003'
                                 ,p_param_data     =>
                                     jsonb_build_object('new', new, 'old', old)
                                 ,p_context_data   =>
@@ -75,7 +71,7 @@ BEGIN
                                         ,'tg_when',       tg_when
                                         ,'tg_schema',     tg_table_schema
                                         ,'tg_table_name', tg_table_name)),
-                    ERRCODE = 'PM003',
+                    ERRCODE = 'PM107',
                     SCHEMA  = tg_table_schema,
                     TABLE   = tg_table_name;
 
@@ -101,7 +97,7 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
 BEGIN
 
@@ -109,19 +105,19 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_data';
-    var_comments_config.function_name   := 'trig_b_u_syst_hierarchies_validate_structured';
+    v_comments_config.function_schema := 'ms_syst_data';
+    v_comments_config.function_name   := 'trig_b_u_syst_hierarchies_validate_structured';
 
-    var_comments_config.trigger_function := TRUE;
-    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
-    var_comments_config.trigger_ops      := ARRAY [ 'u' ]::text[ ];
+    v_comments_config.trigger_function := TRUE;
+    v_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    v_comments_config.trigger_ops      := ARRAY [ 'u' ]::text[ ];
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$A trigger function which ensures that changing a hierarchy between being
 "structured" and "unstructured" is only possible when the Hierarchy record is
 in an "inactive" state.$DOC$;
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

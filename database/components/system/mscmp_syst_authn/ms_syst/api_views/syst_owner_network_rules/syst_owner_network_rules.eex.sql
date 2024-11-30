@@ -49,16 +49,16 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- View
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
     -- View Columns
-    var_owner_id         ms_syst_priv.comments_config_apiview_column;
-    var_ordering            ms_syst_priv.comments_config_apiview_column;
-    var_functional_type     ms_syst_priv.comments_config_apiview_column;
-    var_ip_host_or_network  ms_syst_priv.comments_config_apiview_column;
-    var_ip_host_range_lower ms_syst_priv.comments_config_apiview_column;
-    var_ip_host_range_upper ms_syst_priv.comments_config_apiview_column;
-    var_ip_family           ms_syst_priv.comments_config_apiview_column;
+    v_owner_id         ms_syst_priv.comments_config_apiview_column;
+    v_ordering            ms_syst_priv.comments_config_apiview_column;
+    v_functional_type     ms_syst_priv.comments_config_apiview_column;
+    v_ip_host_or_network  ms_syst_priv.comments_config_apiview_column;
+    v_ip_host_range_lower ms_syst_priv.comments_config_apiview_column;
+    v_ip_host_range_upper ms_syst_priv.comments_config_apiview_column;
+    v_ip_family           ms_syst_priv.comments_config_apiview_column;
 
 BEGIN
 
@@ -66,56 +66,56 @@ BEGIN
     -- API View Config
     --
 
-    var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_owner_network_rules';
-    var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_owner_network_rules';
+    v_view_config.table_schema := 'ms_syst_data';
+    v_view_config.table_name   := 'syst_owner_network_rules';
+    v_view_config.view_schema  := 'ms_syst';
+    v_view_config.view_name    := 'syst_owner_network_rules';
 
     --
     -- Column Configs
     --
 
-    var_owner_id.column_name      := 'owner_id';
-    var_owner_id.required         := TRUE;
-    var_owner_id.unique_values    := FALSE;
-    var_owner_id.user_update      := FALSE;
-    var_owner_id.supplemental     :=
+    v_owner_id.column_name      := 'owner_id';
+    v_owner_id.required         := TRUE;
+    v_owner_id.unique_values    := FALSE;
+    v_owner_id.user_update      := FALSE;
+    v_owner_id.supplemental     :=
 $DOC$This column is part of a composite key.  The combined values of `owner_id` and
 `ordering` must be unique.$DOC$;
 
-    var_ordering.column_name      := 'ordering';
-    var_ordering.required         := TRUE;
-    var_ordering.supplemental     :=
+    v_ordering.column_name      := 'ordering';
+    v_ordering.required         := TRUE;
+    v_ordering.supplemental     :=
 $DOC$This column is part of a composite key.  The combined values of `owner_id` and
 `ordering` must be unique.$DOC$;
 
-    var_functional_type.column_name      := 'functional_type';
-    var_functional_type.required         := TRUE;
+    v_functional_type.column_name      := 'functional_type';
+    v_functional_type.required         := TRUE;
 
-    var_ip_host_or_network.column_name      := 'ip_host_or_network';
+    v_ip_host_or_network.column_name      := 'ip_host_or_network';
 
-    var_ip_host_range_lower.column_name      := 'ip_host_range_lower';
+    v_ip_host_range_lower.column_name      := 'ip_host_range_lower';
 
-    var_ip_host_range_upper.column_name      := 'ip_host_range_upper';
+    v_ip_host_range_upper.column_name      := 'ip_host_range_upper';
 
-    var_ip_family.column_name      := 'ip_family';
-    var_ip_family.user_insert      := FALSE;
-    var_ip_family.user_update      := FALSE;
-    var_ip_family.override_description :=
+    v_ip_family.column_name      := 'ip_family';
+    v_ip_family.user_insert      := FALSE;
+    v_ip_family.user_update      := FALSE;
+    v_ip_family.override_description :=
 $DOC$Indicates which IP family (IPv4/IPv6) for which the record defines a rule.$DOC$;
 
-    var_view_config.columns :=
+    v_view_config.columns :=
         ARRAY [
-              var_owner_id
-            , var_ordering
-            , var_functional_type
-            , var_ip_host_or_network
-            , var_ip_host_range_lower
-            , var_ip_host_range_upper
-            , var_ip_family
+              v_owner_id
+            , v_ordering
+            , v_functional_type
+            , v_ip_host_or_network
+            , v_ip_host_range_lower
+            , v_ip_host_range_upper
+            , v_ip_family
             ]::ms_syst_priv.comments_config_apiview_column[];
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

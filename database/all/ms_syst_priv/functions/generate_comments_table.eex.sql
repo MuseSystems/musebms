@@ -18,38 +18,38 @@ $BODY$
 
 DECLARE
 
-    var_resolved_description text;
-    var_resolved_general_use text;
-    var_resolved_constraints text;
-    var_resolved_direct_use  text;
+    v_resolved_description text;
+    v_resolved_general_use text;
+    v_resolved_constraints text;
+    v_resolved_direct_use  text;
 
-    var_comment text;
+    v_comment text;
 
 BEGIN
 
-    var_resolved_description := p_comments_config.description;
+    v_resolved_description := p_comments_config.description;
 
-    var_resolved_general_use :=
+    v_resolved_general_use :=
         E'**General Usage**\n\n' || p_comments_config.general_usage;
 
-    var_resolved_constraints :=
+    v_resolved_constraints :=
         E'**Constraint Notes**\n\n' || p_comments_config.constraints;
 
-    var_resolved_direct_use :=
+    v_resolved_direct_use :=
         E'**Direct Usage**\n\n' || p_comments_config.direct_usage;
 
-    var_comment :=
+    v_comment :=
             CASE
                 WHEN
-                    var_resolved_description IS NOT NULL
-                        OR var_resolved_general_use IS NOT NULL
-                        OR var_resolved_constraints IS NOT NULL
-                        OR var_resolved_direct_use IS NOT NULL
+                    v_resolved_description IS NOT NULL
+                        OR v_resolved_general_use IS NOT NULL
+                        OR v_resolved_constraints IS NOT NULL
+                        OR v_resolved_direct_use IS NOT NULL
                 THEN
-                    coalesce( var_resolved_description || E'\n\n', '' ) ||
-                        coalesce( var_resolved_general_use || E'\n\n', '' ) ||
-                        coalesce( var_resolved_constraints || E'\n\n', '' ) ||
-                        coalesce( var_resolved_direct_use || E'\n\n', '' )
+                    coalesce( v_resolved_description || E'\n\n', '' ) ||
+                        coalesce( v_resolved_general_use || E'\n\n', '' ) ||
+                        coalesce( v_resolved_constraints || E'\n\n', '' ) ||
+                        coalesce( v_resolved_direct_use || E'\n\n', '' )
                 ELSE
                     E'This table is not yet documented.\n\n'
             END;
@@ -57,7 +57,7 @@ BEGIN
     EXECUTE format( 'COMMENT ON TABLE %1$I.%2$I IS %3$L;',
                     p_comments_config.table_schema,
                     p_comments_config.table_name,
-                    var_comment);
+                    v_comment);
 
     IF coalesce( p_comments_config.generate_common, TRUE ) THEN
         PERFORM
@@ -97,10 +97,10 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
     -- Parameters
-    var_p_comments_config ms_syst_priv.comments_config_function_param;
+    v_p_comments_config ms_syst_priv.comments_config_function_param;
 
 BEGIN
 
@@ -108,14 +108,14 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_priv';
-    var_comments_config.function_name   := 'generate_comments_table';
+    v_comments_config.function_schema := 'ms_syst_priv';
+    v_comments_config.function_name   := 'generate_comments_table';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Generates table comments, and optionally associated column comments, in a
 standardized format.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$The comments themselves are defined using an object of type
 `ms_syst_priv.comment_configs_table` which in turn is used as the parameter of
 this function.$DOC$;
@@ -124,17 +124,17 @@ this function.$DOC$;
     -- Parameter Configs
     --
 
-    var_p_comments_config.param_name := 'p_comments_config';
-    var_p_comments_config.description :=
+    v_p_comments_config.param_name := 'p_comments_config';
+    v_p_comments_config.description :=
 $DOC$A value of type `ms_syst_priv.comments_config_table` which describes the
 required and optional attributes for generating the column's comments.  See
 the comments for that database type for detailed information.$DOC$;
 
 
-    var_comments_config.params :=
-        ARRAY [ var_p_comments_config ]::ms_syst_priv.comments_config_function_param[];
+    v_comments_config.params :=
+        ARRAY [ v_p_comments_config ]::ms_syst_priv.comments_config_function_param[];
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

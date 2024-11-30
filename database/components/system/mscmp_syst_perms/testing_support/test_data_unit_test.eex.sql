@@ -13,7 +13,7 @@
 DO
 $PERMS_UNIT_TEST_INIT$
 DECLARE
-    var_data jsonb;
+    v_data jsonb;
 
 BEGIN
 
@@ -22,7 +22,7 @@ BEGIN
      **  Test Data Description
      **
      **********************************************************************/
-    var_data := $TEST_DATA$
+    v_data := $TEST_DATA$
     {
       "perm_functional_types": [
         {
@@ -321,7 +321,7 @@ BEGIN
       , perm_func_type ->> 'display_name'
       , perm_func_type ->> 'syst_description'
       , perm_func_type ->> 'user_description'
-    FROM jsonb_array_elements( var_data -> 'perm_functional_types' ) perm_func_type;
+    FROM jsonb_array_elements( v_data -> 'perm_functional_types' ) perm_func_type;
 
     ----------------------------------------------------
     -- Perms
@@ -344,7 +344,7 @@ BEGIN
       , array( SELECT jsonb_array_elements_text( perm -> 'maint_scope_options' ) )
       , array( SELECT jsonb_array_elements_text( perm -> 'admin_scope_options' ) )
       , array( SELECT jsonb_array_elements_text( perm -> 'ops_scope_options' ) )
-    FROM jsonb_array_elements( var_data -> 'perms' ) perm;
+    FROM jsonb_array_elements( v_data -> 'perms' ) perm;
 
     ----------------------------------------------------
     -- Perms Roles
@@ -366,7 +366,7 @@ BEGIN
       , (perm_role ->> 'syst_defined')::boolean
       , perm_role ->> 'syst_description'
       , perm_role ->> 'user_description'
-    FROM jsonb_array_elements( var_data -> 'perm_roles' ) perm_role;
+    FROM jsonb_array_elements( v_data -> 'perm_roles' ) perm_role;
 
     ----------------------------------------------------
     -- Perms Role Grants
@@ -386,6 +386,6 @@ BEGIN
       , perm_role_grant ->> 'maint_scope'
       , perm_role_grant ->> 'admin_scope'
       , perm_role_grant ->> 'ops_scope'
-    FROM jsonb_array_elements( var_data -> 'perm_role_grants' ) perm_role_grant;
+    FROM jsonb_array_elements( v_data -> 'perm_role_grants' ) perm_role_grant;
 END;
 $PERMS_UNIT_TEST_INIT$;

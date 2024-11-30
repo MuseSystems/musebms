@@ -16,11 +16,11 @@ $BODY$
 
 DECLARE
 
-    var_context_data record;
+    v_context_data record;
 
 BEGIN
 
-    SELECT INTO var_context_data
+    SELECT INTO v_context_data
         eft.internal_name = 'hierarchy_states_active' AS is_active
       , ch.structured
     FROM
@@ -32,7 +32,7 @@ BEGIN
     WHERE ch.id = new.hierarchy_id;
 
     CASE
-        WHEN var_context_data.is_active THEN
+        WHEN v_context_data.is_active THEN
 
             RAISE EXCEPTION
                 USING
@@ -43,8 +43,6 @@ BEGIN
                                  p_proc_schema    => 'ms_appl_data'
                                 ,p_proc_name      =>
                                     'trig_b_i_syst_hierarchy_items_hierarchy_prereqs'
-                                ,p_exception_name => 'invalid_state'
-                                ,p_errcode        => 'PM003'
                                 ,p_param_data     => to_jsonb( new )
                                 ,p_context_data   =>
                                     jsonb_build_object(
@@ -52,12 +50,12 @@ BEGIN
                                         ,'tg_when',       tg_when
                                         ,'tg_schema',     tg_table_schema
                                         ,'tg_table_name', tg_table_name)),
-                    ERRCODE = 'PM003',
+                    ERRCODE = 'PM106',
                     SCHEMA  = tg_table_schema,
                     TABLE   = tg_table_name;
 
 
-        WHEN NOT var_context_data.structured THEN
+        WHEN NOT v_context_data.structured THEN
 
             RAISE EXCEPTION
                 USING
@@ -67,8 +65,6 @@ BEGIN
                                  p_proc_schema    => 'ms_appl_data'
                                 ,p_proc_name      =>
                                     'trig_b_i_syst_hierarchy_items_hierarchy_prereqs'
-                                ,p_exception_name => 'invalid_state'
-                                ,p_errcode        => 'PM003'
                                 ,p_param_data     => to_jsonb( new )
                                 ,p_context_data   =>
                                     jsonb_build_object(
@@ -76,7 +72,7 @@ BEGIN
                                         ,'tg_when',       tg_when
                                         ,'tg_schema',     tg_table_schema
                                         ,'tg_table_name', tg_table_name)),
-                    ERRCODE = 'PM003',
+                    ERRCODE = 'PM107',
                     SCHEMA  = tg_table_schema,
                     TABLE   = tg_table_name;
 
@@ -101,7 +97,7 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
 BEGIN
 
@@ -109,18 +105,18 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_data';
-    var_comments_config.function_name   := 'trig_b_i_syst_hierarchy_items_hierarchy_prereqs';
+    v_comments_config.function_schema := 'ms_syst_data';
+    v_comments_config.function_name   := 'trig_b_i_syst_hierarchy_items_hierarchy_prereqs';
 
-    var_comments_config.trigger_function := TRUE;
-    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
-    var_comments_config.trigger_ops      := ARRAY [ 'i' ]::text[ ];
+    v_comments_config.trigger_function := TRUE;
+    v_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    v_comments_config.trigger_ops      := ARRAY [ 'i' ]::text[ ];
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Validates that the Hierarchy conditions of being in an "inactive" state and
 that the Hierarchy is a "structured" Hierarchy are true.$DOC$;
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

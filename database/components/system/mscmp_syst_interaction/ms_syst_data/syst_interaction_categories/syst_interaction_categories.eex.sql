@@ -74,20 +74,20 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_perm_id ms_syst_priv.comments_config_table_column;
+    v_perm_id ms_syst_priv.comments_config_table_column;
 BEGIN
 
     --
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_interaction_categories';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_interaction_categories';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Defines broad categories of both data fields and interactions which can cut
 across Interaction Contexts, but share a common permissioning need.
 
@@ -98,7 +98,7 @@ unit costing data by the grant (or not) of a sinlge permission.  We have a
 category of data points, all reflecting unit cost, which should be governable by
 a single permission for the category.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$Categorical permission checks are in addition to the existing Interaction
 Context or specific primary permission checks assigned to the data field or
 interaction.  In cases where the primary permission or the categorical
@@ -109,15 +109,15 @@ the most restrictive permission governs ("deny" wins over "grant").$DOC$;
     -- Column Configs
     --
 
-    var_perm_id.column_name := 'perm_id';
-    var_perm_id.description :=
+    v_perm_id.column_name := 'perm_id';
+    v_perm_id.description :=
 $DOC$An assigned permission which will be evaluated whenever a category member is
 accessed.$DOC$;
 
-    var_comments_config.columns :=
-        ARRAY [ var_perm_id ]::ms_syst_priv.comments_config_table_column[];
+    v_comments_config.columns :=
+        ARRAY [ v_perm_id ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

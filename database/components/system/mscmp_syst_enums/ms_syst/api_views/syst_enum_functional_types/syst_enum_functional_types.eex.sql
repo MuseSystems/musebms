@@ -50,31 +50,31 @@ CREATE TRIGGER a50_trig_i_d_syst_enum_functional_types
 DO
 $DOCUMENTATION$
 DECLARE
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
-    var_syst_defined ms_syst_priv.comments_config_apiview_column;
-    var_enum_id      ms_syst_priv.comments_config_apiview_column;
+    v_syst_defined ms_syst_priv.comments_config_apiview_column;
+    v_enum_id      ms_syst_priv.comments_config_apiview_column;
 
 BEGIN
 
-    var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_enum_functional_types';
-    var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_enum_functional_types';
-    var_view_config.syst_records := TRUE;
-    var_view_config.syst_update  := TRUE;
-    var_view_config.syst_delete  := FALSE;
+    v_view_config.table_schema := 'ms_syst_data';
+    v_view_config.table_name   := 'syst_enum_functional_types';
+    v_view_config.view_schema  := 'ms_syst';
+    v_view_config.view_name    := 'syst_enum_functional_types';
+    v_view_config.syst_records := TRUE;
+    v_view_config.syst_update  := TRUE;
+    v_view_config.syst_delete  := FALSE;
 
-    var_syst_defined.column_name      := 'syst_defined';
-    var_syst_defined.syst_update_mode := 'never';
-    var_syst_defined.user_insert      := FALSE;
-    var_syst_defined.user_update      := FALSE;
+    v_syst_defined.column_name      := 'syst_defined';
+    v_syst_defined.syst_update_mode := 'never';
+    v_syst_defined.user_insert      := FALSE;
+    v_syst_defined.user_update      := FALSE;
 
-    var_syst_defined.override_description :=
+    v_syst_defined.override_description :=
 $DOC$If true, this value indicates that the functional type is considered to be
 system defined and a part of the application.$DOC$;
 
-    var_syst_defined.supplemental :=
+    v_syst_defined.supplemental :=
 $DOC$This column is not part of the Functional Type underlying data and is a
 reflection of the Functional Type's parent enumeration since the parent
 determines if the functional type is  considered system defined.  If false, the
@@ -84,17 +84,17 @@ user functionality.
 See the documentation for ms_syst.syst_enums.syst_defined for a more complete
 complete description.$DOC$;
 
-    var_enum_id.column_name      := 'enum_id';
-    var_enum_id.syst_update_mode := 'never';
-    var_enum_id.user_update      := FALSE;
+    v_enum_id.column_name      := 'enum_id';
+    v_enum_id.syst_update_mode := 'never';
+    v_enum_id.user_update      := FALSE;
 
-    var_view_config.columns :=
+    v_view_config.columns :=
         ARRAY [
-              var_syst_defined
-            , var_enum_id
+              v_syst_defined
+            , v_enum_id
             ]::ms_syst_priv.comments_config_apiview_column[];
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

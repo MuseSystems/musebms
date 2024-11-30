@@ -15,13 +15,13 @@ $BODY$
 -- muse.information@musesystems.com  :: https://muse.systems
 
 DECLARE
-    var_syst_defined boolean;
+    v_syst_defined boolean;
 BEGIN
-    SELECT syst_defined INTO var_syst_defined
+    SELECT syst_defined INTO v_syst_defined
     FROM ms_syst_data.syst_enums
     WHERE id = new.enum_id;
 
-    IF var_syst_defined THEN
+    IF v_syst_defined THEN
         RAISE EXCEPTION
             USING
                 MESSAGE = 'The functional type creation for the requested ' ||
@@ -29,8 +29,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_i_syst_enum_functional_types'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -38,7 +36,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM003',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -62,7 +60,7 @@ BEGIN
         , internal_name
         , display_name
         , external_name
-        , var_syst_defined
+        , v_syst_defined
         , enum_id
         , syst_description
         , user_description
@@ -92,7 +90,7 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
 BEGIN
 
@@ -100,18 +98,18 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst';
-    var_comments_config.function_name   := 'trig_i_i_syst_enum_functional_types';
+    v_comments_config.function_schema := 'ms_syst';
+    v_comments_config.function_name   := 'trig_i_i_syst_enum_functional_types';
 
-    var_comments_config.trigger_function := TRUE;
-    var_comments_config.trigger_timing   := ARRAY [ 'i' ]::text[ ];
-    var_comments_config.trigger_ops      := ARRAY [ 'i' ]::text[ ];
+    v_comments_config.trigger_function := TRUE;
+    v_comments_config.trigger_timing   := ARRAY [ 'i' ]::text[ ];
+    v_comments_config.trigger_ops      := ARRAY [ 'i' ]::text[ ];
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Processes incoming API View requests according to globally applicable business
 rules and data validation requirements.$DOC$;
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

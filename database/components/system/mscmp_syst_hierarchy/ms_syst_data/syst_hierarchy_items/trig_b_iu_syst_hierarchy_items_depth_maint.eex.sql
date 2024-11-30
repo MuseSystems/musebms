@@ -56,7 +56,7 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
 BEGIN
 
@@ -64,18 +64,18 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_data';
-    var_comments_config.function_name   := 'trig_b_iu_syst_hierarchy_items_depth_maint';
+    v_comments_config.function_schema := 'ms_syst_data';
+    v_comments_config.function_name   := 'trig_b_iu_syst_hierarchy_items_depth_maint';
 
-    var_comments_config.trigger_function := TRUE;
-    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
-    var_comments_config.trigger_ops      := ARRAY [ 'i', 'u' ]::text[ ];
+    v_comments_config.trigger_function := TRUE;
+    v_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    v_comments_config.trigger_ops      := ARRAY [ 'i', 'u' ]::text[ ];
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Manages the `hierarchy_depth` column value.  Depending on the passed data, this
 trigger will perform different actions.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$When a new Hierarchy Item record is inserted without specifying a
 `hierarchy_depth` value, this trigger will assign it the next highest
 `hierarchy_depth` value based on the existing Hierarchy Item records assigned
@@ -101,7 +101,7 @@ values meaning that the `hierarchy_depth` sequence within any Hierarchy may
 indeed include gaps: we only attempt to keep overall ordering consistent and we
 do not attempt to achieve a gapless numbering scheme.$DOC$;
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

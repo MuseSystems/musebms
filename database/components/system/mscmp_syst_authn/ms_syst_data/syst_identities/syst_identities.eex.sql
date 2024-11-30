@@ -102,16 +102,16 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_access_account_id     ms_syst_priv.comments_config_table_column;
-    var_identity_type_id      ms_syst_priv.comments_config_table_column;
-    var_account_identifier    ms_syst_priv.comments_config_table_column;
-    var_validated             ms_syst_priv.comments_config_table_column;
-    var_validates_identity_id ms_syst_priv.comments_config_table_column;
-    var_validation_requested  ms_syst_priv.comments_config_table_column;
-    var_identity_expires      ms_syst_priv.comments_config_table_column;
+    v_access_account_id     ms_syst_priv.comments_config_table_column;
+    v_identity_type_id      ms_syst_priv.comments_config_table_column;
+    v_account_identifier    ms_syst_priv.comments_config_table_column;
+    v_validated             ms_syst_priv.comments_config_table_column;
+    v_validates_identity_id ms_syst_priv.comments_config_table_column;
+    v_validation_requested  ms_syst_priv.comments_config_table_column;
+    v_identity_expires      ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -119,10 +119,10 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_identities';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_identities';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$The identities with which access accounts are identified to the system.  The
 most common example of an identity would be a user name such as an email
 address.$DOC$;
@@ -131,72 +131,72 @@ address.$DOC$;
     -- Column Configs
     --
 
-    var_access_account_id.column_name := 'access_account_id';
-    var_access_account_id.description :=
+    v_access_account_id.column_name := 'access_account_id';
+    v_access_account_id.description :=
 $DOC$The ID of the access account to be identified the identifier record.$DOC$;
 
-    var_identity_type_id.column_name := 'identity_type_id';
-    var_identity_type_id.description :=
+    v_identity_type_id.column_name := 'identity_type_id';
+    v_identity_type_id.description :=
 $DOC$The kind of identifier being described by the record.$DOC$;
-    var_identity_type_id.general_usage :=
+    v_identity_type_id.general_usage :=
 $DOC$Note that this value influences the kind of credentials that can be used to
 complete the authentication process.$DOC$;
 
-    var_account_identifier.column_name   := 'account_identifier';
-    var_account_identifier.description   :=
+    v_account_identifier.column_name   := 'account_identifier';
+    v_account_identifier.description   :=
 $DOC$The actual Identifier which identifies a user or system to the system.$DOC$;
-    var_account_identifier.general_usage :=
+    v_account_identifier.general_usage :=
 $DOC$Identifiers of the same Identifier Type are unique to the Owner/Access
 Account combination. All Unowned Access Accounts are considered as being in the
 same Owner group for this purpose.$DOC$;
 
-    var_validated.column_name := 'validated';
-    var_validated.description :=
+    v_validated.column_name := 'validated';
+    v_validated.description :=
 $DOC$The timestamp at which the identity was validated for use.$DOC$;
-    var_validated.general_usage :=
+    v_validated.general_usage :=
 $DOC$  Depending on the requirements of the identity functional type, the timestamp
 here may be set as the time of the identity creation or it may set when the
 access account holder actually makes a formal verification.  A null value here
 indicates that the identity is not validated by the access account holder and is
 not able to be used for authentication to the system.$DOC$;
 
-    var_validates_identity_id.column_name := 'validates_identity_id';
-    var_validates_identity_id.description :=
+    v_validates_identity_id.column_name := 'validates_identity_id';
+    v_validates_identity_id.description :=
 $DOC$Each identity requiring validation will require its own validation.$DOC$;
-    var_validates_identity_id.general_usage :=
+    v_validates_identity_id.general_usage :=
 $DOC$Since validation requests are also single use identities, we need to know which
 permanent identifier is being validate.  This column points to the identifier
 that is being validated.  When the current identifier is not being used for
 validation, this field is null.$DOC$;
 
-    var_validation_requested.column_name := 'validation_requested';
-    var_validation_requested.description :=
+    v_validation_requested.column_name := 'validation_requested';
+    v_validation_requested.description :=
 $DOC$The timestamp on which the validation request was issued to the access account
 holder.$DOC$;
-    var_validation_requested.general_usage :=
+    v_validation_requested.general_usage :=
         $DOC$This value will be null if the identity did not require validation.$DOC$;
 
 
-    var_identity_expires.column_name := 'identity_expires';
-    var_identity_expires.description :=
+    v_identity_expires.column_name := 'identity_expires';
+    v_identity_expires.description :=
 $DOC$The timestamp at which the identity record expires.$DOC$;
-    var_identity_expires.general_usage :=
+    v_identity_expires.general_usage :=
 $DOC$For validation and recovery identities this would be the time of
 validation/recovery request expiration.  For perpetual identity types, this
 value will be NULL.$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_access_account_id
-            , var_identity_type_id
-            , var_account_identifier
-            , var_validated
-            , var_validates_identity_id
-            , var_validation_requested
-            , var_identity_expires
+              v_access_account_id
+            , v_identity_type_id
+            , v_account_identifier
+            , v_validated
+            , v_validates_identity_id
+            , v_validation_requested
+            , v_identity_expires
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

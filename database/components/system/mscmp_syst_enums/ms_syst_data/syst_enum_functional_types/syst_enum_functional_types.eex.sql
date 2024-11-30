@@ -77,27 +77,27 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
 DO
 $DOCUMENTATION$
 DECLARE
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
-    var_enum_id  ms_syst_priv.comments_config_table_column;
+    v_enum_id  ms_syst_priv.comments_config_table_column;
 BEGIN
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_enum_functional_types';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_enum_functional_types';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$For those Enumerations requiring Functional Type designation, this table defines
 the available types and persists related metadata.  Note that not all
 Enumerations require Functional Types.$DOC$;
 
-    var_enum_id.column_name := 'enum_id';
-    var_enum_id.description :=
+    v_enum_id.column_name := 'enum_id';
+    v_enum_id.description :=
 $DOC$A reference to the owning Enumeration of the functional type.$DOC$;
 
 
-    var_comments_config.columns :=
-        ARRAY [ var_enum_id ]::ms_syst_priv.comments_config_table_column[];
+    v_comments_config.columns :=
+        ARRAY [ v_enum_id ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config);
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config);
 
 END;
 $DOCUMENTATION$;

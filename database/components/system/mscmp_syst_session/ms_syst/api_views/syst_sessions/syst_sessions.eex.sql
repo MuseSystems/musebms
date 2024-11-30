@@ -45,11 +45,11 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- View
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
     -- View Columns
-    var_session_data    ms_syst_priv.comments_config_apiview_column;
-    var_session_expires ms_syst_priv.comments_config_apiview_column;
+    v_session_data    ms_syst_priv.comments_config_apiview_column;
+    v_session_expires ms_syst_priv.comments_config_apiview_column;
 
 BEGIN
 
@@ -57,28 +57,28 @@ BEGIN
     -- API View Config
     --
 
-    var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_sessions';
-    var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_sessions';
+    v_view_config.table_schema := 'ms_syst_data';
+    v_view_config.table_name   := 'syst_sessions';
+    v_view_config.view_schema  := 'ms_syst';
+    v_view_config.view_name    := 'syst_sessions';
 
     --
     -- Column Configs
     --
 
-    var_session_data.column_name      := 'session_data';
-    var_session_data.required         := FALSE;
+    v_session_data.column_name      := 'session_data';
+    v_session_data.required         := FALSE;
 
-    var_session_expires.column_name      := 'session_expires';
-    var_session_expires.required         := TRUE;
+    v_session_expires.column_name      := 'session_expires';
+    v_session_expires.required         := TRUE;
 
-    var_view_config.columns :=
+    v_view_config.columns :=
         ARRAY [
-              var_session_data
-            , var_session_expires
+              v_session_data
+            , v_session_expires
             ]::ms_syst_priv.comments_config_apiview_column[];
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

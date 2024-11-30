@@ -48,15 +48,15 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- View
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
     -- View Columns
-    var_perm_role_id ms_syst_priv.comments_config_apiview_column;
-    var_perm_id      ms_syst_priv.comments_config_apiview_column;
-    var_view_scope   ms_syst_priv.comments_config_apiview_column;
-    var_maint_scope  ms_syst_priv.comments_config_apiview_column;
-    var_admin_scope  ms_syst_priv.comments_config_apiview_column;
-    var_ops_scope    ms_syst_priv.comments_config_apiview_column;
+    v_perm_role_id ms_syst_priv.comments_config_apiview_column;
+    v_perm_id      ms_syst_priv.comments_config_apiview_column;
+    v_view_scope   ms_syst_priv.comments_config_apiview_column;
+    v_maint_scope  ms_syst_priv.comments_config_apiview_column;
+    v_admin_scope  ms_syst_priv.comments_config_apiview_column;
+    v_ops_scope    ms_syst_priv.comments_config_apiview_column;
 
 BEGIN
 
@@ -64,57 +64,57 @@ BEGIN
     -- API View Config
     --
 
-    var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_perm_role_grants';
-    var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_perm_role_grants';
-    var_view_config.user_delete  := TRUE;
-    var_view_config.syst_records := TRUE;
+    v_view_config.table_schema := 'ms_syst_data';
+    v_view_config.table_name   := 'syst_perm_role_grants';
+    v_view_config.view_schema  := 'ms_syst';
+    v_view_config.view_name    := 'syst_perm_role_grants';
+    v_view_config.user_delete  := TRUE;
+    v_view_config.syst_records := TRUE;
 
     --
     -- Column Configs
     --
 
-    var_perm_role_id.column_name      := 'perm_role_id';
-    var_perm_role_id.required         := TRUE;
-    var_perm_role_id.default_value    := '( No Default Value )';
-    var_perm_role_id.user_update      := FALSE;
-    var_perm_role_id.supplemental     :=
+    v_perm_role_id.column_name      := 'perm_role_id';
+    v_perm_role_id.required         := TRUE;
+    v_perm_role_id.default_value    := '( No Default Value )';
+    v_perm_role_id.user_update      := FALSE;
+    v_perm_role_id.supplemental     :=
 $DOC$This column is part of a composite key.  The combined values of `perm_role_id`
 and `perm_id` must be unique; `NULL` values, where allowed, are not considered
 distinct for this uniqueness check.$DOC$;
 
-    var_perm_id.column_name      := 'perm_id';
-    var_perm_id.required         := TRUE;
-    var_perm_id.user_update      := FALSE;
-    var_perm_id.supplemental     :=
+    v_perm_id.column_name      := 'perm_id';
+    v_perm_id.required         := TRUE;
+    v_perm_id.user_update      := FALSE;
+    v_perm_id.supplemental     :=
 $DOC$This column is part of a composite key.  The combined values of `perm_role_id`
 and `perm_id` must be unique; `NULL` values, where allowed, are not considered
 distinct for this uniqueness check.$DOC$;
 
-    var_view_scope.column_name      := 'view_scope';
-    var_view_scope.required         := TRUE;
+    v_view_scope.column_name      := 'view_scope';
+    v_view_scope.required         := TRUE;
 
-    var_maint_scope.column_name      := 'maint_scope';
-    var_maint_scope.required         := TRUE;
+    v_maint_scope.column_name      := 'maint_scope';
+    v_maint_scope.required         := TRUE;
 
-    var_admin_scope.column_name      := 'admin_scope';
-    var_admin_scope.required         := TRUE;
+    v_admin_scope.column_name      := 'admin_scope';
+    v_admin_scope.required         := TRUE;
 
-    var_ops_scope.column_name      := 'ops_scope';
-    var_ops_scope.required         := TRUE;
+    v_ops_scope.column_name      := 'ops_scope';
+    v_ops_scope.required         := TRUE;
 
-    var_view_config.columns :=
+    v_view_config.columns :=
         ARRAY [
-              var_perm_role_id
-            , var_perm_id
-            , var_view_scope
-            , var_maint_scope
-            , var_admin_scope
-            , var_ops_scope
+              v_perm_role_id
+            , v_perm_id
+            , v_view_scope
+            , v_maint_scope
+            , v_admin_scope
+            , v_ops_scope
             ]::ms_syst_priv.comments_config_apiview_column[];
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

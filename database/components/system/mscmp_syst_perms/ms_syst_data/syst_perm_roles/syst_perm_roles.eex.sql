@@ -71,10 +71,10 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_perm_functional_type_id ms_syst_priv.comments_config_table_column;
+    v_perm_functional_type_id ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -82,28 +82,28 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_perm_roles';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_perm_roles';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Defines collections of permissions which are then assignable to users.$DOC$;
 
     --
     -- Column Configs
     --
 
-    var_perm_functional_type_id.column_name := 'perm_functional_type_id';
-    var_perm_functional_type_id.description :=
+    v_perm_functional_type_id.column_name := 'perm_functional_type_id';
+    v_perm_functional_type_id.description :=
 $DOC$Assigns the Permission Role to a specific Permission Functional Type.$DOC$;
-    var_perm_functional_type_id.general_usage :=
+    v_perm_functional_type_id.general_usage :=
 $DOC$Only Permissions with the same Permission Functional Type may be granted by the
 Permission Role.$DOC$;
 
 
-    var_comments_config.columns :=
-        ARRAY [ var_perm_functional_type_id ]::ms_syst_priv.comments_config_table_column[];
+    v_comments_config.columns :=
+        ARRAY [ v_perm_functional_type_id ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

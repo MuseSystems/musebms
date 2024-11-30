@@ -16,14 +16,14 @@ $BODY$
 
 DECLARE
 
-    var_exception_message text;
-    var_exception_errcode text := 'PM008';
+    v_exception_message text;
+    v_exception_errcode text;
 
-    var_context record;
+    v_context record;
 
 BEGIN
 
-    SELECT INTO var_context
+    SELECT INTO v_context
         syst_defined
       , syst_defined AND NOT user_maintainable AS no_user_maint
     FROM ms_syst_data.syst_menu
@@ -32,66 +32,76 @@ BEGIN
     CASE
         WHEN new.menu_id != old.menu_id THEN
 
-            var_exception_message :=
+            v_exception_message :=
                 'Prohibited update requested.  You may not change the ' ||
                 'parent Menu of this record using this API view.';
 
+            v_exception_errcode := 'PM107';
+
         WHEN new.parent_menu_item_id != old.parent_menu_item_id THEN
 
-            var_exception_message :=
+            v_exception_message :=
                 'Prohibited update requested.  You may not change the ' ||
                 'Parent Menu Item record of this record using this API view.';
 
+            v_exception_errcode := 'PM107';
+
         WHEN
-            var_context.syst_defined AND new.internal_name != old.internal_name
+            v_context.syst_defined AND new.internal_name != old.internal_name
         THEN
 
-            var_exception_message :=
+            v_exception_message :=
                 'Prohibited update requested.  You may not change the ' ||
                 'internal name value of a System Defined record.';
 
+            v_exception_errcode := 'PM003';
+
         WHEN
-            var_context.no_user_maint AND new.sort_order != old.sort_order
+            v_context.no_user_maint AND new.sort_order != old.sort_order
         THEN
 
-            var_exception_message :=
+            v_exception_message :=
                 'Prohibited update requested.  You may not change the ' ||
                 'Menu Item sort ordering of System Defined Menus unless ' ||
                 'the Menu is also marked User Maintainable.';
 
+            v_exception_errcode := 'PM003';
+
         WHEN
-            var_context.no_user_maint AND
+            v_context.no_user_maint AND
             new.submenu_menu_id != old.submenu_menu_id
         THEN
 
-            var_exception_message :=
+            v_exception_message :=
                 'Prohibited update requested.  You may not change the ' ||
                 'Sub Menu Item assignment of System Defined Menus unless ' ||
                 'the Menu is also marked User Maintainable.';
 
+            v_exception_errcode := 'PM003';
+
         WHEN
-            var_context.no_user_maint AND new.action_id != old.action_id
+            v_context.no_user_maint AND new.action_id != old.action_id
         THEN
 
-            var_exception_message :=
+            v_exception_message :=
                 'Prohibited update requested.  You may not change the ' ||
                 'Action assignment of System Defined Menus unless the Menu ' ||
                 'is also marked User Maintainable.';
 
-        ELSE var_exception_message := NULL::text;
+            v_exception_errcode := 'PM003';
+
+        ELSE v_exception_message := NULL::text;
 
     END CASE;
 
-    IF var_exception_message IS NOT NULL THEN
+    IF v_exception_message IS NOT NULL THEN
 
         RAISE EXCEPTION
         USING
-            MESSAGE = var_exception_message,
+            MESSAGE = v_exception_message,
             DETAIL = ms_syst_priv.get_exception_details(
                          p_proc_schema    => 'ms_syst'
                         ,p_proc_name      => 'trig_i_u_syst_menu_items'
-                        ,p_exception_name => 'invalid_api_view_call'
-                        ,p_errcode        => var_exception_errcode
                         ,p_param_data     =>
                             jsonb_build_object( 'old', old, 'new', new)
                         ,p_context_data   =>
@@ -100,7 +110,7 @@ BEGIN
                                 ,'tg_when',       tg_when
                                 ,'tg_schema',     tg_table_schema
                                 ,'tg_table_name', tg_table_name)),
-            ERRCODE = var_exception_errcode,
+            ERRCODE = v_exception_errcode,
             SCHEMA = tg_table_schema,
             TABLE = tg_table_name;
 
@@ -137,7 +147,7 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
 BEGIN
 
@@ -145,18 +155,18 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst';
-    var_comments_config.function_name   := 'trig_i_u_syst_menu_items';
+    v_comments_config.function_schema := 'ms_syst';
+    v_comments_config.function_name   := 'trig_i_u_syst_menu_items';
 
-    var_comments_config.trigger_function := TRUE;
-    var_comments_config.trigger_timing   := ARRAY [ 'i' ]::text[ ];
-    var_comments_config.trigger_ops      := ARRAY [ 'u' ]::text[ ];
+    v_comments_config.trigger_function := TRUE;
+    v_comments_config.trigger_timing   := ARRAY [ 'i' ]::text[ ];
+    v_comments_config.trigger_ops      := ARRAY [ 'u' ]::text[ ];
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Processes incoming API View requests according to globally applicable business
 rules and data validation requirements.$DOC$;
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

@@ -95,14 +95,14 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_perm_functional_type_id ms_syst_priv.comments_config_table_column;
-    var_view_scope_options      ms_syst_priv.comments_config_table_column;
-    var_maint_scope_options     ms_syst_priv.comments_config_table_column;
-    var_admin_scope_options     ms_syst_priv.comments_config_table_column;
-    var_ops_scope_options       ms_syst_priv.comments_config_table_column;
+    v_perm_functional_type_id ms_syst_priv.comments_config_table_column;
+    v_view_scope_options      ms_syst_priv.comments_config_table_column;
+    v_maint_scope_options     ms_syst_priv.comments_config_table_column;
+    v_admin_scope_options     ms_syst_priv.comments_config_table_column;
+    v_ops_scope_options       ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -110,10 +110,10 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_perms';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_perms';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Defines the available system and application permissions which can be assigned
 to users.
 
@@ -177,52 +177,52 @@ $DOC$;
     -- Column Configs
     --
 
-    var_perm_functional_type_id.column_name := 'perm_functional_type_id';
-    var_perm_functional_type_id.description :=
+    v_perm_functional_type_id.column_name := 'perm_functional_type_id';
+    v_perm_functional_type_id.description :=
 $DOC$Assigns the Permission to a specific Permission Functional Type.$DOC$;
-    var_perm_functional_type_id.general_usage :=
+    v_perm_functional_type_id.general_usage :=
 $DOC$Permissions may only be granted in Permission Roles of the same Permission
 Functional Type.$DOC$;
 
-    var_view_scope_options.column_name := 'view_scope_options';
-    var_view_scope_options.description :=
+    v_view_scope_options.column_name := 'view_scope_options';
+    v_view_scope_options.description :=
 $DOC$If applicable, enumerates the available Scopes of viewable data offered by the
 permission.$DOC$;
-    var_view_scope_options.general_usage :=
+    v_view_scope_options.general_usage :=
 $DOC$If not applicable the only option will be 'unused'.$DOC$;
 
-    var_maint_scope_options.column_name := 'maint_scope_options';
-    var_maint_scope_options.description :=
+    v_maint_scope_options.column_name := 'maint_scope_options';
+    v_maint_scope_options.description :=
 $DOC$If applicable, enumerates the available Scopes of maintainable data offered by
 the permission.  Maintenance in this context refers to changing existing data.$DOC$;
-    var_maint_scope_options.general_usage :=
+    v_maint_scope_options.general_usage :=
 $DOC$If not applicable the only option will be 'unused'.$DOC$;
 
-    var_admin_scope_options.column_name := 'admin_scope_options';
-    var_admin_scope_options.description :=
+    v_admin_scope_options.column_name := 'admin_scope_options';
+    v_admin_scope_options.description :=
 $DOC$If applicable, enumerates the available Scopes of data administration offered
 by the permission.  Administration in this context refers to creating or
 deleting records.$DOC$;
-    var_admin_scope_options.general_usage :=
+    v_admin_scope_options.general_usage :=
 $DOC$If not applicable the only option will be 'unused'.$DOC$;
 
-    var_ops_scope_options.column_name := 'ops_scope_options';
-    var_ops_scope_options.description :=
+    v_ops_scope_options.column_name := 'ops_scope_options';
+    v_ops_scope_options.description :=
 $DOC$If applicable, enumerates the available Scopes of a given operation or
 processing capability offered by the permission.$DOC$;
-    var_ops_scope_options.general_usage :=
+    v_ops_scope_options.general_usage :=
 $DOC$If not applicable the only option will be 'unused'.$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_perm_functional_type_id
-            , var_view_scope_options
-            , var_maint_scope_options
-            , var_admin_scope_options
-            , var_ops_scope_options
+              v_perm_functional_type_id
+            , v_view_scope_options
+            , v_maint_scope_options
+            , v_admin_scope_options
+            , v_ops_scope_options
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

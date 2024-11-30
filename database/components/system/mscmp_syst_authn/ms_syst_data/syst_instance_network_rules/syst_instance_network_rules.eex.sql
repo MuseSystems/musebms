@@ -89,26 +89,26 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
-    
+    v_comments_config ms_syst_priv.comments_config_table;
+
     -- Columns
-    var_instance_id         ms_syst_priv.comments_config_table_column;
-    var_ordering            ms_syst_priv.comments_config_table_column;
-    var_functional_type     ms_syst_priv.comments_config_table_column;
-    var_ip_host_or_network  ms_syst_priv.comments_config_table_column;
-    var_ip_host_range_lower ms_syst_priv.comments_config_table_column;
-    var_ip_host_range_upper ms_syst_priv.comments_config_table_column;
-    
+    v_instance_id         ms_syst_priv.comments_config_table_column;
+    v_ordering            ms_syst_priv.comments_config_table_column;
+    v_functional_type     ms_syst_priv.comments_config_table_column;
+    v_ip_host_or_network  ms_syst_priv.comments_config_table_column;
+    v_ip_host_range_lower ms_syst_priv.comments_config_table_column;
+    v_ip_host_range_upper ms_syst_priv.comments_config_table_column;
+
 BEGIN
-    
+
     --
     -- Table Config
     --
-    
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_instance_network_rules';
 
-    var_comments_config.description :=
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_instance_network_rules';
+
+    v_comments_config.description :=
 $DOC$Defines firewall-like rules, scoped to specific instances, indicating which IP
 addresses are allowed to attempt authentication and which are not.  These rules
 are applied in their defined order after all global_network_rules and
@@ -118,17 +118,17 @@ owner_network_rules.$DOC$;
     -- Column Configs
     --
 
-    var_instance_id.column_name := 'instance_id';
-    var_instance_id.description :=
+    v_instance_id.column_name := 'instance_id';
+    v_instance_id.description :=
 $DOC$The database identifier of the Instance record for whom the Network Rule is
 being defined.$DOC$;
 
-    var_ordering.column_name := 'ordering';
-    var_ordering.description :=
+    v_ordering.column_name := 'ordering';
+    v_ordering.description :=
 $DOC$Defines the order in which IP rules are applied.  Lower values are applied
 prior to higher values.$DOC$;
 
-    var_ordering.general_usage :=
+    v_ordering.general_usage :=
 $DOC$All records are ordered using unique ordering values within each Instance value.
 When a new Instance Network Rule is inserted with the ordering value of an
 existing Instance Network Rule record for the same Owner, the system will assume
@@ -138,10 +138,10 @@ existing record's ordering value by one.  This reordering process happens
 recursively until there are no ordering value conflicts for any of an Instance's
 Network Rule records.$DOC$;
 
-    var_functional_type.column_name := 'functional_type';
-    var_functional_type.description :=
+    v_functional_type.column_name := 'functional_type';
+    v_functional_type.description :=
 $DOC$Indicates how the system will interpret the IP address rule.$DOC$;
-    var_functional_type.general_usage :=
+    v_functional_type.general_usage :=
 $DOC$The valid functional types are:
 
   * `allow` - the rule is explicitly allowing an IP address, network, or range
@@ -151,44 +151,44 @@ $DOC$The valid functional types are:
     of IP addresses from the authentication process.$DOC$;
 
 
-    var_ip_host_or_network.column_name := 'ip_host_or_network';
-    var_ip_host_or_network.description :=
+    v_ip_host_or_network.column_name := 'ip_host_or_network';
+    v_ip_host_or_network.description :=
 $DOC$An IPv4 or IPv6 IP address or network block expressed using standard CIDR
 notation.$DOC$;
-    var_ip_host_or_network.general_usage :=
+    v_ip_host_or_network.general_usage :=
 $DOC$If this value is given you should not provide an IP host address range in the
 ip_host_range_lower/ip_host_range_upper columns.  Providing range column values
 when this column is not null will result in a consistency check failure.$DOC$;
 
-    var_ip_host_range_lower.column_name := 'ip_host_range_lower';
-    var_ip_host_range_lower.description :=
+    v_ip_host_range_lower.column_name := 'ip_host_range_lower';
+    v_ip_host_range_lower.description :=
 $DOC$An IPv4 or IPv6 IP host address which is the lower bound (inclusive) of a
 range of IP addresses.$DOC$;
-    var_ip_host_range_lower.general_usage :=
+    v_ip_host_range_lower.general_usage :=
 $DOC$If the value in this column is not null a value must also be provided for the
 ip_host_range_upper column.  Both ip_host_range_lower and ip_host_range_upper
 must be of the same IP family (IPv4 or IPv6).$DOC$;
 
-    var_ip_host_range_upper.column_name := 'ip_host_range_upper';
-    var_ip_host_range_upper.description :=
+    v_ip_host_range_upper.column_name := 'ip_host_range_upper';
+    v_ip_host_range_upper.description :=
 $DOC$An IPv4 or IPv6 IP host address which is the upper bound (inclusive) of a
 range of IP addresses.$DOC$;
-    var_ip_host_range_upper.general_usage :=
+    v_ip_host_range_upper.general_usage :=
 $DOC$If the value in this column is not null a value must also be provided for the
 ip_host_range_lower column.  Both ip_host_range_lower and ip_host_range_upper
 must be of the same IP family (IPv4 or IPv6).$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_instance_id
-            , var_ordering
-            , var_functional_type
-            , var_ip_host_or_network
-            , var_ip_host_range_lower
-            , var_ip_host_range_upper
+              v_instance_id
+            , v_ordering
+            , v_functional_type
+            , v_ip_host_or_network
+            , v_ip_host_range_lower
+            , v_ip_host_range_upper
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

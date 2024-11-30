@@ -52,58 +52,58 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- View
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
     -- View Columns
-    var_perm_functional_type_id ms_syst_priv.comments_config_apiview_column;
-    var_view_scope_options      ms_syst_priv.comments_config_apiview_column;
-    var_maint_scope_options     ms_syst_priv.comments_config_apiview_column;
-    var_admin_scope_options     ms_syst_priv.comments_config_apiview_column;
-    var_ops_scope_options       ms_syst_priv.comments_config_apiview_column;
-    
+    v_perm_functional_type_id ms_syst_priv.comments_config_apiview_column;
+    v_view_scope_options      ms_syst_priv.comments_config_apiview_column;
+    v_maint_scope_options     ms_syst_priv.comments_config_apiview_column;
+    v_admin_scope_options     ms_syst_priv.comments_config_apiview_column;
+    v_ops_scope_options       ms_syst_priv.comments_config_apiview_column;
+
 BEGIN
-    
+
     --
     -- API View Config
     --
 
-    var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_perms';
-    var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_perms';
-    var_view_config.syst_records := TRUE;
-    var_view_config.syst_update  := TRUE;
-    
+    v_view_config.table_schema := 'ms_syst_data';
+    v_view_config.table_name   := 'syst_perms';
+    v_view_config.view_schema  := 'ms_syst';
+    v_view_config.view_name    := 'syst_perms';
+    v_view_config.syst_records := TRUE;
+    v_view_config.syst_update  := TRUE;
+
     --
     -- Column Configs
     --
-    
-    var_perm_functional_type_id.column_name := 'perm_functional_type_id';
-    var_perm_functional_type_id.required    := TRUE;
-    var_perm_functional_type_id.user_update := FALSE;
 
-    var_view_scope_options.column_name := 'view_scope_options';
-    var_view_scope_options.required    := TRUE;
+    v_perm_functional_type_id.column_name := 'perm_functional_type_id';
+    v_perm_functional_type_id.required    := TRUE;
+    v_perm_functional_type_id.user_update := FALSE;
 
-    var_maint_scope_options.column_name := 'maint_scope_options';
-    var_maint_scope_options.required    := TRUE;
+    v_view_scope_options.column_name := 'view_scope_options';
+    v_view_scope_options.required    := TRUE;
 
-    var_admin_scope_options.column_name := 'admin_scope_options';
-    var_admin_scope_options.required    := TRUE;
+    v_maint_scope_options.column_name := 'maint_scope_options';
+    v_maint_scope_options.required    := TRUE;
 
-    var_ops_scope_options.column_name := 'ops_scope_options';
-    var_ops_scope_options.required    := TRUE;
+    v_admin_scope_options.column_name := 'admin_scope_options';
+    v_admin_scope_options.required    := TRUE;
 
-    var_view_config.columns :=
+    v_ops_scope_options.column_name := 'ops_scope_options';
+    v_ops_scope_options.required    := TRUE;
+
+    v_view_config.columns :=
         ARRAY [
-              var_perm_functional_type_id
-            , var_view_scope_options
-            , var_maint_scope_options
-            , var_admin_scope_options
-            , var_ops_scope_options
+              v_perm_functional_type_id
+            , v_view_scope_options
+            , v_maint_scope_options
+            , v_admin_scope_options
+            , v_ops_scope_options
             ]::ms_syst_priv.comments_config_apiview_column[];
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

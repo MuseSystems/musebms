@@ -107,14 +107,14 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_owning_entity_id  ms_syst_priv.comments_config_table_column;
-    var_formatted_name    ms_syst_priv.comments_config_table_column;
-    var_person_type_id    ms_syst_priv.comments_config_table_column;
-    var_person_state_id   ms_syst_priv.comments_config_table_column;
-    var_access_account_id ms_syst_priv.comments_config_table_column;
+    v_owning_entity_id  ms_syst_priv.comments_config_table_column;
+    v_formatted_name    ms_syst_priv.comments_config_table_column;
+    v_person_type_id    ms_syst_priv.comments_config_table_column;
+    v_person_state_id   ms_syst_priv.comments_config_table_column;
+    v_access_account_id ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -122,10 +122,10 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_appl_data';
-    var_comments_config.table_name   := 'mstr_persons';
+    v_comments_config.table_schema := 'ms_appl_data';
+    v_comments_config.table_name   := 'mstr_persons';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$A Person is someone who acts as an agent on behalf of an Entity. This may be a
 real individual person in the world or indicate a function, such as “Customer
 Support”, where the actual person contacted may vary and identifying a specific
@@ -135,37 +135,37 @@ individual is unimportant.$DOC$;
     -- Column Configs
     --
 
-    var_owning_entity_id.column_name := 'owning_entity_id';
-    var_owning_entity_id.description :=
+    v_owning_entity_id.column_name := 'owning_entity_id';
+    v_owning_entity_id.description :=
 $DOC$Indicates which Managing Entity owns the Person record for the purposes of
 default visibility and access.$DOC$;
-    var_owning_entity_id.general_usage :=
+    v_owning_entity_id.general_usage :=
 $DOC$Any Person record owned by the Global Entity is by default visible and usable by
 any Managed Entity.$DOC$;
 
-    var_formatted_name.column_name := 'formatted_name';
-    var_formatted_name.description :=
+    v_formatted_name.column_name := 'formatted_name';
+    v_formatted_name.description :=
 $DOC$Contains a jsonb object describing the naming fields, field layout, and the
 actual values of the user's name.  Note that the format will normally have
 originated from the `ms_appl_data.syst_name_formats` table, but reflects the
 name formatting configuration at the time of capture.$DOC$;
 
-    var_person_type_id.column_name := 'person_type_id';
-    var_person_type_id.description :=
+    v_person_type_id.column_name := 'person_type_id';
+    v_person_type_id.description :=
 $DOC$The "kind" of Person being represented by the record.  Specifically if the
 record represents an actual individual person or a function such as "clerk".$DOC$;
 
-    var_person_state_id.column_name := 'person_state_id';
-    var_person_state_id.description :=
+    v_person_state_id.column_name := 'person_state_id';
+    v_person_state_id.description :=
 $DOC$Indicates in which Person life-cycle state the record current sits.  This can
 include designating the record as active or inactive.$DOC$;
 
-    var_access_account_id.column_name := 'access_account_id';
-    var_access_account_id.description :=
+    v_access_account_id.column_name := 'access_account_id';
+    v_access_account_id.description :=
 $DOC$An optional association with a global Access Account, used for authentication
 to the application by users.$DOC$;
 
-    var_access_account_id.constraints :=
+    v_access_account_id.constraints :=
 $DOC$An Access Account can only be associated with a single Person record and as
 such must be unique in this table.
 
@@ -175,16 +175,16 @@ database referential integrity constraints.  The application developer,
 therefore, is responsible for ensuring that values in this table actually match
 valid `ms_syst_data.syst_access_accounts` records.$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_owning_entity_id
-            , var_formatted_name
-            , var_person_type_id
-            , var_person_state_id
-            , var_access_account_id
+              v_owning_entity_id
+            , v_formatted_name
+            , v_person_type_id
+            , v_person_state_id
+            , v_access_account_id
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

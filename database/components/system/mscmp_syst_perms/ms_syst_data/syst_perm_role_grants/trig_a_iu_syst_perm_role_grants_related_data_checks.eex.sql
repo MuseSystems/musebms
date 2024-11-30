@@ -15,12 +15,12 @@ $BODY$
 -- muse.information@musesystems.com :: https://muse.systems
 
 DECLARE
-    var_context_data record;
-    var_errors       text[] := ARRAY []::text[];
+    v_context_data record;
+    v_errors       text[] := ARRAY []::text[];
 
 BEGIN
 
-    SELECT INTO STRICT var_context_data
+    SELECT INTO STRICT v_context_data
         sp.view_scope_options
       , sp.maint_scope_options
       , sp.admin_scope_options
@@ -41,7 +41,7 @@ BEGIN
     -- Functional Type Check
     --
 
-    IF var_context_data.perm_functional_type_invalid THEN
+    IF v_context_data.perm_functional_type_invalid THEN
 
         RAISE EXCEPTION
             USING
@@ -51,21 +51,19 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_a_iu_syst_perm_role_grants_related_data_checks'
-                            ,p_exception_name => 'invalid_data'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     =>
                                 jsonb_build_object(
                                      'syst_perms_perm_functional_type_id'
-                                    , var_context_data.perm_perm_functional_type_id
+                                    , v_context_data.perm_perm_functional_type_id
                                     ,'syst_perm_roles_perm_functional_type_id'
-                                    ,var_context_data.perm_role_perm_functional_type_id )
+                                    ,v_context_data.perm_role_perm_functional_type_id )
                             ,p_context_data   =>
                                 jsonb_build_object(
                                      'tg_op',         tg_op
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM104',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
 
@@ -75,32 +73,32 @@ BEGIN
     -- Rights Scoping Checks
     --
 
-    IF var_context_data.view_scope_invalid THEN
-            var_errors :=
-                var_errors ||
+    IF v_context_data.view_scope_invalid THEN
+            v_errors :=
+                v_errors ||
                 'The assigned View Right Scope is not valid for this Permission.'::text;
     END IF;
 
-    IF var_context_data.maint_scope_invalid THEN
-            var_errors :=
-                var_errors ||
+    IF v_context_data.maint_scope_invalid THEN
+            v_errors :=
+                v_errors ||
                 'The assigned Maintenance Right Scope is not valid for this Permission.'::text;
     END IF;
 
-    IF var_context_data.admin_scope_invalid THEN
-            var_errors :=
-                var_errors ||
+    IF v_context_data.admin_scope_invalid THEN
+            v_errors :=
+                v_errors ||
                 'The assigned Administration Right Scope is not valid for this Permission.'::text;
     END IF;
 
-    IF var_context_data.ops_scope_invalid THEN
-            var_errors :=
-                var_errors ||
+    IF v_context_data.ops_scope_invalid THEN
+            v_errors :=
+                v_errors ||
                 'The assigned Operations Right Scope is not valid for this Permission.'::text;
     END IF;
 
 
-    IF array_length(var_errors, 1) > 0 THEN
+    IF array_length(v_errors, 1) > 0 THEN
 
         RAISE EXCEPTION
             USING
@@ -108,15 +106,13 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_a_iu_syst_perm_role_grants_related_data_checks'
-                            ,p_exception_name => 'invalid_data'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     =>
                                 jsonb_build_object(
-                                     'error_scopes',        var_errors
-                                    ,'view_scope_options',  var_context_data.view_scope_options
-                                    ,'maint_scope_options', var_context_data.maint_scope_options
-                                    ,'admin_scope_options', var_context_data.admin_scope_options
-                                    ,'ops_scope_options',   var_context_data.ops_scope_options
+                                     'error_scopes',        v_errors
+                                    ,'view_scope_options',  v_context_data.view_scope_options
+                                    ,'maint_scope_options', v_context_data.maint_scope_options
+                                    ,'admin_scope_options', v_context_data.admin_scope_options
+                                    ,'ops_scope_options',   v_context_data.ops_scope_options
                                     ,'parameters',          new )
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -124,7 +120,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM107',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
 
@@ -146,7 +142,7 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
 BEGIN
 
@@ -154,18 +150,18 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_data';
-    var_comments_config.function_name   := 'trig_a_iu_syst_perm_role_grants_related_data_checks';
+    v_comments_config.function_schema := 'ms_syst_data';
+    v_comments_config.function_name   := 'trig_a_iu_syst_perm_role_grants_related_data_checks';
 
-    var_comments_config.trigger_function := TRUE;
-    var_comments_config.trigger_timing   := ARRAY [ 'a' ]::text[ ];
-    var_comments_config.trigger_ops      := ARRAY [ 'i', 'u' ]::text[ ];
+    v_comments_config.trigger_function := TRUE;
+    v_comments_config.trigger_timing   := ARRAY [ 'a' ]::text[ ];
+    v_comments_config.trigger_ops      := ARRAY [ 'i', 'u' ]::text[ ];
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Checks that Permission Role Grant records are consistent with their defining
 parent records.$DOC$;
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

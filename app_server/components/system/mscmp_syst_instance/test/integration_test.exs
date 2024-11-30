@@ -220,8 +220,7 @@ defmodule IntegrationTest do
                MscmpSystInstance.create_instance_type(params)
     end)
 
-    assert nil ==
-             MscmpSystInstance.get_instance_type_default()
+    assert_raise RuntimeError, fn -> MscmpSystInstance.get_instance_type_default() end
 
     assert {:ok, %Msdata.SystEnumItems{internal_name: "instance_types_std"}} =
              MscmpSystInstance.create_instance_type(%{

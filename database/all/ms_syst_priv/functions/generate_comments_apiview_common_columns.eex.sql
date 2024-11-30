@@ -17,10 +17,10 @@ $BODY$
 -- muse.information@musesystems.com :: https://muse.systems
 
 DECLARE
-    var_table regclass :=
+    v_table regclass :=
         (p_view_config.table_schema || '.' || p_view_config.table_name)::regclass;
 
-    var_columns jsonb := $API_VIEW_COMMON_COLUMNS$
+    v_columns jsonb := $API_VIEW_COMMON_COLUMNS$
     [
       {
         "column_name": "id",
@@ -120,11 +120,11 @@ BEGIN
                 jsonb_populate_record(
                     NULL::ms_syst_priv.comments_config_apiview_column, c ) )
     FROM
-        jsonb_array_elements( var_columns ) c
+        jsonb_array_elements( v_columns ) c
             JOIN pg_attribute pa
                 ON c ->> 'column_name' = pa.attname::text
     WHERE
-          pa.attrelid = var_table
+          pa.attrelid = v_table
       AND pa.attnum > 0
       AND NOT pa.attisdropped;
 
@@ -151,39 +151,39 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
-    
+    v_comments_config ms_syst_priv.comments_config_function;
+
     -- Parameters
-    var_p_view_config ms_syst_priv.comments_config_function_param;
+    v_p_view_config ms_syst_priv.comments_config_function_param;
 
 BEGIN
-    
+
     --
     -- Function Config
     --
-    
-    var_comments_config.function_schema := 'ms_syst_priv';
-    var_comments_config.function_name   := 'generate_comments_apiview_common_columns';
 
-    var_comments_config.description :=
+    v_comments_config.function_schema := 'ms_syst_priv';
+    v_comments_config.function_name   := 'generate_comments_apiview_common_columns';
+
+    v_comments_config.description :=
 $DOC$Provides boilerplate API View Column comment configurations and generates the
 comments for columns which appear in many places across the applications and
 where standardized descriptions are likely to apply.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$This function expects that a there is a closely associated Data Table defined.
 The Data Table columns provide the descriptive texts for the related API View
 columns.  If the API View is not closely associated with an underlying Data
 Table, common columns should be configured manually as regular API View Columns
 and passed directly to either `ms_syst_priv.generate_comments_apiview` or
 `ms_syst_priv.generate_comments_apiview_column` as appropriate.$DOC$;
-    
+
     --
     -- Parameter Configs
-    -- 
+    --
 
-    var_p_view_config.param_name := 'p_view_config';
-    var_p_view_config.description :=
+    v_p_view_config.param_name := 'p_view_config';
+    v_p_view_config.description :=
 $DOC$A required value of type `ms_syst_priv.comments_config_apiview`.  This value
 provides the basic comments configuration data used to determine to which
 API View to apply common column comments, find which columns may be present,
@@ -209,10 +209,10 @@ results.  In cases where the API View is not strongly associated with a Data
 Table, common columns should be documentend manually.$DOC$;
 
 
-    var_comments_config.params :=
-        ARRAY [ var_p_view_config ]::ms_syst_priv.comments_config_function_param[];
+    v_comments_config.params :=
+        ARRAY [ v_p_view_config ]::ms_syst_priv.comments_config_function_param[];
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

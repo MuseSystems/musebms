@@ -47,12 +47,12 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- View
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
     -- View Columns
-    var_owning_owner_id         ms_syst_priv.comments_config_apiview_column;
-    var_allow_global_logins     ms_syst_priv.comments_config_apiview_column;
-    var_access_account_state_id ms_syst_priv.comments_config_apiview_column;
+    v_owning_owner_id         ms_syst_priv.comments_config_apiview_column;
+    v_allow_global_logins     ms_syst_priv.comments_config_apiview_column;
+    v_access_account_state_id ms_syst_priv.comments_config_apiview_column;
 
 BEGIN
 
@@ -60,32 +60,32 @@ BEGIN
     -- API View Config
     --
 
-    var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_access_accounts';
-    var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_access_accounts';
+    v_view_config.table_schema := 'ms_syst_data';
+    v_view_config.table_name   := 'syst_access_accounts';
+    v_view_config.view_schema  := 'ms_syst';
+    v_view_config.view_name    := 'syst_access_accounts';
 
     --
     -- Column Configs
     --
 
-    var_owning_owner_id.column_name := 'owning_owner_id';
-    var_owning_owner_id.user_update := FALSE;
+    v_owning_owner_id.column_name := 'owning_owner_id';
+    v_owning_owner_id.user_update := FALSE;
 
-    var_allow_global_logins.column_name := 'allow_global_logins';
-    var_allow_global_logins.required := TRUE;
+    v_allow_global_logins.column_name := 'allow_global_logins';
+    v_allow_global_logins.required := TRUE;
 
-    var_access_account_state_id.column_name := 'access_account_state_id';
-    var_access_account_state_id.required := TRUE;
+    v_access_account_state_id.column_name := 'access_account_state_id';
+    v_access_account_state_id.required := TRUE;
 
-    var_view_config.columns :=
+    v_view_config.columns :=
         ARRAY [
-              var_owning_owner_id
-            , var_allow_global_logins
-            , var_access_account_state_id
+              v_owning_owner_id
+            , v_allow_global_logins
+            , v_access_account_state_id
             ]::ms_syst_priv.comments_config_apiview_column[];
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

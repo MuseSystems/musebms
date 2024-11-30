@@ -49,14 +49,14 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- View
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
     -- View Columns
-    var_application_id         ms_syst_priv.comments_config_apiview_column;
-    var_description            ms_syst_priv.comments_config_apiview_column;
-    var_start_context          ms_syst_priv.comments_config_apiview_column;
-    var_login_context          ms_syst_priv.comments_config_apiview_column;
-    var_database_owner_context ms_syst_priv.comments_config_apiview_column;
+    v_application_id         ms_syst_priv.comments_config_apiview_column;
+    v_description            ms_syst_priv.comments_config_apiview_column;
+    v_start_context          ms_syst_priv.comments_config_apiview_column;
+    v_login_context          ms_syst_priv.comments_config_apiview_column;
+    v_database_owner_context ms_syst_priv.comments_config_apiview_column;
 
 BEGIN
 
@@ -64,48 +64,48 @@ BEGIN
     -- API View Config
     --
 
-    var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_application_contexts';
-    var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_application_contexts';
-    var_view_config.syst_records := TRUE;
-    var_view_config.syst_update  := TRUE;
-    var_view_config.syst_delete  := TRUE;
+    v_view_config.table_schema := 'ms_syst_data';
+    v_view_config.table_name   := 'syst_application_contexts';
+    v_view_config.view_schema  := 'ms_syst';
+    v_view_config.view_name    := 'syst_application_contexts';
+    v_view_config.syst_records := TRUE;
+    v_view_config.syst_update  := TRUE;
+    v_view_config.syst_delete  := TRUE;
 
     --
     -- Column Configs
     --
 
-    var_application_id.column_name := 'application_id';
-    var_application_id.required    := TRUE;
-    var_application_id.user_update := FALSE;
+    v_application_id.column_name := 'application_id';
+    v_application_id.required    := TRUE;
+    v_application_id.user_update := FALSE;
 
-    var_description.column_name      := 'description';
-    var_description.required         := TRUE;
-    var_description.syst_update_mode := 'always';
+    v_description.column_name      := 'description';
+    v_description.required         := TRUE;
+    v_description.syst_update_mode := 'always';
 
-    var_start_context.column_name      := 'start_context';
-    var_start_context.required         := TRUE;
-    var_start_context.syst_update_mode := 'always';
+    v_start_context.column_name      := 'start_context';
+    v_start_context.required         := TRUE;
+    v_start_context.syst_update_mode := 'always';
 
-    var_login_context.column_name := 'login_context';
-    var_login_context.required    := TRUE;
-    var_login_context.user_update := FALSE;
+    v_login_context.column_name := 'login_context';
+    v_login_context.required    := TRUE;
+    v_login_context.user_update := FALSE;
 
-    var_database_owner_context.column_name := 'database_owner_context';
-    var_database_owner_context.required    := TRUE;
-    var_database_owner_context.user_update := FALSE;
+    v_database_owner_context.column_name := 'database_owner_context';
+    v_database_owner_context.required    := TRUE;
+    v_database_owner_context.user_update := FALSE;
 
-    var_view_config.columns :=
+    v_view_config.columns :=
         ARRAY [
-             var_application_id
-            ,var_description
-            ,var_start_context
-            ,var_login_context
-            ,var_database_owner_context
+             v_application_id
+            ,v_description
+            ,v_start_context
+            ,v_login_context
+            ,v_database_owner_context
         ]::ms_syst_priv.comments_config_apiview_column[];
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

@@ -42,7 +42,7 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
 BEGIN
 
@@ -50,14 +50,14 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_data';
-    var_comments_config.function_name   := 'trig_a_d_syst_credentials_delete_identity';
+    v_comments_config.function_schema := 'ms_syst_data';
+    v_comments_config.function_name   := 'trig_a_d_syst_credentials_delete_identity';
 
-    var_comments_config.trigger_function := TRUE;
-    var_comments_config.trigger_timing   := ARRAY [ 'a' ]::text[ ];
-    var_comments_config.trigger_ops      := ARRAY [ 'd' ]::text[ ];
+    v_comments_config.trigger_function := TRUE;
+    v_comments_config.trigger_timing   := ARRAY [ 'a' ]::text[ ];
+    v_comments_config.trigger_ops      := ARRAY [ 'd' ]::text[ ];
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Deletes the syst_identities record associated with a newly deleted
 syst_credentials record.
 
@@ -71,7 +71,7 @@ credential_for_identity_id definition (ON DELETE CASCADE), but deleting a
 credential has no automatic deletion feature thus this trigger.$DOC$;
 
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

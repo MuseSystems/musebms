@@ -16,9 +16,9 @@ $BODY$
 
 BEGIN
     DECLARE
-        var_jsonb_new        jsonb;
-        var_jsonb_old        jsonb;
-        var_jsonb_final      jsonb;
+        v_jsonb_new        jsonb;
+        v_jsonb_old        jsonb;
+        v_jsonb_final      jsonb;
 
         bypass_change_fields boolean;
 
@@ -36,10 +36,10 @@ BEGIN
                                         FALSE
                                 END;
 
-        var_jsonb_new := to_jsonb( new );
-        var_jsonb_old := to_jsonb( old );
+        v_jsonb_new := to_jsonb( new );
+        v_jsonb_old := to_jsonb( old );
 
-        var_jsonb_final := var_jsonb_new - ARRAY [ 'diag_timestamp_created'
+        v_jsonb_final := v_jsonb_new - ARRAY [ 'diag_timestamp_created'
                                                   ,'diag_role_created'
                                                   ,'diag_timestamp_modified'
                                                   ,'diag_wallclock_modified'
@@ -49,51 +49,51 @@ BEGIN
 
         CASE tg_op
             WHEN 'INSERT' THEN
-                var_jsonb_final :=
-                    var_jsonb_final ||
+                v_jsonb_final :=
+                    v_jsonb_final ||
                     jsonb_build_object( 'diag_timestamp_created', now( ) );
-                var_jsonb_final :=
-                    var_jsonb_final ||
+                v_jsonb_final :=
+                    v_jsonb_final ||
                     jsonb_build_object( 'diag_role_created', session_user );
-                var_jsonb_final :=
-                    var_jsonb_final ||
+                v_jsonb_final :=
+                    v_jsonb_final ||
                     jsonb_build_object( 'diag_timestamp_modified', now( ) );
-                var_jsonb_final :=
-                    var_jsonb_final ||
+                v_jsonb_final :=
+                    v_jsonb_final ||
                     jsonb_build_object( 'diag_wallclock_modified',
                                         clock_timestamp( ) );
-                var_jsonb_final :=
-                    var_jsonb_final ||
+                v_jsonb_final :=
+                    v_jsonb_final ||
                     jsonb_build_object( 'diag_role_modified', session_user );
-                var_jsonb_final :=
-                    var_jsonb_final ||
+                v_jsonb_final :=
+                    v_jsonb_final ||
                     jsonb_build_object( 'diag_row_version', 1 );
-                var_jsonb_final :=
-                    var_jsonb_final ||
+                v_jsonb_final :=
+                    v_jsonb_final ||
                     jsonb_build_object( 'diag_update_count', 0 );
 
             WHEN 'UPDATE' THEN
                 IF NOT bypass_change_fields THEN
-                    var_jsonb_final :=
-                        var_jsonb_final ||
+                    v_jsonb_final :=
+                        v_jsonb_final ||
                         jsonb_build_object( 'diag_timestamp_modified', now( ) );
-                    var_jsonb_final :=
-                        var_jsonb_final ||
+                    v_jsonb_final :=
+                        v_jsonb_final ||
                         jsonb_build_object( 'diag_wallclock_modified',
                                             clock_timestamp( ) );
-                    var_jsonb_final :=
-                        var_jsonb_final ||
+                    v_jsonb_final :=
+                        v_jsonb_final ||
                         jsonb_build_object( 'diag_role_modified', session_user );
-                    var_jsonb_final :=
-                        var_jsonb_final ||
+                    v_jsonb_final :=
+                        v_jsonb_final ||
                         jsonb_build_object( 'diag_row_version',
-                                            ( var_jsonb_old -> 'diag_row_version' )::bigint  + 1 );
+                                            ( v_jsonb_old -> 'diag_row_version' )::bigint  + 1 );
                 END IF;
 
-                var_jsonb_final :=
-                    var_jsonb_final ||
+                v_jsonb_final :=
+                    v_jsonb_final ||
                     jsonb_build_object( 'diag_update_count',
-                                        ( var_jsonb_old -> 'diag_update_count' )::bigint  + 1 );
+                                        ( v_jsonb_old -> 'diag_update_count' )::bigint  + 1 );
 
         ELSE
             RAISE EXCEPTION
@@ -104,8 +104,6 @@ BEGIN
                     DETAIL = ms_syst_priv.get_exception_details(
                                  p_proc_schema    => 'ms_syst_priv'
                                 ,p_proc_name      => 'trig_b_iu_set_diagnostic_columns'
-                                ,p_exception_name => 'unreachable_code_reached'
-                                ,p_errcode        => 'PM001'
                                 ,p_param_data     => NULL::jsonb
                                 ,p_context_data   =>
                                     jsonb_build_object(
@@ -113,13 +111,13 @@ BEGIN
                                         ,'tg_when',       tg_when
                                         ,'tg_schema',     tg_table_schema
                                         ,'tg_table_name', tg_table_name)),
-                    ERRCODE = 'PM001',
+                    ERRCODE = 'PM901',
                     SCHEMA = tg_table_schema,
                     TABLE = tg_table_name;
 
         END CASE;
 
-        new := jsonb_populate_record( new, var_jsonb_final );
+        new := jsonb_populate_record( new, v_jsonb_final );
 
         RETURN new;
 
@@ -138,7 +136,7 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
 BEGIN
 
@@ -146,18 +144,18 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_priv';
-    var_comments_config.function_name   := 'trig_b_iu_set_diagnostic_columns';
+    v_comments_config.function_schema := 'ms_syst_priv';
+    v_comments_config.function_name   := 'trig_b_iu_set_diagnostic_columns';
 
-    var_comments_config.trigger_function := TRUE;
-    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
-    var_comments_config.trigger_ops      := ARRAY [ 'i', 'u' ]::text[ ];
+    v_comments_config.trigger_function := TRUE;
+    v_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    v_comments_config.trigger_ops      := ARRAY [ 'i', 'u' ]::text[ ];
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Automatically maintains the common table diagnostic columns whenever data is
 inserted or updated.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$For `UPDATE` transactions, the trigger will determine if there are 'real data
 changes', meaning any fields other than the common diagnostic columns being
 changed by the transaction.  If not, only the `diag_update_count` column will be
@@ -181,7 +179,7 @@ defined:
   * `diag_update_count` / `bigint`
 $DOC$;
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

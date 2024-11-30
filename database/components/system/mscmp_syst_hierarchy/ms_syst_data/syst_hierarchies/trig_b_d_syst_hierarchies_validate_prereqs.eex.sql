@@ -26,8 +26,6 @@ BEGIN
                 DETAIL  = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_appl_data'
                             ,p_proc_name      => 'trig_b_d_syst_hierarchies_validate_prereqs'
-                            ,p_exception_name => 'invalid_state'
-                            ,p_errcode        => 'PM003'
                             ,p_param_data     => to_jsonb( old )
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -35,7 +33,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM003',
+                ERRCODE = 'PM106',
                 SCHEMA  = tg_table_schema,
                 TABLE   = tg_table_name;
 
@@ -56,7 +54,7 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
 BEGIN
 
@@ -64,23 +62,23 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_data';
-    var_comments_config.function_name   := 'trig_b_d_syst_hierarchies_validate_prereqs';
+    v_comments_config.function_schema := 'ms_syst_data';
+    v_comments_config.function_name   := 'trig_b_d_syst_hierarchies_validate_prereqs';
 
-    var_comments_config.trigger_function := TRUE;
-    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
-    var_comments_config.trigger_ops      := ARRAY [ 'd' ]::text[ ];
+    v_comments_config.trigger_function := TRUE;
+    v_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    v_comments_config.trigger_ops      := ARRAY [ 'd' ]::text[ ];
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Validates that a Hierarchy is no longer referenced by the data of Hierarchy
 implementing Components prior to allowing that Hierarchy being deleted.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$Note that references from associated Hierarchy Item records do not count as
 "references" and that deleting their parent Hierarchy record will cascade to the
 Hierarchy Item records.$DOC$;
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

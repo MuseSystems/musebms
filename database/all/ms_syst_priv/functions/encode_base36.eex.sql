@@ -30,10 +30,10 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
     -- Parameters
-    var_p_value ms_syst_priv.comments_config_function_param;
+    v_p_value ms_syst_priv.comments_config_function_param;
 
 BEGIN
 
@@ -41,25 +41,25 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_priv';
-    var_comments_config.function_name   := 'encode_base36';
+    v_comments_config.function_schema := 'ms_syst_priv';
+    v_comments_config.function_name   := 'encode_base36';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Encodes integers into a Base36 representation.$DOC$;
 
     --
     -- Parameter Configs
     --
 
-    var_p_value.param_name := 'p_value';
-    var_p_value.description :=
+    v_p_value.param_name := 'p_value';
+    v_p_value.description :=
 $DOC$A big integer value to encode as a Base36.$DOC$;
 
 
-    var_comments_config.params :=
-        ARRAY [ var_p_value ]::ms_syst_priv.comments_config_function_param[];
+    v_comments_config.params :=
+        ARRAY [ v_p_value ]::ms_syst_priv.comments_config_function_param[];
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

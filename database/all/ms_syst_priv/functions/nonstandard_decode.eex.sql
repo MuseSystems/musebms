@@ -22,12 +22,12 @@ $BODY$
 -- The original code is believed to be copyright David Sanabria.
 
 DECLARE
-    var_encoded_arr       text[];
-    var_return_result     bigint  := 0;
-    var_interim           bigint;
-    var_index             integer; -- Pointer to input array
-    var_token             text;
-    var_power             integer := 0; -- reverse pointer, used for position exponent (e.g. 2^32)
+    v_encoded_arr       text[];
+    v_return_result     bigint  := 0;
+    v_interim           bigint;
+    v_index             integer; -- Pointer to input array
+    v_token             text;
+    v_power             integer := 0; -- reverse pointer, used for position exponent (e.g. 2^32)
 
 BEGIN
 
@@ -35,24 +35,24 @@ BEGIN
         RETURN NULL;
     END IF;
 
-    var_encoded_arr := string_to_array( reverse( p_value ), NULL );
+    v_encoded_arr := string_to_array( reverse( p_value ), NULL );
 
     << conversion_loop >>
-    FOREACH var_token IN ARRAY var_encoded_arr LOOP
+    FOREACH v_token IN ARRAY v_encoded_arr LOOP
 
-        var_index := strpos( p_tokens, var_token );
+        v_index := strpos( p_tokens, v_token );
 
-        IF var_index <> 0 THEN
+        IF v_index <> 0 THEN
 
-            var_interim       := ( ( var_index - 1 ) * pow( p_base, var_power ) );
-            var_return_result := var_return_result + var_interim;
-            var_power         := 1 + var_power;
+            v_interim       := ( ( v_index - 1 ) * pow( p_base, v_power ) );
+            v_return_result := v_return_result + v_interim;
+            v_power         := 1 + v_power;
 
         END IF;
 
     END LOOP conversion_loop;
 
-    RETURN var_return_result;
+    RETURN v_return_result;
 
 END;
 $BODY$
@@ -72,22 +72,22 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
     -- Parameters
-    var_p_base   ms_syst_priv.comments_config_function_param;
-    var_p_tokens ms_syst_priv.comments_config_function_param;
-    var_p_value  ms_syst_priv.comments_config_function_param;
+    v_p_base   ms_syst_priv.comments_config_function_param;
+    v_p_tokens ms_syst_priv.comments_config_function_param;
+    v_p_value  ms_syst_priv.comments_config_function_param;
 BEGIN
 
     --
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_priv';
-    var_comments_config.function_name   := 'nonstandard_decode';
+    v_comments_config.function_schema := 'ms_syst_priv';
+    v_comments_config.function_name   := 'nonstandard_decode';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Performs a decode to decimal operation, similar to the standard decode function,
 but for non-standard decoding schemes such as Base32 or Base36.$DOC$;
 
@@ -95,28 +95,28 @@ but for non-standard decoding schemes such as Base32 or Base36.$DOC$;
     -- Parameter Configs
     --
 
-    var_p_base.param_name := 'p_base';
-    var_p_base.description :=
+    v_p_base.param_name := 'p_base';
+    v_p_base.description :=
 $DOC$The number base that the value has been encoded in.  For example, Base36
 the `p_base` value is `36`.$DOC$;
 
-    var_p_tokens.param_name := 'p_tokens';
-    var_p_tokens.description :=
+    v_p_tokens.param_name := 'p_tokens';
+    v_p_tokens.description :=
 $DOC$The tokens used in representing the numbering scheme.  The count of
 characters passed in this parameter should match the `p_base` parameter.$DOC$;
 
-    var_p_value.param_name := 'p_value';
-    var_p_value.description :=
+    v_p_value.param_name := 'p_value';
+    v_p_value.description :=
 $DOC$The encoded value to convert to decimal.$DOC$;
 
-    var_comments_config.params :=
+    v_comments_config.params :=
         ARRAY [
-              var_p_base
-            , var_p_tokens
-            , var_p_value
+              v_p_base
+            , v_p_tokens
+            , v_p_value
             ]::ms_syst_priv.comments_config_function_param[];
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

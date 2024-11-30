@@ -13,7 +13,7 @@
 DO
 $AUTHENTICATION_TESTING_INIT$
     DECLARE
-        var_data jsonb;
+        v_data jsonb;
     BEGIN
 
         /**********************************************************************
@@ -22,7 +22,7 @@ $AUTHENTICATION_TESTING_INIT$
          **
          **********************************************************************/
 
-        var_data := $TEST_DATA_DEFINTION$
+        v_data := $TEST_DATA_DEFINTION$
         {
           "disallowed_passwords": [
             "password",
@@ -2727,7 +2727,7 @@ $AUTHENTICATION_TESTING_INIT$
             ( password_hash )
         SELECT
             digest( password, 'sha1' )
-        FROM jsonb_array_elements_text( var_data -> 'disallowed_passwords' ) password;
+        FROM jsonb_array_elements_text( v_data -> 'disallowed_passwords' ) password;
 
         ----------------------------------------------------
         -- Disallowed Hosts
@@ -2737,7 +2737,7 @@ $AUTHENTICATION_TESTING_INIT$
             ( host_address )
         SELECT
             ip_addr::inet
-        FROM jsonb_array_elements_text( var_data -> 'disallowed_hosts' ) ip_addr;
+        FROM jsonb_array_elements_text( v_data -> 'disallowed_hosts' ) ip_addr;
 
         ----------------------------------------------------
         -- Owner Password Rules
@@ -2769,7 +2769,7 @@ $AUTHENTICATION_TESTING_INIT$
           , ( opr ->> 'disallow_compromised' )::boolean
           , ( opr ->> 'require_mfa' )::boolean
           , array( SELECT jsonb_array_elements_text( opr -> 'allowed_mfa_types' ) )
-        FROM jsonb_array_elements( var_data -> 'owner_password_rules' ) opr
+        FROM jsonb_array_elements( v_data -> 'owner_password_rules' ) opr
             JOIN ms_syst_data.syst_owners o ON o.internal_name = opr ->> 'owner_name';
 
         ----------------------------------------------------
@@ -2790,7 +2790,7 @@ $AUTHENTICATION_TESTING_INIT$
             , (gnr ->> 'ip_host_or_network')::inet
             , (gnr ->> 'ip_host_range_lower')::inet
             , (gnr ->> 'ip_host_range_upper')::inet
-        FROM jsonb_array_elements( var_data -> 'global_network_rules' ) gnr;
+        FROM jsonb_array_elements( v_data -> 'global_network_rules' ) gnr;
 
         INSERT INTO ms_syst_data.syst_owner_network_rules
             (
@@ -2808,7 +2808,7 @@ $AUTHENTICATION_TESTING_INIT$
             , (onr ->> 'ip_host_or_network')::inet
             , (onr ->> 'ip_host_range_lower')::inet
             , (onr ->> 'ip_host_range_upper')::inet
-        FROM jsonb_array_elements( var_data -> 'owner_network_rules' ) onr
+        FROM jsonb_array_elements( v_data -> 'owner_network_rules' ) onr
             JOIN ms_syst_data.syst_owners o ON o.internal_name = onr ->> 'owner_name';
 
         INSERT INTO ms_syst_data.syst_owner_network_rules
@@ -2825,7 +2825,7 @@ $AUTHENTICATION_TESTING_INIT$
           , ( onr ->> 'ip_host_or_network' )::inet
           , ( onr ->> 'ip_host_range_lower' )::inet
           , ( onr ->> 'ip_host_range_upper' )::inet
-        FROM  jsonb_path_query( var_data, '$.owner_network_rules[*] ? (@.owner_name == null)' ) onr
+        FROM  jsonb_path_query( v_data, '$.owner_network_rules[*] ? (@.owner_name == null)' ) onr
             CROSS JOIN ms_syst_data.syst_owners o
         WHERE o.id NOT IN (SELECT owner_id FROM ms_syst_data.syst_owner_network_rules);
 
@@ -2843,7 +2843,7 @@ $AUTHENTICATION_TESTING_INIT$
           , ( inr ->> 'ip_host_or_network' )::inet
           , ( inr ->> 'ip_host_range_lower' )::inet
           , ( inr ->> 'ip_host_range_upper' )::inet
-        FROM jsonb_array_elements( var_data -> 'instance_network_rules' ) inr
+        FROM jsonb_array_elements( v_data -> 'instance_network_rules' ) inr
             JOIN ms_syst_data.syst_instances i ON i.internal_name = inr ->> 'instance_name';
 
         INSERT INTO ms_syst_data.syst_instance_network_rules
@@ -2860,7 +2860,7 @@ $AUTHENTICATION_TESTING_INIT$
           , ( inr ->> 'ip_host_or_network' )::inet
           , ( inr ->> 'ip_host_range_lower' )::inet
           , ( inr ->> 'ip_host_range_upper' )::inet
-        FROM  jsonb_path_query( var_data, '$.instance_network_rules[*] ? (@.instance_name == null)' ) inr
+        FROM  jsonb_path_query( v_data, '$.instance_network_rules[*] ? (@.instance_name == null)' ) inr
             CROSS JOIN ms_syst_data.syst_instances i
         WHERE i.id NOT IN (SELECT instance_id FROM ms_syst_data.syst_instance_network_rules);
 
@@ -2870,19 +2870,19 @@ $AUTHENTICATION_TESTING_INIT$
 
         << access_account_creation >>
         DECLARE
-            var_account_data           record;
-            var_access_account_id      uuid;
+            v_account_data           record;
+            v_access_account_id      uuid;
 
-            var_identity_data          record;
-            var_primary_identity_id    uuid;
-            var_validation_identity_id uuid;
+            v_identity_data          record;
+            v_primary_identity_id    uuid;
+            v_validation_identity_id uuid;
 
-            var_credential_data        record;
+            v_credential_data        record;
 
         BEGIN
 
             << access_account_loop >>
-            FOR var_account_data IN
+            FOR v_account_data IN
                 SELECT
                     aa ->> 'access_account_name'              AS access_account_name
                   , aa ->> 'external_name'                    AS external_name
@@ -2894,7 +2894,7 @@ $AUTHENTICATION_TESTING_INIT$
                   , aa -> 'identities'                        AS identities
                   , aa -> 'credentials'                       AS credentials
                   , aa -> 'password_history'                  AS password_history
-                FROM jsonb_array_elements( var_data -> 'access_accounts' ) aa
+                FROM jsonb_array_elements( v_data -> 'access_accounts' ) aa
                     JOIN ms_syst_data.syst_enum_items ei
                         ON ei.internal_name = aa ->> 'access_account_state_name'
                     LEFT JOIN ms_syst_data.syst_owners o
@@ -2912,12 +2912,12 @@ $AUTHENTICATION_TESTING_INIT$
                     , allow_global_logins
                     , access_account_state_id )
                 VALUES
-                    ( var_account_data.access_account_name
-                    , var_account_data.external_name
-                    , var_account_data.owning_owner_id
-                    , var_account_data.allow_global_logins
-                    , var_account_data.access_account_state_id)
-                RETURNING id INTO var_access_account_id;
+                    ( v_account_data.access_account_name
+                    , v_account_data.external_name
+                    , v_account_data.owning_owner_id
+                    , v_account_data.allow_global_logins
+                    , v_account_data.access_account_state_id)
+                RETURNING id INTO v_access_account_id;
 
                 ----------------------------------------------------
                 -- Access Account Instance Access
@@ -2937,9 +2937,9 @@ $AUTHENTICATION_TESTING_INIT$
                     , now() + make_interval( days => ( ia ->> 'invitation_issued_days' )::integer )
                     , now() + make_interval( days => ( ia ->> 'invitation_expires_days' )::integer )
                     , now() + make_interval( days => ( ia ->> 'invitation_declined_days' )::integer )
-                FROM jsonb_array_elements( var_account_data.instance_access ) ia
+                FROM jsonb_array_elements( v_account_data.instance_access ) ia
                     JOIN ms_syst_data.syst_access_accounts aa
-                        ON aa.internal_name = var_account_data.access_account_name
+                        ON aa.internal_name = v_account_data.access_account_name
                     JOIN ms_syst_data.syst_instances i
                         ON i.internal_name = ia ->> 'instance_name';
 
@@ -2957,13 +2957,13 @@ $AUTHENTICATION_TESTING_INIT$
                     , now() + make_interval( days => ( ia ->> 'invitation_issued_days' )::integer )
                     , now() + make_interval( days => ( ia ->> 'invitation_expires_days' )::integer )
                     , now() + make_interval( days => ( ia ->> 'invitation_declined_days' )::integer )
-                FROM jsonb_array_elements( var_account_data.instance_access ) ia
+                FROM jsonb_array_elements( v_account_data.instance_access ) ia
                     JOIN ms_syst_data.syst_access_accounts aa
-                        ON aa.internal_name = var_account_data.access_account_name
+                        ON aa.internal_name = v_account_data.access_account_name
                     CROSS JOIN ms_syst_data.syst_instances i
                 WHERE i.id NOT IN (SELECT instance_id
                                    FROM ms_syst_data.syst_access_account_instance_assocs
-                                   WHERE access_account_id = var_access_account_id)
+                                   WHERE access_account_id = v_access_account_id)
                   AND ( i.owner_id = aa.owning_owner_id or
                         coalesce( ( ia ->> 'no_owner_restriction' )::boolean, FALSE ) );
 
@@ -2972,7 +2972,7 @@ $AUTHENTICATION_TESTING_INIT$
                 ----------------------------------------------------
 
                 << access_account_identities_loop >>
-                FOR var_identity_data IN
+                FOR v_identity_data IN
                     SELECT
                         i ->> 'identity_type_name'                                       AS identity_type_name
                       , ei.id                                                            AS identity_type_id
@@ -2990,7 +2990,7 @@ $AUTHENTICATION_TESTING_INIT$
                             days => ( i ->> 'identity_expires_days' )::integer )         AS identity_expires
                       , i -> 'validation'                                                AS validation
                       , i -> 'credential'                                                AS credential
-                    FROM jsonb_array_elements( var_account_data.identities ) i
+                    FROM jsonb_array_elements( v_account_data.identities ) i
                         JOIN ms_syst_data.syst_enum_items ei
                              ON ei.internal_name = i ->> 'identity_type_name'
                 LOOP
@@ -3007,13 +3007,13 @@ $AUTHENTICATION_TESTING_INIT$
                         , validation_requested
                         , identity_expires)
                     VALUES
-                        ( var_access_account_id
-                        , var_identity_data.identity_type_id
-                        , var_identity_data.account_identifier
-                        , var_identity_data.validated
-                        , var_identity_data.validation_requested
-                        , var_identity_data.identity_expires )
-                    RETURNING id INTO var_primary_identity_id;
+                        ( v_access_account_id
+                        , v_identity_data.identity_type_id
+                        , v_identity_data.account_identifier
+                        , v_identity_data.validated
+                        , v_identity_data.validation_requested
+                        , v_identity_data.identity_expires )
+                    RETURNING id INTO v_primary_identity_id;
 
                     ----------------------------------------------------
                     -- Identity Linked Credential
@@ -3027,23 +3027,23 @@ $AUTHENTICATION_TESTING_INIT$
                         , force_reset
                         , last_updated )
                     SELECT
-                          var_access_account_id
+                          v_access_account_id
                         , (SELECT id
                            FROM ms_syst_data.syst_enum_items
-                           WHERE internal_name = var_identity_data.credential ->> 'credential_type_name' )
-                        , var_primary_identity_id
-                        , var_identity_data.credential ->> 'credential_data'
+                           WHERE internal_name = v_identity_data.credential ->> 'credential_type_name' )
+                        , v_primary_identity_id
+                        , v_identity_data.credential ->> 'credential_data'
                         , CASE
-                            WHEN ( var_identity_data.credential ->> 'force_reset' )::boolean THEN
+                            WHEN ( v_identity_data.credential ->> 'force_reset' )::boolean THEN
                                 now()
                           END
                         , now() +
                           make_interval(
                               days =>
                                   coalesce(
-                                      ( var_identity_data.credential ->> 'last_updated_days' )::integer,
+                                      ( v_identity_data.credential ->> 'last_updated_days' )::integer,
                                       0) )
-                    WHERE jsonb_typeof(var_identity_data.credential) = 'object';
+                    WHERE jsonb_typeof(v_identity_data.credential) = 'object';
 
                     ----------------------------------------------------
                     -- Identity Linked Validation Identity/Credential
@@ -3057,31 +3057,31 @@ $AUTHENTICATION_TESTING_INIT$
                         , validated
                         , identity_expires )
                     SELECT
-                          var_access_account_id
+                          v_access_account_id
                         , ( SELECT
                                 id
                             FROM ms_syst_data.syst_enum_items
                             WHERE internal_name = 'identity_types_sysdef_validation' )
-                        , coalesce( var_identity_data.validation #>>
+                        , coalesce( v_identity_data.validation #>>
                                         '{identity, account_identifier}',
                                     ms_syst_priv.get_random_string(
-                                        ( var_identity_data.validation #>>
+                                        ( v_identity_data.validation #>>
                                           '{identity, account_identifier_length}' )::integer ) )
-                        , var_primary_identity_id
+                        , v_primary_identity_id
                         , CASE
-                            WHEN 
-                                coalesce( 
-                                    ( var_identity_data.validation #>> '{identity, validated}' )::boolean, 
-                                    TRUE ) 
+                            WHEN
+                                coalesce(
+                                    ( v_identity_data.validation #>> '{identity, validated}' )::boolean,
+                                    TRUE )
                             THEN
                                 now()
                           END
                         , now( ) +
                           make_interval(
-                              days => ( var_identity_data.validation #>>
+                              days => ( v_identity_data.validation #>>
                                         '{identity, identity_expires_days}' )::integer )
-                    WHERE jsonb_typeof(var_identity_data.validation -> 'identity') = 'object'
-                    RETURNING id INTO var_validation_identity_id;
+                    WHERE jsonb_typeof(v_identity_data.validation -> 'identity') = 'object'
+                    RETURNING id INTO v_validation_identity_id;
 
                     INSERT INTO ms_syst_data.syst_credentials
                         ( access_account_id
@@ -3091,27 +3091,27 @@ $AUTHENTICATION_TESTING_INIT$
                         , force_reset
                         , last_updated )
                     SELECT
-                          var_access_account_id
+                          v_access_account_id
                         , ( SELECT
                                 id
                             FROM ms_syst_data.syst_enum_items
                             WHERE internal_name = 'credential_types_sysdef_token_validation' )
-                        , var_validation_identity_id
-                        , var_identity_data.validation #>> '{credential, credential_data}'
+                        , v_validation_identity_id
+                        , v_identity_data.validation #>> '{credential, credential_data}'
                         , CASE
                             WHEN
-                               ( var_identity_data.validation #>> '{credential, force_reset}' )::boolean
+                               ( v_identity_data.validation #>> '{credential, force_reset}' )::boolean
                             THEN
                                 now()
                           END
                         , now( ) +
                           make_interval(
                               days => coalesce(
-                                  ( var_identity_data.validation #>>
+                                  ( v_identity_data.validation #>>
                                     '{credential, last_updated_days}' )::integer,
                                   0 ) )
-                    WHERE jsonb_typeof(var_identity_data.validation -> 'credential') = 'object'
-                      AND var_validation_identity_id IS NOT NULL;
+                    WHERE jsonb_typeof(v_identity_data.validation -> 'credential') = 'object'
+                      AND v_validation_identity_id IS NOT NULL;
 
                 END LOOP access_account_identities_loop;
 
@@ -3126,7 +3126,7 @@ $AUTHENTICATION_TESTING_INIT$
                     , force_reset
                     , last_updated )
                 SELECT
-                      var_access_account_id
+                      v_access_account_id
                     , ei.id
                     , c ->> 'credential_data'
                     , CASE
@@ -3135,7 +3135,7 @@ $AUTHENTICATION_TESTING_INIT$
                       END
                     , now( ) +
                       make_interval( days => coalesce( ( c ->> 'last_updated_days' )::integer, 0 ) )
-                FROM jsonb_array_elements( var_account_data.credentials ) c
+                FROM jsonb_array_elements( v_account_data.credentials ) c
                     JOIN ms_syst_data.syst_enum_items ei
                          ON ei.internal_name = c ->> 'credential_type_name';
 
@@ -3146,9 +3146,9 @@ $AUTHENTICATION_TESTING_INIT$
                 INSERT INTO ms_syst_data.syst_password_history
                     (access_account_id, credential_data )
                 SELECT
-                      var_access_account_id
+                      v_access_account_id
                     , credential_data
-                FROM jsonb_array_elements_text( var_account_data.password_history ) credential_data;
+                FROM jsonb_array_elements_text( v_account_data.password_history ) credential_data;
 
             END LOOP access_account_loop;
 

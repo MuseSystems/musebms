@@ -54,10 +54,10 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_host_address ms_syst_priv.comments_config_table_column;
+    v_host_address ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -65,10 +65,10 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_disallowed_hosts';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_disallowed_hosts';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$A simple listing of "banned" IP address which are not allowed to authenticate
 their users to the system.  This registry differs from the syst_*_network_rules
 tables in that IP addresses here are registered as the result of automatic
@@ -81,15 +81,15 @@ and most network rules are processed in the authentication attempt sequence.$DOC
     -- Column Configs
     --
 
-    var_host_address.column_name := 'host_address';
-    var_host_address.description :=
+    v_host_address.column_name := 'host_address';
+    v_host_address.description :=
 $DOC$The IP address of the host disallowed from attempting to authenticate Access
 Accounts.$DOC$;
 
-    var_comments_config.columns :=
-        ARRAY [ var_host_address ]::ms_syst_priv.comments_config_table_column[];
+    v_comments_config.columns :=
+        ARRAY [ v_host_address ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

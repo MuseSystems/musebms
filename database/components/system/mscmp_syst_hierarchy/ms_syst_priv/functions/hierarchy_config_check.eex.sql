@@ -23,7 +23,7 @@ $BODY$
 
 DECLARE
 
-    var_errors text[] := '{}'::text[];
+    v_errors text[] := '{}'::text[];
 
 BEGIN
 
@@ -34,7 +34,7 @@ BEGIN
                         FROM ms_syst_data.syst_hierarchy_items chi
                         WHERE chi.hierarchy_id = p_hierarchy.id )
     THEN
-        var_errors := var_errors || 'unstructured_with_hierarchy_items'::text;
+        v_errors := v_errors || 'unstructured_with_hierarchy_items'::text;
     END IF;
 
     -- Ensure that top level hierarchy item is required and that all hierarchy
@@ -57,7 +57,7 @@ BEGIN
                                     ORDER BY hierarchy_depth DESC
                                     LIMIT 1 ) ), TRUE )
     THEN
-        var_errors := var_errors || 'structured_invalid_required_items'::text;
+        v_errors := v_errors || 'structured_invalid_required_items'::text;
     END IF;
 
     -- Ensure that bottom level required hierarchy item allows leaf node
@@ -73,10 +73,10 @@ BEGIN
                       ORDER BY hierarchy_depth DESC
                       LIMIT 1 )
     THEN
-        var_errors := var_errors || 'structured_invalid_allow_leaf_nodes'::text;
+        v_errors := v_errors || 'structured_invalid_allow_leaf_nodes'::text;
     END IF;
 
-    RETURN var_errors;
+    RETURN v_errors;
 
 END;
 $BODY$

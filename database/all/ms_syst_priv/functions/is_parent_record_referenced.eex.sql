@@ -20,8 +20,8 @@ $BODY$
 -- muse.information@musesystems.com :: https://muse.systems
 
 DECLARE
-    var_referencing_relation record;
-    var_check_result         boolean;
+    v_referencing_relation record;
+    v_check_result         boolean;
 
 BEGIN
 
@@ -37,8 +37,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst_priv'
                             ,p_proc_name      => 'is_parent_record_referenced'
-                            ,p_exception_name => 'invalid_parameter'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     =>
                                 jsonb_build_object(
                                      'p_table_schema',       p_table_schema
@@ -46,11 +44,10 @@ BEGIN
                                     ,'p_parent_record_id',   p_parent_record_id
                                     ,'p_excluded_relations', p_excluded_relations)
                             ,p_context_data   => null),
-                ERRCODE = 'PM008';
+                ERRCODE = 'PM110';
     END IF;
-
     << referencing_relations_loop >>
-    FOR var_referencing_relation IN
+    FOR v_referencing_relation IN
         SELECT
               kcu.table_schema
             , kcu.table_name
@@ -72,13 +69,13 @@ BEGIN
 
         EXECUTE format(
             'SELECT exists(SELECT TRUE FROM %1$I.%2$I WHERE %3$I = (%4$L)::uuid)',
-            var_referencing_relation.table_schema,
-            var_referencing_relation.table_name,
-            var_referencing_relation.column_name,
+            v_referencing_relation.table_schema,
+            v_referencing_relation.table_name,
+            v_referencing_relation.column_name,
             p_parent_record_id)
-            INTO var_check_result;
+            INTO v_check_result;
 
-        IF var_check_result THEN
+        IF v_check_result THEN
             RETURN TRUE;
         END IF;
 
@@ -118,13 +115,13 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
     -- Parameters
-    var_p_table_schema       ms_syst_priv.comments_config_function_param;
-    var_p_table_name         ms_syst_priv.comments_config_function_param;
-    var_p_parent_record_id   ms_syst_priv.comments_config_function_param;
-    var_p_excluded_relations ms_syst_priv.comments_config_function_param;
+    v_p_table_schema       ms_syst_priv.comments_config_function_param;
+    v_p_table_name         ms_syst_priv.comments_config_function_param;
+    v_p_parent_record_id   ms_syst_priv.comments_config_function_param;
+    v_p_excluded_relations ms_syst_priv.comments_config_function_param;
 
 BEGIN
 
@@ -132,13 +129,13 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_priv';
-    var_comments_config.function_name   := 'is_parent_record_referenced';
+    v_comments_config.function_schema := 'ms_syst_priv';
+    v_comments_config.function_name   := 'is_parent_record_referenced';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Tests if a specific parent record is referenced in a foreign key relationship.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$The parent table is identified by the `p_table_schema` and `p_table_name`
 parameters and the specific record is identified using the `p_parent_record_id`
 parameter.  The `p_parent_record_id` is expected to be the `id` column value of
@@ -166,35 +163,35 @@ return `NULL`.$DOC$;
     -- Parameter Configs
     --
 
-    var_p_table_schema.param_name := 'p_table_schema';
-    var_p_table_schema.description :=
+    v_p_table_schema.param_name := 'p_table_schema';
+    v_p_table_schema.description :=
 $DOC$The name of the schema which hosts the parent table.$DOC$;
 
-    var_p_table_name.param_name := 'p_table_name';
-    var_p_table_name.description :=
+    v_p_table_name.param_name := 'p_table_name';
+    v_p_table_name.description :=
 $DOC$The name of the parent table.$DOC$;
 
-    var_p_parent_record_id.param_name := 'p_parent_record_id';
-    var_p_parent_record_id.description :=
+    v_p_parent_record_id.param_name := 'p_parent_record_id';
+    v_p_parent_record_id.description :=
 $DOC$The ID value of the parent record which will be searched for in the child
 tables.$DOC$;
 
-    var_p_excluded_relations.param_name := 'p_excluded_relations';
-    var_p_excluded_relations.required := FALSE;
-    var_p_excluded_relations.default_value := 'No excluded relations';
-    var_p_excluded_relations.description :=
+    v_p_excluded_relations.param_name := 'p_excluded_relations';
+    v_p_excluded_relations.required := FALSE;
+    v_p_excluded_relations.default_value := 'No excluded relations';
+    v_p_excluded_relations.description :=
 $DOC$An optional array of child table `regclass`es which should not be searched.$DOC$;
 
 
-    var_comments_config.params :=
+    v_comments_config.params :=
         ARRAY [
-              var_p_table_schema
-            , var_p_table_name
-            , var_p_parent_record_id
-            , var_p_excluded_relations
+              v_p_table_schema
+            , v_p_table_name
+            , v_p_parent_record_id
+            , v_p_excluded_relations
             ]::ms_syst_priv.comments_config_function_param[];
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

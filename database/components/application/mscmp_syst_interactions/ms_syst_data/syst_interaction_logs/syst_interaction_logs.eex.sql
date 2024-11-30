@@ -94,13 +94,13 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_interaction_timestamp ms_syst_priv.comments_config_table_column;
-    var_interaction_type_id   ms_syst_priv.comments_config_table_column;
-    var_interface_type_id     ms_syst_priv.comments_config_table_column;
-    var_data                  ms_syst_priv.comments_config_table_column;
+    v_interaction_timestamp ms_syst_priv.comments_config_table_column;
+    v_interaction_type_id   ms_syst_priv.comments_config_table_column;
+    v_interface_type_id     ms_syst_priv.comments_config_table_column;
+    v_data                  ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -108,10 +108,10 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_interaction_logs';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_interaction_logs';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Records interactions to drive both system functionality and to provide usage
 telemetry.$DOC$;
 
@@ -119,35 +119,35 @@ telemetry.$DOC$;
     -- Column Configs
     --
 
-    var_interaction_timestamp.column_name := 'interaction_timestamp';
-    var_interaction_timestamp.description :=
+    v_interaction_timestamp.column_name := 'interaction_timestamp';
+    v_interaction_timestamp.description :=
 $DOC$The nominal time at which the event being recorded is considered to have
 happened.  This is the database transaction start time specifically.$DOC$;
 
-    var_interaction_type_id.column_name := 'interaction_type_id';
-    var_interaction_type_id.description :=
+    v_interaction_type_id.column_name := 'interaction_type_id';
+    v_interaction_type_id.description :=
 $DOC$The kind of interaction being recorded.$DOC$;
 
-    var_interface_type_id.column_name := 'interface_type_id';
-    var_interface_type_id.description :=
+    v_interface_type_id.column_name := 'interface_type_id';
+    v_interface_type_id.description :=
 $DOC$The origin entry point into the application and from which the activity was
 initiated.$DOC$;
 
-    var_data.column_name := 'data';
-    var_data.description :=
+    v_data.column_name := 'data';
+    v_data.description :=
 $DOC$Optional document style data which may more completely elaborate on the activity
 being recorded.$DOC$;
 
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_interaction_timestamp
-            , var_interaction_type_id
-            , var_interface_type_id
-            , var_data
+              v_interaction_timestamp
+            , v_interaction_type_id
+            , v_interface_type_id
+            , v_data
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

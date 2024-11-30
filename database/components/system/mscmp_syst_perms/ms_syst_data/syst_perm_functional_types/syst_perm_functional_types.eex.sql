@@ -65,7 +65,7 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
 BEGIN
 
@@ -73,10 +73,10 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_perm_functional_types';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_perm_functional_types';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Defines application specific areas of applicability to which Permissions and
 Permission Roles are assigned.
 
@@ -90,12 +90,12 @@ warehouse's inventory management features.  In this case there would be "Global"
 Permission Functional Type containing the log in Permission and a "Warehouse"
 Permission Functional Type for those Permissions and Permission Roles which can
 vary warehouse by warehouse.$DOC$;
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$Both Permissions and Permission Roles must share a Permission Functional Type
 since the Permission Functional Type establishes the context of applicability
 for both.$DOC$;
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

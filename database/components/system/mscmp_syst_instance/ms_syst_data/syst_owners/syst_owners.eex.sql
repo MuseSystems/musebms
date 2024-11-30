@@ -75,11 +75,11 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
 
-    var_owner_state_id ms_syst_priv.comments_config_table_column;
+    v_owner_state_id ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -87,10 +87,10 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_owners';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_owners';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Identifies instance owners.  Instance owners are typically the clients which
 have commissioned the use of an application instance.$DOC$;
 
@@ -98,15 +98,15 @@ have commissioned the use of an application instance.$DOC$;
     -- Column Configs
     --
 
-    var_owner_state_id.column_name := 'owner_state_id';
-    var_owner_state_id.description :=
+    v_owner_state_id.column_name := 'owner_state_id';
+    v_owner_state_id.description :=
 $DOC$Establishes the current life-cycle state in which Instance Owner record
 currently resides.$DOC$;
 
-    var_comments_config.columns :=
-        ARRAY [ var_owner_state_id ]::ms_syst_priv.comments_config_table_column[];
+    v_comments_config.columns :=
+        ARRAY [ v_owner_state_id ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

@@ -83,13 +83,13 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_person_id              ms_syst_priv.comments_config_table_column;
-    var_person_contact_role_id ms_syst_priv.comments_config_table_column;
-    var_place_id               ms_syst_priv.comments_config_table_column;
-    var_contact_id             ms_syst_priv.comments_config_table_column;
+    v_person_id              ms_syst_priv.comments_config_table_column;
+    v_person_contact_role_id ms_syst_priv.comments_config_table_column;
+    v_place_id               ms_syst_priv.comments_config_table_column;
+    v_contact_id             ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -97,10 +97,10 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_appl_data';
-    var_comments_config.table_name   := 'mstr_person_contact_roles';
+    v_comments_config.table_schema := 'ms_appl_data';
+    v_comments_config.table_name   := 'mstr_person_contact_roles';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Establishes the Roles that Contact records serve in relation to the given
 Person.$DOC$;
 
@@ -108,37 +108,37 @@ Person.$DOC$;
     -- Column Configs
     --
 
-    var_person_id.column_name := 'person_id';
-    var_person_id.description :=
+    v_person_id.column_name := 'person_id';
+    v_person_id.description :=
 $DOC$Identifies the Person which has the relationship to the Contact information.$DOC$;
 
-    var_person_contact_role_id.column_name := 'person_contact_role_id';
-    var_person_contact_role_id.description :=
+    v_person_contact_role_id.column_name := 'person_contact_role_id';
+    v_person_contact_role_id.description :=
 $DOC$Indicates a specific use or purpose for the identified Contact information.$DOC$;
 
-    var_place_id.column_name := 'place_id';
-    var_place_id.description :=
+    v_place_id.column_name := 'place_id';
+    v_place_id.description :=
 $DOC$This is an optional value indicating whether the given Contact information is
 associated with a known Place.$DOC$;
-    var_place_id.general_usage :=
+    v_place_id.general_usage :=
 $DOC$If the Contact information is associated with a specific Place, a reference to
 the Place record ID will appear here.  Otherwise the value will be `NULL`.$DOC$;
 
-    var_contact_id.column_name := 'contact_id';
-    var_contact_id.description :=
+    v_contact_id.column_name := 'contact_id';
+    v_contact_id.description :=
 $DOC$A reference to the Contact record which serves the given Role for the given
 Person.$DOC$;
 
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_person_id
-            , var_person_contact_role_id
-            , var_place_id
-            , var_contact_id
+              v_person_id
+            , v_person_contact_role_id
+            , v_place_id
+            , v_contact_id
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

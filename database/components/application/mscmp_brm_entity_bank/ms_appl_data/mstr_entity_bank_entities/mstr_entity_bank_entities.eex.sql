@@ -63,11 +63,11 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_entity_id        ms_syst_priv.comments_config_table_column;
-    var_owning_entity_id ms_syst_priv.comments_config_table_column;
+    v_entity_id        ms_syst_priv.comments_config_table_column;
+    v_owning_entity_id ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -75,14 +75,14 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_appl_data';
-    var_comments_config.table_name   := 'mstr_entity_bank_entities';
+    v_comments_config.table_schema := 'ms_appl_data';
+    v_comments_config.table_name   := 'mstr_entity_bank_entities';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Establishes an financial service provider relationship between an Owning entity
 and an Entity which provides financial and banking services.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$Banks can process certain financial related transactions and be associated with
 specific asset and liability accounts is relation to the owning Entity.$DOC$;
 
@@ -90,22 +90,22 @@ specific asset and liability accounts is relation to the owning Entity.$DOC$;
     -- Column Configs
     --
 
-    var_entity_id.column_name := 'entity_id';
-    var_entity_id.description :=
+    v_entity_id.column_name := 'entity_id';
+    v_entity_id.description :=
 $DOC$Identifies an Entity which acts as a bank or financial institution in the
 relationship.$DOC$;
 
-    var_owning_entity_id.column_name := 'owning_entity_id';
-    var_owning_entity_id.description :=
+    v_owning_entity_id.column_name := 'owning_entity_id';
+    v_owning_entity_id.description :=
 $DOC$Identifies the Entity on whose behalf the banking relationship exists.$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_entity_id
-            , var_owning_entity_id
+              v_entity_id
+            , v_owning_entity_id
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

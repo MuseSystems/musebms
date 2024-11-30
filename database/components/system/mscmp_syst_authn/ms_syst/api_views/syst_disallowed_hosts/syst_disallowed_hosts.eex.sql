@@ -43,10 +43,10 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- View
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
     -- View Columns
-    var_host_address ms_syst_priv.comments_config_apiview_column;
+    v_host_address ms_syst_priv.comments_config_apiview_column;
 
 BEGIN
 
@@ -54,26 +54,26 @@ BEGIN
     -- API View Config
     --
 
-    var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_disallowed_hosts';
-    var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_disallowed_hosts';
-    var_view_config.user_update  := FALSE;
+    v_view_config.table_schema := 'ms_syst_data';
+    v_view_config.table_name   := 'syst_disallowed_hosts';
+    v_view_config.view_schema  := 'ms_syst';
+    v_view_config.view_name    := 'syst_disallowed_hosts';
+    v_view_config.user_update  := FALSE;
 
     --
     -- Column Configs
     --
-    var_host_address.column_name      := 'host_address';
-    var_host_address.required         := TRUE;
-    var_host_address.unique_values    := TRUE;
-    var_host_address.supplemental     :=
+    v_host_address.column_name      := 'host_address';
+    v_host_address.required         := TRUE;
+    v_host_address.unique_values    := TRUE;
+    v_host_address.supplemental     :=
 $DOC$Attempting to `INSERT` a duplicate host using this API View will simply result
 in the inserted record being silently ignored in favor of the existing record.$DOC$;
 
-    var_view_config.columns :=
-        ARRAY [ var_host_address ]::ms_syst_priv.comments_config_apiview_column[];
+    v_view_config.columns :=
+        ARRAY [ v_host_address ]::ms_syst_priv.comments_config_apiview_column[];
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

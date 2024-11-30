@@ -15,7 +15,7 @@ $BODY$
 -- muse.information@musesystems.com :: https://muse.systems
 
 DECLARE
-    var_resolved_value text := upper(p_value);
+    v_resolved_value text := upper(p_value);
 BEGIN
 
     RETURN
@@ -23,7 +23,7 @@ BEGIN
              ms_syst_priv.nonstandard_decode(
                  p_base   => 36,
                  p_tokens => '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-                 P_value  => var_resolved_value));
+                 P_value  => v_resolved_value));
 
 END;
 $BODY$
@@ -39,10 +39,10 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
     -- Parameters
-    var_p_value ms_syst_priv.comments_config_function_param;
+    v_p_value ms_syst_priv.comments_config_function_param;
 
 BEGIN
 
@@ -50,24 +50,24 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_priv';
-    var_comments_config.function_name   := 'decode_base36';
+    v_comments_config.function_schema := 'ms_syst_priv';
+    v_comments_config.function_name   := 'decode_base36';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Decodes integers represented in Base36 notation back to decimal form.$DOC$;
 
     --
     -- Parameter Configs
     --
 
-    var_p_value.param_name := 'p_value';
-    var_p_value.description :=
+    v_p_value.param_name := 'p_value';
+    v_p_value.description :=
 $DOC$The Base36 value to decode to decimal.$DOC$;
 
-    var_comments_config.params :=
-        ARRAY [ var_p_value ]::ms_syst_priv.comments_config_function_param[];
+    v_comments_config.params :=
+        ARRAY [ v_p_value ]::ms_syst_priv.comments_config_function_param[];
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

@@ -44,11 +44,11 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- View
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
     -- View Columns
-    var_access_account_id ms_syst_priv.comments_config_apiview_column;
-    var_credential_data   ms_syst_priv.comments_config_apiview_column;
+    v_access_account_id ms_syst_priv.comments_config_apiview_column;
+    v_credential_data   ms_syst_priv.comments_config_apiview_column;
 
 BEGIN
 
@@ -56,29 +56,29 @@ BEGIN
     -- API View Config
     --
 
-    var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_password_history';
-    var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_password_history';
-    var_view_config.user_update  := FALSE;
+    v_view_config.table_schema := 'ms_syst_data';
+    v_view_config.table_name   := 'syst_password_history';
+    v_view_config.view_schema  := 'ms_syst';
+    v_view_config.view_name    := 'syst_password_history';
+    v_view_config.user_update  := FALSE;
 
     --
     -- Column Configs
     --
 
-    var_access_account_id.column_name      := 'access_account_id';
-    var_access_account_id.required         := TRUE;
+    v_access_account_id.column_name      := 'access_account_id';
+    v_access_account_id.required         := TRUE;
 
-    var_credential_data.column_name      := 'credential_data';
-    var_credential_data.required         := TRUE;
+    v_credential_data.column_name      := 'credential_data';
+    v_credential_data.required         := TRUE;
 
-    var_view_config.columns :=
+    v_view_config.columns :=
         ARRAY [
-              var_access_account_id
-            , var_credential_data
+              v_access_account_id
+            , v_credential_data
             ]::ms_syst_priv.comments_config_apiview_column[];
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

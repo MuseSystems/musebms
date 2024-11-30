@@ -34,8 +34,6 @@ BEGIN
                 DETAIL  = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst_data'
                             ,p_proc_name      => 'trig_b_i_syst_enum_functional_type_validate_new_allowed'
-                            ,p_exception_name => 'invalid_functional_type'
-                            ,p_errcode        => 'PM003'
                             ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -43,7 +41,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM003',
+                ERRCODE = 'PM105',
                 SCHEMA  = tg_table_schema,
                 TABLE   = tg_table_name;
 
@@ -65,7 +63,7 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
 BEGIN
 
@@ -73,18 +71,18 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_data';
-    var_comments_config.function_name   := 'trig_b_i_syst_enum_functional_type_validate_new_allowed';
+    v_comments_config.function_schema := 'ms_syst_data';
+    v_comments_config.function_name   := 'trig_b_i_syst_enum_functional_type_validate_new_allowed';
 
-    var_comments_config.trigger_function := TRUE;
-    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
-    var_comments_config.trigger_ops      := ARRAY [ 'i' ]::text[ ];
+    v_comments_config.trigger_function := TRUE;
+    v_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    v_comments_config.trigger_ops      := ARRAY [ 'i' ]::text[ ];
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Checks to see if this is the first functional type being added for the
 enumeration and, if so, that no syst_enum_items records already exist.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$Adding a first functional type for an enumeration which already has defined
 enumeration items implies that the enumeration items must be assigned a
 functional type in the same operation to keep data consistency.  In practice,
@@ -93,7 +91,7 @@ functional types available in order to avoid making bogus assignments; it would
 be much more difficult to manage such a process as compared to simply
 disallowing the scenario.$DOC$;
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

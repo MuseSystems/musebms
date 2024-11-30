@@ -80,11 +80,11 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_instance_type_id ms_syst_priv.comments_config_table_column;
-    var_application_id   ms_syst_priv.comments_config_table_column;
+    v_instance_type_id ms_syst_priv.comments_config_table_column;
+    v_application_id   ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -92,14 +92,14 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_instance_type_applications';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_instance_type_applications';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$A many-to-many relation indicating which Instance Types are usable for each
 Application.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$Note that creating ms_syst_data.syst_application_contexts records prior to
 inserting an Instance Type/Application association into this table is
 recommended as default Instance Type Context records can be created
@@ -111,21 +111,21 @@ require must be handled manually.$DOC$;
     -- Column Configs
     --
 
-    var_instance_type_id.column_name := 'instance_type_id';
-    var_instance_type_id.description :=
+    v_instance_type_id.column_name := 'instance_type_id';
+    v_instance_type_id.description :=
 $DOC$A reference to the Instance Type being associated to an Application.$DOC$;
 
-    var_application_id.column_name := 'application_id';
-    var_application_id.description :=
+    v_application_id.column_name := 'application_id';
+    v_application_id.description :=
 $DOC$A reference to the Application being associated with the Instance Type.$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_instance_type_id
-            , var_application_id
+              v_instance_type_id
+            , v_application_id
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

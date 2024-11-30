@@ -77,24 +77,24 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_instance_id            ms_syst_priv.comments_config_table_column;
-    var_application_context_id ms_syst_priv.comments_config_table_column;
-    var_start_context          ms_syst_priv.comments_config_table_column;
-    var_db_pool_size           ms_syst_priv.comments_config_table_column;
-    var_context_code           ms_syst_priv.comments_config_table_column;
+    v_instance_id            ms_syst_priv.comments_config_table_column;
+    v_application_context_id ms_syst_priv.comments_config_table_column;
+    v_start_context          ms_syst_priv.comments_config_table_column;
+    v_db_pool_size           ms_syst_priv.comments_config_table_column;
+    v_context_code           ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
     --
     -- Table Config
     --
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_instance_contexts';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_instance_contexts';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Instance specific settings which determine how each Instance connects to the
 defined Application Contexts.$DOC$;
 
@@ -102,43 +102,43 @@ defined Application Contexts.$DOC$;
     -- Column Configs
     --
 
-    var_instance_id.column_name := 'instance_id';
-    var_instance_id.description :=
+    v_instance_id.column_name := 'instance_id';
+    v_instance_id.description :=
 $DOC$Identifies the parent Instance for which Instance Contexts are being defined.$DOC$;
 
-    var_application_context_id.column_name := 'application_context_id';
-    var_application_context_id.description :=
+    v_application_context_id.column_name := 'application_context_id';
+    v_application_context_id.description :=
 $DOC$Identifies the Application Context which is being defined for the Instance.$DOC$;
 
-    var_start_context.column_name := 'start_context';
-    var_start_context.description :=
+    v_start_context.column_name := 'start_context';
+    v_start_context.description :=
 $DOC$Indicates whether the Instance Context should be started on Instance start.$DOC$;
 
-    var_start_context.general_usage :=
+    v_start_context.general_usage :=
 $DOC$If true, indicates that the Instance Context should be started, so long as the
 Application Context record is also set to allow context starting.  If false, the
 Instance Context not be started, even if the related Application Context is set
 to allow context starts.$DOC$;
 
-    var_db_pool_size.column_name := 'db_pool_size';
-    var_db_pool_size.description :=
+    v_db_pool_size.column_name := 'db_pool_size';
+    v_db_pool_size.description :=
 $DOC$If the Application Context is a login datastore context, this value establishes
 how many database connections to open on behalf of this Instance Context.$DOC$;
 
-    var_context_code.column_name := 'context_code';
-    var_context_code.description :=
+    v_context_code.column_name := 'context_code';
+    v_context_code.description :=
 $DOC$An Instance Context specific series of bytes which are used in algorithmic
 credential generation.$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_instance_id
-            , var_application_context_id
-            , var_start_context
-            , var_db_pool_size
-            , var_context_code]::ms_syst_priv.comments_config_table_column[];
+              v_instance_id
+            , v_application_context_id
+            , v_start_context
+            , v_db_pool_size
+            , v_context_code]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

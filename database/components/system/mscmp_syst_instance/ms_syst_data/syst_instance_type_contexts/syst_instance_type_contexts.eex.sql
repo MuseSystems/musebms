@@ -69,12 +69,12 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_instance_type_application_id ms_syst_priv.comments_config_table_column;
-    var_application_context_id       ms_syst_priv.comments_config_table_column;
-    var_default_db_pool_size         ms_syst_priv.comments_config_table_column;
+    v_instance_type_application_id ms_syst_priv.comments_config_table_column;
+    v_application_context_id       ms_syst_priv.comments_config_table_column;
+    v_default_db_pool_size         ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -82,14 +82,14 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_instance_type_contexts';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_instance_type_contexts';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Establishes Instance Type defaults for each of an Application's defined
 datastore contexts.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$In practice, these records are used in the creation of Instance Context records,
 but do not establish a direct relationship; records in this table simply inform
 us what Instance Contexts should exist and give us default values to use in
@@ -99,28 +99,28 @@ their creation.$DOC$;
     -- Column Configs
     --
 
-    var_instance_type_application_id.column_name := 'instance_type_application_id';
-    var_instance_type_application_id.description :=
+    v_instance_type_application_id.column_name := 'instance_type_application_id';
+    v_instance_type_application_id.description :=
 $DOC$The Instance Type/Application association to which the context definition
 belongs.$DOC$;
 
-    var_application_context_id.column_name := 'application_context_id';
-    var_application_context_id.description :=
+    v_application_context_id.column_name := 'application_context_id';
+    v_application_context_id.description :=
 $DOC$The Application Context which is being represented in the Instance Type.$DOC$;
 
-    var_default_db_pool_size.column_name := 'default_db_pool_size';
-    var_default_db_pool_size.description :=
+    v_default_db_pool_size.column_name := 'default_db_pool_size';
+    v_default_db_pool_size.description :=
 $DOC$A default pool size which is assigned to new Instances of the Instance Type
 unless the creator of the Instance specifies a different value.$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_instance_type_application_id
-            , var_application_context_id
-            , var_default_db_pool_size
+              v_instance_type_application_id
+            , v_application_context_id
+            , v_default_db_pool_size
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

@@ -13,7 +13,7 @@
 DO
 $INIT_ENUM_MSSUB_MCP_STATES$
     DECLARE
-        var_enum_id uuid;
+        v_enum_id uuid;
 
     BEGIN
 
@@ -29,7 +29,7 @@ $INIT_ENUM_MSSUB_MCP_STATES$
             , 'Defines the available values describing the MCP life-cycle states.'
             , TRUE
             , FALSE)
-        RETURNING id INTO var_enum_id;
+        RETURNING id INTO v_enum_id;
 
         INSERT INTO ms_syst_data.syst_enum_items
             ( internal_name
@@ -46,7 +46,7 @@ $INIT_ENUM_MSSUB_MCP_STATES$
             ( 'mssub_mcp_states_sysdef_bootstrapping'
             , 'MCP States / Bootstrapping'
             , 'Bootstrapping'
-            , var_enum_id
+            , v_enum_id
             , TRUE
             , TRUE
             , TRUE
@@ -58,7 +58,7 @@ $INIT_ENUM_MSSUB_MCP_STATES$
             ( 'mssub_mcp_states_sysdef_active'
             , 'MCP States / Active'
             , 'Active'
-            , var_enum_id
+            , v_enum_id
             , FALSE
             , FALSE
             , TRUE

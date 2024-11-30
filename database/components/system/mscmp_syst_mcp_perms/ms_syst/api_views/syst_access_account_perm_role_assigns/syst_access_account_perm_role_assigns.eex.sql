@@ -44,11 +44,11 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- View
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
     -- View Columns
-    var_access_account_id ms_syst_priv.comments_config_apiview_column;
-    var_perm_role_id      ms_syst_priv.comments_config_apiview_column;
+    v_access_account_id ms_syst_priv.comments_config_apiview_column;
+    v_perm_role_id      ms_syst_priv.comments_config_apiview_column;
 
 BEGIN
 
@@ -56,35 +56,35 @@ BEGIN
     -- API View Config
     --
 
-    var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_access_account_perm_role_assigns';
-    var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_access_account_perm_role_assigns';
-    var_view_config.user_update  := FALSE;
+    v_view_config.table_schema := 'ms_syst_data';
+    v_view_config.table_name   := 'syst_access_account_perm_role_assigns';
+    v_view_config.view_schema  := 'ms_syst';
+    v_view_config.view_name    := 'syst_access_account_perm_role_assigns';
+    v_view_config.user_update  := FALSE;
 
     --
     -- Column Configs
     --
 
-    var_access_account_id.column_name  := 'access_account_id';
-    var_access_account_id.required     := TRUE;
-    var_access_account_id.supplemental :=
+    v_access_account_id.column_name  := 'access_account_id';
+    v_access_account_id.required     := TRUE;
+    v_access_account_id.supplemental :=
 $DOC$This column is part of a composite key.  The combined values of
 `access_account_id` and `perm_role_id` must be unique.$DOC$;
 
-    var_perm_role_id.column_name  := 'perm_role_id';
-    var_perm_role_id.required     := TRUE;
-    var_perm_role_id.supplemental :=
+    v_perm_role_id.column_name  := 'perm_role_id';
+    v_perm_role_id.required     := TRUE;
+    v_perm_role_id.supplemental :=
 $DOC$This column is part of a composite key.  The combined values of
 `access_account_id` and `perm_role_id` must be unique.$DOC$;
 
-    var_view_config.columns :=
+    v_view_config.columns :=
         ARRAY [
-              var_access_account_id
-            , var_perm_role_id
+              v_access_account_id
+            , v_perm_role_id
             ]::ms_syst_priv.comments_config_apiview_column[];
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

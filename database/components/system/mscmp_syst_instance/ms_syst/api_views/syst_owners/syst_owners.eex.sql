@@ -45,10 +45,10 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- View
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
     -- View Columns
-    var_owner_state_id ms_syst_priv.comments_config_apiview_column;
+    v_owner_state_id ms_syst_priv.comments_config_apiview_column;
 
 BEGIN
 
@@ -56,22 +56,22 @@ BEGIN
     -- API View Config
     --
 
-    var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_owners';
-    var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_owners';
+    v_view_config.table_schema := 'ms_syst_data';
+    v_view_config.table_name   := 'syst_owners';
+    v_view_config.view_schema  := 'ms_syst';
+    v_view_config.view_name    := 'syst_owners';
 
     --
     -- Column Configs
     --
 
-    var_owner_state_id.column_name      := 'owner_state_id';
-    var_owner_state_id.required         := TRUE;
+    v_owner_state_id.column_name      := 'owner_state_id';
+    v_owner_state_id.required         := TRUE;
 
-    var_view_config.columns :=
-        ARRAY [ var_owner_state_id ]::ms_syst_priv.comments_config_apiview_column[];
+    v_view_config.columns :=
+        ARRAY [ v_owner_state_id ]::ms_syst_priv.comments_config_apiview_column[];
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

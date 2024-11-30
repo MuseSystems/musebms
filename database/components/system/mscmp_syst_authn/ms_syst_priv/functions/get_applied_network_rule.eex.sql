@@ -132,22 +132,22 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
     -- Parameters
-    var_p_host_addr         ms_syst_priv.comments_config_function_param;
-    var_p_instance_id       ms_syst_priv.comments_config_function_param;
-    var_p_instance_owner_id ms_syst_priv.comments_config_function_param;
+    v_p_host_addr         ms_syst_priv.comments_config_function_param;
+    v_p_instance_id       ms_syst_priv.comments_config_function_param;
+    v_p_instance_owner_id ms_syst_priv.comments_config_function_param;
 BEGIN
 
     --
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_priv';
-    var_comments_config.function_name   := 'get_applied_network_rule';
+    v_comments_config.function_schema := 'ms_syst_priv';
+    v_comments_config.function_name   := 'get_applied_network_rule';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Applies all of the applicable network rules for a host and returns the governing
 record for the identified host.
 
@@ -171,7 +171,7 @@ rule with the highest precedence.  Currently the precedence is defined as:
      found for a host this rule will apply implicitly.  The current rule
      grants access from any host.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$This function returns the best matching rule for the provided parameters.  This
 means that when `p_host_addr` is provided but neither of `p_instance_id` or
 `p_instance_owner_id` are provided, the host can only be evaluated against the
@@ -189,37 +189,37 @@ Instance Owner ID can be derived using just `p_instance_id` parameter.$DOC$;
     -- Parameter Configs
     --
 
-    var_p_host_addr.param_name := 'p_host_addr';
-    var_p_host_addr.description :=
+    v_p_host_addr.param_name := 'p_host_addr';
+    v_p_host_addr.description :=
 $DOC$The host IP address for which to retrieve a network rule to apply.$DOC$;
 
-    var_p_instance_id.param_name    := 'p_instance_id';
-    var_p_instance_id.required      := FALSE;
-    var_p_instance_id.default_value := '`NULL`';
-    var_p_instance_id.description   :=
+    v_p_instance_id.param_name    := 'p_instance_id';
+    v_p_instance_id.required      := FALSE;
+    v_p_instance_id.default_value := '`NULL`';
+    v_p_instance_id.description   :=
 $DOC$The record `id` of the Instance that the host is attempting to access.
 
 Note that `NULL` is a valid value subject to the conditions in the function
 description.$DOC$;
 
-    var_p_instance_owner_id.param_name    := 'p_instance_owner_id';
-    var_p_instance_owner_id.required      := FALSE;
-    var_p_instance_owner_id.default_value := '`NULL`';
-    var_p_instance_owner_id.description   :=
+    v_p_instance_owner_id.param_name    := 'p_instance_owner_id';
+    v_p_instance_owner_id.required      := FALSE;
+    v_p_instance_owner_id.default_value := '`NULL`';
+    v_p_instance_owner_id.description   :=
 $DOC$The record `id` value of the Owner record which owns the Instance.
 
 Note that `NULL` is a valid value subject to the conditions in the function
 description.$DOC$;
 
 
-    var_comments_config.params :=
+    v_comments_config.params :=
         ARRAY [
-              var_p_host_addr
-            , var_p_instance_id
-            , var_p_instance_owner_id
+              v_p_host_addr
+            , v_p_instance_id
+            , v_p_instance_owner_id
             ]::ms_syst_priv.comments_config_function_param[];
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

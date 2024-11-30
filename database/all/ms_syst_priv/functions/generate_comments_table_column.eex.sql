@@ -19,24 +19,24 @@ $BODY$
 -- muse.information@musesystems.com :: https://muse.systems
 
 DECLARE
-    var_resolved_description   text;
-    var_resolved_general_usage text;
-    var_resolved_func_type     text;
-    var_resolved_life_cycle    text;
-    var_resolved_constraint    text;
-    var_resolved_direct_usage  text;
+    v_resolved_description   text;
+    v_resolved_general_usage text;
+    v_resolved_func_type     text;
+    v_resolved_life_cycle    text;
+    v_resolved_constraint    text;
+    v_resolved_direct_usage  text;
 
-    var_comment text;
+    v_comment text;
 
 BEGIN
 
-    var_resolved_description := p_comments_config.description;
+    v_resolved_description := p_comments_config.description;
 
-    var_resolved_general_usage :=
+    v_resolved_general_usage :=
         E'**General Usage**\n\n' ||
             p_comments_config.general_usage;
 
-    var_resolved_func_type :=
+    v_resolved_func_type :=
         E'**Functional Type Reference**\n\n' ||
             CASE
                 WHEN p_comments_config.func_type_text IS NOT NULL THEN
@@ -50,7 +50,7 @@ BEGIN
                         E'in the records of\nthose tables.'
             END;
 
-    var_resolved_life_cycle :=
+    v_resolved_life_cycle :=
         E'**Life-Cycle State Reference**\n\n' ||
             CASE
                 WHEN p_comments_config.state_text IS NOT NULL THEN
@@ -64,30 +64,30 @@ BEGIN
                         E'those tables.'
             END;
 
-    var_resolved_constraint :=
+    v_resolved_constraint :=
         E'**Constraint Reference**\n\n' ||
             p_comments_config.constraints;
 
-    var_resolved_direct_usage :=
+    v_resolved_direct_usage :=
         E'**Direct Usage**\n\n' ||
             p_comments_config.direct_usage;
 
-    var_comment :=
+    v_comment :=
         CASE
             WHEN
-                var_resolved_description IS NOT NULL
-                    OR var_resolved_general_usage IS NOT NULL
-                    OR var_resolved_func_type IS NOT NULL
-                    OR var_resolved_life_cycle IS NOT NULL
-                    OR var_resolved_constraint IS NOT NULL
-                    OR var_resolved_direct_usage IS NOT NULL
+                v_resolved_description IS NOT NULL
+                    OR v_resolved_general_usage IS NOT NULL
+                    OR v_resolved_func_type IS NOT NULL
+                    OR v_resolved_life_cycle IS NOT NULL
+                    OR v_resolved_constraint IS NOT NULL
+                    OR v_resolved_direct_usage IS NOT NULL
             THEN
-                coalesce( var_resolved_description || E'\n\n', '' ) ||
-                    coalesce( var_resolved_general_usage || E'\n\n', '' ) ||
-                    coalesce( var_resolved_func_type || E'\n\n', '' ) ||
-                    coalesce( var_resolved_life_cycle || E'\n\n', '' ) ||
-                    coalesce( var_resolved_constraint || E'\n\n', '' ) ||
-                    coalesce( var_resolved_direct_usage || E'\n\n', '' )
+                coalesce( v_resolved_description || E'\n\n', '' ) ||
+                    coalesce( v_resolved_general_usage || E'\n\n', '' ) ||
+                    coalesce( v_resolved_func_type || E'\n\n', '' ) ||
+                    coalesce( v_resolved_life_cycle || E'\n\n', '' ) ||
+                    coalesce( v_resolved_constraint || E'\n\n', '' ) ||
+                    coalesce( v_resolved_direct_usage || E'\n\n', '' )
             ELSE
                 E'This table column is not yet documented.\n\n'
         END;
@@ -96,7 +96,7 @@ BEGIN
                     p_table_schema,
                     p_table_name,
                     p_comments_config.column_name,
-                    var_comment );
+                    v_comment );
 
 END;
 $BODY$
@@ -127,12 +127,12 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
     -- Parameters
-    var_p_table_schema    ms_syst_priv.comments_config_function_param;
-    var_p_table_name      ms_syst_priv.comments_config_function_param;
-    var_p_comments_config ms_syst_priv.comments_config_function_param;
+    v_p_table_schema    ms_syst_priv.comments_config_function_param;
+    v_p_table_name      ms_syst_priv.comments_config_function_param;
+    v_p_comments_config ms_syst_priv.comments_config_function_param;
 
 BEGIN
 
@@ -140,45 +140,45 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_priv';
-    var_comments_config.function_name   := 'generate_comments_table_column';
+    v_comments_config.function_schema := 'ms_syst_priv';
+    v_comments_config.function_name   := 'generate_comments_table_column';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Generates table column comments in a standardized format.
 
 The comments themselves are defined using a configuration type containing the
 column documentation and comment related configurations.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$$DOC$;
 
     --
     -- Parameter Configs
     --
 
-    var_p_table_schema.param_name := 'p_table_schema';
-    var_p_table_schema.description :=
+    v_p_table_schema.param_name := 'p_table_schema';
+    v_p_table_schema.description :=
 $DOC$The database schema where the column is defined.$DOC$;
 
-    var_p_table_name.param_name := 'p_table_name';
-    var_p_table_name.description :=
+    v_p_table_name.param_name := 'p_table_name';
+    v_p_table_name.description :=
 $DOC$The database table where the column is defined.$DOC$;
 
-    var_p_comments_config.param_name := 'p_comments_config';
-    var_p_comments_config.description :=
+    v_p_comments_config.param_name := 'p_comments_config';
+    v_p_comments_config.description :=
 $DOC$A value of type `ms_syst_priv.comments_config_table_column` which describes
 the required and optional attributes for generating the column's comments.
 See the comments for that database type for detailed information.$DOC$;
 
 
-    var_comments_config.params :=
+    v_comments_config.params :=
         ARRAY [
-              var_p_table_schema
-            , var_p_table_name
-            , var_p_comments_config
+              v_p_table_schema
+            , v_p_table_name
+            , v_p_comments_config
             ]::ms_syst_priv.comments_config_function_param[];
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

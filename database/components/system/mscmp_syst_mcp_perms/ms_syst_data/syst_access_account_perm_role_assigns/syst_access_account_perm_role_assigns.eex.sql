@@ -64,11 +64,11 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_access_account_id ms_syst_priv.comments_config_table_column;
-    var_perm_role_id      ms_syst_priv.comments_config_table_column;
+    v_access_account_id ms_syst_priv.comments_config_table_column;
+    v_perm_role_id      ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -76,10 +76,10 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_access_account_perm_role_assigns';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_access_account_perm_role_assigns';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Assigns Permission Roles to Access Accounts providing an MCP authentication
 mechanism.$DOC$;
 
@@ -87,21 +87,21 @@ mechanism.$DOC$;
     -- Column Configs
     --
 
-    var_access_account_id.column_name := 'access_account_id';
-    var_access_account_id.description :=
+    v_access_account_id.column_name := 'access_account_id';
+    v_access_account_id.description :=
 $DOC$References the Access Account to which the Permission Role is being assigned.$DOC$;
 
-    var_perm_role_id.column_name := 'perm_role_id';
-    var_perm_role_id.description :=
+    v_perm_role_id.column_name := 'perm_role_id';
+    v_perm_role_id.description :=
 $DOC$A reference to the Permission Role being assigned to the Access Account.$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_access_account_id
-            , var_perm_role_id
+              v_access_account_id
+            , v_perm_role_id
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

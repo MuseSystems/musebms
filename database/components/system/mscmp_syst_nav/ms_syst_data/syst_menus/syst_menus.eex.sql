@@ -86,10 +86,10 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_menu_state_id ms_syst_priv.comments_config_table_column;
+    v_menu_state_id ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -97,10 +97,10 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_menus';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_menus';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Establishes user configurable menu and navigation definitions for use in the
 User Interfaces of the application.$DOC$;
 
@@ -108,15 +108,15 @@ User Interfaces of the application.$DOC$;
     -- Column Configs
     --
 
-    var_menu_state_id.column_name := 'menu_state_id';
-    var_menu_state_id.description :=
+    v_menu_state_id.column_name := 'menu_state_id';
+    v_menu_state_id.description :=
 $DOC$Indicates at which life-cycle stage the record exists.  Functionally, this
 breaks down into "active" and "inactive" states.$DOC$;
 
-    var_comments_config.columns :=
-        ARRAY [ var_menu_state_id ]::ms_syst_priv.comments_config_table_column[];
+    v_comments_config.columns :=
+        ARRAY [ v_menu_state_id ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

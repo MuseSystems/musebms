@@ -52,19 +52,19 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- View
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
     -- View Columns
-    var_password_length        ms_syst_priv.comments_config_apiview_column;
-    var_max_age                ms_syst_priv.comments_config_apiview_column;
-    var_require_upper_case     ms_syst_priv.comments_config_apiview_column;
-    var_require_lower_case     ms_syst_priv.comments_config_apiview_column;
-    var_require_numbers        ms_syst_priv.comments_config_apiview_column;
-    var_require_symbols        ms_syst_priv.comments_config_apiview_column;
-    var_disallow_recently_used ms_syst_priv.comments_config_apiview_column;
-    var_disallow_compromised   ms_syst_priv.comments_config_apiview_column;
-    var_require_mfa            ms_syst_priv.comments_config_apiview_column;
-    var_allowed_mfa_types      ms_syst_priv.comments_config_apiview_column;
+    v_password_length        ms_syst_priv.comments_config_apiview_column;
+    v_max_age                ms_syst_priv.comments_config_apiview_column;
+    v_require_upper_case     ms_syst_priv.comments_config_apiview_column;
+    v_require_lower_case     ms_syst_priv.comments_config_apiview_column;
+    v_require_numbers        ms_syst_priv.comments_config_apiview_column;
+    v_require_symbols        ms_syst_priv.comments_config_apiview_column;
+    v_disallow_recently_used ms_syst_priv.comments_config_apiview_column;
+    v_disallow_compromised   ms_syst_priv.comments_config_apiview_column;
+    v_require_mfa            ms_syst_priv.comments_config_apiview_column;
+    v_allowed_mfa_types      ms_syst_priv.comments_config_apiview_column;
 
 BEGIN
 
@@ -72,73 +72,73 @@ BEGIN
     -- API View Config
     --
 
-    var_view_config.table_schema    := 'ms_syst_data';
-    var_view_config.table_name      := 'syst_global_password_rules';
-    var_view_config.view_schema     := 'ms_syst';
-    var_view_config.view_name       := 'syst_global_password_rules';
-    var_view_config.user_records    := FALSE;
-    var_view_config.syst_records    := TRUE;
-    var_view_config.syst_update     := TRUE;
+    v_view_config.table_schema    := 'ms_syst_data';
+    v_view_config.table_name      := 'syst_global_password_rules';
+    v_view_config.view_schema     := 'ms_syst';
+    v_view_config.view_name       := 'syst_global_password_rules';
+    v_view_config.user_records    := FALSE;
+    v_view_config.syst_records    := TRUE;
+    v_view_config.syst_update     := TRUE;
 
     --
     -- Column Configs
     --
 
-    var_password_length.column_name      := 'password_length';
-    var_password_length.required         := TRUE;
-    var_password_length.syst_update_mode := 'always';
+    v_password_length.column_name      := 'password_length';
+    v_password_length.required         := TRUE;
+    v_password_length.syst_update_mode := 'always';
 
-    var_max_age.column_name      := 'max_age';
-    var_max_age.required         := TRUE;
-    var_max_age.syst_update_mode := 'always';
+    v_max_age.column_name      := 'max_age';
+    v_max_age.required         := TRUE;
+    v_max_age.syst_update_mode := 'always';
 
-    var_require_upper_case.column_name      := 'require_upper_case';
-    var_require_upper_case.required         := TRUE;
-    var_require_upper_case.syst_update_mode := 'always';
+    v_require_upper_case.column_name      := 'require_upper_case';
+    v_require_upper_case.required         := TRUE;
+    v_require_upper_case.syst_update_mode := 'always';
 
-    var_require_lower_case.column_name      := 'require_lower_case';
-    var_require_lower_case.required         := TRUE;
-    var_require_lower_case.syst_update_mode := 'always';
+    v_require_lower_case.column_name      := 'require_lower_case';
+    v_require_lower_case.required         := TRUE;
+    v_require_lower_case.syst_update_mode := 'always';
 
-    var_require_numbers.column_name      := 'require_numbers';
-    var_require_numbers.required         := TRUE;
-    var_require_numbers.syst_update_mode := 'always';
+    v_require_numbers.column_name      := 'require_numbers';
+    v_require_numbers.required         := TRUE;
+    v_require_numbers.syst_update_mode := 'always';
 
-    var_require_symbols.column_name      := 'require_symbols';
-    var_require_symbols.required         := TRUE;
-    var_require_symbols.syst_update_mode := 'always';
+    v_require_symbols.column_name      := 'require_symbols';
+    v_require_symbols.required         := TRUE;
+    v_require_symbols.syst_update_mode := 'always';
 
-    var_disallow_recently_used.column_name      := 'disallow_recently_used';
-    var_disallow_recently_used.required         := TRUE;
-    var_disallow_recently_used.syst_update_mode := 'always';
+    v_disallow_recently_used.column_name      := 'disallow_recently_used';
+    v_disallow_recently_used.required         := TRUE;
+    v_disallow_recently_used.syst_update_mode := 'always';
 
-    var_disallow_compromised.column_name      := 'disallow_compromised';
-    var_disallow_compromised.required         := TRUE;
-    var_disallow_compromised.syst_update_mode := 'always';
+    v_disallow_compromised.column_name      := 'disallow_compromised';
+    v_disallow_compromised.required         := TRUE;
+    v_disallow_compromised.syst_update_mode := 'always';
 
-    var_require_mfa.column_name      := 'require_mfa';
-    var_require_mfa.required         := TRUE;
-    var_require_mfa.syst_update_mode := 'always';
+    v_require_mfa.column_name      := 'require_mfa';
+    v_require_mfa.required         := TRUE;
+    v_require_mfa.syst_update_mode := 'always';
 
-    var_allowed_mfa_types.column_name      := 'allowed_mfa_types';
-    var_allowed_mfa_types.required         := TRUE;
-    var_allowed_mfa_types.syst_update_mode := 'always';
+    v_allowed_mfa_types.column_name      := 'allowed_mfa_types';
+    v_allowed_mfa_types.required         := TRUE;
+    v_allowed_mfa_types.syst_update_mode := 'always';
 
-    var_view_config.columns :=
+    v_view_config.columns :=
         ARRAY [
-              var_password_length
-            , var_max_age
-            , var_require_upper_case
-            , var_require_lower_case
-            , var_require_numbers
-            , var_require_symbols
-            , var_disallow_recently_used
-            , var_disallow_compromised
-            , var_require_mfa
-            , var_allowed_mfa_types
+              v_password_length
+            , v_max_age
+            , v_require_upper_case
+            , v_require_lower_case
+            , v_require_numbers
+            , v_require_symbols
+            , v_disallow_recently_used
+            , v_disallow_compromised
+            , v_require_mfa
+            , v_allowed_mfa_types
             ]::ms_syst_priv.comments_config_apiview_column[];
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

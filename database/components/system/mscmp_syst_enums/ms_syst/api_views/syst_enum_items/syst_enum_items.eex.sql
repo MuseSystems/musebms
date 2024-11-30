@@ -55,63 +55,63 @@ CREATE TRIGGER a50_trig_i_d_syst_enum_items
 DO
 $DOCUMENTATION$
 DECLARE
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
-    var_enum_id                 ms_syst_priv.comments_config_apiview_column;
-    var_functional_type_id      ms_syst_priv.comments_config_apiview_column;
-    var_enum_default            ms_syst_priv.comments_config_apiview_column;
-    var_functional_type_default ms_syst_priv.comments_config_apiview_column;
-    var_sort_order              ms_syst_priv.comments_config_apiview_column;
-    var_syst_options            ms_syst_priv.comments_config_apiview_column;
-    var_user_options            ms_syst_priv.comments_config_apiview_column;
+    v_enum_id                 ms_syst_priv.comments_config_apiview_column;
+    v_functional_type_id      ms_syst_priv.comments_config_apiview_column;
+    v_enum_default            ms_syst_priv.comments_config_apiview_column;
+    v_functional_type_default ms_syst_priv.comments_config_apiview_column;
+    v_sort_order              ms_syst_priv.comments_config_apiview_column;
+    v_syst_options            ms_syst_priv.comments_config_apiview_column;
+    v_user_options            ms_syst_priv.comments_config_apiview_column;
 
 BEGIN
 
-    var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_enum_items';
-    var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_enum_items';
-    var_view_config.syst_records := TRUE;
-    var_view_config.syst_update  := TRUE;
-    var_view_config.syst_delete  := FALSE;
+    v_view_config.table_schema := 'ms_syst_data';
+    v_view_config.table_name   := 'syst_enum_items';
+    v_view_config.view_schema  := 'ms_syst';
+    v_view_config.view_name    := 'syst_enum_items';
+    v_view_config.syst_records := TRUE;
+    v_view_config.syst_update  := TRUE;
+    v_view_config.syst_delete  := FALSE;
 
-    var_enum_id.column_name := 'enum_id';
-    var_enum_id.required    := TRUE;
-    var_enum_id.user_update := FALSE;
+    v_enum_id.column_name := 'enum_id';
+    v_enum_id.required    := TRUE;
+    v_enum_id.user_update := FALSE;
 
-    var_functional_type_id.column_name := 'functional_type_id';
+    v_functional_type_id.column_name := 'functional_type_id';
 
-    var_enum_default.column_name      := 'enum_default';
-    var_enum_default.default_value    := '`FALSE`';
-    var_enum_default.syst_update_mode := 'maint';
+    v_enum_default.column_name      := 'enum_default';
+    v_enum_default.default_value    := '`FALSE`';
+    v_enum_default.syst_update_mode := 'maint';
 
-    var_functional_type_default.column_name      := 'functional_type_default';
-    var_functional_type_default.default_value    := '`FALSE`';
-    var_functional_type_default.syst_update_mode := 'maint';
+    v_functional_type_default.column_name      := 'functional_type_default';
+    v_functional_type_default.default_value    := '`FALSE`';
+    v_functional_type_default.syst_update_mode := 'maint';
 
-    var_sort_order.column_name      := 'sort_order';
-    var_sort_order.required         := TRUE;
-    var_sort_order.syst_update_mode := 'maint';
+    v_sort_order.column_name      := 'sort_order';
+    v_sort_order.required         := TRUE;
+    v_sort_order.syst_update_mode := 'maint';
 
-    var_syst_options.column_name := 'syst_options';
-    var_syst_options.user_insert := FALSE;
-    var_syst_options.user_update := FALSE;
+    v_syst_options.column_name := 'syst_options';
+    v_syst_options.user_insert := FALSE;
+    v_syst_options.user_update := FALSE;
 
-    var_user_options.column_name      := 'user_options';
-    var_user_options.syst_update_mode := 'always';
+    v_user_options.column_name      := 'user_options';
+    v_user_options.syst_update_mode := 'always';
 
-    var_view_config.columns :=
+    v_view_config.columns :=
         ARRAY [
-              var_enum_id
-            , var_functional_type_id
-            , var_enum_default
-            , var_functional_type_default
-            , var_sort_order
-            , var_syst_options
-            , var_user_options
+              v_enum_id
+            , v_functional_type_id
+            , v_enum_default
+            , v_functional_type_default
+            , v_sort_order
+            , v_syst_options
+            , v_user_options
             ]::ms_syst_priv.comments_config_apiview_column[];
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

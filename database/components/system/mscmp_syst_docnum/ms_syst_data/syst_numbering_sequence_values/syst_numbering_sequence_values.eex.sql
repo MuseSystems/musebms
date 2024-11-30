@@ -30,10 +30,10 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_next_value ms_syst_priv.comments_config_table_column;
+    v_next_value ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -41,13 +41,13 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_numbering_sequence_values';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_numbering_sequence_values';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Contains the next value for a parent numbering sequence.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$This is a quantitative table which is, one record for one record, related to the
 qualitative data table ms_syst_data.syst_numbering_sequences. As such,
 records in this table are created automatically when a new
@@ -65,20 +65,20 @@ sequence value.  Direct updating of these records is discouraged.$DOC$;
     -- Column Configs
     --
 
-    var_next_value.column_name := 'next_value';
-    var_next_value.description :=
+    v_next_value.column_name := 'next_value';
+    v_next_value.description :=
 $DOC$The next value to be returned to callers requesting a number from the
 sequence.  $DOC$;
-    var_next_value.general_usage :=
+    v_next_value.general_usage :=
 $DOC$Note that consuming a sequence should typically be handled using a
 `SELECT FOR UPDATE` or similar row locking strategy; the assumption being that
 any sequence may be supporting a gap-less numbering need in the application.$DOC$;
 
 
-    var_comments_config.columns :=
-        ARRAY [ var_next_value ]::ms_syst_priv.comments_config_table_column[];
+    v_comments_config.columns :=
+        ARRAY [ v_next_value ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

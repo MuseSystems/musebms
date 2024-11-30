@@ -49,10 +49,10 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- View
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
     -- View Columns
-    var_menu_state_id ms_syst_priv.comments_config_apiview_column;
+    v_menu_state_id ms_syst_priv.comments_config_apiview_column;
 
 BEGIN
 
@@ -60,26 +60,26 @@ BEGIN
     -- API View Config
     --
 
-    var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_menus';
-    var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_menus';
-    var_view_config.syst_records := TRUE;
-    var_view_config.syst_update  := TRUE;
-    var_view_config.syst_delete  := TRUE;
+    v_view_config.table_schema := 'ms_syst_data';
+    v_view_config.table_name   := 'syst_menus';
+    v_view_config.view_schema  := 'ms_syst';
+    v_view_config.view_name    := 'syst_menus';
+    v_view_config.syst_records := TRUE;
+    v_view_config.syst_update  := TRUE;
+    v_view_config.syst_delete  := TRUE;
 
     --
     -- Column Configs
     --
 
-    var_menu_state_id.column_name      := 'menu_state_id';
-    var_menu_state_id.required         := TRUE;
-    var_menu_state_id.syst_update_mode := 'maint';
+    v_menu_state_id.column_name      := 'menu_state_id';
+    v_menu_state_id.required         := TRUE;
+    v_menu_state_id.syst_update_mode := 'maint';
 
-    var_view_config.columns :=
-        ARRAY [ var_menu_state_id ]::ms_syst_priv.comments_config_apiview_column[];
+    v_view_config.columns :=
+        ARRAY [ v_menu_state_id ]::ms_syst_priv.comments_config_apiview_column[];
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

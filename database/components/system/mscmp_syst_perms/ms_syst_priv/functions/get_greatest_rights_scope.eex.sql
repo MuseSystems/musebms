@@ -15,16 +15,16 @@ $BODY$
 -- muse.information@musesystems.com :: https://muse.systems
 
 DECLARE
-    var_resolved_scopes text[] := coalesce(p_scopes, ARRAY ['deny']::text[]);
+    v_resolved_scopes text[] := coalesce(p_scopes, ARRAY ['deny']::text[]);
 
 BEGIN
 
     RETURN
         CASE
-            WHEN 'all'        = ANY (var_resolved_scopes) THEN 'all'
-            WHEN 'same_group' = ANY (var_resolved_scopes) THEN 'same_group'
-            WHEN 'same_user'  = ANY (var_resolved_scopes) THEN 'same_user'
-            WHEN 'unused'     = ANY (var_resolved_scopes) THEN 'unused'
+            WHEN 'all'        = ANY (v_resolved_scopes) THEN 'all'
+            WHEN 'same_group' = ANY (v_resolved_scopes) THEN 'same_group'
+            WHEN 'same_user'  = ANY (v_resolved_scopes) THEN 'same_user'
+            WHEN 'unused'     = ANY (v_resolved_scopes) THEN 'unused'
             ELSE 'deny'
         END CASE;
 
@@ -42,10 +42,10 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
     -- Parameters
-    var_p_scopes ms_syst_priv.comments_config_function_param;
+    v_p_scopes ms_syst_priv.comments_config_function_param;
 
 BEGIN
 
@@ -53,33 +53,33 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_priv';
-    var_comments_config.function_name   := 'get_greatest_rights_scope';
+    v_comments_config.function_schema := 'ms_syst_priv';
+    v_comments_config.function_name   := 'get_greatest_rights_scope';
 
-    var_comments_config.trigger_function := FALSE;
-    var_comments_config.trigger_timing   := ARRAY [ ]::text[ ];
-    var_comments_config.trigger_ops      := ARRAY [ ]::text[ ];
+    v_comments_config.trigger_function := FALSE;
+    v_comments_config.trigger_timing   := ARRAY [ ]::text[ ];
+    v_comments_config.trigger_ops      := ARRAY [ ]::text[ ];
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Given an array of Permission Right Scopes, returns the most expansive scope
 found in the array.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$If the array is NULL the returned value is 'deny'.$DOC$;
 
     --
     -- Parameter Configs
     --
 
-    var_p_scopes.param_name := 'p_scopes';
-    var_p_scopes.description :=
+    v_p_scopes.param_name := 'p_scopes';
+    v_p_scopes.description :=
 $DOC$The array of permission scopes to test.$DOC$;
 
 
-    var_comments_config.params :=
-        ARRAY [ var_p_scopes ]::ms_syst_priv.comments_config_function_param[];
+    v_comments_config.params :=
+        ARRAY [ v_p_scopes ]::ms_syst_priv.comments_config_function_param[];
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

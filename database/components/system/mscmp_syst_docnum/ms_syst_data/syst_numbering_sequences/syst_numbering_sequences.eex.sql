@@ -85,14 +85,14 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_globally_assignable ms_syst_priv.comments_config_table_column;
-    var_allowed_value_range ms_syst_priv.comments_config_table_column;
-    var_value_increment     ms_syst_priv.comments_config_table_column;
-    var_style_type          ms_syst_priv.comments_config_table_column;
-    var_cycle_policy        ms_syst_priv.comments_config_table_column;
+    v_globally_assignable ms_syst_priv.comments_config_table_column;
+    v_allowed_value_range ms_syst_priv.comments_config_table_column;
+    v_value_increment     ms_syst_priv.comments_config_table_column;
+    v_style_type          ms_syst_priv.comments_config_table_column;
+    v_cycle_policy        ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -100,10 +100,10 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_numbering_sequences';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_numbering_sequences';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$For numbering segments which are driven by a numbering sequence, this record
 defines the configuration settings which influence behavior the behavior of the
 sequence.$DOC$;
@@ -112,14 +112,14 @@ sequence.$DOC$;
     -- Column Configs
     --
 
-    var_globally_assignable.column_name := 'globally_assignable';
-    var_globally_assignable.description :=
+    v_globally_assignable.column_name := 'globally_assignable';
+    v_globally_assignable.description :=
 $DOC$If true, the numbering sequence may be used by more than one segment or more
 than one numbering configuration.  If false, the sequence backs a single,
 specific numbering segment.$DOC$;
 
-    var_allowed_value_range.column_name := 'allowed_value_range';
-    var_allowed_value_range.description :=
+    v_allowed_value_range.column_name := 'allowed_value_range';
+    v_allowed_value_range.description :=
 $DOC$The range of valid values that the sequence may dispense.  By default the
 valid range is 1 to 9223372036854775806, though the range may be defined for any
 values between -9223372036854775807 and 9223372036854775806, +/- 1 of the
@@ -130,13 +130,13 @@ or the maximum allowed value +1; the cycle or exception will happen when a
 request would be answered with an out-of-range value, not at the time the last
 value allowed by the range was consumed.$DOC$;
 
-    var_value_increment.column_name := 'value_increment';
-    var_value_increment.description :=
+    v_value_increment.column_name := 'value_increment';
+    v_value_increment.description :=
 $DOC$The value by which the number is incremented or decremented when a request for
 a numbering sequence value is made.  This value must be set to a non-zero value.$DOC$;
 
-    var_style_type.column_name := 'style_type';
-    var_style_type.description :=
+    v_style_type.column_name := 'style_type';
+    v_style_type.description :=
 $DOC$Indicates the presentation style of the value.  Supported style types are:
 
   *  `base10`
@@ -161,8 +161,8 @@ $DOC$Indicates the presentation style of the value.  Supported style types are:
      compared to base10/decimal.
 $DOC$;
 
-    var_cycle_policy.column_name := 'cycle_policy';
-    var_cycle_policy.description :=
+    v_cycle_policy.column_name := 'cycle_policy';
+    v_cycle_policy.description :=
 $DOC$Indicates what the correct course of action is once a numbering sequence has
 reached the limit of its allowed_value_range.  The acceptable values for ths
 column are:
@@ -173,16 +173,16 @@ column are:
     *  error: Raise an exception and cease to produce values from the sequence.$DOC$;
 
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_globally_assignable
-            , var_allowed_value_range
-            , var_value_increment
-            , var_style_type
-            , var_cycle_policy
+              v_globally_assignable
+            , v_allowed_value_range
+            , v_value_increment
+            , v_style_type
+            , v_cycle_policy
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

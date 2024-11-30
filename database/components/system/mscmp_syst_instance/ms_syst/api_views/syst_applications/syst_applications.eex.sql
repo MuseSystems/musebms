@@ -45,18 +45,18 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- View
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
 BEGIN
 
-    var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_applications';
-    var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_applications';
-    var_view_config.user_delete  := FALSE;
-    var_view_config.syst_records := TRUE;
+    v_view_config.table_schema := 'ms_syst_data';
+    v_view_config.table_name   := 'syst_applications';
+    v_view_config.view_schema  := 'ms_syst';
+    v_view_config.view_name    := 'syst_applications';
+    v_view_config.user_delete  := FALSE;
+    v_view_config.syst_records := TRUE;
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

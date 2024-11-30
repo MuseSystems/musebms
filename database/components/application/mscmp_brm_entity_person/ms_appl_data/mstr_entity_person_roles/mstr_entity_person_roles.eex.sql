@@ -81,12 +81,12 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_person_id             ms_syst_priv.comments_config_table_column;
-    var_entity_id             ms_syst_priv.comments_config_table_column;
-    var_entity_person_role_id ms_syst_priv.comments_config_table_column;
+    v_person_id             ms_syst_priv.comments_config_table_column;
+    v_entity_id             ms_syst_priv.comments_config_table_column;
+    v_entity_person_role_id ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -94,13 +94,13 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_appl_data';
-    var_comments_config.table_name   := 'mstr_entity_person_roles';
+    v_comments_config.table_schema := 'ms_appl_data';
+    v_comments_config.table_name   := 'mstr_entity_person_roles';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Establishes the relationship between individual persons and and entity.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$Note that for now a simple table with the Entity, Person, and the Role assigned
 is sufficient for expressing the relationship, though in future it may be
 appropriate to have specific relationship tables like Entity/Entity
@@ -111,28 +111,28 @@ describing the Role.$DOC$;
     -- Column Configs
     --
 
-    var_person_id.column_name := 'person_id';
-    var_person_id.description :=
+    v_person_id.column_name := 'person_id';
+    v_person_id.description :=
 $DOC$The Person that is being assigned a Role with the Entity.$DOC$;
 
-    var_entity_id.column_name := 'entity_id';
-    var_entity_id.description :=
+    v_entity_id.column_name := 'entity_id';
+    v_entity_id.description :=
 $DOC$The Entity with which the identified Person has a Role.  In many regards,
 this field identifies the Owner of the record.$DOC$;
 
-    var_entity_person_role_id.column_name := 'entity_person_role_id';
-    var_entity_person_role_id.description :=
+    v_entity_person_role_id.column_name := 'entity_person_role_id';
+    v_entity_person_role_id.description :=
 $DOC$Identifies the Role being assigned to the Person for the identified Entity.$DOC$;
 
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_person_id
-            , var_entity_id
-            , var_entity_person_role_id
+              v_person_id
+            , v_entity_id
+            , v_entity_person_role_id
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

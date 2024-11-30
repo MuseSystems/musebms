@@ -72,15 +72,15 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_access_account_id   ms_syst_priv.comments_config_table_column;
-    var_instance_id         ms_syst_priv.comments_config_table_column;
-    var_access_granted      ms_syst_priv.comments_config_table_column;
-    var_invitation_issued   ms_syst_priv.comments_config_table_column;
-    var_invitation_expires  ms_syst_priv.comments_config_table_column;
-    var_invitation_declined ms_syst_priv.comments_config_table_column;
+    v_access_account_id   ms_syst_priv.comments_config_table_column;
+    v_instance_id         ms_syst_priv.comments_config_table_column;
+    v_access_granted      ms_syst_priv.comments_config_table_column;
+    v_invitation_issued   ms_syst_priv.comments_config_table_column;
+    v_invitation_expires  ms_syst_priv.comments_config_table_column;
+    v_invitation_declined ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -88,10 +88,10 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_access_account_instance_assocs';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_access_account_instance_assocs';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Associates access accounts with the instances for which they are allowed to
 authenticate to.  Note that being able to authenticate to an instance is not the
 same as having authorized rights within the instance; authorization is handled
@@ -101,56 +101,56 @@ by the instance directly.$DOC$;
     -- Column Configs
     --
 
-    var_access_account_id.column_name := 'access_account_id';
-    var_access_account_id.description :=
+    v_access_account_id.column_name := 'access_account_id';
+    v_access_account_id.description :=
 $DOC$The access account which is being granted authentication rights to the given
 instance.$DOC$;
 
-    var_instance_id.column_name := 'instance_id';
-    var_instance_id.description :=
+    v_instance_id.column_name := 'instance_id';
+    v_instance_id.description :=
 $DOC$The identity of the instance to which authentication rights is being granted.$DOC$;
 
-    var_access_granted.column_name := 'access_granted';
-    var_access_granted.description :=
+    v_access_granted.column_name := 'access_granted';
+    v_access_granted.description :=
 $DOC$The timestamp at which access to the instance was granted and active.$DOC$;
-    var_access_granted.general_usage :=
+    v_access_granted.general_usage :=
 $DOC$If the access did not require the access invitation process, this value will
 typically reflect the creation timestamp of the record.  If the invitation was
 required, it will reflect the time when the access account holder actually
 accepted the invitation to access the instance.$DOC$;
 
 
-    var_invitation_issued.column_name := 'invitation_issued';
-    var_invitation_issued.description :=
+    v_invitation_issued.column_name := 'invitation_issued';
+    v_invitation_issued.description :=
 $DOC$When inviting unowned, independent access accounts such as might be used by an
 external bookkeeper, the grant of access by the instance owner is
 not immediately effective but must also be approved by the access account holder
 being granted access.  $DOC$;
-    var_invitation_issued.general_usage :=
+    v_invitation_issued.general_usage :=
 $DOC$The timestamp in this column indicates when the invitation to connect to the
 instance was issued. If the value in this column is null, the assumption is that
 no invitation was required to grant the access to the access account.$DOC$;
 
-    var_invitation_expires.column_name := 'invitation_expires';
-    var_invitation_expires.description :=
+    v_invitation_expires.column_name := 'invitation_expires';
+    v_invitation_expires.description :=
 $DOC$The timestamp at which the invitation to access a given instance expires.$DOC$;
 
-    var_invitation_declined.column_name := 'invitation_declined';
-    var_invitation_declined.description :=
+    v_invitation_declined.column_name := 'invitation_declined';
+    v_invitation_declined.description :=
 $DOC$The timestamp at which the access account holder explicitly declined the
 invitation to access the given instance.$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_access_account_id
-            , var_instance_id
-            , var_access_granted
-            , var_invitation_issued
-            , var_invitation_expires
-            , var_invitation_declined
+              v_access_account_id
+            , v_instance_id
+            , v_access_granted
+            , v_invitation_issued
+            , v_invitation_expires
+            , v_invitation_declined
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

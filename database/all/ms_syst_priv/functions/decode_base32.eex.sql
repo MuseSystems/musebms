@@ -15,7 +15,7 @@ $BODY$
 -- muse.information@musesystems.com :: https://muse.systems
 
 DECLARE
-    var_resolved_value text :=
+    v_resolved_value text :=
         upper(
             regexp_replace(
                 regexp_replace( p_value, '[il]', '1', 'ig' ),
@@ -27,7 +27,7 @@ BEGIN
              ms_syst_priv.nonstandard_decode(
                  p_base   => 32,
                  p_tokens => '0123456789ABCDEFGHJKMNPQRSTVWXYZ',
-                 P_value  => var_resolved_value));
+                 P_value  => v_resolved_value));
 
 END;
 $BODY$
@@ -43,10 +43,10 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
     -- Parameters
-    var_p_value ms_syst_priv.comments_config_function_param;
+    v_p_value ms_syst_priv.comments_config_function_param;
 
 BEGIN
 
@@ -54,10 +54,10 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_priv';
-    var_comments_config.function_name   := 'decode_base32';
+    v_comments_config.function_schema := 'ms_syst_priv';
+    v_comments_config.function_name   := 'decode_base32';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Decodes integers represented in Base32.  The representation here is that
 designed by Douglas Crockford (https://www.crockford.com/base32.html).$DOC$;
 
@@ -65,15 +65,15 @@ designed by Douglas Crockford (https://www.crockford.com/base32.html).$DOC$;
     -- Parameter Configs
     --
 
-    var_p_value.param_name := 'p_value';
-    var_p_value.description :=
+    v_p_value.param_name := 'p_value';
+    v_p_value.description :=
         $DOC$The Base32 encoded value to decode back to a decimal representation.$DOC$;
 
 
-    var_comments_config.params :=
-        ARRAY [ var_p_value ]::ms_syst_priv.comments_config_function_param[];
+    v_comments_config.params :=
+        ARRAY [ v_p_value ]::ms_syst_priv.comments_config_function_param[];
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

@@ -40,8 +40,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst_data'
                             ,p_proc_name      => 'trig_b_i_syst_identities_validate_uniqueness'
-                            ,p_exception_name => 'duplicate_identity'
-                            ,p_errcode        => 'PM002'
                             ,p_param_data     => jsonb_build_object(
                                  'access_account_id', new.access_account_id
                                 ,'account_identifier', new.account_identifier
@@ -52,7 +50,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM002',
+                ERRCODE = 'PM101',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
 
@@ -74,7 +72,7 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
 
 BEGIN
@@ -83,19 +81,19 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_data';
-    var_comments_config.function_name   := 'trig_b_i_syst_identities_validate_uniqueness';
+    v_comments_config.function_schema := 'ms_syst_data';
+    v_comments_config.function_name   := 'trig_b_i_syst_identities_validate_uniqueness';
 
-    var_comments_config.trigger_function := TRUE;
-    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
-    var_comments_config.trigger_ops      := ARRAY [ 'i' ]::text[ ];
+    v_comments_config.trigger_function := TRUE;
+    v_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    v_comments_config.trigger_ops      := ARRAY [ 'i' ]::text[ ];
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Provides a check that each ms_syst_data.syst_identities.account_identifier
 value is unique for each owner's access accounts or unique amongst unowned
 access accounts.$DOC$;
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

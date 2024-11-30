@@ -74,15 +74,15 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_place_id                    ms_syst_priv.comments_config_table_column;
-    var_owning_entity_id            ms_syst_priv.comments_config_table_column;
-    var_receives_external_inventory ms_syst_priv.comments_config_table_column;
-    var_fulfills_external_inventory ms_syst_priv.comments_config_table_column;
-    var_receives_internal_inventory ms_syst_priv.comments_config_table_column;
-    var_fulfills_internal_inventory ms_syst_priv.comments_config_table_column;
+    v_place_id                    ms_syst_priv.comments_config_table_column;
+    v_owning_entity_id            ms_syst_priv.comments_config_table_column;
+    v_receives_external_inventory ms_syst_priv.comments_config_table_column;
+    v_fulfills_external_inventory ms_syst_priv.comments_config_table_column;
+    v_receives_internal_inventory ms_syst_priv.comments_config_table_column;
+    v_fulfills_internal_inventory ms_syst_priv.comments_config_table_column;
 
 
 BEGIN
@@ -91,10 +91,10 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_appl_data';
-    var_comments_config.table_name   := 'mstr_entity_inventory_places';
+    v_comments_config.table_schema := 'ms_appl_data';
+    v_comments_config.table_name   := 'mstr_entity_inventory_places';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Establishes one or more Inventory Relationships between an Owning Entity and a
 Place.$DOC$;
 
@@ -102,55 +102,55 @@ Place.$DOC$;
     -- Column Configs
     --
 
-    var_place_id.column_name := 'place_id';
-    var_place_id.description :=
+    v_place_id.column_name := 'place_id';
+    v_place_id.description :=
 $DOC$Identifies the place that will have an Inventory Relationship with the Owning
 Entity.$DOC$;
 
-    var_owning_entity_id.column_name := 'owning_entity_id';
-    var_owning_entity_id.description :=
+    v_owning_entity_id.column_name := 'owning_entity_id';
+    v_owning_entity_id.description :=
 $DOC$Establishes the Entity which has an Inventory Relationship to the identified
 place.$DOC$;
 
-    var_receives_external_inventory.column_name := 'receives_external_inventory';
-    var_receives_external_inventory.description :=
+    v_receives_external_inventory.column_name := 'receives_external_inventory';
+    v_receives_external_inventory.description :=
 $DOC$If true, this inventory may receive inventory shipments from third parties such
 as might originate from purchase order transactions.  If false, this inventory
 may not receive inventory from external third parties.$DOC$;
 
-    var_fulfills_external_inventory.column_name := 'fulfills_external_inventory';
-    var_fulfills_external_inventory.description :=
+    v_fulfills_external_inventory.column_name := 'fulfills_external_inventory';
+    v_fulfills_external_inventory.description :=
 $DOC$If true, inventory units may be fulfilled from this place, for this entity. If
 false, this inventory may not participate as a source of fulfillment to third
 parties.$DOC$;
 
-    var_receives_internal_inventory.column_name := 'receives_internal_inventory';
-    var_receives_internal_inventory.description :=
+    v_receives_internal_inventory.column_name := 'receives_internal_inventory';
+    v_receives_internal_inventory.description :=
 $DOC$If true, inventory units may be received into this inventory from other
 inventories managed by the system.  If false, other managed inventories will not
 be valid sources to replenish stocks in this inventory.  Transferred inventory
 would be an example of a transaction requiring the inventory to allow the
 processing of internal receipts.$DOC$;
 
-    var_fulfills_internal_inventory.column_name := 'fulfills_internal_inventory';
-    var_fulfills_internal_inventory.description :=
+    v_fulfills_internal_inventory.column_name := 'fulfills_internal_inventory';
+    v_fulfills_internal_inventory.description :=
 $DOC$If true, inventory units may be fulfilled from this managed inventory to another
 inventory managed by the system. If false, the inventory may not serve as the
 source of inventory units to other managed inventories.  Transferring inventory
 out is an example of a transaction requiring this internal fulfillment ability.$DOC$;
 
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_place_id
-            , var_owning_entity_id
-            , var_receives_external_inventory
-            , var_fulfills_external_inventory
-            , var_receives_internal_inventory
-            , var_fulfills_internal_inventory
+              v_place_id
+            , v_owning_entity_id
+            , v_receives_external_inventory
+            , v_fulfills_external_inventory
+            , v_receives_internal_inventory
+            , v_fulfills_internal_inventory
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

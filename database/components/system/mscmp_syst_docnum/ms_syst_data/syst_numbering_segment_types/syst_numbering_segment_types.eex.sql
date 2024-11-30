@@ -66,7 +66,7 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
 BEGIN
 
@@ -74,18 +74,18 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_numbering_segment_types';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_numbering_segment_types';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Enumerates the available kinds of segments which may be used to construct an
 application numbering system.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$Note that as of this writing, these records are not considered user configurable
 beyond setting a custom user_description value.$DOC$;
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

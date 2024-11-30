@@ -79,11 +79,11 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_interaction_category_id ms_syst_priv.comments_config_table_column;
-    var_perm_id                 ms_syst_priv.comments_config_table_column;
+    v_interaction_category_id ms_syst_priv.comments_config_table_column;
+    v_perm_id                 ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -91,15 +91,15 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_interaction_contexts';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_interaction_contexts';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Establishes a defined Interaction Context which can be assigned a context wide
 default permission, a default Category, as well as serve as parent to more
 granular data field and interaction record/permission assignments.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$The Interaction Context must be assigned to either an Interaction Category, a
 specific Permission, or both.  This assignment establishes the default
 permission requirements for all member data fields or interactions not setting
@@ -116,37 +116,37 @@ inadvertently left uncontrolled.$DOC$;
     -- Column Configs
     --
 
-    var_interaction_category_id.column_name := 'interaction_category_id';
-    var_interaction_category_id.description :=
+    v_interaction_category_id.column_name := 'interaction_category_id';
+    v_interaction_category_id.description :=
 $DOC$If the Interaction Context as a whole should be subject to the requirements of a
 specific Interaction Category, this field specifies the Interaction Category
 which applies.$DOC$;
-    var_interaction_category_id.constraints :=
+    v_interaction_category_id.constraints :=
 $DOC$One of the `interaction_category_id` or `perm_id` columns must be non-null.  It
 is acceptable for both values to be populated in which case both values will
 apply.$DOC$;
-    var_interaction_category_id.general_usage :=
+    v_interaction_category_id.general_usage :=
 $DOC$The expectation is that Interaction Category assignments at the Interaction
 Context level will be rare compared to simple permission assignments via the
 `perm_id` column.$DOC$;
 
-    var_perm_id.column_name := 'perm_id';
-    var_perm_id.description :=
+    v_perm_id.column_name := 'perm_id';
+    v_perm_id.description :=
 $DOC$Assigns a Permission to the Interaction Context which acts as the default
 primary permission for all data fields and actions associated with the
 Interaction Context.$DOC$;
-    var_perm_id.constraints :=
+    v_perm_id.constraints :=
 $DOC$One of the `interaction_category_id` or `perm_id` columns must be non-null.  It
 is acceptable for both values to be populated in which case both values will
 apply.$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-            var_interaction_category_id
-            , var_perm_id
+            v_interaction_category_id
+            , v_perm_id
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

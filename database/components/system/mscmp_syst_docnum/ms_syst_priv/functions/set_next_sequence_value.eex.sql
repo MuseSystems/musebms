@@ -15,10 +15,10 @@ $BODY$
 -- muse.information@musesystems.com  :: https://muse.systems
 
 DECLARE
-    var_context_data record;
+    v_context_data record;
 BEGIN
 
-    SELECT INTO var_context_data
+    SELECT INTO v_context_data
          NOT p_new_value @> allowed_value_range AS new_value_disallowed
         ,allowed_value_range
     FROM ms_syst_data.syst_numbering_sequences sns
@@ -28,7 +28,7 @@ BEGIN
     FOR UPDATE OF ms_syst_data.syst_numbering_sequence_values;
 
 
-    IF var_context_data.new_value_disallowed THEN
+    IF v_context_data.new_value_disallowed THEN
 
         RAISE EXCEPTION
             USING
@@ -37,8 +37,6 @@ BEGIN
                 DETAIL  = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst_priv'
                             ,p_proc_name      => 'set_next_sequence_value'
-                            ,p_exception_name => 'numbering_sequence_out_of_range'
-                            ,p_errcode        => 'PM007'
                             ,p_param_data     =>
                                 jsonb_build_object(
                                      'p_numbering_sequence_id'
@@ -47,8 +45,8 @@ BEGIN
                                     ,p_new_value)::jsonb
                             ,p_context_data   =>
                                 jsonb_build_object(
-                                     'var_context_data',  to_jsonb(var_context_data))),
-                ERRCODE = 'PM007',
+                                     'v_context_data',  to_jsonb(v_context_data))),
+                ERRCODE = 'PM103',
                 SCHEMA  = 'ms_syst_data',
                 TABLE   = 'syst_numbering_sequence_values';
 
@@ -75,24 +73,24 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
     -- Parameters
-    var_p_numbering_sequence_id ms_syst_priv.comments_config_function_param;
-    var_p_new_value             ms_syst_priv.comments_config_function_param;
+    v_p_numbering_sequence_id ms_syst_priv.comments_config_function_param;
+    v_p_new_value             ms_syst_priv.comments_config_function_param;
 BEGIN
 
     --
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_priv';
-    var_comments_config.function_name   := 'set_next_sequence_values';
+    v_comments_config.function_schema := 'ms_syst_priv';
+    v_comments_config.function_name   := 'set_next_sequence_values';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Set the value of a numbering sequence.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$Using this function ensures that the targeted new value is within the acceptable
 ranges of the sequence.
 
@@ -103,22 +101,22 @@ it is not needed after a value has been retrieved from the numbering sequence.$D
     -- Parameter Configs
     --
 
-    var_p_numbering_sequence_id.param_name := 'p_numbering_sequence_id';
-    var_p_numbering_sequence_id.description :=
+    v_p_numbering_sequence_id.param_name := 'p_numbering_sequence_id';
+    v_p_numbering_sequence_id.description :=
 $DOC$The record ID of the targeted numbering sequence which is to be set.$DOC$;
 
-    var_p_new_value.param_name := 'p_new_value';
-    var_p_new_value.description :=
+    v_p_new_value.param_name := 'p_new_value';
+    v_p_new_value.description :=
 $DOC$The new value to which the requested numbering sequence should be set.$DOC$;
 
 
-    var_comments_config.params :=
+    v_comments_config.params :=
         ARRAY [
-              var_p_numbering_sequence_id
-            , var_p_new_value
+              v_p_numbering_sequence_id
+            , v_p_new_value
             ]::ms_syst_priv.comments_config_function_param[];
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

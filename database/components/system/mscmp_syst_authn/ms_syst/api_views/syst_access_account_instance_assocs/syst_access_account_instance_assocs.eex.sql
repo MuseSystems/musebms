@@ -48,15 +48,15 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- View
-    var_view_config ms_syst_priv.comments_config_apiview;
+    v_view_config ms_syst_priv.comments_config_apiview;
 
     -- View Columns
-    var_access_account_id   ms_syst_priv.comments_config_apiview_column;
-    var_instance_id         ms_syst_priv.comments_config_apiview_column;
-    var_access_granted      ms_syst_priv.comments_config_apiview_column;
-    var_invitation_issued   ms_syst_priv.comments_config_apiview_column;
-    var_invitation_expires  ms_syst_priv.comments_config_apiview_column;
-    var_invitation_declined ms_syst_priv.comments_config_apiview_column;
+    v_access_account_id   ms_syst_priv.comments_config_apiview_column;
+    v_instance_id         ms_syst_priv.comments_config_apiview_column;
+    v_access_granted      ms_syst_priv.comments_config_apiview_column;
+    v_invitation_issued   ms_syst_priv.comments_config_apiview_column;
+    v_invitation_expires  ms_syst_priv.comments_config_apiview_column;
+    v_invitation_declined ms_syst_priv.comments_config_apiview_column;
 
 BEGIN
 
@@ -64,48 +64,48 @@ BEGIN
     -- API View Config
     --
 
-    var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_access_account_instance_assocs';
-    var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_access_account_instance_assocs';
+    v_view_config.table_schema := 'ms_syst_data';
+    v_view_config.table_name   := 'syst_access_account_instance_assocs';
+    v_view_config.view_schema  := 'ms_syst';
+    v_view_config.view_name    := 'syst_access_account_instance_assocs';
 
     --
     -- Column Configs
     --
 
-    var_access_account_id.column_name      := 'access_account_id';
-    var_access_account_id.required         := TRUE;
-    var_access_account_id.user_update      := FALSE;
-    var_access_account_id.supplemental     :=
+    v_access_account_id.column_name      := 'access_account_id';
+    v_access_account_id.required         := TRUE;
+    v_access_account_id.user_update      := FALSE;
+    v_access_account_id.supplemental     :=
 $DOC$This column is part of a composite key along with column `instance_id`.  The
 combined values of `access_account_id` and `instance_id` must be unique.$DOC$;
 
-    var_instance_id.column_name      := 'instance_id';
-    var_instance_id.required         := TRUE;
-    var_instance_id.user_update      := FALSE;
-    var_instance_id.supplemental     :=
+    v_instance_id.column_name      := 'instance_id';
+    v_instance_id.required         := TRUE;
+    v_instance_id.user_update      := FALSE;
+    v_instance_id.supplemental     :=
 $DOC$This column is part of a composite key along with column `access_account_id`.
 The combined values of `access_account_id` and `instance_id` must be unique.$DOC$;
 
-    var_access_granted.column_name      := 'access_granted';
+    v_access_granted.column_name      := 'access_granted';
 
-    var_invitation_issued.column_name      := 'invitation_issued';
+    v_invitation_issued.column_name      := 'invitation_issued';
 
-    var_invitation_expires.column_name      := 'invitation_expires';
+    v_invitation_expires.column_name      := 'invitation_expires';
 
-    var_invitation_declined.column_name      := 'invitation_declined';
+    v_invitation_declined.column_name      := 'invitation_declined';
 
-    var_view_config.columns :=
+    v_view_config.columns :=
         ARRAY [
-              var_access_account_id
-            , var_instance_id
-            , var_access_granted
-            , var_invitation_issued
-            , var_invitation_expires
-            , var_invitation_declined
+              v_access_account_id
+            , v_instance_id
+            , v_access_granted
+            , v_invitation_issued
+            , v_invitation_expires
+            , v_invitation_declined
             ]::ms_syst_priv.comments_config_apiview_column[];
 
-    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+    PERFORM ms_syst_priv.generate_comments_apiview( v_view_config );
 
 END;
 $DOCUMENTATION$;

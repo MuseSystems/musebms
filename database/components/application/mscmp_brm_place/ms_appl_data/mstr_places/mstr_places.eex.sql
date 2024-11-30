@@ -100,12 +100,12 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_owning_entity_id ms_syst_priv.comments_config_table_column;
-    var_place_type_id    ms_syst_priv.comments_config_table_column;
-    var_place_state_id   ms_syst_priv.comments_config_table_column;
+    v_owning_entity_id ms_syst_priv.comments_config_table_column;
+    v_place_type_id    ms_syst_priv.comments_config_table_column;
+    v_place_state_id   ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -113,10 +113,10 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_appl_data';
-    var_comments_config.table_name   := 'mstr_places';
+    v_comments_config.table_schema := 'ms_appl_data';
+    v_comments_config.table_name   := 'mstr_places';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Places are the retail stores, warehouses, factories, and offices in which
 businesses conduct their operations.  This is not synonymous with "address" as a
 place may have multiple, different addresses for different purposes.$DOC$;
@@ -125,31 +125,31 @@ place may have multiple, different addresses for different purposes.$DOC$;
     -- Column Configs
     --
 
-    var_owning_entity_id.column_name := 'owning_entity_id';
-    var_owning_entity_id.description :=
+    v_owning_entity_id.column_name := 'owning_entity_id';
+    v_owning_entity_id.description :=
 $DOC$Indicates which Managing Entity owns the Place record for the purposes of
 default visibility and access.$DOC$;
-    var_owning_entity_id.general_usage :=
+    v_owning_entity_id.general_usage :=
 $DOC$Any Place record owned by the Global Entity is by default visible and usable by
 any Managed Entity.$DOC$;
 
-    var_place_type_id.column_name := 'place_type_id';
-    var_place_type_id.description :=
+    v_place_type_id.column_name := 'place_type_id';
+    v_place_type_id.description :=
 $DOC$Defines the kind of Place the record represents.  Different types of Places may
 offer different functional abilities and limitations.$DOC$;
 
-    var_place_state_id.column_name := 'place_state_id';
-    var_place_state_id.description :=
+    v_place_state_id.column_name := 'place_state_id';
+    v_place_state_id.description :=
 $DOC$Establishes where in the record life-cycle that the record current sits.$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_owning_entity_id
-            , var_place_type_id
-            , var_place_state_id
+              v_owning_entity_id
+            , v_place_type_id
+            , v_place_state_id
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

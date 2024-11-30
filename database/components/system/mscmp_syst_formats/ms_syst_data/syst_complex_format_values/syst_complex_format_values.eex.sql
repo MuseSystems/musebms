@@ -95,16 +95,16 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Table
-    var_comments_config ms_syst_priv.comments_config_table;
+    v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    var_complex_format_id ms_syst_priv.comments_config_table_column;
-    var_format_default    ms_syst_priv.comments_config_table_column;
-    var_sort_order        ms_syst_priv.comments_config_table_column;
-    var_syst_data         ms_syst_priv.comments_config_table_column;
-    var_syst_form         ms_syst_priv.comments_config_table_column;
-    var_user_data         ms_syst_priv.comments_config_table_column;
-    var_user_form         ms_syst_priv.comments_config_table_column;
+    v_complex_format_id ms_syst_priv.comments_config_table_column;
+    v_format_default    ms_syst_priv.comments_config_table_column;
+    v_sort_order        ms_syst_priv.comments_config_table_column;
+    v_syst_data         ms_syst_priv.comments_config_table_column;
+    v_syst_form         ms_syst_priv.comments_config_table_column;
+    v_user_data         ms_syst_priv.comments_config_table_column;
+    v_user_form         ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -112,10 +112,10 @@ BEGIN
     -- Table Config
     --
 
-    var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_complex_format_values';
+    v_comments_config.table_schema := 'ms_syst_data';
+    v_comments_config.table_name   := 'syst_complex_format_values';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$The list of values provided by an enumeration as well as related behavioral and
 informational metadata.$DOC$;
 
@@ -123,12 +123,12 @@ informational metadata.$DOC$;
     -- Column Configs
     --
 
-    var_complex_format_id.column_name := 'complex_format_id';
-    var_complex_format_id.description :=
+    v_complex_format_id.column_name := 'complex_format_id';
+    v_complex_format_id.description :=
 $DOC$The format record with which the value is associated.$DOC$;
 
-    var_format_default.column_name := 'format_default';
-    var_format_default.description :=
+    v_format_default.column_name := 'format_default';
+    v_format_default.description :=
 $DOC$If true, indicates that this value is the default selection from all values
 defined for the enumerations.  If false then the value record has no special
 significance relative to defaulting.
@@ -139,8 +139,8 @@ enum_default set true, the newly inserted/updated record will take precedence
 and the value record previously set to be default will have its enum_default
 setting set to false.$DOC$;
 
-    var_sort_order.column_name := 'sort_order';
-    var_sort_order.description :=
+    v_sort_order.column_name := 'sort_order';
+    v_sort_order.description :=
 $DOC$Indicates the sort ordering of the particular value record with the lowest value
 sorting first.  When a value record for an enumeration is inserted or updated
 and this column is being set to a value which equals another enumeration value
@@ -148,43 +148,43 @@ record for the same enumeration, the system assumes that the new record is
 being set to precede the existing record and it will be set to sort after the
 newly inserted/updated enumeration value.$DOC$;
 
-    var_syst_data.column_name := 'syst_data';
-    var_syst_data.description :=
+    v_syst_data.column_name := 'syst_data';
+    v_syst_data.description :=
 $DOC$For the system expected data definition this column identifies the individual
 fields that make up the complex format type along with the expected type and
 other expected metadata for each field.$DOC$;
 
-    var_syst_form.column_name := 'syst_form';
-    var_syst_form.description :=
+    v_syst_form.column_name := 'syst_form';
+    v_syst_form.description :=
 $DOC$Describes how the individual data fields of the complex format are
 presented in user interfaces and printed documents.$DOC$;
 
-    var_user_data.column_name := 'user_data';
-    var_user_data.description :=
+    v_user_data.column_name := 'user_data';
+    v_user_data.description :=
 $DOC$Allows for custom user data fields to be defined in place of the system provided
 data in syst_data.  Note that when this column is not null, it replaces the
 system definition: it does not augment it.  This means that any system expected
 data fields should also appear in the user data.$DOC$;
 
-    var_user_form.column_name := 'user_form';
-    var_user_form.description :=
+    v_user_form.column_name := 'user_form';
+    v_user_form.description :=
 $DOC$Allows for custom user layout of the format data fields in user interfaces and
 other user presentations.  Note that when this column is not null, it replaces
 the system definition and so any system expected layout elements should also
 be accounted for in this user layout.$DOC$;
 
-    var_comments_config.columns :=
+    v_comments_config.columns :=
         ARRAY [
-              var_complex_format_id
-            , var_format_default
-            , var_sort_order
-            , var_syst_data
-            , var_syst_form
-            , var_user_data
-            , var_user_form
+              v_complex_format_id
+            , v_format_default
+            , v_sort_order
+            , v_syst_data
+            , v_syst_form
+            , v_user_data
+            , v_user_form
             ]::ms_syst_priv.comments_config_table_column[];
 
-    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_table( v_comments_config );
 
 END;
 $DOCUMENTATION$;

@@ -16,13 +16,13 @@ $BODY$
 -- muse.information@musesystems.com  :: https://muse.systems
 
 DECLARE
-    var_context_data   record;
-    var_new_next_value bigint;
-    var_return_value   bigint;
+    v_context_data   record;
+    v_new_next_value bigint;
+    v_return_value   bigint;
 
 BEGIN
 
-    SELECT INTO var_context_data
+    SELECT INTO v_context_data
          sns.id
         ,sns.allowed_value_range
         ,sns.cycle_policy
@@ -34,24 +34,24 @@ BEGIN
     WHERE sns.id = p_numbering_sequence_id
     FOR NO KEY UPDATE OF ms_syst_data.syst_numbering_sequence_values;
 
-    var_return_value   := var_context_data.next_value;
+    v_return_value   := v_context_data.next_value;
 
     -- It's possible that next_value + value_increment can exceed both the bounds of the
     -- allowed_value_range and even the data type of next_value.  So we need to test for that and
     -- be sure that we don't create some sort of error condition because we broke the type bounds on
     -- update.
-    IF NOT var_context_data.allowed_value_range @> var_context_data.next_value THEN
+    IF NOT v_context_data.allowed_value_range @> v_context_data.next_value THEN
 
-        CASE var_context_data.cycle_policy
+        CASE v_context_data.cycle_policy
             WHEN 'cycle' THEN
 
-                var_return_value :=
-                    CASE sign(var_context_data.value_increment)
-                        WHEN 1 THEN lower(var_context_data.allowed_value_range)
-                        WHEN -1 THEN upper(var_context_data.allowed_value_range)
+                v_return_value :=
+                    CASE sign(v_context_data.value_increment)
+                        WHEN 1 THEN lower(v_context_data.allowed_value_range)
+                        WHEN -1 THEN upper(v_context_data.allowed_value_range)
                     END;
 
-                var_new_next_value := var_return_value + var_context_data.value_increment;
+                v_new_next_value := v_return_value + v_context_data.value_increment;
 
             WHEN 'error' THEN
 
@@ -63,48 +63,46 @@ BEGIN
                         DETAIL  = ms_syst_priv.get_exception_details(
                                      p_proc_schema    => 'ms_syst_priv'
                                     ,p_proc_name      => 'get_next_sequence_value'
-                                    ,p_exception_name => 'numbering_sequence_out_of_range'
-                                    ,p_errcode        => 'PM006'
                                     ,p_param_data     =>
                                         jsonb_build_object(
                                              'p_numbering_sequence_id'
                                             ,p_numbering_sequence_id)::jsonb
                                     ,p_context_data   =>
                                         jsonb_build_object(
-                                             'var_context_data',  to_jsonb(var_context_data))),
-                        ERRCODE = 'PM006',
+                                             'v_context_data',  to_jsonb(v_context_data))),
+                        ERRCODE = 'PM102',
                         SCHEMA  = 'ms_syst_data',
                         TABLE   = 'syst_numbering_sequence_values';
 
         END CASE;
 
     ELSIF
-        sign(var_context_data.value_increment) = 1 AND
-        var_context_data.value_increment > upper(var_context_data.allowed_value_range) -
-                                           var_context_data.next_value
+        sign(v_context_data.value_increment) = 1 AND
+        v_context_data.value_increment > upper(v_context_data.allowed_value_range) -
+                                           v_context_data.next_value
     THEN
 
-        var_new_next_value := upper(var_context_data.allowed_value_range) + 1;
+        v_new_next_value := upper(v_context_data.allowed_value_range) + 1;
 
     ELSIF
-        sign(var_context_data.value_increment) = -1 AND
-        abs(var_context_data.value_increment) > var_context_data.next_value -
-                                                lower(var_context_data.allowed_value_range)
+        sign(v_context_data.value_increment) = -1 AND
+        abs(v_context_data.value_increment) > v_context_data.next_value -
+                                                lower(v_context_data.allowed_value_range)
     THEN
 
-        var_new_next_value := lower(var_context_data.allowed_value_range) - 1;
+        v_new_next_value := lower(v_context_data.allowed_value_range) - 1;
 
     ELSE
 
-        var_new_next_value := var_context_data.next_value + var_context_data.value_increment;
+        v_new_next_value := v_context_data.next_value + v_context_data.value_increment;
 
     END IF;
 
     UPDATE ms_syst_data.syst_numbering_sequence_values SET
-        next_value = var_new_next_value
-    WHERE id = var_context_data.id;
+        next_value = v_new_next_value
+    WHERE id = v_context_data.id;
 
-    RETURN var_return_value;
+    RETURN v_return_value;
 
 END;
 $BODY$
@@ -125,10 +123,10 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
     -- Parameters
-    var_p_numbering_sequence_id ms_syst_priv.comments_config_function_param;
+    v_p_numbering_sequence_id ms_syst_priv.comments_config_function_param;
 
 BEGIN
 
@@ -136,13 +134,13 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_priv';
-    var_comments_config.function_name   := 'get_next_sequence_value';
+    v_comments_config.function_schema := 'ms_syst_priv';
+    v_comments_config.function_name   := 'get_next_sequence_value';
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$Returns the next value for the requested numbering sequence.$DOC$;
 
-    var_comments_config.general_usage :=
+    v_comments_config.general_usage :=
 $DOC$If the sequence has exhausted all values in the allowed range of values, this
 function will either cycle or error depending on the value of the prevailing
 `ms_syst_data.syst_numbering_sequences.cycle_policy` column value.  The cycle
@@ -162,14 +160,14 @@ policy option values are:
     -- Parameter Configs
     --
 
-    var_p_numbering_sequence_id.param_name := 'p_numbering_sequence_id';
-    var_p_numbering_sequence_id.description :=
+    v_p_numbering_sequence_id.param_name := 'p_numbering_sequence_id';
+    v_p_numbering_sequence_id.description :=
 $DOC$The record ID of the numbering sequence from which to draw the next value.$DOC$;
 
-    var_comments_config.params :=
-        ARRAY [ var_p_numbering_sequence_id ]::ms_syst_priv.comments_config_function_param[];
+    v_comments_config.params :=
+        ARRAY [ v_p_numbering_sequence_id ]::ms_syst_priv.comments_config_function_param[];
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;

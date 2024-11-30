@@ -15,26 +15,26 @@ $BODY$
 -- muse.information@musesystems.com :: https://muse.systems
 
 DECLARE
-    var_perm ms_syst_data.syst_perms;
+    v_perm ms_syst_data.syst_perms;
 
 BEGIN
 
-    SELECT * INTO STRICT var_perm FROM ms_syst_data.syst_perms WHERE id = new.perm_id;
+    SELECT * INTO STRICT v_perm FROM ms_syst_data.syst_perms WHERE id = new.perm_id;
 
     IF new.view_scope IS NULL THEN
-        new.view_scope = var_perm.view_scope_options[1];
+        new.view_scope = v_perm.view_scope_options[1];
     END IF;
 
     IF new.maint_scope IS NULL THEN
-        new.maint_scope = var_perm.maint_scope_options[1];
+        new.maint_scope = v_perm.maint_scope_options[1];
     END IF;
 
     IF new.admin_scope IS NULL THEN
-        new.admin_scope = var_perm.admin_scope_options[1];
+        new.admin_scope = v_perm.admin_scope_options[1];
     END IF;
 
     IF new.ops_scope IS NULL THEN
-        new.ops_scope = var_perm.ops_scope_options[1];
+        new.ops_scope = v_perm.ops_scope_options[1];
     END IF;
 
     RETURN new;
@@ -53,7 +53,7 @@ DO
 $DOCUMENTATION$
 DECLARE
     -- Function
-    var_comments_config ms_syst_priv.comments_config_function;
+    v_comments_config ms_syst_priv.comments_config_function;
 
 BEGIN
 
@@ -61,19 +61,19 @@ BEGIN
     -- Function Config
     --
 
-    var_comments_config.function_schema := 'ms_syst_data';
-    var_comments_config.function_name   := 'trig_b_iu_syst_perm_role_grants_default_scopes';
+    v_comments_config.function_schema := 'ms_syst_data';
+    v_comments_config.function_name   := 'trig_b_iu_syst_perm_role_grants_default_scopes';
 
-    var_comments_config.trigger_function := TRUE;
-    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
-    var_comments_config.trigger_ops      := ARRAY [ 'i', 'u' ]::text[ ];
+    v_comments_config.trigger_function := TRUE;
+    v_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    v_comments_config.trigger_ops      := ARRAY [ 'i', 'u' ]::text[ ];
 
-    var_comments_config.description :=
+    v_comments_config.description :=
 $DOC$This trigger will assign default Permmission Scope values based on the
 definition of the permission defined in Permissions' `ms_syst_data.syst_perms`
 record.$DOC$;
 
-    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+    PERFORM ms_syst_priv.generate_comments_function( v_comments_config );
 
 END;
 $DOCUMENTATION$;
