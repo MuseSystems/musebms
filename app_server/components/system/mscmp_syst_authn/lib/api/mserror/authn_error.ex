@@ -1,6 +1,6 @@
-# Source File:  .ex
-# Location:    musebms/app_server/components/system/mscmp_syst_authn/lib/api/mserror/authn_error.ex
-# Project:     Muse Systems Business Management System
+# Source File:  authn_error.ex
+# Location:     musebms/app_server/components/system/mscmp_syst_authn/lib/api/mserror/authn_error.ex
+# Project:      Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 # This file may include content copyrighted and licensed from third parties.
