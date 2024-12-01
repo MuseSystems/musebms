@@ -13,52 +13,50 @@
 defmodule MscmpSystPerms.Impl.PermRoleGrant do
   @moduledoc false
 
+  use Msutils.Guards
+
   import Ecto.Query
 
   alias MscmpSystPerms.Types
 
-  require Logger
-
   @scopes ["unused", "deny", "same_user", "same_group", "all"]
 
   @spec create_perm_role_grant(Types.perm_role_grant_params()) ::
-          {:ok, Msdata.SystPermRoleGrants.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystPermRoleGrants.t()} | {:error, term()}
   def create_perm_role_grant(perm_role_grant_params) do
     perm_role_grant_params
     |> Msdata.SystPermRoleGrants.insert_changeset()
-    |> MscmpSystDb.insert!(returning: true)
-    |> then(&{:ok, &1})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure creating Permission Role Grant.",
-         cause: error
-       }}
+    |> MscmpSystDb.insert(returning: true)
+    |> case do
+      {:ok, perm} -> {:ok, perm}
+      error -> {:error, error}
+    end
   end
 
   @spec update_perm_role_grant(
           Types.perm_role_grant_id() | Msdata.SystPermRoleGrants.t(),
           Types.perm_role_grant_params()
         ) ::
-          {:ok, Msdata.SystPermRoleGrants.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystPermRoleGrants.t()} | {:error, :not_found} | {:error, term()}
   def update_perm_role_grant(perm_role_grant_id, perm_role_grant_params)
-      when is_binary(perm_role_grant_id) do
-    MscmpSystDb.get!(Msdata.SystPermRoleGrants, perm_role_grant_id)
-    |> update_perm_role_grant(perm_role_grant_params)
+      when is_uuid(perm_role_grant_id) do
+    case MscmpSystDb.get(Msdata.SystPermRoleGrants, perm_role_grant_id) do
+      %Msdata.SystPermRoleGrants{} = perm_role_grant ->
+        update_perm_role_grant(perm_role_grant, perm_role_grant_params)
+
+      nil ->
+        {:error, :not_found}
+
+      error ->
+        {:error, error}
+    end
   rescue
     error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure updating Permission Role Grant by ID.",
-         cause: error
-       }}
+      case error do
+        %Postgrex.Error{postgres: %{pg_code: "PM001"}} -> {:error, :invalid_change}
+        %Postgrex.Error{postgres: %{pg_code: "PM003"}} -> {:error, :syst_defined}
+        error -> {:error, error}
+      end
   end
 
   def update_perm_role_grant(
@@ -67,50 +65,24 @@ defmodule MscmpSystPerms.Impl.PermRoleGrant do
       ) do
     perm_role_grant
     |> Msdata.SystPermRoleGrants.update_changeset(perm_role_grant_params)
-    |> MscmpSystDb.update!(returning: true)
-    |> then(&{:ok, &1})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure updating Permission Role Grant.",
-         cause: error
-       }}
+    |> MscmpSystDb.update(returning: true)
+    |> case do
+      {:ok, perm} -> {:ok, perm}
+      error -> {:error, error}
+    end
   end
 
   @spec delete_perm_role_grant(Msdata.SystPermRoleGrants.t() | Types.perm_role_grant_id()) ::
-          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
-  def delete_perm_role_grant(perm_role_grant_id) when is_binary(perm_role_grant_id) do
+          :ok | {:error, :not_found}
+  def delete_perm_role_grant(perm_role_grant_id) when is_uuid(perm_role_grant_id) do
     from(p in Msdata.SystPermRoleGrants, where: p.id == ^perm_role_grant_id)
     |> MscmpSystDb.delete_all()
     |> case do
-      {0, _} ->
-        {:ok, :not_found}
-
-      {1, _} ->
-        {:ok, :deleted}
-
-      error ->
-        {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Unexpected result deleting Permission Role Grant by ID.",
-           cause: error
-         }}
+      {1, _} -> :ok
+      {0, _} -> {:error, :not_found}
     end
   rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure deleting Permission Role Grant.",
-         cause: error
-       }}
+    error -> {:error, error}
   end
 
   def delete_perm_role_grant(%Msdata.SystPermRoleGrants{} = perm),
@@ -124,20 +96,10 @@ defmodule MscmpSystPerms.Impl.PermRoleGrant do
     standard_scope_score = Enum.find_index(@scopes, &(&1 == standard_scope))
 
     cond do
-      test_scope_score == standard_scope_score ->
-        :eq
-
-      test_scope_score > standard_scope_score ->
-        :gt
-
-      test_scope_score < standard_scope_score ->
-        :lt
-
-      true ->
-        raise MscmpSystError,
-          code: :undefined_error,
-          message: "Invalid scope comparison.",
-          cause: %{parameters: %{test_scope: test_scope, standard_scope: standard_scope}}
+      test_scope_score == standard_scope_score -> :eq
+      test_scope_score > standard_scope_score -> :gt
+      test_scope_score < standard_scope_score -> :lt
+      true -> raise "Invalid scope comparison."
     end
   end
 

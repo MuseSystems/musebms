@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule PermFunctionalTypeTest do
+  @moduledoc false
+
   use PermsTestCase, async: true
 
   import Ecto.Query

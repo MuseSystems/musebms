@@ -17,6 +17,7 @@ defmodule MscmpSystPerms do
              |> String.split("<!-- MDOC !-->")
              |> Enum.fetch!(1)
 
+  alias MscmpSystError.Types.Context, as: ErrorContext
   alias MscmpSystPerms.Impl
   alias MscmpSystPerms.Types
 
@@ -43,7 +44,7 @@ defmodule MscmpSystPerms do
   On successful update, a success tuple is returned including a copy of the
   updated Permission Functional Type record (`{:ok, <record>}`).  On failure
   an error tuple is returned indicating the reason for failure
-  (`{:error, reason}`).
+  (`{:error, %Mserror.PermsError{}}`).
 
   ## Parameters
 
@@ -60,9 +61,31 @@ defmodule MscmpSystPerms do
           Types.perm_functional_type_id() | Msdata.SystPermFunctionalTypes.t(),
           Types.perm_functional_type_params()
         ) ::
-          {:ok, Msdata.SystPermFunctionalTypes.t()} | {:error, MscmpSystError.t()}
-  defdelegate update_perm_functional_type(perm_functional_type, perm_functional_type_params),
-    to: Impl.PermFunctionalType
+          {:ok, Msdata.SystPermFunctionalTypes.t()} | {:error, Mserror.PermsError.t()}
+  def update_perm_functional_type(perm_functional_type, perm_functional_type_params) do
+    case Impl.PermFunctionalType.update_perm_functional_type(
+           perm_functional_type,
+           perm_functional_type_params
+         ) do
+      {:ok, perm} ->
+        {:ok, perm}
+
+      {:error, error} ->
+        {:error,
+         Mserror.PermsError.new(
+           :perms_data,
+           "Error updating Permission Functional Type",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :update_perm_functional_type, 2},
+             parameters: %{
+               perm_functional_type: perm_functional_type,
+               perm_functional_type_params: perm_functional_type_params
+             }
+           }
+         )}
+    end
+  end
 
   # ==============================================================================================
   #
@@ -82,7 +105,7 @@ defmodule MscmpSystPerms do
 
   Upon creation this function returns a success tuple in the form
   `{:ok, %Msdata.SystPerms{}}` where the struct is the data of the newly created
-  record.  On error an error tuple is returned (`{:error, %MscmpSystError{}}`).
+  record.  On error an error tuple is returned (`{:error, %Mserror.PermsError{}}`).
 
   ## Parameters
 
@@ -90,8 +113,25 @@ defmodule MscmpSystPerms do
     create.  For details see `t:MscmpSystPerms.Types.perm_params/0`.
   """
   @spec create_perm(Types.perm_params()) ::
-          {:ok, Msdata.SystPerms.t()} | {:error, MscmpSystError.t()}
-  defdelegate create_perm(perm_params), to: Impl.Perm
+          {:ok, Msdata.SystPerms.t()} | {:error, Mserror.PermsError.t()}
+  def create_perm(perm_params) do
+    case Impl.Perm.create_perm(perm_params) do
+      {:ok, perm} ->
+        {:ok, perm}
+
+      {:error, error} ->
+        {:error,
+         Mserror.PermsError.new(
+           :perms_data,
+           "Error creating Permission",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :create_perm, 1},
+             parameters: %{perm_params: perm_params}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -105,7 +145,7 @@ defmodule MscmpSystPerms do
 
   Upon update this function returns a success tuple in the form
   `{:ok, %Msdata.SystPerms{}}` where the struct is the data of the updated
-  record.  On error an error tuple is returned (`{:error, %MscmpSystError{}}`).
+  record.  On error an error tuple is returned (`{:error, %Mserror.PermsError{}}`).
 
   System defined Permission records only allow the user interface display fields
   to be updated (`display_name`, `user_description`).  User defined permissions
@@ -121,8 +161,25 @@ defmodule MscmpSystPerms do
     and their new values.  For details see `t:MscmpSystPerms.Types.perm_params/0`.
   """
   @spec update_perm(Types.perm_id() | Msdata.SystPerms.t(), Types.perm_params()) ::
-          {:ok, Msdata.SystPerms.t()} | {:error, MscmpSystError.t()}
-  defdelegate update_perm(perm, perm_params), to: Impl.Perm
+          {:ok, Msdata.SystPerms.t()} | {:error, Mserror.PermsError.t()}
+  def update_perm(perm, perm_params) do
+    case Impl.Perm.update_perm(perm, perm_params) do
+      {:ok, perm} ->
+        {:ok, perm}
+
+      {:error, error} ->
+        {:error,
+         Mserror.PermsError.new(
+           :perms_data,
+           "Error updating Permission",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :update_perm, 2},
+             parameters: %{perm: perm, perm_params: perm_params}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -134,10 +191,10 @@ defmodule MscmpSystPerms do
   @doc """
   Deletes a user defined Permission record.
 
-  On successful deletion of the record this function returns a success tuple in
-  the form `{:ok, :deleted}`.  If the requested record is not found a success
-  tuple in the form `{:ok, :not_found}` is returned.  On error an error tuple is
-  returned (`{:error, %MscmpSystError{}}`).
+  On successful deletion of the record this function returns `:ok`.  If the
+  requested record is not found an error tuple in the form of
+  `{:error, %Mserror.PermsError{cause: :not_found}}` is returned.  On any other
+  error an error tuple is returned (`{:error, %Mserror.PermsError{}}`).
 
   ## Parameters
 
@@ -145,8 +202,25 @@ defmodule MscmpSystPerms do
     value of the Permission record to delete.
   """
   @spec delete_perm(Msdata.SystPerms.t() | Types.perm_id()) ::
-          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
-  defdelegate delete_perm(perm), to: Impl.Perm
+          :ok | {:error, Mserror.PermsError.t()}
+  def delete_perm(perm) do
+    case Impl.Perm.delete_perm(perm) do
+      :ok ->
+        :ok
+
+      {:error, error} ->
+        {:error,
+         Mserror.PermsError.new(
+           :perms_data,
+           "Error deleting Permission",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :delete_perm, 1},
+             parameters: %{perm: perm}
+           }
+         )}
+    end
+  end
 
   # ==============================================================================================
   #
@@ -167,7 +241,7 @@ defmodule MscmpSystPerms do
   On successful record creation this function returns a success tuple in the
   form `{:ok, %Msdata.SystPermRoles{}}` where the struct is the data of the
   created record.  On error an error tuple is returned
-  (`{:error, %MscmpSystError{}}`).
+  (`{:error, %Mserror.PermsError{}}`).
 
   ## Parameters
 
@@ -175,8 +249,25 @@ defmodule MscmpSystPerms do
     values.  For more about see `t:MscmpSystPerms.Types.perm_role_params/0`.
   """
   @spec create_perm_role(Types.perm_role_params()) ::
-          {:ok, Msdata.SystPermRoles.t()} | {:error, MscmpSystError.t()}
-  defdelegate create_perm_role(perm_role_params), to: Impl.PermRole
+          {:ok, Msdata.SystPermRoles.t()} | {:error, Mserror.PermsError.t()}
+  def create_perm_role(perm_role_params) do
+    case Impl.PermRole.create_perm_role(perm_role_params) do
+      {:ok, perm} ->
+        {:ok, perm}
+
+      {:error, error} ->
+        {:error,
+         Mserror.PermsError.new(
+           :perms_data,
+           "Error creating Permission Role",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :create_perm_role, 1},
+             parameters: %{perm_role_params: perm_role_params}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -190,7 +281,7 @@ defmodule MscmpSystPerms do
 
   Upon update this function returns a success tuple in the form
   `{:ok, %Msdata.SystPermRoles{}}` where the struct is the data of the updated
-  record.  On error an error tuple is returned (`{:error, %MscmpSystError{}}`).
+  record.  On error an error tuple is returned (`{:error, %Mserror.PermsError{}}`).
 
   System defined Permission Role records only allow the user interface display
   fields to be updated (`display_name`, `user_description`).  User defined
@@ -210,8 +301,25 @@ defmodule MscmpSystPerms do
           Types.perm_role_id() | Msdata.SystPermRoles.t(),
           Types.perm_role_params()
         ) ::
-          {:ok, Msdata.SystPermRoles.t()} | {:error, MscmpSystError.t()}
-  defdelegate update_perm_role(perm_role, perm_role_params), to: Impl.PermRole
+          {:ok, Msdata.SystPermRoles.t()} | {:error, Mserror.PermsError.t()}
+  def update_perm_role(perm_role, perm_role_params) do
+    case Impl.PermRole.update_perm_role(perm_role, perm_role_params) do
+      {:ok, perm} ->
+        {:ok, perm}
+
+      {:error, error} ->
+        {:error,
+         Mserror.PermsError.new(
+           :perms_data,
+           "Error updating Permission Role",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :update_perm_role, 2},
+             parameters: %{perm_role: perm_role, perm_role_params: perm_role_params}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -223,10 +331,10 @@ defmodule MscmpSystPerms do
   @doc """
   Deletes user defined Permission Role records.
 
-  On successful deletion of the record this function returns a success tuple in
-  the form `{:ok, :deleted}`.  If the requested record is not found a success
-  tuple in the form `{:ok, :not_found}` is returned.  On error an error tuple is
-  returned (`{:error, %MscmpSystError{}}`).
+  On successful deletion of the record this function returns `:ok`.  If the
+  requested record is not found an error tuple in the form of
+  `{:error, %Mserror.PermsError{cause: :not_found}}` is returned.  On any other
+  error an error tuple is returned (`{:error, %Mserror.PermsError{}}`).
 
   System defined Permission Role records may not be deleted using this API.
 
@@ -237,8 +345,25 @@ defmodule MscmpSystPerms do
     Permission Role record.
   """
   @spec delete_perm_role(Msdata.SystPermRoles.t() | Types.perm_role_id()) ::
-          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
-  defdelegate delete_perm_role(perm_role), to: Impl.PermRole
+          :ok | {:error, Mserror.PermsError.t()}
+  def delete_perm_role(perm_role) do
+    case Impl.PermRole.delete_perm_role(perm_role) do
+      :ok ->
+        :ok
+
+      {:error, error} ->
+        {:error,
+         Mserror.PermsError.new(
+           :perms_data,
+           "Error deleting Permission Role",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :delete_perm_role, 1},
+             parameters: %{perm_role: perm_role}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -251,9 +376,10 @@ defmodule MscmpSystPerms do
   Retrieves the Permission Role record ID as found by its functional type name
   and Internal Name.
 
-  The function will either return the record ID of the requested Permission Role
-  or `nil` of that role was not found.  If an error occurs an error tuple is
-  returned.
+  The function will return a success tuple containing the record ID of the
+  requested Permission Role if found.  If the requested record is not found an
+  error tuple in the form of `{:error, %Mserror.PermsError{cause: :not_found}}`
+  is returned.  If any other error occurs an error tuple is returned.
 
   ## Parameters
 
@@ -269,17 +395,36 @@ defmodule MscmpSystPerms do
 
   Retrieve the record ID of a Permission Role record.
 
-      iex> _perm_role_id =
+      iex> {:ok, _perm_role_id} =
       ...>   MscmpSystPerms.get_perm_role_id_by_name("func_type_1", "perm_role_1")
 
-  Searching for a non-existent record returns `nil`.
+  Searching for a non-existent record returns error tuple.
 
-      iex> MscmpSystPerms.get_perm_role_id_by_name("func_type_1", "nonexistent_role")
-      nil
+      iex> {:error, %Mserror.PermsError{cause: :not_found}} =
+      ...>   MscmpSystPerms.get_perm_role_id_by_name("func_type_1", "nonexistent_role")
+
   """
   @spec get_perm_role_id_by_name(Types.perm_functional_type_name(), Types.perm_role_name()) ::
-          Types.perm_role_id() | nil | {:error, MscmpSystError.t()}
-  defdelegate get_perm_role_id_by_name(perm_func_type_name, perm_role_name), to: Impl.PermRole
+          {:ok, Types.perm_role_id()} | {:error, Mserror.PermsError.t()}
+  def get_perm_role_id_by_name(perm_func_type_name, perm_role_name) do
+    case Impl.PermRole.get_perm_role_id_by_name(perm_func_type_name, perm_role_name) do
+      {:ok, result} ->
+        {:ok, result}
+
+      {:error, error} ->
+        {:error,
+         Mserror.PermsError.new(:perms_data, "Error getting Permission Role ID by name",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :get_perm_role_id_by_name, 2},
+             parameters: %{
+               perm_func_type_name: perm_func_type_name,
+               perm_role_name: perm_role_name
+             }
+           }
+         )}
+    end
+  end
 
   # ==============================================================================================
   #
@@ -300,7 +445,7 @@ defmodule MscmpSystPerms do
   On successful record creation this function returns a success tuple in the
   form `{:ok, %Msdata.SystPermRoleGrants{}}` where the struct is the data of the
   created record.  On error an error tuple is returned
-  (`{:error, %MscmpSystError{}}`).
+  (`{:error, %Mserror.PermsError{}}`).
 
   New Permission Role Grant records can only be created for parent Permission
   Role records that are not set as being system defined.
@@ -312,8 +457,25 @@ defmodule MscmpSystPerms do
     `t:MscmpSystPerms.Types.perm_role_grant_params/0`.
   """
   @spec create_perm_role_grant(Types.perm_role_grant_params()) ::
-          {:ok, Msdata.SystPermRoleGrants.t()} | {:error, MscmpSystError.t()}
-  defdelegate create_perm_role_grant(perm_role_grant_params), to: Impl.PermRoleGrant
+          {:ok, Msdata.SystPermRoleGrants.t()} | {:error, Mserror.PermsError.t()}
+  def create_perm_role_grant(perm_role_grant_params) do
+    case Impl.PermRoleGrant.create_perm_role_grant(perm_role_grant_params) do
+      {:ok, perm} ->
+        {:ok, perm}
+
+      {:error, error} ->
+        {:error,
+         Mserror.PermsError.new(
+           :perms_data,
+           "Error creating Permission Role Grant",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :create_perm_role_grant, 1},
+             parameters: %{perm_role_grant_params: perm_role_grant_params}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -328,7 +490,7 @@ defmodule MscmpSystPerms do
   Upon update this function returns a success tuple in the form
   `{:ok, %Msdata.SystPermRoleGrants{}}` where the struct is the data of the
   updated record.  On error an error tuple is returned
-  (`{:error, %MscmpSystError{}}`).
+  (`{:error, %Mserror.PermsError{}}`).
 
   Permission Role Grant records which are children of system defined Permission
   Roles may not be updated using this API.
@@ -347,9 +509,28 @@ defmodule MscmpSystPerms do
           Types.perm_role_grant_id() | Msdata.SystPermRoleGrants.t(),
           Types.perm_role_grant_params()
         ) ::
-          {:ok, Msdata.SystPermRoleGrants.t()} | {:error, MscmpSystError.t()}
-  defdelegate update_perm_role_grant(perm_role_grant, perm_role_grant_params),
-    to: Impl.PermRoleGrant
+          {:ok, Msdata.SystPermRoleGrants.t()} | {:error, Mserror.PermsError.t()}
+  def update_perm_role_grant(perm_role_grant, perm_role_grant_params) do
+    case Impl.PermRoleGrant.update_perm_role_grant(perm_role_grant, perm_role_grant_params) do
+      {:ok, perm} ->
+        {:ok, perm}
+
+      {:error, error} ->
+        {:error,
+         Mserror.PermsError.new(
+           :perms_data,
+           "Error updating Permission Role Grant",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :update_perm_role_grant, 2},
+             parameters: %{
+               perm_role_grant: perm_role_grant,
+               perm_role_grant_params: perm_role_grant_params
+             }
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -361,10 +542,10 @@ defmodule MscmpSystPerms do
   @doc """
   Deletes the Permission Role Grant records of user defined Permission Roles.
 
-  On successful deletion of the record this function returns a success tuple in
-  the form `{:ok, :deleted}`.  If the requested record is not found a success
-  tuple in the form `{:ok, :not_found}` is returned.  On error an error tuple is
-  returned (`{:error, %MscmpSystError{}}`).
+  On successful deletion of the record this function returns `:ok`.  If the
+  requested record is not found an error tuple in the form
+  `{:error, %Mserror.PermsError{cause: :not_found}}` is returned.  On any other
+  error an error tuple is returned (`{:error, %Mserror.PermsError{}}`).
 
   Permission Role Grant records belonging to System defined Permission Roles may
   not be deleted using this API.
@@ -376,8 +557,25 @@ defmodule MscmpSystPerms do
     representing the Permission Role Grant record.
   """
   @spec delete_perm_role_grant(Msdata.SystPermRoleGrants.t() | Types.perm_role_grant_id()) ::
-          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
-  defdelegate delete_perm_role_grant(perm_role_grant), to: Impl.PermRoleGrant
+          :ok | {:error, Mserror.PermsError.t()}
+  def delete_perm_role_grant(perm_role_grant) do
+    case Impl.PermRoleGrant.delete_perm_role_grant(perm_role_grant) do
+      :ok ->
+        :ok
+
+      {:error, error} ->
+        {:error,
+         Mserror.PermsError.new(
+           :perms_data,
+           "Error deleting Permission Role Grant",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :delete_perm_role_grant, 1},
+             parameters: %{perm_role_grant: perm_role_grant}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -486,21 +684,27 @@ defmodule MscmpSystPerms do
       #{NimbleOptions.docs(@get_effective_perm_grant_opts)}
   """
   @spec get_effective_perm_grants(struct()) ::
-          {:ok, Types.perm_grants()} | {:error, MscmpSystError.t()}
+          {:ok, Types.perm_grants()} | {:error, Mserror.PermsError.t()}
   @spec get_effective_perm_grants(struct(), Keyword.t()) ::
-          {:ok, Types.perm_grants()} | {:error, MscmpSystError.t()}
+          {:ok, Types.perm_grants()} | {:error, Mserror.PermsError.t()}
   def get_effective_perm_grants(selector, opts \\ []) do
-    case NimbleOptions.validate(opts, @get_effective_perm_grant_opts) do
-      {:ok, validated_opts} ->
-        MscmpSystPerms.Protocol.get_effective_perm_grants(selector, validated_opts)
+    validated_opts = NimbleOptions.validate!(opts, @get_effective_perm_grant_opts)
+
+    case MscmpSystPerms.Protocol.get_effective_perm_grants(selector, validated_opts) do
+      {:ok, result} ->
+        {:ok, result}
 
       {:error, error} ->
         {:error,
-         %MscmpSystError{
-           code: :parameter_error,
-           message: "Option validation error",
-           cause: error
-         }}
+         Mserror.PermsError.new(
+           :perms_management,
+           "Error getting effective Permission Grants",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :get_effective_perm_grants, 2},
+             parameters: %{selector: selector, opts: validated_opts}
+           }
+         )}
     end
   end
 
@@ -539,21 +743,27 @@ defmodule MscmpSystPerms do
     #{NimbleOptions.docs(@list_perm_grant_opts)}
   """
   @spec list_perm_grants(struct()) ::
-          {:ok, [Msdata.SystPermRoles.t()]} | {:error, MscmpSystError.t()}
+          {:ok, [Msdata.SystPermRoles.t()]} | {:error, Mserror.PermsError.t()}
   @spec list_perm_grants(struct(), Keyword.t()) ::
-          {:ok, [Msdata.SystPermRoles.t()]} | {:error, MscmpSystError.t()}
+          {:ok, [Msdata.SystPermRoles.t()]} | {:error, Mserror.PermsError.t()}
   def list_perm_grants(selector, opts \\ []) do
-    case NimbleOptions.validate(opts, @list_perm_grant_opts) do
-      {:ok, validated_opts} ->
-        MscmpSystPerms.Protocol.list_perm_grants(selector, validated_opts)
+    validated_opts = NimbleOptions.validate!(opts, @list_perm_grant_opts)
+
+    case MscmpSystPerms.Protocol.list_perm_grants(selector, validated_opts) do
+      {:ok, result} ->
+        {:ok, result}
 
       {:error, error} ->
         {:error,
-         %MscmpSystError{
-           code: :parameter_error,
-           message: "Option validation error",
-           cause: error
-         }}
+         Mserror.PermsError.new(
+           :perms_management,
+           "Error listing Permission Grants",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :list_perm_grants, 2},
+             parameters: %{selector: selector, opts: validated_opts}
+           }
+         )}
     end
   end
 
@@ -594,21 +804,27 @@ defmodule MscmpSystPerms do
     #{NimbleOptions.docs(@list_perm_denial_opts)}
   """
   @spec list_perm_denials(struct()) ::
-          {:ok, [Msdata.SystPerms.t()] | []} | {:error, MscmpSystError.t()}
+          {:ok, [Msdata.SystPerms.t()] | []} | {:error, Mserror.PermsError.t()}
   @spec list_perm_denials(struct(), Keyword.t()) ::
-          {:ok, [Msdata.SystPerms.t()] | []} | {:error, MscmpSystError.t()}
+          {:ok, [Msdata.SystPerms.t()] | []} | {:error, Mserror.PermsError.t()}
   def list_perm_denials(selector, opts \\ []) do
-    case NimbleOptions.validate(opts, @list_perm_denial_opts) do
-      {:ok, validated_opts} ->
-        MscmpSystPerms.Protocol.list_perm_denials(selector, validated_opts)
+    validated_opts = NimbleOptions.validate!(opts, @list_perm_denial_opts)
+
+    case MscmpSystPerms.Protocol.list_perm_denials(selector, validated_opts) do
+      {:ok, result} ->
+        {:ok, result}
 
       {:error, error} ->
         {:error,
-         %MscmpSystError{
-           code: :parameter_error,
-           message: "Option validation error",
-           cause: error
-         }}
+         Mserror.PermsError.new(
+           :perms_management,
+           "Error listing Permission Denials",
+           cause: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :list_perm_denials, 2},
+             parameters: %{selector: selector, opts: validated_opts}
+           }
+         )}
     end
   end
 
@@ -635,7 +851,7 @@ defmodule MscmpSystPerms do
     * `perm_role_id` - the record ID value of the Permission Role record which
     you are granting to the user context identified by the `selector`.
   """
-  @spec grant_perm_role(struct(), Types.perm_role_id()) :: :ok | {:error, MscmpSystError.t()}
+  @spec grant_perm_role(struct(), Types.perm_role_id()) :: :ok | {:error, Exception.t()}
   defdelegate grant_perm_role(selector, perm_role_id), to: MscmpSystPerms.Protocol
 
   ##############################################################################
@@ -649,9 +865,9 @@ defmodule MscmpSystPerms do
   Revokes a previously granted Permission Role from the given selector.
 
   On successful execution a success tuple is returned.  If the grant was
-  actually deleted this tuple will take the form `{:ok, :deleted}`.  If the
-  grant was not found for the user context identified by the `selector` then the
-  `{:ok, :not_found}` tuple will be returned.  Any other outcome is an error
+  actually deleted this tuple will take the form `:ok`.  If the
+  grant was not found for the user context identified by the `selector` then an
+  appropirate error tuple is returned.  Any other outcome is an error
   resulting in an error tuple being returned.
 
   ## Parameters
@@ -664,7 +880,6 @@ defmodule MscmpSystPerms do
     * `perm_role_id` - the record ID value of the Permission Role record which
     you are revoking from the user context identified by the `selector`.
   """
-  @spec revoke_perm_role(struct(), Types.perm_role_id()) ::
-          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
+  @spec revoke_perm_role(struct(), Types.perm_role_id()) :: :ok | {:error, Exception.t()}
   defdelegate revoke_perm_role(selector, perm_role_id), to: MscmpSystPerms.Protocol
 end

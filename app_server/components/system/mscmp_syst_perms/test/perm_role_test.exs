@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule PermRoleTest do
+  @moduledoc false
+
   use PermsTestCase, async: true
 
   import Ecto.Query
@@ -164,8 +166,8 @@ defmodule PermRoleTest do
       from(p in Msdata.SystPermRoles, where: p.internal_name == "perm_role_5")
       |> MscmpSystDb.one!()
 
-    assert {:ok, :deleted} = Impl.PermRole.delete_perm_role(perm_5)
-    assert {:ok, :not_found} = Impl.PermRole.delete_perm_role(perm_5.id)
+    assert :ok = Impl.PermRole.delete_perm_role(perm_5)
+    assert {:error, :not_found} = Impl.PermRole.delete_perm_role(perm_5.id)
   end
 
   test "Can look up Perm Role Id by Internal Name" do
@@ -173,6 +175,7 @@ defmodule PermRoleTest do
       from(pr in Msdata.SystPermRoles, where: pr.internal_name == "perm_role_1", select: pr.id)
       |> MscmpSystDb.one!()
 
-    assert ^perm_role_id = Impl.PermRole.get_perm_role_id_by_name("func_type_1", "perm_role_1")
+    assert {:ok, ^perm_role_id} =
+             Impl.PermRole.get_perm_role_id_by_name("func_type_1", "perm_role_1")
   end
 end

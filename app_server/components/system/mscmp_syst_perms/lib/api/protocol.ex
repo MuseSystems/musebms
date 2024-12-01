@@ -51,7 +51,7 @@ defprotocol MscmpSystPerms.Protocol do
       specific and documented for each individual implementation.
   """
   @spec get_effective_perm_grants(struct(), Keyword.t()) ::
-          {:ok, Types.perm_grants()} | {:error, MscmpSystError.t()}
+          {:ok, Types.perm_grants()} | {:error, Exception.t()}
   def get_effective_perm_grants(selector, opts)
 
   @doc """
@@ -84,7 +84,7 @@ defprotocol MscmpSystPerms.Protocol do
       option is `false`.
   """
   @spec list_perm_grants(struct(), Keyword.t()) ::
-          {:ok, [Msdata.SystPermRoles.t()]} | {:error, MscmpSystError.t()}
+          {:ok, [Msdata.SystPermRoles.t()]} | {:error, Exception.t()}
   def list_perm_grants(selector, opts)
 
   @doc """
@@ -114,7 +114,7 @@ defprotocol MscmpSystPerms.Protocol do
     implementation.
   """
   @spec list_perm_denials(struct(), Keyword.t()) ::
-          {:ok, [Msdata.SystPerms.t()] | []} | {:error, MscmpSystError.t()}
+          {:ok, [Msdata.SystPerms.t()] | []} | {:error, Exception.t()}
   def list_perm_denials(selector, opts)
 
   @doc """
@@ -133,7 +133,7 @@ defprotocol MscmpSystPerms.Protocol do
     * `perm_role_id` - the record ID value of the Permission Role record which
     you are granting to the user context identified by the `selector`.
   """
-  @spec grant_perm_role(struct(), Types.perm_role_id()) :: :ok | {:error, MscmpSystError.t()}
+  @spec grant_perm_role(struct(), Types.perm_role_id()) :: :ok | {:error, Exception.t()}
   def grant_perm_role(selector, perm_role_id)
 
   @doc """
@@ -155,7 +155,6 @@ defprotocol MscmpSystPerms.Protocol do
     * `perm_role_id` - the record ID value of the Permission Role record which
     you are revoking from the user context identified by the `selector`.
   """
-  @spec revoke_perm_role(struct(), Types.perm_role_id()) ::
-          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
+  @spec revoke_perm_role(struct(), Types.perm_role_id()) :: :ok | {:error, Exception.t()}
   def revoke_perm_role(selector, perm_role_id)
 end

@@ -13,6 +13,8 @@
 defmodule MscmpSystPerms.Impl.PermRole do
   @moduledoc false
 
+  use Msutils.Guards
+
   import Ecto.Query
 
   alias MscmpSystPerms.Types
@@ -20,63 +22,41 @@ defmodule MscmpSystPerms.Impl.PermRole do
   require Logger
 
   @spec create_perm_role(Types.perm_role_params()) ::
-          {:ok, Msdata.SystPermRoles.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystPermRoles.t()} | {:error, term()}
   def create_perm_role(perm_role_params) do
     perm_role_params
     |> Msdata.SystPermRoles.insert_changeset()
-    |> MscmpSystDb.insert!(returning: true)
-    |> then(&{:ok, &1})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure creating Permission Role.",
-         cause: error
-       }}
+    |> MscmpSystDb.insert(returning: true)
+    |> case do
+      {:ok, perm} -> {:ok, perm}
+      error -> {:error, error}
+    end
   end
 
   @spec update_perm_role(
           Types.perm_role_id() | Msdata.SystPermRoles.t(),
           Types.perm_role_params()
         ) ::
-          {:ok, Msdata.SystPermRoles.t()} | {:error, MscmpSystError.t()}
-  def update_perm_role(perm_role_id, perm_role_params) when is_binary(perm_role_id) do
-    MscmpSystDb.get!(Msdata.SystPermRoles, perm_role_id)
-    |> update_perm_role(perm_role_params)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure updating Permission Role by ID.",
-         cause: error
-       }}
+          {:ok, Msdata.SystPermRoles.t()} | {:error, :not_found} | {:error, term()}
+  def update_perm_role(perm_role_id, perm_role_params) when is_uuid(perm_role_id) do
+    case MscmpSystDb.get(Msdata.SystPermRoles, perm_role_id) do
+      %Msdata.SystPermRoles{} = perm -> update_perm_role(perm, perm_role_params)
+      nil -> {:error, :not_found}
+    end
   end
 
   def update_perm_role(%Msdata.SystPermRoles{} = perm, perm_role_params) do
     perm
     |> Msdata.SystPermRoles.update_changeset(perm_role_params)
-    |> MscmpSystDb.update!(returning: true)
-    |> then(&{:ok, &1})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure updating Permission Role.",
-         cause: error
-       }}
+    |> MscmpSystDb.update(returning: true)
+    |> case do
+      {:ok, perm} -> {:ok, perm}
+      error -> {:error, error}
+    end
   end
 
   @spec get_perm_role_id_by_name(Types.perm_functional_type_name(), Types.perm_role_name()) ::
-          Types.perm_role_id() | nil | {:error, MscmpSystError.t()}
+          {:ok, Types.perm_role_id()} | {:error, :not_found} | {:error, term()}
   def get_perm_role_id_by_name(perm_func_type_name, perm_role_name) do
     from(pr in Msdata.SystPermRoles,
       join: pft in assoc(pr, :perm_functional_type),
@@ -84,48 +64,23 @@ defmodule MscmpSystPerms.Impl.PermRole do
       select: pr.id
     )
     |> MscmpSystDb.one()
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure retrieving Permission Role record ID by name.",
-         cause: error
-       }}
+    |> case do
+      nil -> {:error, :not_found}
+      perm_role_id -> {:ok, perm_role_id}
+    end
   end
 
   @spec delete_perm_role(Msdata.SystPermRoles.t() | Types.perm_role_id()) ::
-          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
+          :ok | {:error, :not_found}
   def delete_perm_role(perm_role_id) when is_binary(perm_role_id) do
     from(p in Msdata.SystPermRoles, where: p.id == ^perm_role_id)
     |> MscmpSystDb.delete_all()
     |> case do
-      {0, _} ->
-        {:ok, :not_found}
-
-      {1, _} ->
-        {:ok, :deleted}
-
-      error ->
-        {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Unexpected result deleting Permission Role by ID.",
-           cause: error
-         }}
+      {1, _} -> :ok
+      {0, _} -> {:error, :not_found}
     end
   rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure deleting Permission Role.",
-         cause: error
-       }}
+    error -> {:error, error}
   end
 
   def delete_perm_role(%Msdata.SystPermRoles{} = perm), do: delete_perm_role(perm.id)

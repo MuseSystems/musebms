@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule PermRoleGrantTest do
+  @moduledoc false
+
   use PermsTestCase, async: true
 
   import Ecto.Query
@@ -81,13 +83,15 @@ defmodule PermRoleGrantTest do
       ops_scope: :unused
     }
 
-    assert {:error, _} = Impl.PermRoleGrant.create_perm_role_grant(insert_params)
+    assert_raise Postgrex.Error, fn ->
+      Impl.PermRoleGrant.create_perm_role_grant(insert_params)
+    end
   end
 
   test "Cannot create Grant when View Scope is less than Maint Scope" do
     perm_role_id =
       from(pr in Msdata.SystPermRoles,
-        where: pr.internal_name == "perm_role_3",
+        where: pr.internal_name == "perm_role_3" or pr.internal_name == "updated_perm_role_3",
         select: pr.id
       )
       |> MscmpSystDb.one!()
@@ -123,7 +127,8 @@ defmodule PermRoleGrantTest do
 
     update_params = %{ops_scope: :deny}
 
-    assert {:error, _} = Impl.PermRoleGrant.update_perm_role_grant(grant_id, update_params)
+    assert {:error, :syst_defined} =
+             Impl.PermRoleGrant.update_perm_role_grant(grant_id, update_params)
   end
 
   test "Can update User Defined maintainable fields" do
@@ -131,7 +136,9 @@ defmodule PermRoleGrantTest do
       from(prg in Msdata.SystPermRoleGrants,
         join: pr in assoc(prg, :perm_role),
         join: p in assoc(prg, :perm),
-        where: p.internal_name == "perm_3" and pr.internal_name == "perm_role_3",
+        where:
+          p.internal_name == "perm_3" and
+            (pr.internal_name == "perm_role_3" or pr.internal_name == "updated_perm_role_3"),
         select: prg.id
       )
       |> MscmpSystDb.one!()
@@ -166,7 +173,9 @@ defmodule PermRoleGrantTest do
       from(prg in Msdata.SystPermRoleGrants,
         join: pr in assoc(prg, :perm_role),
         join: p in assoc(prg, :perm),
-        where: p.internal_name == "perm_3" and pr.internal_name == "perm_role_3",
+        where:
+          p.internal_name == "perm_3" and
+            (pr.internal_name == "perm_role_3" or pr.internal_name == "updated_perm_role_3"),
         select: prg
       )
       |> MscmpSystDb.one!()
@@ -192,7 +201,9 @@ defmodule PermRoleGrantTest do
 
     update_params_3 = %{view_scope: :same_user}
 
-    assert {:error, _} = Impl.PermRoleGrant.update_perm_role_grant(grant, update_params_3)
+    assert_raise Postgrex.Error, fn ->
+      Impl.PermRoleGrant.update_perm_role_grant(grant, update_params_3)
+    end
   end
 
   test "Cannot delete Syst Defined" do
@@ -218,7 +229,7 @@ defmodule PermRoleGrantTest do
       )
       |> MscmpSystDb.one!()
 
-    assert {:ok, :deleted} = Impl.PermRoleGrant.delete_perm_role_grant(grant)
-    assert {:ok, :not_found} = Impl.PermRoleGrant.delete_perm_role_grant(grant.id)
+    assert :ok = Impl.PermRoleGrant.delete_perm_role_grant(grant)
+    assert {:error, :not_found} = Impl.PermRoleGrant.delete_perm_role_grant(grant.id)
   end
 end

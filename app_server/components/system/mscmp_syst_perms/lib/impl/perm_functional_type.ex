@@ -13,6 +13,8 @@
 defmodule MscmpSystPerms.Impl.PermFunctionalType do
   @moduledoc false
 
+  use Msutils.Guards
+
   alias MscmpSystPerms.Types
 
   require Logger
@@ -21,21 +23,19 @@ defmodule MscmpSystPerms.Impl.PermFunctionalType do
           Types.perm_functional_type_id() | Msdata.SystPermFunctionalTypes.t(),
           Types.perm_functional_type_params()
         ) ::
-          {:ok, Msdata.SystPermFunctionalTypes.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystPermFunctionalTypes.t()} | {:error, :not_found} | {:error, term()}
   def update_perm_functional_type(perm_functional_type_id, perm_functional_type_params)
-      when is_binary(perm_functional_type_id) do
-    MscmpSystDb.get!(Msdata.SystPermFunctionalTypes, perm_functional_type_id)
-    |> update_perm_functional_type(perm_functional_type_params)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+      when is_uuid(perm_functional_type_id) do
+    case MscmpSystDb.get(Msdata.SystPermFunctionalTypes, perm_functional_type_id) do
+      %Msdata.SystPermFunctionalTypes{} = perm_functional_type ->
+        update_perm_functional_type(perm_functional_type, perm_functional_type_params)
 
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure updating Permission Functional Type by ID.",
-         cause: error
-       }}
+      nil ->
+        {:error, :not_found}
+
+      error ->
+        {:error, error}
+    end
   end
 
   def update_perm_functional_type(
@@ -44,17 +44,10 @@ defmodule MscmpSystPerms.Impl.PermFunctionalType do
       ) do
     perm_functional_type
     |> Msdata.SystPermFunctionalTypes.update_changeset(perm_functional_type_params)
-    |> MscmpSystDb.update!(returning: true)
-    |> then(&{:ok, &1})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure updating Permission Functional Type.",
-         cause: error
-       }}
+    |> MscmpSystDb.update(returning: true)
+    |> case do
+      {:ok, perm} -> {:ok, perm}
+      error -> {:error, error}
+    end
   end
 end

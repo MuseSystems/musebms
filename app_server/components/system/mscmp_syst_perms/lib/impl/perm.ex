@@ -13,95 +13,55 @@
 defmodule MscmpSystPerms.Impl.Perm do
   @moduledoc false
 
+  use Msutils.Guards
+
   import Ecto.Query
 
   alias MscmpSystPerms.Types
 
-  require Logger
-
   @spec create_perm(Types.perm_params()) ::
-          {:ok, Msdata.SystPerms.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystPerms.t()} | {:error, term()}
   def create_perm(perm_params) do
     perm_params
     |> Msdata.SystPerms.insert_changeset()
-    |> MscmpSystDb.insert!(returning: true)
-    |> then(&{:ok, &1})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure creating Permission.",
-         cause: error
-       }}
+    |> MscmpSystDb.insert(returning: true)
+    |> case do
+      {:ok, perm} -> {:ok, perm}
+      error -> {:error, error}
+    end
   end
 
   @spec update_perm(Types.perm_id() | Msdata.SystPerms.t(), Types.perm_params()) ::
-          {:ok, Msdata.SystPerms.t()} | {:error, MscmpSystError.t()}
-  def update_perm(perm_id, perm_params) when is_binary(perm_id) do
-    MscmpSystDb.get!(Msdata.SystPerms, perm_id)
-    |> update_perm(perm_params)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure updating Permission by ID.",
-         cause: error
-       }}
+          {:ok, Msdata.SystPerms.t()} | {:error, :not_found} | {:error, term()}
+  def update_perm(perm_id, perm_params) when is_uuid(perm_id) do
+    case MscmpSystDb.get(Msdata.SystPerms, perm_id) do
+      %Msdata.SystPerms{} = perm -> update_perm(perm, perm_params)
+      nil -> {:error, :not_found}
+      error -> {:error, error}
+    end
   end
 
   def update_perm(%Msdata.SystPerms{} = perm, perm_params) do
     perm
     |> Msdata.SystPerms.update_changeset(perm_params)
-    |> MscmpSystDb.update!(returning: true)
-    |> then(&{:ok, &1})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure updating Permission.",
-         cause: error
-       }}
+    |> MscmpSystDb.update(returning: true)
+    |> case do
+      {:ok, perm} -> {:ok, perm}
+      error -> {:error, error}
+    end
   end
 
   @spec delete_perm(Msdata.SystPerms.t() | Types.perm_id()) ::
-          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
-  def delete_perm(perm_id) when is_binary(perm_id) do
+          :ok | {:error, :not_found}
+  def delete_perm(perm_id) when is_uuid(perm_id) do
     from(p in Msdata.SystPerms, where: p.id == ^perm_id)
     |> MscmpSystDb.delete_all()
     |> case do
-      {0, _} ->
-        {:ok, :not_found}
-
-      {1, _} ->
-        {:ok, :deleted}
-
-      error ->
-        {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Unexpected result deleting Permission by ID.",
-           cause: error
-         }}
+      {1, _} -> :ok
+      {0, _} -> {:error, :not_found}
     end
   rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure deleting Permission.",
-         cause: error
-       }}
+    error -> {:error, error}
   end
 
   def delete_perm(%Msdata.SystPerms{} = perm), do: delete_perm(perm.id)

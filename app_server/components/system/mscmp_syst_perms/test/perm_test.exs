@@ -11,6 +11,7 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule PermTest do
+  @moduledoc false
   use PermsTestCase, async: true
 
   import Ecto.Query
@@ -181,7 +182,7 @@ defmodule PermTest do
       from(p in Msdata.SystPerms, where: p.internal_name == "perm_5")
       |> MscmpSystDb.one!()
 
-    assert {:ok, :deleted} = Impl.Perm.delete_perm(perm_5)
-    assert {:ok, :not_found} = Impl.Perm.delete_perm(perm_5.id)
+    assert :ok = Impl.Perm.delete_perm(perm_5)
+    assert {:error, :not_found} = Impl.Perm.delete_perm(perm_5.id)
   end
 end

@@ -175,8 +175,11 @@ defmodule IntegrationTest do
       from(pr in Msdata.SystPermRoles, where: pr.internal_name == "perm_role_1", select: pr.id)
       |> MscmpSystDb.one!()
 
-    assert ^perm_role_id = MscmpSystPerms.get_perm_role_id_by_name("func_type_1", "perm_role_1")
-    assert is_nil(MscmpSystPerms.get_perm_role_id_by_name("func_type_1", "nonexistent_role"))
+    assert {:ok, ^perm_role_id} =
+             MscmpSystPerms.get_perm_role_id_by_name("func_type_1", "perm_role_1")
+
+    assert {:error, %Mserror.PermsError{cause: :not_found}} =
+             MscmpSystPerms.get_perm_role_id_by_name("func_type_1", "nonexistent_role")
   end
 
   test "Step 1.05: Validate System Defined Permission Role Grant Data Maintenance" do
@@ -191,21 +194,22 @@ defmodule IntegrationTest do
 
     update_params = %{view_scope: :same_user}
 
-    assert {:error, _} = MscmpSystPerms.update_perm_role_grant(perm_role_grant.id, update_params)
+    assert {:error, %Mserror.PermsError{cause: :syst_defined}} =
+             MscmpSystPerms.update_perm_role_grant(perm_role_grant.id, update_params)
 
     update_params_2 = %{maint_scope: :same_user}
 
-    assert {:error, _} =
+    assert {:error, %Mserror.PermsError{cause: :syst_defined}} =
              MscmpSystPerms.update_perm_role_grant(perm_role_grant.id, update_params_2)
 
     update_params_3 = %{admin_scope: :same_user}
 
-    assert {:error, _} =
+    assert {:error, %Mserror.PermsError{cause: :syst_defined}} =
              MscmpSystPerms.update_perm_role_grant(perm_role_grant.id, update_params_3)
 
     update_params_4 = %{ops_scope: :same_user}
 
-    assert {:error, _} =
+    assert {:error, %Mserror.PermsError{cause: :syst_defined}} =
              MscmpSystPerms.update_perm_role_grant(perm_role_grant.id, update_params_4)
 
     perm_role_id =
@@ -231,7 +235,7 @@ defmodule IntegrationTest do
   #
   # ==============================================================================================
 
-  test "Step 2.XX: Create User Defined Permission Record" do
+  test "Step 2.01: Create User Defined Permission Record" do
     func_type_id =
       from(pft in Msdata.SystPermFunctionalTypes,
         where: pft.internal_name == "func_type_2",
@@ -270,7 +274,7 @@ defmodule IntegrationTest do
              Enum.map(create_params.ops_scope_options, &Atom.to_string/1)
   end
 
-  test "Step 2.XX: Update User Defined Permission Record" do
+  test "Step 2.02: Update User Defined Permission Record" do
     perm =
       from(p in Msdata.SystPerms, where: p.internal_name == "user_perm_1")
       |> MscmpSystDb.one!()
@@ -304,7 +308,7 @@ defmodule IntegrationTest do
              Enum.map(update_params.ops_scope_options, &Atom.to_string/1)
   end
 
-  test "Step 2.XX: Prevent Disallowed User Defined Permission Record Maintenance" do
+  test "Step 2.03: Prevent Disallowed User Defined Permission Record Maintenance" do
     perm =
       from(p in Msdata.SystPerms, where: p.internal_name == "user_permission_1")
       |> MscmpSystDb.one!()
@@ -323,7 +327,7 @@ defmodule IntegrationTest do
     assert failure_record.perm_functional_type_id == perm.perm_functional_type_id
   end
 
-  test "Step 2.XX: Create User Defined Permission Role Record" do
+  test "Step 2.04: Create User Defined Permission Role Record" do
     func_type_id =
       from(pft in Msdata.SystPermFunctionalTypes,
         where: pft.internal_name == "func_type_2",
@@ -346,7 +350,7 @@ defmodule IntegrationTest do
     assert created_record.user_description == create_params.user_description
   end
 
-  test "Step 2.XX: Update User Defined Permission Role Record" do
+  test "Step 2.05: Update User Defined Permission Role Record" do
     perm_role =
       from(pr in Msdata.SystPermRoles, where: pr.internal_name == "user_perm_role_1")
       |> MscmpSystDb.one!()
@@ -364,7 +368,7 @@ defmodule IntegrationTest do
     assert updated_record.user_description == update_params.user_description
   end
 
-  test "Step 2.XX: Prevent Disallowed User Defined Permission Role Record Maintenance" do
+  test "Step 2.06: Prevent Disallowed User Defined Permission Role Record Maintenance" do
     perm_role =
       from(pr in Msdata.SystPermRoles, where: pr.internal_name == "user_permission_role_1")
       |> MscmpSystDb.one!()
@@ -383,7 +387,7 @@ defmodule IntegrationTest do
     assert failure_record.perm_functional_type_id == perm_role.perm_functional_type_id
   end
 
-  test "Step 2.XX: Create User Defined Permission Role Grant Record" do
+  test "Step 2.07: Create User Defined Permission Role Grant Record" do
     perm_role_id =
       from(pr in Msdata.SystPermRoles,
         where: pr.internal_name == "user_permission_role_1",
@@ -414,7 +418,7 @@ defmodule IntegrationTest do
     assert created_record.ops_scope == Atom.to_string(create_params.ops_scope)
   end
 
-  test "Step 2.XX: Update User Defined Permission Role Grant Record" do
+  test "Step 2.08: Update User Defined Permission Role Grant Record" do
     perm_role_grant =
       from(prg in Msdata.SystPermRoleGrants,
         join: pr in assoc(prg, :perm_role),
@@ -447,7 +451,7 @@ defmodule IntegrationTest do
     assert updated_record.ops_scope == Atom.to_string(update_params.ops_scope)
   end
 
-  test "Step 2.XX: Prevent Disallowed User Defined Permission Role Grant Record Maintenance" do
+  test "Step 2.09: Prevent Disallowed User Defined Permission Role Grant Record Maintenance" do
     perm_role_grant =
       from(prg in Msdata.SystPermRoleGrants,
         join: pr in assoc(prg, :perm_role),
@@ -478,7 +482,7 @@ defmodule IntegrationTest do
     assert failure_record.perm_id == perm_role_grant.perm_id
   end
 
-  test "Step 2.XX: Delete User Defined Permission Role Grant Record" do
+  test "Step 2.10: Delete User Defined Permission Role Grant Record" do
     perm_role_grant =
       from(prg in Msdata.SystPermRoleGrants,
         join: pr in assoc(prg, :perm_role),
@@ -489,25 +493,29 @@ defmodule IntegrationTest do
       )
       |> MscmpSystDb.one!()
 
-    assert {:ok, :deleted} = MscmpSystPerms.delete_perm_role_grant(perm_role_grant)
-    assert {:ok, :not_found} = MscmpSystPerms.delete_perm_role_grant(perm_role_grant.id)
+    assert :ok = MscmpSystPerms.delete_perm_role_grant(perm_role_grant)
+
+    assert {:error, %Mserror.PermsError{cause: :not_found}} =
+             MscmpSystPerms.delete_perm_role_grant(perm_role_grant.id)
   end
 
-  test "Step 2.XX: Delete User Defined Permission Record" do
+  test "Step 2.11: Delete User Defined Permission Record" do
     perm =
       from(p in Msdata.SystPerms, where: p.internal_name == "user_permission_1")
       |> MscmpSystDb.one!()
 
-    assert {:ok, :deleted} = MscmpSystPerms.delete_perm(perm)
-    assert {:ok, :not_found} = MscmpSystPerms.delete_perm(perm.id)
+    assert :ok = MscmpSystPerms.delete_perm(perm)
+    assert {:error, %Mserror.PermsError{cause: :not_found}} = MscmpSystPerms.delete_perm(perm.id)
   end
 
-  test "Step 2.XX: Delete User Defined Permission Role Record" do
+  test "Step 2.12: Delete User Defined Permission Role Record" do
     perm_role =
       from(pr in Msdata.SystPermRoles, where: pr.internal_name == "user_permission_role_1")
       |> MscmpSystDb.one!()
 
-    assert {:ok, :deleted} = MscmpSystPerms.delete_perm_role(perm_role)
-    assert {:ok, :not_found} = MscmpSystPerms.delete_perm_role(perm_role.id)
+    assert :ok = MscmpSystPerms.delete_perm_role(perm_role)
+
+    assert {:error, %Mserror.PermsError{cause: :not_found}} =
+             MscmpSystPerms.delete_perm_role(perm_role.id)
   end
 end
