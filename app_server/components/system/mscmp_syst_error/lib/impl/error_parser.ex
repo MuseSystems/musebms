@@ -13,6 +13,14 @@
 defmodule MscmpSystError.Impl.ErrorParser do
   @moduledoc false
 
+  alias MscmpSystError.Types
+
+  ##############################################################################
+  #
+  # get_root_cause
+  #
+  #
+
   @spec get_root_cause(any()) :: any()
   def get_root_cause(%{__mserror__: true, cause: %_{__mserror__: true} = next_error}) do
     next_error
@@ -20,4 +28,24 @@ defmodule MscmpSystError.Impl.ErrorParser do
   end
 
   def get_root_cause(last_error), do: last_error
+
+  ##############################################################################
+  #
+  # parse_error
+  #
+  #
+
+  @spec parse_error(Types.parsable_error()) :: Types.parsed_error()
+  def parse_error(error), do: do_parse(error)
+
+  defp do_parse({:error, {:error, _} = inner_error}), do: do_parse(inner_error)
+
+  defp do_parse({:error, {code, message}}) when is_atom(code) and is_binary(message),
+    do: {code, message}
+
+  defp do_parse({:error, code}) when is_atom(code), do: {code, nil}
+
+  defp do_parse({:error, term}), do: {term, nil}
+
+  defp do_parse(term), do: {term, nil}
 end

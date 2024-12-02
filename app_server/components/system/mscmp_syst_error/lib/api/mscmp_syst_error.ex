@@ -41,6 +41,16 @@ defmodule MscmpSystError do
     * `:cause` - The cause of the error, which can be an exception, an error tuple,
       or any other term.
 
+    * `:parse_error` - An error result conforming with
+      `t:MscmpSystError.Types.parsable_error/0` to be parsed overriding
+      certain attributes of the exception struct.  When provided the `message`
+      parameter is treated as a default message which can be overridden by a
+      message supplied by the error result provided to this option.  The
+      `cause` attribute of the exception struct will be set to a value derived
+      from this option's value, ignoring the `:cause` option if provided;
+      typically you would not provide both `:parse_error` and `:cause` in the
+      same call to `new/3`.
+
   ## Returns
 
   Returns a struct of the implementing module with the error details.
@@ -141,18 +151,31 @@ defmodule MscmpSystError do
         * `:cause` - The cause of the error, which can be an exception, an error tuple,
           or any other term.
 
+        * `:parse_error` - An error result conforming with
+          `t:MscmpSystError.Types.parsable_error/0` to be parsed overriding
+          certain attributes of the exception struct.  When provided the
+          `message` parameter is treated as a default message which can be
+          overridden by a message supplied by the error result provided to this
+          option.  The `cause` attribute of the exception struct will be set to
+          a value derived from this option's value, ignoring the `:cause`
+          option if provided; typically you would not provide both
+          `:parse_error` and `:cause` in the same call to `new/3`.
+
       ## Returns
 
       Returns a struct of this error type with the error details.
       """
       @impl true
       @spec new(kind :: kinds(), message :: String.t(), opts :: keyword()) :: t()
-      def new(kind, message, opts \\ []) when kind in @kinds do
+      def new(kind, message, opts \\ []) when kind in @kinds and is_binary(message) do
+        {parsed_cause, parsed_message} =
+          Impl.ErrorParser.parse_error(Keyword.get(opts, :parse_error))
+
         %__MODULE__{
           kind: kind,
-          message: message,
+          message: parsed_message || message,
           context: Keyword.get(opts, :context),
-          cause: Keyword.get(opts, :cause)
+          cause: parsed_cause || Keyword.get(opts, :cause)
         }
       end
 
