@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule AccessAccountPermRoleTest do
+  @moduledoc false
+
   use McpPermsTestCase, async: true
 
   import Ecto.Query
@@ -35,7 +37,17 @@ defmodule AccessAccountPermRoleTest do
 
     assert :ok = Impl.AccessAccountPermRole.grant_perm_role(selector, perm_role_id)
 
-    assert {:error, _} = Impl.AccessAccountPermRole.grant_perm_role(selector, perm_role_id)
+    assert {:error,
+            %Ecto.Changeset{
+              errors: [
+                access_account_id:
+                  {"has already been taken",
+                   [
+                     constraint: :unique,
+                     constraint_name: "syst_access_account_perm_role_assigns_udx"
+                   ]}
+              ]
+            }} = Impl.AccessAccountPermRole.grant_perm_role(selector, perm_role_id)
   end
 
   test "Revoke Access Account Permission Role" do
@@ -51,8 +63,12 @@ defmodule AccessAccountPermRoleTest do
       from(pr in Msdata.SystPermRoles, where: pr.internal_name == "mcp_login", select: pr.id)
       |> MscmpSystDb.one!()
 
-    assert {:ok, :deleted} = Impl.AccessAccountPermRole.revoke_perm_role(selector, perm_role_id)
-    assert {:ok, :not_found} = Impl.AccessAccountPermRole.revoke_perm_role(selector, perm_role_id)
+    assert :ok = Impl.AccessAccountPermRole.revoke_perm_role(selector, perm_role_id)
+
+    assert {:error, {:not_found, msg}} =
+             Impl.AccessAccountPermRole.revoke_perm_role(selector, perm_role_id)
+
+    assert is_binary(msg)
   end
 
   test "List Access Account Permission Denial" do

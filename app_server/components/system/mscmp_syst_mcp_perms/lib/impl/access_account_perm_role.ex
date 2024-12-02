@@ -13,11 +13,12 @@
 defmodule MscmpSystMcpPerms.Impl.AccessAccountPermRole do
   @moduledoc false
 
+  use Msutils.Guards
+
   import Ecto.Query
 
+  alias MscmpSystError.Types, as: ErrorTypes
   alias MscmpSystMcpPerms.Types
-
-  require Logger
 
   ##############################################################################
   #
@@ -26,7 +27,7 @@ defmodule MscmpSystMcpPerms.Impl.AccessAccountPermRole do
   #
 
   @spec get_effective_perm_grants(Types.AccessAccountPermsSelector.t(), Keyword.t()) ::
-          {:ok, MscmpSystPerms.Types.perm_grants()} | {:error, MscmpSystError.t()}
+          {:ok, MscmpSystPerms.Types.perm_grants()} | ErrorTypes.parsable_error()
   def get_effective_perm_grants(selector, opts) do
     role_query =
       from(aapra in Msdata.SystAccessAccountPermRoleAssigns,
@@ -77,14 +78,10 @@ defmodule MscmpSystMcpPerms.Impl.AccessAccountPermRole do
     |> then(&{:ok, &1})
   rescue
     error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure retrieving Access Account Permission Grants",
-         cause: error
-       }}
+      case error do
+        %Postgrex.Error{} -> {:error, MscmpSystDb.get_pg_exception(error)}
+        error -> reraise(error, __STACKTRACE__)
+      end
   end
 
   defp maybe_filter_by_permissions(query, :all), do: query
@@ -102,7 +99,7 @@ defmodule MscmpSystMcpPerms.Impl.AccessAccountPermRole do
   #
 
   @spec list_perm_grants(Types.AccessAccountPermsSelector.t(), Keyword.t()) ::
-          {:ok, [Msdata.SystPermRoles.t()]} | {:error, MscmpSystError.t()}
+          {:ok, [Msdata.SystPermRoles.t()]} | ErrorTypes.parsable_error()
   def list_perm_grants(selector, opts) do
     from(pr in Msdata.SystPermRoles,
       as: :perm_roles,
@@ -120,14 +117,10 @@ defmodule MscmpSystMcpPerms.Impl.AccessAccountPermRole do
     |> then(&{:ok, &1})
   rescue
     error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure retrieving Access Account Permission Role/Grants List",
-         cause: error
-       }}
+      case error do
+        %Postgrex.Error{} -> {:error, MscmpSystDb.get_pg_exception(error)}
+        error -> reraise(error, __STACKTRACE__)
+      end
   end
 
   defp maybe_preload_perms(query, true) do
@@ -146,37 +139,25 @@ defmodule MscmpSystMcpPerms.Impl.AccessAccountPermRole do
   #
 
   @spec list_perm_denials(Types.AccessAccountPermsSelector.t(), Keyword.t()) ::
-          {:ok, [Msdata.SystPerms.t()] | []} | {:error, MscmpSystError.t()}
+          {:ok, [Msdata.SystPerms.t()] | []} | ErrorTypes.parsable_error()
   def list_perm_denials(_selector, _opts), do: {:ok, []}
 
   @spec grant_perm_role(Types.AccessAccountPermsSelector.t(), MscmpSystPerms.Types.perm_role_id()) ::
-          :ok | {:error, MscmpSystError.t()}
+          :ok | ErrorTypes.parsable_error()
   def grant_perm_role(selector, perm_role_id) do
     %{access_account_id: selector.access_account_id, perm_role_id: perm_role_id}
     |> Msdata.SystAccessAccountPermRoleAssigns.insert_changeset()
     |> MscmpSystDb.insert()
     |> case do
-      {:ok, _record} ->
-        :ok
-
-      error ->
-        {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Failure granting Permission Role to Access Account",
-           cause: error
-         }}
+      {:ok, _record} -> :ok
+      {:error, error} -> {:error, error}
     end
   rescue
     error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Error granting Permission Role to Access Account",
-         cause: error
-       }}
+      case error do
+        %Postgrex.Error{} -> {:error, MscmpSystDb.get_pg_exception(error)}
+        error -> reraise(error, __STACKTRACE__)
+      end
   end
 
   ##############################################################################
@@ -188,8 +169,7 @@ defmodule MscmpSystMcpPerms.Impl.AccessAccountPermRole do
   @spec revoke_perm_role(
           Types.AccessAccountPermsSelector.t(),
           MscmpSystPerms.Types.perm_role_id()
-        ) ::
-          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
+        ) :: :ok | ErrorTypes.parsable_error()
   def revoke_perm_role(selector, perm_role_id) do
     from(aapra in Msdata.SystAccessAccountPermRoleAssigns,
       where:
@@ -198,29 +178,17 @@ defmodule MscmpSystMcpPerms.Impl.AccessAccountPermRole do
     )
     |> MscmpSystDb.delete_all()
     |> case do
-      {0, _} ->
-        {:ok, :not_found}
-
       {1, _} ->
-        {:ok, :deleted}
+        :ok
 
-      error ->
-        {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Unexpected result revoking Access Account Permission Role Assignment by ID.",
-           cause: error
-         }}
+      {0, _} ->
+        {:error, {:not_found, "The requested MscmpSystMcpPerms permission role was not found."}}
     end
   rescue
     error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Error revoking Permission Role from Access Account",
-         cause: error
-       }}
+      case error do
+        %Postgrex.Error{} -> {:error, MscmpSystDb.get_pg_exception(error)}
+        error -> reraise(error, __STACKTRACE__)
+      end
   end
 end

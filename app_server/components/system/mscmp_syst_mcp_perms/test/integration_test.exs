@@ -39,7 +39,17 @@ defmodule IntegrationTest do
 
     assert :ok = MscmpSystPerms.grant_perm_role(selector, mcp_role_id)
 
-    assert {:error, _} = MscmpSystPerms.grant_perm_role(selector, mcp_role_id)
+    assert {:error,
+            %Ecto.Changeset{
+              errors: [
+                access_account_id:
+                  {"has already been taken",
+                   [
+                     constraint: :unique,
+                     constraint_name: "syst_access_account_perm_role_assigns_udx"
+                   ]}
+              ]
+            }} = MscmpSystPerms.grant_perm_role(selector, mcp_role_id)
 
     global_role_id =
       from(pr in Msdata.SystPermRoles, where: pr.internal_name == "global_login", select: pr.id)
@@ -47,7 +57,17 @@ defmodule IntegrationTest do
 
     assert :ok = MscmpSystPerms.grant_perm_role(selector, global_role_id)
 
-    assert {:error, _} = MscmpSystPerms.grant_perm_role(selector, global_role_id)
+    assert {:error,
+            %Ecto.Changeset{
+              errors: [
+                access_account_id:
+                  {"has already been taken",
+                   [
+                     constraint: :unique,
+                     constraint_name: "syst_access_account_perm_role_assigns_udx"
+                   ]}
+              ]
+            }} = MscmpSystPerms.grant_perm_role(selector, global_role_id)
   end
 
   test "Step 1.02: Get effective Permission grants for Access Account" do
@@ -215,8 +235,9 @@ defmodule IntegrationTest do
       from(pr in Msdata.SystPermRoles, where: pr.internal_name == "global_login", select: pr.id)
       |> MscmpSystDb.one!()
 
-    assert {:ok, :deleted} = MscmpSystPerms.revoke_perm_role(selector, global_role_id)
-    assert {:ok, :not_found} = MscmpSystPerms.revoke_perm_role(selector, global_role_id)
+    assert :ok = MscmpSystPerms.revoke_perm_role(selector, global_role_id)
+    assert {:error, {:not_found, msg}} = MscmpSystPerms.revoke_perm_role(selector, global_role_id)
+    assert is_binary(msg)
 
     {:ok, all_grants} = MscmpSystPerms.get_effective_perm_grants(selector)
 
@@ -256,8 +277,9 @@ defmodule IntegrationTest do
       from(pr in Msdata.SystPermRoles, where: pr.internal_name == "mcp_login", select: pr.id)
       |> MscmpSystDb.one!()
 
-    assert {:ok, :deleted} = MscmpSystPerms.revoke_perm_role(selector, mcp_role_id)
-    assert {:ok, :not_found} = MscmpSystPerms.revoke_perm_role(selector, mcp_role_id)
+    assert :ok = MscmpSystPerms.revoke_perm_role(selector, mcp_role_id)
+    assert {:error, {:not_found, msg}} = MscmpSystPerms.revoke_perm_role(selector, mcp_role_id)
+    assert is_binary(msg)
 
     {:ok, all_grants} = MscmpSystPerms.get_effective_perm_grants(selector)
 
