@@ -73,7 +73,8 @@ defmodule MscmpSystDb.MixProject do
           "Datastore Management": &(&1[:section] == :datastore_management),
           "Datastore Migrations": &(&1[:section] == :datastore_migrations),
           Runtime: &(&1[:section] == :service_management),
-          "Development Support": &(&1[:section] == :development_support)
+          "Development Support": &(&1[:section] == :development_support),
+          Utility: &(&1[:section] == :utility)
         ],
         groups_for_modules: [
           API: [MscmpSystDb],

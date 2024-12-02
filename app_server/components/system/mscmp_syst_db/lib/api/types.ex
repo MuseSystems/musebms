@@ -112,6 +112,31 @@ defmodule MscmpSystDb.Types do
   @type datastore_service_name() :: GenServer.name() | nil
 
   @typedoc """
+  Error codes which may be raised by database procedural logic errors.
+
+  When database functions and stored procedures raise exceptions, they do so
+  with SQL Error Codes which may have specific meanings within our applications.
+  This type defines the known error codes which may be raised by the database.
+
+  The error code is represented as an atom and the message is a string which
+  provides additional information about the error.  The error code is either a
+  standard PostgreSQL error code or a custom error code defined by our
+  applications.
+
+  ## Custom Error Codes
+
+  This is the list of known error codes which may be raised by the database that
+  are unique to our applications. The parenthetical value is the SQLSTATE values
+  reported by the database.  Our database applications raise exceptions with
+  these codes when they encounter an custom error condition.
+
+  #{MscmpSystDb.Impl.PgError.get_error_code_docs()}
+
+  For PostgreSQL error codes, please refer to the PostgreSQL documentation.
+  """
+  @type error_code() :: {code :: atom(), message :: String.t()}
+
+  @typedoc """
   Defines the available states in which a Datastore might exist in relation to
   its schema migrations.
 

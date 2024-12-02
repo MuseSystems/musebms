@@ -18,6 +18,7 @@ defmodule MscmpSystDb do
              |> Enum.fetch!(1)
 
   alias MscmpSystDb.Impl.Dba
+  alias MscmpSystDb.Impl.PgError
   alias MscmpSystDb.Impl.Privileged
   alias MscmpSystDb.Runtime.Datastore
   alias MscmpSystDb.Types
@@ -1090,6 +1091,59 @@ defmodule MscmpSystDb do
   """
   @spec current_datastore_context :: atom() | pid() | nil
   defdelegate current_datastore_context(), to: Datastore
+
+  ##############################################################################
+  #
+  # get_pg_exception
+  #
+  #
+
+  @doc section: :utility
+  @doc """
+  Extracts the PostgreSQL error code and message from a given exception.
+
+  If the PostgreSQL SQLSTATE of the exception is one of our application custom
+  error codes, we'll map the SQLSTATE code to an appropriate atom representation
+  of the error code.  Our custom error codes are documented in the return type
+  `t:Types.error_code/0`.
+
+  ## Returns
+
+  Returns either a tuple as defined by `t:Types.error_code/0` or returns the
+  original exception if it is not a `Postgrex.Error` of either a standard
+  PostgreSQL SQLSTATE code or a custom error code defined by the our
+  application.
+
+  ## Examples
+
+  An example of parsing our application's known custom error codes:
+
+      iex> MscmpSystDb.get_pg_exception(
+      ...>   %Postgrex.Error{
+      ...>     postgres: %{pg_code: "PM003", message: "An Example Error"}
+      ...>   })
+      {:msdata_syst_defined, "An Example Error"}
+
+  An example of parsing a standard PostgreSQL SQLSTATE code (mocked here):
+
+      iex> MscmpSystDb.get_pg_exception(
+      ...>   %Postgrex.Error{
+      ...>     message: "Elixir Error Text",
+      ...>     postgres: %{
+      ...>       pg_code: "23502",
+      ...>       code: :not_null_violation,
+      ...>       message: "PostgreSQL Error Text"
+      ...>     }
+      ...>   })
+      {:not_null_violation, "Elixir Error Text"}
+
+  An example of returning the original exception if it is not otherwise handled:
+
+      iex> MscmpSystDb.get_pg_exception(%ArgumentError{message: "Elixir Error Text"})
+      %ArgumentError{message: "Elixir Error Text"}
+  """
+  @spec get_pg_exception(Exception.t()) :: Types.error_code() | Exception.t()
+  defdelegate get_pg_exception(error), to: PgError
 
   ##############################################################################
   #

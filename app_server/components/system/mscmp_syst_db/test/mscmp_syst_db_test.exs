@@ -1,6 +1,11 @@
 defmodule MscmpSystDbTest do
   @moduledoc false
 
+  # TODO: Everything about our MscmpSystDb Component tests is underdone.  True,
+  #       it was the first component with any complexity that we've built, but
+  #       we've gotten much better and more systematic since then.  Rightfully,
+  #       this needs to be a todo list item.
+
   use ExUnit.Case, async: false
 
   alias Mix.Tasks.Builddb
@@ -283,5 +288,81 @@ defmodule MscmpSystDbTest do
              )
 
     assert :ok = MscmpSystDb.drop_datastore(datastore_options)
+  end
+
+  test "get_pg_exception" do
+    assert {:not_null_violation, "Elixir Error Text"} =
+             MscmpSystDb.get_pg_exception(%Postgrex.Error{
+               message: "Elixir Error Text",
+               postgres: %{pg_code: "23502", code: :not_null_violation}
+             })
+
+    assert {:msdata_disallowed_field_change, "An Example Error"} =
+             MscmpSystDb.get_pg_exception(%Postgrex.Error{
+               postgres: %{pg_code: "PM001", message: "An Example Error"}
+             })
+
+    assert {:msdata_disallowed_operation, "An Example Error"} =
+             MscmpSystDb.get_pg_exception(%Postgrex.Error{
+               postgres: %{pg_code: "PM002", message: "An Example Error"}
+             })
+
+    assert {:msdata_syst_defined, "An Example Error"} =
+             MscmpSystDb.get_pg_exception(%Postgrex.Error{
+               postgres: %{pg_code: "PM003", message: "An Example Error"}
+             })
+
+    assert {:msdata_logical_duplicate, "An Example Error"} =
+             MscmpSystDb.get_pg_exception(%Postgrex.Error{
+               postgres: %{pg_code: "PM101", message: "An Example Error"}
+             })
+
+    assert {:msdata_resource_exhausted, "An Example Error"} =
+             MscmpSystDb.get_pg_exception(%Postgrex.Error{
+               postgres: %{pg_code: "PM102", message: "An Example Error"}
+             })
+
+    assert {:msdata_out_of_range, "An Example Error"} =
+             MscmpSystDb.get_pg_exception(%Postgrex.Error{
+               postgres: %{pg_code: "PM103", message: "An Example Error"}
+             })
+
+    assert {:msdata_parent_child_mismatch, "An Example Error"} =
+             MscmpSystDb.get_pg_exception(%Postgrex.Error{
+               postgres: %{pg_code: "PM104", message: "An Example Error"}
+             })
+
+    assert {:msdata_out_of_order_prereq, "An Example Error"} =
+             MscmpSystDb.get_pg_exception(%Postgrex.Error{
+               postgres: %{pg_code: "PM105", message: "An Example Error"}
+             })
+
+    assert {:msdata_ineligible_deletion, "An Example Error"} =
+             MscmpSystDb.get_pg_exception(%Postgrex.Error{
+               postgres: %{pg_code: "PM106", message: "An Example Error"}
+             })
+
+    assert {:msdata_invalid_data_change, "An Example Error"} =
+             MscmpSystDb.get_pg_exception(%Postgrex.Error{
+               postgres: %{pg_code: "PM107", message: "An Example Error"}
+             })
+
+    assert {:msdata_invalid_state_change, "An Example Error"} =
+             MscmpSystDb.get_pg_exception(%Postgrex.Error{
+               postgres: %{pg_code: "PM108", message: "An Example Error"}
+             })
+
+    assert {:msdata_out_of_order_deletion, "An Example Error"} =
+             MscmpSystDb.get_pg_exception(%Postgrex.Error{
+               postgres: %{pg_code: "PM109", message: "An Example Error"}
+             })
+
+    assert {:msdata_missing_parameter, "An Example Error"} =
+             MscmpSystDb.get_pg_exception(%Postgrex.Error{
+               postgres: %{pg_code: "PM110", message: "An Example Error"}
+             })
+
+    assert %ArgumentError{message: "Elixir Error Text"} =
+             MscmpSystDb.get_pg_exception(%ArgumentError{message: "Elixir Error Text"})
   end
 end
