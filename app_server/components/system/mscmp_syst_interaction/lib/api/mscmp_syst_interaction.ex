@@ -17,6 +17,7 @@ defmodule MscmpSystInteraction do
              |> String.split("<!-- MDOC !-->")
              |> Enum.fetch!(1)
 
+  alias MscmpSystError.Types.Context, as: ErrorContext
   alias MscmpSystInteraction.Impl
   alias MscmpSystInteraction.Runtime
   alias MscmpSystInteraction.Types
@@ -175,9 +176,9 @@ defmodule MscmpSystInteraction do
 
   """
   @spec child_spec(Keyword.t()) :: Supervisor.child_spec()
-  def child_spec(opts) do
-    opts = NimbleOptions.validate!(opts, @child_spec_opts)
-    Runtime.Service.child_spec(opts)
+  def child_spec(opts) when is_list(opts) do
+    validated_opts = NimbleOptions.validate!(opts, @child_spec_opts)
+    Runtime.Service.child_spec(validated_opts)
   end
 
   ##############################################################################
@@ -214,21 +215,32 @@ defmodule MscmpSystInteraction do
     #{NimbleOptions.docs(@start_link_opts)}
   """
   @spec start_link(Types.service_name(), MscmpSystDb.Types.context_service_name()) ::
-          {:ok, pid()} | {:error, MscmpSystError.t()}
+          {:ok, pid()} | {:error, Mserror.InteractionError.t()}
   @spec start_link(Types.service_name(), MscmpSystDb.Types.context_service_name(), Keyword.t()) ::
-          {:ok, pid()} | {:error, MscmpSystError.t()}
-  def start_link(service_name, datastore_context_name, opts \\ []) do
-    case NimbleOptions.validate(opts, @start_link_opts) do
-      {:ok, validated_opts} ->
-        Runtime.Service.start_link(service_name, datastore_context_name, validated_opts)
+          {:ok, pid()} | {:error, Mserror.InteractionError.t()}
+  def start_link(service_name, datastore_context_name, opts \\ [])
+      when not is_nil(service_name) and not is_nil(datastore_context_name) and is_list(opts) do
+    validated_opts = NimbleOptions.validate!(opts, @start_link_opts)
 
-      {:error, error} ->
+    case Runtime.Service.start_link(service_name, datastore_context_name, validated_opts) do
+      {:ok, pid} ->
+        {:ok, pid}
+
+      error ->
         {:error,
-         %MscmpSystError{
-           code: :parameter_error,
-           message: "Option validation error",
-           cause: error
-         }}
+         Mserror.InteractionError.new(
+           :service_management,
+           "Error starting Interaction Context Service",
+           parse_error: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :start_link, 3},
+             parameters: %{
+               service_name: service_name,
+               datastore_context_name: datastore_context_name,
+               opts: validated_opts
+             }
+           }
+         )}
     end
   end
 
@@ -331,5 +343,7 @@ defmodule MscmpSystInteraction do
   Returns the permission configuration for the specified Interaction Context.
   """
   @spec get_context_config(Types.context_name()) :: Types.ContextConfig.t()
-  defdelegate get_context_config(context_name), to: Impl.Context
+  def get_context_config(context_name) when is_binary(context_name) do
+    Impl.Context.get_context_config(context_name)
+  end
 end
