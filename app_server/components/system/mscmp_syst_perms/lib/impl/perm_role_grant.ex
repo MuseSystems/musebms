@@ -17,12 +17,13 @@ defmodule MscmpSystPerms.Impl.PermRoleGrant do
 
   import Ecto.Query
 
+  alias MscmpSystError.Types, as: ErrorTypes
   alias MscmpSystPerms.Types
 
   @scopes ["unused", "deny", "same_user", "same_group", "all"]
 
   @spec create_perm_role_grant(Types.perm_role_grant_params()) ::
-          {:ok, Msdata.SystPermRoleGrants.t()} | {:error, term()}
+          {:ok, Msdata.SystPermRoleGrants.t()} | ErrorTypes.parsable_error()
   def create_perm_role_grant(perm_role_grant_params) do
     perm_role_grant_params
     |> Msdata.SystPermRoleGrants.insert_changeset()
@@ -31,13 +32,16 @@ defmodule MscmpSystPerms.Impl.PermRoleGrant do
       {:ok, perm} -> {:ok, perm}
       error -> {:error, error}
     end
+  rescue
+    error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
+    error -> reraise(error, __STACKTRACE__)
   end
 
   @spec update_perm_role_grant(
           Types.perm_role_grant_id() | Msdata.SystPermRoleGrants.t(),
           Types.perm_role_grant_params()
         ) ::
-          {:ok, Msdata.SystPermRoleGrants.t()} | {:error, :not_found} | {:error, term()}
+          {:ok, Msdata.SystPermRoleGrants.t()} | ErrorTypes.parsable_error()
   def update_perm_role_grant(perm_role_grant_id, perm_role_grant_params)
       when is_uuid(perm_role_grant_id) do
     case MscmpSystDb.get(Msdata.SystPermRoleGrants, perm_role_grant_id) do
@@ -45,18 +49,15 @@ defmodule MscmpSystPerms.Impl.PermRoleGrant do
         update_perm_role_grant(perm_role_grant, perm_role_grant_params)
 
       nil ->
-        {:error, :not_found}
+        {:error,
+         {:not_found, "The requested perm role grant was not found and could not be updated."}}
 
       error ->
         {:error, error}
     end
   rescue
-    error ->
-      case error do
-        %Postgrex.Error{postgres: %{pg_code: "PM001"}} -> {:error, :invalid_change}
-        %Postgrex.Error{postgres: %{pg_code: "PM003"}} -> {:error, :syst_defined}
-        error -> {:error, error}
-      end
+    error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
+    error -> reraise(error, __STACKTRACE__)
   end
 
   def update_perm_role_grant(
@@ -70,19 +71,27 @@ defmodule MscmpSystPerms.Impl.PermRoleGrant do
       {:ok, perm} -> {:ok, perm}
       error -> {:error, error}
     end
+  rescue
+    error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
+    error -> reraise(error, __STACKTRACE__)
   end
 
   @spec delete_perm_role_grant(Msdata.SystPermRoleGrants.t() | Types.perm_role_grant_id()) ::
-          :ok | {:error, :not_found}
+          :ok | ErrorTypes.parsable_error()
   def delete_perm_role_grant(perm_role_grant_id) when is_uuid(perm_role_grant_id) do
     from(p in Msdata.SystPermRoleGrants, where: p.id == ^perm_role_grant_id)
     |> MscmpSystDb.delete_all()
     |> case do
-      {1, _} -> :ok
-      {0, _} -> {:error, :not_found}
+      {1, _} ->
+        :ok
+
+      {0, _} ->
+        {:error,
+         {:not_found, "The requested perm role grant was not found and could not be deleted."}}
     end
   rescue
-    error -> {:error, error}
+    error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
+    error -> reraise(error, __STACKTRACE__)
   end
 
   def delete_perm_role_grant(%Msdata.SystPermRoleGrants{} = perm),

@@ -83,9 +83,10 @@ defmodule PermRoleGrantTest do
       ops_scope: :unused
     }
 
-    assert_raise Postgrex.Error, fn ->
-      Impl.PermRoleGrant.create_perm_role_grant(insert_params)
-    end
+    assert {:error, {:msdata_syst_defined, msg}} =
+             Impl.PermRoleGrant.create_perm_role_grant(insert_params)
+
+    assert is_binary(msg)
   end
 
   test "Cannot create Grant when View Scope is less than Maint Scope" do
@@ -127,8 +128,10 @@ defmodule PermRoleGrantTest do
 
     update_params = %{ops_scope: :deny}
 
-    assert {:error, :syst_defined} =
+    assert {:error, {:msdata_syst_defined, msg}} =
              Impl.PermRoleGrant.update_perm_role_grant(grant_id, update_params)
+
+    assert is_binary(msg)
   end
 
   test "Can update User Defined maintainable fields" do
@@ -201,9 +204,10 @@ defmodule PermRoleGrantTest do
 
     update_params_3 = %{view_scope: :same_user}
 
-    assert_raise Postgrex.Error, fn ->
-      Impl.PermRoleGrant.update_perm_role_grant(grant, update_params_3)
-    end
+    assert {:error, {:msdata_invalid_data_change, msg}} =
+             Impl.PermRoleGrant.update_perm_role_grant(grant, update_params_3)
+
+    assert is_binary(msg)
   end
 
   test "Cannot delete Syst Defined" do
@@ -230,6 +234,7 @@ defmodule PermRoleGrantTest do
       |> MscmpSystDb.one!()
 
     assert :ok = Impl.PermRoleGrant.delete_perm_role_grant(grant)
-    assert {:error, :not_found} = Impl.PermRoleGrant.delete_perm_role_grant(grant.id)
+    assert {:error, {:not_found, msg}} = Impl.PermRoleGrant.delete_perm_role_grant(grant.id)
+    assert is_binary(msg)
   end
 end

@@ -17,12 +17,11 @@ defmodule MscmpSystPerms.Impl.PermRole do
 
   import Ecto.Query
 
+  alias MscmpSystError.Types, as: ErrorTypes
   alias MscmpSystPerms.Types
 
-  require Logger
-
   @spec create_perm_role(Types.perm_role_params()) ::
-          {:ok, Msdata.SystPermRoles.t()} | {:error, term()}
+          {:ok, Msdata.SystPermRoles.t()} | ErrorTypes.parsable_error()
   def create_perm_role(perm_role_params) do
     perm_role_params
     |> Msdata.SystPermRoles.insert_changeset()
@@ -31,18 +30,27 @@ defmodule MscmpSystPerms.Impl.PermRole do
       {:ok, perm} -> {:ok, perm}
       error -> {:error, error}
     end
+  rescue
+    error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
+    error -> reraise(error, __STACKTRACE__)
   end
 
   @spec update_perm_role(
           Types.perm_role_id() | Msdata.SystPermRoles.t(),
           Types.perm_role_params()
         ) ::
-          {:ok, Msdata.SystPermRoles.t()} | {:error, :not_found} | {:error, term()}
+          {:ok, Msdata.SystPermRoles.t()} | ErrorTypes.parsable_error()
   def update_perm_role(perm_role_id, perm_role_params) when is_uuid(perm_role_id) do
     case MscmpSystDb.get(Msdata.SystPermRoles, perm_role_id) do
-      %Msdata.SystPermRoles{} = perm -> update_perm_role(perm, perm_role_params)
-      nil -> {:error, :not_found}
+      %Msdata.SystPermRoles{} = perm ->
+        update_perm_role(perm, perm_role_params)
+
+      nil ->
+        {:error, {:not_found, "The requested perm role was not found and could not be updated."}}
     end
+  rescue
+    error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
+    error -> reraise(error, __STACKTRACE__)
   end
 
   def update_perm_role(%Msdata.SystPermRoles{} = perm, perm_role_params) do
@@ -53,10 +61,13 @@ defmodule MscmpSystPerms.Impl.PermRole do
       {:ok, perm} -> {:ok, perm}
       error -> {:error, error}
     end
+  rescue
+    error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
+    error -> reraise(error, __STACKTRACE__)
   end
 
   @spec get_perm_role_id_by_name(Types.perm_functional_type_name(), Types.perm_role_name()) ::
-          {:ok, Types.perm_role_id()} | {:error, :not_found} | {:error, term()}
+          {:ok, Types.perm_role_id()} | ErrorTypes.parsable_error()
   def get_perm_role_id_by_name(perm_func_type_name, perm_role_name) do
     from(pr in Msdata.SystPermRoles,
       join: pft in assoc(pr, :perm_functional_type),
@@ -65,22 +76,32 @@ defmodule MscmpSystPerms.Impl.PermRole do
     )
     |> MscmpSystDb.one()
     |> case do
-      nil -> {:error, :not_found}
-      perm_role_id -> {:ok, perm_role_id}
+      nil ->
+        {:error, {:not_found, "The requested perm role was not found."}}
+
+      perm_role_id ->
+        {:ok, perm_role_id}
     end
+  rescue
+    error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
+    error -> reraise(error, __STACKTRACE__)
   end
 
   @spec delete_perm_role(Msdata.SystPermRoles.t() | Types.perm_role_id()) ::
-          :ok | {:error, :not_found}
+          :ok | ErrorTypes.parsable_error()
   def delete_perm_role(perm_role_id) when is_binary(perm_role_id) do
     from(p in Msdata.SystPermRoles, where: p.id == ^perm_role_id)
     |> MscmpSystDb.delete_all()
     |> case do
-      {1, _} -> :ok
-      {0, _} -> {:error, :not_found}
+      {1, _} ->
+        :ok
+
+      {0, _} ->
+        {:error, {:not_found, "The requested perm role was not found and could not be deleted."}}
     end
   rescue
-    error -> {:error, error}
+    error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
+    error -> reraise(error, __STACKTRACE__)
   end
 
   def delete_perm_role(%Msdata.SystPermRoles{} = perm), do: delete_perm_role(perm.id)

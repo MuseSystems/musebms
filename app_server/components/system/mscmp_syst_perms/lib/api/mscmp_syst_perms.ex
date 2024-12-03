@@ -70,12 +70,12 @@ defmodule MscmpSystPerms do
       {:ok, perm} ->
         {:ok, perm}
 
-      {:error, error} ->
+      error ->
         {:error,
          Mserror.PermsError.new(
            :perms_data,
            "Error updating Permission Functional Type",
-           cause: error,
+           parse_error: error,
            context: %ErrorContext{
              origin: {__MODULE__, :update_perm_functional_type, 2},
              parameters: %{
@@ -119,12 +119,12 @@ defmodule MscmpSystPerms do
       {:ok, perm} ->
         {:ok, perm}
 
-      {:error, error} ->
+      error ->
         {:error,
          Mserror.PermsError.new(
            :perms_data,
            "Error creating Permission",
-           cause: error,
+           parse_error: error,
            context: %ErrorContext{
              origin: {__MODULE__, :create_perm, 1},
              parameters: %{perm_params: perm_params}
@@ -167,12 +167,12 @@ defmodule MscmpSystPerms do
       {:ok, perm} ->
         {:ok, perm}
 
-      {:error, error} ->
+      error ->
         {:error,
          Mserror.PermsError.new(
            :perms_data,
            "Error updating Permission",
-           cause: error,
+           parse_error: error,
            context: %ErrorContext{
              origin: {__MODULE__, :update_perm, 2},
              parameters: %{perm: perm, perm_params: perm_params}
@@ -208,12 +208,12 @@ defmodule MscmpSystPerms do
       :ok ->
         :ok
 
-      {:error, error} ->
+      error ->
         {:error,
          Mserror.PermsError.new(
            :perms_data,
            "Error deleting Permission",
-           cause: error,
+           parse_error: error,
            context: %ErrorContext{
              origin: {__MODULE__, :delete_perm, 1},
              parameters: %{perm: perm}
@@ -255,12 +255,12 @@ defmodule MscmpSystPerms do
       {:ok, perm} ->
         {:ok, perm}
 
-      {:error, error} ->
+      error ->
         {:error,
          Mserror.PermsError.new(
            :perms_data,
            "Error creating Permission Role",
-           cause: error,
+           parse_error: error,
            context: %ErrorContext{
              origin: {__MODULE__, :create_perm_role, 1},
              parameters: %{perm_role_params: perm_role_params}
@@ -307,12 +307,12 @@ defmodule MscmpSystPerms do
       {:ok, perm} ->
         {:ok, perm}
 
-      {:error, error} ->
+      error ->
         {:error,
          Mserror.PermsError.new(
            :perms_data,
            "Error updating Permission Role",
-           cause: error,
+           parse_error: error,
            context: %ErrorContext{
              origin: {__MODULE__, :update_perm_role, 2},
              parameters: %{perm_role: perm_role, perm_role_params: perm_role_params}
@@ -351,12 +351,12 @@ defmodule MscmpSystPerms do
       :ok ->
         :ok
 
-      {:error, error} ->
+      error ->
         {:error,
          Mserror.PermsError.new(
            :perms_data,
            "Error deleting Permission Role",
-           cause: error,
+           parse_error: error,
            context: %ErrorContext{
              origin: {__MODULE__, :delete_perm_role, 1},
              parameters: %{perm_role: perm_role}
@@ -411,10 +411,10 @@ defmodule MscmpSystPerms do
       {:ok, result} ->
         {:ok, result}
 
-      {:error, error} ->
+      error ->
         {:error,
          Mserror.PermsError.new(:perms_data, "Error getting Permission Role ID by name",
-           cause: error,
+           parse_error: error,
            context: %ErrorContext{
              origin: {__MODULE__, :get_perm_role_id_by_name, 2},
              parameters: %{
@@ -463,12 +463,12 @@ defmodule MscmpSystPerms do
       {:ok, perm} ->
         {:ok, perm}
 
-      {:error, error} ->
+      error ->
         {:error,
          Mserror.PermsError.new(
            :perms_data,
            "Error creating Permission Role Grant",
-           cause: error,
+           parse_error: error,
            context: %ErrorContext{
              origin: {__MODULE__, :create_perm_role_grant, 1},
              parameters: %{perm_role_grant_params: perm_role_grant_params}
@@ -515,12 +515,12 @@ defmodule MscmpSystPerms do
       {:ok, perm} ->
         {:ok, perm}
 
-      {:error, error} ->
+      error ->
         {:error,
          Mserror.PermsError.new(
            :perms_data,
            "Error updating Permission Role Grant",
-           cause: error,
+           parse_error: error,
            context: %ErrorContext{
              origin: {__MODULE__, :update_perm_role_grant, 2},
              parameters: %{
@@ -563,12 +563,12 @@ defmodule MscmpSystPerms do
       :ok ->
         :ok
 
-      {:error, error} ->
+      error ->
         {:error,
          Mserror.PermsError.new(
            :perms_data,
            "Error deleting Permission Role Grant",
-           cause: error,
+           parse_error: error,
            context: %ErrorContext{
              origin: {__MODULE__, :delete_perm_role_grant, 1},
              parameters: %{perm_role_grant: perm_role_grant}
@@ -694,12 +694,12 @@ defmodule MscmpSystPerms do
       {:ok, result} ->
         {:ok, result}
 
-      {:error, error} ->
+      error ->
         {:error,
          Mserror.PermsError.new(
            :perms_management,
            "Error getting effective Permission Grants",
-           cause: error,
+           parse_error: error,
            context: %ErrorContext{
              origin: {__MODULE__, :get_effective_perm_grants, 2},
              parameters: %{selector: selector, opts: validated_opts}
@@ -753,12 +753,12 @@ defmodule MscmpSystPerms do
       {:ok, result} ->
         {:ok, result}
 
-      {:error, error} ->
+      error ->
         {:error,
          Mserror.PermsError.new(
            :perms_management,
            "Error listing Permission Grants",
-           cause: error,
+           parse_error: error,
            context: %ErrorContext{
              origin: {__MODULE__, :list_perm_grants, 2},
              parameters: %{selector: selector, opts: validated_opts}
@@ -814,12 +814,12 @@ defmodule MscmpSystPerms do
       {:ok, result} ->
         {:ok, result}
 
-      {:error, error} ->
+      error ->
         {:error,
          Mserror.PermsError.new(
            :perms_management,
            "Error listing Permission Denials",
-           cause: error,
+           parse_error: error,
            context: %ErrorContext{
              origin: {__MODULE__, :list_perm_denials, 2},
              parameters: %{selector: selector, opts: validated_opts}

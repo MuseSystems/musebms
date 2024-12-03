@@ -194,22 +194,22 @@ defmodule IntegrationTest do
 
     update_params = %{view_scope: :same_user}
 
-    assert {:error, %Mserror.PermsError{cause: :syst_defined}} =
+    assert {:error, %Mserror.PermsError{cause: :msdata_syst_defined}} =
              MscmpSystPerms.update_perm_role_grant(perm_role_grant.id, update_params)
 
     update_params_2 = %{maint_scope: :same_user}
 
-    assert {:error, %Mserror.PermsError{cause: :syst_defined}} =
+    assert {:error, %Mserror.PermsError{cause: :msdata_syst_defined}} =
              MscmpSystPerms.update_perm_role_grant(perm_role_grant.id, update_params_2)
 
     update_params_3 = %{admin_scope: :same_user}
 
-    assert {:error, %Mserror.PermsError{cause: :syst_defined}} =
+    assert {:error, %Mserror.PermsError{cause: :msdata_syst_defined}} =
              MscmpSystPerms.update_perm_role_grant(perm_role_grant.id, update_params_3)
 
     update_params_4 = %{ops_scope: :same_user}
 
-    assert {:error, %Mserror.PermsError{cause: :syst_defined}} =
+    assert {:error, %Mserror.PermsError{cause: :msdata_syst_defined}} =
              MscmpSystPerms.update_perm_role_grant(perm_role_grant.id, update_params_4)
 
     perm_role_id =

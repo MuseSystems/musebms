@@ -167,7 +167,8 @@ defmodule PermRoleTest do
       |> MscmpSystDb.one!()
 
     assert :ok = Impl.PermRole.delete_perm_role(perm_5)
-    assert {:error, :not_found} = Impl.PermRole.delete_perm_role(perm_5.id)
+    assert {:error, {:not_found, msg}} = Impl.PermRole.delete_perm_role(perm_5.id)
+    assert is_binary(msg)
   end
 
   test "Can look up Perm Role Id by Internal Name" do

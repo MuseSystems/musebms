@@ -183,6 +183,7 @@ defmodule PermTest do
       |> MscmpSystDb.one!()
 
     assert :ok = Impl.Perm.delete_perm(perm_5)
-    assert {:error, :not_found} = Impl.Perm.delete_perm(perm_5.id)
+    assert {:error, {:not_found, msg}} = Impl.Perm.delete_perm(perm_5.id)
+    assert is_binary(msg)
   end
 end
