@@ -77,11 +77,8 @@ defmodule MscmpSystMcpPerms.Impl.AccessAccountPermRole do
     end)
     |> then(&{:ok, &1})
   rescue
-    error ->
-      case error do
-        %Postgrex.Error{} -> {:error, MscmpSystDb.get_pg_exception(error)}
-        error -> reraise(error, __STACKTRACE__)
-      end
+    error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
+    error -> reraise(error, __STACKTRACE__)
   end
 
   defp maybe_filter_by_permissions(query, :all), do: query
@@ -116,11 +113,8 @@ defmodule MscmpSystMcpPerms.Impl.AccessAccountPermRole do
     |> MscmpSystDb.all()
     |> then(&{:ok, &1})
   rescue
-    error ->
-      case error do
-        %Postgrex.Error{} -> {:error, MscmpSystDb.get_pg_exception(error)}
-        error -> reraise(error, __STACKTRACE__)
-      end
+    error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
+    error -> reraise(error, __STACKTRACE__)
   end
 
   defp maybe_preload_perms(query, true) do
@@ -153,11 +147,8 @@ defmodule MscmpSystMcpPerms.Impl.AccessAccountPermRole do
       {:error, error} -> {:error, error}
     end
   rescue
-    error ->
-      case error do
-        %Postgrex.Error{} -> {:error, MscmpSystDb.get_pg_exception(error)}
-        error -> reraise(error, __STACKTRACE__)
-      end
+    error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
+    error -> reraise(error, __STACKTRACE__)
   end
 
   ##############################################################################
@@ -185,10 +176,7 @@ defmodule MscmpSystMcpPerms.Impl.AccessAccountPermRole do
         {:error, {:not_found, "The requested MscmpSystMcpPerms permission role was not found."}}
     end
   rescue
-    error ->
-      case error do
-        %Postgrex.Error{} -> {:error, MscmpSystDb.get_pg_exception(error)}
-        error -> reraise(error, __STACKTRACE__)
-      end
+    error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
+    error -> reraise(error, __STACKTRACE__)
   end
 end
