@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule IntegrationTest do
+  @moduledoc false
+
   use SessionTestCase, async: false
 
   import Ecto.Query
@@ -84,7 +86,8 @@ defmodule IntegrationTest do
 
     Process.sleep(1000)
 
-    assert {:ok, :not_found} = MscmpSystSession.get_session(session_name)
+    assert {:error, %Mserror.SessionError{cause: :not_found}} =
+             MscmpSystSession.get_session(session_name)
   end
 
   test "Step 2.02: Cannot Update Expired Session" do
@@ -92,7 +95,7 @@ defmodule IntegrationTest do
 
     Process.sleep(1000)
 
-    assert {:ok, :not_found} =
+    assert {:error, %Mserror.SessionError{cause: :not_found}} =
              MscmpSystSession.update_session(session_name, %{updated_key: "updated_value"})
   end
 

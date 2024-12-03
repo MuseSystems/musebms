@@ -15,9 +15,8 @@ defmodule MscmpSystSession.Impl.DbSession do
 
   import Ecto.Query
 
+  alias MscmpSystError.Types, as: ErrorTypes
   alias MscmpSystSession.Types
-
-  require Logger
 
   ##############################################################################
   #
@@ -36,7 +35,7 @@ defmodule MscmpSystSession.Impl.DbSession do
   #
 
   @spec create_session(map(), Keyword.t()) ::
-          {:ok, Types.session_name()} | {:error, MscmpSystError.t()}
+          {:ok, Types.session_name()} | ErrorTypes.parsable_error()
   def create_session(session_data, opts) do
     # TODO: Think about the public API call in this private module context.
     #       Right now I want the defaults set at the API, but now I'm tying the
@@ -56,18 +55,14 @@ defmodule MscmpSystSession.Impl.DbSession do
 
     new_session_params
     |> Msdata.SystSessions.insert_changeset()
-    |> MscmpSystDb.insert!(returning: [:internal_name])
-    |> then(&{:ok, &1.internal_name})
+    |> MscmpSystDb.insert(returning: [:internal_name])
+    |> case do
+      {:ok, result} -> {:ok, result.internal_name}
+      error -> {:error, error}
+    end
   rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Unexpected failure creating Session.",
-         cause: error
-       }}
+    error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
+    error -> reraise(error, __STACKTRACE__)
   end
 
   ##############################################################################
@@ -77,7 +72,7 @@ defmodule MscmpSystSession.Impl.DbSession do
   #
 
   @spec get_session(Types.session_name(), Keyword.t()) ::
-          {:ok, Types.session_data()} | {:ok, :not_found} | {:error, MscmpSystError.t()}
+          {:ok, Types.session_data()} | ErrorTypes.parsable_error()
   def get_session(session_name, opts) when is_binary(session_name) do
     current_datetime = DateTime.utc_now() |> DateTime.truncate(:second)
 
@@ -91,32 +86,17 @@ defmodule MscmpSystSession.Impl.DbSession do
     |> MscmpSystDb.update_all([])
     |> case do
       {0, _} ->
-        {:ok, :not_found}
+        {:error, {:not_found, "The requested session was not found."}}
 
       {1, [result | _]} ->
         {:ok, result.session_data}
-
-      error ->
-        {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Invalid Session search result.",
-           cause: error
-         }}
     end
   rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Unexpected failure retrieving Session.",
-         cause: error
-       }}
+    error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
+    error -> reraise(error, __STACKTRACE__)
   end
 
-  def get_session(_, _), do: {:ok, :not_found}
+  def get_session(_, _), do: raise(ArgumentError, "Invalid session request.")
 
   ##############################################################################
   #
@@ -125,7 +105,7 @@ defmodule MscmpSystSession.Impl.DbSession do
   #
 
   @spec refresh_session_expiration(Types.session_name(), Keyword.t()) ::
-          :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
+          :ok | ErrorTypes.parsable_error()
   def refresh_session_expiration(session_name, opts) do
     current_datetime = DateTime.utc_now() |> DateTime.truncate(:second)
 
@@ -137,30 +117,15 @@ defmodule MscmpSystSession.Impl.DbSession do
     )
     |> MscmpSystDb.update_all([])
     |> case do
-      {0, _} ->
-        {:ok, :not_found}
-
       {1, _} ->
         :ok
 
-      error ->
-        {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Invalid refreshing Session expiration date/time result.",
-           cause: error
-         }}
+      {0, _} ->
+        {:error, {:not_found, "The requested session was not found and could not be refreshed."}}
     end
   rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Unexpected failure refreshing Session expiration date/time.",
-         cause: error
-       }}
+    error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
+    error -> reraise(error, __STACKTRACE__)
   end
 
   ##############################################################################
@@ -170,7 +135,7 @@ defmodule MscmpSystSession.Impl.DbSession do
   #
 
   @spec update_session(Types.session_name(), Types.session_data(), Keyword.t()) ::
-          :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
+          :ok | ErrorTypes.parsable_error()
   def update_session(session_name, session_data, opts) do
     current_datetime = DateTime.utc_now() |> DateTime.truncate(:second)
 
@@ -182,30 +147,15 @@ defmodule MscmpSystSession.Impl.DbSession do
     )
     |> MscmpSystDb.update_all([])
     |> case do
-      {0, _} ->
-        {:ok, :not_found}
-
       {1, _} ->
         :ok
 
-      error ->
-        {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Invalid Session update result.",
-           cause: error
-         }}
+      {0, _} ->
+        {:error, {:not_found, "The requested session was not found and could not be updated."}}
     end
   rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Unexpected failure updating Session.",
-         cause: error
-       }}
+    error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
+    error -> reraise(error, __STACKTRACE__)
   end
 
   ##############################################################################
@@ -215,35 +165,20 @@ defmodule MscmpSystSession.Impl.DbSession do
   #
 
   @spec delete_session(Types.session_name()) ::
-          :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
+          :ok | ErrorTypes.parsable_error()
   def delete_session(session_name) do
     from(s in Msdata.SystSessions, where: s.internal_name == ^session_name)
     |> MscmpSystDb.delete_all()
     |> case do
-      {0, _} ->
-        {:ok, :not_found}
-
       {1, _} ->
         :ok
 
-      error ->
-        {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Failure deleting Session.",
-           cause: error
-         }}
+      {0, _} ->
+        {:error, {:not_found, "The requested session was not found and could not be deleted."}}
     end
   rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Unexpected failure deleting Session.",
-         cause: error
-       }}
+    error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
+    error -> reraise(error, __STACKTRACE__)
   end
 
   ##############################################################################
@@ -255,35 +190,19 @@ defmodule MscmpSystSession.Impl.DbSession do
   # Note that we can't readily test purging in the Unit Tests suite.  We have
   # sufficient control to test in the Integration Tests suite.
 
-  @spec purge_expired_sessions(Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
+  @spec purge_expired_sessions(Keyword.t()) :: :ok | ErrorTypes.parsable_error()
   def purge_expired_sessions(opts) do
     current_datetime = DateTime.utc_now() |> DateTime.truncate(:second)
     db_timeout_ms = opts[:db_timeout] * 1000
 
-    from(s in Msdata.SystSessions, where: s.session_expires < ^current_datetime)
-    |> MscmpSystDb.delete_all(timeout: db_timeout_ms)
-    |> case do
-      {_, _} ->
-        :ok
+    {_, _} =
+      from(s in Msdata.SystSessions, where: s.session_expires < ^current_datetime)
+      |> MscmpSystDb.delete_all(timeout: db_timeout_ms)
 
-      error ->
-        {:error,
-         %MscmpSystError{
-           code: :undefined_error,
-           message: "Failure purging expired Sessions.",
-           cause: error
-         }}
-    end
+    :ok
   rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Unexpected failure purging expired Sessions.",
-         cause: error
-       }}
+    error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
+    error -> reraise(error, __STACKTRACE__)
   end
 
   defp get_expiration_date(expires_after) do

@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule DbSessionTest do
+  @moduledoc false
+
   use SessionTestCase, async: true
 
   import Ecto.Query
@@ -178,8 +180,10 @@ defmodule DbSessionTest do
       |> NimbleOptions.new!()
       |> then(&NimbleOptions.validate!([], &1))
 
-    assert {:ok, :not_found} =
+    assert {:error, {:not_found, msg}} =
              Impl.DbSession.update_session("expired_session", %{updated: "updated"}, opts)
+
+    assert is_binary(msg)
   end
 
   test "Can get existing Session data with defaults" do
@@ -262,7 +266,10 @@ defmodule DbSessionTest do
       |> NimbleOptions.new!()
       |> then(&NimbleOptions.validate!([], &1))
 
-    assert {:ok, :not_found} = Impl.DbSession.refresh_session_expiration("expired_session", opts)
+    assert {:error, {:not_found, msg}} =
+             Impl.DbSession.refresh_session_expiration("expired_session", opts)
+
+    assert is_binary(msg)
   end
 
   test "Cannot get expired Session" do
@@ -272,7 +279,10 @@ defmodule DbSessionTest do
       |> NimbleOptions.new!()
       |> then(&NimbleOptions.validate!([], &1))
 
-    assert {:ok, :not_found} = Impl.DbSession.get_session("expired_session", opts)
+    assert {:error, {:not_found, msg}} =
+             Impl.DbSession.get_session("expired_session", opts)
+
+    assert is_binary(msg)
   end
 
   test "Can delete existing Session" do

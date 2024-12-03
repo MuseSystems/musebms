@@ -17,6 +17,7 @@ defmodule MscmpSystSession do
              |> String.split("<!-- MDOC !-->")
              |> Enum.fetch!(1)
 
+  alias MscmpSystError.Types.Context, as: ErrorContext
   alias MscmpSystSession.Impl
   alias MscmpSystSession.Types
 
@@ -157,21 +158,25 @@ defmodule MscmpSystSession do
       iex> is_binary(session_name)
       true
   """
-  @spec create_session(map()) :: {:ok, Types.session_name()} | {:error, MscmpSystError.t()}
+  @spec create_session(map()) :: {:ok, Types.session_name()} | {:error, Mserror.SessionError.t()}
   @spec create_session(map(), Keyword.t()) ::
-          {:ok, Types.session_name()} | {:error, MscmpSystError.t()}
+          {:ok, Types.session_name()} | {:error, Mserror.SessionError.t()}
   def create_session(session_data, opts \\ []) do
-    case NimbleOptions.validate(opts, @create_session_opts) do
-      {:ok, validated_opts} ->
-        Impl.DbSession.create_session(session_data, validated_opts)
+    validated_opts = NimbleOptions.validate!(opts, @create_session_opts)
 
-      {:error, error} ->
+    case Impl.DbSession.create_session(session_data, validated_opts) do
+      {:ok, result} ->
+        {:ok, result}
+
+      error ->
         {:error,
-         %MscmpSystError{
-           code: :parameter_error,
-           message: "Option validation error",
-           cause: error
-         }}
+         Mserror.SessionError.new(:session_management, "Error creating session",
+           parse_error: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :create_session, 2},
+             parameters: %{session_data: session_data, opts: opts}
+           }
+         )}
     end
   end
 
@@ -192,7 +197,7 @@ defmodule MscmpSystSession do
   that Session's expiration date.
 
   Trying to retrieve the Session data of an already expired Session results in
-  a not found tuple being returned (`{:ok, :not_found}`).
+  an error type with the `:not_found` cause being returned.
 
   ## Parameters
 
@@ -214,25 +219,29 @@ defmodule MscmpSystSession do
 
   Attempting to retrieve an expired Session returns the not found value.
 
-      iex> MscmpSystSession.get_session("example_expired_session")
-      {:ok, :not_found}
+      iex> {:error, %Mserror.SessionError{cause: :not_found}} =
+      ...>   MscmpSystSession.get_session("example_expired_session")
   """
   @spec get_session(Types.session_name()) ::
-          {:ok, Types.session_data()} | {:ok, :not_found} | {:error, MscmpSystError.t()}
+          {:ok, Types.session_data()} | {:error, Mserror.SessionError.t()}
   @spec get_session(Types.session_name(), Keyword.t()) ::
-          {:ok, Types.session_data()} | {:ok, :not_found} | {:error, MscmpSystError.t()}
+          {:ok, Types.session_data()} | {:error, Mserror.SessionError.t()}
   def get_session(session_name, opts \\ []) do
-    case NimbleOptions.validate(opts, @get_session_opts) do
-      {:ok, validated_opts} ->
-        Impl.DbSession.get_session(session_name, validated_opts)
+    validated_opts = NimbleOptions.validate!(opts, @get_session_opts)
 
-      {:error, error} ->
+    case Impl.DbSession.get_session(session_name, validated_opts) do
+      {:ok, result} ->
+        {:ok, result}
+
+      error ->
         {:error,
-         %MscmpSystError{
-           code: :parameter_error,
-           message: "Option validation error",
-           cause: error
-         }}
+         Mserror.SessionError.new(:session_management, "Error getting session",
+           parse_error: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :get_session, 2},
+             parameters: %{session_name: session_name, opts: opts}
+           }
+         )}
     end
   end
 
@@ -278,26 +287,29 @@ defmodule MscmpSystSession do
 
   Attempting to refresh an already expired Session returns the not found value.
 
-      iex> MscmpSystSession.refresh_session_expiration("example_expired_session")
-      {:ok, :not_found}
-
+      iex> {:error, %Mserror.SessionError{cause: :not_found}} =
+      ...>   MscmpSystSession.refresh_session_expiration("example_expired_session")
   """
   @spec refresh_session_expiration(Types.session_name()) ::
-          :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
+          :ok | {:error, Mserror.SessionError.t()}
   @spec refresh_session_expiration(Types.session_name(), Keyword.t()) ::
-          :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
+          :ok | {:error, Mserror.SessionError.t()}
   def refresh_session_expiration(session_name, opts \\ []) do
-    case NimbleOptions.validate(opts, @refresh_session_expiration_opts) do
-      {:ok, validated_opts} ->
-        Impl.DbSession.refresh_session_expiration(session_name, validated_opts)
+    validated_opts = NimbleOptions.validate!(opts, @refresh_session_expiration_opts)
 
-      {:error, error} ->
+    case Impl.DbSession.refresh_session_expiration(session_name, validated_opts) do
+      :ok ->
+        :ok
+
+      error ->
         {:error,
-         %MscmpSystError{
-           code: :parameter_error,
-           message: "Option validation error",
-           cause: error
-         }}
+         Mserror.SessionError.new(:session_management, "Error refreshing session expiration",
+           parse_error: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :refresh_session_expiration, 2},
+             parameters: %{session_name: session_name, opts: opts}
+           }
+         )}
     end
   end
 
@@ -348,25 +360,29 @@ defmodule MscmpSystSession do
 
   Attempting to update an already expired Session returns the not found value.
 
-      iex> MscmpSystSession.update_session("example_expired_session", %{updated_key: "updated_value"})
-      {:ok, :not_found}
+      iex> {:error, %Mserror.SessionError{cause: :not_found}} =
+      ...>   MscmpSystSession.update_session("example_expired_session", %{updated_key: "updated_value"})
   """
   @spec update_session(Types.session_name(), Types.session_data()) ::
-          :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
+          :ok | {:error, Mserror.SessionError.t()}
   @spec update_session(Types.session_name(), Types.session_data(), Keyword.t()) ::
-          :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
+          :ok | {:error, Mserror.SessionError.t()}
   def update_session(session_name, session_data, opts \\ []) do
-    case NimbleOptions.validate(opts, @update_session_opts) do
-      {:ok, validated_opts} ->
-        Impl.DbSession.update_session(session_name, session_data, validated_opts)
+    validated_opts = NimbleOptions.validate!(opts, @update_session_opts)
 
-      {:error, error} ->
+    case Impl.DbSession.update_session(session_name, session_data, validated_opts) do
+      :ok ->
+        :ok
+
+      error ->
         {:error,
-         %MscmpSystError{
-           code: :parameter_error,
-           message: "Option validation error",
-           cause: error
-         }}
+         Mserror.SessionError.new(:session_management, "Error updating session",
+           parse_error: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :update_session, 3},
+             parameters: %{session_name: session_name, session_data: session_data, opts: opts}
+           }
+         )}
     end
   end
 
@@ -400,12 +416,27 @@ defmodule MscmpSystSession do
 
   Attempting to delete a nonexistent Session returns the not found value.
 
-      iex> MscmpSystSession.delete_session("nonexistent_session")
-      {:ok, :not_found}
+      iex> {:error, %Mserror.SessionError{cause: :not_found}} =
+      ...>   MscmpSystSession.delete_session("nonexistent_session")
+
   """
-  @spec delete_session(Types.session_name()) ::
-          :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
-  defdelegate delete_session(session_name), to: Impl.DbSession
+  @spec delete_session(Types.session_name()) :: :ok | {:error, Mserror.SessionError.t()}
+  def delete_session(session_name) do
+    case Impl.DbSession.delete_session(session_name) do
+      :ok ->
+        :ok
+
+      error ->
+        {:error,
+         Mserror.SessionError.new(:session_management, "Error deleting session",
+           parse_error: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :delete_session, 1},
+             parameters: %{session_name: session_name}
+           }
+         )}
+    end
+  end
 
   ##############################################################################
   #
@@ -433,20 +464,24 @@ defmodule MscmpSystSession do
 
     #{NimbleOptions.docs(@purge_expired_sessions_opts)}
   """
-  @spec purge_expired_sessions() :: :ok | {:error, MscmpSystError.t()}
-  @spec purge_expired_sessions(Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
+  @spec purge_expired_sessions() :: :ok | {:error, Mserror.SessionError.t()}
+  @spec purge_expired_sessions(Keyword.t()) :: :ok | {:error, Mserror.SessionError.t()}
   def purge_expired_sessions(opts \\ []) do
-    case NimbleOptions.validate(opts, @purge_expired_sessions_opts) do
-      {:ok, validated_opts} ->
-        Impl.DbSession.purge_expired_sessions(validated_opts)
+    validated_opts = NimbleOptions.validate!(opts, @purge_expired_sessions_opts)
 
-      {:error, error} ->
+    case Impl.DbSession.purge_expired_sessions(validated_opts) do
+      :ok ->
+        :ok
+
+      error ->
         {:error,
-         %MscmpSystError{
-           code: :parameter_error,
-           message: "Option validation error",
-           cause: error
-         }}
+         Mserror.SessionError.new(:session_management, "Error purging expired sessions",
+           parse_error: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :purge_expired_sessions, 1},
+             parameters: %{opts: opts}
+           }
+         )}
     end
   end
 end
