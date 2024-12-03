@@ -20,6 +20,12 @@ defmodule MscmpSystPerms.Impl.Perm do
   alias MscmpSystError.Types, as: ErrorTypes
   alias MscmpSystPerms.Types
 
+  ##############################################################################
+  #
+  # create_perm
+  #
+  #
+
   @spec create_perm(Types.perm_params()) ::
           {:ok, Msdata.SystPerms.t()} | ErrorTypes.parsable_error()
   def create_perm(perm_params) do
@@ -34,6 +40,12 @@ defmodule MscmpSystPerms.Impl.Perm do
     error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
     error -> reraise(error, __STACKTRACE__)
   end
+
+  ##############################################################################
+  #
+  # update_perm
+  #
+  #
 
   @spec update_perm(Types.perm_id() | Msdata.SystPerms.t(), Types.perm_params()) ::
           {:ok, Msdata.SystPerms.t()} | ErrorTypes.parsable_error()
@@ -60,6 +72,12 @@ defmodule MscmpSystPerms.Impl.Perm do
     error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
     error -> reraise(error, __STACKTRACE__)
   end
+
+  ##############################################################################
+  #
+  # delete_perm
+  #
+  #
 
   @spec delete_perm(Msdata.SystPerms.t() | Types.perm_id()) :: :ok | ErrorTypes.parsable_error()
   def delete_perm(perm_id) when is_uuid(perm_id) do

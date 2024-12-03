@@ -22,6 +22,12 @@ defmodule MscmpSystPerms.Impl.PermRoleGrant do
 
   @scopes ["unused", "deny", "same_user", "same_group", "all"]
 
+  ##############################################################################
+  #
+  # create_perm_role_grant
+  #
+  #
+
   @spec create_perm_role_grant(Types.perm_role_grant_params()) ::
           {:ok, Msdata.SystPermRoleGrants.t()} | ErrorTypes.parsable_error()
   def create_perm_role_grant(perm_role_grant_params) do
@@ -36,6 +42,12 @@ defmodule MscmpSystPerms.Impl.PermRoleGrant do
     error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
     error -> reraise(error, __STACKTRACE__)
   end
+
+  ##############################################################################
+  #
+  # update_perm_role_grant
+  #
+  #
 
   @spec update_perm_role_grant(
           Types.perm_role_grant_id() | Msdata.SystPermRoleGrants.t(),
@@ -76,6 +88,12 @@ defmodule MscmpSystPerms.Impl.PermRoleGrant do
     error -> reraise(error, __STACKTRACE__)
   end
 
+  ##############################################################################
+  #
+  # delete_perm_role_grant
+  #
+  #
+
   @spec delete_perm_role_grant(Msdata.SystPermRoleGrants.t() | Types.perm_role_grant_id()) ::
           :ok | ErrorTypes.parsable_error()
   def delete_perm_role_grant(perm_role_grant_id) when is_uuid(perm_role_grant_id) do
@@ -96,6 +114,12 @@ defmodule MscmpSystPerms.Impl.PermRoleGrant do
 
   def delete_perm_role_grant(%Msdata.SystPermRoleGrants{} = perm),
     do: delete_perm_role_grant(perm.id)
+
+  ##############################################################################
+  #
+  # compare_scopes
+  #
+  #
 
   @spec compare_scopes(Types.rights_scope() | String.t(), Types.rights_scope() | String.t()) ::
           :eq | :gt | :lt

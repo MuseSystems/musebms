@@ -20,6 +20,12 @@ defmodule MscmpSystPerms.Impl.PermRole do
   alias MscmpSystError.Types, as: ErrorTypes
   alias MscmpSystPerms.Types
 
+  ##############################################################################
+  #
+  # create_perm_role
+  #
+  #
+
   @spec create_perm_role(Types.perm_role_params()) ::
           {:ok, Msdata.SystPermRoles.t()} | ErrorTypes.parsable_error()
   def create_perm_role(perm_role_params) do
@@ -34,6 +40,12 @@ defmodule MscmpSystPerms.Impl.PermRole do
     error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
     error -> reraise(error, __STACKTRACE__)
   end
+
+  ##############################################################################
+  #
+  # update_perm_role
+  #
+  #
 
   @spec update_perm_role(
           Types.perm_role_id() | Msdata.SystPermRoles.t(),
@@ -66,6 +78,12 @@ defmodule MscmpSystPerms.Impl.PermRole do
     error -> reraise(error, __STACKTRACE__)
   end
 
+  ##############################################################################
+  #
+  # get_perm_role_id_by_name
+  #
+  #
+
   @spec get_perm_role_id_by_name(Types.perm_functional_type_name(), Types.perm_role_name()) ::
           {:ok, Types.perm_role_id()} | ErrorTypes.parsable_error()
   def get_perm_role_id_by_name(perm_func_type_name, perm_role_name) do
@@ -86,6 +104,12 @@ defmodule MscmpSystPerms.Impl.PermRole do
     error in Postgrex.Error -> {:error, MscmpSystDb.get_pg_exception(error)}
     error -> reraise(error, __STACKTRACE__)
   end
+
+  ##############################################################################
+  #
+  # delete_perm_role
+  #
+  #
 
   @spec delete_perm_role(Msdata.SystPermRoles.t() | Types.perm_role_id()) ::
           :ok | ErrorTypes.parsable_error()

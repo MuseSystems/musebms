@@ -18,6 +18,12 @@ defmodule MscmpSystPerms.Impl.PermFunctionalType do
   alias MscmpSystError.Types, as: ErrorTypes
   alias MscmpSystPerms.Types
 
+  ##############################################################################
+  #
+  # update_perm_functional_type
+  #
+  #
+
   @spec update_perm_functional_type(
           Types.perm_functional_type_id() | Msdata.SystPermFunctionalTypes.t(),
           Types.perm_functional_type_params()
