@@ -11,7 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Mserror.OptionsError do
-  @moduledoc false
+  @moduledoc """
+  Defines an `Mserror` compliant error module for the MscmpSystOptions component.
+
+  For more see the `MscmpSystError` Component documentation.
+  """
 
   use MscmpSystError,
     component: MscmpSystOptions,
