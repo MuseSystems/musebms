@@ -405,7 +405,10 @@ defmodule IntegrationTest do
           @startup_options
         )
 
-      assert {:ok, :ready, context_states} = MscmpSystDb.get_datastore_state(datastore_options)
+      assert {:ok, :ready, context_states} =
+               MscmpSystDb.get_datastore_state(datastore_options,
+                 context_registry: MscmpSystInstance.TestRegistry
+               )
 
       Enum.each(context_states, &assert(%{context: _, state: :ready} = &1))
 

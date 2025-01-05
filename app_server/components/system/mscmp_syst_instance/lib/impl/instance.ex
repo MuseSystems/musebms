@@ -94,7 +94,7 @@ defmodule MscmpSystInstance.Impl.Instance do
      %MscmpSystDb.Types.DatastoreOptions{
        database_name: instance.internal_name,
        datastore_code: global_pepper,
-       datastore_name: String.to_atom(instance.internal_name),
+       datastore_name: instance.internal_name,
        contexts: contexts,
        db_server: instance_dbserver
      }}
@@ -111,7 +111,7 @@ defmodule MscmpSystInstance.Impl.Instance do
          startup_options
        ) do
     %MscmpSystDb.Types.DatastoreContext{
-      context_name: String.to_atom(instance_context.internal_name),
+      context_name: instance_context.internal_name,
       description:
         instance_data.display_name <>
           " / " <> instance_context.application_context.display_name,
