@@ -39,7 +39,7 @@ defmodule MscmpSystInstance.Application do
       specific options available will vary by Application implementation.
   """
   @callback init(
-              instances :: MscmpSystInstance.Types.target_instances(),
+              instances :: MscmpSystInstance.Types.instances(),
               startup_options :: MscmpSystOptions.Types.options(),
               opts :: Keyword.t()
             ) ::
@@ -72,10 +72,10 @@ defmodule MscmpSystInstance.Application do
       `MscmpSystOptions` for more.
   """
   @callback start_instances(
-              instances :: MscmpSystInstance.Types.target_instances(),
+              instances :: MscmpSystInstance.Types.startable_instances(),
               startup_options :: MscmpSystOptions.Types.options()
             ) ::
-              {:ok, list(MscmpSystInstance.Types.target_instance_result())}
+              {:ok, list(MscmpSystInstance.Types.instance_action_result())}
               | {:error, Exception.t()}
 
   @doc """
@@ -85,8 +85,8 @@ defmodule MscmpSystInstance.Application do
 
     * `instances` - Identifies the Application Instances to stop.
   """
-  @callback stop_instances(instances :: MscmpSystInstance.Types.target_instances()) ::
-              {:ok, list(MscmpSystInstance.Types.target_instance_result())}
+  @callback stop_instances(instances :: MscmpSystInstance.Types.startable_instances()) ::
+              {:ok, list(MscmpSystInstance.Types.instance_action_result())}
               | {:error, Exception.t()}
 
   @doc """
@@ -96,8 +96,8 @@ defmodule MscmpSystInstance.Application do
 
     * `instances` - the desired Instances for which to return the runtime state.
   """
-  @callback get_instance_states(instances :: MscmpSystInstance.Types.target_instances()) ::
-              list(MscmpSystInstance.Types.target_instance_result())
+  @callback get_instance_states(instances :: MscmpSystInstance.Types.startable_instances()) ::
+              list(MscmpSystInstance.Types.instance_action_result())
 
   @doc """
   Retrieves a mapping of the known Instance services mapped to a specific
@@ -154,9 +154,9 @@ defmodule MscmpSystInstance.Application do
       `MscmpSystOptions` for more.
   """
   @callback upgrade_instances(
-              instances :: MscmpSystInstance.Types.target_instances(),
+              instances :: MscmpSystInstance.Types.startable_instances(),
               startup_options :: MscmpSystOptions.Types.options()
             ) ::
-              {:ok, list(MscmpSystInstance.Types.target_instance_result())}
+              {:ok, list(MscmpSystInstance.Types.instance_action_result())}
               | {:error, Exception.t()}
 end

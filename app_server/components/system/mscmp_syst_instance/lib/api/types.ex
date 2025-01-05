@@ -266,6 +266,20 @@ defmodule MscmpSystInstance.Types do
         }
 
   @typedoc """
+  Defines the acceptable forms for identifying Instances to be subjected to an
+  action, such as starting or stopping.
+  """
+  @type instances() :: startable_instances() | no_instances()
+
+  @typedoc """
+  Type for identifying the absence of any instances.
+
+  The `:none` value is used to indicate that no instances are to be subjected
+  to the action.
+  """
+  @type no_instances() :: :none
+
+  @typedoc """
   Type for Owner record ID values.
   """
   @type owner_id() :: binary()
@@ -364,22 +378,19 @@ defmodule MscmpSystInstance.Types do
 
   The following values are available:
 
-    * `:none`: No Instances will be affected, effectively making the action a
-      no-op from an Instance management perspective.
-
-    *  `:all`: All qualifying Instances will be subjected to the action.
+    * `:all`: All qualifying Instances will be subjected to the action.
 
     * A list of Instance Names
   """
-  @type target_instances() :: :none | :all | list(instance_name())
+  @type startable_instances() :: :all | [instance_name()]
 
   @typedoc """
   Expresses a specific Instance, its runtime state, and the functional type of
   its runtime state.
   """
-  @type target_instance_result() ::
+  @type instance_action_result() ::
           {instance_name(),
            {:ok, :upgraded}
            | {:ok, instance_runtime_state()}
-           | {:error, Mserror.InstanceError.t()}}
+           | {:error, Exception.t()}}
 end
