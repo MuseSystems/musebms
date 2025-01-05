@@ -15,7 +15,7 @@ defmodule MscmpSystAuthn.Impl.Identity.AccountCode do
 
   @behaviour MscmpSystAuthn.Impl.Identity
 
-  use Msutils.Guards
+  import Msutils.Guards
 
   import Ecto.Query
 

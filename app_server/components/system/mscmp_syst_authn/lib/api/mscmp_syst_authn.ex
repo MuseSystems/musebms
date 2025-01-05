@@ -17,7 +17,7 @@ defmodule MscmpSystAuthn do
              |> String.split("<!-- MDOC !-->")
              |> Enum.fetch!(1)
 
-  use Msutils.Guards
+  import Msutils.Guards
 
   import MscmpSystNetwork.Guards
 

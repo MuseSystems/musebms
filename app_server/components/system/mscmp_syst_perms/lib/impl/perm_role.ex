@@ -13,7 +13,7 @@
 defmodule MscmpSystPerms.Impl.PermRole do
   @moduledoc false
 
-  use Msutils.Guards
+  import Msutils.Guards
 
   import Ecto.Query
 

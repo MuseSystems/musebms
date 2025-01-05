@@ -13,7 +13,7 @@
 defmodule MscmpSystDb.Impl.Dba do
   @moduledoc false
 
-  use Msutils.Guards
+  import Msutils.Guards
 
   alias MscmpSystDb.Impl.Privileged
   alias MscmpSystDb.Runtime.Datastore

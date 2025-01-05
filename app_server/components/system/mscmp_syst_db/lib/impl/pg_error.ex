@@ -13,7 +13,7 @@
 defmodule MscmpSystDb.Impl.PgError do
   @moduledoc false
 
-  use Msutils.Guards
+  import Msutils.Guards
 
   alias MscmpSystDb.Types
 

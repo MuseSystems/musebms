@@ -13,7 +13,7 @@
 defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
   @moduledoc false
 
-  use Msutils.Guards
+  import Msutils.Guards
 
   alias MscmpSystAuthn.Impl
   alias MscmpSystAuthn.Types

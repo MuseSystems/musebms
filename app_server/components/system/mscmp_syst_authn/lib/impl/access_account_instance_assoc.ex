@@ -13,7 +13,7 @@
 defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
   @moduledoc false
 
-  use Msutils.Guards
+  import Msutils.Guards
 
   import Ecto.Query
 

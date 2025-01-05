@@ -13,7 +13,7 @@
 defmodule MscmpSystAuthn.Impl.Identity.Helpers do
   @moduledoc false
 
-  use Msutils.Guards
+  import Msutils.Guards
 
   import Ecto.Query
 

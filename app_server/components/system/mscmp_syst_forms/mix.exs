@@ -28,7 +28,7 @@ defmodule MscmpSystForms.MixProject do
     {:nimble_options, "~> 1.0"},
 
     # Muse Systems Business Management System Components
-    {:mscmp_syst_utils_string, path: "../mscmp_syst_utils_string"},
+    {:mscmp_syst_utils, path: "../mscmp_syst_utils"},
     {:mscmp_syst_error, path: "../mscmp_syst_error"},
     {:mscmp_syst_perms, path: "../mscmp_syst_perms"}
   ]
@@ -48,7 +48,7 @@ defmodule MscmpSystForms.MixProject do
     [
       app: @name,
       version: @version,
-      elixir: "~> 1.17",
+      elixir: "~> 1.18",
       deps: @deps,
       build_embedded: in_production,
       start_permanent: in_production,
@@ -59,8 +59,7 @@ defmodule MscmpSystForms.MixProject do
         main: "MscmpSystForms",
         output: "../../../../documentation/technical/app_server/mscmp_syst_forms",
         deps: [
-          mscmp_syst_utils_string:
-            "../../../../documentation/technical/app_server/mscmp_syst_utils_string",
+          mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils",
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
           mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db",
           mscmp_syst_perms: "../../../../documentation/technical/app_server/mscmp_syst_perms"

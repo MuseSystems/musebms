@@ -42,7 +42,7 @@ defmodule MscmpSystNetwork.MixProject do
     [
       app: @name,
       version: @version,
-      elixir: "~> 1.17",
+      elixir: "~> 1.18",
       deps: @deps,
       build_embedded: in_production,
       start_permanent: in_production,

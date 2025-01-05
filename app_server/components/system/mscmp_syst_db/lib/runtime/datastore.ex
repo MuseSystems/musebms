@@ -17,7 +17,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
     otp_app: :mscmp_syst_db,
     adapter: Ecto.Adapters.Postgres
 
-  use Msutils.Guards
+  import Msutils.Guards
 
   alias MscmpSystDb.Types
   alias MscmpSystDb.Types.{ContextState, DatastoreContext, DatastoreOptions}

@@ -13,7 +13,7 @@
 defmodule MscmpSystPerms.Impl.PermFunctionalType do
   @moduledoc false
 
-  use Msutils.Guards
+  import Msutils.Guards
 
   alias MscmpSystError.Types, as: ErrorTypes
   alias MscmpSystPerms.Types

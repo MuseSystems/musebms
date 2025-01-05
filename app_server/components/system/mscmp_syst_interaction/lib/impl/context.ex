@@ -13,7 +13,7 @@
 defmodule MscmpSystInteraction.Impl.Context do
   @moduledoc false
 
-  use Msutils.Guards
+  import Msutils.Guards
 
   alias MscmpSystError.Types, as: ErrorType
   alias MscmpSystInteraction.Runtime.ProcessUtils

@@ -13,7 +13,7 @@
 defmodule MscmpSystAuthn.Impl.NetworkRules do
   @moduledoc false
 
-  use Msutils.Guards
+  import Msutils.Guards
 
   import Ecto.Query
   import MscmpSystNetwork.Guards, only: [is_ip: 1]
