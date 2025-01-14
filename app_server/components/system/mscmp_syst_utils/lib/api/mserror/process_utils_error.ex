@@ -19,6 +19,9 @@ defmodule Mserror.ProcessUtilsError do
     kinds: [
       lookup: """
       Indicates that there was an error looking up a process.
+      """,
+      registration: """
+      Indicates that there was an error registering a process.
       """
     ],
     component: MscmpSystUtilsProcess

@@ -32,11 +32,12 @@ defmodule MscmpSystDb.DatastoreContext do
 
   option_defs = [
     context_registry: [
-      type: {:or, [:atom, nil]},
-      type_doc: "`t:module/0` or `nil`",
+      type: {:or, [{:in, [:local, :global]}, {:tuple, [:atom, :any]}, nil]},
+      type_doc: "`t:Msutils.Types.Process.registry/0` or `nil`",
+      type_spec: quote(do: Msutils.Types.Process.registry() | nil),
       doc: """
-      Specifies the name of a registry to use for registering named Datastore
-      Contexts.
+      Specifies the registry to use for registering named Datastore Contexts.
+      Can be `:local`, `:global`, a tuple of `{module(), term()}`, or `nil`.
       """
     ]
   ]

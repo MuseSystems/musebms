@@ -18,19 +18,19 @@ defmodule IntegrationTest do
   # change in the future, but for now it's adequate and the non-process
   # test cases won't be affected.
 
-  use ProcessTestCase, async: true
+  use ProcessTestCase, async: false
   import Msutils.Guards
 
   @moduletag :integration
   @moduletag :capture_log
 
-  describe "String Utilities API" do
-    test "generates a random string of the specified length" do
+  describe "100 - String Utilities API" do
+    test "101 - generates a random string of the specified length" do
       assert String.length(Msutils.String.get_random_string(10)) == 10
       assert String.length(Msutils.String.get_random_string(20)) == 20
     end
 
-    test "generates a random string using the specified character set" do
+    test "102 - generates a random string using the specified character set" do
       assert Msutils.String.get_random_string(10, :alphanum) =~ ~r/^[0-9A-Z]{10}$/
       assert Msutils.String.get_random_string(10, :mixed_alphanum) =~ ~r/^[0-9A-Za-z]{10}$/
       assert Msutils.String.get_random_string(10, :b32e) =~ ~r/^[0-9A-V]{10}$/
@@ -39,58 +39,58 @@ defmodule IntegrationTest do
     end
   end
 
-  describe "Guards" do
-    test "is_reg_atom/1 returns true for a regular atom" do
+  describe "200 - Guards" do
+    test "201 - is_reg_atom/1 returns true for a regular atom" do
       assert is_reg_atom(:regular_atom)
     end
 
-    test "is_reg_atom/1 returns false for nil" do
+    test "202 - is_reg_atom/1 returns false for nil" do
       refute is_reg_atom(nil)
     end
 
-    test "is_reg_atom/1 returns false for true" do
+    test "203 - is_reg_atom/1 returns false for true" do
       refute is_reg_atom(true)
     end
 
-    test "is_reg_atom/1 returns false for false" do
+    test "204 - is_reg_atom/1 returns false for false" do
       refute is_reg_atom(false)
     end
 
-    test "is_reg_atom/1 returns false for a string" do
+    test "205 - is_reg_atom/1 returns false for a string" do
       refute is_reg_atom("string")
     end
 
-    test "is_reg_atom/1 returns false for an integer" do
+    test "206 - is_reg_atom/1 returns false for an integer" do
       refute is_reg_atom(42)
     end
 
-    test "is_reg_atom/1 returns false for a float" do
+    test "207 - is_reg_atom/1 returns false for a float" do
       refute is_reg_atom(3.14)
     end
 
-    test "is_reg_atom/1 returns false for a list" do
+    test "208 - is_reg_atom/1 returns false for a list" do
       refute is_reg_atom([1, 2, 3])
     end
 
-    test "is_reg_atom/1 returns false for a tuple" do
+    test "209 - is_reg_atom/1 returns false for a tuple" do
       refute is_reg_atom({:a, :b, :c})
     end
 
-    test "is_reg_atom/1 returns false for a map" do
+    test "210 - is_reg_atom/1 returns false for a map" do
       refute is_reg_atom(%{key: "value"})
     end
 
-    test "is_reg_atom/1 returns false for a function" do
+    test "211 - is_reg_atom/1 returns false for a function" do
       refute is_reg_atom(fn -> :ok end)
     end
 
-    test "is_uuid/1 returns true for valid UUIDs" do
+    test "212 - is_uuid/1 returns true for valid UUIDs" do
       assert is_uuid("123e4567-e89b-12d3-a456-426614174000")
       assert is_uuid("00000000-0000-0000-0000-000000000000")
       assert is_uuid("ffffffff-ffff-ffff-ffff-ffffffffffff")
     end
 
-    test "is_uuid/1 returns false for a non-UUID" do
+    test "213 - is_uuid/1 returns false for a non-UUID" do
       #  Note that we don't refute test values which are constructed using invalid
       #  hexidecimal values.  The guard only tests the shape of the string and not
       #  the actual values.
@@ -115,41 +115,43 @@ defmodule IntegrationTest do
     end
   end
 
-  describe "Process Utilities API" do
-    test "whereis/2 returns pid for locally registered process", %{local: %{pid: pid, name: name}} do
+  describe "300 - Process Utilities API" do
+    test "301 - whereis/2 returns pid for locally registered process", %{
+      local: %{pid: pid, name: name}
+    } do
       assert {:ok, ^pid} = Msutils.Process.whereis(name)
     end
 
-    test "whereis/2 returns pid for globally registered process", %{
+    test "302 - whereis/2 returns pid for globally registered process", %{
       global: %{pid: pid, name: name}
     } do
       assert {:ok, ^pid} = Msutils.Process.whereis(name)
     end
 
-    test "whereis/2 returns pid when given a pid directly", %{unnamed: %{pid: pid}} do
+    test "303 - whereis/2 returns pid when given a pid directly", %{unnamed: %{pid: pid}} do
       assert {:ok, ^pid} = Msutils.Process.whereis(pid)
     end
 
-    test "whereis/2 returns error for non-existent local process" do
+    test "304 - whereis/2 returns error for non-existent local process" do
       assert {:error, %Mserror.ProcessUtilsError{kind: :lookup, cause: :process_not_found}} =
                Msutils.Process.whereis(:nonexistent_process)
     end
 
-    test "whereis/2 returns error for non-existent global process" do
+    test "305 - whereis/2 returns error for non-existent global process" do
       assert {:error, %Mserror.ProcessUtilsError{kind: :lookup, cause: :process_not_found}} =
                Msutils.Process.whereis({:global, :nonexistent_process})
     end
 
-    test "whereis/2 returns error for invalid process name" do
+    test "306 - whereis/2 returns error for invalid process name" do
       assert {:error, %Mserror.ProcessUtilsError{kind: :lookup, cause: :invalid_name}} =
                Msutils.Process.whereis({:invalid, :name})
     end
 
-    test "whereis/2 returns pid for via-registered process", %{via: %{pid: pid, name: name}} do
+    test "307 - whereis/2 returns pid for via-registered process", %{via: %{pid: pid, name: name}} do
       assert {:ok, ^pid} = Msutils.Process.whereis(name)
     end
 
-    test "whereis/2 returns error for non-existent via process" do
+    test "308 - whereis/2 returns error for non-existent via process" do
       assert {:error, %Mserror.ProcessUtilsError{kind: :lookup, cause: :process_not_found}} =
                Msutils.Process.whereis(
                  {:via, Registry, {MscmpSystUtils.TestRegistry, :nonexistent_process}}

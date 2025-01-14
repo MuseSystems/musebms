@@ -32,7 +32,8 @@ defmodule MscmpSystDb.Datastore do
       type:
         {:or,
          [nil, :atom, {:tuple, [{:in, [:via]}, :atom, :any]}, {:tuple, [{:in, [:global]}, :any]}]},
-      type_doc: "`t:GenServer.name/0` or `nil`",
+      type_doc: "`t:Msutils.Types.Process.name/0` or `nil`",
+      type_spec: quote(do: Msutils.Types.Process.name() | nil),
       doc: """
       Specifies the name for the Datastore Supervisor. If this option is not
       provided, the `datastore_options.datastore_name` value will be used as
@@ -43,11 +44,12 @@ defmodule MscmpSystDb.Datastore do
       """
     ],
     context_registry: [
-      type: {:or, [:atom, nil]},
-      type_doc: "`t:module/0` or `nil`",
+      type: {:or, [{:in, [:local, :global]}, {:tuple, [:atom, :any]}, nil]},
+      type_doc: "`t:Msutils.Types.Process.registry/0` or `nil`",
+      type_spec: quote(do: Msutils.Types.Process.registry() | nil),
       doc: """
-      Specifies the name of a registry to use for registering named Datastore
-      Contexts.
+      Specifies the registry to use for registering named Datastore Contexts.
+      Can be `:local`, `:global`, a tuple of `{module(), term()}`, or `nil`.
       """
     ],
     strategy: [

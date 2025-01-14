@@ -46,7 +46,7 @@ defmodule TestSupport do
     {:ok, _} = load_database(datastore_options, get_datastore_type(test_kind))
 
     MscmpSystDb.Datastore.child_spec(datastore_options,
-      context_registry: opts[:context_registry] || MscmpSystSettings.TestRegistry
+      context_registry: opts[:context_registry] || {Registry, MscmpSystSettings.TestRegistry}
     )
   end
 

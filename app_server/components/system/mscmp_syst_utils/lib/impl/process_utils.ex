@@ -13,17 +13,21 @@
 defmodule MscmpSystUtils.Impl.Process do
   @moduledoc false
 
+  import Msutils.Guards, only: [is_reg_atom: 1]
+
+  alias Msutils.Types.Process, as: ProcessTypes
+
   ##############################################################################
   #
   # get_pid
   #
   #
 
-  @spec get_pid(GenServer.name()) ::
-          {:ok, pid()} | {:error, {:process_not_found | :invalid_name, String.t()}}
+  @spec get_pid(ProcessTypes.name()) ::
+          {:ok, pid()} | {:error, MscmpSystError.Types.parsable_error()}
   def get_pid(name) when is_pid(name), do: {:ok, name}
 
-  def get_pid(name) when is_atom(name) do
+  def get_pid(name) when is_reg_atom(name) do
     case Process.whereis(name) do
       pid when is_pid(pid) -> {:ok, pid}
       nil -> {:error, {:process_not_found, "The process was not found locally."}}
@@ -52,4 +56,82 @@ defmodule MscmpSystUtils.Impl.Process do
 
   def get_pid(_invalid_name),
     do: {:error, {:invalid_name, "The provided name is not a valid process name."}}
+
+  @spec get_pid(ProcessTypes.registry(), term()) ::
+          {:ok, pid()} | {:error, MscmpSystError.Types.parsable_error()}
+  def get_pid(_, name) when is_pid(name), do: {:ok, name}
+  def get_pid(:local, name), do: get_pid(name)
+  def get_pid(:global, name), do: get_pid({:global, name})
+
+  def get_pid({registry_module, registry_name}, name),
+    do: get_pid({:via, registry_module, {registry_name, name}})
+
+  def get_pid(_, _invalid_name),
+    do: {:error, {:invalid_name, "The provided registry or name is not valid."}}
+
+  ##############################################################################
+  #
+  # register
+  #
+  #
+
+  @spec register(ProcessTypes.name()) ::
+          :ok | {:error, MscmpSystError.Types.parsable_error()}
+  def register(name) when is_reg_atom(name) do
+    try do
+      Process.register(self(), name)
+      :ok
+    rescue
+      ArgumentError ->
+        {:error,
+         {:registration_failed,
+          "Registering the current process into the local process registry failed."}}
+    end
+  end
+
+  def register({:global, name}) do
+    case :global.register_name(name, self()) do
+      :yes ->
+        :ok
+
+      :no ->
+        {:error,
+         {:registration_failed,
+          "Registering the current process into the global registry failed."}}
+    end
+  end
+
+  def register({:via, module, name}) do
+    case module.register_name(name, self()) do
+      :yes ->
+        :ok
+
+      :no ->
+        {:error,
+         {:registration_failed, "Failed registering the current process using a via tuple."}}
+    end
+  end
+
+  def register(_invalid_name),
+    do: {:error, {:invalid_name, "The provided name is not a valid process name."}}
+
+  @spec register(ProcessTypes.registry(), term()) ::
+          :ok | {:error, MscmpSystError.Types.parsable_error()}
+  def register(:local, name) do
+    try do
+      Process.register(self(), name)
+      :ok
+    rescue
+      ArgumentError ->
+        {:error, {:name_already_registered, "The name is already registered."}}
+    end
+  end
+
+  def register(:global, name), do: register({:global, name})
+
+  def register({registry_module, registry_name}, name),
+    do: register({:via, registry_module, {registry_name, name}})
+
+  def register(_, _name),
+    do: {:error, {:invalid_name, "The provided registry or name is not valid."}}
 end

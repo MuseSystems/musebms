@@ -21,8 +21,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
 
   alias MscmpSystDb.Types
   alias MscmpSystDb.Types.{ContextState, DatastoreContext, DatastoreOptions}
-
-  require Logger
+  alias Msutils.Types.Process, as: ProcessTypes
 
   @query_log_level :debug
 
@@ -270,17 +269,17 @@ defmodule MscmpSystDb.Runtime.Datastore do
 
   def init(:runtime, config), do: {:ok, config}
 
-  defp register_datastore_context(:global, context_name) do
-    :yes = :global.register_name(context_name, self())
-    :ok
-  end
-
-  defp register_datastore_context(registry, context_name) when is_reg_atom(registry) do
-    {:ok, _} = Registry.register(registry, context_name, self())
-    :ok
-  end
-
   defp register_datastore_context(nil, _), do: :ok
+
+  defp register_datastore_context(context_registry, context_name) do
+    case Msutils.Process.register(context_registry, context_name) do
+      :ok ->
+        :ok
+
+      {:error, _} ->
+        raise RuntimeError, "Failed to register Datastore Context '#{context_name}'."
+    end
+  end
 
   ##############################################################################
   #
@@ -302,6 +301,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
     filter_fn = fn context ->
       resolved_context =
         case lookup_context_pid(opts[:context_registry], context.context_name) do
+          {:ok, nil} -> nil
           {:ok, found_context} -> found_context
           {:error, {:not_found, _}} -> nil
         end
@@ -329,8 +329,15 @@ defmodule MscmpSystDb.Runtime.Datastore do
   end
 
   def stop_datastore_context(context, opts) when is_binary(context) do
-    with {:ok, context} <- lookup_context_pid(opts[:context_registry], context) do
-      stop_datastore_context(context, opts)
+    case lookup_context_pid(opts[:context_registry], context) do
+      {:ok, context} ->
+        stop_datastore_context(context, opts)
+
+      {:error, {:not_found, _}} ->
+        raise RuntimeError, "Context name not found."
+
+      {:error, _} ->
+        raise RuntimeError, "Failed to lookup context name."
     end
   end
 
@@ -459,13 +466,13 @@ defmodule MscmpSystDb.Runtime.Datastore do
           "The given Datastore Context name '#{inspect(context_name)}' is not in a recognized format."
   end
 
-  @spec put_datastore_context(Types.context_registry(), Types.context_name()) ::
-          {:ok, atom() | pid()} | {:error, reason :: term()}
+  @spec put_datastore_context(ProcessTypes.registry(), ProcessTypes.name()) ::
+          {:ok, atom() | pid()} | {:error, MscmpSystError.Types.parsable_error()}
 
   def put_datastore_context(context_registry, context_name) when not is_nil(context_registry) do
-    case lookup_context_pid(context_registry, context_name) do
+    case Msutils.Process.whereis(context_registry, context_name) do
       {:ok, context} -> put_datastore_context(context)
-      {:error, error} -> {:error, error}
+      {:error, error} -> {:error, {:context_lookup_error, error}}
     end
   end
 
@@ -488,56 +495,30 @@ defmodule MscmpSystDb.Runtime.Datastore do
   #
   #
 
-  @spec lookup_context_pid(Ecto.Repo.t() | Ecto.Adapter.adapter_meta() | GenServer.name()) ::
-          {:ok, pid()} | {:error, reason :: term()}
-  def lookup_context_pid({:global, context_name}), do: lookup_context_pid(:global, context_name)
+  @spec lookup_context_pid(ProcessTypes.name()) ::
+          {:ok, pid()} | {:error, MscmpSystError.Types.parsable_error()}
+  def lookup_context_pid(context_name),
+    do: Msutils.Process.whereis(context_name) |> process_lookup_result()
 
-  def lookup_context_pid({:via, :global, context_name}),
-    do: lookup_context_pid(:global, context_name)
-
-  def lookup_context_pid({:via, Registry, {registry_name, context_name}}),
-    do: lookup_context_pid(registry_name, context_name)
-
-  def lookup_context_pid(context_name) when is_reg_atom(context_name), do: {:ok, context_name}
-
-  def lookup_context_pid(context_name) do
-    raise ArgumentError,
-          "The given Datastore Context name '#{inspect(context_name)}' is not in a recognized format."
-  end
-
-  @spec lookup_context_pid(atom() | nil, Types.context_name() | nil) ::
-          {:ok, pid()} | {:ok, atom()} | {:ok, nil} | {:error, reason :: term()}
+  @spec lookup_context_pid(ProcessTypes.registry(), term()) ::
+          {:ok, pid() | nil} | {:error, MscmpSystError.Types.parsable_error()}
   def lookup_context_pid(_, nil), do: {:ok, nil}
 
-  def lookup_context_pid(:global, context_name) do
-    case :global.whereis_name(context_name) do
-      pid when is_pid(pid) -> {:ok, pid}
-      _ -> {:error, {:not_found, :global}}
-    end
-  end
-
-  def lookup_context_pid(context_registry, context_name) when is_reg_atom(context_registry) do
-    case Registry.lookup(context_registry, context_name) do
-      [{pid, _}] -> {:ok, pid}
-      _ -> {:error, {:not_found, {context_registry, context_name}}}
-    end
-  end
-
-  def lookup_context_pid(nil, context_name) when is_reg_atom(context_name),
-    do: {:ok, context_name}
-
-  def lookup_context_pid(nil, context_name),
-    do:
-      raise(
-        "Context names using types other than atoms must be registered in a " <>
-          "Registry. (#{inspect(context_name)})"
-      )
+  def lookup_context_pid(context_registry, context_name),
+    do: Msutils.Process.whereis(context_registry, context_name) |> process_lookup_result()
 
   ##############################################################################
   #
   # Internal Support Functions
   #
   #
+
+  defp process_lookup_result({:ok, pid}), do: {:ok, pid}
+
+  defp process_lookup_result({:error, %Mserror.ProcessUtilsError{cause: :process_not_found}}),
+    do: {:error, {:not_found, "Context name not found."}}
+
+  defp process_lookup_result({:error, error}), do: {:error, {:lookup_error, error}}
 
   defp extract_registry_from_name({:global, _}), do: :global
   defp extract_registry_from_name({:via, :global, _}), do: :global

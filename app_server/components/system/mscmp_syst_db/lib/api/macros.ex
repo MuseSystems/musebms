@@ -189,12 +189,12 @@ defmodule MscmpSystDb.Macros do
 
   drop_database_opts = [
     context_registry: [
-      type: {:or, [{:in, [:global]}, :atom]},
+      type: {:or, [{:in, [:local, :global]}, {:tuple, [:atom, :any]}]},
+      type_doc: "`t:Msutils.Types.Process.registry/0`",
+      type_spec: quote(do: Msutils.Types.Process.registry()),
       doc: """
-      Identifies a process registry which will be used to register Datastore
-      Context (`Ecto.Repo`) instances. A valid value for this option can be
-      either `:global` to use the Erlang `:global` module or any other module
-      which implements a :global compatible API.
+      Specifies the registry to use for registering named Datastore Contexts.
+      Can be `:local`, `:global`, or a tuple of `{module(), term()}`.
       """
     ]
   ]

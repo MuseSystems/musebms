@@ -12,7 +12,7 @@
 
 defmodule Msutils.Types.String do
   @moduledoc """
-  This module defines the types used by the MscmpSystUtils library.
+  This module defines string related types used by the MscmpSystUtils library.
   """
 
   @typedoc """

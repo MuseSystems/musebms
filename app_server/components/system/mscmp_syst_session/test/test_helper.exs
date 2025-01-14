@@ -28,7 +28,7 @@ test_registry = MscmpSystSession.TestRegistry
 
 children = [
   Registry.child_spec(keys: :unique, name: test_registry),
-  TestSupport.setup_testing_database(test_kind, context_registry: test_registry)
+  TestSupport.setup_testing_database(test_kind, context_registry: {Registry, test_registry})
 ]
 
 {:ok, _pid} =
@@ -40,5 +40,5 @@ children = [
 ExUnit.start()
 
 ExUnit.after_suite(fn _suite_result ->
-  TestSupport.cleanup_testing_database(test_kind, context_registry: test_registry)
+  TestSupport.cleanup_testing_database(test_kind, context_registry: {Registry, test_registry})
 end)

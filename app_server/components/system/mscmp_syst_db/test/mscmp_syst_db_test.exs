@@ -180,7 +180,7 @@ defmodule MscmpSystDbTest do
 
     assert {:ok, :ready, context_states} =
              MscmpSystDb.get_datastore_state(new_datastore_options,
-               context_registry: MscmpSystDb.TestRegistry
+               context_registry: {Registry, MscmpSystDb.TestRegistry}
              )
 
     assert 4 = length(context_states)
@@ -195,7 +195,7 @@ defmodule MscmpSystDbTest do
     # Get datastore state after added contexts dropped
     assert {:ok, :ready, context_states} =
              MscmpSystDb.get_datastore_state(@datastore_options_type_one,
-               context_registry: MscmpSystDb.TestRegistry
+               context_registry: {Registry, MscmpSystDb.TestRegistry}
              )
 
     assert 2 = length(context_states)
@@ -203,7 +203,7 @@ defmodule MscmpSystDbTest do
     # Get datastore context states
     assert {:ok, context_states} =
              MscmpSystDb.get_datastore_context_states(@datastore_options_type_one,
-               context_registry: MscmpSystDb.TestRegistry
+               context_registry: {Registry, MscmpSystDb.TestRegistry}
              )
 
     assert 2 = length(context_states)
@@ -232,7 +232,7 @@ defmodule MscmpSystDbTest do
     datastore_child_spec =
       MscmpSystDb.Datastore.child_spec(datastore_options,
         datastore_name: {:via, Registry, {MscmpSystDb.TestRegistry, "test_datastore"}},
-        context_registry: MscmpSystDb.TestRegistry
+        context_registry: {Registry, MscmpSystDb.TestRegistry}
       )
 
     assert {:ok, _datastore_pid, {:all_started, _context_states}} =
@@ -246,7 +246,10 @@ defmodule MscmpSystDbTest do
                @migration_test_opts
              )
 
-    MscmpSystDb.put_datastore_context(MscmpSystDb.TestRegistry, "ms_type_four_role_01")
+    MscmpSystDb.put_datastore_context(
+      {Registry, MscmpSystDb.TestRegistry},
+      "ms_type_four_role_01"
+    )
 
     assert 3 = length(first_stage_migrations_applied)
 
@@ -272,7 +275,10 @@ defmodule MscmpSystDbTest do
 
     assert 8 = length(second_stage_migrations_applied)
 
-    MscmpSystDb.put_datastore_context(MscmpSystDb.TestRegistry, "ms_type_four_role_01")
+    MscmpSystDb.put_datastore_context(
+      {Registry, MscmpSystDb.TestRegistry},
+      "ms_type_four_role_01"
+    )
 
     assert {:ok, 10} =
              MscmpSystDb.query_for_value(
@@ -284,7 +290,7 @@ defmodule MscmpSystDbTest do
 
     assert :ok =
              MscmpSystDb.stop_datastore(datastore_options,
-               context_registry: MscmpSystDb.TestRegistry
+               context_registry: {Registry, MscmpSystDb.TestRegistry}
              )
 
     assert :ok = MscmpSystDb.drop_datastore(datastore_options)

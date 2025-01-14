@@ -349,9 +349,6 @@ defmodule MscmpSystDb.Impl.Dba do
             {:ok, pid_or_atom} when is_pid(pid_or_atom) or is_reg_atom(pid_or_atom) ->
               pid_or_atom
 
-            {:ok, nil} ->
-              nil
-
             {:error, {:not_found, _}} ->
               nil
           end

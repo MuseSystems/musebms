@@ -37,7 +37,7 @@ datastore_context_name =
 children =
   [
     Registry.child_spec(keys: :unique, name: test_registry),
-    TestSupport.setup_testing_database(test_kind, context_registry: test_registry),
+    TestSupport.setup_testing_database(test_kind, context_registry: {Registry, test_registry}),
     MscmpSystEnums.child_spec(
       service_name: TestSupport.get_enums_service_name(),
       datastore_context_name: datastore_context_name
@@ -61,5 +61,5 @@ DynamicSupervisor.start_child(MscmpSystInstance.TestingSupervisor, instance_serv
 ExUnit.start()
 
 ExUnit.after_suite(fn _suite_result ->
-  TestSupport.cleanup_testing_database(test_kind, context_registry: test_registry)
+  TestSupport.cleanup_testing_database(test_kind, context_registry: {Registry, test_registry})
 end)

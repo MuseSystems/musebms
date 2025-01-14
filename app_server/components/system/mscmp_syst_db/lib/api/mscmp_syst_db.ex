@@ -24,6 +24,7 @@ defmodule MscmpSystDb do
   alias MscmpSystDb.Types
   alias MscmpSystDb.Types.{ContextState, DatastoreContext, DatastoreOptions}
   alias MscmpSystError.Types.Context, as: ErrorContext
+  alias Msutils.Types.Process, as: ProcessTypes
 
   ##############################################################################
   #
@@ -41,13 +42,12 @@ defmodule MscmpSystDb do
       """
     ],
     context_registry: [
-      type: {:or, [{:in, [:global]}, :atom]},
-      type_doc: "`:global` or `t:module/0`",
+      type: {:or, [{:in, [:local, :global]}, {:tuple, [:atom, :any]}]},
+      type_doc: "`t:Msutils.Types.Process.registry/0`",
+      type_spec: quote(do: Msutils.Types.Process.registry()),
       doc: """
-      Identifies a process registry which is used to register Datastore
-      Context (`Ecto.Repo`) instances. A valid value for this option can be
-      either `:global` to use the Erlang `:global` module or any other module
-      which implements a :global compatible API.
+      Specifies the registry to use for registering named Datastore Contexts.
+      Can be `:local`, `:global`, or a tuple of `{module(), term()}`.
       """
     ],
     migrations_schema: [
@@ -774,11 +774,11 @@ defmodule MscmpSystDb do
   """
   @spec start_datastore_context(
           DatastoreOptions.t(),
-          Types.context_name() | DatastoreContext.t()
+          ProcessTypes.name() | DatastoreContext.t()
         ) :: {:ok, pid()} | {:error, Mserror.DbError.t()}
   @spec start_datastore_context(
           DatastoreOptions.t(),
-          Types.context_name() | DatastoreContext.t(),
+          ProcessTypes.name() | DatastoreContext.t(),
           Keyword.t()
         ) ::
           {:ok, pid()} | {:error, Mserror.DbError.t()}
@@ -840,13 +840,13 @@ defmodule MscmpSystDb do
   @spec stop_datastore(
           DatastoreOptions.t()
           | list(DatastoreContext.t())
-          | list(%{context_name: Types.context_name()})
+          | list(%{context_name: ProcessTypes.name()})
         ) ::
           :ok | {:error, Mserror.DbError.t()}
   @spec stop_datastore(
           DatastoreOptions.t()
           | list(DatastoreContext.t())
-          | list(%{context_name: Types.context_name()}),
+          | list(%{context_name: ProcessTypes.name()}),
           Keyword.t()
         ) ::
           :ok
@@ -1009,7 +1009,8 @@ defmodule MscmpSystDb do
 
     * `Mserror.DbError` - If there was an error setting the Datastore Context.
   """
-  @spec put_datastore_context!(Types.context_registry(), Types.context_name()) :: atom() | pid()
+  @spec put_datastore_context!(ProcessTypes.registry(), ProcessTypes.name()) ::
+          atom() | pid()
   def put_datastore_context!(context_registry, context) do
     case put_datastore_context(context_registry, context) do
       {:ok, result} -> result
@@ -1046,7 +1047,7 @@ defmodule MscmpSystDb do
     * `{:error, Mserror.DbError.t()}` - If there was an error setting the
       Datastore Context.
   """
-  @spec put_datastore_context(Types.context_registry(), Types.context_name()) ::
+  @spec put_datastore_context(ProcessTypes.registry(), ProcessTypes.name()) ::
           {:ok, atom() | pid()} | {:error, Mserror.DbError.t()}
   def put_datastore_context(context_registry, context) do
     case Datastore.put_datastore_context(context_registry, context) do
