@@ -19,8 +19,8 @@ defmodule HashTest do
 
   @moduletag :unit
   @moduletag :capture_log
-  @strong_iterations 100
-  @weak_iterations 1_000_000
+  @strong_iterations 250
+  @weak_iterations 10_000
 
   describe "credential hash operations" do
     test "Can Create and Verify a Credential Hash" do

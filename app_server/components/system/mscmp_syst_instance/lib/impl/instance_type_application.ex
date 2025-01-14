@@ -15,8 +15,6 @@ defmodule MscmpSystInstance.Impl.InstanceTypeApplication do
 
   alias MscmpSystInstance.Types
 
-  require Logger
-
   ##############################################################################
   #
   # create_instance_type_application

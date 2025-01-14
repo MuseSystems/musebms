@@ -20,8 +20,6 @@ defmodule MscmpSystDb.Impl.Dba do
   alias MscmpSystDb.Types
   alias MscmpSystDb.Types.{ContextState, DatastoreContext, DatastoreOptions, DbServer}
 
-  require Logger
-
   ######
   #
   # DBA actions are those which require highly privileged access to the database

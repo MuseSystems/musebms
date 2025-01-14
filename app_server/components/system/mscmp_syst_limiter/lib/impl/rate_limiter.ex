@@ -15,8 +15,6 @@ defmodule MscmpSystLimiter.Impl.RateLimiter do
 
   alias MscmpSystLimiter.Types
 
-  require Logger
-
   ##############################################################################
   #
   # get_counter_name

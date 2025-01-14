@@ -17,8 +17,6 @@ defmodule MscmpSystInstance.Impl.ApplicationContexts do
 
   alias MscmpSystInstance.Types
 
-  require Logger
-
   ##############################################################################
   #
   # create_application_context

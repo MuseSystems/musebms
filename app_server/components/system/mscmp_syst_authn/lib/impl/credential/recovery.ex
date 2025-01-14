@@ -18,8 +18,6 @@ defmodule MscmpSystAuthn.Impl.Credential.Recovery do
   alias MscmpSystAuthn.Impl.Credential.GenericToken
   alias MscmpSystAuthn.Types
 
-  require Logger
-
   @token_type :credential_types_sysdef_token_recovery
 
   ##############################################################################

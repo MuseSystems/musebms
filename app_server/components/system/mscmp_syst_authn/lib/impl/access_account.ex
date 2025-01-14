@@ -17,8 +17,6 @@ defmodule MscmpSystAuthn.Impl.AccessAccount do
 
   alias MscmpSystAuthn.Types
 
-  require Logger
-
   ##############################################################################
   #
   # create_access_account

@@ -15,8 +15,6 @@ defmodule MscmpSystDb.Impl.Migrations do
 
   alias MscmpSystDb.Runtime.Datastore
 
-  require Logger
-
   ######
   #
   # This module provides the logic for both building database build plan TOML

@@ -19,8 +19,6 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
 
   alias MscmpSystAuthn.Types
 
-  require Logger
-
   ##############################################################################
   #
   # invite_to_instance

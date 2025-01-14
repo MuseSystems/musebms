@@ -21,8 +21,6 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   alias MscmpSystAuthn.Types
   alias MscmpSystDb.DbTypes
 
-  require Logger
-
   ##############################################################################
   #
   # host_disallowed

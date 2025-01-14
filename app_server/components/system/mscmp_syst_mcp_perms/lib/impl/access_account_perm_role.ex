@@ -13,8 +13,6 @@
 defmodule MscmpSystMcpPerms.Impl.AccessAccountPermRole do
   @moduledoc false
 
-  import Msutils.Guards
-
   import Ecto.Query
 
   alias MscmpSystError.Types, as: ErrorTypes

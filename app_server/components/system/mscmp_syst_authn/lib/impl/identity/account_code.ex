@@ -22,8 +22,6 @@ defmodule MscmpSystAuthn.Impl.Identity.AccountCode do
   alias MscmpSystAuthn.Impl
   alias MscmpSystAuthn.Types
 
-  require Logger
-
   ##############################################################################
   #
   # create_identity

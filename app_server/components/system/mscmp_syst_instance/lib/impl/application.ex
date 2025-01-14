@@ -17,8 +17,6 @@ defmodule MscmpSystInstance.Impl.Application do
 
   alias MscmpSystInstance.Types
 
-  require Logger
-
   # Note that this module, despite the name, is not the OTP Application related
   # code.  Please see `MscmpSystInstance.Runtime.Application` for that code.
   # This module is for working with `Msdata.SystApplications` records.

@@ -20,8 +20,6 @@ defmodule MscmpSystAuthn.Impl.Identity.ApiToken do
   alias MscmpSystAuthn.Impl.Identity.Helpers
   alias MscmpSystAuthn.Types
 
-  require Logger
-
   ##############################################################################
   #
   # create_identity

@@ -21,8 +21,6 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
   alias MscmpSystAuthn.Types
   alias MscmpSystDb.DbTypes
 
-  require Logger
-
   # TODO: Really think about logging in this context.  We don't want
   #       plaintext_pwd to leak here.  No special care has been taken at this
   #       point time.

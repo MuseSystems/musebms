@@ -19,8 +19,6 @@ defmodule MscmpSystInteraction.Runtime.Service do
   alias MscmpSystInteraction.Impl
   alias MscmpSystInteraction.Types
 
-  require Logger
-
   ######
   #
   # This module implements the mechanics of dealing with GenServer runtime

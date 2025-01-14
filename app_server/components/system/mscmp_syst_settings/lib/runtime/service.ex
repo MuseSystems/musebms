@@ -18,8 +18,6 @@ defmodule MscmpSystSettings.Runtime.Service do
   alias MscmpSystSettings.Impl
   alias MscmpSystSettings.Types
 
-  require Logger
-
   ######
   #
   # This module implements the mechanics of dealing with GenServer runtime

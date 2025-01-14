@@ -18,8 +18,6 @@ defmodule MscmpSystEnums.Runtime.Service do
   alias MscmpSystEnums.Impl
   alias MscmpSystEnums.Types
 
-  require Logger
-
   ######
   #
   # This module implements the mechanics of dealing with GenServer runtime

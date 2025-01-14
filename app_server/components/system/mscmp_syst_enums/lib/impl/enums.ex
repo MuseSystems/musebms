@@ -18,8 +18,6 @@ defmodule MscmpSystEnums.Impl.Enums do
   alias MscmpSystEnums.Runtime.ProcessUtils
   alias MscmpSystEnums.Types
 
-  require Logger
-
   ######
   #
   # The application logic which is accessed via either the public API defined in

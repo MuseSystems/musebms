@@ -17,8 +17,6 @@ defmodule MscmpSystDb.Impl.Privileged do
   alias MscmpSystDb.Runtime.Datastore
   alias MscmpSystDb.Types.{DatastoreContext, DatastoreOptions, DbServer}
 
-  require Logger
-
   ######
   #
   # Privileged actions are those which require the database owner role to

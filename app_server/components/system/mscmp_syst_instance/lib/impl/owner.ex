@@ -17,8 +17,6 @@ defmodule MscmpSystInstance.Impl.Owner do
 
   alias MscmpSystInstance.Types
 
-  require Logger
-
   ##############################################################################
   #
   # create_owner

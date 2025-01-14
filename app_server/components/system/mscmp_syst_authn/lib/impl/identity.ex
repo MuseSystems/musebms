@@ -18,8 +18,6 @@ defmodule MscmpSystAuthn.Impl.Identity do
   alias MscmpSystAuthn.Impl.Identity.Helpers
   alias MscmpSystAuthn.Types
 
-  require Logger
-
   ##############################################################################
   #
   # Identity Behaviour Callbacks

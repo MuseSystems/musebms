@@ -17,8 +17,6 @@ defmodule MscmpSystHierarchy.Impl.Hierarchy do
 
   alias MscmpSystHierarchy.Types
 
-  require Logger
-
   #
   # Hierarchy Type
   #

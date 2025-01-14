@@ -19,8 +19,6 @@ defmodule MscmpSystNetwork.Impl.Ip do
   alias MscmpSystNetwork.Impl
   alias MscmpSystNetwork.Types
 
-  require Logger
-
   ##############################################################################
   #
   # to_struct

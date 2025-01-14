@@ -22,8 +22,6 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   alias MscmpSystAuthn.Types.PasswordRules
   alias MscmpSystDb.DbTypes
 
-  require Logger
-
   ##############################################################################
   #
   # create_disallowed_password

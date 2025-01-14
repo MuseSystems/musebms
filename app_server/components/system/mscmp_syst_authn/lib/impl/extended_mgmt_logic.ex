@@ -19,8 +19,6 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
   alias MscmpSystAuthn.Types
   alias MscmpSystAuthn.Types.AuthenticatorResult
 
-  require Logger
-
   # ============================================================================
   #
   # Email / Password Management

@@ -45,8 +45,6 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   #       passed through a cleansing function.  This area needs some serious
   #       consideration once we've got more of an application together.
 
-  require Logger
-
   # TODO: Consider a rate limit similar to the host limit based on identity.  If
   #       an attack is going after a specific account, but across different
   #       hosts, we'd only ever just rate limit it.  At some point flagging that

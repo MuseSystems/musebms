@@ -15,8 +15,6 @@ defmodule MscmpSystInstance.Impl.InstanceTypeContext do
 
   alias MscmpSystInstance.Types
 
-  require Logger
-
   ##############################################################################
   #
   # update_instance_type_context

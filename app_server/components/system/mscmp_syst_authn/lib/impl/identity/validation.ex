@@ -18,8 +18,6 @@ defmodule MscmpSystAuthn.Impl.Identity.Validation do
   alias MscmpSystAuthn.Impl.Identity.Helpers
   alias MscmpSystAuthn.Types
 
-  require Logger
-
   # Validation identities are sufficiently different from other kinds of
   # identities that we shouldn't implement the
   # MscmpSystAuthn.Impl.Identity behaviour here, though we should be

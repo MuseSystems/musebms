@@ -18,8 +18,6 @@ defmodule MscmpSystInstance.Impl.Instance do
   alias MscmpSystInstance.Impl
   alias MscmpSystInstance.Types
 
-  require Logger
-
   # The below is used as a salting value for Instance Context password
   # generation.  The overall approach, including this value, is almost certainly
   # a bad idea and terribly naive.  Put "magic" in the name to make apparent

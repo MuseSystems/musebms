@@ -18,8 +18,6 @@ defmodule MscmpSystAuthn.Impl.Identity.Email do
   alias MscmpSystAuthn.Impl.Identity.Helpers
   alias MscmpSystAuthn.Types
 
-  require Logger
-
   ##############################################################################
   #
   # create_identity

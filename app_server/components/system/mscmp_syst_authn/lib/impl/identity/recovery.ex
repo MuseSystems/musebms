@@ -13,14 +13,10 @@
 defmodule MscmpSystAuthn.Impl.Identity.Recovery do
   @moduledoc false
 
-  import Msutils.Guards
-
   import Ecto.Query
 
   alias MscmpSystAuthn.Impl.Identity.Helpers
   alias MscmpSystAuthn.Types
-
-  require Logger
 
   # The Recovery process currently only supports Password Credential recovery
   # and there are number of places in this module and related modules where this

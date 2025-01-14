@@ -210,7 +210,7 @@ defmodule Msutils.Process do
       ...>   %{}
       ...> end)
       iex> {:ok, ^pid1} = Msutils.Process.whereis(:taken_name)
-      iex> {:ok, pid2} = Agent.start_link(fn ->
+      iex> {:ok, _} = Agent.start_link(fn ->
       ...>   {:error, error} = Msutils.Process.register(:taken_name)
       ...>   %Mserror.ProcessUtilsError{kind: :registration, cause: :registration_failed} = error
       ...>   %{}
