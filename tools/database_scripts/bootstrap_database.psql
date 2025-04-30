@@ -23,7 +23,6 @@
 \echo '\n=== Muse Systems Business Management System :: Bootstrap Script ===\n'
 \echo '\n=== Starting bootstrap at ' `date '+%Y-%m-%d %H:%M:%S'` ' ===\n'
 
-
 SET SESSION muse.privileged_password TO :'dbadmin_password';
 
 DO
@@ -103,11 +102,7 @@ roles may be automatically managed by the application processes.$DOC$;
 
             COMMENT ON ROLE ms_syst_documentation IS
                 $DOC$An unprivileged group role with usage access to all schemas for
-the purposes of database documentation generation.
-
-Please note that this role is not automatically removed when the database is
-reset.  We don't drop this role because user roles are added to this group and
-we don't want to force re-adding those after a reset.$DOC$;
+the purposes of database documentation generation.$DOC$;
 
         END IF;
 

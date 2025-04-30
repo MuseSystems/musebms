@@ -68,5 +68,6 @@ DROP ROLE IF EXISTS ms_syst_access;
 DROP ROLE IF EXISTS ms_syst_privileged;
 DROP ROLE IF EXISTS ms_syst_managable;
 DROP ROLE IF EXISTS ms_syst_owner;
+DROP ROLE IF EXISTS ms_syst_documentation;
 
 \echo '\n=== Drop objects script complete. ===\n'
