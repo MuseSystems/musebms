@@ -495,14 +495,21 @@ defmodule MscmpSystDb.Runtime.Datastore do
   #
   #
 
-  @spec lookup_context_pid(ProcessTypes.name()) ::
+  @spec lookup_context_pid(ProcessTypes.name() | DatastoreContext.t()) ::
           {:ok, pid()} | {:error, MscmpSystError.Types.parsable_error()}
+
+  def lookup_context_pid(%DatastoreContext{context_name: context_name}),
+    do: Msutils.Process.whereis(context_name) |> process_lookup_result()
+
   def lookup_context_pid(context_name),
     do: Msutils.Process.whereis(context_name) |> process_lookup_result()
 
-  @spec lookup_context_pid(ProcessTypes.registry(), term()) ::
+  @spec lookup_context_pid(ProcessTypes.registry(), DatastoreContext.t() | term()) ::
           {:ok, pid() | nil} | {:error, MscmpSystError.Types.parsable_error()}
   def lookup_context_pid(_, nil), do: {:ok, nil}
+
+  def lookup_context_pid(context_registry, %DatastoreContext{context_name: context_name}),
+    do: Msutils.Process.whereis(context_registry, context_name) |> process_lookup_result()
 
   def lookup_context_pid(context_registry, context_name),
     do: Msutils.Process.whereis(context_registry, context_name) |> process_lookup_result()

@@ -110,13 +110,25 @@ defmodule MscmpSystDb.Impl.Dba do
   def drop_datastore(datastore_options, opts) do
     starting_datastore_context = Datastore.current_datastore_context()
 
+    stop_datastore_opts =
+      Keyword.take(opts, [:context_registry, :db_shutdown_timeout])
+
+    drop_contexts_opts =
+      Keyword.take(opts, [:context_registry, :bypass_stop_datastore])
+
     result =
       with {:ok, dba_pid} <- start_dba_connection(datastore_options),
            {:ok, _} <- Datastore.put_datastore_context(dba_pid),
            :ok <-
              revoke_db_connect_privs(datastore_options.contexts, datastore_options.database_name),
+           :ok <-
+             maybe_stop_datastore(
+               drop_contexts_opts[:bypass_stop_datastore],
+               datastore_options,
+               stop_datastore_opts
+             ),
            :ok <- drop_database(datastore_options),
-           :ok <- drop_contexts(datastore_options.contexts) do
+           :ok <- drop_contexts(datastore_options.contexts, drop_contexts_opts) do
         stop_dba_connection(opts[:db_shutdown_timeout])
       else
         error ->
@@ -128,6 +140,11 @@ defmodule MscmpSystDb.Impl.Dba do
 
     result
   end
+
+  defp maybe_stop_datastore(true, _, _), do: :ok
+
+  defp maybe_stop_datastore(false, datastore_options, opts),
+    do: Datastore.stop_datastore(datastore_options, opts)
 
   ##############################################################################
   #
@@ -205,11 +222,14 @@ defmodule MscmpSystDb.Impl.Dba do
   def drop_datastore_contexts(datastore_options, delete_contexts, opts \\ []) do
     starting_datastore_context = Datastore.current_datastore_context()
 
+    drop_contexts_opts =
+      Keyword.take(opts, [:context_registry, :bypass_stop_datastore])
+
     result =
       with {:ok, dba_pid} <- start_dba_connection(datastore_options),
            {:ok, _} <- Datastore.put_datastore_context(dba_pid),
            :ok <- revoke_db_connect_privs(delete_contexts, datastore_options.database_name),
-           :ok <- drop_contexts(delete_contexts) do
+           :ok <- drop_contexts(delete_contexts, drop_contexts_opts) do
         stop_dba_connection(opts[:db_shutdown_timeout])
       end
 
@@ -465,26 +485,62 @@ defmodule MscmpSystDb.Impl.Dba do
     end
   end
 
-  defp drop_contexts(contexts) do
+  defp drop_contexts(contexts, opts) do
+    ds_stop_opt =
+      case opts[:bypass_stop_datastore] do
+        true -> :bypass_stop_datastore
+        false -> :stop_datastore
+      end
+
     each_func = fn context ->
-      context
-      |> drop_database_role()
-      |> parse_drop_database_role_result()
+      with :ok <- maybe_stop_datastore_context(ds_stop_opt, context, opts[:context_registry]),
+           {:ok, _database_result} <- drop_database_role(context) do
+        :ok
+      else
+        error -> raise "Failed to drop context '#{context.context_name}': #{inspect(error)}."
+      end
     end
 
-    case Datastore.transaction(fn -> contexts |> Enum.each(&each_func.(&1)) end) do
+    result =
+      Datastore.transaction(fn -> Enum.each(contexts, &each_func.(&1)) end)
+
+    case result do
       {:ok, _} -> :ok
-      error -> {:error, {:database_transaction_error, error}}
+      {:error, error} -> {:error, {:database_transaction_error, error}}
+    end
+  end
+
+  defp maybe_stop_datastore_context(:bypass_stop_datastore, _context, _context_registry), do: :ok
+
+  defp maybe_stop_datastore_context(
+         :stop_datastore,
+         %DatastoreContext{context_name: context_name},
+         context_registry
+       ) do
+    lookup_result = Datastore.lookup_context_pid(context_registry, context_name)
+
+    case lookup_result do
+      {:ok, pid} when is_pid(pid) ->
+        stop_result =
+          Datastore.stop_datastore_context(pid, context_registry: {Registry, context_registry})
+
+        stop_result
+
+      {:ok, nil} ->
+        :ok
+
+      {:error, {:not_found, _}} ->
+        :ok
+
+      {:error, error} ->
+        {:error, {:context_lookup_error, error}}
     end
   end
 
   defp drop_database_role(%DatastoreContext{database_role: role_name}) do
-    Datastore.query("SELECT ms_syst.drop_role(p_role_name => $1);", [role_name])
+    query = "SELECT ms_syst.drop_role(p_role_name => $1);"
+    Datastore.query(query, [role_name])
   end
-
-  defp parse_drop_database_role_result({:ok, _database_result}), do: :ok
-
-  defp parse_drop_database_role_result({:error, _} = error), do: error
 
   defp revoke_db_connect_privs(contexts, database_name) do
     each_func = fn context ->

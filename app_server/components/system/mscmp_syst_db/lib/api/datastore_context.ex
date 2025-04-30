@@ -38,6 +38,7 @@ defmodule MscmpSystDb.DatastoreContext do
       doc: """
       Specifies the registry to use for registering named Datastore Contexts.
       Can be `:local`, `:global`, a tuple of `{module(), term()}`, or `nil`.
+      Commonly, this is a tuple of `{Registry, registry_name}`.
       """
     ]
   ]

@@ -195,6 +195,16 @@ defmodule MscmpSystDb.Macros do
       doc: """
       Specifies the registry to use for registering named Datastore Contexts.
       Can be `:local`, `:global`, or a tuple of `{module(), term()}`.
+      Commonly, this is a tuple of `{Registry, registry_name}`.
+      """
+    ],
+    bypass_stop_datastore: [
+      type: :boolean,
+      default: false,
+      doc: """
+      A boolean value indicating whether to bypass the stopping of the Datastore.
+      This is useful in cases such as when using `mix dropdb` to drop a database
+      which never starts a Datastore Context nor registry.
       """
     ]
   ]
@@ -294,8 +304,7 @@ defmodule MscmpSystDb.Macros do
       def drop_database(datastore_options, opts) do
         opts = NimbleOptions.validate!(opts, unquote(Macro.escape(@drop_options)))
 
-        :ok = MscmpSystDb.stop_datastore(datastore_options, opts)
-        :ok = MscmpSystDb.drop_datastore(datastore_options)
+        :ok = MscmpSystDb.drop_datastore(datastore_options, opts)
       end
     end
   end

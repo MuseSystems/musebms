@@ -189,7 +189,8 @@ defmodule MscmpSystDbTest do
     assert :ok =
              MscmpSystDb.drop_datastore_contexts(
                @datastore_options_type_one,
-               @context_type_one_group_two
+               @context_type_one_group_two,
+               context_registry: {Registry, MscmpSystDb.TestRegistry}
              )
 
     # Get datastore state after added contexts dropped
@@ -214,7 +215,9 @@ defmodule MscmpSystDbTest do
 
     # Drop the datastore
     assert :ok =
-             MscmpSystDb.drop_datastore(@datastore_options_type_one)
+             MscmpSystDb.drop_datastore(@datastore_options_type_one,
+               context_registry: {Registry, MscmpSystDb.TestRegistry}
+             )
   end
 
   test "Migrations & Querying" do
@@ -293,7 +296,10 @@ defmodule MscmpSystDbTest do
                context_registry: {Registry, MscmpSystDb.TestRegistry}
              )
 
-    assert :ok = MscmpSystDb.drop_datastore(datastore_options)
+    assert :ok =
+             MscmpSystDb.drop_datastore(datastore_options,
+               context_registry: {Registry, MscmpSystDb.TestRegistry}
+             )
   end
 
   test "get_pg_exception" do

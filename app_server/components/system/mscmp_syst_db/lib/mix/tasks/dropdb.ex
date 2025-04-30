@@ -84,6 +84,12 @@ defmodule Mix.Tasks.Dropdb do
       migrations were built.  This option is only used if either the
       `--clean-all` or `--clean` options are also set.  This is an optional
       value which defaults to "priv/database".
+
+    * `--bypass-stop-datastore` or `-b` - if this switch is set, this task will
+      not try to stop the Datastore Contexts before dropping the database.  This
+      is useful if the database was only loaded, but an Elixir application was
+      not started; an example of this is when database documentation is
+      generated.  This is a boolean switch and defaults to false.
   """
 
   use Mix.Task
@@ -104,13 +110,15 @@ defmodule Mix.Tasks.Dropdb do
     clean_all: :boolean,
     clean: :boolean,
     type: :string,
-    destination: :string
+    destination: :string,
+    bypass_stop_datastore: :boolean
   ]
 
   @aliases [
     d: :destination,
     t: :type,
-    c: :clean
+    c: :clean,
+    b: :bypass_stop_datastore
   ]
 
   @spec run([binary()]) :: :ok
@@ -130,7 +138,10 @@ defmodule Mix.Tasks.Dropdb do
 
     datastore_options = get_drop_datastore_options(opts_cli)
 
-    :ok = drop_database(datastore_options, [])
+    :ok =
+      drop_database(datastore_options,
+        bypass_stop_datastore: Keyword.get(opts_cli, :bypass_stop_datastore, false)
+      )
   end
 
   defp get_drop_datastore_options(opts_cli) do

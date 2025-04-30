@@ -48,6 +48,7 @@ defmodule MscmpSystDb do
       doc: """
       Specifies the registry to use for registering named Datastore Contexts.
       Can be `:local`, `:global`, or a tuple of `{module(), term()}`.
+      Commonly, this is a tuple of `{Registry, registry_name}`.
       """
     ],
     migrations_schema: [
@@ -84,6 +85,15 @@ defmodule MscmpSystDb do
       process registry (e.g. `{:via, Registry, {MyApp.Registry, :my_registry}}`),
       this registry will become the default registry for all Datastore Contexts;
       a valid `context_registry` value overrides this default.
+      """
+    ],
+    bypass_stop_datastore: [
+      type: :boolean,
+      default: false,
+      doc: """
+      If true, functions such as `drop_datastore/1` will not attempt to stop the
+      Datastore.  This is useful in cases, such as in `Mix.Tasks.Dropdb`, where
+      the datastore was never started or stopped using other means.
       """
     ]
   ]
@@ -245,7 +255,13 @@ defmodule MscmpSystDb do
   #
   #
 
-  @drop_datastore_opts NimbleOptions.new!(Keyword.take(option_defs, [:db_shutdown_timeout]))
+  @drop_datastore_opts NimbleOptions.new!(
+                         Keyword.take(option_defs, [
+                           :db_shutdown_timeout,
+                           :context_registry,
+                           :bypass_stop_datastore
+                         ])
+                       )
 
   @doc section: :datastore_management
   @doc """
@@ -448,7 +464,11 @@ defmodule MscmpSystDb do
   #
 
   @drop_datastore_contexts_opts NimbleOptions.new!(
-                                  Keyword.take(option_defs, [:db_shutdown_timeout])
+                                  Keyword.take(option_defs, [
+                                    :db_shutdown_timeout,
+                                    :context_registry,
+                                    :bypass_stop_datastore
+                                  ])
                                 )
 
   @doc section: :datastore_management
