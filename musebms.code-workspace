@@ -101,6 +101,10 @@
             "path": "tools"
         },
         {
+            "name": "msbms_build_lib",
+            "path": "tools/build_tools/msbms_build_lib"
+        },
+        {
             "name": ".github",
             "path": ".github"
         }
@@ -137,6 +141,7 @@
             "**/documentation/technical": true
         },
         "git.ignoreLimitWarning": true,
-        "editor.formatOnSave": true
+        "editor.formatOnSave": true,
+        "powershell.cwd": "tools"
     }
 }
