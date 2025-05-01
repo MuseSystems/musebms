@@ -22,9 +22,10 @@ defmodule MssubMcp.MixProject do
     {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
     {:ex_doc, "~> 0.31", only: :dev, runtime: false},
     {:nimble_options, "~> 1.0"},
+    {:phoenix_pubsub, "~> 2.0"},
 
     # Muse Systems Business Management System Components
-    {:mscmp_syst_utils_string, path: "../../components/system/mscmp_syst_utils_string"},
+    {:mscmp_syst_utils, path: "../../components/system/mscmp_syst_utils"},
     {:mscmp_syst_error, path: "../../components/system/mscmp_syst_error"},
     {:mscmp_syst_options, path: "../../components/system/mscmp_syst_options"},
     {:mscmp_syst_enums, path: "../../components/system/mscmp_syst_enums"},
@@ -51,7 +52,7 @@ defmodule MssubMcp.MixProject do
     [
       app: @name,
       version: @version,
-      elixir: "~> 1.17",
+      elixir: "~> 1.18",
       deps: @deps,
       build_embedded: in_production,
       start_permanent: in_production,
@@ -64,8 +65,7 @@ defmodule MssubMcp.MixProject do
         deps: [
           mscmp_syst_db: "../mscmp_syst_db",
           mscmp_syst_error: "../mscmp_syst_error",
-          mscmp_syst_utils_string: "../mscmp_syst_utils_string",
-          mscmp_syst_limiter: "../mscmp_syst_limiter",
+          mscmp_syst_utils: "../mscmp_syst_utils",
           mscmp_syst_enums: "../mscmp_syst_enums",
           mscmp_syst_options: "../mscmp_syst_options",
           mscmp_syst_instance: "../mscmp_syst_instance",
