@@ -30,3 +30,6 @@ mscmp_syst_enums-*.tar
 
 # Ignore our PLT directory since those aren't versioned
 priv/plts
+
+# Ignore testing migrations
+priv/database

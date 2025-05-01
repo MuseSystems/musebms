@@ -33,3 +33,6 @@ mscmp_syst_athn-*.tar
 
 # Ignore our PLT directory since those aren't versioned
 priv/plts
+
+# Ignore testing migrations
+priv/database

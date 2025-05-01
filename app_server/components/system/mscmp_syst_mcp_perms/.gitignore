@@ -30,3 +30,6 @@ mscmp_syst_mcp_perms-*.tar
 
 # Ignore our PLT directory since those aren't versioned
 priv/plts
+
+# Ignore testing migrations
+priv/database
