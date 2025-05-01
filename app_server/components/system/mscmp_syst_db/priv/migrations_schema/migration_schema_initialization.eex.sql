@@ -20,7 +20,7 @@ $INIT_DATASTORE$
         --
         -- !!!!! Do not release to production !!!!!
         --
-        -- TODO: Remove from code at PostgreSQL 17 release.  PostgreSQL 17 is
+        -- TODO: Remove from code at PostgreSQL 18 release.  PostgreSQL 18 is
         --       expected to have UUIDv7 support.
 
         IF
