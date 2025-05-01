@@ -11,10 +11,15 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule DbTypesDecimalRangeDecimalTest do
+  @moduledoc false
+
   use ExUnit.Case, async: true
 
   alias MscmpSystDb.DbTypes
   alias MscmpSystDb.Types.BoundsCompareResult
+
+  @moduletag :unit
+  @moduletag :capture_log
 
   test "Can compute Decimal/Decimal result operators" do
     assert DbTypes.compare(Decimal.new("1.1"), Decimal.new("1.1")) == :eq

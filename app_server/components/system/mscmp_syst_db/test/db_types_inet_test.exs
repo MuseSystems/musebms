@@ -13,11 +13,16 @@
 # credo:disable-for-this-file Credo.Check.Readability.LargeNumbers
 
 defmodule DbTypesInetTest do
+  @moduledoc false
+
   use ExUnit.Case, async: true
 
   import MscmpSystNetwork, only: [sigil_i: 2]
 
   alias MscmpSystDb.DbTypes
+
+  @moduletag :unit
+  @moduletag :capture_log
 
   test "Can convert DbTypes.Inet to Postgrex.INET" do
     assert %Postgrex.INET{address: {10, 1, 1, 10}} =
@@ -29,7 +34,10 @@ defmodule DbTypesInetTest do
 
   test "Can convert Postgrex.INET to DbTypes.Inet" do
     assert %DbTypes.Inet{address: {10, 1, 1, 10}} =
-             DbTypes.Inet.from_postgrex_inet(%Postgrex.INET{address: {10, 1, 1, 10}, netmask: nil})
+             DbTypes.Inet.from_postgrex_inet(%Postgrex.INET{
+               address: {10, 1, 1, 10},
+               netmask: nil
+             })
 
     assert %DbTypes.Inet{address: {10, 1, 1, 0}, netmask: 24} =
              DbTypes.Inet.from_postgrex_inet(%Postgrex.INET{address: {10, 1, 1, 0}, netmask: 24})

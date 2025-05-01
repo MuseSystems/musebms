@@ -11,9 +11,14 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule DbTypesIntervalTest do
+  @moduledoc false
+
   use ExUnit.Case, async: true
 
   alias MscmpSystDb.DbTypes
+
+  @moduletag :unit
+  @moduletag :capture_log
 
   test "Can compute Interval result operators" do
     control = %DbTypes.Interval{

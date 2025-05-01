@@ -1,5 +1,5 @@
-# Source File: doctests_test.exs
-# Location:    musebms/components/system/mscmp_syst_db/test/doctests_test.exs
+# Source File: test_support.ex
+# Location:    musebms/components/system/mscmp_syst_db/test/support/test_support.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,16 +10,15 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule DoctestsTest do
+defmodule TestSupport do
   @moduledoc false
 
-  use ExUnit.Case, async: true
+  @spec get_test_migrations_root_dir() :: String.t()
+  def get_test_migrations_root_dir, do: "priv/database/migration_test"
 
-  @moduletag :doctest
-  @moduletag :capture_log
-
-  doctest MscmpSystDb.DbTypes
-  doctest MscmpSystDb.DbTypes.Range
-  doctest MscmpSystDb.DbTypes.Interval
-  doctest MscmpSystDb.Types
+  @spec cleanup_test_migrations() :: :ok
+  def cleanup_test_migrations do
+    File.rm_rf!(get_test_migrations_root_dir())
+    :ok
+  end
 end

@@ -11,10 +11,15 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule DbTypesDateTimeRangeDateTimeTest do
+  @moduledoc false
+
   use ExUnit.Case, async: true
 
   alias MscmpSystDb.DbTypes
   alias MscmpSystDb.Types.BoundsCompareResult
+
+  @moduletag :unit
+  @moduletag :capture_log
 
   test "Can compute DateTime/DateTime result operators" do
     assert DbTypes.compare(~U[2022-01-01 00:00:00Z], ~U[2022-01-01 00:00:00Z]) == :eq

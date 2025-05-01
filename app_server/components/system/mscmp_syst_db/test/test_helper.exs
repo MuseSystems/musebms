@@ -15,3 +15,7 @@ Mix.shell(Mix.Shell.Process)
 {:ok, _} = Registry.start_link(keys: :unique, name: MscmpSystDb.TestRegistry)
 
 ExUnit.start()
+
+ExUnit.after_suite(fn _suite_result ->
+  TestSupport.cleanup_test_migrations()
+end)

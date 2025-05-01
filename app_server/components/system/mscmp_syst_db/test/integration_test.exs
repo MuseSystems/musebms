@@ -1,4 +1,16 @@
-defmodule MscmpSystDbTest do
+# Source File: integration_test.exs
+# Location:    musebms/components/system/mscmp_syst_db/test/integration_test.exs
+# Project:     Muse Systems Business Management System
+#
+# Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+# This file may include content copyrighted and licensed from third parties.
+#
+# See the LICENSE file in the project root for license terms and conditions.
+# See the NOTICE file in the project root for copyright ownership information.
+#
+# muse.information@musesystems.com :: https://muse.systems
+
+defmodule IntegrationTest do
   @moduledoc false
 
   # TODO: Everything about our MscmpSystDb Component tests is underdone.  True,
@@ -10,6 +22,9 @@ defmodule MscmpSystDbTest do
 
   alias Mix.Tasks.Builddb
   alias MscmpSystDb.Types.{DatastoreContext, DatastoreOptions, DbServer}
+
+  @moduletag :integration
+  @moduletag :capture_log
 
   @datastore_options_type_one %DatastoreOptions{
     database_name: "ms_test_type_one",
@@ -83,7 +98,7 @@ defmodule MscmpSystDbTest do
   ]
 
   @migration_test_source_root_dir "database/migration_test"
-  @migration_test_migrations_root_dir "priv/database/migration_test"
+  @migration_test_migrations_root_dir TestSupport.get_test_migrations_root_dir()
   @migration_test_datastore_type "test_type_four"
   @migration_test_opts [migrations_root_dir: @migration_test_migrations_root_dir]
 

@@ -11,11 +11,15 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MixBuilddbTaskTest do
+  @moduledoc false
   use ExUnit.Case
 
   alias Mix.Tasks.Builddb
 
   require IEx
+
+  @moduletag :unit
+  @moduletag :capture_log
 
   @standard_migrations_root_dir "priv/database"
 

@@ -11,10 +11,15 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule DbTypesIntegerRangeIntegerTest do
+  @moduledoc false
+
   use ExUnit.Case, async: true
 
   alias MscmpSystDb.DbTypes
   alias MscmpSystDb.Types.BoundsCompareResult
+
+  @moduletag :unit
+  @moduletag :capture_log
 
   test "Can compute Integer/Integer result operators" do
     assert DbTypes.compare(1, 1) == :eq
