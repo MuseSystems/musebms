@@ -1,6 +1,10 @@
 {
     "folders": [
         {
+            "name": ".cursor",
+            "path": ".cursor"
+        },
+        {
             "name": "database",
             "path": "database"
         },
@@ -9,16 +13,12 @@
             "path": "app_server/components/system/mscmp_syst_error"
         },
         {
-            "name": "mscmp_syst_utils_string",
-            "path": "app_server/components/system/mscmp_syst_utils_string"
+            "name": "mscmp_syst_utils",
+            "path": "app_server/components/system/mscmp_syst_utils"
         },
         {
             "name": "mscmp_syst_utils_data",
             "path": "app_server/components/system/mscmp_syst_utils_data"
-        },
-        {
-            "name": "mscmp_syst_utils_guards",
-            "path": "app_server/components/system/mscmp_syst_utils_guards"
         },
         {
             "name": "mscmp_syst_network",
