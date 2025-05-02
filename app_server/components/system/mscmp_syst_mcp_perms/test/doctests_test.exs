@@ -11,10 +11,20 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule DoctestsTest do
+  @moduledoc false
   use McpPermsTestCase, async: true
 
   @moduletag :doctest
   @moduletag :capture_log
 
-  doctest MscmpSystMcpPerms
+  # No doctests are actually present in this Component.
+  #
+  # This test is just a placeholder to ensure that we don't fail the doctests
+  # when running the tests for the Component, especially when running in a
+  # CI environment using the build scripts.
+  #
+
+  test "No doctests" do
+    assert true
+  end
 end
