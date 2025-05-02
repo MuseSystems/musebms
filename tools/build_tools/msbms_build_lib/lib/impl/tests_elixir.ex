@@ -44,31 +44,17 @@ defmodule MsbmsBuildLib.Impl.TestsElixir do
   end
 
   defp run_component_tests(tests, component_paths) do
-    component_paths
-    |> Enum.map(fn component_path ->
-      process_component(tests, component_path)
+    Enum.reduce_while(component_paths, :ok, fn component_path, _acc ->
+      case process_component(tests, component_path) do
+        :ok ->
+          {:cont, :ok}
+
+        {:error, component_name} ->
+          error_message = "Testing failed for component: #{component_name}"
+          Logger.warning(error_message)
+          {:halt, {:error, error_message}}
+      end
     end)
-    |> Enum.reduce(:ok, fn
-      :ok, :ok ->
-        :ok
-
-      {:error, component_name}, :ok ->
-        {:error, [component_name]}
-
-      {:error, component_name}, {:error, [_ | _] = error_components} ->
-        if component_name in error_components do
-          {:error, error_components}
-        else
-          {:error, [component_name | error_components]}
-        end
-    end)
-    |> case do
-      :ok ->
-        :ok
-
-      {:error, error_components} ->
-        {:error, "Testing failed by components: " <> Enum.join(error_components, ", ")}
-    end
   end
 
   defp process_component(tests, component_path) do
