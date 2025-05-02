@@ -181,7 +181,9 @@ defmodule MscmpSystInstance.Impl.Instance do
   end
 
   defp process_create_datastore_result(error, instance, datastore_options, opts) do
-    with :ok <- MscmpSystDb.drop_datastore(datastore_options),
+    dbg(%{error: error, instance: instance, datastore_options: datastore_options, opts: opts})
+
+    with :ok <- MscmpSystDb.drop_datastore(datastore_options, bypass_stop_datastore: true),
          {:ok, _} <- set_instance_state(instance, opts[:failed_state_id]) do
       {:error, {:datastore_creation_failure, error}}
     else
@@ -338,7 +340,7 @@ defmodule MscmpSystInstance.Impl.Instance do
 
   defp maybe_perform_instance_purge("instance_states_purge_eligible", instance, startup_options) do
     with {:ok, datastore_options} <- get_instance_datastore_options(instance, startup_options),
-         :ok <- MscmpSystDb.drop_datastore(datastore_options),
+         :ok <- MscmpSystDb.drop_datastore(datastore_options, bypass_stop_datastore: true),
          {:ok, _} <- MscmpSystDb.delete(instance) do
       :ok
     end
