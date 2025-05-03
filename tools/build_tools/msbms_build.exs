@@ -115,7 +115,7 @@ defmodule MsbmsBuild do
     elixir_env = Keyword.get(opts, :elixir_env, "dev")
 
     :ok =
-      String.to_atom(Keyword.get(opts, :log_level, "notice"))
+      String.to_atom(Keyword.get(opts, :log_level, "info"))
       |> MsbmsBuildLib.set_log_level()
 
     actions_list =
