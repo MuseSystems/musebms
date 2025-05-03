@@ -84,23 +84,21 @@ defmodule MsbmsBuildLib.Impl.CleanElixir do
 
       Enum.each(component_paths, fn component_path ->
         target_dir = Path.join(component_path, clean_target)
+        component_name = component_path |> Path.basename()
 
         if File.dir?(target_dir) do
           case File.rm_rf(target_dir) do
             {:ok, _} ->
-              Logger.info(
-                "::::cleaning #{clean_target_description} :: #{component_path |> Path.basename()}: DONE."
-              )
+              Logger.info("::#{component_name}::cleaning #{clean_target_description}: DONE.")
 
             {:error, _error_message, _error_details} ->
               throw(
-                {:error,
-                 "Failed to remove #{clean_target_description} :: #{component_path |> Path.basename()}."}
+                {:error, "Failed to remove #{clean_target_description} :: #{component_name}."}
               )
           end
         else
           Logger.info(
-            "::::cleaning #{clean_target_description} :: #{component_path |> Path.basename()}: SKIPPED (does not exist)"
+            "::#{component_name}::cleaning #{clean_target_description}: SKIPPED (does not exist)"
           )
         end
       end)

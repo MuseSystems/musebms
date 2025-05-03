@@ -97,7 +97,7 @@ defmodule MsbmsBuildLib.Impl.DocsDb do
              base_dir,
              db_opts
            ) do
-      Logger.info("::::building DB docs :: #{component_name}: DONE")
+      Logger.info("::#{component_name}::building DB docs: DONE")
       :ok
     end
   end
@@ -108,7 +108,7 @@ defmodule MsbmsBuildLib.Impl.DocsDb do
 
     # Check if buildplan exists
     if File.exists?(component_buildplan_path) do
-      Logger.info("::::building DB docs :: #{component_name}: START")
+      Logger.info("::#{component_name}::building DB docs: START")
 
       # Delete existing documentation if it exists
       component_docs_path = Path.join(db_docs_path, component_name)
@@ -116,7 +116,7 @@ defmodule MsbmsBuildLib.Impl.DocsDb do
 
       {:ok, component_docs_path}
     else
-      Logger.info("::::building DB docs :: #{component_name}: SKIPPED")
+      Logger.info("::#{component_name}::building DB docs: SKIPPED")
 
       {:skip, :ok}
     end
@@ -141,7 +141,7 @@ defmodule MsbmsBuildLib.Impl.DocsDb do
       end
     rescue
       e ->
-        Logger.error("::::Error building DB docs for #{component_name}")
+        Logger.warning("::#{component_name}::building DB docs: FAILED")
         {:error, e}
     after
       File.cd!(current_dir)
@@ -171,8 +171,8 @@ defmodule MsbmsBuildLib.Impl.DocsDb do
     if status == 0 do
       :ok
     else
-      Logger.error("::::Error building database for #{component_name}")
-      {:error, "Error building database for #{component_name}"}
+      Logger.warning("::#{component_name}::loading DB docs database: FAILED")
+      {:error, "Error loading DB docs database for #{component_name}"}
     end
   end
 
@@ -226,8 +226,8 @@ defmodule MsbmsBuildLib.Impl.DocsDb do
     if status == 0 do
       :ok
     else
-      Logger.error("::::Error generating schema documentation for #{component_name}")
-      {:error, "Error generating schema documentation for #{component_name}"}
+      Logger.warning("::#{component_name}::generating schema docs: FAILED")
+      {:error, "Error generating schema docs for #{component_name}"}
     end
   end
 
@@ -252,7 +252,7 @@ defmodule MsbmsBuildLib.Impl.DocsDb do
     if status == 0 do
       :ok
     else
-      Logger.error("::::Error dropping database for #{component_name}")
+      Logger.warning("::#{component_name}::dropping database: FAILED")
       {:error, "Error dropping database for #{component_name}"}
     end
   end

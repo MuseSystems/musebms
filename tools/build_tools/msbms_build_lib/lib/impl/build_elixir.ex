@@ -59,7 +59,7 @@ defmodule MsbmsBuildLib.Impl.BuildElixir do
     Enum.reduce_while(component_paths, :ok, fn component_path, _acc ->
       component_name = Path.basename(component_path)
 
-      Logger.info("::::building Elixir component :: #{component_name}")
+      Logger.info("::#{component_name}::building Elixir component")
 
       current_dir = File.cwd!()
 
@@ -80,20 +80,20 @@ defmodule MsbmsBuildLib.Impl.BuildElixir do
           Logger.debug(plt_output)
 
           if plt_status == 0 do
-            Logger.info("::::building Elixir component :: #{component_name}: DONE")
+            Logger.info("::#{component_name}::building Elixir component: DONE")
 
             {:cont, :ok}
           else
-            Logger.error("::::Error building Dialyzer PLT for #{component_name}")
+            Logger.warning("::#{component_name}::building Dialyzer PLT: FAILED")
             {:halt, {:error, "Error building Dialyzer PLT for #{component_name}"}}
           end
         else
-          Logger.error("::::Error compiling #{component_name}")
+          Logger.warning("::#{component_name}::compiling Elixir component: FAILED")
           {:halt, {:error, "Error compiling #{component_name}"}}
         end
       rescue
         e ->
-          Logger.error("::::Error building Elixir component #{component_name}")
+          Logger.warning("::#{component_name}::building Elixir component: FAILED")
           {:halt, {:error, e}}
       after
         File.cd!(current_dir)

@@ -73,7 +73,7 @@ defmodule MsbmsBuildLib.Impl.BuildDb do
     source_dir = Path.join(base_dir, "database")
 
     if File.dir?(source_dir) do
-      Logger.info("::::building migrations for #{component_name} (type: #{db_type})")
+      Logger.info("::#{component_name}::building migrations for type: #{db_type}")
 
       # Build migrations using mix builddb command
       try do
@@ -89,24 +89,25 @@ defmodule MsbmsBuildLib.Impl.BuildDb do
           System.cmd("mix", args, cd: full_component_path, stderr_to_stdout: true)
 
         if exit_code == 0 do
-          Logger.info("::::building migrations for #{component_name}: DONE.")
+          Logger.info("::#{component_name}::building migrations for type: #{db_type}: DONE.")
           Logger.debug(output)
           {:ok, component_name}
         else
-          Logger.error(
-            "::::building migrations for #{component_name}: FAILED. Exit code: #{exit_code}"
+          Logger.warning(
+            "::#{component_name}::building migrations for type #{db_type} with exit code: #{exit_code}: FAILED."
           )
 
-          Logger.error("Output: #{output}")
+          Logger.warning("Output: #{output}")
           {:error, {component_name, "Migration build failed with exit code #{exit_code}"}}
         end
       rescue
         error ->
-          Logger.error("::::building migrations for #{component_name}: FAILED.")
+          Logger.warning("::#{component_name}::building migrations for type: #{db_type}: FAILED.")
+
           {:error, {component_name, error}}
       end
     else
-      Logger.info("::::building migrations for #{component_name}: SKIPPED.")
+      Logger.info("::#{component_name}::building migrations for type: #{db_type}: SKIPPED.")
       # Consider this a success since there's nothing to build
       {:ok, component_name}
     end

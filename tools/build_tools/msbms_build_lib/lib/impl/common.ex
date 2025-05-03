@@ -223,7 +223,6 @@ defmodule MsbmsBuildLib.Impl.Common do
              :debug
            ] do
     Logger.configure(level: level)
-    Logger.info("This is a test of log level logging... ", %{level: level})
   end
 
   def set_log_level(level), do: raise(ArgumentError, "Invalid log level: #{inspect(level)}")

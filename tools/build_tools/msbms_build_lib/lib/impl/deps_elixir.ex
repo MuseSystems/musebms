@@ -94,7 +94,7 @@ defmodule MsbmsBuildLib.Impl.DepsElixir do
     Enum.reduce_while(component_paths, :ok, fn component_path, _acc ->
       component_name = Path.basename(component_path)
 
-      Logger.info("::::processing Elixir deps :: #{component_name}: START")
+      Logger.info("::#{component_name}::processing Elixir deps: START")
 
       # Change to component directory and run mix command
       current_dir = File.cwd!()
@@ -105,16 +105,16 @@ defmodule MsbmsBuildLib.Impl.DepsElixir do
         Logger.debug(output)
 
         if status == 0 do
-          Logger.info("::::processing Elixir deps :: #{component_name}: DONE")
+          Logger.info("::#{component_name}::processing Elixir deps: DONE")
 
           {:cont, :ok}
         else
-          Logger.error("::::Error processing dependencies for #{component_name}")
+          Logger.warning("::#{component_name}::processing Elixir deps: FAILED")
           {:halt, {:error, "Error processing dependencies for #{component_name}"}}
         end
       rescue
         e ->
-          Logger.error("::::Error processing dependencies for #{component_name}")
+          Logger.warning("::#{component_name}::processing Elixir deps: FAILED")
           {:halt, {:error, e}}
       after
         File.cd!(current_dir)

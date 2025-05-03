@@ -59,7 +59,7 @@ defmodule MsbmsBuildLib.Impl.DocsElixir do
     Enum.reduce_while(component_paths, :ok, fn component_path, _acc ->
       component_name = Path.basename(component_path)
 
-      Logger.info("::::building Elixir docs :: #{component_name}: START")
+      Logger.info("::#{component_name}::building Elixir docs: START")
 
       # Delete existing documentation if it exists
       component_docs_path = Path.join(elixir_docs_path, component_name)
@@ -74,16 +74,16 @@ defmodule MsbmsBuildLib.Impl.DocsElixir do
         Logger.debug(output)
 
         if status == 0 do
-          Logger.info("::::building Elixir docs :: #{component_name}: DONE")
+          Logger.info("::#{component_name}::building Elixir docs: DONE")
 
           {:cont, :ok}
         else
-          Logger.error("::::Error generating documentation for #{component_name}")
+          Logger.warning("::#{component_name}::building Elixir docs: FAILED")
           {:halt, {:error, "Error generating documentation for #{component_name}"}}
         end
       rescue
         e ->
-          Logger.error("::::Error building Elixir docs for #{component_name}")
+          Logger.warning("::#{component_name}::building Elixir docs: FAILED")
           {:halt, {:error, e}}
       after
         File.cd!(current_dir)
