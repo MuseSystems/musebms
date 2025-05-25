@@ -97,12 +97,16 @@
             "path": "documentation"
         },
         {
-            "name": "tools",
-            "path": "tools"
+            "name": "build_config",
+            "path": "tools/build_tools/build_config"
         },
         {
             "name": "msbms_build_lib",
             "path": "tools/build_tools/msbms_build_lib"
+        },
+        {
+            "name": "database_scripts",
+            "path": "tools/database_scripts"
         },
         {
             "name": ".github",
@@ -142,6 +146,6 @@
         },
         "git.ignoreLimitWarning": true,
         "editor.formatOnSave": true,
-        "powershell.cwd": "tools"
+        "powershell.cwd": "documentation"
     }
 }
