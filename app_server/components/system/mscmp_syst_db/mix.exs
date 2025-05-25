@@ -1,5 +1,5 @@
 # Source File: mix.exs
-# Location:    musebms/components/system/mscmp_syst_db/mix.exs
+# Location:    musebms/app_server/components/system/mscmp_syst_db/mix.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -13,32 +13,28 @@
 defmodule MscmpSystDb.MixProject do
   use Mix.Project
 
+  Code.require_file(Path.expand("../../../../tools/build_tools/build_config/msbms_build_config.exs", __DIR__))
+
   @name :mscmp_syst_db
   @version "0.1.0"
 
-  @deps [
-    # Third Party Dependencies
-    {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
-    {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
-    {:ex_doc, "~> 0.31", only: :dev, runtime: false},
-    {:ecto_sql, "~> 3.11"},
-    {:ecto, "~> 3.11"},
-    {:jason, "~> 1.4"},
-    {:postgrex, "~> 0.19"},
-    {:toml, "~> 0.7"},
-    {:nimble_options, "~> 1.0"},
-
-    # Muse Systems Business Management System Components
-    {:mscmp_syst_error, path: "../mscmp_syst_error"},
-    {:mscmp_syst_utils, path: "../mscmp_syst_utils"},
-    {:mscmp_syst_network, path: "../mscmp_syst_network"}
+  @third_party_deps [
+    :credo,
+    :dialyxir,
+    :ex_doc,
+    :ecto_sql,
+    :ecto,
+    :jason,
+    :postgrex,
+    :toml,
+    :nimble_options,
+    :telemetry
   ]
 
-  @dialyzer_opts [
-    flags: ["-Wunmatched_returns", :error_handling],
-    plt_add_apps: [:mix, :ex_unit],
-    plt_core_path: "priv/plts",
-    plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
+  @msbms_deps [
+    :mscmp_syst_error,
+    :mscmp_syst_utils,
+    :mscmp_syst_network
   ]
 
   # ------------------------------------------------------------
@@ -49,21 +45,17 @@ defmodule MscmpSystDb.MixProject do
     [
       app: @name,
       version: @version,
-      elixir: "~> 1.18",
-      deps: @deps,
+      elixir: MsbmsBuildConfig.versions().elixir,
+      deps: MsbmsBuildConfig.resolve_deps(@third_party_deps ++ @msbms_deps),
       build_embedded: in_production,
       start_permanent: in_production,
-      dialyzer: @dialyzer_opts,
+      dialyzer: MsbmsBuildConfig.dialyzer_config(),
       elixirc_paths: elixirc_paths(Mix.env()),
       docs: [
         name: "MscmpSystDb",
         main: "MscmpSystDb",
         output: "../../../../documentation/technical/app_server/mscmp_syst_db",
-        deps: [
-          mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
-          mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils",
-          mscmp_syst_network: "../../../../documentation/technical/app_server/mscmp_syst_network"
-        ],
+        deps: MsbmsBuildConfig.resolve_dep_docs(@msbms_deps),
         nest_modules_by_prefix: [MscmpSystDb.DbTypes, MscmpSystDb.Types],
         groups_for_docs: [
           Query: &(&1[:section] == :query),

@@ -13,28 +13,23 @@
 defmodule MscmpSystPerms.MixProject do
   use Mix.Project
 
+  Code.require_file(Path.expand("../../../../tools/build_tools/build_config/msbms_build_config.exs", __DIR__))
+
   @name :mscmp_syst_perms
   @version "0.1.0"
 
-  @deps [
-    # Third Party Dependencies
-    {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
-    {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
-    {:ex_doc, "~> 0.31", only: :dev, runtime: false},
-    {:nimble_options, "~> 1.0"},
-
-    # Muse Systems Business Management System Components
-    {:mscmp_syst_utils, path: "../mscmp_syst_utils"},
-    {:mscmp_syst_utils_data, path: "../mscmp_syst_utils_data"},
-    {:mscmp_syst_error, path: "../mscmp_syst_error"},
-    {:mscmp_syst_db, path: "../mscmp_syst_db"}
+  @third_party_deps [
+    :credo,
+    :dialyxir,
+    :ex_doc,
+    :nimble_options
   ]
 
-  @dialyzer_opts [
-    flags: ["-Wunmatched_returns", :error_handling],
-    plt_add_apps: [:mix, :ex_unit],
-    plt_core_path: "priv/plts",
-    plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
+  @msbms_deps [
+    :mscmp_syst_utils,
+    :mscmp_syst_utils_data,
+    :mscmp_syst_error,
+    :mscmp_syst_db
   ]
 
   # ------------------------------------------------------------
@@ -45,21 +40,17 @@ defmodule MscmpSystPerms.MixProject do
     [
       app: @name,
       version: @version,
-      elixir: "~> 1.18",
-      deps: @deps,
+      elixir: MsbmsBuildConfig.versions().elixir,
+      deps: MsbmsBuildConfig.resolve_deps(@third_party_deps ++ @msbms_deps),
       build_embedded: in_production,
       start_permanent: in_production,
-      dialyzer: @dialyzer_opts,
+      dialyzer: MsbmsBuildConfig.dialyzer_config(),
       elixirc_paths: elixirc_paths(Mix.env()),
       docs: [
         name: "MscmpSystPerms",
         main: "MscmpSystPerms",
         output: "../../../../documentation/technical/app_server/mscmp_syst_perms",
-        deps: [
-          mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils",
-          mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
-          mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db"
-        ],
+        deps: MsbmsBuildConfig.resolve_dep_docs(@msbms_deps),
         groups_for_docs: [
           Permissions: &(&1[:section] == :perms_management),
           "Data Management": &(&1[:section] == :perms_data)

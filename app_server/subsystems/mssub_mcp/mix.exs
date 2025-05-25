@@ -1,5 +1,5 @@
 # Source File: mix.exs
-# Location:    musebms/subsystems/mssub_mcp/mix.exs
+# Location:    musebms/app_server/subsystems/mssub_mcp/mix.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -13,35 +13,30 @@
 defmodule MssubMcp.MixProject do
   use Mix.Project
 
+  Code.require_file(Path.expand("../../../tools/build_tools/build_config/msbms_build_config.exs", __DIR__))
+
   @name :mssub_mcp
   @version "0.1.0"
 
-  @deps [
-    # Third Party Dependencies
-    {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
-    {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
-    {:ex_doc, "~> 0.31", only: :dev, runtime: false},
-    {:nimble_options, "~> 1.0"},
-    {:phoenix_pubsub, "~> 2.0"},
-
-    # Muse Systems Business Management System Components
-    {:mscmp_syst_utils, path: "../../components/system/mscmp_syst_utils"},
-    {:mscmp_syst_error, path: "../../components/system/mscmp_syst_error"},
-    {:mscmp_syst_options, path: "../../components/system/mscmp_syst_options"},
-    {:mscmp_syst_enums, path: "../../components/system/mscmp_syst_enums"},
-    {:mscmp_syst_settings, path: "../../components/system/mscmp_syst_settings"},
-    {:mscmp_syst_instance, path: "../../components/system/mscmp_syst_instance"},
-    {:mscmp_syst_authn, path: "../../components/system/mscmp_syst_authn"},
-    {:mscmp_syst_perms, path: "../../components/system/mscmp_syst_perms"},
-    {:mscmp_syst_mcp_perms, path: "../../components/system/mscmp_syst_mcp_perms"},
-    {:mscmp_syst_session, path: "../../components/system/mscmp_syst_session"}
+  @third_party_deps [
+    :credo,
+    :dialyxir,
+    :ex_doc,
+    :nimble_options,
+    :phoenix_pubsub
   ]
 
-  @dialyzer_opts [
-    flags: ["-Wunmatched_returns", :error_handling],
-    plt_add_apps: [:mix, :ex_unit],
-    plt_core_path: "priv/plts",
-    plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
+  @msbms_deps [
+    :mscmp_syst_utils,
+    :mscmp_syst_error,
+    :mscmp_syst_options,
+    :mscmp_syst_enums,
+    :mscmp_syst_settings,
+    :mscmp_syst_instance,
+    :mscmp_syst_authn,
+    :mscmp_syst_perms,
+    :mscmp_syst_mcp_perms,
+    :mscmp_syst_session
   ]
 
   # ------------------------------------------------------------
@@ -52,27 +47,17 @@ defmodule MssubMcp.MixProject do
     [
       app: @name,
       version: @version,
-      elixir: "~> 1.18",
-      deps: @deps,
+      elixir: MsbmsBuildConfig.versions().elixir,
+      deps: MsbmsBuildConfig.resolve_deps(@third_party_deps ++ @msbms_deps),
       build_embedded: in_production,
       start_permanent: in_production,
-      dialyzer: @dialyzer_opts,
+      dialyzer: MsbmsBuildConfig.dialyzer_config(),
       elixirc_paths: elixirc_paths(Mix.env()),
       docs: [
         name: "MssubMcp",
         main: "MssubMcp",
         output: "../../../documentation/technical/app_server/mssub_mcp",
-        deps: [
-          mscmp_syst_db: "../mscmp_syst_db",
-          mscmp_syst_error: "../mscmp_syst_error",
-          mscmp_syst_utils: "../mscmp_syst_utils",
-          mscmp_syst_enums: "../mscmp_syst_enums",
-          mscmp_syst_options: "../mscmp_syst_options",
-          mscmp_syst_instance: "../mscmp_syst_instance",
-          mscmp_syst_authn: "../mscmp_syst_authn",
-          mscmp_syst_perms: "../mscmp_syst_perms",
-          mscmp_syst_mcp_perms: "../mscmp_syst_mcp_perms"
-        ],
+        deps: MsbmsBuildConfig.resolve_dep_docs(@msbms_deps),
         groups_for_docs: [
           "Instance Manager Runtime": &(&1[:section] == :instance_management),
           "Instance Applications": &(&1[:section] == :instance_applications),
