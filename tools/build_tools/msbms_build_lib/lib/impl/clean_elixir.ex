@@ -80,32 +80,38 @@ defmodule MsbmsBuildLib.Impl.CleanElixir do
     Logger.notice("==msbms_build_lib==::clean_elixir::clean::#{clean_target_description}::START")
 
     try do
-      {:ok, component_paths} = Common.resolve_component_paths(:elixir, base_dir, components)
+      case Common.resolve_component_paths(:elixir, base_dir, components) do
+        {:ok, component_paths} ->
+          Enum.each(component_paths, fn component_path ->
+            target_dir = Path.join(component_path, clean_target)
+            component_name = component_path |> Path.basename()
 
-      Enum.each(component_paths, fn component_path ->
-        target_dir = Path.join(component_path, clean_target)
-        component_name = component_path |> Path.basename()
+            if File.dir?(target_dir) do
+              case File.rm_rf(target_dir) do
+                {:ok, _} ->
+                  Logger.info("::#{component_name}::cleaning #{clean_target_description}: DONE.")
 
-        if File.dir?(target_dir) do
-          case File.rm_rf(target_dir) do
-            {:ok, _} ->
-              Logger.info("::#{component_name}::cleaning #{clean_target_description}: DONE.")
-
-            {:error, _error_message, _error_details} ->
-              throw(
-                {:error, "Failed to remove #{clean_target_description} :: #{component_name}."}
+                {:error, _error_message, _error_details} ->
+                  throw(
+                    {:error, "Failed to remove #{clean_target_description} :: #{component_name}."}
+                  )
+              end
+            else
+              Logger.info(
+                "::#{component_name}::cleaning #{clean_target_description}: SKIPPED (does not exist)"
               )
-          end
-        else
-          Logger.info(
-            "::#{component_name}::cleaning #{clean_target_description}: SKIPPED (does not exist)"
+            end
+          end)
+
+          Logger.notice(
+            "==msbms_build_lib==::clean_elixir::clean::#{clean_target_description}::DONE"
           )
-        end
-      end)
 
-      Logger.notice("==msbms_build_lib==::clean_elixir::clean::#{clean_target_description}::DONE")
+          :ok
 
-      :ok
+        {:error, error_message} ->
+          throw({:error, error_message})
+      end
     catch
       {:error, error_message} ->
         Logger.error(

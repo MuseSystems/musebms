@@ -37,7 +37,7 @@ defmodule MsbmsBuildLib.Impl.BuildDb do
   * `{:error, reason}` - An error occurred during the build process.
   """
   @spec build_migrations(Path.t(), Types.components() | nil) ::
-          :ok | {:error, term()}
+          :ok | {:error, message :: String.t()}
   def build_migrations(base_dir, components) do
     Logger.notice("==msbms_build_lib==::build_db::build_migrations::START")
 
@@ -58,13 +58,18 @@ defmodule MsbmsBuildLib.Impl.BuildDb do
 
     case Enum.filter(results, &match?({:error, _}, &1)) do
       [] ->
-        Logger.notice("==msbms_build_lib==::build_db::build_migrations::DONE")
+        Logger.notice("==msbms_build_lib==::build_migrations::DONE")
         :ok
 
       errors ->
-        Logger.error("==msbms_build_lib==::build_db::build_migrations::FAILED")
-        first_error = List.first(errors)
-        {:error, first_error}
+        Logger.error("==msbms_build_lib==::build_migrations::FAILED")
+
+        error_messages =
+          Enum.map(errors, fn {:error, {component, reason}} ->
+            "#{component}: #{format_error_reason(reason)}"
+          end)
+
+        {:error, "Migration build failed for components: #{Enum.join(error_messages, "; ")}"}
     end
   end
 
@@ -104,7 +109,7 @@ defmodule MsbmsBuildLib.Impl.BuildDb do
         error ->
           Logger.warning("::#{component_name}::building migrations for type: #{db_type}: FAILED.")
 
-          {:error, {component_name, error}}
+          {:error, {component_name, Exception.message(error)}}
       end
     else
       Logger.info("::#{component_name}::building migrations for type: #{db_type}: SKIPPED.")
@@ -112,4 +117,7 @@ defmodule MsbmsBuildLib.Impl.BuildDb do
       {:ok, component_name}
     end
   end
+
+  defp format_error_reason(reason) when is_binary(reason), do: reason
+  defp format_error_reason(reason), do: inspect(reason)
 end

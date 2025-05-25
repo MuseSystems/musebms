@@ -1,0 +1,25 @@
+# Source File: new_project_error.ex
+# Location:    musebms/tools/build_tools/msbms_new_project/lib/api/mserror/new_project_error.ex
+# Project:     Muse Systems Business Management System
+#
+# Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+# This file may include content copyrighted and licensed from third parties.
+#
+# See the LICENSE file in the project root for license terms and conditions.
+# See the NOTICE file in the project root for copyright ownership information.
+#
+# muse.information@musesystems.com :: https://muse.systems
+
+defmodule Mserror.NewProjectError do
+  @moduledoc """
+  Defines an `Mserror` compliant error module for the MsbmsNewProject component.
+
+  For more see the `MsbmsNewProject` Component documentation.
+  """
+
+  use MscmpSystError,
+    component: MsbmsNewProject,
+    kinds: [
+      error_kind: "An example error kind."
+    ]
+end

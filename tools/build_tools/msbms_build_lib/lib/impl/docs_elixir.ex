@@ -36,7 +36,7 @@ defmodule MsbmsBuildLib.Impl.DocsElixir do
         {:ok, component_paths} ->
           elixir_docs_path = Path.join(base_dir, Common.elixir_docs_root())
           # Ensure documentation directory exists
-          File.mkdir_p(elixir_docs_path)
+          File.mkdir_p!(elixir_docs_path)
 
           process_elixir_docs(component_paths, elixir_docs_path)
 
@@ -63,7 +63,7 @@ defmodule MsbmsBuildLib.Impl.DocsElixir do
 
       # Delete existing documentation if it exists
       component_docs_path = Path.join(elixir_docs_path, component_name)
-      if File.dir?(component_docs_path), do: File.rm_rf(component_docs_path)
+      _ = if File.dir?(component_docs_path), do: File.rm_rf!(component_docs_path)
 
       # Change to component directory and run mix docs
       current_dir = File.cwd!()
@@ -84,7 +84,7 @@ defmodule MsbmsBuildLib.Impl.DocsElixir do
       rescue
         e ->
           Logger.warning("::#{component_name}::building Elixir docs: FAILED")
-          {:halt, {:error, e}}
+          {:halt, {:error, Exception.message(e)}}
       after
         File.cd!(current_dir)
       end

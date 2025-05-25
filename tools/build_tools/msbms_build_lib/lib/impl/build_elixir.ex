@@ -43,9 +43,21 @@ defmodule MsbmsBuildLib.Impl.BuildElixir do
         Logger.notice("==msbms_build_lib==::build_elixir::build_elixir::DONE")
         :ok
 
+      {:error, error_message} when is_binary(error_message) ->
+        Logger.error("==msbms_build_lib==::build_elixir::build_elixir::FAILED")
+        {:error, error_message}
+
       error ->
         Logger.error("==msbms_build_lib==::build_elixir::build_elixir::FAILED")
-        error
+
+        error_message =
+          case error do
+            {:error, msg} when is_binary(msg) -> msg
+            {:error, other} -> "Elixir build failed: #{inspect(other)}"
+            other -> "Elixir build failed: #{inspect(other)}"
+          end
+
+        {:error, error_message}
     end
   end
 
@@ -94,7 +106,7 @@ defmodule MsbmsBuildLib.Impl.BuildElixir do
       rescue
         e ->
           Logger.warning("::#{component_name}::building Elixir component: FAILED")
-          {:halt, {:error, e}}
+          {:halt, {:error, Exception.message(e)}}
       after
         File.cd!(current_dir)
       end

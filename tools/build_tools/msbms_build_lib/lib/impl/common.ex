@@ -56,6 +56,11 @@ defmodule MsbmsBuildLib.Impl.Common do
   #
   #
 
+  @doc """
+  Get the list of project directories.
+
+  Returns a list of directory names.
+  """
   @spec project_directories() :: [Path.t(), ...]
   def project_directories, do: @project_directories
 
@@ -65,6 +70,11 @@ defmodule MsbmsBuildLib.Impl.Common do
   #
   #
 
+  @doc """
+  Get the list of project markers.
+
+  Returns a list of marker file names.
+  """
   @spec project_markers() :: [Path.t(), ...]
   def project_markers, do: @project_markers
 
@@ -74,6 +84,11 @@ defmodule MsbmsBuildLib.Impl.Common do
   #
   #
 
+  @doc """
+  Get the list of Elixir component paths.
+
+  Returns a list of directory names.
+  """
   @spec elixir_component_paths() :: [Path.t(), ...]
   def elixir_component_paths, do: @elixir_component_paths
 
@@ -83,6 +98,11 @@ defmodule MsbmsBuildLib.Impl.Common do
   #
   #
 
+  @doc """
+  Get the list of database component paths.
+
+  Returns a list of directory names.
+  """
   @spec db_component_paths() :: [Path.t(), ...]
   def db_component_paths, do: @db_component_paths
 
@@ -92,6 +112,11 @@ defmodule MsbmsBuildLib.Impl.Common do
   #
   #
 
+  @doc """
+  Get the root directory for Elixir documentation.
+
+  Returns the path to the Elixir documentation root directory.
+  """
   @spec elixir_docs_root() :: Path.t()
   def elixir_docs_root, do: @elixir_docs_root
 
@@ -101,6 +126,11 @@ defmodule MsbmsBuildLib.Impl.Common do
   #
   #
 
+  @doc """
+  Get the root directory for database documentation.
+
+  Returns the path to the database documentation root directory.
+  """
   @spec db_docs_root() :: Path.t()
   def db_docs_root, do: @db_docs_root
 
@@ -110,8 +140,14 @@ defmodule MsbmsBuildLib.Impl.Common do
   #
   #
 
-  @spec resolve_component_paths(Types.kind(), Path.t(), nil | list(Path.t())) ::
-          {:error, String.t()} | {:ok, [...]}
+  @doc """
+  Resolve the paths for a given kind of component.
+
+  Returns a tuple with either `{:ok, paths}` if the paths are successfully resolved,
+  or `{:error, message}` if there is an error.
+  """
+  @spec resolve_component_paths(Types.kind(), Path.t(), Types.components() | nil) ::
+          {:error, String.t()} | {:ok, Types.component_paths()}
   def resolve_component_paths(kind, base_dir, components)
 
   def resolve_component_paths(:elixir, base_dir, components)
@@ -209,6 +245,11 @@ defmodule MsbmsBuildLib.Impl.Common do
   #
   #
 
+  @doc """
+  Set the Logger level for the current process.
+
+  Raises `ArgumentError` if an invalid log level is provided.
+  """
   @spec set_log_level(Logger.level()) :: :ok
   def set_log_level(level)
       when level in [
@@ -229,9 +270,47 @@ defmodule MsbmsBuildLib.Impl.Common do
 
   ##############################################################################
   #
+  # read_component_file
+  #
+  #
+
+  @doc """
+  Read the contents of a component file and parse it into a list of components.
+
+  Returns a tuple with either `{:ok, components}` if the file is successfully read and parsed,
+  or `{:error, message}` if there is an error.
+  """
+  @spec read_component_file(Path.t(), Path.t()) ::
+          {:ok, Types.components()} | {:error, String.t()}
+  def read_component_file(base_dir, file_path) do
+    full_path = Path.join(base_dir, file_path)
+
+    with {:exists, true} <- {:exists, File.exists?(full_path)},
+         {:read, {:ok, content}} <- {:read, File.read(full_path)} do
+      components = parse_component_file_content(content)
+      {:ok, components}
+    else
+      {:exists, false} ->
+        {:error, "Component file not found: #{full_path}"}
+
+      {:read, {:error, reason}} ->
+        {:error, "Failed to read component file #{full_path}: #{reason}"}
+    end
+  end
+
+  ##############################################################################
+  #
   # General Private Functions
   #
   #
+
+  # Component file parsing helper
+  defp parse_component_file_content(content) do
+    content
+    |> String.split("\n")
+    |> Enum.map(&String.trim/1)
+    |> Enum.reject(&(String.starts_with?(&1, "#") or &1 == "" or String.match?(&1, ~r/^\s*$/)))
+  end
 
   # Shared helper functions used by multiple public functions
   defp resolve_from_single_path(parent_path, components) do

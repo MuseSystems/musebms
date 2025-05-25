@@ -37,7 +37,7 @@ defmodule MsbmsBuildLib.MixProject do
       docs: [
         name: "MsbmsBuildLib",
         main: "MsbmsBuildLib",
-        output: "../../../../documentation/technical/auxiliary/msbms_build_lib",
+        output: "../../../documentation/technical/auxiliary/msbms_build_lib",
         deps: [],
         groups_for_docs: [],
         nest_modules_by_prefix: [],
@@ -48,7 +48,7 @@ defmodule MsbmsBuildLib.MixProject do
 
   def application do
     [
-      extra_applications: []
+      extra_applications: [:logger]
     ]
   end
 

@@ -45,9 +45,21 @@ defmodule MsbmsBuildLib.Impl.DepsElixir do
         Logger.notice("==msbms_build_lib==::deps_elixir::install_elixir_deps::DONE")
         :ok
 
+      {:error, error_message} when is_binary(error_message) ->
+        Logger.error("==msbms_build_lib==::deps_elixir::install_elixir_deps::FAILED")
+        {:error, error_message}
+
       error ->
         Logger.error("==msbms_build_lib==::deps_elixir::install_elixir_deps::FAILED")
-        error
+
+        error_message =
+          case error do
+            {:error, msg} when is_binary(msg) -> msg
+            {:error, other} -> "Dependency installation failed: #{inspect(other)}"
+            other -> "Dependency installation failed: #{inspect(other)}"
+          end
+
+        {:error, error_message}
     end
   end
 
@@ -78,9 +90,21 @@ defmodule MsbmsBuildLib.Impl.DepsElixir do
         Logger.notice("==msbms_build_lib==::deps_elixir::update_elixir_deps::DONE")
         :ok
 
+      {:error, error_message} when is_binary(error_message) ->
+        Logger.error("==msbms_build_lib==::deps_elixir::update_elixir_deps::FAILED")
+        {:error, error_message}
+
       error ->
         Logger.error("==msbms_build_lib==::deps_elixir::update_elixir_deps::FAILED")
-        error
+
+        error_message =
+          case error do
+            {:error, msg} when is_binary(msg) -> msg
+            {:error, other} -> "Dependency update failed: #{inspect(other)}"
+            other -> "Dependency update failed: #{inspect(other)}"
+          end
+
+        {:error, error_message}
     end
   end
 
@@ -115,7 +139,7 @@ defmodule MsbmsBuildLib.Impl.DepsElixir do
       rescue
         e ->
           Logger.warning("::#{component_name}::processing Elixir deps: FAILED")
-          {:halt, {:error, e}}
+          {:halt, {:error, Exception.message(e)}}
       after
         File.cd!(current_dir)
       end

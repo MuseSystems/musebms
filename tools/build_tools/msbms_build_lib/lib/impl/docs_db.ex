@@ -34,7 +34,7 @@ defmodule MsbmsBuildLib.Impl.DocsDb do
          {:ok, component_paths} <- Common.resolve_component_paths(:db, base_dir, components) do
       db_docs_path = Path.join(base_dir, Common.db_docs_root())
       # Ensure documentation directory exists
-      File.mkdir_p(db_docs_path)
+      File.mkdir_p!(db_docs_path)
 
       db_source_root = Path.join(base_dir, "database")
 
@@ -46,9 +46,21 @@ defmodule MsbmsBuildLib.Impl.DocsDb do
           Logger.notice("==msbms_build_lib==::docs_db::build_docs_db::DONE")
           :ok
 
+        {:error, error_message} when is_binary(error_message) ->
+          Logger.error("==msbms_build_lib==::docs_db::build_docs_db::FAILED")
+          {:error, error_message}
+
         error ->
           Logger.error("==msbms_build_lib==::docs_db::build_docs_db::FAILED")
-          {:error, error}
+
+          error_message =
+            case error do
+              {:error, msg} when is_binary(msg) -> msg
+              {:error, other} -> "Database documentation build failed: #{inspect(other)}"
+              other -> "Database documentation build failed: #{inspect(other)}"
+            end
+
+          {:error, error_message}
       end
     else
       {:error, error_message} ->
@@ -99,6 +111,9 @@ defmodule MsbmsBuildLib.Impl.DocsDb do
            ) do
       Logger.info("::#{component_name}::building DB docs: DONE")
       :ok
+    else
+      :skip -> :ok
+      error -> error
     end
   end
 
@@ -112,13 +127,13 @@ defmodule MsbmsBuildLib.Impl.DocsDb do
 
       # Delete existing documentation if it exists
       component_docs_path = Path.join(db_docs_path, component_name)
-      if File.dir?(component_docs_path), do: File.rm_rf(component_docs_path)
+      _ = if File.dir?(component_docs_path), do: File.rm_rf!(component_docs_path)
 
       {:ok, component_docs_path}
     else
       Logger.info("::#{component_name}::building DB docs: SKIPPED")
 
-      {:skip, :ok}
+      :skip
     end
   end
 
@@ -137,12 +152,15 @@ defmodule MsbmsBuildLib.Impl.DocsDb do
 
       with :ok <- build_component_db(component_name, db_source_root),
            :ok <- generate_schema_docs(component_name, component_docs_path, base_dir, db_opts) do
-        drop_component_db(component_name)
+        case drop_component_db(component_name) do
+          :ok -> :ok
+          error -> error
+        end
       end
     rescue
       e ->
         Logger.warning("::#{component_name}::building DB docs: FAILED")
-        {:error, e}
+        {:error, Exception.message(e)}
     after
       File.cd!(current_dir)
     end
