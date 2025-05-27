@@ -1,0 +1,26 @@
+# Source File: integration_test.exs
+# Location:    musebms/app_server/components/system/mscmp_syst_telemetry/test/integration_test.exs
+# Project:     Muse Systems Business Management System
+#
+# Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+# This file may include content copyrighted and licensed from third parties.
+#
+# See the LICENSE file in the project root for license terms and conditions.
+# See the NOTICE file in the project root for copyright ownership information.
+#
+# muse.information@musesystems.com :: https://muse.systems
+
+defmodule IntegrationTest do
+  use ExUnit.Case
+
+  # Add your integration tests here
+  # Integration tests typically test the component's interaction with external systems
+  # or other components in the application.
+
+  @moduletag :integration
+
+  test "placeholder integration test" do
+    # Replace this with actual integration tests
+    assert true
+  end
+end
