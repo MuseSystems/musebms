@@ -1,5 +1,5 @@
 # Source File: types.ex
-# Location:    musebms/tools/build_tools/msbms_new_project/lib/api/types.ex
+# Location:    musebms/<%= project_path %>/lib/api/types.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -9,3 +9,13 @@
 # See the NOTICE file in the project root for copyright ownership information.
 #
 # muse.information@musesystems.com :: https://muse.systems
+
+defmodule <%= module_name %>.Types do
+  @moduledoc """
+  Type definitions for the <%= module_name %> module.
+
+  This module defines the core types used throughout the <%= component_display_name %> component.
+  """
+
+  # Add your type definitions here
+end

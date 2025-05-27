@@ -1,5 +1,5 @@
-# Source File: new_project_error.ex
-# Location:    musebms/tools/build_tools/msbms_new_project/lib/api/mserror/new_project_error.ex
+# Source File: <%= comp_short_name %>_error.ex
+# Location:    musebms/<%= project_path %>/lib/api/mserror/<%= comp_short_name %>_error.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,16 +10,16 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule Mserror.NewProjectError do
+defmodule Mserror.<%= module_short_name %>Error do
   @moduledoc """
-  Defines an `Mserror` compliant error module for the MsbmsNewProject component.
+  Defines an `Mserror` compliant error module for the <%= module_name %> component.
 
-  For more see the `MsbmsNewProject` Component documentation.
+  For more see the `<%= module_name %>` Component documentation.
   """
 
   use MscmpSystError,
-    component: MsbmsNewProject,
+    component: <%= module_name %>,
     kinds: [
-      error_kind: "An example error kind."
+      error_kind: "An <%= comp_name %> error kind."
     ]
 end

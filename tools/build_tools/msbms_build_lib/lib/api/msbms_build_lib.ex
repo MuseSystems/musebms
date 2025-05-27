@@ -464,25 +464,73 @@ defmodule MsbmsBuildLib do
   # ==============================================================================================
   # ==============================================================================================
   #
-  # Utility Functions
+  # Project Scaffolding Functions
   #
   # ==============================================================================================
   # ==============================================================================================
 
-  @doc """
-  Sets the log level for the build system.
+  ##############################################################################
+  #
+  # scaffold_elixir_component
+  #
+  #
 
-  Configures the logging level for all build operations, controlling the verbosity
-  of output during build processes.
+  @doc """
+  Scaffolds a new Elixir component from templates.
+
+  Creates a new Elixir component project structure based on the standard
+  templates, with all files properly configured for the new component.
 
   ## Parameters
-    * `level` - The desired log level (`:debug`, `:info`, `:warning`, `:error`)
+    * `base_dir` - The base directory path where the project is located
+    * `component_name` - The name of the component (e.g., "mscmp_syst_new_feature")
+    * `target_path` - The relative path where the component should be created
+    * `opts` - Optional configuration options
+
+  ## Options
+    * `:component_display_name` - Human-friendly name for the component
+    * `:component_description` - Brief description of the component
+    * `:component_section` - Documentation section atom
+    * `:comp_short_name` - Override the derived short component name (removes categorizing prefix)
+    * `:module_name` - Override the derived module name (PascalCase of full component name)
+    * `:module_short_name` - Override the derived short module name (PascalCase of short component name)
 
   ## Returns
-    * `:ok` - Always returns `:ok`
+    * `:ok` on successful scaffolding
+    * `{:error, message}` if scaffolding fails
+
+  ## Examples
+
+      # Create a new system component (names derived automatically)
+      MsbmsBuildLib.scaffold_elixir_component(
+        "/path/to/project",
+        "mscmp_syst_new_feature",
+        "app_server/components/system",
+        component_display_name: "New Feature Component",
+        component_description: "Provides new feature functionality."
+      )
+
+      # Create a new application component
+      MsbmsBuildLib.scaffold_elixir_component(
+        "/path/to/project",
+        "msapp_new_app",
+        "app_server/components/application"
+      )
+
+      # Override derived names for edge cases
+      MsbmsBuildLib.scaffold_elixir_component(
+        "/path/to/project",
+        "legacy_system_component",
+        "app_server/components/system",
+        comp_short_name: "legacy",
+        module_short_name: "Legacy"
+      )
   """
-  @spec set_log_level(Logger.level()) :: :ok
-  defdelegate set_log_level(level), to: Impl.Common
+  @spec scaffold_elixir_component(Path.t(), String.t(), String.t(), keyword()) ::
+          :ok | {:error, String.t()}
+  defdelegate scaffold_elixir_component(base_dir, component_name, target_path, opts \\ []),
+    to: Impl.ProjectElixir,
+    as: :scaffold_component
 
   @doc """
   Reads and parses a component list file.
@@ -503,4 +551,33 @@ defmodule MsbmsBuildLib do
   """
   @spec read_component_file(Path.t(), Path.t()) :: {:ok, [String.t()]} | {:error, String.t()}
   defdelegate read_component_file(base_dir, file_path), to: Impl.Common
+
+  # ==============================================================================================
+  # ==============================================================================================
+  #
+  # Utility Functions
+  #
+  # ==============================================================================================
+  # ==============================================================================================
+
+  ##############################################################################
+  #
+  # set_log_level
+  #
+  #
+
+  @doc """
+  Sets the log level for the build system.
+
+  Configures the logging level for all build operations, controlling the verbosity
+  of output during build processes.
+
+  ## Parameters
+    * `level` - The desired log level (`:debug`, `:info`, `:warning`, `:error`)
+
+  ## Returns
+    * `:ok` - Always returns `:ok`
+  """
+  @spec set_log_level(Logger.level()) :: :ok
+  defdelegate set_log_level(level), to: Impl.Common
 end

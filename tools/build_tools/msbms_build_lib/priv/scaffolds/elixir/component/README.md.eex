@@ -1,0 +1,7 @@
+# <%= module_name %> - <%= component_display_name %>
+
+<!-- MDOC !-->
+
+<%= component_description %>
+
+Extended component description and follow-on general module documentation goes here.
