@@ -28,6 +28,7 @@ defmodule MsbmsBuildLib do
   # ==============================================================================================
   # ==============================================================================================
 
+  @doc section: :constants_retrieval
   @doc """
   Get the project directories.
 
@@ -39,6 +40,7 @@ defmodule MsbmsBuildLib do
   @spec project_directories() :: [String.t(), ...]
   defdelegate project_directories(), to: Impl.Common
 
+  @doc section: :constants_retrieval
   @doc """
   Get the project markers.
 
@@ -50,6 +52,7 @@ defmodule MsbmsBuildLib do
   @spec project_markers() :: [String.t(), ...]
   defdelegate project_markers(), to: Impl.Common
 
+  @doc section: :constants_retrieval
   @doc """
   Get the Elixir component paths.
 
@@ -61,6 +64,7 @@ defmodule MsbmsBuildLib do
   @spec elixir_component_paths() :: [String.t(), ...]
   defdelegate elixir_component_paths(), to: Impl.Common
 
+  @doc section: :constants_retrieval
   @doc """
   Get the Elixir docs root.
 
@@ -72,6 +76,7 @@ defmodule MsbmsBuildLib do
   @spec elixir_docs_root() :: String.t()
   defdelegate elixir_docs_root(), to: Impl.Common
 
+  @doc section: :constants_retrieval
   @doc """
   Get the DB docs root.
 
@@ -83,6 +88,7 @@ defmodule MsbmsBuildLib do
   @spec db_docs_root() :: String.t()
   defdelegate db_docs_root(), to: Impl.Common
 
+  @doc section: :constants_retrieval
   @doc """
   Get the DB component paths.
 
@@ -108,6 +114,7 @@ defmodule MsbmsBuildLib do
   #
   #
 
+  @doc section: :build_cleaning
   @doc """
   Cleans the Elixir Language Server in the given components.
 
@@ -128,6 +135,7 @@ defmodule MsbmsBuildLib do
   #
   #
 
+  @doc section: :build_cleaning
   @doc """
   Cleans the PLT (Persistent Lookup Table) in the given components.
 
@@ -150,6 +158,7 @@ defmodule MsbmsBuildLib do
   #
   #
 
+  @doc section: :build_cleaning
   @doc """
   Cleans the build artifacts in the given components.
 
@@ -172,6 +181,7 @@ defmodule MsbmsBuildLib do
   #
   #
 
+  @doc section: :build_cleaning
   @doc """
   Cleans the dependencies in the given components.
 
@@ -195,6 +205,7 @@ defmodule MsbmsBuildLib do
   #
   #
 
+  @doc section: :build_cleaning
   @doc """
   Cleans the database for the given components.
 
@@ -225,6 +236,7 @@ defmodule MsbmsBuildLib do
   #
   #
 
+  @doc section: :build_cleaning
   @doc """
   Cleans the database migrations for the given components.
 
@@ -256,6 +268,7 @@ defmodule MsbmsBuildLib do
   #
   #
 
+  @doc section: :build_documentation
   @doc """
   Builds the Elixir documentation for the given components.
 
@@ -279,6 +292,7 @@ defmodule MsbmsBuildLib do
   #
   #
 
+  @doc section: :build_documentation
   @doc """
   Builds the DB documentation for the given components.
 
@@ -318,6 +332,7 @@ defmodule MsbmsBuildLib do
   #
   #
 
+  @doc section: :dependency_management
   @doc """
   Installs Elixir dependencies for the given components.
 
@@ -341,6 +356,7 @@ defmodule MsbmsBuildLib do
   #
   #
 
+  @doc section: :dependency_management
   @doc """
   Updates Elixir dependencies for the given components.
 
@@ -372,6 +388,7 @@ defmodule MsbmsBuildLib do
   #
   #
 
+  @doc section: :test_execution
   @doc """
   Runs tests for the given components.
 
@@ -410,6 +427,7 @@ defmodule MsbmsBuildLib do
   #
   #
 
+  @doc section: :build_elixir
   @doc """
   Builds the Elixir project.
 
@@ -443,6 +461,7 @@ defmodule MsbmsBuildLib do
   #
   #
 
+  @doc section: :build_migrations
   @doc """
   Builds the database migrations for the given components.
 
@@ -475,6 +494,7 @@ defmodule MsbmsBuildLib do
   #
   #
 
+  @doc section: :project_scaffolding
   @doc """
   Scaffolds a new Elixir component from templates.
 
@@ -532,6 +552,15 @@ defmodule MsbmsBuildLib do
     to: Impl.ProjectElixir,
     as: :scaffold_component
 
+  # ==============================================================================================
+  # ==============================================================================================
+  #
+  # Utility Functions
+  #
+  # ==============================================================================================
+  # ==============================================================================================
+
+  @doc section: :utility
   @doc """
   Reads and parses a component list file.
 
@@ -552,20 +581,13 @@ defmodule MsbmsBuildLib do
   @spec read_component_file(Path.t(), Path.t()) :: {:ok, [String.t()]} | {:error, String.t()}
   defdelegate read_component_file(base_dir, file_path), to: Impl.Common
 
-  # ==============================================================================================
-  # ==============================================================================================
-  #
-  # Utility Functions
-  #
-  # ==============================================================================================
-  # ==============================================================================================
-
   ##############################################################################
   #
   # set_log_level
   #
   #
 
+  @doc section: :utility
   @doc """
   Sets the log level for the build system.
 

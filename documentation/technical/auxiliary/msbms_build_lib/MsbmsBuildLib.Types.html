@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.37.3">
+    <meta name="project" content="msbms_build_lib v1.0.0">
+
+
+    <title>MsbmsBuildLib.Types — msbms_build_lib v1.0.0</title>
+
+    <link rel="stylesheet" href="dist/html-elixir-6X3L5KMG.css" />
+
+    <script defer src="dist/sidebar_items-769B7935.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-ALU6OERS.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="MsbmsBuildLib.html" class="sidebar-projectName" translate="no">
+msbms_build_lib
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v1.0.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-module" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of msbms_build_lib</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">MsbmsBuildLib.Types</span> 
+      <small class="app-vsn" translate="no">(msbms_build_lib v1.0.0)</small>
+
+    </h1>
+
+  </div>
+
+
+    <section id="moduledoc">
+<p>Type definitions for the MsbmsBuildLib module.</p><p>This module defines the core types used throughout the build library for
+representing components, paths, artifacts, and other build-related concepts.
+These types ensure consistency and type safety across the build system's API.</p><h2 id="module-type-categories" class="section-heading">
+  <a href="#module-type-categories" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Type Categories</span>
+</h2>
+<h3 id="module-component-types" class="section-heading">
+  <a href="#module-component-types" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Component Types</span>
+</h3>
+<ul><li><code class="inline">component_name/0</code> - Individual component identifiers</li><li><code class="inline">components/0</code> - Collections of component names</li><li><code class="inline">component_path/0</code> - File system paths to components</li><li><code class="inline">component_paths/0</code> - Collections of component paths</li></ul><h3 id="module-artifact-types" class="section-heading">
+  <a href="#module-artifact-types" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Artifact Types</span>
+</h3>
+<ul><li><code class="inline">kind/0</code> - Different types of build artifacts (Elixir, DB, docs)</li></ul><h3 id="module-migration-types" class="section-heading">
+  <a href="#module-migration-types" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Migration Types</span>
+</h3>
+<ul><li><code class="inline">migration_target/0</code> - Database migration configuration tuples</li></ul>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-types summary">
+  <h2>
+    <a href="#types">Types</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:component_name/0" data-no-tooltip="" translate="no">component_name()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>The name of a component in the project.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:component_path/0" data-no-tooltip="" translate="no">component_path()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>A fully qualified file system path to a component in the project.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:component_paths/0" data-no-tooltip="" translate="no">component_paths()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>A list of fully qualified file system paths to components in the project.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:components/0" data-no-tooltip="" translate="no">components()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>A list of component names for batch operations.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:kind/0" data-no-tooltip="" translate="no">kind()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>The different kinds of project artifacts that can be built or managed.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:migration_target/0" data-no-tooltip="" translate="no">migration_target()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Configuration tuple for components that require persistent database migration management.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Types</span>
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:component_name/0">
+
+  <div class="detail-header">
+    <a href="#t:component_name/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">component_name()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> component_name() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+<p>The name of a component in the project.</p><p>Component names should match their representation in the file system exactly.
+This typically uses snake_case naming convention and corresponds to the
+directory name where the component is located.</p><h2 id="t:component_name/0-naming-convention" class="section-heading">
+  <a href="#t:component_name/0-naming-convention" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Naming Convention</span>
+</h2>
+<p>Component names should use the file system representation rather than the
+Elixir module representation:</p><ul><li>✅ Correct: <code class="inline">&quot;mscmp_syst_enums&quot;</code></li><li>❌ Incorrect: <code class="inline">&quot;MscmpSystEnums&quot;</code></li></ul><h2 id="t:component_name/0-examples" class="section-heading">
+  <a href="#t:component_name/0-examples" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Examples</span>
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="c1"># Valid component names</span><span class="w">
+</span><span class="s">&quot;mscmp_syst_enums&quot;</span><span class="w">
+</span><span class="s">&quot;mscmp_syst_utils&quot;</span><span class="w">
+</span><span class="s">&quot;msapp_mcp_web&quot;</span><span class="w">
+</span><span class="s">&quot;mssub_mcp&quot;</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="t:component_path/0">
+
+  <div class="detail-header">
+    <a href="#t:component_path/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">component_path()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> component_path() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+<p>A fully qualified file system path to a component in the project.</p><p>This represents the absolute path to a component's root directory, where
+the component's source code, configuration files, and other artifacts
+are located. The path should be valid and accessible from the current
+working directory context.</p><h2 id="t:component_path/0-path-format" class="section-heading">
+  <a href="#t:component_path/0-path-format" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Path Format</span>
+</h2>
+<p>Paths are typically absolute and point to the component's root directory:</p><pre><code class="makeup elixir" translate="no"><span class="s">&quot;/full/path/to/project/components/mscmp_syst_enums&quot;</span><span class="w">
+</span><span class="s">&quot;/full/path/to/project/apps/msapp_mcp_web&quot;</span></code></pre><h2 id="t:component_path/0-usage" class="section-heading">
+  <a href="#t:component_path/0-usage" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Usage</span>
+</h2>
+<p>These paths are used internally by build functions to locate and operate
+on specific components within the project structure.</p>
+  </section>
+</section>
+<section class="detail" id="t:component_paths/0">
+
+  <div class="detail-header">
+    <a href="#t:component_paths/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">component_paths()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> component_paths() :: [<a href="#t:component_path/0">component_path</a>()]</pre>
+
+      </div>
+
+<p>A list of fully qualified file system paths to components in the project.</p><p>This collection type is used when build operations need to process multiple
+components by their full paths rather than just their names. It's typically
+used internally after component names have been resolved to their actual
+file system locations.</p><h2 id="t:component_paths/0-usage" class="section-heading">
+  <a href="#t:component_paths/0-usage" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Usage</span>
+</h2>
+<p>This type is commonly used in internal build pipeline functions where
+the system has already resolved component names to their full paths
+and needs to perform batch operations across multiple components.</p>
+  </section>
+</section>
+<section class="detail" id="t:components/0">
+
+  <div class="detail-header">
+    <a href="#t:components/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">components()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> components() :: [<a href="#t:component_name/0">component_name</a>()]</pre>
+
+      </div>
+
+<p>A list of component names for batch operations.</p><p>This type represents a collection of component names that can be processed
+together in build operations. An empty list typically indicates that all
+available components should be processed.</p><h2 id="t:components/0-examples" class="section-heading">
+  <a href="#t:components/0-examples" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Examples</span>
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">components</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="5235545538-1">[</span><span class="s">&quot;mscmp_syst_enums&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;mscmp_syst_utils&quot;</span><span class="p" data-group-id="5235545538-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsBuildLib</span><span class="o">.</span><span class="n">clean_build</span><span class="p" data-group-id="5235545538-2">(</span><span class="n">base_dir</span><span class="p">,</span><span class="w"> </span><span class="n">components</span><span class="p" data-group-id="5235545538-2">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="t:kind/0">
+
+  <div class="detail-header">
+    <a href="#t:kind/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">kind()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> kind() :: :elixir | :db | :elixir_docs | :db_docs</pre>
+
+      </div>
+
+<p>The different kinds of project artifacts that can be built or managed.</p><p>This type categorizes the various types of build artifacts and outputs
+that the build system can create and manage. Each kind represents a
+different aspect of the project's deliverables.</p><h2 id="t:kind/0-artifact-types" class="section-heading">
+  <a href="#t:kind/0-artifact-types" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Artifact Types</span>
+</h2>
+<ul><li><p><code class="inline">:elixir</code> - Compiled Elixir/Erlang code artifacts including BEAM files,
+applications, and releases. This includes the core application logic
+and libraries.</p></li><li><p><code class="inline">:db</code> - Database artifacts including schemas, migrations, stored procedures,
+functions, and other database objects. These define the data layer of
+the application.</p></li><li><p><code class="inline">:elixir_docs</code> - Generated documentation for Elixir code using ExDoc.
+This includes API documentation, guides, and module documentation
+extracted from the source code.</p></li><li><p><code class="inline">:db_docs</code> - Generated documentation for database objects including
+schema documentation, table descriptions, and database design
+documentation extracted from database metadata and comments.</p></li></ul><h2 id="t:kind/0-usage" class="section-heading">
+  <a href="#t:kind/0-usage" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Usage</span>
+</h2>
+<p>These kinds are used to categorize build operations and determine which
+specific build tools and processes should be applied to different parts
+of the project.</p>
+  </section>
+</section>
+<section class="detail" id="t:migration_target/0">
+
+  <div class="detail-header">
+    <a href="#t:migration_target/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">migration_target()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> migration_target() ::
+  {component_name :: <a href="#t:component_name/0">component_name</a>(), database_type :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+   component_path :: <a href="https://hexdocs.pm/elixir/Path.html#t:t/0">Path.t</a>()}</pre>
+
+      </div>
+
+<p>Configuration tuple for components that require persistent database migration management.</p><p>This type associates database migration metadata with component locations,
+enabling the build system to properly manage database schema evolution
+for deployable components.</p><h2 id="t:migration_target/0-target-scope" class="section-heading">
+  <a href="#t:migration_target/0-target-scope" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Target Scope</span>
+</h2>
+<p>Migration targets typically focus on Subsystems, which represent the
+architectural level where complete, deployable databases are defined.
+While other components may create and use migrations during development
+and testing, these are usually transient and not deployed to production
+environments.</p><h2 id="t:migration_target/0-tuple-elements" class="section-heading">
+  <a href="#t:migration_target/0-tuple-elements" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Tuple Elements</span>
+</h2>
+<ul><li><p><code class="inline">component_name</code> - The name of the component as it appears in the file system
+(e.g., <code class="inline">&quot;mssub_mcp&quot;</code> for the MCP subsystem)</p></li><li><p><code class="inline">database_type</code> - A string reference to a specific database buildplan that
+defines the build process for this type of database. This determines which
+migration tools and processes are used (e.g., <code class="inline">&quot;application_db&quot;</code>,
+<code class="inline">&quot;analytics_db&quot;</code>)</p></li><li><p><code class="inline">component_path</code> - The absolute file system path to the root directory of
+the component's Elixir project, where migration files and configuration
+are located</p></li></ul><h2 id="t:migration_target/0-examples" class="section-heading">
+  <a href="#t:migration_target/0-examples" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Examples</span>
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="c1"># MCP subsystem with application database</span><span class="w">
+</span><span class="p" data-group-id="7409761462-1">{</span><span class="s">&quot;mssub_mcp&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;application_db&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/full/path/to/project/subsystems/mssub_mcp&quot;</span><span class="p" data-group-id="7409761462-1">}</span><span class="w">
+
+</span><span class="c1"># Analytics subsystem with specialized database</span><span class="w">
+</span><span class="p" data-group-id="7409761462-2">{</span><span class="s">&quot;mssub_analytics&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;analytics_db&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/full/path/to/project/subsystems/mssub_analytics&quot;</span><span class="p" data-group-id="7409761462-2">}</span></code></pre><h2 id="t:migration_target/0-usage" class="section-heading">
+  <a href="#t:migration_target/0-usage" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Usage</span>
+</h2>
+<p>These tuples are used by the migration build system to locate migration
+files, determine the appropriate build process, and coordinate database
+schema updates across different deployment environments.</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="msbms_build_lib.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.37.3) for the
+
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

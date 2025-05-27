@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.37.3">
+    <meta name="project" content="msbms_build_lib v1.0.0">
+
+
+    <title>MsbmsBuildLib — msbms_build_lib v1.0.0</title>
+
+    <link rel="stylesheet" href="dist/html-elixir-6X3L5KMG.css" />
+
+    <script defer src="dist/sidebar_items-769B7935.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-ALU6OERS.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="MsbmsBuildLib.html" class="sidebar-projectName" translate="no">
+msbms_build_lib
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v1.0.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-module" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of msbms_build_lib</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">MsbmsBuildLib</span> 
+      <small class="app-vsn" translate="no">(msbms_build_lib v1.0.0)</small>
+
+    </h1>
+
+  </div>
+
+
+    <section id="moduledoc">
+<p>MsbmsBuildLib is a comprehensive Elixir build utilities library that provides
+automated build, test, documentation, and maintenance tasks for multi-component
+projects within the Muse Systems Business Management System ecosystem.</p><h2 id="module-overview" class="section-heading">
+  <a href="#module-overview" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Overview</span>
+</h2>
+<p>This library serves as a centralized toolset for managing complex,
+multi-component projects that span both Elixir applications and database
+schemas. It provides a unified interface through Mix tasks and programmatic APIs
+to handle common development operations across multiple project components
+simultaneously.</p><h3 id="module-key-capabilities" class="section-heading">
+  <a href="#module-key-capabilities" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Key Capabilities</span>
+</h3>
+<ul><li><p><strong>Multi-Component Build Management</strong>: Coordinate build processes across
+multiple Elixir applications and libraries within a single project structure</p></li><li><p><strong>Database Operations</strong>: Manage database cleaning, migration handling, and
+documentation generation for PostgreSQL-based components</p></li><li><p><strong>Documentation Generation</strong>: Automated building of both Elixir (ExDoc) and
+database documentation with proper cross-referencing</p></li><li><p><strong>Development Environment Maintenance</strong>: Clean and manage development
+artifacts including Language Server files, PLT caches, build directories,
+and dependencies</p></li><li><p><strong>Testing Coordination</strong>: Execute test suites across multiple components
+with unified reporting and configuration</p></li><li><p><strong>Project Discovery</strong>: Automatically discover and manage project components
+based on filesystem markers and conventions</p></li></ul><p>The library is designed specifically for complex business management systems
+where multiple interconnected components (applications, libraries, database
+schemas) need to be developed, tested, and maintained as a cohesive unit while
+preserving modular boundaries and independent deployment capabilities.</p>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-constants-retrieval summary">
+  <h2>
+    <a href="#constants-retrieval">Constants Retrieval</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#db_component_paths/0" data-no-tooltip="" translate="no">db_component_paths()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Get the DB component paths.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#db_docs_root/0" data-no-tooltip="" translate="no">db_docs_root()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Get the DB docs root.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#elixir_component_paths/0" data-no-tooltip="" translate="no">elixir_component_paths()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Get the Elixir component paths.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#elixir_docs_root/0" data-no-tooltip="" translate="no">elixir_docs_root()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Get the Elixir docs root.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#project_directories/0" data-no-tooltip="" translate="no">project_directories()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Get the project directories.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#project_markers/0" data-no-tooltip="" translate="no">project_markers()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Get the project markers.</p></div>
+
+    </div>
+
+</div>
+<div class="summary-build-cleaning summary">
+  <h2>
+    <a href="#build-cleaning">Build Cleaning</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#clean_build/2" data-no-tooltip="" translate="no">clean_build(base_dir, components)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Cleans the build artifacts in the given components.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#clean_db/2" data-no-tooltip="" translate="no">clean_db(base_dir, db_opts)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Cleans the database for the given components.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#clean_db_migrations/2" data-no-tooltip="" translate="no">clean_db_migrations(base_dir, components)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Cleans the database migrations for the given components.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#clean_deps/2" data-no-tooltip="" translate="no">clean_deps(base_dir, components)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Cleans the dependencies in the given components.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#clean_ls/2" data-no-tooltip="" translate="no">clean_ls(base_dir, components)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Cleans the Elixir Language Server in the given components.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#clean_plt/2" data-no-tooltip="" translate="no">clean_plt(base_dir, components)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Cleans the PLT (Persistent Lookup Table) in the given components.</p></div>
+
+    </div>
+
+</div>
+<div class="summary-build-documentation summary">
+  <h2>
+    <a href="#build-documentation">Build Documentation</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#build_docs_db/3" data-no-tooltip="" translate="no">build_docs_db(base_dir, components, db_opts)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Builds the DB documentation for the given components.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#build_docs_elixir/2" data-no-tooltip="" translate="no">build_docs_elixir(base_dir, components)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Builds the Elixir documentation for the given components.</p></div>
+
+    </div>
+
+</div>
+<div class="summary-dependency-management summary">
+  <h2>
+    <a href="#dependency-management">Dependency Management</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#install_elixir_deps/2" data-no-tooltip="" translate="no">install_elixir_deps(base_dir, components)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Installs Elixir dependencies for the given components.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#update_elixir_deps/2" data-no-tooltip="" translate="no">update_elixir_deps(base_dir, components)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Updates Elixir dependencies for the given components.</p></div>
+
+    </div>
+
+</div>
+<div class="summary-test-execution summary">
+  <h2>
+    <a href="#test-execution">Test Execution</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#run_tests/3" data-no-tooltip="" translate="no">run_tests(base_dir, components, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Runs tests for the given components.</p></div>
+
+    </div>
+
+</div>
+<div class="summary-build-elixir summary">
+  <h2>
+    <a href="#build-elixir">Build Elixir</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#build_elixir/3" data-no-tooltip="" translate="no">build_elixir(base_dir, components, elixir_env)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Builds the Elixir project.</p></div>
+
+    </div>
+
+</div>
+<div class="summary-build-migrations summary">
+  <h2>
+    <a href="#build-migrations">Build Migrations</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#build_migrations/2" data-no-tooltip="" translate="no">build_migrations(base_dir, components)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Builds the database migrations for the given components.</p></div>
+
+    </div>
+
+</div>
+<div class="summary-project-scaffolding summary">
+  <h2>
+    <a href="#project-scaffolding">Project Scaffolding</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#scaffold_elixir_component/4" data-no-tooltip="" translate="no">scaffold_elixir_component(base_dir, component_name, target_path, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Scaffolds a new Elixir component from templates.</p></div>
+
+    </div>
+
+</div>
+<div class="summary-utility summary">
+  <h2>
+    <a href="#utility">Utility</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#read_component_file/2" data-no-tooltip="" translate="no">read_component_file(base_dir, file_path)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Reads and parses a component list file.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#set_log_level/1" data-no-tooltip="" translate="no">set_log_level(level)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Sets the log level for the build system.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="constants-retrieval" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#constants-retrieval">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Constants Retrieval</span>
+    </h1>
+    <div class="constants-retrieval-list">
+<section class="detail" id="db_component_paths/0">
+
+  <div class="detail-header">
+    <a href="#db_component_paths/0" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">db_component_paths()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> db_component_paths() :: [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), ...]</pre>
+
+      </div>
+
+<p>Get the DB component paths.</p><p>Returns a list of relative paths where database components are located within the project.</p><h2 id="db_component_paths/0-returns" class="section-heading">
+  <a href="#db_component_paths/0-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li>List of database component paths as strings</li></ul>
+  </section>
+</section>
+<section class="detail" id="db_docs_root/0">
+
+  <div class="detail-header">
+    <a href="#db_docs_root/0" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">db_docs_root()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> db_docs_root() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+<p>Get the DB docs root.</p><p>Returns the root directory path where database documentation should be generated.</p><h2 id="db_docs_root/0-returns" class="section-heading">
+  <a href="#db_docs_root/0-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li>Root path for database documentation as a string</li></ul>
+  </section>
+</section>
+<section class="detail" id="elixir_component_paths/0">
+
+  <div class="detail-header">
+    <a href="#elixir_component_paths/0" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">elixir_component_paths()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> elixir_component_paths() :: [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), ...]</pre>
+
+      </div>
+
+<p>Get the Elixir component paths.</p><p>Returns a list of relative paths where Elixir components are located within the project.</p><h2 id="elixir_component_paths/0-returns" class="section-heading">
+  <a href="#elixir_component_paths/0-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li>List of Elixir component paths as strings</li></ul>
+  </section>
+</section>
+<section class="detail" id="elixir_docs_root/0">
+
+  <div class="detail-header">
+    <a href="#elixir_docs_root/0" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">elixir_docs_root()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> elixir_docs_root() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+<p>Get the Elixir docs root.</p><p>Returns the root directory path where Elixir documentation should be generated.</p><h2 id="elixir_docs_root/0-returns" class="section-heading">
+  <a href="#elixir_docs_root/0-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li>Root path for Elixir documentation as a string</li></ul>
+  </section>
+</section>
+<section class="detail" id="project_directories/0">
+
+  <div class="detail-header">
+    <a href="#project_directories/0" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">project_directories()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> project_directories() :: [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), ...]</pre>
+
+      </div>
+
+<p>Get the project directories.</p><p>Returns a list of standard project directory names used throughout the build system.</p><h2 id="project_directories/0-returns" class="section-heading">
+  <a href="#project_directories/0-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li>List of project directory names as strings</li></ul>
+  </section>
+</section>
+<section class="detail" id="project_markers/0">
+
+  <div class="detail-header">
+    <a href="#project_markers/0" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">project_markers()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> project_markers() :: [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), ...]</pre>
+
+      </div>
+
+<p>Get the project markers.</p><p>Returns a list of file markers that identify project boundaries or special locations.</p><h2 id="project_markers/0-returns" class="section-heading">
+  <a href="#project_markers/0-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li>List of project marker file names as strings</li></ul>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="build-cleaning" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#build-cleaning">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Build Cleaning</span>
+    </h1>
+    <div class="build-cleaning-list">
+<section class="detail" id="clean_build/2">
+
+  <div class="detail-header">
+    <a href="#clean_build/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">clean_build(base_dir, components)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> clean_build(<a href="https://hexdocs.pm/elixir/Path.html#t:t/0">Path.t</a>(), <a href="MsbmsBuildLib.Types.html#t:components/0">MsbmsBuildLib.Types.components</a>()) ::
+  :ok | {:error, message :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
+
+      </div>
+
+<p>Cleans the build artifacts in the given components.</p><p>Removes compiled beam files, build directories, and other compilation artifacts.</p><h2 id="clean_build/2-parameters" class="section-heading">
+  <a href="#clean_build/2-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">base_dir</code> - The base directory path</li><li><code class="inline">components</code> - List of component names to clean</li></ul><h2 id="clean_build/2-returns" class="section-heading">
+  <a href="#clean_build/2-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><code class="inline">:ok</code> on successful cleanup</li><li><code class="inline">{:error, message}</code> if cleanup fails</li></ul>
+  </section>
+</section>
+<section class="detail" id="clean_db/2">
+
+  <div class="detail-header">
+    <a href="#clean_db/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">clean_db(base_dir, db_opts)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> clean_db(<a href="https://hexdocs.pm/elixir/Path.html#t:t/0">Path.t</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: :ok | {:error, message :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
+
+      </div>
+
+<p>Cleans the database for the given components.</p><p>Drops and recreates database schemas, removing all data and schema objects
+for a fresh start. This is a destructive operation.</p><h2 id="clean_db/2-parameters" class="section-heading">
+  <a href="#clean_db/2-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">base_dir</code> - The base directory path</li><li><code class="inline">db_opts</code> - Keyword list of database connection options:<ul><li><code class="inline">:host</code> - Database host (default: &quot;127.0.0.1&quot;)</li><li><code class="inline">:port</code> - Database port (default: 5432)</li><li><code class="inline">:user</code> - Database user (required)</li><li><code class="inline">:password</code> - Database password (required)</li><li><code class="inline">:database</code> - Database name (default: &quot;postgres&quot;)</li><li><code class="inline">:dbadmin_password</code> - Database admin password (default: &quot;musesystems-insecure-publicly-known-password&quot;)</li></ul></li></ul><h2 id="clean_db/2-returns" class="section-heading">
+  <a href="#clean_db/2-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><code class="inline">:ok</code> on successful database cleanup</li><li><code class="inline">{:error, message}</code> if cleanup fails</li></ul>
+  </section>
+</section>
+<section class="detail" id="clean_db_migrations/2">
+
+  <div class="detail-header">
+    <a href="#clean_db_migrations/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">clean_db_migrations(base_dir, components)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> clean_db_migrations(<a href="https://hexdocs.pm/elixir/Path.html#t:t/0">Path.t</a>(), <a href="MsbmsBuildLib.Types.html#t:components/0">MsbmsBuildLib.Types.components</a>()) ::
+  :ok | {:error, message :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
+
+      </div>
+
+<p>Cleans the database migrations for the given components.</p><p>Removes migration tracking state and history, allowing migrations to be re-run
+from scratch. Does not affect the actual database schema.</p><h2 id="clean_db_migrations/2-parameters" class="section-heading">
+  <a href="#clean_db_migrations/2-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">base_dir</code> - The base directory path</li><li><code class="inline">components</code> - List of component names to clean</li></ul><h2 id="clean_db_migrations/2-returns" class="section-heading">
+  <a href="#clean_db_migrations/2-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><code class="inline">:ok</code> on successful cleanup</li><li><code class="inline">{:error, message}</code> if cleanup fails</li></ul>
+  </section>
+</section>
+<section class="detail" id="clean_deps/2">
+
+  <div class="detail-header">
+    <a href="#clean_deps/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">clean_deps(base_dir, components)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> clean_deps(<a href="https://hexdocs.pm/elixir/Path.html#t:t/0">Path.t</a>(), <a href="MsbmsBuildLib.Types.html#t:components/0">MsbmsBuildLib.Types.components</a>()) ::
+  :ok | {:error, message :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
+
+      </div>
+
+<p>Cleans the dependencies in the given components.</p><p>Removes downloaded and compiled dependency files, forcing a fresh dependency resolution
+on the next build.</p><h2 id="clean_deps/2-parameters" class="section-heading">
+  <a href="#clean_deps/2-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">base_dir</code> - The base directory path</li><li><code class="inline">components</code> - List of component names to clean</li></ul><h2 id="clean_deps/2-returns" class="section-heading">
+  <a href="#clean_deps/2-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><code class="inline">:ok</code> on successful cleanup</li><li><code class="inline">{:error, message}</code> if cleanup fails</li></ul>
+  </section>
+</section>
+<section class="detail" id="clean_ls/2">
+
+  <div class="detail-header">
+    <a href="#clean_ls/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">clean_ls(base_dir, components)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> clean_ls(<a href="https://hexdocs.pm/elixir/Path.html#t:t/0">Path.t</a>(), <a href="MsbmsBuildLib.Types.html#t:components/0">MsbmsBuildLib.Types.components</a>()) ::
+  :ok | {:error, message :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
+
+      </div>
+
+<p>Cleans the Elixir Language Server in the given components.</p><h2 id="clean_ls/2-parameters" class="section-heading">
+  <a href="#clean_ls/2-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">base_dir</code> - The base directory path</li><li><code class="inline">components</code> - List of component names to clean</li></ul><h2 id="clean_ls/2-returns" class="section-heading">
+  <a href="#clean_ls/2-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><code class="inline">:ok</code> on successful cleanup</li><li><code class="inline">{:error, message}</code> if cleanup fails</li></ul>
+  </section>
+</section>
+<section class="detail" id="clean_plt/2">
+
+  <div class="detail-header">
+    <a href="#clean_plt/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">clean_plt(base_dir, components)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> clean_plt(<a href="https://hexdocs.pm/elixir/Path.html#t:t/0">Path.t</a>(), <a href="MsbmsBuildLib.Types.html#t:components/0">MsbmsBuildLib.Types.components</a>()) ::
+  :ok | {:error, message :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
+
+      </div>
+
+<p>Cleans the PLT (Persistent Lookup Table) in the given components.</p><p>Removes Dialyzer PLT files that cache type information for faster subsequent analysis.</p><h2 id="clean_plt/2-parameters" class="section-heading">
+  <a href="#clean_plt/2-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">base_dir</code> - The base directory path</li><li><code class="inline">components</code> - List of component names to clean</li></ul><h2 id="clean_plt/2-returns" class="section-heading">
+  <a href="#clean_plt/2-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><code class="inline">:ok</code> on successful cleanup</li><li><code class="inline">{:error, message}</code> if cleanup fails</li></ul>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="build-documentation" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#build-documentation">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Build Documentation</span>
+    </h1>
+    <div class="build-documentation-list">
+<section class="detail" id="build_docs_db/3">
+
+  <div class="detail-header">
+    <a href="#build_docs_db/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">build_docs_db(base_dir, components, db_opts)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> build_docs_db(<a href="https://hexdocs.pm/elixir/Path.html#t:t/0">Path.t</a>(), <a href="MsbmsBuildLib.Types.html#t:components/0">MsbmsBuildLib.Types.components</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
+  :ok | {:error, message :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
+
+      </div>
+
+<p>Builds the DB documentation for the given components.</p><p>Generates database documentation by extracting schema information and comments
+from the database and creating formatted documentation files.</p><h2 id="build_docs_db/3-parameters" class="section-heading">
+  <a href="#build_docs_db/3-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">base_dir</code> - The base directory path where the project is located</li><li><code class="inline">components</code> - List of component names to build documentation for</li><li><code class="inline">db_opts</code> - Keyword list of database connection options:<ul><li><code class="inline">:host</code> - Database host (default: &quot;127.0.0.1&quot;)</li><li><code class="inline">:port</code> - Database port (default: 5432)</li><li><code class="inline">:user</code> - Database user (required)</li><li><code class="inline">:password</code> - Database password (required)</li><li><code class="inline">:database</code> - Database name (default: &quot;postgres&quot;)</li><li><code class="inline">:dbadmin_password</code> - Database admin password (default: &quot;musesystems-insecure-publicly-known-password&quot;)</li></ul></li></ul><h2 id="build_docs_db/3-returns" class="section-heading">
+  <a href="#build_docs_db/3-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><code class="inline">:ok</code> on successful documentation generation</li><li><code class="inline">{:error, message}</code> if documentation generation fails</li></ul>
+  </section>
+</section>
+<section class="detail" id="build_docs_elixir/2">
+
+  <div class="detail-header">
+    <a href="#build_docs_elixir/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">build_docs_elixir(base_dir, components)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> build_docs_elixir(<a href="https://hexdocs.pm/elixir/Path.html#t:t/0">Path.t</a>(), <a href="MsbmsBuildLib.Types.html#t:components/0">MsbmsBuildLib.Types.components</a>()) ::
+  :ok | {:error, message :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
+
+      </div>
+
+<p>Builds the Elixir documentation for the given components.</p><p>Generates ExDoc documentation for the specified Elixir components using their respective
+documentation configurations.</p><h2 id="build_docs_elixir/2-parameters" class="section-heading">
+  <a href="#build_docs_elixir/2-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">base_dir</code> - The base directory path where the project is located</li><li><code class="inline">components</code> - List of component names to generate documentation for</li></ul><h2 id="build_docs_elixir/2-returns" class="section-heading">
+  <a href="#build_docs_elixir/2-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><code class="inline">:ok</code> on successful documentation generation</li><li><code class="inline">{:error, message}</code> if documentation generation fails</li></ul>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="dependency-management" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#dependency-management">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Dependency Management</span>
+    </h1>
+    <div class="dependency-management-list">
+<section class="detail" id="install_elixir_deps/2">
+
+  <div class="detail-header">
+    <a href="#install_elixir_deps/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">install_elixir_deps(base_dir, components)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> install_elixir_deps(<a href="https://hexdocs.pm/elixir/Path.html#t:t/0">Path.t</a>(), <a href="MsbmsBuildLib.Types.html#t:components/0">MsbmsBuildLib.Types.components</a>()) ::
+  :ok | {:error, message :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
+
+      </div>
+
+<p>Installs Elixir dependencies for the given components.</p><p>Downloads and compiles all required dependencies for the specified components,
+ensuring they are available for compilation and runtime.</p><h2 id="install_elixir_deps/2-parameters" class="section-heading">
+  <a href="#install_elixir_deps/2-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">base_dir</code> - The base directory path where the project is located</li><li><code class="inline">components</code> - List of component names to install dependencies for</li></ul><h2 id="install_elixir_deps/2-returns" class="section-heading">
+  <a href="#install_elixir_deps/2-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><code class="inline">:ok</code> on successful dependency installation</li><li><code class="inline">{:error, message}</code> if installation fails</li></ul>
+  </section>
+</section>
+<section class="detail" id="update_elixir_deps/2">
+
+  <div class="detail-header">
+    <a href="#update_elixir_deps/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">update_elixir_deps(base_dir, components)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> update_elixir_deps(<a href="https://hexdocs.pm/elixir/Path.html#t:t/0">Path.t</a>(), <a href="MsbmsBuildLib.Types.html#t:components/0">MsbmsBuildLib.Types.components</a>()) ::
+  :ok | {:error, message :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
+
+      </div>
+
+<p>Updates Elixir dependencies for the given components.</p><p>Updates all dependencies to their latest compatible versions as specified
+in the dependency configuration files.</p><h2 id="update_elixir_deps/2-parameters" class="section-heading">
+  <a href="#update_elixir_deps/2-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">base_dir</code> - The base directory path where the project is located</li><li><code class="inline">components</code> - List of component names to update dependencies for</li></ul><h2 id="update_elixir_deps/2-returns" class="section-heading">
+  <a href="#update_elixir_deps/2-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><code class="inline">:ok</code> on successful dependency update</li><li><code class="inline">{:error, message}</code> if update fails</li></ul>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="test-execution" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#test-execution">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Test Execution</span>
+    </h1>
+    <div class="test-execution-list">
+<section class="detail" id="run_tests/3">
+
+    <span id="run_tests/2"></span>
+
+  <div class="detail-header">
+    <a href="#run_tests/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">run_tests(base_dir, components, opts \\ [])</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> run_tests(<a href="https://hexdocs.pm/elixir/Path.html#t:t/0">Path.t</a>(), <a href="MsbmsBuildLib.Types.html#t:components/0">MsbmsBuildLib.Types.components</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
+  :ok | {:error, message :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
+
+      </div>
+
+<p>Runs tests for the given components.</p><p>Executes various types of tests including unit tests, integration tests, doctests,
+code quality checks (Credo), and static analysis (Dialyzer) based on the provided options.</p><h2 id="run_tests/3-parameters" class="section-heading">
+  <a href="#run_tests/3-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">base_dir</code> - The base directory path where the project is located</li><li><code class="inline">components</code> - List of component names to test (empty list means all components)</li><li><code class="inline">opts</code> - Keyword list of test options:<ul><li><code class="inline">:test_unit</code> - Whether to run unit tests (default: true)</li><li><code class="inline">:test_integration</code> - Whether to run integration tests (default: true)</li><li><code class="inline">:test_doctest</code> - Whether to run doctests (default: true)</li><li><code class="inline">:run_credo</code> - Whether to run credo tests (default: true)</li><li><code class="inline">:run_dialyzer</code> - Whether to run dialyzer tests (default: true)</li></ul></li></ul><h2 id="run_tests/3-returns" class="section-heading">
+  <a href="#run_tests/3-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><code class="inline">:ok</code> if all specified tests pass</li><li><code class="inline">{:error, message}</code> if any tests fail</li></ul>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="build-elixir" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#build-elixir">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Build Elixir</span>
+    </h1>
+    <div class="build-elixir-list">
+<section class="detail" id="build_elixir/3">
+
+  <div class="detail-header">
+    <a href="#build_elixir/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">build_elixir(base_dir, components, elixir_env)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> build_elixir(<a href="https://hexdocs.pm/elixir/Path.html#t:t/0">Path.t</a>(), <a href="MsbmsBuildLib.Types.html#t:components/0">MsbmsBuildLib.Types.components</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) ::
+  :ok | {:error, message :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
+
+      </div>
+
+<p>Builds the Elixir project.</p><p>Compiles the Elixir components for the specified environment, handling dependencies
+and compilation in the correct order.</p><h2 id="build_elixir/3-parameters" class="section-heading">
+  <a href="#build_elixir/3-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">base_dir</code> - The base directory path where the project is located</li><li><code class="inline">components</code> - List of component names to build</li><li><code class="inline">elixir_env</code> - The Elixir environment to build for (e.g., &quot;dev&quot;, &quot;test&quot;, &quot;prod&quot;)</li></ul><h2 id="build_elixir/3-returns" class="section-heading">
+  <a href="#build_elixir/3-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><code class="inline">:ok</code> on successful build completion</li><li><code class="inline">{:error, message}</code> if the build fails</li></ul>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="build-migrations" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#build-migrations">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Build Migrations</span>
+    </h1>
+    <div class="build-migrations-list">
+<section class="detail" id="build_migrations/2">
+
+  <div class="detail-header">
+    <a href="#build_migrations/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">build_migrations(base_dir, components)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> build_migrations(<a href="https://hexdocs.pm/elixir/Path.html#t:t/0">Path.t</a>(), <a href="MsbmsBuildLib.Types.html#t:components/0">MsbmsBuildLib.Types.components</a>()) ::
+  :ok | {:error, message :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
+
+      </div>
+
+<p>Builds the database migrations for the given components.</p><p>Processes and prepares database migration files for the specified components,
+ensuring they are ready for execution against the target database.</p><h2 id="build_migrations/2-parameters" class="section-heading">
+  <a href="#build_migrations/2-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">base_dir</code> - The base directory path where the project is located</li><li><code class="inline">components</code> - List of component names to build migrations for</li></ul><h2 id="build_migrations/2-returns" class="section-heading">
+  <a href="#build_migrations/2-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><code class="inline">:ok</code> on successful migration build completion</li><li><code class="inline">{:error, message}</code> if the migration build fails</li></ul>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="project-scaffolding" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#project-scaffolding">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Project Scaffolding</span>
+    </h1>
+    <div class="project-scaffolding-list">
+<section class="detail" id="scaffold_elixir_component/4">
+
+    <span id="scaffold_elixir_component/3"></span>
+
+  <div class="detail-header">
+    <a href="#scaffold_elixir_component/4" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">scaffold_elixir_component(base_dir, component_name, target_path, opts \\ [])</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> scaffold_elixir_component(<a href="https://hexdocs.pm/elixir/Path.html#t:t/0">Path.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) ::
+  :ok | {:error, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
+
+      </div>
+
+<p>Scaffolds a new Elixir component from templates.</p><p>Creates a new Elixir component project structure based on the standard
+templates, with all files properly configured for the new component.</p><h2 id="scaffold_elixir_component/4-parameters" class="section-heading">
+  <a href="#scaffold_elixir_component/4-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">base_dir</code> - The base directory path where the project is located</li><li><code class="inline">component_name</code> - The name of the component (e.g., &quot;mscmp_syst_new_feature&quot;)</li><li><code class="inline">target_path</code> - The relative path where the component should be created</li><li><code class="inline">opts</code> - Optional configuration options</li></ul><h2 id="scaffold_elixir_component/4-options" class="section-heading">
+  <a href="#scaffold_elixir_component/4-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options</span>
+</h2>
+<ul><li><code class="inline">:component_display_name</code> - Human-friendly name for the component</li><li><code class="inline">:component_description</code> - Brief description of the component</li><li><code class="inline">:component_section</code> - Documentation section atom</li><li><code class="inline">:comp_short_name</code> - Override the derived short component name (removes categorizing prefix)</li><li><code class="inline">:module_name</code> - Override the derived module name (PascalCase of full component name)</li><li><code class="inline">:module_short_name</code> - Override the derived short module name (PascalCase of short component name)</li></ul><h2 id="scaffold_elixir_component/4-returns" class="section-heading">
+  <a href="#scaffold_elixir_component/4-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><code class="inline">:ok</code> on successful scaffolding</li><li><code class="inline">{:error, message}</code> if scaffolding fails</li></ul><h2 id="scaffold_elixir_component/4-examples" class="section-heading">
+  <a href="#scaffold_elixir_component/4-examples" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Examples</span>
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="c1"># Create a new system component (names derived automatically)</span><span class="w">
+</span><span class="nc">MsbmsBuildLib</span><span class="o">.</span><span class="n">scaffold_elixir_component</span><span class="p" data-group-id="2188752168-1">(</span><span class="w">
+  </span><span class="s">&quot;/path/to/project&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="s">&quot;mscmp_syst_new_feature&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="s">&quot;app_server/components/system&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="ss">component_display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;New Feature Component&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="ss">component_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Provides new feature functionality.&quot;</span><span class="w">
+</span><span class="p" data-group-id="2188752168-1">)</span><span class="w">
+
+</span><span class="c1"># Create a new application component</span><span class="w">
+</span><span class="nc">MsbmsBuildLib</span><span class="o">.</span><span class="n">scaffold_elixir_component</span><span class="p" data-group-id="2188752168-2">(</span><span class="w">
+  </span><span class="s">&quot;/path/to/project&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="s">&quot;msapp_new_app&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="s">&quot;app_server/components/application&quot;</span><span class="w">
+</span><span class="p" data-group-id="2188752168-2">)</span><span class="w">
+
+</span><span class="c1"># Override derived names for edge cases</span><span class="w">
+</span><span class="nc">MsbmsBuildLib</span><span class="o">.</span><span class="n">scaffold_elixir_component</span><span class="p" data-group-id="2188752168-3">(</span><span class="w">
+  </span><span class="s">&quot;/path/to/project&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="s">&quot;legacy_system_component&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="s">&quot;app_server/components/system&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="ss">comp_short_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;legacy&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="ss">module_short_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Legacy&quot;</span><span class="w">
+</span><span class="p" data-group-id="2188752168-3">)</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="utility" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#utility">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Utility</span>
+    </h1>
+    <div class="utility-list">
+<section class="detail" id="read_component_file/2">
+
+  <div class="detail-header">
+    <a href="#read_component_file/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">read_component_file(base_dir, file_path)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> read_component_file(<a href="https://hexdocs.pm/elixir/Path.html#t:t/0">Path.t</a>(), <a href="https://hexdocs.pm/elixir/Path.html#t:t/0">Path.t</a>()) ::
+  {:ok, [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()]} | {:error, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
+
+      </div>
+
+<p>Reads and parses a component list file.</p><p>The file format supports:</p><ul><li>One component name per line</li><li>Comments starting with <code class="inline">#</code> are ignored</li><li>Empty lines are ignored</li><li>Leading/trailing whitespace is trimmed</li></ul><h2 id="read_component_file/2-parameters" class="section-heading">
+  <a href="#read_component_file/2-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">base_dir</code> - The base directory path where the project is located</li><li><code class="inline">file_path</code> - Path to the component file (relative to base_dir)</li></ul><h2 id="read_component_file/2-returns" class="section-heading">
+  <a href="#read_component_file/2-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><code class="inline">{:ok, components}</code> - List of component names from the file</li><li><code class="inline">{:error, reason}</code> - Error message if file cannot be read or parsed</li></ul>
+  </section>
+</section>
+<section class="detail" id="set_log_level/1">
+
+  <div class="detail-header">
+    <a href="#set_log_level/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">set_log_level(level)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> set_log_level(<a href="https://hexdocs.pm/logger/Logger.html#t:level/0">Logger.level</a>()) :: :ok</pre>
+
+      </div>
+
+<p>Sets the log level for the build system.</p><p>Configures the logging level for all build operations, controlling the verbosity
+of output during build processes.</p><h2 id="set_log_level/1-parameters" class="section-heading">
+  <a href="#set_log_level/1-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">level</code> - The desired log level (<code class="inline">:debug</code>, <code class="inline">:info</code>, <code class="inline">:warning</code>, <code class="inline">:error</code>)</li></ul><h2 id="set_log_level/1-returns" class="section-heading">
+  <a href="#set_log_level/1-returns" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Returns</span>
+</h2>
+<ul><li><code class="inline">:ok</code> - Always returns <code class="inline">:ok</code></li></ul>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="msbms_build_lib.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.37.3) for the
+
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

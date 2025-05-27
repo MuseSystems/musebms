@@ -1,23 +1,27 @@
+# Source File: mix.exs
+# Location:    musebms/tools/build_tools/msbms_build_lib/mix.exs
+# Project:     Muse Systems Business Management System
+#
+# Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+# This file may include content copyrighted and licensed from third parties.
+#
+# See the LICENSE file in the project root for license terms and conditions.
+# See the NOTICE file in the project root for copyright ownership information.
+#
+# muse.information@musesystems.com :: https://muse.systems
+
 defmodule MsbmsBuildLib.MixProject do
   use Mix.Project
 
+  Code.require_file(Path.expand("../build_config/msbms_build_config.exs", __DIR__))
+
   @name :msbms_build_lib
-  @version "0.1.0"
+  @version "1.0.0"
 
-  @deps [
-    # Third Party Dependencies
-    {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
-    {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
-    {:ex_doc, "~> 0.31", only: :dev, runtime: false}
-
-    # Muse Systems First Party Dependencies
-  ]
-
-  @dialyzer_opts [
-    flags: ["-Wunmatched_returns", :error_handling],
-    plt_add_apps: [:mix, :ex_unit],
-    plt_core_path: "priv/plts",
-    plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
+  @third_party_deps [
+    :credo,
+    :dialyxir,
+    :ex_doc
   ]
 
   # ------------------------------------------------------------
@@ -28,32 +32,44 @@ defmodule MsbmsBuildLib.MixProject do
     [
       app: @name,
       version: @version,
-      elixir: "~> 1.18",
-      deps: @deps,
+      elixir: MsbmsBuildConfig.versions().elixir,
+      deps: MsbmsBuildConfig.resolve_deps(@third_party_deps),
       build_embedded: in_production,
       start_permanent: in_production,
-      dialyzer: @dialyzer_opts,
+      dialyzer: MsbmsBuildConfig.dialyzer_config(),
       elixirc_paths: elixirc_paths(Mix.env()),
       docs: [
         name: "MsbmsBuildLib",
         main: "MsbmsBuildLib",
         output: "../../../documentation/technical/auxiliary/msbms_build_lib",
-        deps: [],
-        groups_for_docs: [],
-        nest_modules_by_prefix: [],
-        groups_for_modules: []
+        groups_for_docs: [
+          "Constants Retrieval": &(&1[:section] == :constants_retrieval),
+          "Build Cleaning": &(&1[:section] == :build_cleaning),
+          "Build Documentation": &(&1[:section] == :build_documentation),
+          "Dependency Management": &(&1[:section] == :dependency_management),
+          "Test Execution": &(&1[:section] == :test_execution),
+          "Build Elixir": &(&1[:section] == :build_elixir),
+          "Build Migrations": &(&1[:section] == :build_migrations),
+          "Project Scaffolding": &(&1[:section] == :project_scaffolding),
+          Utility: &(&1[:section] == :utility)
+        ],
+        groups_for_modules: [
+          API: [MsbmsBuildLib],
+          "Supporting Types": [MsbmsBuildLib.Types]
+        ]
       ]
     ]
   end
 
   def application do
     [
-      extra_applications: [:logger]
+      extra_applications: [
+        :logger
+      ]
     ]
   end
 
   defp elixirc_paths(:test), do: elixirc_paths() ++ ["test/support"]
-  defp elixirc_paths(:dev), do: elixirc_paths() ++ ["dev_support"]
   defp elixirc_paths(_), do: elixirc_paths()
   defp elixirc_paths(), do: ["lib"]
 end
