@@ -17,7 +17,7 @@ defmodule MsbmsBuildLib.Impl.ProjectElixir do
 
   require Logger
 
-  @scaffold_template_path "priv/scaffolds/elixir/component"
+  @component_scaffold_path ["scaffolds", "elixir", "component"]
 
   ##############################################################################
   #
@@ -40,7 +40,6 @@ defmodule MsbmsBuildLib.Impl.ProjectElixir do
   ## Options
     * `:component_display_name` - Human-friendly name for the component
     * `:component_description` - Brief description of the component
-    * `:component_section` - Documentation section atom
 
   ## Returns
     * `:ok` on successful scaffolding
@@ -51,244 +50,262 @@ defmodule MsbmsBuildLib.Impl.ProjectElixir do
   def scaffold_component(base_dir, component_name, target_path, opts \\ []) do
     Logger.notice("==msbms_build_lib==::project_elixir::scaffold_component::START")
 
-    with {:ok, template_vars} <-
-           build_template_variables(component_name, target_path, opts),
-         {:ok, target_dir} <- create_target_directory(base_dir, target_path, component_name),
-         :ok <- copy_and_process_templates(template_vars, target_dir) do
-      Logger.notice("==msbms_build_lib==::project_elixir::scaffold_component::DONE")
-      Logger.info("New Elixir component '#{component_name}' created at: #{target_dir}")
-      :ok
-    else
+    # Build bindings for template variable substitution (relative paths)
+    bindings = build_bindings(component_name, target_path, opts)
+
+    # Build the actual absolute target directory for scaffolding
+    absolute_target_dir = Path.join([base_dir, target_path, component_name])
+
+    scaffold_path = Path.join([:code.priv_dir(:msbms_build_lib)] ++ @component_scaffold_path)
+
+    case process_scaffold(scaffold_path, absolute_target_dir, bindings) do
+      :ok ->
+        Logger.info("New Elixir component '#{component_name}' created at: #{absolute_target_dir}")
+        Logger.notice("==msbms_build_lib==::project_elixir::scaffold_component::DONE")
+        :ok
+
       {:error, reason} ->
         Logger.error("==msbms_build_lib==::project_elixir::scaffold_component::FAILED")
         {:error, reason}
     end
   end
 
-  ##############################################################################
-  #
-  # Private Functions
-  #
-  #
+  defp build_bindings(component_name, target_path, opts) do
+    default_short_name = derive_short_component_name(component_name)
 
-  defp build_template_variables(component_name, target_path, opts) do
-    with {:ok, docs_output_path} <- build_docs_output_path(target_path, component_name) do
-      # Derive names with command line overrides
-      default_short_name = derive_short_component_name(component_name)
+    # Component path for relative calculations (target_path/component_name)
+    resolved_project_path = Path.join(target_path, component_name)
+    relative_root_path = build_relative_root_path(resolved_project_path)
 
-      template_vars = [
-        comp_name: component_name,
-        comp_short_name: Keyword.get(opts, :comp_short_name, default_short_name),
-        module_name:
-          Keyword.get(opts, :module_name, derive_module_name_from_string(component_name)),
-        module_short_name:
-          Keyword.get(
-            opts,
-            :module_short_name,
-            derive_module_name_from_string(default_short_name)
-          ),
-        project_path: Path.join(target_path, component_name),
-        component_display_name:
-          Keyword.get(opts, :component_display_name, humanize_name(component_name)),
-        component_description:
-          Keyword.get(
-            opts,
-            :component_description,
-            "A new Elixir component for the Muse Systems Business Management System."
-          ),
-        component_section:
-          Keyword.get(opts, :component_section, derive_section_atom(component_name)),
-        docs_output_path: docs_output_path,
-        build_config_path: build_build_config_path(target_path, component_name)
-      ]
+    resolved_config_path = Path.join(relative_root_path, Common.elixir_build_config_path())
 
-      {:ok, template_vars}
-    end
+    resolved_docs_path =
+      Path.join([relative_root_path, Common.elixir_docs_root(), component_name])
+
+    resolved_comp_short_name = Keyword.get(opts, :comp_short_name, default_short_name)
+
+    resolved_module_name =
+      Keyword.get(opts, :module_name, snake_to_pascal(component_name))
+
+    resolved_module_short_name =
+      Keyword.get(opts, :module_short_name, snake_to_pascal(default_short_name))
+
+    resolved_component_display_name =
+      Keyword.get(opts, :component_display_name, snake_to_friendly(component_name))
+
+    resolved_component_description =
+      Keyword.get(
+        opts,
+        :component_description,
+        "A new Elixir component for the Muse Systems Business Management System."
+      )
+
+    [
+      comp_name: component_name,
+      comp_short_name: resolved_comp_short_name,
+      module_name: resolved_module_name,
+      module_short_name: resolved_module_short_name,
+      project_path: resolved_project_path,
+      component_display_name: resolved_component_display_name,
+      component_description: resolved_component_description,
+      docs_output_path: resolved_docs_path,
+      build_config_path: resolved_config_path
+    ]
+  end
+
+  defp build_relative_root_path(component_path) do
+    component_path
+    |> Path.split()
+    |> length()
+    |> then(&List.duplicate("..", &1))
+    |> Path.join()
   end
 
   defp derive_short_component_name(component_name) do
-    # Handle the pattern: msxxx_yyyy_<component_name> -> <component_name>
-    case String.split(component_name, "_") do
-      [prefix1, prefix2 | rest] ->
-        if String.starts_with?(prefix1, "ms") and String.length(prefix1) > 2 and
-             String.length(prefix2) > 0 and length(rest) > 0 do
-          Enum.join(rest, "_")
-        else
-          component_name
-        end
+    regex = ~r/^(?<prefix>[a-z]{5})_(?<section>[a-z]{4})_(?<component>.+)$/
 
-      _ ->
-        # Fallback: if pattern doesn't match, use full name
-        component_name
+    case Regex.named_captures(regex, component_name) do
+      %{"component" => component} -> component
+      nil -> component_name
     end
   end
 
-  defp derive_module_name_from_string(name) do
+  defp snake_to_pascal(name) do
     name
     |> String.split("_")
     |> Enum.map_join("", &String.capitalize/1)
   end
 
-  defp humanize_name(component_name) do
+  defp snake_to_friendly(component_name) do
     component_name
     |> String.split("_")
     |> Enum.map_join(" ", &String.capitalize/1)
   end
 
-  defp derive_section_atom(component_name) do
-    component_name
-    |> String.replace("mscmp_", "")
-    |> String.replace("msapp_", "")
-    |> String.replace("mssub_", "")
-    |> String.to_atom()
+  defp rename_with_bindings(filename, bindings) do
+    Enum.reduce(bindings, filename, fn {key, value}, acc_filename ->
+      # Convert key to uppercase string for the tag format, e.g., :comp_name -> "COMP_NAME"
+      tag_key_str = key |> Atom.to_string() |> String.upcase()
+      tag_to_replace = "__#{tag_key_str}__"
+      # Ensure value is a string for replacement
+      replacement_value = to_string(value)
+      String.replace(acc_filename, tag_to_replace, replacement_value)
+    end)
   end
 
-  defp build_docs_output_path(target_path, component_name) do
-    # Calculate relative path from component to docs directory
-    component_path = Path.join(target_path, component_name)
-    docs_root = Common.elixir_docs_root()
-
-    # Count directory levels to go back to base
-    levels_up = component_path |> Path.split() |> length()
-    back_path = List.duplicate("..", levels_up) |> Path.join()
-
-    docs_path = Path.join([back_path, docs_root, component_name])
-    {:ok, docs_path}
+  defp process_scaffold(scaffold_dir, target_dir, bindings) do
+    process_scaffold_recursive(scaffold_dir, target_dir, bindings)
   end
 
-  defp build_build_config_path(target_path, component_name) do
-    # Calculate relative path from component to build config file
-    component_path = Path.join(target_path, component_name)
-
-    # Count directory levels to go back to project root
-    levels_up = component_path |> Path.split() |> length()
-    back_path = List.duplicate("..", levels_up) |> Path.join()
-
-    # Path to build config from project root
-    Path.join([back_path, "tools/build_tools/build_config/msbms_build_config.exs"])
-  end
-
-  defp create_target_directory(base_dir, target_path, component_name) do
-    target_dir = Path.join([base_dir, target_path, component_name])
-
-    if File.exists?(target_dir) do
-      {:error, "Target directory already exists: #{target_dir}"}
-    else
-      case File.mkdir_p(target_dir) do
-        :ok -> {:ok, target_dir}
-        {:error, reason} -> {:error, "Failed to create target directory: #{reason}"}
-      end
-    end
-  end
-
-  defp copy_and_process_templates(template_vars, target_dir) do
-    template_dir = get_template_directory()
-
-    if File.dir?(template_dir) do
-      process_template_directory(template_dir, target_dir, template_vars, "")
-    else
-      {:error, "Template directory not found: #{template_dir}"}
-    end
-  end
-
-  defp get_template_directory do
-    # Get the path to the template directory relative to this application
-    app_dir = Application.app_dir(:msbms_build_lib)
-    Path.join(app_dir, @scaffold_template_path)
-  end
-
-  defp process_template_directory(source_dir, target_dir, template_vars, relative_path) do
-    case File.ls(source_dir) do
-      {:ok, entries} ->
-        Enum.reduce_while(entries, :ok, fn entry, _acc ->
-          process_directory_entry(entry, source_dir, target_dir, template_vars, relative_path)
-        end)
-
-      {:error, reason} ->
-        {:error, "Failed to list directory #{source_dir}: #{reason}"}
-    end
-  end
-
-  defp process_directory_entry(entry, source_dir, target_dir, template_vars, relative_path) do
-    source_path = Path.join(source_dir, entry)
-    target_path = Path.join(target_dir, process_filename(entry, template_vars))
-
-    cond do
-      File.dir?(source_path) ->
-        process_subdirectory(source_path, target_path, template_vars, relative_path, entry)
-
-      String.ends_with?(entry, ".eex") ->
-        process_template_entry(source_path, target_path, template_vars)
-
-      true ->
-        process_regular_file(source_path, target_path)
-    end
-  end
-
-  defp process_subdirectory(source_path, target_path, template_vars, relative_path, entry) do
-    case File.mkdir_p(target_path) do
+  defp process_scaffold_recursive(source_dir, target_dir, bindings) do
+    # Ensure target directory exists
+    case File.mkdir_p(target_dir) do
       :ok ->
-        case process_template_directory(
-               source_path,
-               target_path,
-               template_vars,
-               Path.join(relative_path, entry)
-             ) do
-          :ok -> {:cont, :ok}
-          error -> {:halt, error}
+        # Proceed with processing contents
+        do_process_scaffold_contents(source_dir, target_dir, bindings)
+
+      {:error, reason} ->
+        Logger.error("Failed to create target directory #{target_dir}: #{reason}")
+        {:error, "Failed to create target directory #{target_dir}: #{reason}"}
+    end
+  end
+
+  defp do_process_scaffold_contents(source_dir, target_dir, bindings) do
+    case File.ls(source_dir) do
+      {:ok, contents} ->
+        # Categorize all items in current directory
+        {directories, templates, statics} = categorize_scaffold_items(source_dir, contents)
+
+        # Process items, halting on any error
+        with :ok <-
+               process_directories_recursively(directories, source_dir, target_dir, bindings),
+             :ok <- process_all_templates(templates, source_dir, target_dir, bindings),
+             :ok <- copy_all_static_files(statics, source_dir, target_dir, bindings) do
+          :ok
+        else
+          # An error from any of the above steps will be caught here
+          {:error, _reason} = error -> error
         end
 
       {:error, reason} ->
-        {:halt, {:error, "Failed to create directory #{target_path}: #{reason}"}}
+        Logger.error("Failed to read scaffold directory #{source_dir}: #{reason}")
+        {:error, "Failed to read scaffold directory #{source_dir}: #{reason}"}
     end
   end
 
-  defp process_template_entry(source_path, target_path, template_vars) do
-    case process_template_file(source_path, target_path, template_vars) do
-      :ok -> {:cont, :ok}
-      error -> {:halt, error}
-    end
+  # Helper to process directories recursively
+  defp process_directories_recursively(directories, source_dir, target_dir, bindings) do
+    Enum.reduce_while(directories, :ok, fn dir_name, _acc ->
+      source_child_dir = Path.join(source_dir, dir_name)
+      renamed_dir_name = rename_with_bindings(dir_name, bindings)
+      target_child_dir = Path.join(target_dir, renamed_dir_name)
+
+      case process_scaffold_recursive(source_child_dir, target_child_dir, bindings) do
+        :ok -> {:cont, :ok}
+        {:error, _reason} = error -> {:halt, error}
+      end
+    end)
   end
 
-  defp process_regular_file(source_path, target_path) do
-    case File.cp(source_path, target_path) do
-      :ok -> {:cont, :ok}
-      {:error, reason} -> {:halt, {:error, "Failed to copy file #{source_path}: #{reason}"}}
-    end
+  # Helper to process all template files
+  defp process_all_templates(templates, source_dir, target_dir, bindings) do
+    Enum.reduce_while(templates, :ok, fn template_file, _acc ->
+      case process_template_file(source_dir, target_dir, template_file, bindings) do
+        :ok -> {:cont, :ok}
+        {:error, _reason} = error -> {:halt, error}
+      end
+    end)
   end
 
-  defp process_filename(filename, template_vars) do
-    # Replace __KEY_NAME__ placeholders with values from template_vars
-    processed_filename =
-      Enum.reduce(template_vars, filename, fn {key, value}, acc ->
-        placeholder = "__#{String.upcase(to_string(key))}__"
-        String.replace(acc, placeholder, to_string(value))
-      end)
+  # Helper to copy all static files
+  defp copy_all_static_files(statics, source_dir, target_dir, bindings) do
+    Enum.reduce_while(statics, :ok, fn static_file, _acc ->
+      target_static_file_name = rename_with_bindings(static_file, bindings)
 
-    # Remove .eex extension
-    String.replace(processed_filename, ".eex", "")
+      case copy_static_file(source_dir, target_dir, static_file, target_static_file_name) do
+        :ok -> {:cont, :ok}
+        {:error, _reason} = error -> {:halt, error}
+      end
+    end)
   end
 
-  defp process_template_file(source_path, target_path, template_vars) do
-    # Remove .eex extension from target path
-    final_target_path = String.replace_suffix(target_path, ".eex", "")
+  defp categorize_scaffold_items(source_dir, file_names) do
+    Enum.reduce(file_names, {[], [], []}, fn file_name, {dirs, templates, statics} ->
+      file_path = Path.join(source_dir, file_name)
 
-    case File.read(source_path) do
-      {:ok, template_content} ->
-        try do
-          processed_content = EEx.eval_string(template_content, template_vars)
+      cond do
+        File.dir?(file_path) ->
+          {[file_name | dirs], templates, statics}
 
-          case File.write(final_target_path, processed_content) do
-            :ok -> :ok
-            {:error, reason} -> {:error, "Failed to write file #{final_target_path}: #{reason}"}
-          end
-        rescue
-          e ->
-            {:error, "Failed to process template #{source_path}: #{Exception.message(e)}"}
+        File.regular?(file_path) and String.ends_with?(file_name, ".eex") ->
+          {dirs, [file_name | templates], statics}
+
+        File.regular?(file_path) ->
+          {dirs, templates, [file_name | statics]}
+
+        true ->
+          # Skip other file types (symlinks, etc.)
+          {dirs, templates, statics}
+      end
+    end)
+  end
+
+  defp process_template_file(source_dir, target_dir, template_file, bindings) do
+    source_path = Path.join(source_dir, template_file)
+
+    # Remove .eex extension for target file
+    renamed_template_file = rename_with_bindings(template_file, bindings)
+    target_file_name = String.replace_suffix(renamed_template_file, ".eex", "")
+    target_path = Path.join(target_dir, target_file_name)
+
+    with {:ok, template_content} <- File.read(source_path),
+         {:ok, rendered_content} <-
+           evaluate_template(template_content, renamed_template_file, bindings),
+         :ok <- File.write(target_path, rendered_content) do
+      Logger.debug("Processed template: #{renamed_template_file} -> #{target_file_name}")
+      :ok
+    else
+      {:error, reason} ->
+        # Specific error logging for read failures
+        # Check if it's not already a file read error reason
+        if reason != :eaddrinuse and reason != :eagain and reason != :einval and reason != :enoent do
+          Logger.error("Failed to process template file #{renamed_template_file}: #{reason}")
         end
 
+        {:error, "Failed to process template #{renamed_template_file}: #{reason}"}
+    end
+  end
+
+  defp evaluate_template(template_content, template_file_name, bindings) do
+    {:ok, EEx.eval_string(template_content, bindings)}
+  rescue
+    e in EEx.SyntaxError ->
+      Logger.error("EEx syntax error in template #{template_file_name}: #{Exception.message(e)}")
+
+      {:error, "Template syntax error in #{template_file_name}: #{Exception.message(e)}"}
+
+    e ->
+      Logger.error("Error evaluating template #{template_file_name}: #{Exception.message(e)}")
+
+      {:error, "Error evaluating template #{template_file_name}: #{Exception.message(e)}"}
+  end
+
+  defp copy_static_file(source_dir, target_dir, original_static_file, target_static_file_name) do
+    source_path = Path.join(source_dir, original_static_file)
+    target_path = Path.join(target_dir, target_static_file_name)
+
+    case File.copy(source_path, target_path) do
+      {:ok, _bytes_copied} ->
+        Logger.debug("Copied static file: #{original_static_file} -> #{target_static_file_name}")
+        :ok
+
       {:error, reason} ->
-        {:error, "Failed to read template #{source_path}: #{reason}"}
+        Logger.error(
+          "Failed to copy static file #{original_static_file} from #{source_path} to #{target_path}: #{reason}"
+        )
+
+        # Ensure a consistent error tuple structure if needed, though File.copy already provides it.
+        {:error, "Failed to copy static file #{original_static_file}: #{reason}"}
     end
   end
 end

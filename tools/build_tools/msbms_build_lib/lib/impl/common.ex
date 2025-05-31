@@ -49,6 +49,7 @@ defmodule MsbmsBuildLib.Impl.Common do
 
   @build_tools_path "tools/build_tools"
   @db_build_scripts_path "tools/database_scripts"
+  @elixir_build_config_path "tools/build_tools/build_config/msbms_build_config.exs"
 
   ##############################################################################
   #
@@ -119,6 +120,20 @@ defmodule MsbmsBuildLib.Impl.Common do
   """
   @spec elixir_docs_root() :: Path.t()
   def elixir_docs_root, do: @elixir_docs_root
+
+  ##############################################################################
+  #
+  # elixir_build_config_path
+  #
+  #
+
+  @doc """
+  Get the path to the Elixir build configuration file.
+
+  Returns the path to the Elixir build configuration file.
+  """
+  @spec elixir_build_config_path() :: Path.t()
+  def elixir_build_config_path, do: @elixir_build_config_path
 
   ##############################################################################
   #

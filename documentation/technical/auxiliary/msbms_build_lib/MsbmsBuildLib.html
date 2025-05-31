@@ -5,14 +5,14 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.37.3">
-    <meta name="project" content="msbms_build_lib v1.0.0">
+    <meta name="project" content="msbms_build_lib v1.1.0">
 
 
-    <title>MsbmsBuildLib — msbms_build_lib v1.0.0</title>
+    <title>MsbmsBuildLib — msbms_build_lib v1.1.0</title>
 
     <link rel="stylesheet" href="dist/html-elixir-6X3L5KMG.css" />
 
-    <script defer src="dist/sidebar_items-769B7935.js"></script>
+    <script defer src="dist/sidebar_items-E191B637.js"></script>
     <script defer src="docs_config.js"></script>
     <script defer src="dist/html-ALU6OERS.js"></script>
 
@@ -37,7 +37,7 @@
 msbms_build_lib
         </a>
         <div class="sidebar-projectVersion" translate="no">
-          v1.0.0
+          v1.1.0
         </div>
       </div>
     </div>
@@ -76,7 +76,7 @@ msbms_build_lib
   <div class="heading-with-actions top-heading">
     <h1>
       <span translate="no">MsbmsBuildLib</span> 
-      <small class="app-vsn" translate="no">(msbms_build_lib v1.0.0)</small>
+      <small class="app-vsn" translate="no">(msbms_build_lib v1.1.0)</small>
 
     </h1>
 
@@ -146,6 +146,16 @@ preserving modular boundaries and independent deployment capabilities.</p>
       </div>
 
         <div class="summary-synopsis"><p>Get the DB docs root.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#elixir_build_config_path/0" data-no-tooltip="" translate="no">elixir_build_config_path()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Get the path to the Elixir build configuration file.</p></div>
 
     </div>
 
@@ -468,6 +478,30 @@ preserving modular boundaries and independent deployment capabilities.</p>
   <span class="text">Returns</span>
 </h2>
 <ul><li>Root path for database documentation as a string</li></ul>
+  </section>
+</section>
+<section class="detail" id="elixir_build_config_path/0">
+
+  <div class="detail-header">
+    <a href="#elixir_build_config_path/0" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">elixir_build_config_path()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> elixir_build_config_path() :: <a href="https://hexdocs.pm/elixir/Path.html#t:t/0">Path.t</a>()</pre>
+
+      </div>
+
+<p>Get the path to the Elixir build configuration file.</p><p>Returns the path to the Elixir build configuration file.</p>
   </section>
 </section>
 <section class="detail" id="elixir_component_paths/0">
@@ -1203,7 +1237,7 @@ templates, with all files properly configured for the new component.</p><h2 id="
   </a>
   <span class="text">Options</span>
 </h2>
-<ul><li><code class="inline">:component_display_name</code> - Human-friendly name for the component</li><li><code class="inline">:component_description</code> - Brief description of the component</li><li><code class="inline">:component_section</code> - Documentation section atom</li><li><code class="inline">:comp_short_name</code> - Override the derived short component name (removes categorizing prefix)</li><li><code class="inline">:module_name</code> - Override the derived module name (PascalCase of full component name)</li><li><code class="inline">:module_short_name</code> - Override the derived short module name (PascalCase of short component name)</li></ul><h2 id="scaffold_elixir_component/4-returns" class="section-heading">
+<ul><li><code class="inline">:component_display_name</code> - Human-friendly name for the component</li><li><code class="inline">:component_description</code> - Brief description of the component</li><li><code class="inline">:comp_short_name</code> - Override the derived short component name (removes categorizing prefix)</li><li><code class="inline">:module_name</code> - Override the derived module name (PascalCase of full component name)</li><li><code class="inline">:module_short_name</code> - Override the derived short module name (PascalCase of short component name)</li></ul><h2 id="scaffold_elixir_component/4-returns" class="section-heading">
   <a href="#scaffold_elixir_component/4-returns" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
   </a>
@@ -1216,29 +1250,29 @@ templates, with all files properly configured for the new component.</p><h2 id="
   <span class="text">Examples</span>
 </h2>
 <pre><code class="makeup elixir" translate="no"><span class="c1"># Create a new system component (names derived automatically)</span><span class="w">
-</span><span class="nc">MsbmsBuildLib</span><span class="o">.</span><span class="n">scaffold_elixir_component</span><span class="p" data-group-id="2188752168-1">(</span><span class="w">
+</span><span class="nc">MsbmsBuildLib</span><span class="o">.</span><span class="n">scaffold_elixir_component</span><span class="p" data-group-id="3098842108-1">(</span><span class="w">
   </span><span class="s">&quot;/path/to/project&quot;</span><span class="p">,</span><span class="w">
   </span><span class="s">&quot;mscmp_syst_new_feature&quot;</span><span class="p">,</span><span class="w">
   </span><span class="s">&quot;app_server/components/system&quot;</span><span class="p">,</span><span class="w">
   </span><span class="ss">component_display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;New Feature Component&quot;</span><span class="p">,</span><span class="w">
   </span><span class="ss">component_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Provides new feature functionality.&quot;</span><span class="w">
-</span><span class="p" data-group-id="2188752168-1">)</span><span class="w">
+</span><span class="p" data-group-id="3098842108-1">)</span><span class="w">
 
 </span><span class="c1"># Create a new application component</span><span class="w">
-</span><span class="nc">MsbmsBuildLib</span><span class="o">.</span><span class="n">scaffold_elixir_component</span><span class="p" data-group-id="2188752168-2">(</span><span class="w">
+</span><span class="nc">MsbmsBuildLib</span><span class="o">.</span><span class="n">scaffold_elixir_component</span><span class="p" data-group-id="3098842108-2">(</span><span class="w">
   </span><span class="s">&quot;/path/to/project&quot;</span><span class="p">,</span><span class="w">
   </span><span class="s">&quot;msapp_new_app&quot;</span><span class="p">,</span><span class="w">
   </span><span class="s">&quot;app_server/components/application&quot;</span><span class="w">
-</span><span class="p" data-group-id="2188752168-2">)</span><span class="w">
+</span><span class="p" data-group-id="3098842108-2">)</span><span class="w">
 
 </span><span class="c1"># Override derived names for edge cases</span><span class="w">
-</span><span class="nc">MsbmsBuildLib</span><span class="o">.</span><span class="n">scaffold_elixir_component</span><span class="p" data-group-id="2188752168-3">(</span><span class="w">
+</span><span class="nc">MsbmsBuildLib</span><span class="o">.</span><span class="n">scaffold_elixir_component</span><span class="p" data-group-id="3098842108-3">(</span><span class="w">
   </span><span class="s">&quot;/path/to/project&quot;</span><span class="p">,</span><span class="w">
   </span><span class="s">&quot;legacy_system_component&quot;</span><span class="p">,</span><span class="w">
   </span><span class="s">&quot;app_server/components/system&quot;</span><span class="p">,</span><span class="w">
   </span><span class="ss">comp_short_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;legacy&quot;</span><span class="p">,</span><span class="w">
   </span><span class="ss">module_short_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Legacy&quot;</span><span class="w">
-</span><span class="p" data-group-id="2188752168-3">)</span></code></pre>
+</span><span class="p" data-group-id="3098842108-3">)</span></code></pre>
   </section>
 </section>
 

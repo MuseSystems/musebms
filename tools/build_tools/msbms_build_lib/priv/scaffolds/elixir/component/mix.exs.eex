@@ -46,7 +46,7 @@ defmodule <%= module_name %>.MixProject do
         output: "<%= docs_output_path %>",
         deps: MsbmsBuildConfig.resolve_dep_docs(@msbms_deps),
         groups_for_docs: [
-          "<%= component_display_name %>": &(&1[:section] == :<%= component_section %>)
+          "<%= module_name %>": &(&1[:section] == :<%= comp_short_name %>)
         ],
         groups_for_modules: [
           API: [<%= module_name %>],

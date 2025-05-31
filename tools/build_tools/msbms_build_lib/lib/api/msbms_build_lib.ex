@@ -78,6 +78,15 @@ defmodule MsbmsBuildLib do
 
   @doc section: :constants_retrieval
   @doc """
+  Get the path to the Elixir build configuration file.
+
+  Returns the path to the Elixir build configuration file.
+  """
+  @spec elixir_build_config_path() :: Path.t()
+  defdelegate elixir_build_config_path(), to: Impl.Common
+
+  @doc section: :constants_retrieval
+  @doc """
   Get the DB docs root.
 
   Returns the root directory path where database documentation should be generated.
@@ -510,7 +519,6 @@ defmodule MsbmsBuildLib do
   ## Options
     * `:component_display_name` - Human-friendly name for the component
     * `:component_description` - Brief description of the component
-    * `:component_section` - Documentation section atom
     * `:comp_short_name` - Override the derived short component name (removes categorizing prefix)
     * `:module_name` - Override the derived module name (PascalCase of full component name)
     * `:module_short_name` - Override the derived short module name (PascalCase of short component name)
