@@ -46,7 +46,7 @@ defmodule MscmpSystTelemetry.MixProject do
         output: "../../../../documentation/technical/app_server/mscmp_syst_telemetry",
         deps: MsbmsBuildConfig.resolve_dep_docs(@msbms_deps),
         groups_for_docs: [
-          "Mscmp Syst Telemetry": &(&1[:section] == :syst_telemetry)
+          "MscmpSystTelemetry": &(&1[:section] == :telemetry)
         ],
         groups_for_modules: [
           API: [MscmpSystTelemetry],

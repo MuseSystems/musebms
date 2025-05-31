@@ -1,4 +1,4 @@
-# MscmpSystTelemetry - Mscmp Syst Telemetry
+# MscmpSystTelemetry - Telemetry
 
 <!-- MDOC !-->
 

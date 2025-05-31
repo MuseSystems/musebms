@@ -1,5 +1,5 @@
-# Source File: types.ex
-# Location:    musebms/app_server/components/system/mscmp_syst_telemetry/lib/api/types.ex
+# Source File: config.exs
+# Location:    musebms/app_server/components/system/mscmp_syst_telemetry/config/config.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,12 +10,6 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MscmpSystTelemetry.Types do
-  @moduledoc """
-  Type definitions for the MscmpSystTelemetry module.
+import Config
 
-  This module defines the core types used throughout the Telemetry component.
-  """
-
-  # Add your type definitions here
-end
+import_config "#{Mix.env()}.exs"
