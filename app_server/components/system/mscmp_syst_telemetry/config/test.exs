@@ -12,4 +12,8 @@
 
 import Config
 
-config :logger, level: :info
+config :logger, level: :debug
+
+config :logger, :default_formatter,
+  format: "$date $time [$level] $metadata :: $message\n",
+  metadata: :all

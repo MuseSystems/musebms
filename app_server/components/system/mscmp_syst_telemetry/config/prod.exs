@@ -1,5 +1,5 @@
-# Source File: mscmp_syst_telemetry_test.exs
-# Location:    musebms/app_server/components/system/mscmp_syst_telemetry/test/mscmp_syst_telemetry_test.exs
+# Source File: prod.exs
+# Location:    musebms/app_server/components/system/mscmp_syst_telemetry/config/prod.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,11 +10,4 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MscmpSystTelemetryTest do
-  use ExUnit.Case
-  doctest MscmpSystTelemetry
-
-  test "greets the world" do
-    assert MscmpSystTelemetry.hello() == :world
-  end
-end
+import Config

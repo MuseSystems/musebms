@@ -20,6 +20,6 @@ defmodule Mserror.TelemetryError do
   use MscmpSystError,
     component: MscmpSystTelemetry,
     kinds: [
-      error_kind: "An mscmp_syst_telemetry error kind."
+      handler: "Telemetry handler errors."
     ]
 end

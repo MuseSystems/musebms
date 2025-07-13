@@ -11,10 +11,17 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystTelemetryTest do
+  @moduledoc false
   use ExUnit.Case
+
+  @moduletag :doctest
+  @moduletag :capture_log
+
   doctest MscmpSystTelemetry
 
-  test "greets the world" do
-    assert MscmpSystTelemetry.hello() == :world
+  # We need the placeholder as there is no actual testable documenation at this
+  # time and finding no tests is treated as a failure.
+  test "Placeholder test" do
+    assert true
   end
 end

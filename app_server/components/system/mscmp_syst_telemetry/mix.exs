@@ -13,7 +13,9 @@
 defmodule MscmpSystTelemetry.MixProject do
   use Mix.Project
 
-  Code.require_file(Path.expand("../../../../tools/build_tools/build_config/msbms_build_config.exs", __DIR__))
+  Code.require_file(
+    Path.expand("../../../../tools/build_tools/build_config/msbms_build_config.exs", __DIR__)
+  )
 
   @name :mscmp_syst_telemetry
   @version "0.1.0"
@@ -21,7 +23,8 @@ defmodule MscmpSystTelemetry.MixProject do
   @third_party_deps [
     :credo,
     :dialyxir,
-    :ex_doc
+    :ex_doc,
+    :telemetry
   ]
 
   @msbms_deps [:mscmp_syst_error]
@@ -46,7 +49,7 @@ defmodule MscmpSystTelemetry.MixProject do
         output: "../../../../documentation/technical/app_server/mscmp_syst_telemetry",
         deps: MsbmsBuildConfig.resolve_dep_docs(@msbms_deps),
         groups_for_docs: [
-          "MscmpSystTelemetry": &(&1[:section] == :telemetry)
+          MscmpSystTelemetry: &(&1[:section] == :telemetry)
         ],
         groups_for_modules: [
           API: [MscmpSystTelemetry],
