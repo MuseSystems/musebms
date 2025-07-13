@@ -52,8 +52,7 @@ defmodule MscmpSystTelemetry.MixProject do
           MscmpSystTelemetry: &(&1[:section] == :telemetry)
         ],
         groups_for_modules: [
-          API: [MscmpSystTelemetry],
-          "Supporting Types": [MscmpSystTelemetry.Types]
+          API: [MscmpSystTelemetry]
         ]
       ]
     ]

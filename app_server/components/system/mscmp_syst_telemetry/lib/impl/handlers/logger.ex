@@ -114,7 +114,9 @@ defmodule MscmpSystTelemetry.Impl.Handlers.Logger do
   def attach_logger_handler(opts) do
     component = Keyword.fetch!(opts, :component)
     events = generate_events(component, opts)
-    handler_id = __MODULE__
+    # Create a unique handler ID based on component and categories
+    categories = Keyword.fetch!(opts, :categories)
+    handler_id = {__MODULE__, component, categories}
 
     Enum.reduce_while(events, [], fn event, acc ->
       case :telemetry.attach({handler_id, event}, event, &handle_event/4, nil) do
@@ -148,7 +150,9 @@ defmodule MscmpSystTelemetry.Impl.Handlers.Logger do
   def detach_logger_handler(opts) do
     component = Keyword.fetch!(opts, :component)
     events = generate_events(component, opts)
-    handler_id = __MODULE__
+    # Create the same unique handler ID used in attach
+    categories = Keyword.fetch!(opts, :categories)
+    handler_id = {__MODULE__, component, categories}
 
     Enum.reduce_while(events, [], fn event, acc ->
       case :telemetry.detach({handler_id, event}) do

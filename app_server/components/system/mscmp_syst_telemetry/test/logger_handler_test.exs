@@ -165,7 +165,7 @@ defmodule LoggerHandlerTest do
         [:mscmp_syst_telemetry, :general, :api_call, :stop]
       ]
 
-      handler_id = LoggerHandler
+      handler_id = {LoggerHandler, :mscmp_syst_telemetry, [:general]}
 
       on_exit(fn ->
         for event <- events do
@@ -184,7 +184,7 @@ defmodule LoggerHandlerTest do
         categories: [:general]
       ]
 
-      handler_id = LoggerHandler
+      handler_id = {LoggerHandler, :mscmp_syst_telemetry, [:general]}
 
       # Attach
       assert LoggerHandler.attach_logger_handler(opts) == :ok

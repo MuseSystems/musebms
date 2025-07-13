@@ -1,5 +1,5 @@
-# Source File: mscmp_syst_telemetry_marcos_test.exs
-# Location:    musebms/app_server/components/system/mscmp_syst_telemetry/test/mscmp_syst_telemetry_marcos_test.exs
+# Source File: mscmp_syst_telemetry_macros_test.exs
+# Location:    musebms/app_server/components/system/mscmp_syst_telemetry/test/mscmp_syst_telemetry_macros_test.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,7 +10,7 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MscmpSystTelemetryMarcosTest do
+defmodule MscmpSystTelemetryMacrosTest do
   @moduledoc false
   use TelemetryTestCase,
     async: true,
