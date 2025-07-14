@@ -15,23 +15,43 @@ monitoring across the system.
 
 The telemetry system is organized around **Components** and **Categories**:
 
-- **Component**: A logical grouping representing a MuseBMS Component (e.g., `:mscmp_syst_db`, `:mscmp_syst_auth`)
-- **Category**: A functional area within a component (e.g., `:database`, `:api`, `:worker`)
+- **Component**: A logical grouping representing a MuseBMS Component
+  (e.g., `:mscmp_syst_db`, `:mscmp_syst_auth`)
+- **Category**: A functional area within a component
+  (e.g., `:database`, `:api`, `:worker`)
 
 Each component must explicitly define its valid categories when using the library.
 This creates a clear hierarchical structure for telemetry events.
 
+### Event Kinds
+
+**Event Kinds** represent the types of telemetry events that can be generated
+and are a cross-cutting concern that applies across all components and
+categories. Unlike components and categories which form a hierarchy, event
+kinds determine the nature and structure of the telemetry event itself.
+
+The supported event kinds are:
+
+- **Log Event Kinds**: `:log_debug`, `:log_info`, `:log_warn`, `:log_error`
+- **API Call Event Kinds**: `:api_call_start`, `:api_call_stop`
+
+Event kinds are independent of the component/category hierarchy and can be
+combined with any valid component/category pair to generate specific telemetry
+events.
+
 ### Event Types
 
-The library generates three main types of telemetry events:
+The library generates telemetry events based on the combination of components,
+categories, and event kinds:
 
 1. **API Call Events**: Timing and metadata for function calls
-   - Event name: `[component, category, :api_call]`
+   - Event names: `[component, category, :api_call, :start]` and
+     `[component, category, :api_call, :stop]`
    - Generated using `api_telemetry/3` macro
    - Creates telemetry spans with start/stop events
 
 2. **Log Events**: Structured logging at different levels
-   - Event names: `[component, category, :event_debug|info|warn|error]`
+   - Event names: `[component, category, :log_debug|info|warn|error]`
    - Generated using `log_debug/3`, `log_info/3`, `log_warn/3`, `log_error/3`
    - One-time events with message and context
 
@@ -39,13 +59,16 @@ The library generates three main types of telemetry events:
 
 All telemetry events follow a consistent naming pattern:
 ```
-[component_atom, category_atom, event_type_atom]
+[component_atom, category_atom, event_kind_suffix...]
 ```
 
 Examples:
-- `[:mscmp_syst_db, :database, :api_call]` - Database API call timing
-- `[:mscmp_syst_auth, :api, :event_info]` - Authentication API info log
-- `[:mscmp_syst_worker, :background, :event_error]` - Background worker error
+- `[:mscmp_syst_db, :database, :api_call, :start]` - Database API call start
+  event
+- `[:mscmp_syst_db, :database, :api_call, :stop]` - Database API call stop
+  event
+- `[:mscmp_syst_auth, :api, :log_info]` - Authentication API info log
+- `[:mscmp_syst_worker, :background, :log_error]` - Background worker error
 
 ### Handlers
 
@@ -134,10 +157,10 @@ For development and testing, attach handlers in your component:
 ```elixir
 def setup_telemetry do
   MscmpSystTelemetry.attach_logger_handler(
-    component: :my_component,
-    categories: [:api, :database, :worker],
-    log: [:info, :warn, :error],
-    api_calls: true
+    {MyComponent.Logger, :my_component, self()},
+    :my_component,
+    [:api, :database, :worker],
+    [:log_info, :log_warn, :log_error, :api_call_start, :api_call_stop]
   )
 end
 ```
@@ -150,12 +173,18 @@ In production, handlers are typically managed at the Platform level:
 # In your application supervision tree or platform configuration
 def attach_component_handlers do
   # Attach handlers for all components
-  for component <- [:mscmp_syst_db, :mscmp_syst_auth, :my_component] do
+  components = [
+    {:mscmp_syst_db, [:database, :api]},
+    {:mscmp_syst_auth, [:api, :worker]},
+    {:my_component, [:api, :database, :worker]}
+  ]
+
+  for {component, categories} <- components do
     MscmpSystTelemetry.attach_logger_handler(
-      component: component,
-      categories: component_categories(component),
-      log: [:warn, :error],  # Production typically logs less verbose
-      api_calls: false       # May use separate metrics system
+      {MyApp.Logger, component, self()},
+      component,
+      categories,
+      [:log_warn, :log_error]  # Production typically logs less verbose
     )
   end
 end

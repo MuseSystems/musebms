@@ -14,6 +14,7 @@ defmodule MscmpSystTelemetry.Impl.Handlers.Logger do
   @moduledoc false
 
   alias MscmpSystError.Types
+  alias MscmpSystTelemetry.Impl.Events
 
   require Logger
 
@@ -30,7 +31,7 @@ defmodule MscmpSystTelemetry.Impl.Handlers.Logger do
           :telemetry.handler_config()
         ) :: :ok
   def handle_event(
-        [component, category, :event_debug],
+        [component, category, :log_debug],
         _measurements,
         %{} = metadata,
         _config
@@ -39,7 +40,7 @@ defmodule MscmpSystTelemetry.Impl.Handlers.Logger do
   end
 
   def handle_event(
-        [component, category, :event_info],
+        [component, category, :log_info],
         _measurements,
         %{} = metadata,
         _config
@@ -48,7 +49,7 @@ defmodule MscmpSystTelemetry.Impl.Handlers.Logger do
   end
 
   def handle_event(
-        [component, category, :event_warn],
+        [component, category, :log_warn],
         _measurements,
         %{} = metadata,
         _config
@@ -57,12 +58,34 @@ defmodule MscmpSystTelemetry.Impl.Handlers.Logger do
   end
 
   def handle_event(
-        [component, category, :event_error],
+        [component, category, :log_error],
         _measurements,
         %{} = metadata,
         _config
       ) do
     log_message(:error, component, category, metadata)
+  end
+
+  def handle_event(
+        [component, category, :api_call, :start],
+        %{system_time: system_time},
+        %{} = metadata,
+        _config
+      ) do
+    message =
+      "Telemetry Event: #{inspect([component, category, :api_call, :start])}"
+
+    logger_metadata = [
+      component: component,
+      category: category,
+      module: metadata[:module],
+      function: metadata.function,
+      arity: metadata.arity,
+      context: inspect(metadata.context),
+      system_time: system_time
+    ]
+
+    Logger.info(message, logger_metadata)
   end
 
   def handle_event(
@@ -113,30 +136,20 @@ defmodule MscmpSystTelemetry.Impl.Handlers.Logger do
   @spec attach_logger_handler(keyword()) :: :ok | Types.parsable_error()
   def attach_logger_handler(opts) do
     component = Keyword.fetch!(opts, :component)
-    events = generate_events(component, opts)
-    # Create a unique handler ID based on component and categories
     categories = Keyword.fetch!(opts, :categories)
-    handler_id = {__MODULE__, component, categories}
+    event_kinds = Keyword.fetch!(opts, :event_kinds)
+    handler_id = Keyword.fetch!(opts, :handler_id)
 
-    Enum.reduce_while(events, [], fn event, acc ->
-      case :telemetry.attach({handler_id, event}, event, &handle_event/4, nil) do
-        :ok ->
-          {:cont, [event | acc]}
+    events = Events.generate_events(component, categories, event_kinds)
 
-        {:error, :already_exists} ->
-          # Detach what we've attached so far
-          for attached_event <- acc do
-            :ok = :telemetry.detach({handler_id, attached_event})
-          end
+    case :telemetry.attach_many(handler_id, events, &__MODULE__.handle_event/4, nil) do
+      :ok ->
+        :ok
 
-          {:halt,
-           {:error,
-            {:already_exists, "Telemetry handler already exists for event: #{inspect(event)}"}}}
-      end
-    end)
-    |> case do
-      {:error, _reason} = error -> error
-      _ -> :ok
+      {:error, :already_exists} ->
+        {:error,
+         {:already_exists,
+          "Telemetry handler already exists for handler_id: #{inspect(handler_id)}"}}
     end
   end
 
@@ -148,25 +161,15 @@ defmodule MscmpSystTelemetry.Impl.Handlers.Logger do
 
   @spec detach_logger_handler(keyword()) :: :ok | Types.parsable_error()
   def detach_logger_handler(opts) do
-    component = Keyword.fetch!(opts, :component)
-    events = generate_events(component, opts)
-    # Create the same unique handler ID used in attach
-    categories = Keyword.fetch!(opts, :categories)
-    handler_id = {__MODULE__, component, categories}
+    handler_id = Keyword.fetch!(opts, :handler_id)
 
-    Enum.reduce_while(events, [], fn event, acc ->
-      case :telemetry.detach({handler_id, event}) do
-        :ok ->
-          {:cont, [event | acc]}
+    case :telemetry.detach(handler_id) do
+      :ok ->
+        :ok
 
-        {:error, :not_found} ->
-          {:halt,
-           {:error, {:not_found, "Telemetry handler not found for event: #{inspect(event)}"}}}
-      end
-    end)
-    |> case do
-      {:error, _reason} = error -> error
-      _ -> :ok
+      {:error, :not_found} ->
+        {:error,
+         {:not_found, "Telemetry handler not found for handler_id: #{inspect(handler_id)}"}}
     end
   end
 
@@ -175,26 +178,4 @@ defmodule MscmpSystTelemetry.Impl.Handlers.Logger do
   # General Private Functions
   #
   #
-
-  defp generate_events(component, opts) do
-    log_levels = Keyword.get(opts, :log, [])
-    log_api_calls = Keyword.get(opts, :api_calls, false)
-    categories = Keyword.fetch!(opts, :categories)
-
-    # Generate events for each category and log level combination
-    events =
-      for category <- categories, level <- log_levels do
-        [component, category, :"event_#{level}"]
-      end
-
-    # Add API call events if requested
-    api_events =
-      if log_api_calls do
-        for category <- categories, do: [component, category, :api_call, :stop]
-      else
-        []
-      end
-
-    events ++ api_events
-  end
 end

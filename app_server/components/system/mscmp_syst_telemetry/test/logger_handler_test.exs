@@ -30,7 +30,7 @@ defmodule LoggerHandlerTest do
       log =
         capture_log(fn ->
           LoggerHandler.handle_event(
-            [:my_component, :my_category, :event_debug],
+            [:my_component, :my_category, :log_debug],
             %{},
             %{function: :my_func, arity: 1, context: context, message: message, module: MyModule},
             nil
@@ -54,7 +54,7 @@ defmodule LoggerHandlerTest do
       log =
         capture_log(fn ->
           LoggerHandler.handle_event(
-            [:my_component, :my_category, :event_info],
+            [:my_component, :my_category, :log_info],
             %{},
             %{function: :my_func, arity: 1, context: context, message: message, module: MyModule},
             nil
@@ -78,7 +78,7 @@ defmodule LoggerHandlerTest do
       log =
         capture_log(fn ->
           LoggerHandler.handle_event(
-            [:my_component, :my_category, :event_warn],
+            [:my_component, :my_category, :log_warn],
             %{},
             %{function: :my_func, arity: 1, context: context, message: message, module: MyModule},
             nil
@@ -102,7 +102,7 @@ defmodule LoggerHandlerTest do
       log =
         capture_log(fn ->
           LoggerHandler.handle_event(
-            [:my_component, :my_category, :event_error],
+            [:my_component, :my_category, :log_error],
             %{},
             %{function: :my_func, arity: 1, context: context, message: message, module: MyModule},
             nil
@@ -117,6 +117,36 @@ defmodule LoggerHandlerTest do
       assert log =~ "function=my_func"
       assert log =~ "arity=1"
       assert log =~ "context=#{inspect(context)}"
+    end
+
+    test "correctly logs an :api_call, :start event" do
+      context = %{some: :data}
+      system_time = 1_234_567_890
+
+      log =
+        capture_log(fn ->
+          LoggerHandler.handle_event(
+            [:my_component, :my_category, :api_call, :start],
+            %{system_time: system_time},
+            %{
+              function: :my_api_func,
+              arity: 2,
+              context: context,
+              module: MyModule
+            },
+            nil
+          )
+        end)
+
+      assert log =~ "[info]"
+      assert log =~ "Telemetry Event: [:my_component, :my_category, :api_call, :start]"
+      assert log =~ "component=my_component"
+      assert log =~ "category=my_category"
+      assert log =~ "module=MyModule"
+      assert log =~ "function=my_api_func"
+      assert log =~ "arity=2"
+      assert log =~ "context=#{inspect(context)}"
+      assert log =~ "system_time=#{system_time}"
     end
 
     test "correctly logs an :api_call, :stop event" do
@@ -159,70 +189,51 @@ defmodule LoggerHandlerTest do
 
   describe "attach_logger_handler/1 and detach_logger_handler/1" do
     setup do
-      events = [
-        [:mscmp_syst_telemetry, :general, :event_debug],
-        [:mscmp_syst_telemetry, :general, :event_info],
-        [:mscmp_syst_telemetry, :general, :api_call, :stop]
-      ]
-
-      handler_id = {LoggerHandler, :mscmp_syst_telemetry, [:general]}
+      handler_id = {LoggerHandler, :mscmp_syst_telemetry, self()}
 
       on_exit(fn ->
-        for event <- events do
-          :telemetry.detach({handler_id, event})
-        end
+        :telemetry.detach(handler_id)
       end)
 
       :ok
     end
 
     test "attaches and detaches handlers correctly" do
-      opts = [
-        component: :mscmp_syst_telemetry,
-        log: [:debug, :info],
-        api_calls: true,
-        categories: [:general]
-      ]
+      handler_id = {LoggerHandler, :mscmp_syst_telemetry, self()}
 
-      handler_id = {LoggerHandler, :mscmp_syst_telemetry, [:general]}
+      # Test attaching handlers for log_debug and api_call_stop events
+      opts = [
+        handler_id: handler_id,
+        component: :mscmp_syst_telemetry,
+        categories: [:general],
+        event_kinds: [:log_debug, :api_call_stop]
+      ]
 
       # Attach
       assert LoggerHandler.attach_logger_handler(opts) == :ok
 
       # Verify attachment
-      debug_handlers = :telemetry.list_handlers([:mscmp_syst_telemetry, :general, :event_debug])
-      info_handlers = :telemetry.list_handlers([:mscmp_syst_telemetry, :general, :event_info])
-      api_handlers = :telemetry.list_handlers([:mscmp_syst_telemetry, :general, :api_call, :stop])
-      warn_handlers = :telemetry.list_handlers([:mscmp_syst_telemetry, :general, :event_warn])
+      debug_handlers = :telemetry.list_handlers([:mscmp_syst_telemetry, :general, :log_debug])
+      info_handlers = :telemetry.list_handlers([:mscmp_syst_telemetry, :general, :log_info])
 
-      assert Enum.any?(
-               debug_handlers,
-               &(&1.id == {handler_id, [:mscmp_syst_telemetry, :general, :event_debug]})
-             )
+      api_stop_handlers =
+        :telemetry.list_handlers([:mscmp_syst_telemetry, :general, :api_call, :stop])
 
-      assert Enum.any?(
-               info_handlers,
-               &(&1.id == {handler_id, [:mscmp_syst_telemetry, :general, :event_info]})
-             )
-
-      assert Enum.any?(
-               api_handlers,
-               &(&1.id == {handler_id, [:mscmp_syst_telemetry, :general, :api_call, :stop]})
-             )
-
-      assert Enum.empty?(warn_handlers)
+      assert Enum.any?(debug_handlers, &(&1.id == handler_id))
+      assert Enum.empty?(info_handlers)
+      assert Enum.any?(api_stop_handlers, &(&1.id == handler_id))
 
       # Detach
-      assert LoggerHandler.detach_logger_handler(opts) == :ok
+      assert LoggerHandler.detach_logger_handler(handler_id: handler_id) == :ok
 
       # Verify detachment
-      debug_handlers = :telemetry.list_handlers([:mscmp_syst_telemetry, :general, :event_debug])
-      info_handlers = :telemetry.list_handlers([:mscmp_syst_telemetry, :general, :event_info])
-      api_handlers = :telemetry.list_handlers([:mscmp_syst_telemetry, :general, :api_call, :stop])
+      debug_handlers = :telemetry.list_handlers([:mscmp_syst_telemetry, :general, :log_debug])
+
+      api_stop_handlers =
+        :telemetry.list_handlers([:mscmp_syst_telemetry, :general, :api_call, :stop])
 
       assert Enum.empty?(debug_handlers)
-      assert Enum.empty?(info_handlers)
-      assert Enum.empty?(api_handlers)
+      assert Enum.empty?(api_stop_handlers)
     end
   end
 end

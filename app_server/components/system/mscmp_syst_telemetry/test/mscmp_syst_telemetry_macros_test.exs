@@ -101,7 +101,7 @@ defmodule MscmpSystTelemetryMacrosTest do
                       [
                         :mscmp_syst_telemetry_test,
                         :general,
-                        :event_debug
+                        :log_debug
                       ], %{},
                       %{
                         message: ^message,
@@ -121,7 +121,7 @@ defmodule MscmpSystTelemetryMacrosTest do
                       [
                         :mscmp_syst_telemetry_test,
                         :general,
-                        :event_info
+                        :log_info
                       ], %{},
                       %{
                         message: ^message,
@@ -141,7 +141,7 @@ defmodule MscmpSystTelemetryMacrosTest do
                       [
                         :mscmp_syst_telemetry_test,
                         :general,
-                        :event_warn
+                        :log_warn
                       ], %{},
                       %{
                         message: ^message,
@@ -161,7 +161,7 @@ defmodule MscmpSystTelemetryMacrosTest do
                       [
                         :mscmp_syst_telemetry_test,
                         :general,
-                        :event_error
+                        :log_error
                       ], %{},
                       %{
                         message: ^message,

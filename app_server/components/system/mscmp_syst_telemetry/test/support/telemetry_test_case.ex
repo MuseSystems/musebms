@@ -53,10 +53,10 @@ defmodule TelemetryTestCase do
           [
             [component_name, category_name, :api_call, :start],
             [component_name, category_name, :api_call, :stop],
-            [component_name, category_name, :event_debug],
-            [component_name, category_name, :event_info],
-            [component_name, category_name, :event_warn],
-            [component_name, category_name, :event_error]
+            [component_name, category_name, :log_debug],
+            [component_name, category_name, :log_info],
+            [component_name, category_name, :log_warn],
+            [component_name, category_name, :log_error]
           ],
           # The helper function is also injected by this template
           &handle_telemetry_event/4,

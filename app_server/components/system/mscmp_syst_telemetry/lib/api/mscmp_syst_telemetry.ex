@@ -18,6 +18,7 @@ defmodule MscmpSystTelemetry do
              |> Enum.fetch!(1)
 
   alias MscmpSystError.Types.Context, as: ErrorContext
+  alias MscmpSystTelemetry.Impl.Events
   alias MscmpSystTelemetry.Impl.Handlers.Logger, as: LoggerHandler
 
   ##############################################################################
@@ -67,9 +68,10 @@ defmodule MscmpSystTelemetry do
   @doc """
   Used to instrument Component API calls.
 
-  The telemetry event name will be `[@component, category, :api_call]`.
-  The `context` argument is added to the telemetry metadata under the `:context`
-  key, and the calling module is added under the `:module` key.
+  The telemetry event names will be `[@component, category, :api_call, :start]`
+  and `[@component, category, :api_call, :stop]`.
+  The `context` argument is added to the telemetry metadata under the
+  `:context` key, and the calling module is added under the `:module` key.
 
   It is the developer's responsibility to ensure that the provided `context`
   does not contain sensitive information. The context should be a keyword list
@@ -133,7 +135,7 @@ defmodule MscmpSystTelemetry do
   @doc """
   Logs a `debug` event with context via telemetry.
 
-  The event name will be `[@component, category, :event_debug]`.
+  The event name will be `[@component, category, :log_debug]`.
   The message and context are passed as metadata, along with the calling module.
   It is the developer's responsibility to ensure that the provided context does
   not contain sensitive information.
@@ -156,7 +158,7 @@ defmodule MscmpSystTelemetry do
       metadata = Map.merge(base_metadata, mfa_metadata)
 
       :telemetry.execute(
-        [unquote(component), unquote(category), :event_debug],
+        [unquote(component), unquote(category), :log_debug],
         %{},
         metadata
       )
@@ -172,7 +174,7 @@ defmodule MscmpSystTelemetry do
   @doc """
   Logs an `info` event with context via telemetry.
 
-  The event name will be `[@component, category, :event_info]`.
+  The event name will be `[@component, category, :log_info]`.
   The message and context are passed as metadata, along with the calling module.
   It is the developer's responsibility to ensure that the provided context does
   not contain sensitive information.
@@ -195,7 +197,7 @@ defmodule MscmpSystTelemetry do
       metadata = Map.merge(base_metadata, mfa_metadata)
 
       :telemetry.execute(
-        [unquote(component), unquote(category), :event_info],
+        [unquote(component), unquote(category), :log_info],
         %{},
         metadata
       )
@@ -211,7 +213,7 @@ defmodule MscmpSystTelemetry do
   @doc """
   Logs a `warn` event with context via telemetry.
 
-  The event name will be `[@component, category, :event_warn]`.
+  The event name will be `[@component, category, :log_warn]`.
   The message and context are passed as metadata, along with the calling module.
   It is the developer's responsibility to ensure that the provided context does
   not contain sensitive information.
@@ -234,7 +236,7 @@ defmodule MscmpSystTelemetry do
       metadata = Map.merge(base_metadata, mfa_metadata)
 
       :telemetry.execute(
-        [unquote(component), unquote(category), :event_warn],
+        [unquote(component), unquote(category), :log_warn],
         %{},
         metadata
       )
@@ -250,7 +252,7 @@ defmodule MscmpSystTelemetry do
   @doc """
   Logs an `error` event with context via telemetry.
 
-  The event name will be `[@component, category, :event_error]`.
+  The event name will be `[@component, category, :log_error]`.
   The message and context are passed as metadata, along with the calling module.
   It is the developer's responsibility to ensure that the provided context does
   not contain sensitive information.
@@ -273,7 +275,7 @@ defmodule MscmpSystTelemetry do
       metadata = Map.merge(base_metadata, mfa_metadata)
 
       :telemetry.execute(
-        [unquote(component), unquote(category), :event_error],
+        [unquote(component), unquote(category), :log_error],
         %{},
         metadata
       )
@@ -290,49 +292,57 @@ defmodule MscmpSystTelemetry do
   Attaches the MscmpSystTelemetry logger handler to telemetry events.
 
   This function sets up a handler that will log telemetry events using Elixir's
-  `Logger`. The handler is attached to events that match `[component, category, event_suffix]`.
+  `Logger`. The handler is attached to events that match
+  `[component, category, event_kind]`.
 
-  ## Options
+  ## Parameters
 
-    * `:component` (atom, required) - The component atom to listen for events from.
-    * `:log` (list of atoms) - The list of log levels to attach to. Valid
-      levels are `:debug`, `:info`, `:warn`, and `:error`. Defaults to `[]`.
-    * `:api_calls` (boolean) - If `true`, attaches to `:api_call` span stop
-      events. Defaults to `false`.
-    * `:categories` (list of atoms, required) - The list of category atoms to attach to.
-      Events will be attached for each category in the list.
+    * `handler_id` (term, required) - A unique identifier for this handler.
+      Must be unique across all telemetry handlers in the system.
+    * `component` (atom, required) - The component atom to listen for events
+      from.
+    * `categories` (list of atoms, required) - The list of category atoms to
+      attach to. Events will be attached for each category in the list. Must be
+      non-empty.
+    * `event_kinds` (list of atoms, required) - The list of event kinds to
+      listen for. Valid values are: `:log_debug`, `:log_info`, `:log_warn`,
+      `:log_error`, `:api_call_start`, `:api_call_stop`. Must be non-empty.
 
   ## Example
 
       MscmpSystTelemetry.attach_logger_handler(
-        component: :my_component,
-        log: [:info, :error],
-        api_calls: true,
-        categories: [:database, :api, :worker]
+        {MyApp.Logger, :my_component, self()},
+        :my_component,
+        [:database, :api, :worker],
+        [:log_info, :log_error, :api_call_stop]
       )
   """
-  @spec attach_logger_handler(keyword()) :: :ok | {:error, any()}
-  def attach_logger_handler(opts) do
-    validated_opts =
-      Keyword.validate!(opts, [
-        {:categories, :required},
-        {:component, :required},
-        log: [],
-        api_calls: false
-      ])
+  @spec attach_logger_handler(term(), atom(), [atom()], [atom()]) ::
+          :ok | {:error, Mserror.TelemetryError.t()}
+  def attach_logger_handler(handler_id, component, categories, event_kinds) do
+    handler_opts = [
+      handler_id: handler_id,
+      component: component,
+      categories: categories,
+      event_kinds: event_kinds
+    ]
 
-    case LoggerHandler.attach_logger_handler(validated_opts) do
-      :ok ->
-        :ok
-
-      {:error, error} ->
+    with :ok <- Events.validate_categories(categories),
+         :ok <- Events.validate_event_kinds(event_kinds),
+         :ok <- LoggerHandler.attach_logger_handler(handler_opts) do
+      :ok
+    else
+      {:error, _reason} = error ->
         {:error,
          Mserror.TelemetryError.new(:handler, "Failed to attach telemetry logger handler.",
-           cause: error,
+           parse_error: error,
            context: %ErrorContext{
-             origin: {__MODULE__, :attach_logger_handler, 1},
+             origin: {__MODULE__, :attach_logger_handler, 4},
              parameters: %{
-               opts: validated_opts
+               handler_id: handler_id,
+               component: component,
+               categories: categories,
+               event_kinds: event_kinds
              }
            }
          )}
@@ -348,48 +358,108 @@ defmodule MscmpSystTelemetry do
   @doc """
   Detaches the MscmpSystTelemetry logger handler.
 
-  The options provided must match the options used when attaching the handler.
+  The handler_id provided must match the handler_id used when attaching the handler.
 
-  ## Options
+  ## Parameters
 
-    * `:component` (atom, required) - The component atom that was used when attaching.
-    * `:log` (list of atoms) - The list of log levels to detach from. Valid
-      levels are `:debug`, `:info`, `:warn`, and `:error`. Defaults to `[]`.
-    * `:api_calls` (boolean) - If `true`, detaches from `:api_call` span stop
-      events. Defaults to `false`.
-    * `:categories` (list of atoms, required) - The list of category atoms that were used when
-      attaching. Must match the categories option from attach.
+    * `handler_id` (term, required) - The unique identifier that was used when attaching.
 
   ## Example
 
       MscmpSystTelemetry.detach_logger_handler(
-        component: :my_component,
-        log: [:info, :error],
-        api_calls: true,
-        categories: [:database, :api, :worker]
+        {MyApp.Logger, :my_component, self()}
       )
   """
-  @spec detach_logger_handler(keyword()) :: :ok
-  def detach_logger_handler(opts) do
-    validated_opts =
-      Keyword.validate!(opts, [
-        {:categories, :required},
-        {:component, :required},
-        log: [],
-        api_calls: false
-      ])
-
-    case LoggerHandler.detach_logger_handler(validated_opts) do
+  @spec detach_logger_handler(term()) :: :ok | {:error, Mserror.TelemetryError.t()}
+  def detach_logger_handler(handler_id) do
+    case LoggerHandler.detach_logger_handler(handler_id: handler_id) do
       :ok ->
         :ok
 
-      {:error, error} ->
+      {:error, _reason} = error ->
         {:error,
          Mserror.TelemetryError.new(:handler, "Failed to detach telemetry logger handler.",
-           cause: error,
+           parse_error: error,
            context: %ErrorContext{
              origin: {__MODULE__, :detach_logger_handler, 1},
-             parameters: %{opts: validated_opts}
+             parameters: %{handler_id: handler_id}
+           }
+         )}
+    end
+  end
+
+  ##############################################################################
+  #
+  # generate_events
+  #
+  #
+
+  @doc """
+  Generates the list of telemetry event names for the given component, categories,
+  and event kinds.
+
+  This function provides the canonical mapping from event kinds to actual telemetry
+  event names. It can be used by handlers, external libraries, or for testing to
+  determine what events will be generated.
+
+  This function validates the provided event kinds and returns an error if any
+  invalid event kinds are provided.
+
+  ## Parameters
+
+    * `component` (atom, required) - The component atom.
+    * `categories` (list of atoms, required) - The list of category atoms. Must
+      be non-empty.
+    * `event_kinds` (list of atoms, required) - The list of event kinds.
+      Valid values are: `:log_debug`, `:log_info`, `:log_warn`, `:log_error`,
+      `:api_call_start`, `:api_call_stop`. Must be non-empty.
+
+  ## Returns
+
+  * `{:ok, events}` - A tuple containing the list of telemetry event names
+    (lists of atoms).
+  * `{:error, reason}` - An error tuple if validation fails.
+
+  ## Example
+
+      iex> MscmpSystTelemetry.generate_events(
+      ...>   :my_component,
+      ...>   [:database, :api],
+      ...>   [:log_info, :api_call_stop]
+      ...> )
+      {:ok, [
+        [:my_component, :database, :log_info],
+        [:my_component, :database, :api_call, :stop],
+        [:my_component, :api, :log_info],
+        [:my_component, :api, :api_call, :stop]
+      ]}
+
+      iex> {:error, %Mserror.TelemetryError{}} =
+      ...>   MscmpSystTelemetry.generate_events(
+      ...>     :my_component,
+      ...>     [:database],
+      ...>     [:invalid_event]
+      ...>   )
+
+  """
+  @spec generate_events(atom(), [atom()], [atom()]) ::
+          {:ok, [list(atom())]} | Mserror.TelemetryError.t()
+  def generate_events(component, categories, event_kinds) do
+    with :ok <- Events.validate_categories(categories),
+         :ok <- Events.validate_event_kinds(event_kinds) do
+      {:ok, MscmpSystTelemetry.Impl.Events.generate_events(component, categories, event_kinds)}
+    else
+      {:error, _reason} = error ->
+        {:error,
+         Mserror.TelemetryError.new(:handler, "Failed to generate the requested events list.",
+           parse_error: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :generate_events, 3},
+             parameters: %{
+               component: component,
+               categories: categories,
+               event_kinds: event_kinds
+             }
            }
          )}
     end
