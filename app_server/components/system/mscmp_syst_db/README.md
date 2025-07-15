@@ -241,3 +241,33 @@ achieved with the `Ecto` library.  This recommendation is not meant to suggest
 that you shouldn't use the `Ecto.Query` related DSL or methods for constructing
 queries; using the Ecto Query DSL is, in fact, recommended absent compelling
 reason to do otherwise.
+
+## Telemetry
+
+Each category represents both a functional area and an implied security level
+based on the database connection privileges required:
+
+#### Categories and Security Implications
+
+* `:datastore` - **DBA Security Level**
+  Database and context lifecycle operations requiring DBA connection privileges.
+  All operations in this category have high security sensitivity regardless of
+  apparent complexity (e.g., even state checking requires DBA access).
+
+* `:migrator` - **Privileged Security Level**
+  Schema migration and versioning operations requiring privileged database access.
+
+* `:service` - **Standard Security Level**
+  Application-level service management using regular database connections.
+
+* `:query` - **Standard Security Level**
+  Query execution and transaction operations using regular database connections.
+
+* `:utility` - **No Database Connection**
+  Utility functions that don't require database access.
+
+#### Security Monitoring Patterns
+
+* High-privilege operations: `[:datastore, :migrator]`
+* Application-level operations: `[:service, :query]`
+* All database operations: `[:datastore, :migrator, :service, :query]`

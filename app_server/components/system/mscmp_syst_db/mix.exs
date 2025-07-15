@@ -13,7 +13,9 @@
 defmodule MscmpSystDb.MixProject do
   use Mix.Project
 
-  Code.require_file(Path.expand("../../../../tools/build_tools/build_config/msbms_build_config.exs", __DIR__))
+  Code.require_file(
+    Path.expand("../../../../tools/build_tools/build_config/msbms_build_config.exs", __DIR__)
+  )
 
   @name :mscmp_syst_db
   @version "0.1.0"
@@ -27,14 +29,14 @@ defmodule MscmpSystDb.MixProject do
     :jason,
     :postgrex,
     :toml,
-    :nimble_options,
-    :telemetry
+    :nimble_options
   ]
 
   @msbms_deps [
     :mscmp_syst_error,
     :mscmp_syst_utils,
-    :mscmp_syst_network
+    :mscmp_syst_network,
+    :mscmp_syst_telemetry
   ]
 
   # ------------------------------------------------------------

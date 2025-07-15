@@ -12,6 +12,12 @@
 
 import Config
 
+config :logger, level: :warning
+
+config :logger, :default_formatter,
+  format: "$date $time [$level] $metadata :: $message\n",
+  metadata: [:component, :action, :mfa]
+
 config :mscmp_syst_db,
   ecto_repos: [MscmpSystDb.Runtime.Datastore]
 

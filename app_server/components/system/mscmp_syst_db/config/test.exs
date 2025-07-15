@@ -13,3 +13,7 @@
 import Config
 
 config :logger, level: :info
+
+config :logger, :default_formatter,
+  format: "$date $time [$level] $metadata :: $message\n",
+  metadata: [:component, :action, :mfa]
