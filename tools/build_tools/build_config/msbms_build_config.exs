@@ -58,6 +58,7 @@ defmodule MsbmsBuildConfig do
     mscmp_syst_perms: [path: "app_server/components/system/mscmp_syst_perms"],
     mscmp_syst_session: [path: "app_server/components/system/mscmp_syst_session"],
     mscmp_syst_settings: [path: "app_server/components/system/mscmp_syst_settings"],
+    mscmp_syst_telemetry: [path: "app_server/components/system/mscmp_syst_telemetry"],
     mscmp_syst_utils: [path: "app_server/components/system/mscmp_syst_utils"],
     mscmp_syst_utils_data: [path: "app_server/components/system/mscmp_syst_utils_data"]
   }
@@ -79,6 +80,7 @@ defmodule MsbmsBuildConfig do
     mscmp_syst_perms: "documentation/technical/app_server/mscmp_syst_perms",
     mscmp_syst_session: "documentation/technical/app_server/mscmp_syst_session",
     mscmp_syst_settings: "documentation/technical/app_server/mscmp_syst_settings",
+    mscmp_syst_telemetry: "documentation/technical/app_server/mscmp_syst_telemetry",
     mscmp_syst_utils: "documentation/technical/app_server/mscmp_syst_utils",
     mscmp_syst_utils_data: "documentation/technical/app_server/mscmp_syst_utils_data"
   }
