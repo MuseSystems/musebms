@@ -293,7 +293,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
           | list(%{context_name: Types.context_name()}),
           Keyword.t()
         ) ::
-          :ok | {:error, Mserror.DbError.t()}
+          :ok
   def stop_datastore(%{contexts: contexts}, opts),
     do: stop_datastore(contexts, opts)
 
