@@ -60,7 +60,7 @@ defmodule DevSupport do
 
     {:ok, _} = load_database(datastore_options, get_datastore_type(db_kind))
 
-    MscmpSystDb.Datastore.child_spec(datastore_options, context_registry: @registry )
+    MscmpSystDb.Datastore.child_spec(datastore_options, context_registry: {Registry, @registry} )
   end
 
   defp cleanup_database(db_kind \\ :unit_testing) do
