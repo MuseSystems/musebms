@@ -1,5 +1,5 @@
 # Source File: extended_mgmt_logic.ex
-# Location:    musebms/components/system/mscmp_syst_authn/lib/impl/extended_mgmt_logic.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_authn/lib/impl/extended_mgmt_logic.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

@@ -1,5 +1,5 @@
 # Source File: error_parser.ex
-# Location:    musebms/components/system/mscmp_syst_error/lib/impl/error_parser.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_error/lib/impl/error_parser.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

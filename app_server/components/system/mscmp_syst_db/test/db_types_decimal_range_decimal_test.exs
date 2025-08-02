@@ -1,5 +1,5 @@
 # Source File: db_types_decimal_range_decimal_test.exs
-# Location:    musebms/components/system/mscmp_syst_db/test/db_types_decimal_range_decimal_test.exs
+# Location:    musebms/app_server/components/system/mscmp_syst_db/test/db_types_decimal_range_decimal_test.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

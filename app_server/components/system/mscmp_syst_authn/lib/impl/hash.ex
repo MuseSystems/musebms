@@ -1,5 +1,5 @@
 # Source File: hash.ex
-# Location:    musebms/components/system/mscmp_syst_authn/lib/impl/hash.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_authn/lib/impl/hash.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

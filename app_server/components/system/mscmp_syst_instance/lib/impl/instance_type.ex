@@ -1,5 +1,5 @@
 # Source File: instance_type.ex
-# Location:    musebms/components/system/mscmp_syst_instance/lib/impl/instance_type.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_instance/lib/impl/instance_type.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

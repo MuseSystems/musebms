@@ -1,5 +1,5 @@
 # Source File: instance_state.ex
-# Location:    musebms/components/system/mscmp_syst_instance/lib/impl/instance_state.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_instance/lib/impl/instance_state.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

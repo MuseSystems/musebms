@@ -1,5 +1,5 @@
 -- File:        test01.b.test_type_three.eex.sql
--- Location:    musebms/components/system/mscmp_syst_db/database/alt_database/test_type_three/test01.b.test_type_three.eex.sql
+-- Location:    musebms/app_server/components/system/mscmp_syst_db/database/alt_database/test_type_three/test01.b.test_type_three.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Licensed to Lima Buttgereit Holdings LLC (d/b/a Muse Systems) under one or

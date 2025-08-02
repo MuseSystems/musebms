@@ -1,5 +1,5 @@
 # Source File: settings.ex
-# Location:    musebms/components/system/mscmp_syst_settings/lib/impl/settings.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_settings/lib/impl/settings.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

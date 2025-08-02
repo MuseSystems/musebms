@@ -1,5 +1,5 @@
 # Source File: perm.ex
-# Location:    musebms/components/system/mscmp_syst_perms/lib/impl/perm.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_perms/lib/impl/perm.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

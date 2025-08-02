@@ -1,5 +1,5 @@
 # Source File: privileged.ex
-# Location:    musebms/components/system/mscmp_syst_db/lib/impl/privileged.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_db/lib/impl/privileged.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

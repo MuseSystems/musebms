@@ -1,5 +1,5 @@
 # Source File: email.ex
-# Location:    musebms/components/system/mscmp_syst_authn/lib/impl/identity/email.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_authn/lib/impl/identity/email.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

@@ -1,5 +1,5 @@
 # Source File: access_account_instance_assoc.ex
-# Location:    musebms/components/system/mscmp_syst_authn/lib/impl/access_account_instance_assoc.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_authn/lib/impl/access_account_instance_assoc.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

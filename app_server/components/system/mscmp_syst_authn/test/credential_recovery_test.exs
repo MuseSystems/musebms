@@ -1,5 +1,5 @@
 # Source File: credential_recovery_test.exs
-# Location:    musebms/components/system/mscmp_syst_authn/test/credential_recovery_test.exs
+# Location:    musebms/app_server/components/system/mscmp_syst_authn/test/credential_recovery_test.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
