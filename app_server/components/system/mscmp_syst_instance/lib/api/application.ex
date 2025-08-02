@@ -59,6 +59,111 @@ defmodule MscmpSystInstance.Application do
   """
   @callback get_services() :: MscmpSystInstance.Types.services()
 
+  # ==============================================================================================
+  # ==============================================================================================
+  #
+  # Instance Management
+  #
+  # ==============================================================================================
+  # ==============================================================================================
+
+  ##############################################################################
+  #
+  # create_instance
+  #
+  #
+
+  @doc """
+  Creates a new Application Instance.
+
+  ## Parameters
+
+    * `instance_name` - The name of the Instance to be created.  This name must
+      be globally unique amongst Instance Names, including Instances of other
+      Applications.  This value is required.
+
+    * `startup_options` - The startup options which provide database connection
+      information for where the Instance and its contexts are to be created.
+      See `MscmpSystOptions` for more.  This value is required.
+
+    * `opts` - Miscellaneous options which the specific Application
+      implementation of this Behaviour may define for it's own purposes.
+  """
+  @callback create_instance(
+              instance_name :: MscmpSystInstance.Types.instance_name(),
+              startup_options :: MscmpSystOptions.Types.options(),
+              opts :: Keyword.t()
+            ) :: :ok | {:error, Exception.t()}
+
+  ##############################################################################
+  #
+  # upgrade_instances
+  #
+  #
+
+  @doc """
+  Upgrades the identified Application Instances.
+
+  You must ensure that the Application Instances to upgrade have been stopped
+  prior to initiating the upgrade with this function.
+
+  The upgrade process will apply any new database migrations to each of the
+  targeted Instances and then return a list of each Instance's upgrade status.
+  Once upgraded, the Instances many be restarted; this process does not attempt
+  to restart Instances.
+
+  ## Parameters
+
+    * `instances` - Identifies the Application Instances to upgrade.
+
+    * `startup_options` - The startup options which provide database connection
+      information for the Instance that is to be upgraded.  See
+      `MscmpSystOptions` for more.  This value is required.
+
+    * `opts` - Miscellaneous options which the specific Application
+      implementation of this Behaviour may define for it's own purposes.
+  """
+  @callback upgrade_instances(
+              instances :: MscmpSystInstance.Types.startable_instances(),
+              startup_options :: MscmpSystOptions.Types.options(),
+              opts :: Keyword.t()
+            ) ::
+              {:ok, list(MscmpSystInstance.Types.instance_action_result())}
+              | {:error, Exception.t()}
+
+  ##############################################################################
+  #
+  # delete_instance
+  #
+  #
+
+  @doc """
+  Deletes an existing Application Instance.
+
+  Note that specific Application implementation may impose requirements such as
+  Instances to be deleted must be stopped prior to deletion or that they might
+  have attributes such as "purge elegible" flags which must be set prior to
+  deletion.  As a behaviour, this callback does not hold any opinions on such
+  matters.
+
+  ## Parameters
+
+    * `instance_name` - The name of the Instance to be created.  This name must
+      be globally unique amongst Instance Names, including Instances of other
+      Applications.  This value is required.
+
+    * `startup_options` - The startup options which provide database connection
+      information for the Instance and its contexts which are to be deleted.
+      See `MscmpSystOptions` for more.  This value is required.
+
+    * `opts` - Miscellaneous options which the specific Application
+      implementation of this Behaviour may define for it's own purposes.
+  """
+  @callback delete_instance(
+              instance_name :: MscmpSystInstance.Types.instance_name(),
+              startup_options :: MscmpSystOptions.Types.options(),
+              opts :: Keyword.t()
+            ) :: :ok | {:error, Exception.t()}
   @doc """
   Starts unstarted, but startable, Application Instances.
 
