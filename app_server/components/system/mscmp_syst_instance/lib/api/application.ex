@@ -309,31 +309,4 @@ defmodule MscmpSystInstance.Application do
   """
   @callback put_instance(instance_name :: MscmpSystInstance.Types.instance_name()) ::
               MscmpSystInstance.Types.instance_name() | nil
-
-  @doc """
-  Upgrades the identified Application Instances.
-
-  You must ensure that the Application Instances to upgrade have been stopped
-  prior to initiating the upgrade with this function.
-
-  The upgrade process will apply any new database migrations to each of the
-  targeted Instances and then return a list of each Instance's upgrade status.
-  Once upgraded, the Instances many be restarted; this process does not attempt
-  to restart Instances.
-
-  ## Parameters
-
-    * `instances` - Identifies the Application Instances to upgrade.
-
-    * `startup_options` - The startup options to use when starting the
-      application.  Typically these options will include externally configured
-      runtime options such as database connection information.  See
-      `MscmpSystOptions` for more.
-  """
-  @callback upgrade_instances(
-              instances :: MscmpSystInstance.Types.startable_instances(),
-              startup_options :: MscmpSystOptions.Types.options()
-            ) ::
-              {:ok, list(MscmpSystInstance.Types.instance_action_result())}
-              | {:error, Exception.t()}
 end
