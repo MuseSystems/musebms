@@ -17,13 +17,34 @@ defmodule MscmpSystInstance.Application do
 
   """
 
+  # ==============================================================================================
+  # ==============================================================================================
+  #
+  # Application Management
+  #
+  # ==============================================================================================
+  # ==============================================================================================
+
+  ##############################################################################
+  #
+  # child_spec
+  #
+  #
+
   @doc """
   Returns the child specification of the Application.
   """
   @callback child_spec(Keyword.t()) :: Supervisor.child_spec()
 
+  ##############################################################################
+  #
+  # init
+  #
+  #
+
   @doc """
-  Initializes the Application, its services, and optionally its Instances.
+  Initializes the Application, its services, and optionally starts its
+  Instances.
 
   ## Parameters
 
@@ -45,10 +66,22 @@ defmodule MscmpSystInstance.Application do
             ) ::
               {:ok, pid()} | {:error, {:already_started, pid()} | {:shutdown, term()} | term()}
 
+  ##############################################################################
+  #
+  # stop
+  #
+  #
+
   @doc """
   Stops the Application services and any of its running Instances.
   """
   @callback stop() :: :ok
+
+  ##############################################################################
+  #
+  # get_services
+  #
+  #
 
   @doc """
   Returns the map of Application services to their runtime names or PIDs.
@@ -164,6 +197,21 @@ defmodule MscmpSystInstance.Application do
               startup_options :: MscmpSystOptions.Types.options(),
               opts :: Keyword.t()
             ) :: :ok | {:error, Exception.t()}
+
+  # ==============================================================================================
+  # ==============================================================================================
+  #
+  # Instance Runtime Management
+  #
+  # ==============================================================================================
+  # ==============================================================================================
+
+  ##############################################################################
+  #
+  # start_instances
+  #
+  #
+
   @doc """
   Starts unstarted, but startable, Application Instances.
 
@@ -183,6 +231,12 @@ defmodule MscmpSystInstance.Application do
               {:ok, list(MscmpSystInstance.Types.instance_action_result())}
               | {:error, Exception.t()}
 
+  ##############################################################################
+  #
+  # stop_instances
+  #
+  #
+
   @doc """
   Stops the identified running Application Instances.
 
@@ -194,6 +248,12 @@ defmodule MscmpSystInstance.Application do
               {:ok, list(MscmpSystInstance.Types.instance_action_result())}
               | {:error, Exception.t()}
 
+  ##############################################################################
+  #
+  # get_instance_states
+  #
+  #
+
   @doc """
   Retrieves the runtime state of the requested Application Instances.
 
@@ -202,7 +262,13 @@ defmodule MscmpSystInstance.Application do
     * `instances` - the desired Instances for which to return the runtime state.
   """
   @callback get_instance_states(instances :: MscmpSystInstance.Types.startable_instances()) ::
-              list(MscmpSystInstance.Types.instance_action_result())
+              list(MscmpSystInstance.Types.instance_state())
+
+  ##############################################################################
+  #
+  # get_instance_services
+  #
+  #
 
   @doc """
   Retrieves a mapping of the known Instance services mapped to a specific
@@ -214,6 +280,12 @@ defmodule MscmpSystInstance.Application do
   """
   @callback get_instance_services(instance_name :: MscmpSystInstance.Types.instance_name()) ::
               MscmpSystInstance.Types.services()
+
+  ##############################################################################
+  #
+  # put_instance
+  #
+  #
 
   @doc """
   Establishes the current Instance services which should be used for the current
