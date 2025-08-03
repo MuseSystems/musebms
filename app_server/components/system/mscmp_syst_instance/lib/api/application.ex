@@ -33,8 +33,13 @@ defmodule MscmpSystInstance.Application do
 
   @doc """
   Returns the child specification of the Application.
+
+  ## Parameters
+
+  * `opts` - Miscellaneous options which the specific Application
+      implementation of this Behaviour may define for it's own purposes.
   """
-  @callback child_spec(Keyword.t()) :: Supervisor.child_spec()
+  @callback child_spec(opts :: Keyword.t()) :: Supervisor.child_spec()
 
   ##############################################################################
   #
@@ -226,7 +231,8 @@ defmodule MscmpSystInstance.Application do
   """
   @callback start_instances(
               instances :: MscmpSystInstance.Types.startable_instances(),
-              startup_options :: MscmpSystOptions.Types.options()
+              startup_options :: MscmpSystOptions.Types.options(),
+              opts :: Keyword.t()
             ) ::
               {:ok, list(MscmpSystInstance.Types.instance_action_result())}
               | {:error, Exception.t()}
