@@ -13,7 +13,9 @@
 defmodule MscmpSystLimiter.MixProject do
   use Mix.Project
 
-  Code.require_file(Path.expand("../../../../tools/build_tools/build_config/msbms_build_config.exs", __DIR__))
+  Code.require_file(
+    Path.expand("../../../../tools/build_tools/build_config/msbms_build_config.exs", __DIR__)
+  )
 
   @name :mscmp_syst_limiter
   @version "0.1.0"
@@ -22,11 +24,12 @@ defmodule MscmpSystLimiter.MixProject do
     :credo,
     :dialyxir,
     :ex_doc,
-    :hammer
+    :nimble_options
   ]
 
   @msbms_deps [
     :mscmp_syst_error,
+    :mscmp_syst_service,
     :mscmp_syst_utils
   ]
 
@@ -51,7 +54,8 @@ defmodule MscmpSystLimiter.MixProject do
         deps: MsbmsBuildConfig.resolve_dep_docs(@msbms_deps),
         groups_for_docs: [
           "Rate Limiter": &(&1[:section] == :rate_limiter_data),
-          Runtime: &(&1[:section] == :service_management)
+          Runtime: &(&1[:section] == :service_management),
+          "Limiter Support": &(&1[:section] == :limiter_support)
         ],
         groups_for_modules: [
           API: [MscmpSystLimiter],
@@ -71,6 +75,7 @@ defmodule MscmpSystLimiter.MixProject do
   end
 
   defp elixirc_paths(:test), do: elixirc_paths() ++ ["test/support"]
+  defp elixirc_paths(:dev), do: elixirc_paths() ++ ["dev_support"]
   defp elixirc_paths(_), do: elixirc_paths()
   defp elixirc_paths(), do: ["lib"]
 end

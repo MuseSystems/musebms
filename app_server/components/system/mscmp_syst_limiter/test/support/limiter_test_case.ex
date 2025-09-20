@@ -1,5 +1,5 @@
-# Source File: integration_test.exs
-# Location:    musebms/app_server/components/system/mscmp_syst_limiter/test/integration_test.exs
+# Source File: limiter_test_case.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_limiter/test/support/limiter_test_case.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,11 +10,14 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule IntegrationTest do
+defmodule LimiterTestCase do
   @moduledoc false
 
-  use LimiterTestCase, async: false
+  use ExUnit.CaseTemplate
 
-  @moduletag :integration
-  @moduletag :capture_log
+  setup do
+    [
+      limiter_service: MscmpSystLimiter.put_service(TestSupport.get_limiter_service_name())
+    ]
+  end
 end

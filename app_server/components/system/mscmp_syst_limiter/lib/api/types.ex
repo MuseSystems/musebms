@@ -20,16 +20,19 @@ defmodule MscmpSystLimiter.Types do
   """
 
   @typedoc """
-  A unique identifier for the specific counter within the requested counter
-  type.
+  The algorithm to use for the limiter.
   """
-  @type counter_id() :: String.t()
+  @type algorithm() :: :sliding_window | :fixed_window | :token_bucket
 
   @typedoc """
-  The name of the counter which is derived from the counter type and counter
-  id values.
+  A unique identifier for a specific counter type within a limiter.
+
+  This identifier distinguishes between different instances of the same counter
+  type. For example, if you have a `:login_attempt` counter type, different
+  users would have different counter IDs to track their individual login
+  attempts separately.
   """
-  @type counter_name() :: String.t()
+  @type counter_id() :: String.t()
 
   @typedoc """
   The kind of activity being rate limited.
@@ -42,4 +45,128 @@ defmodule MscmpSystLimiter.Types do
   The type of value expected for the table which holds the counters.
   """
   @type counter_table_name() :: atom()
+
+  @typedoc """
+  Configuration for the fixed window algorithm.
+
+  > #### Treat as opaque {: .important}
+  >
+  > While this type is public due to Elixir module boundary limitations, the
+  > concrete representation is an implementation detail and may change without
+  > notice. Treat this value as opaque and construct/manage it via the public API.
+
+  Conceptually includes:
+
+    * `limit` - the maximum number of actions allowed in the window (positive integer)
+    * `interval_ms` - the length of the window in milliseconds (positive integer)
+  """
+  @type fixed_window_config() :: nil | :atomics.atomics_ref()
+
+  @typedoc """
+  A composite identifier referencing a counter's origin, type, and unique
+  identity.
+
+  This acts as the identifier of a specific counter within an assumed algorithm.
+  The composite ID provides a methodology for the application to support rate
+  limiting across the application while avoiding counter identity conflicts via
+  the this structured naming approach.
+  """
+  @type limiter_id() :: {module(), counter_type(), counter_id()}
+
+  @typedoc """
+  Configuration parameters for a rate limiting algorithm.
+
+  This type represents the algorithm-specific configuration needed to define
+  how a rate limiter should behave. Each algorithm has its own configuration
+  structure that defines the limits, intervals, and other parameters specific
+  to that algorithm's implementation.
+
+  > #### Treat constituent configs as opaque {: .important}
+  >
+  > While the constituent configuration types are public due to Elixir module
+  > boundary limitations, they are not intended for pattern matching. Use the
+  > public API to construct and work with them.
+  """
+  @type limiter_config() ::
+          token_bucket_config()
+          | fixed_window_config()
+          | sliding_window_config()
+
+  @typedoc """
+  A reference to a specific limiter instance.
+
+  A limiter instance represents a complete rate limiting configuration including
+  the algorithm to use and the specific limiter to apply it to. For example, a
+  user attempting to make API calls to the system will have a limiter instance
+  assigned to their session to ensure that their access is within reasonable
+  resource consumption limits. The limiter instance is sufficient to know the
+  algorithm, the activity being rate limited, and the user/process engaging in
+  the activity.
+  """
+  @type limiter_instance() :: {algorithm(), limiter_id(), limiter_config()}
+
+  @typedoc """
+  The name of the limiter.
+  """
+  @type limiter_name() :: String.t()
+
+  @typedoc """
+  The result of a rate limit check or increment operation.
+
+  Returns a tuple indicating whether the action is allowed or denied.
+
+  * `{:allow, remaining_limit}`: The action is allowed. `remaining_limit` is a
+    non-negative integer representing the number of remaining allowed actions
+    before hitting the rate limit.
+
+  * `{:deny, retry_after_ms}`: The action is denied. `retry_after_ms` is a
+    non-negative integer representing the number of milliseconds to wait before
+    the limit is reset and actions are allowed again.
+  """
+  @type limiter_result() ::
+          {:allow, non_neg_integer(), limiter_instance()}
+          | {:deny, non_neg_integer(), limiter_instance()}
+
+  @type time_scale() :: :day | :hour | :minute | :second
+
+  @typedoc """
+  Configuration for the sliding window algorithm.
+
+  > #### Treat as opaque {: .important}
+  >
+  > While this type is public due to Elixir module boundary limitations, the
+  > concrete representation is an implementation detail and may change without
+  > notice. Treat this value as opaque and construct/manage it via the public API.
+
+  Conceptually includes:
+
+    * `limit` - the maximum number of actions allowed in the window (positive integer)
+    * `interval_ms` - the length of the sliding window in milliseconds (positive integer)
+  """
+  @type sliding_window_config() :: nil | :atomics.atomics_ref()
+
+  @typedoc """
+  Configuration for the token bucket algorithm.
+
+  > #### Treat as opaque {: .important}
+  >
+  > While this type is public due to Elixir module boundary limitations, the
+  > concrete representation is an implementation detail and may change without
+  > notice. Treat this value as opaque and construct/manage it via the public API.
+
+  Conceptually includes:
+
+    * `limit` - the maximum number of tokens in the bucket (positive integer)
+    * `interval_ms` - the interval in milliseconds for refilling tokens (positive integer)
+    * `refill_rate` - the number of tokens to add per interval (positive integer)
+  """
+  @type token_bucket_config() :: nil | :atomics.atomics_ref()
+
+  @typedoc """
+  The algorithms which are to be started.
+
+  This includes all the supported algorithms individually, and the special
+  value `:all` which includes all the supported algorithms.
+  """
+  @type start_algorithms() :: :all | [algorithm()]
 end

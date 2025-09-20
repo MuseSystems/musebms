@@ -17,156 +17,415 @@ defmodule MscmpSystLimiter do
              |> String.split("<!-- MDOC !-->")
              |> Enum.fetch!(1)
 
+  use MscmpSystService
+
+  import Msutils.Guards, only: [is_reg_atom: 1]
+
   alias MscmpSystError.Types.Context, as: ErrorContext
   alias MscmpSystLimiter.Impl
+  alias MscmpSystLimiter.Runtime
   alias MscmpSystLimiter.Types
+  alias MscmpSystService.Types, as: ServiceTypes
 
   ##############################################################################
   #
-  # get_counter_name
+  # Options Definition
   #
   #
 
-  @doc section: :rate_limiter_data
-  @doc """
-  Creates a canonical name for each unique counter.
+  option_defs =
+    [
+      algorithms: [
+        type:
+          {:or,
+           [
+             {:in, [:all]},
+             {:list, {:in, [:sliding_window, :fixed_window, :token_bucket]}}
+           ]},
+        default: :all,
+        type_doc: "t:MscmpSystLimiter.Types.start_algorithms/0",
+        type_spec: quote(do: MscmpSystLimiter.Types.start_algorithms()),
+        doc: """
+        The rate limiting algorithms to start.
 
-  ## Parameters
+        This includes all the supported algorithms individually, and the special
+        value `:all` which starts backends for all the supported algorithms.
+        """
+      ],
+      cleanup_interval: [
+        type: :keyword_list,
+        keys: [
+          all: [type: :pos_integer, default: 60_000],
+          sliding_window: [type: :pos_integer],
+          fixed_window: [type: :pos_integer],
+          token_bucket: [type: :pos_integer]
+        ],
+        default: [all: 60_000],
+        doc: """
+        The interval in milliseconds at which to cleanup expired rate limiting
+        counters.
 
-    * `counter_type` - an atom representing the kind of counter being created.
-
-    * `counter_id` - a value unique to the `counter_type` which identifies a
-    specific counter.
-
-  ## Example
-
-      iex> MscmpSystLimiter.get_counter_name(:example_counter_name, "123")
-      "example_counter_name_123"
-  """
-
-  @spec get_counter_name(Types.counter_type(), Types.counter_id()) :: Types.counter_name()
-  defdelegate get_counter_name(counter_type, counter_id), to: Impl.RateLimiter
+        The interval can be specified for all algorithms using the special key
+        `:all` or for each algorithm individually.  If not specified, the default
+        value of 60,000 milliseconds is used.  If you specify the `:all` key and
+        one or more algorithms specific settings, the interval for the `:all`
+        value is ignored for the specified algorithms and will only be used as
+        the default for the unspecified algorithms.
+        """
+      ]
+    ]
 
   ##############################################################################
   #
-  # get_check_rate_function
+  # child_spec
   #
   #
 
-  @doc section: :rate_limiter_data
+  @child_spec_opts NimbleOptions.new!(
+                     Keyword.take(option_defs, [
+                       :algorithms,
+                       :cleanup_interval
+                     ]) ++ @service_option_defs
+                   )
+  @doc section: :service_management
   @doc """
-  Returns an anonymous function to simplify calls to check the rate for a
-  specific counter type.
-
-  The returned function avoids requiring the parameters that are common between
-  calls from being constantly supplied.  The only parameter that the returned
-  function requires is the `counter_id` value of the specific counter of the
-  type to test; all other parameters typically required by
-  `MscmpSystLimiter.check_rate/4` are captured by the returned closure.
+  Returns the child specification for starting rate limiting services.
 
   ## Parameters
+    * `opts` - The options to pass to the rate limiting service.
 
-    * `counter_type` - an atom representing the kind of counter that the
-    returned function will be set to check.
+  ## Options
 
-    * `scale_ms` - the time in milliseconds of the rate window.  For example,
-    for the rate limit of 3 tries in one minute the `scale_ms` value is set to
-    60,000 milliseconds for one minute.
-
-    * `limit` - the number of attempts allowed with the `scale_ms` duration.  In
-    the example of 3 tries in one minute, the `limit` value is 3.
-
-  ## Example
-
-  Note that The returned anonymous function is equivalent to making a call to
-  the more verbose `MscmpSystLimiter.check_rate/4`:
-
-      iex> my_check_rate_function =
-      ...>   MscmpSystLimiter.get_check_rate_function(
-      ...>     :example_counter_get_func,
-      ...>     60_000,
-      ...>     3)
-      iex> my_check_rate_function.("id1")
-      {:allow, 1}
-      iex> MscmpSystLimiter.check_rate(
-      ...>   :example_counter_get_func,
-      ...>   "id1",
-      ...>   60_000,
-      ...>   3)
-      {:allow, 2}
-      iex> my_check_rate_function.("id1")
-      {:allow, 3}
+    #{NimbleOptions.docs(@child_spec_opts)}
   """
-
-  @spec get_check_rate_function(Types.counter_type(), integer(), integer()) ::
-          (counter_id :: Types.counter_id() ->
-             {:allow, count :: integer()}
-             | {:deny, limit :: integer()}
-             | {:error, Mserror.LimiterError.t()})
-  defdelegate get_check_rate_function(counter_type, scale_ms, limit), to: Impl.RateLimiter
+  @impl true
+  @spec child_spec(Keyword.t()) :: Supervisor.child_spec()
+  def child_spec(opts) do
+    validated_opts = NimbleOptions.validate!(opts, @child_spec_opts)
+    %{id: __MODULE__, start: {MscmpSystLimiter, :start_link, [validated_opts]}}
+  end
 
   ##############################################################################
   #
-  # check_rate
+  # start_link
   #
   #
 
-  @doc section: :rate_limiter_data
+  @start_link_opts NimbleOptions.new!(
+                     Keyword.take(option_defs, [
+                       :algorithms,
+                       :cleanup_interval
+                     ]) ++ @service_option_defs
+                   )
+  @doc section: :service_management
   @doc """
-  Checks if a Counter is within it's permissible rate and increments the Counter
-  if it is within it's permissible rate.
+  Starts a rate limiting service.
+
+  ## Parameters
+    * `opts` - The options to pass to the rate limiting service.
+
+  ## Options
+
+    #{NimbleOptions.docs(@start_link_opts)}
+  """
+  @impl true
+  @spec start_link(Keyword.t()) :: {:ok, pid()} | :ignore | {:error, Mserror.LimiterError.t()}
+  def start_link(opts) do
+    validated_opts = NimbleOptions.validate!(opts, @start_link_opts)
+
+    genserver_opts =
+      [name: validated_opts[:service_name]] ++
+        Keyword.take(validated_opts, [:debug, :timeout, :hibernate_after])
+
+    init_opts = Keyword.take(validated_opts, [:algorithms, :cleanup_interval])
+
+    case GenServer.start_link(Runtime.Service, init_opts, genserver_opts) do
+      {:ok, pid} ->
+        {:ok, pid}
+
+      {:error, reason} ->
+        {:error,
+         Mserror.LimiterError.new(:service_management, "Failed to start rate limiting services",
+           cause: reason,
+           context: %ErrorContext{
+             origin: {__MODULE__, :start_link, 1},
+             parameters: %{opts: validated_opts}
+           }
+         )}
+
+      :ignore ->
+        :ignore
+    end
+  end
+
+  ##############################################################################
+  #
+  # put_service
+  #
+  #
+
+  @doc section: :service_management
+  @doc """
+  Establishes a specific running instance of the Rate Limiting Service as the
+  current service for the running process which invoked this function.
 
   ## Parameters
 
-    * `counter_type` - an atom representing the kind of counter for which the
-    rate is being checked.
+    * `service_name` - the name under which the Rate Limiting Service is
+      started and by which it may be referenced.  This is any name that may be
+      used to reference a GenServer process.  Additionally, this value may be
+      set `nil` to clear the currently set Rate Limiting Service name.
 
-    * `counter_id` - the specific Counter ID of the type.  For example if the
-    `counter_type` is `:user_login`, the `counter_id` value may be a value like
-    `user@email.domain` for the user's username.
+  ## Returns
 
-    * `scale_ms` - the time in milliseconds of the rate window.  For example,
-    for the rate limit of 3 tries in one minute the `scale_ms` value is set to
-    60,000 milliseconds for one minute.
+  Returns the name of the previously set Rate Limiting Service name or `nil` if
+  no Rate Limiting Service name had been previously set.
 
-    * `limit` - the number of attempts allowed with the `scale_ms` duration.  In
-    the example of 3 tries in one minute, the `limit` value is 3.
+  ## Examples
 
-  ## Example
+    Setting a specific Rate Limiting Service name:
 
-      iex> MscmpSystLimiter.check_rate(:check_rate_counter, "id1", 60_000, 3)
-      {:allow, 1}
-      iex> MscmpSystLimiter.check_rate(:check_rate_counter, "id1", 60_000, 3)
-      {:allow, 2}
-      iex> MscmpSystLimiter.check_rate(:check_rate_counter, "id1", 60_000, 3)
-      {:allow, 3}
-      iex> MscmpSystLimiter.check_rate(:check_rate_counter, "id1", 60_000, 3)
-      {:deny, 3}
+      iex> MscmpSystLimiter.put_service(:"MscmpSystLimiter.TestSupportService")
+      ...> MscmpSystLimiter.get_service()
+      :"MscmpSystLimiter.TestSupportService"
 
+    Clearing a previously set specific Service Name:
+
+      iex> MscmpSystLimiter.put_service(nil)
+      ...> MscmpSystLimiter.get_service()
+      nil
+  """
+  @impl true
+  @spec put_service(ServiceTypes.service_name()) :: ServiceTypes.service_name()
+  defdelegate put_service(service_name), to: Runtime.ProcessUtils
+
+  ##############################################################################
+  #
+  # get_service
+  #
+  #
+
+  @doc section: :service_management
+  @doc """
+  Retrieves the name of the currently set Rate Limiting Service instance.
+
+  See `put_service/1` for more information about setting an active Rate Limiting
+  Service name.
+
+  ## Returns
+
+  Returns the name of the currently set Rate Limiting Service name or `nil` if
+  no Rate Limiting Service name has been set.
+
+  ## Examples
+
+    Retrieving a specific Rate Limiting Service name:
+
+      iex> MscmpSystLimiter.put_service(:"MscmpSystLimiter.TestSupportService")
+      ...> MscmpSystLimiter.get_service()
+      :"MscmpSystLimiter.TestSupportService"
+
+    Retrieving a specific Rate Limiting Service name when no value is currently
+    set for the process:
+
+      iex> MscmpSystLimiter.put_service(nil)
+      ...> MscmpSystLimiter.get_service()
+      nil
+  """
+  @impl true
+  @spec get_service() :: ServiceTypes.service_name()
+  defdelegate get_service, to: Runtime.ProcessUtils
+
+  ##############################################################################
+  #
+  # get_runtime_config
+  #
+  #
+
+  @doc section: :service_management
+  @doc """
+  Retrieves the runtime configuration of a previously started Rate Limiting Service.
+
+  Some services need a mechanism to return features such as `:ets` table names
+  which are set at runtime.  This function provides the mechanism by which such
+  runtime configuration can be returned.
+
+  ## Returns
+
+  Returns a map containing the runtime configuration of the currently active
+  Rate Limiting Service, or `nil` if no service is currently set.
+
+  ## Examples
+
+    Getting runtime configuration from the current service:
+
+      iex> MscmpSystLimiter.put_service(MyRateLimiter)
+      ...> config = MscmpSystLimiter.get_runtime_config()
+      ...> %{sliding_window_table: table_id} = config
+      ...> is_reference(table_id)
+      true
+  """
+  @impl true
+  @spec get_runtime_config() :: map() | nil
+  defdelegate get_runtime_config, to: Runtime.ProcessUtils
+
+  ##############################################################################
+  #
+  # new
+  #
+  #
+
+  @new_token_bucket_opts NimbleOptions.new!(
+                           bucket_size: [
+                             type: :pos_integer,
+                             required: true,
+                             type_doc: "t:pos_integer/0",
+                             type_spec: quote(do: pos_integer()),
+                             doc: """
+                             The maximum number of tokens the bucket can hold at any one time.
+
+                             This represents the burst capacity of the limiter. When the bucket is full,
+                             no additional tokens can be added until some are consumed.
+                             """
+                           ],
+                           refill_rate: [
+                             type: :pos_integer,
+                             required: true,
+                             type_doc: "t:pos_integer/0",
+                             type_spec: quote(do: pos_integer()),
+                             doc: """
+                             The number of tokens added to the bucket during each refill interval.
+
+                             This determines how quickly the bucket refills after tokens are consumed.
+                             Higher values allow for faster recovery from burst consumption.
+                             """
+                           ],
+                           refill_per: [
+                             type: {:in, [:day, :hour, :minute, :second]},
+                             required: true,
+                             type_doc: "t:MscmpSystLimiter.Types.time_scale/0",
+                             type_spec: quote(do: MscmpSystLimiter.Types.time_scale()),
+                             doc: """
+                             The time scale of the refill interval.
+
+                             This value determines the time period over which the refill rate is
+                             achieved or more simply: `refill_rate` per `refill_per`.
+                             """
+                           ]
+                         )
+
+  @new_fixed_window_opts NimbleOptions.new!(
+                           window_limit: [
+                             type: :pos_integer,
+                             required: true,
+                             type_doc: "t:pos_integer/0",
+                             type_spec: quote(do: pos_integer()),
+                             doc: """
+                             The maximum number of requests allowed within a single time window.
+
+                             This defines the rate limit for the fixed window. Once this limit is
+                             reached, no additional requests are allowed until the window resets.
+                             """
+                           ],
+                           window_time_scale: [
+                             type: {:in, [:day, :hour, :minute, :second]},
+                             required: true,
+                             type_doc: "t:MscmpSystLimiter.Types.time_scale/0",
+                             type_spec: quote(do: MscmpSystLimiter.Types.time_scale()),
+                             doc: """
+                             The time scale for the window duration.
+
+                             This determines the granularity of the time window. For example, if set to
+                             `:minute`, the window will be measured in minutes. This works in conjunction
+                             with the global time_scale setting to determine the actual window duration.
+                             """
+                           ]
+                         )
+
+  @new_sliding_window_opts NimbleOptions.new!(
+                             window_limit: [
+                               type: :pos_integer,
+                               required: true,
+                               type_doc: "t:pos_integer/0",
+                               type_spec: quote(do: pos_integer()),
+                               doc: """
+                               The maximum number of requests allowed within the sliding window.
+
+                               This defines the rate limit for the sliding window. The window continuously
+                               slides forward in time, providing more accurate rate limiting compared to
+                               fixed windows.
+                               """
+                             ],
+                             window_time_scale: [
+                               type: {:in, [:day, :hour, :minute, :second]},
+                               required: true,
+                               type_doc: "t:MscmpSystLimiter.Types.time_scale/0",
+                               type_spec: quote(do: MscmpSystLimiter.Types.time_scale()),
+                               doc: """
+                               The time scale for the sliding window duration.
+
+                               This determines the granularity of the sliding window. For example, if set to
+                               `:minute`, the window will slide minute by minute. This works in conjunction
+                               with the global time_scale setting to determine the actual window duration.
+                               """
+                             ]
+                           )
+
+  @doc section: :limiter_support
+  @doc """
+  Starts a rate limiting service.
+
+  ## Parameters
+    * `opts` - The options to pass to the rate limiting service.
+
+  ## Options
+
+  Each algorithm requires certain options be set to configure the limiter for
+  use.
+
+  #### Token Bucket:
+
+    #{NimbleOptions.docs(@new_token_bucket_opts)}
+
+  #### Fixed Window:
+
+    #{NimbleOptions.docs(@new_fixed_window_opts)}
+
+  #### Sliding Window:
+
+    #{NimbleOptions.docs(@new_sliding_window_opts)}
   """
 
-  @spec check_rate(Types.counter_type(), Types.counter_id(), integer(), integer()) ::
-          {:allow, count :: integer()}
-          | {:deny, limit :: integer()}
-          | {:error, Mserror.LimiterError.t()}
-  def check_rate(counter_type, counter_id, scale_ms, limit) do
-    case Impl.RateLimiter.check_rate(counter_type, counter_id, scale_ms, limit) do
-      {response, _} = result when response in [:allow, :deny] ->
-        result
+  @spec new(
+          algorithm :: Types.algorithm(),
+          component :: module(),
+          type :: Types.counter_type(),
+          id :: Types.counter_id(),
+          opts :: Keyword.t()
+        ) :: {:ok, Types.limiter_instance()} | {:error, Mserror.LimiterError.t()}
+
+  def new(:token_bucket, component, type, id, opts)
+      when is_reg_atom(component) and is_reg_atom(type) and is_binary(id) do
+    validated_opts = NimbleOptions.validate!(opts, @new_token_bucket_opts)
+
+    case Impl.TokenBucket.new(component, type, id, validated_opts) do
+      {:ok, limiter_instance} ->
+        {:ok, limiter_instance}
 
       {:error, _} = error ->
         {:error,
          Mserror.LimiterError.new(
-           :check_counter,
-           "Error encountered checking and incrementing the rate limit.",
-           cause: error,
+           :limiter_management,
+           "Error establishing new Token Bucket rate limiter instance.",
+           parse_error: error,
            context: %ErrorContext{
-             origin: {__MODULE__, :check_rate, 4},
+             origin: {__MODULE__, :new, 5},
              parameters: %{
-               counter_type: counter_type,
-               counter_id: counter_id,
-               scale_ms: scale_ms,
-               limit: limit
+               algorithm: :token_bucket,
+               component: component,
+               type: type,
+               id: id,
+               opts: validated_opts
              }
            }
          )}
@@ -175,85 +434,27 @@ defmodule MscmpSystLimiter do
 
   ##############################################################################
   #
-  # check_rate_with_increment
+  # use
   #
   #
 
-  @doc section: :rate_limiter_data
-  @doc """
-  Checks the rate same as `MscmpSystLimiter.check_rate/4`, but allows for a
-  variable increment to be set for the call.
-
-  ## Parameters
-
-    * `counter_type` - an atom representing the kind of counter for which the
-    rate is being checked.
-
-    * `counter_id` - the specific Counter ID of the type.  For example if the
-    `counter_type` is `:user_login`, the `counter_id` value may be a value like
-    `user@email.domain` for the user's username.
-
-    * `scale_ms` - the time in milliseconds of the rate window.  For example,
-    for the rate limit of 3 tries in one minute the `scale_ms` value is set to
-    60,000 milliseconds for one minute.
-
-    * `limit` - the number of attempts allowed with the `scale_ms` duration.  In
-    the example of 3 tries in one minute, the `limit` value is 3.
-
-  ## Example
-
-      iex> MscmpSystLimiter.check_rate_with_increment(
-      ...>   :check_with_increment,
-      ...>   "id1",
-      ...>   60_000,
-      ...>   10,
-      ...>   7)
-      {:allow, 7}
-      iex> MscmpSystLimiter.check_rate_with_increment(
-      ...>   :check_with_increment,
-      ...>   "id1",
-      ...>   60_000,
-      ...>   10,
-      ...>   2)
-      {:allow, 9}
-      iex> MscmpSystLimiter.check_rate(:check_with_increment, "id1", 60_000, 10)
-      {:allow, 10}
-  """
-
-  @spec check_rate_with_increment(
-          Types.counter_type(),
-          Types.counter_id(),
-          integer(),
-          integer(),
-          integer()
-        ) ::
-          {:allow, count :: integer()}
-          | {:deny, limit :: integer()}
-          | {:error, Mserror.LimiterError.t()}
-  def check_rate_with_increment(counter_type, counter_id, scale_ms, limit, increment) do
-    case Impl.RateLimiter.check_rate_with_increment(
-           counter_type,
-           counter_id,
-           scale_ms,
-           limit,
-           increment
-         ) do
-      {response, _} = result when response in [:allow, :deny] ->
+  @spec use(limiter_instance :: Types.limiter_instance(), increment :: pos_integer()) ::
+          {:ok, Types.limiter_result()} | {:error, Mserror.LimiterError.t()}
+  def use({:token_bucket, _, _} = limiter_instance, increment) do
+    case Impl.TokenBucket.use(limiter_instance, increment) do
+      {:ok, _} = result ->
         result
 
       {:error, _} = error ->
         {:error,
          Mserror.LimiterError.new(
-           :check_counter,
-           "Error encountered checking and incrementing the rate limit with a variable increment.",
-           cause: error,
+           :limiter_management,
+           "Error trying to consume possibly available rate limiter availability.",
+           parse_error: error,
            context: %ErrorContext{
-             origin: {__MODULE__, :check_rate_with_increment, 5},
+             origin: {__MODULE__, :use, 2},
              parameters: %{
-               counter_type: counter_type,
-               counter_id: counter_id,
-               scale_ms: scale_ms,
-               limit: limit,
+               limiter_instance: limiter_instance,
                increment: increment
              }
            }
@@ -263,58 +464,27 @@ defmodule MscmpSystLimiter do
 
   ##############################################################################
   #
-  # inspect_counter
+  # get
   #
   #
 
-  @doc section: :rate_limiter_data
-  @doc """
-  Retrieves data about a currently used counter without counting towards the limit.
-
-  ## Parameters
-
-    * `counter_type` - an atom representing the kind of counter which to inspect.
-
-    * `counter_id` - the specific Counter ID of the type.  For example if the
-    `counter_type` is `:user_login`, the `counter_id` value may be a value like
-    `user@email.domain` for the user's username.
-
-    * `scale_ms` - the time in milliseconds of the rate window.  For example,
-    for the rate limit of 3 tries in one minute the `scale_ms` value is set to
-    60,000 milliseconds for one minute.
-
-    * `limit` - the number of attempts allowed with the `scale_ms` duration.  In
-    the example of 3 tries in one minute, the `limit` value is 3.
-  """
-
-  @spec inspect_counter(Types.counter_type(), Types.counter_id(), integer(), integer()) ::
-          {:ok,
-           {
-             count :: integer(),
-             count_remaining :: integer(),
-             ms_to_next_counter :: integer(),
-             created_at :: integer() | nil,
-             updated_at :: integer() | nil
-           }}
-          | {:error, Mserror.LimiterError.t()}
-  def inspect_counter(counter_type, counter_id, scale_ms, limit) do
-    case Impl.RateLimiter.inspect_counter(counter_type, counter_id, scale_ms, limit) do
+  @spec get(limiter_instance :: Types.limiter_instance()) ::
+          {:ok, Types.limiter_result()} | {:error, Mserror.LimiterError.t()}
+  def get({:token_bucket, _, _} = limiter_instance) do
+    case Impl.TokenBucket.get(limiter_instance) do
       {:ok, _} = result ->
         result
 
       {:error, _} = error ->
         {:error,
          Mserror.LimiterError.new(
-           :inspect_counter,
-           "Error encountered inspecting the rate limit counter.",
-           cause: error,
+           :limiter_management,
+           "Error trying retrieve the current limiter state.",
+           parse_error: error,
            context: %ErrorContext{
-             origin: {__MODULE__, :inspect_counter, 4},
+             origin: {__MODULE__, :get, 1},
              parameters: %{
-               counter_type: counter_type,
-               counter_id: counter_id,
-               scale_ms: scale_ms,
-               limit: limit
+               limiter_instance: limiter_instance
              }
            }
          )}
@@ -323,47 +493,117 @@ defmodule MscmpSystLimiter do
 
   ##############################################################################
   #
-  # delete_counters
+  # set
   #
   #
 
-  @doc section: :rate_limiter_data
+  @set_token_bucket_opts NimbleOptions.new!(
+                           current_fill: [
+                             type: :non_neg_integer,
+                             required: true,
+                             type_doc: "t:non_neg_integer/0",
+                             type_spec: quote(do: non_neg_integer()),
+                             doc: """
+                             The current fill of the bucket.
+
+                             Allows the caller to override the number of tokens
+                             currently filling the bucket.
+                             """
+                           ]
+                         )
+
+  @set_fixed_window_opts NimbleOptions.new!(
+                           current_count: [
+                             type: :non_neg_integer,
+                             required: true,
+                             type_doc: "t:non_neg_integer/0",
+                             type_spec: quote(do: non_neg_integer()),
+                             doc: """
+                             The current count of the window.
+
+                             Allows the caller to override the number of requests
+                             consumed in the current window.
+                             """
+                           ]
+                         )
+
   @doc """
-  Deletes a counter from the system.
+  Allows for the overriding of the rate limiting configuration for a limiter instance.
 
   ## Parameters
+    * `limiter_instance` - The limiter instance to set the configuration for.
+    * `opts` - The options to set the configuration for.
 
-    * `counter_type` - an atom representing the kind of counter which is to be
-    deleted.
+  ## Options
 
-    * `counter_id` - the specific Counter ID of the type.  For example if the
-    `counter_type` is `:user_login`, the `counter_id` value may be a value like
-    `user@email.domain` for the user's username.
+  Each algorithm requires certain options be set to configure the limiter for
+  use.
 
-  ## Example
+  #### Token Bucket:
 
-      iex> MscmpSystLimiter.check_rate(:delete_test_counter, "id1", 60_000, 3)
-      {:allow, 1}
-      iex> MscmpSystLimiter.delete_counters(:delete_test_counter, "id1")
-      {:ok, 1}
+    #{NimbleOptions.docs(@set_token_bucket_opts)}
+
+  #### Fixed Window:
+
+    #{NimbleOptions.docs(@set_fixed_window_opts)}
+
+  #### Sliding Window:
+
+    There are currently no settable options for Sliding Window rate limiters
+    after creation.
   """
+  @spec set(limiter_instance :: Types.limiter_instance(), opts :: Keyword.t()) ::
+          {:ok, Types.limiter_result()} | {:error, Mserror.LimiterError.t()}
+  def set({:token_bucket, _limiter_id, _limiter_config} = limiter_instance, opts) do
+    validated_opts = NimbleOptions.validate!(opts, @set_token_bucket_opts)
 
-  @spec delete_counters(Types.counter_type(), Types.counter_id()) ::
-          {:ok, integer()} | {:error, Mserror.LimiterError.t()}
-  def delete_counters(counter_type, counter_id) do
-    case Impl.RateLimiter.delete_counters(counter_type, counter_id) do
-      {:ok, _} = result ->
-        result
+    case Impl.TokenBucket.set(limiter_instance, validated_opts) do
+      {:ok, limiter_result} ->
+        {:ok, limiter_result}
 
       {:error, _} = error ->
         {:error,
          Mserror.LimiterError.new(
-           :delete_counter,
-           "Error encountered deleting the rate limit counter.",
-           cause: error,
+           :limiter_management,
+           "Error setting Token Bucket counter to explicit value.",
+           parse_error: error,
            context: %ErrorContext{
-             origin: {__MODULE__, :delete_counters, 2},
-             parameters: %{counter_type: counter_type, counter_id: counter_id}
+             origin: {__MODULE__, :set, 2},
+             parameters: %{
+               algorithm: :token_bucket,
+               limiter_instance: limiter_instance,
+               opts: validated_opts
+             }
+           }
+         )}
+    end
+  end
+
+  ##############################################################################
+  #
+  # reset
+  #
+  #
+
+  @spec reset(limiter_instance :: Types.limiter_instance()) ::
+          {:ok, Types.limiter_result()} | {:error, Mserror.LimiterError.t()}
+  def reset({:token_bucket, _limiter_id, _limiter_config} = limiter_instance) do
+    case Impl.TokenBucket.reset(limiter_instance) do
+      {:ok, limiter_result} ->
+        {:ok, limiter_result}
+
+      {:error, error} ->
+        {:error,
+         Mserror.LimiterError.new(
+           :limiter_management,
+           "Error resetting Token Bucket counter.",
+           parse_error: error,
+           context: %ErrorContext{
+             origin: {__MODULE__, :set, 2},
+             parameters: %{
+               algorithm: :token_bucket,
+               limiter_instance: limiter_instance
+             }
            }
          )}
     end

@@ -1,41 +1,49 @@
-# MscmpSystLimiter - Token Bucket Rate Limiting
+# MscmpSystLimiter - General Rate Limiting Algorithms
 
 <!-- MDOC !-->
 
 API for establishing rate limits for usage of finite system resources.
 
-Online, multi-user systems can be unintentionally overwhelmed by aggressive
-service calls from external applications and systems or intentionally
-exploited by hostile actors seeking to defeat system protections though such
-actions as brute forcing user credentials or consuming all available computing
-resources of our application.  One approach to mitigating the dangers of
-resource exhaustion or persistent illicit information seeking attempts is to
-reject excessive calls to system services.
+Many activities in the system consume available scarce computing resources or
+are otherwise rightfully subject to limitations on usage or consumption.  This
+Component provides simple rate limiting algorithms to allow other, higher level
+Components to implement rate limiting as they might require for their specific
+purposes.
 
-This component limits the rate at which targeted services can be called by
-any one caller to a level which preserves the availability of resources to
-all users of the system, or makes brute force information gathering
-prohibitively time intensive to would be attackers of the system.
+## Algorithms
 
-## Third Party Functionality
+The following algorithms have been implemented in this Component:
 
-This version of the `MscmpSystLimiter` component is primarily a wrapper
-around the third party [`Hammer`](https://github.com/ExHammer/hammer) library.
-`MscmpSystLimiter` offers a slightly different API to the wrapped library and
-changes some return values to be more consistent with the Muse Systems Business
-Management System standards and practices.  We also reuse and incorporate some
-of the documentation from these projects into our own documentation as
-appropriate.
+* **Token Bucket**
 
-## Concepts
+  This algorithm models a bucket which is filled with "usage tokens".  Each
+  request consumes a token, and tokens are replenished at a steady rate.  This
+  allows for burst traffic while maintaining an overall rate limit.
 
-MscmpSystLimiter implements a ["Token Bucket"](https://en.wikipedia.org/wiki/Token_bucket)
-rate limiting algorithm.  In a Token Bucket rate limit, for each user and
-request type a "bucket", called a "Counter" herein, with a finite
-number of tokens is created.  As requests are made the Counter is checked to
-see if all the tokens are consumed and if not the request is allowed and a
-token consumed.  If there are no tokens available at request time, then the
-request is denied until the Counter expires.
+* **Fixed Window**
 
-Over time, expired Counters are periodically deleted by the system.  Both the
-expiry time and the cleanup schedule are configurable.
+  This algorithm divides time into fixed intervals (windows) and tracks the
+  number of requests within each window.  Once the limit for a window is
+  reached, no more requests are allowed until the next window begins.
+
+* **Sliding Window**
+
+  This algorithm tracks requests over a rolling time period rather than fixed
+  intervals.  It provides more accurate rate limiting by continuously
+  evaluating requests against a moving time window, avoiding the burst
+  behavior that can occur at window boundaries in fixed window algorithms.
+
+* **Semaphore**
+
+  This algorithm controls access to a limited number of resources by
+  maintaining a count of available permits.  Each request must acquire a permit
+  before proceeding, and releases it when complete, ensuring that no more than
+  the maximum number of concurrent operations can occur simultaneously.
+
+## Inspiration for this Component
+
+This Component is inspired by the [ExHammer](https://github.com/ExHammer)
+project.  In writing this Component, ExHammer was consistently used as a
+reference implementation for how such general rate limiting algorithms might be
+implemented in Elixir and therefore any similarities between this library and
+ExHammer may be a result of this ExHammer influence.

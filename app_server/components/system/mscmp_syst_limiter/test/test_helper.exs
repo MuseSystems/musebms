@@ -19,4 +19,21 @@ _test_kind =
     :unit_testing
   end
 
+test_registry = MscmpSystLimiter.TestRegistry
+
+children = [
+  Registry.child_spec(keys: :unique, name: test_registry),
+  MscmpSystLimiter.child_spec(
+    service_name: TestSupport.get_limiter_service_name(),
+    algorithms: :all,
+    cleanup_interval: [all: 60_000]
+  )
+]
+
+{:ok, _pid} =
+  Supervisor.start_link(children,
+    strategy: :one_for_one,
+    name: :"MscmpSystLimiter.TestSupportSupervisor"
+  )
+
 ExUnit.start()

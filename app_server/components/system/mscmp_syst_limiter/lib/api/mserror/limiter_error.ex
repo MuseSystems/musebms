@@ -17,9 +17,10 @@ defmodule Mserror.LimiterError do
 
   use MscmpSystError,
     kinds: [
-      check_counter: "Failure checking and incrementing the rate limit.",
-      inspect_counter: "Failure inspecting the rate limit counter.",
-      delete_counter: "Failure deleting the rate limit counter."
+      service_management: "Failure performing a service management operation.",
+      limiter_management: "Failure managing a rate limiter instance.",
+      check_limiter: "Failure incrementing or inspecting a rate limiter counter.",
+      reset_limiter: "Failure resetting a rate limiter counter."
     ],
     component: MscmpSystLimiter
 end
