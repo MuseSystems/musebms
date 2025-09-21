@@ -18,7 +18,7 @@ defmodule MsbmsBuildConfig do
   """
 
   @third_party_deps %{
-    argon2_elixir: "~> 3.0",
+    argon2_elixir: "~> 4.0",
     credo: {"~> 1.7", [only: [:dev, :test], runtime: false]},
     dialyxir: {"~> 1.4", [only: [:dev, :test], runtime: false]},
     ecto: "~> 3.11",
@@ -26,7 +26,6 @@ defmodule MsbmsBuildConfig do
     ex_doc: {"~> 0.31", [only: [:dev, :test], runtime: false]},
     extrace: {"~> 0.5.0", [only: [:dev, :test], runtime: false]},
     gettext: "~> 0.20",
-    hammer: "~> 6.1",
     jason: "~> 1.4",
     nimble_options: "~> 1.0",
     nimble_totp: "~> 1.0",
@@ -56,6 +55,7 @@ defmodule MsbmsBuildConfig do
     mscmp_syst_network: [path: "app_server/components/system/mscmp_syst_network"],
     mscmp_syst_options: [path: "app_server/components/system/mscmp_syst_options"],
     mscmp_syst_perms: [path: "app_server/components/system/mscmp_syst_perms"],
+    mscmp_syst_service: [path: "app_server/components/system/mscmp_syst_service"],
     mscmp_syst_session: [path: "app_server/components/system/mscmp_syst_session"],
     mscmp_syst_settings: [path: "app_server/components/system/mscmp_syst_settings"],
     mscmp_syst_telemetry: [path: "app_server/components/system/mscmp_syst_telemetry"],
@@ -78,6 +78,7 @@ defmodule MsbmsBuildConfig do
     mscmp_syst_network: "documentation/technical/app_server/mscmp_syst_network",
     mscmp_syst_options: "documentation/technical/app_server/mscmp_syst_options",
     mscmp_syst_perms: "documentation/technical/app_server/mscmp_syst_perms",
+    mscmp_syst_service: "documentation/technical/app_server/mscmp_syst_service",
     mscmp_syst_session: "documentation/technical/app_server/mscmp_syst_session",
     mscmp_syst_settings: "documentation/technical/app_server/mscmp_syst_settings",
     mscmp_syst_telemetry: "documentation/technical/app_server/mscmp_syst_telemetry",
