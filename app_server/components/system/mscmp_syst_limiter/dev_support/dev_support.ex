@@ -11,13 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule DevSupport do
-  alias Mix.Tasks.Builddb
-
   use MscmpSystLimiter.Macros
 
   limiter_devsupport(:dev)
 
-  def start_dev_environment(db_kind \\ :unit_testing) do
+  def start_dev_environment() do
     children =
       [
         MscmpSystLimiter.child_spec(
