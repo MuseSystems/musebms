@@ -11,7 +11,9 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule DoctestsTest do
-  use ExUnit.Case, async: true
+  @moduledoc false
+
+  use LimiterTestCase, async: true
 
   @moduletag :doctest
   @moduletag :capture_log

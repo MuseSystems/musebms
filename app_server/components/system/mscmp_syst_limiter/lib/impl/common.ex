@@ -17,10 +17,11 @@ defmodule MscmpSystLimiter.Impl.Common do
   alias MscmpSystLimiter.Types
 
   @time_scale_codes %{
-    1 => :second,
-    2 => :minute,
-    3 => :hour,
-    4 => :day
+    1 => :millisecond,
+    2 => :second,
+    3 => :minute,
+    4 => :hour,
+    5 => :day
   }
 
   ##############################################################################
@@ -41,6 +42,7 @@ defmodule MscmpSystLimiter.Impl.Common do
   def time_scale_to_ms(:hour, time_value), do: time_value * (60 * 60 * 1000)
   def time_scale_to_ms(:minute, time_value), do: time_value * (60 * 1000)
   def time_scale_to_ms(:second, time_value), do: time_value * 1000
+  def time_scale_to_ms(:millisecond, time_value), do: time_value
 
   ##############################################################################
   #
@@ -50,7 +52,7 @@ defmodule MscmpSystLimiter.Impl.Common do
 
   @spec decode_time_scale(code :: pos_integer()) ::
           {:ok, Types.time_scale()} | ErrorTypes.parsable_error()
-  def decode_time_scale(code) when code in 1..4, do: {:ok, @time_scale_codes[code]}
+  def decode_time_scale(code) when code in 1..5, do: {:ok, @time_scale_codes[code]}
 
   def decode_time_scale(code),
     do: {:error, {:time_scale_coding_error, "Invalid time scale code #{inspect(code)}."}}

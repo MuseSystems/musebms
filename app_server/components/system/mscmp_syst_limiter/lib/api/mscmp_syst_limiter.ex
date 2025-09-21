@@ -40,7 +40,7 @@ defmodule MscmpSystLimiter do
           {:or,
            [
              {:in, [:all]},
-             {:list, {:in, [:sliding_window, :fixed_window, :token_bucket]}}
+             {:list, {:in, [:token_bucket, :semaphore]}}
            ]},
         default: :all,
         type_doc: "t:MscmpSystLimiter.Types.start_algorithms/0",
@@ -56,9 +56,8 @@ defmodule MscmpSystLimiter do
         type: :keyword_list,
         keys: [
           all: [type: :pos_integer, default: 60_000],
-          sliding_window: [type: :pos_integer],
-          fixed_window: [type: :pos_integer],
-          token_bucket: [type: :pos_integer]
+          token_bucket: [type: :pos_integer],
+          semaphore: [type: :pos_integer]
         ],
         default: [all: 60_000],
         doc: """
@@ -259,11 +258,14 @@ defmodule MscmpSystLimiter do
 
     Getting runtime configuration from the current service:
 
-      iex> MscmpSystLimiter.put_service(MyRateLimiter)
-      ...> config = MscmpSystLimiter.get_runtime_config()
-      ...> %{sliding_window_table: table_id} = config
-      ...> is_reference(table_id)
+      iex> old_service = MscmpSystLimiter.put_service(TestSupport.get_limiter_service_name())
+      iex> config = MscmpSystLimiter.get_runtime_config()
+      iex> %{semaphore: {table_id, _}} = config
+      iex> is_reference(table_id)
       true
+      iex> MscmpSystLimiter.put_service(old_service)
+      iex> :ok
+      :ok
   """
   @impl true
   @spec get_runtime_config() :: map() | nil
@@ -301,7 +303,7 @@ defmodule MscmpSystLimiter do
                              """
                            ],
                            refill_per: [
-                             type: {:in, [:day, :hour, :minute, :second]},
+                             type: {:in, [:day, :hour, :minute, :second, :millisecond]},
                              required: true,
                              type_doc: "t:MscmpSystLimiter.Types.time_scale/0",
                              type_spec: quote(do: MscmpSystLimiter.Types.time_scale()),
@@ -314,86 +316,169 @@ defmodule MscmpSystLimiter do
                            ]
                          )
 
-  @new_fixed_window_opts NimbleOptions.new!(
-                           window_limit: [
-                             type: :pos_integer,
-                             required: true,
-                             type_doc: "t:pos_integer/0",
-                             type_spec: quote(do: pos_integer()),
-                             doc: """
-                             The maximum number of requests allowed within a single time window.
+  @new_semaphore_opts NimbleOptions.new!(
+                        max_permits: [
+                          type: :pos_integer,
+                          required: true,
+                          type_doc: "t:pos_integer/0",
+                          type_spec: quote(do: pos_integer()),
+                          doc: """
+                          The maximum capacity of the semaphore.
 
-                             This defines the rate limit for the fixed window. Once this limit is
-                             reached, no additional requests are allowed until the window resets.
-                             """
-                           ],
-                           window_time_scale: [
-                             type: {:in, [:day, :hour, :minute, :second]},
-                             required: true,
-                             type_doc: "t:MscmpSystLimiter.Types.time_scale/0",
-                             type_spec: quote(do: MscmpSystLimiter.Types.time_scale()),
-                             doc: """
-                             The time scale for the window duration.
+                          This represents the total number of permits/resources available.
+                          Positive increments consume permits, negative increments release them.
+                          The semaphore starts with full capacity and requires explicit management.
+                          """
+                        ],
+                        time_to_live: [
+                          type: :pos_integer,
+                          required: true,
+                          type_doc: "t:pos_integer/0",
+                          type_spec: quote(do: pos_integer()),
+                          doc: """
+                          The amount of time for which a semaphore limiter should be enforced.
 
-                             This determines the granularity of the time window. For example, if set to
-                             `:minute`, the window will be measured in minutes. This works in conjunction
-                             with the global time_scale setting to determine the actual window duration.
-                             """
-                           ]
-                         )
-
-  @new_sliding_window_opts NimbleOptions.new!(
-                             window_limit: [
-                               type: :pos_integer,
-                               required: true,
-                               type_doc: "t:pos_integer/0",
-                               type_spec: quote(do: pos_integer()),
-                               doc: """
-                               The maximum number of requests allowed within the sliding window.
-
-                               This defines the rate limit for the sliding window. The window continuously
-                               slides forward in time, providing more accurate rate limiting compared to
-                               fixed windows.
-                               """
-                             ],
-                             window_time_scale: [
-                               type: {:in, [:day, :hour, :minute, :second]},
-                               required: true,
-                               type_doc: "t:MscmpSystLimiter.Types.time_scale/0",
-                               type_spec: quote(do: MscmpSystLimiter.Types.time_scale()),
-                               doc: """
-                               The time scale for the sliding window duration.
-
-                               This determines the granularity of the sliding window. For example, if set to
-                               `:minute`, the window will slide minute by minute. This works in conjunction
-                               with the global time_scale setting to determine the actual window duration.
-                               """
-                             ]
-                           )
+                          In units of `time_scale`.  The limiter will be maintained from limiter
+                          creation time to that time plus the time to live; this is the expiry
+                          time.  After the expiry time expires the limiter will be considered
+                          "purge-eligible" and will be dropped from the system.  Any `use/2` calls
+                          made against an expired limiter cause the limiter to behave as though it
+                          were newly created with maximum permits available.
+                          """
+                        ],
+                        time_scale: [
+                          type: {:in, [:day, :hour, :minute, :second, :millisecond]},
+                          required: true,
+                          type_doc: "t:MscmpSystLimiter.Types.time_scale/0",
+                          type_spec: quote(do: MscmpSystLimiter.Types.time_scale()),
+                          doc: """
+                          Establishes the time unit in which the `time_to_live` is expressed.
+                          """
+                        ]
+                      )
 
   @doc section: :limiter_support
   @doc """
-  Starts a rate limiting service.
+  Creates a new rate limiter instance for the specified algorithm.
+
+  This function creates a new limiter instance that can be used with the rate
+  limiting operations (`use/2`, `get/1`, `set/2`, `reset/1`). The limiter is
+  identified by a combination of component, type, and ID, allowing for
+  hierarchical organization of limiters across different parts of an application.
 
   ## Parameters
-    * `opts` - The options to pass to the rate limiting service.
+
+    * `algorithm` - The rate limiting algorithm to use. Must be either
+      `:token_bucket` or `:semaphore`.
+
+    * `component` - A module name that represents the component or subsystem
+      creating this limiter. This provides namespace organization and helps
+      with debugging and monitoring.
+
+    * `type` - An atom that categorizes the type of operation being limited.
+      Examples might include `:api_calls`, `:database_connections`, `:file_uploads`, etc.
+
+    * `id` - A string that uniquely identifies this specific limiter within
+      the component/type namespace. This allows for per-user, per-resource,
+      or other granular limiting.
+
+    * `opts` - Algorithm-specific configuration options (see Options section below).
+
+  ## Returns
+
+  Returns `{:ok, limiter_instance}` on success or `{:error, error}` on failure.
+
+  The `limiter_instance` is an opaque data structure that contains all the
+  information needed to interact with the specific limiter. This instance
+  should be passed to other limiter functions like `use/2`, `get/1`, etc.
 
   ## Options
 
-  Each algorithm requires certain options be set to configure the limiter for
-  use.
+  Each algorithm requires specific options to configure the limiter behavior:
 
-  #### Token Bucket:
+  ### Semaphore Options:
+
+    #{NimbleOptions.docs(@new_semaphore_opts)}
+
+  ### Token Bucket Options:
 
     #{NimbleOptions.docs(@new_token_bucket_opts)}
 
-  #### Fixed Window:
+  ## Examples
 
-    #{NimbleOptions.docs(@new_fixed_window_opts)}
+  ### Creating a Token Bucket Limiter
 
-  #### Sliding Window:
+      iex> # First ensure we have a service available for testing
+      iex> old_service = MscmpSystLimiter.put_service(TestSupport.get_limiter_service_name())
+      iex>
+      iex> # Create a token bucket for API rate limiting
+      iex> {:ok, limiter} = MscmpSystLimiter.new(
+      ...>   :token_bucket,
+      ...>   MyApp.API,
+      ...>   :requests,
+      ...>   "user:123",
+      ...>   bucket_size: 100,
+      ...>   refill_rate: 10,
+      ...>   refill_per: :second
+      ...> )
+      iex>
+      iex> # Verify the limiter was created by checking its initial state
+      iex> {:ok, {:allow, capacity, _}} = MscmpSystLimiter.get(limiter)
+      iex> capacity
+      100
+      iex>
+      iex> # Restore previous service
+      iex> MscmpSystLimiter.put_service(old_service)
+      iex> :ok
+      :ok
 
-    #{NimbleOptions.docs(@new_sliding_window_opts)}
+  ### Creating a Semaphore Limiter
+
+      iex> # First ensure we have a service available for testing
+      iex> old_service = MscmpSystLimiter.put_service(TestSupport.get_limiter_service_name())
+      iex>
+      iex> # Create a semaphore for connection pool limiting
+      iex> {:ok, limiter} = MscmpSystLimiter.new(
+      ...>   :semaphore,
+      ...>   MyApp.Database,
+      ...>   :connections,
+      ...>   "primary_pool",
+      ...>   max_permits: 20,
+      ...>   time_to_live: 5,
+      ...>   time_scale: :minute
+      ...> )
+      iex>
+      iex> # Verify the limiter was created with full permits
+      iex> {:ok, {:allow, permits, _}} = MscmpSystLimiter.get(limiter)
+      iex> permits
+      20
+      iex>
+      iex> # Restore previous service
+      iex> MscmpSystLimiter.put_service(old_service)
+      iex> :ok
+      :ok
+
+  ## Limiter Identity
+
+  Limiters are uniquely identified by the tuple `{component, type, id}`. Creating
+  a new limiter with the same identity will either:
+
+    * Return the existing limiter if it's still active and valid
+    * Replace an expired or invalid limiter with a fresh instance
+
+  This allows for idempotent limiter creation and automatic recovery from
+  expired state.
+
+  ## Error Conditions
+
+  The function returns `{:error, error}` in the following cases:
+
+    * Invalid algorithm name
+    * Invalid component (must be an atom suitable for module names)
+    * Invalid type (must be an atom)
+    * Invalid ID (must be a binary string)
+    * Invalid or missing required options for the chosen algorithm
+    * Internal storage or system errors
   """
 
   @spec new(
@@ -403,12 +488,24 @@ defmodule MscmpSystLimiter do
           id :: Types.counter_id(),
           opts :: Keyword.t()
         ) :: {:ok, Types.limiter_instance()} | {:error, Mserror.LimiterError.t()}
+  # credo:disable-for-next-line Credo.Check.Refactor.CyclomaticComplexity
+  def new(algorithm, component, type, id, opts)
+      when algorithm in [:semaphore, :token_bucket] and
+             is_reg_atom(component) and is_reg_atom(type) and
+             is_binary(id) do
+    validated_opts =
+      case algorithm do
+        :semaphore -> NimbleOptions.validate!(opts, @new_semaphore_opts)
+        :token_bucket -> NimbleOptions.validate!(opts, @new_token_bucket_opts)
+      end
 
-  def new(:token_bucket, component, type, id, opts)
-      when is_reg_atom(component) and is_reg_atom(type) and is_binary(id) do
-    validated_opts = NimbleOptions.validate!(opts, @new_token_bucket_opts)
+    new_module =
+      case algorithm do
+        :semaphore -> Impl.Semaphore
+        :token_bucket -> Impl.TokenBucket
+      end
 
-    case Impl.TokenBucket.new(component, type, id, validated_opts) do
+    case new_module.new(component, type, id, validated_opts) do
       {:ok, limiter_instance} ->
         {:ok, limiter_instance}
 
@@ -416,12 +513,12 @@ defmodule MscmpSystLimiter do
         {:error,
          Mserror.LimiterError.new(
            :limiter_management,
-           "Error establishing new Token Bucket rate limiter instance.",
+           "Error establishing new #{algorithm} limiter instance.",
            parse_error: error,
            context: %ErrorContext{
              origin: {__MODULE__, :new, 5},
              parameters: %{
-               algorithm: :token_bucket,
+               algorithm: algorithm,
                component: component,
                type: type,
                id: id,
@@ -438,10 +535,177 @@ defmodule MscmpSystLimiter do
   #
   #
 
-  @spec use(limiter_instance :: Types.limiter_instance(), increment :: pos_integer()) ::
+  @doc section: :limiter_support
+  @doc """
+  Attempts to consume or release capacity from a rate limiter instance.
+
+  This function is the primary mechanism for interacting with active rate limiters.
+  It attempts to consume (positive increment) or release (negative increment) the
+  specified amount of capacity from the limiter and returns whether the operation
+  was allowed or denied.
+
+  ## Parameters
+
+    * `limiter_instance` - A limiter instance created with `new/5`. The instance
+      contains all the information needed to identify the specific limiter and
+      its configuration.
+
+    * `increment` - An integer representing the amount of capacity to consume
+      (positive values) or release (negative values). The behavior depends on
+      the algorithm:
+
+      * **Token Bucket**: Must be positive. Represents the number of tokens to
+        consume from the bucket.
+
+      * **Semaphore**: Can be positive (acquire permits), negative (release
+        permits), or zero (no-op). Positive values consume permits, negative
+        values release permits back to the pool.
+
+  ## Returns
+
+  Returns `{:ok, limiter_result}` on success or `{:error, error}` on failure.
+
+  The `limiter_result` is a tuple with one of the following forms:
+
+    * `{:allow, remaining_capacity, updated_limiter_instance}` - The operation
+      was allowed. `remaining_capacity` indicates how much capacity remains
+      available after this operation.
+
+    * `{:deny, retry_condition, updated_limiter_instance}` - The operation was
+      denied due to insufficient capacity. `retry_condition` provides
+      algorithm-specific guidance:
+
+      * **Token Bucket**: Number of milliseconds to wait before enough tokens
+        are refilled to potentially allow the request.
+
+      * **Semaphore**: Number of additional permits that would need to be
+        released before this request could be satisfied.
+
+  ## Algorithm-Specific Behavior
+
+  ### Token Bucket
+
+  Consumes tokens from a bucket that refills at a steady rate. Only positive
+  increments are allowed.
+
+    * **Allow**: When sufficient tokens are available, they are consumed and
+      the remaining token count is returned.
+
+    * **Deny**: When insufficient tokens are available, returns the number of
+      milliseconds to wait for enough tokens to be refilled.
+
+  ### Semaphore
+
+  Manages a fixed pool of permits that can be acquired and released explicitly.
+
+    * **Positive increment**: Attempts to acquire the specified number of permits.
+      Fails if insufficient permits are available.
+
+    * **Negative increment**: Releases permits back to the pool. Cannot exceed
+      the maximum permit capacity.
+
+    * **Zero increment**: No-op that returns current state without changes.
+
+  ## Examples
+
+  ### Token Bucket Usage
+
+      iex> # First ensure we have a service available for testing
+      iex> old_service = MscmpSystLimiter.put_service(TestSupport.get_limiter_service_name())
+      iex>
+      iex> # Create a token bucket limiter (10 tokens, refill 5 per second)
+      iex> {:ok, limiter} = MscmpSystLimiter.new(
+      ...>   :token_bucket,
+      ...>   MscmpSystLimiter.Doctest,
+      ...>   :api_calls,
+      ...>   "user_doctest_token_bucket",
+      ...>   bucket_size: 10,
+      ...>   refill_rate: 5,
+      ...>   refill_per: :second
+      ...> )
+      iex>
+      iex> # Consume 3 tokens - allowed
+      iex> {:ok, {:allow, remaining, updated_limiter}} = MscmpSystLimiter.use(limiter, 3)
+      iex> remaining
+      7
+      iex>
+      iex> # Try to consume 10 tokens when only 7 remain - denied
+      iex> {:ok, {:deny, retry_after_ms, _limiter}} = MscmpSystLimiter.use(updated_limiter, 10)
+      iex> is_integer(retry_after_ms) and retry_after_ms > 0
+      true
+      iex>
+      iex> # Restore previous service
+      iex> MscmpSystLimiter.put_service(old_service)
+      iex> :ok
+      :ok
+
+  ### Semaphore Usage
+
+      iex> # First ensure we have a service available for testing
+      iex> old_service = MscmpSystLimiter.put_service(TestSupport.get_limiter_service_name())
+      iex>
+      iex> # Create a semaphore limiter (5 permits, 1 hour TTL)
+      iex> {:ok, limiter} = MscmpSystLimiter.new(
+      ...>   :semaphore,
+      ...>   MscmpSystLimiter.Doctest,
+      ...>   :database_connections,
+      ...>   "pool_doctest_semaphore",
+      ...>   max_permits: 5,
+      ...>   time_to_live: 1,
+      ...>   time_scale: :hour
+      ...> )
+      iex>
+      iex> # Acquire 2 permits - allowed
+      iex> {:ok, {:allow, remaining, updated_limiter}} = MscmpSystLimiter.use(limiter, 2)
+      iex> remaining
+      3
+      iex>
+      iex> # Try to acquire 5 permits when only 3 remain - denied
+      iex> {:ok, {:deny, needed_permits, _limiter}} = MscmpSystLimiter.use(updated_limiter, 5)
+      iex> needed_permits
+      2
+      iex>
+      iex> # Release 1 permit back to the pool
+      iex> {:ok, {:allow, final_remaining, _final_limiter}} = MscmpSystLimiter.use(updated_limiter, -1)
+      iex> final_remaining
+      4
+      iex>
+      iex> # Restore previous service
+      iex> MscmpSystLimiter.put_service(old_service)
+      iex> :ok
+      :ok
+
+  ## Error Conditions
+
+  The function returns `{:error, error}` in the following cases:
+
+    * Invalid limiter instance format
+    * Internal algorithm errors (storage issues, etc.)
+    * For token bucket: non-positive increment values
+
+  ## Thread Safety
+
+  This function is thread-safe and can be called concurrently from multiple
+  processes against the same limiter instance. The underlying storage mechanisms
+  provide atomic operations to ensure consistent state.
+
+  ## Performance Notes
+
+  This function performs atomic operations against shared storage (ETS tables
+  with `:atomics` references). Performance is optimized for high-concurrency
+  scenarios, but consider the frequency of calls when designing rate limiting
+  strategies.
+  """
+  @spec use(limiter_instance :: Types.limiter_instance(), increment :: integer()) ::
           {:ok, Types.limiter_result()} | {:error, Mserror.LimiterError.t()}
-  def use({:token_bucket, _, _} = limiter_instance, increment) do
-    case Impl.TokenBucket.use(limiter_instance, increment) do
+  def use(limiter_instance, increment) do
+    use_module =
+      case limiter_instance do
+        {:semaphore, _, _} -> Impl.Semaphore
+        {:token_bucket, _, _} -> Impl.TokenBucket
+      end
+
+    case use_module.use(limiter_instance, increment) do
       {:ok, _} = result ->
         result
 
@@ -449,7 +713,7 @@ defmodule MscmpSystLimiter do
         {:error,
          Mserror.LimiterError.new(
            :limiter_management,
-           "Error trying to consume possibly available rate limiter availability.",
+           "Error trying to consume possibly available limiter availability.",
            parse_error: error,
            context: %ErrorContext{
              origin: {__MODULE__, :use, 2},
@@ -468,10 +732,139 @@ defmodule MscmpSystLimiter do
   #
   #
 
+  @doc section: :limiter_support
+  @doc """
+  Retrieves the current state of a rate limiter instance without modifying it.
+
+  This function allows you to inspect the current capacity and state of a limiter
+  without consuming or releasing any resources. It's useful for monitoring,
+  logging, or making decisions based on current availability.
+
+  ## Parameters
+
+    * `limiter_instance` - A limiter instance created with `new/5`. The instance
+      contains all the information needed to identify the specific limiter and
+      its configuration.
+
+  ## Returns
+
+  Returns `{:ok, limiter_result}` on success or `{:error, error}` on failure.
+
+  The `limiter_result` is a tuple with the following form:
+
+    * `{:allow, current_capacity, limiter_instance}` - Returns the current
+      available capacity without modifying the limiter state. The
+      `current_capacity` value represents:
+
+      * **Token Bucket**: The number of tokens currently available in the bucket.
+
+      * **Semaphore**: The number of permits currently available for acquisition.
+
+  ## Algorithm-Specific Behavior
+
+  ### Token Bucket
+
+  Returns the current number of tokens in the bucket, taking into account any
+  refills that have occurred since the last operation. The bucket is refilled
+  up to its maximum capacity based on the configured refill rate and time elapsed.
+
+  ### Semaphore
+
+  Returns the current number of available permits. If the semaphore has expired
+  (past its time-to-live), it behaves as if newly created with maximum permits
+  available.
+
+  ## Examples
+
+  ### Token Bucket State Check
+
+      iex> # First ensure we have a service available for testing
+      iex> old_service = MscmpSystLimiter.put_service(TestSupport.get_limiter_service_name())
+      iex>
+      iex> # Create a token bucket limiter (10 tokens, refill 5 per second)
+      iex> {:ok, limiter} = MscmpSystLimiter.new(
+      ...>   :token_bucket,
+      ...>   MscmpSystLimiter.Doctest,
+      ...>   :api_calls,
+      ...>   "user_doctest_get_token_bucket",
+      ...>   bucket_size: 10,
+      ...>   refill_rate: 5,
+      ...>   refill_per: :second
+      ...> )
+      iex>
+      iex> # Check initial state - should have full bucket
+      iex> {:ok, {:allow, capacity, _limiter}} = MscmpSystLimiter.get(limiter)
+      iex> capacity
+      10
+      iex>
+      iex> # Consume some tokens
+      iex> {:ok, {:allow, remaining, updated_limiter}} = MscmpSystLimiter.use(limiter, 3)
+      iex> remaining
+      7
+      iex>
+      iex> # Check state after consumption - should show reduced capacity
+      iex> {:ok, {:allow, current_capacity, _limiter}} = MscmpSystLimiter.get(updated_limiter)
+      iex> current_capacity
+      7
+      iex>
+      iex> # Restore previous service
+      iex> MscmpSystLimiter.put_service(old_service)
+      iex> :ok
+      :ok
+
+  ### Semaphore State Check
+
+      iex> # First ensure we have a service available for testing
+      iex> old_service = MscmpSystLimiter.put_service(TestSupport.get_limiter_service_name())
+      iex>
+      iex> # Create a semaphore limiter (5 permits, 1 hour TTL)
+      iex> {:ok, limiter} = MscmpSystLimiter.new(
+      ...>   :semaphore,
+      ...>   MscmpSystLimiter.Doctest,
+      ...>   :database_connections,
+      ...>   "pool_doctest_get_semaphore",
+      ...>   max_permits: 5,
+      ...>   time_to_live: 1,
+      ...>   time_scale: :hour
+      ...> )
+      iex>
+      iex> # Check initial state - should have full permits
+      iex> {:ok, {:allow, capacity, _limiter}} = MscmpSystLimiter.get(limiter)
+      iex> capacity
+      5
+      iex>
+      iex> # Acquire some permits
+      iex> {:ok, {:allow, remaining, updated_limiter}} = MscmpSystLimiter.use(limiter, 2)
+      iex> remaining
+      3
+      iex>
+      iex> # Check state after acquisition - should show reduced permits
+      iex> {:ok, {:allow, current_permits, _limiter}} = MscmpSystLimiter.get(updated_limiter)
+      iex> current_permits
+      3
+      iex>
+      iex> # Restore previous service
+      iex> MscmpSystLimiter.put_service(old_service)
+      iex> :ok
+      :ok
+
+  ## Error Conditions
+
+  The function returns `{:error, error}` in the following cases:
+
+    * Invalid limiter instance format
+    * Internal algorithm errors (storage issues, etc.)
+  """
   @spec get(limiter_instance :: Types.limiter_instance()) ::
           {:ok, Types.limiter_result()} | {:error, Mserror.LimiterError.t()}
-  def get({:token_bucket, _, _} = limiter_instance) do
-    case Impl.TokenBucket.get(limiter_instance) do
+  def get(limiter_instance) do
+    get_module =
+      case limiter_instance do
+        {:semaphore, _, _} -> Impl.Semaphore
+        {:token_bucket, _, _} -> Impl.TokenBucket
+      end
+
+    case get_module.get(limiter_instance) do
       {:ok, _} = result ->
         result
 
@@ -497,6 +890,22 @@ defmodule MscmpSystLimiter do
   #
   #
 
+  @set_semaphore_opts NimbleOptions.new!(
+                        current_permits: [
+                          type: :non_neg_integer,
+                          required: true,
+                          type_doc: "t:non_neg_integer/0",
+                          type_spec: quote(do: non_neg_integer()),
+                          doc: """
+                          The current number of permits available.
+
+                          Overrides the existing number of permits available to value of this
+                          option.  Note that the value of this option must be no less than 1 and
+                          no more than the `max_permits` value established at limiter creation.
+                          """
+                        ]
+                      )
+
   @set_token_bucket_opts NimbleOptions.new!(
                            current_fill: [
                              type: :non_neg_integer,
@@ -506,58 +915,170 @@ defmodule MscmpSystLimiter do
                              doc: """
                              The current fill of the bucket.
 
-                             Allows the caller to override the number of tokens
-                             currently filling the bucket.
+                             Allows the caller to override the number of tokens currently filling
+                             the bucket.  This value must be 1 or greater and less than or equal
+                             to the `bucket_size` value set on limiter creation.
                              """
                            ]
                          )
 
-  @set_fixed_window_opts NimbleOptions.new!(
-                           current_count: [
-                             type: :non_neg_integer,
-                             required: true,
-                             type_doc: "t:non_neg_integer/0",
-                             type_spec: quote(do: non_neg_integer()),
-                             doc: """
-                             The current count of the window.
-
-                             Allows the caller to override the number of requests
-                             consumed in the current window.
-                             """
-                           ]
-                         )
-
+  @doc section: :limiter_support
   @doc """
-  Allows for the overriding of the rate limiting configuration for a limiter instance.
+  Explicitly sets the current available capacity of a rate limiter instance.
+
+  This function allows you to override the current state of a limiter with a
+  specific capacity value. This is useful for administrative operations,
+  testing scenarios, or implementing custom policies that need to adjust
+  limiter capacity based on external conditions.
 
   ## Parameters
-    * `limiter_instance` - The limiter instance to set the configuration for.
-    * `opts` - The options to set the configuration for.
+
+    * `limiter_instance` - A limiter instance created with `new/5`. The instance
+      contains all the information needed to identify the specific limiter and
+      its configuration.
+
+    * `opts` - Algorithm-specific options that define the new capacity state
+      (see Options section below).
+
+  ## Returns
+
+  Returns `{:ok, limiter_result}` on success or `{:error, error}` on failure.
+
+  The `limiter_result` is a tuple with the following form:
+
+    * `{:allow, set_capacity, limiter_instance}` - The limiter capacity has been
+      set to the specified value. The `set_capacity` reflects the new current
+      capacity:
+
+      * **Token Bucket**: The number of tokens now available in the bucket.
+
+      * **Semaphore**: The number of permits now available for acquisition.
 
   ## Options
 
-  Each algorithm requires certain options be set to configure the limiter for
-  use.
+  Each algorithm requires specific options to set the capacity:
 
-  #### Token Bucket:
+  ### Semaphore Options:
+
+    #{NimbleOptions.docs(@set_semaphore_opts)}
+
+  ### Token Bucket Options:
 
     #{NimbleOptions.docs(@set_token_bucket_opts)}
 
-  #### Fixed Window:
+  ## Algorithm-Specific Behavior
 
-    #{NimbleOptions.docs(@set_fixed_window_opts)}
+  ### Token Bucket
 
-  #### Sliding Window:
+  Sets the bucket's current token count to the specified value and updates the
+  last refill timestamp to the current time. The new token count must be within
+  the bucket's configured capacity (0 to `bucket_size`).
 
-    There are currently no settable options for Sliding Window rate limiters
-    after creation.
+  ### Semaphore
+
+  Sets the semaphore's current permit count to the specified value. The new
+  permit count must be within the semaphore's configured capacity (0 to
+  `max_permits`). The expiry time is not modified.
+
+  ## Examples
+
+  ### Setting Token Bucket Capacity
+
+      iex> # First ensure we have a service available for testing
+      iex> old_service = MscmpSystLimiter.put_service(TestSupport.get_limiter_service_name())
+      iex>
+      iex> # Create a token bucket limiter
+      iex> {:ok, limiter} = MscmpSystLimiter.new(
+      ...>   :token_bucket,
+      ...>   MscmpSystLimiter.Doctest,
+      ...>   :api_calls,
+      ...>   "user_doctest_set_bucket",
+      ...>   bucket_size: 10,
+      ...>   refill_rate: 5,
+      ...>   refill_per: :second
+      ...> )
+      iex>
+      iex> # Consume some tokens
+      iex> {:ok, {:allow, remaining, depleted_limiter}} = MscmpSystLimiter.use(limiter, 7)
+      iex> remaining
+      3
+      iex>
+      iex> # Explicitly set the bucket to half capacity
+      iex> {:ok, {:allow, set_capacity, set_limiter}} = MscmpSystLimiter.set(depleted_limiter, current_fill: 5)
+      iex> set_capacity
+      5
+      iex>
+      iex> # Verify the new capacity is in effect
+      iex> {:ok, {:allow, current_capacity, _}} = MscmpSystLimiter.get(set_limiter)
+      iex> current_capacity
+      5
+      iex>
+      iex> # Restore previous service
+      iex> MscmpSystLimiter.put_service(old_service)
+      iex> :ok
+      :ok
+
+  ### Setting Semaphore Permits
+
+      iex> # First ensure we have a service available for testing
+      iex> old_service = MscmpSystLimiter.put_service(TestSupport.get_limiter_service_name())
+      iex>
+      iex> # Create a semaphore limiter
+      iex> {:ok, limiter} = MscmpSystLimiter.new(
+      ...>   :semaphore,
+      ...>   MscmpSystLimiter.Doctest,
+      ...>   :database_connections,
+      ...>   "pool_doctest_set_semaphore",
+      ...>   max_permits: 10,
+      ...>   time_to_live: 1,
+      ...>   time_scale: :hour
+      ...> )
+      iex>
+      iex> # Acquire some permits
+      iex> {:ok, {:allow, remaining, depleted_limiter}} = MscmpSystLimiter.use(limiter, 6)
+      iex> remaining
+      4
+      iex>
+      iex> # Explicitly set permits to a specific value
+      iex> {:ok, {:allow, set_permits, set_limiter}} = MscmpSystLimiter.set(depleted_limiter, current_permits: 8)
+      iex> set_permits
+      8
+      iex>
+      iex> # Verify the new permit count is in effect
+      iex> {:ok, {:allow, current_permits, _}} = MscmpSystLimiter.get(set_limiter)
+      iex> current_permits
+      8
+      iex>
+      iex> # Restore previous service
+      iex> MscmpSystLimiter.put_service(old_service)
+      iex> :ok
+      :ok
+
+  ## Error Conditions
+
+  The function returns `{:error, error}` in the following cases:
+
+    * Invalid limiter instance format
+    * Capacity value outside valid range (e.g., negative values or exceeding
+      maximum configured capacity)
+    * Internal algorithm errors (storage issues, etc.)
   """
   @spec set(limiter_instance :: Types.limiter_instance(), opts :: Keyword.t()) ::
           {:ok, Types.limiter_result()} | {:error, Mserror.LimiterError.t()}
-  def set({:token_bucket, _limiter_id, _limiter_config} = limiter_instance, opts) do
-    validated_opts = NimbleOptions.validate!(opts, @set_token_bucket_opts)
+  def set(limiter_instance, opts) do
+    validated_opts =
+      case limiter_instance do
+        {:semaphore, _, _} -> NimbleOptions.validate!(opts, @set_semaphore_opts)
+        {:token_bucket, _, _} -> NimbleOptions.validate!(opts, @set_token_bucket_opts)
+      end
 
-    case Impl.TokenBucket.set(limiter_instance, validated_opts) do
+    set_module =
+      case limiter_instance do
+        {:semaphore, _, _} -> Impl.Semaphore
+        {:token_bucket, _, _} -> Impl.TokenBucket
+      end
+
+    case set_module.set(limiter_instance, validated_opts) do
       {:ok, limiter_result} ->
         {:ok, limiter_result}
 
@@ -565,12 +1086,11 @@ defmodule MscmpSystLimiter do
         {:error,
          Mserror.LimiterError.new(
            :limiter_management,
-           "Error setting Token Bucket counter to explicit value.",
+           "Error setting limiter available capacity to explicit value.",
            parse_error: error,
            context: %ErrorContext{
              origin: {__MODULE__, :set, 2},
              parameters: %{
-               algorithm: :token_bucket,
                limiter_instance: limiter_instance,
                opts: validated_opts
              }
@@ -585,10 +1105,157 @@ defmodule MscmpSystLimiter do
   #
   #
 
+  @doc section: :limiter_support
+  @doc """
+  Resets a rate limiter instance to its initial state.
+
+  This function restores a limiter to its original configuration state, as if it
+  were newly created. This is useful for clearing accumulated state, resetting
+  counters after maintenance windows, or handling error recovery scenarios.
+
+  ## Parameters
+
+    * `limiter_instance` - A limiter instance created with `new/5`. The instance
+      contains all the information needed to identify the specific limiter and
+      its configuration.
+
+  ## Returns
+
+  Returns `{:ok, limiter_result}` on success or `{:error, error}` on failure.
+
+  The `limiter_result` is a tuple with the following form:
+
+    * `{:allow, initial_capacity, limiter_instance}` - The limiter has been
+      reset to its initial state. The `initial_capacity` value represents:
+
+      * **Token Bucket**: The bucket is filled to its maximum `bucket_size`
+        capacity with all tokens available.
+
+      * **Semaphore**: All permits are available, equal to the `max_permits`
+        value configured at creation time.
+
+  ## Algorithm-Specific Behavior
+
+  ### Token Bucket
+
+  Resets the bucket to its maximum capacity (`bucket_size`) and updates the
+  last refill timestamp to the current time. This effectively gives the limiter
+  a fresh start with all tokens immediately available.
+
+  ### Semaphore
+
+  Resets the semaphore to have all permits available (`max_permits`) and
+  updates the expiry time based on the current time plus the configured
+  `time_to_live`. This extends the limiter's lifetime and makes all permits
+  available for acquisition.
+
+  ## Examples
+
+  ### Token Bucket Reset
+
+      iex> # First ensure we have a service available for testing
+      iex> old_service = MscmpSystLimiter.put_service(TestSupport.get_limiter_service_name())
+      iex>
+      iex> # Create a token bucket limiter (10 tokens, refill 5 per second)
+      iex> {:ok, limiter} = MscmpSystLimiter.new(
+      ...>   :token_bucket,
+      ...>   MscmpSystLimiter.Doctest,
+      ...>   :api_calls,
+      ...>   "user_doctest_reset_token_bucket",
+      ...>   bucket_size: 10,
+      ...>   refill_rate: 5,
+      ...>   refill_per: :second
+      ...> )
+      iex>
+      iex> # Consume most tokens
+      iex> {:ok, {:allow, remaining, depleted_limiter}} = MscmpSystLimiter.use(limiter, 8)
+      iex> remaining
+      2
+      iex>
+      iex> # Reset the limiter - should restore full capacity
+      iex> {:ok, {:allow, reset_capacity, reset_limiter}} = MscmpSystLimiter.reset(depleted_limiter)
+      iex> reset_capacity
+      10
+      iex>
+      iex> # Verify we can now consume the full amount again
+      iex> {:ok, {:allow, final_remaining, _final_limiter}} = MscmpSystLimiter.use(reset_limiter, 8)
+      iex> final_remaining
+      2
+      iex>
+      iex> # Restore previous service
+      iex> MscmpSystLimiter.put_service(old_service)
+      iex> :ok
+      :ok
+
+  ### Semaphore Reset
+
+      iex> # First ensure we have a service available for testing
+      iex> old_service = MscmpSystLimiter.put_service(TestSupport.get_limiter_service_name())
+      iex>
+      iex> # Create a semaphore limiter (5 permits, 1 hour TTL)
+      iex> {:ok, limiter} = MscmpSystLimiter.new(
+      ...>   :semaphore,
+      ...>   MscmpSystLimiter.Doctest,
+      ...>   :database_connections,
+      ...>   "pool_doctest_reset_semaphore",
+      ...>   max_permits: 5,
+      ...>   time_to_live: 1,
+      ...>   time_scale: :hour
+      ...> )
+      iex>
+      iex> # Acquire most permits
+      iex> {:ok, {:allow, remaining, depleted_limiter}} = MscmpSystLimiter.use(limiter, 4)
+      iex> remaining
+      1
+      iex>
+      iex> # Reset the semaphore - should restore all permits
+      iex> {:ok, {:allow, reset_permits, reset_limiter}} = MscmpSystLimiter.reset(depleted_limiter)
+      iex> reset_permits
+      5
+      iex>
+      iex> # Verify we can now acquire permits again
+      iex> {:ok, {:allow, final_remaining, _final_limiter}} = MscmpSystLimiter.use(reset_limiter, 3)
+      iex> final_remaining
+      2
+      iex>
+      iex> # Restore previous service
+      iex> MscmpSystLimiter.put_service(old_service)
+      iex> :ok
+      :ok
+
+  ## Use Cases
+
+  This function is particularly useful in the following scenarios:
+
+    * **Maintenance Windows**: Resetting limiters after scheduled maintenance
+      to ensure full capacity is available when services resume.
+
+    * **Error Recovery**: Clearing accumulated state after resolving issues
+      that may have caused unusual consumption patterns.
+
+    * **Testing**: Providing a clean slate for test scenarios without needing
+      to recreate limiter instances.
+
+    * **Administrative Actions**: Allowing operators to manually reset limiters
+      in response to operational requirements.
+
+  ## Error Conditions
+
+  The function returns `{:error, error}` in the following cases:
+
+    * Invalid limiter instance format
+    * Internal algorithm errors (storage issues, etc.)
+  """
   @spec reset(limiter_instance :: Types.limiter_instance()) ::
           {:ok, Types.limiter_result()} | {:error, Mserror.LimiterError.t()}
-  def reset({:token_bucket, _limiter_id, _limiter_config} = limiter_instance) do
-    case Impl.TokenBucket.reset(limiter_instance) do
+  def reset(limiter_instance) do
+    reset_module =
+      case limiter_instance do
+        {:semaphore, _, _} -> Impl.Semaphore
+        {:token_bucket, _, _} -> Impl.TokenBucket
+      end
+
+    case reset_module.reset(limiter_instance) do
       {:ok, limiter_result} ->
         {:ok, limiter_result}
 
@@ -596,12 +1263,11 @@ defmodule MscmpSystLimiter do
         {:error,
          Mserror.LimiterError.new(
            :limiter_management,
-           "Error resetting Token Bucket counter.",
+           "Error resetting limiter.",
            parse_error: error,
            context: %ErrorContext{
-             origin: {__MODULE__, :set, 2},
+             origin: {__MODULE__, :reset, 1},
              parameters: %{
-               algorithm: :token_bucket,
                limiter_instance: limiter_instance
              }
            }

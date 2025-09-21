@@ -36,22 +36,17 @@ defmodule MscmpSystLimiter.Runtime.Service do
     algorithms = opts[:algorithms]
     cleanup_interval = opts[:cleanup_interval]
 
-    sliding_window_table = maybe_start_limiter(:sliding_window, algorithms)
-    fixed_window_table = maybe_start_limiter(:fixed_window, algorithms)
+    semaphore_table = maybe_start_limiter(:semaphore, algorithms)
     token_bucket_table = maybe_start_limiter(:token_bucket, algorithms)
 
     default_cleanup_interval = cleanup_interval[:all] || 60_000
 
-    sliding_window_cleanup_interval =
-      cleanup_interval[:sliding_window] || default_cleanup_interval
-
-    fixed_window_cleanup_interval = cleanup_interval[:fixed_window] || default_cleanup_interval
+    semaphore_cleanup_interval = cleanup_interval[:semaphore] || default_cleanup_interval
     token_bucket_cleanup_interval = cleanup_interval[:token_bucket] || default_cleanup_interval
 
     runtime_config =
       %{
-        sliding_window: {sliding_window_table, sliding_window_cleanup_interval},
-        fixed_window: {fixed_window_table, fixed_window_cleanup_interval},
+        semaphore: {semaphore_table, semaphore_cleanup_interval},
         token_bucket: {token_bucket_table, token_bucket_cleanup_interval}
       }
 
@@ -74,8 +69,7 @@ defmodule MscmpSystLimiter.Runtime.Service do
     end
   end
 
-  defp get_algorithm_cleanup_atom(:sliding_window), do: :cleanup_sliding_window
-  defp get_algorithm_cleanup_atom(:fixed_window), do: :cleanup_fixed_window
+  defp get_algorithm_cleanup_atom(:semaphore), do: :cleanup_semaphore
   defp get_algorithm_cleanup_atom(:token_bucket), do: :cleanup_token_bucket
 
   ##############################################################################
@@ -94,12 +88,10 @@ defmodule MscmpSystLimiter.Runtime.Service do
   #
 
   @impl true
-  def handle_info(:cleanup_sliding_window, state) do
-    {:noreply, state}
-  end
-
-  @impl true
-  def handle_info(:cleanup_fixed_window, state) do
+  def handle_info(:cleanup_semaphore, state) do
+    %{semaphore: {ets_table, cleanup_interval}} = state
+    Impl.Semaphore.cleanup(ets_table)
+    Process.send_after(self(), :cleanup_semaphore, cleanup_interval)
     {:noreply, state}
   end
 

@@ -24,6 +24,13 @@ defmodule TokenBucketTest do
   @test_counter_type :test_counter
   @default_opts [bucket_size: 10, refill_rate: 5, refill_per: :second]
 
+  @atomics_current_fill 1
+  @atomics_request_time 2
+  @atomics_ttl 3
+  @atomics_bucket_size 4
+  @atomics_refill_rate 5
+  @atomics_refill_per_code 6
+
   # Helper function to generate unique counter IDs
   defp unique_counter_id(prefix \\ "test") do
     "#{prefix}_#{System.unique_integer([:positive])}"
@@ -41,11 +48,11 @@ defmodule TokenBucketTest do
 
       # Verify atomics are properly initialized
       # current_fill = bucket_size
-      assert :atomics.get(atomics_ref, 1) == 10
+      assert :atomics.get(atomics_ref, @atomics_current_fill) == 10
       # bucket_size
-      assert :atomics.get(atomics_ref, 4) == 10
+      assert :atomics.get(atomics_ref, @atomics_bucket_size) == 10
       # refill_rate
-      assert :atomics.get(atomics_ref, 5) == 5
+      assert :atomics.get(atomics_ref, @atomics_refill_rate) == 5
     end
 
     test "creates limiter with different bucket sizes" do
@@ -56,11 +63,11 @@ defmodule TokenBucketTest do
                TokenBucket.new(@test_component, @test_counter_type, counter_id, opts)
 
       # current_fill
-      assert :atomics.get(atomics_ref, 1) == 100
+      assert :atomics.get(atomics_ref, @atomics_current_fill) == 100
       # bucket_size
-      assert :atomics.get(atomics_ref, 4) == 100
+      assert :atomics.get(atomics_ref, @atomics_bucket_size) == 100
       # refill_rate
-      assert :atomics.get(atomics_ref, 5) == 20
+      assert :atomics.get(atomics_ref, @atomics_refill_rate) == 20
     end
 
     test "creates limiter with different refill rates" do
@@ -71,7 +78,7 @@ defmodule TokenBucketTest do
                TokenBucket.new(@test_component, @test_counter_type, counter_id, opts)
 
       # refill_rate
-      assert :atomics.get(atomics_ref, 5) == 1
+      assert :atomics.get(atomics_ref, @atomics_refill_rate) == 1
     end
 
     test "creates limiter with different time scales" do
@@ -83,8 +90,8 @@ defmodule TokenBucketTest do
                  TokenBucket.new(@test_component, @test_counter_type, counter_id, opts)
 
         # Verify time scale was encoded correctly
-        encoded_time_scale = :atomics.get(atomics_ref, 6)
-        assert encoded_time_scale in 1..4
+        encoded_time_scale = :atomics.get(atomics_ref, @atomics_refill_per_code)
+        assert encoded_time_scale in 1..5
       end
     end
 
@@ -157,13 +164,13 @@ defmodule TokenBucketTest do
       {:ok, limiter} =
         TokenBucket.new(@test_component, @test_counter_type, counter_id, @default_opts)
 
-      assert_raise FunctionClauseError, fn ->
-        TokenBucket.use(limiter, 0)
-      end
+      assert {:error,
+              {:token_bucket_bad_increment, "Increment must be an integer greater than 0."}} =
+               TokenBucket.use(limiter, 0)
 
-      assert_raise FunctionClauseError, fn ->
-        TokenBucket.use(limiter, -1)
-      end
+      assert {:error,
+              {:token_bucket_bad_increment, "Increment must be an integer greater than 0."}} =
+               TokenBucket.use(limiter, -1)
     end
 
     test "token refill works over time" do
@@ -414,8 +421,8 @@ defmodule TokenBucketTest do
                  TokenBucket.new(@test_component, @test_counter_type, counter_id, opts)
 
         # Verify encoded time scale is valid
-        encoded_time_scale = :atomics.get(atomics_ref, 6)
-        assert encoded_time_scale in 1..4
+        encoded_time_scale = :atomics.get(atomics_ref, @atomics_refill_per_code)
+        assert encoded_time_scale in 1..5
       end
     end
 
@@ -610,17 +617,17 @@ defmodule TokenBucketTest do
 
       # Verify all expected atomics positions are properly initialized
       # current_fill
-      assert :atomics.get(atomics_ref, 1) >= 0
+      assert :atomics.get(atomics_ref, @atomics_current_fill) >= 0
       # request_time
-      assert :atomics.get(atomics_ref, 2) > 0
+      assert :atomics.get(atomics_ref, @atomics_request_time) > 0
       # ttl
-      assert :atomics.get(atomics_ref, 3) > 0
+      assert :atomics.get(atomics_ref, @atomics_ttl) > 0
       # bucket_size
-      assert :atomics.get(atomics_ref, 4) == 10
+      assert :atomics.get(atomics_ref, @atomics_bucket_size) == 10
       # refill_rate
-      assert :atomics.get(atomics_ref, 5) == 5
+      assert :atomics.get(atomics_ref, @atomics_refill_rate) == 5
       # refill_per_code
-      assert :atomics.get(atomics_ref, 6) in 1..4
+      assert :atomics.get(atomics_ref, @atomics_refill_per_code) in 1..5
     end
   end
 end

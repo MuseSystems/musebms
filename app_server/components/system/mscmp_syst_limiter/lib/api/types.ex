@@ -22,7 +22,7 @@ defmodule MscmpSystLimiter.Types do
   @typedoc """
   The algorithm to use for the limiter.
   """
-  @type algorithm() :: :sliding_window | :fixed_window | :token_bucket
+  @type algorithm() :: :semaphore | :token_bucket
 
   @typedoc """
   A unique identifier for a specific counter type within a limiter.
@@ -47,33 +47,6 @@ defmodule MscmpSystLimiter.Types do
   @type counter_table_name() :: atom()
 
   @typedoc """
-  Configuration for the fixed window algorithm.
-
-  > #### Treat as opaque {: .important}
-  >
-  > While this type is public due to Elixir module boundary limitations, the
-  > concrete representation is an implementation detail and may change without
-  > notice. Treat this value as opaque and construct/manage it via the public API.
-
-  Conceptually includes:
-
-    * `limit` - the maximum number of actions allowed in the window (positive integer)
-    * `interval_ms` - the length of the window in milliseconds (positive integer)
-  """
-  @type fixed_window_config() :: nil | :atomics.atomics_ref()
-
-  @typedoc """
-  A composite identifier referencing a counter's origin, type, and unique
-  identity.
-
-  This acts as the identifier of a specific counter within an assumed algorithm.
-  The composite ID provides a methodology for the application to support rate
-  limiting across the application while avoiding counter identity conflicts via
-  the this structured naming approach.
-  """
-  @type limiter_id() :: {module(), counter_type(), counter_id()}
-
-  @typedoc """
   Configuration parameters for a rate limiting algorithm.
 
   This type represents the algorithm-specific configuration needed to define
@@ -87,10 +60,18 @@ defmodule MscmpSystLimiter.Types do
   > boundary limitations, they are not intended for pattern matching. Use the
   > public API to construct and work with them.
   """
-  @type limiter_config() ::
-          token_bucket_config()
-          | fixed_window_config()
-          | sliding_window_config()
+  @type limiter_config() :: semaphore_config() | token_bucket_config()
+
+  @typedoc """
+  A composite identifier referencing a counter's origin, type, and unique
+  identity.
+
+  This acts as the identifier of a specific counter within an assumed algorithm.
+  The composite ID provides a methodology for the application to support rate
+  limiting across the application while avoiding counter identity conflicts via
+  the this structured naming approach.
+  """
+  @type limiter_id() :: {module(), counter_type(), counter_id()}
 
   @typedoc """
   A reference to a specific limiter instance.
@@ -115,22 +96,23 @@ defmodule MscmpSystLimiter.Types do
 
   Returns a tuple indicating whether the action is allowed or denied.
 
-  * `{:allow, remaining_limit}`: The action is allowed. `remaining_limit` is a
-    non-negative integer representing the number of remaining allowed actions
-    before hitting the rate limit.
+  * `{:allow, remaining_limit, limiter_instance}`: The action is allowed.
+    `remaining_limit` is a non-negative integer representing the number of
+    remaining allowed actions before hitting the rate limit.
 
-  * `{:deny, retry_after_ms}`: The action is denied. `retry_after_ms` is a
-    non-negative integer representing the number of milliseconds to wait before
-    the limit is reset and actions are allowed again.
+  * `{:deny, retry_condition, limiter_instance}`: The action is denied.
+    `retry_condition` is a `non-negative integer representing an algorithm-
+    specific condition for retrying the action.  In the case of the semaphore
+    algorithm, this is the number of permits which would need to be made
+    available prior to retrying the action.  For token bucket, this is the
+    number of milliseconds to wait before tokens are added back to the bucket.
   """
   @type limiter_result() ::
           {:allow, non_neg_integer(), limiter_instance()}
           | {:deny, non_neg_integer(), limiter_instance()}
 
-  @type time_scale() :: :day | :hour | :minute | :second
-
   @typedoc """
-  Configuration for the sliding window algorithm.
+  Configuration for the semaphore algorithm.
 
   > #### Treat as opaque {: .important}
   >
@@ -140,10 +122,32 @@ defmodule MscmpSystLimiter.Types do
 
   Conceptually includes:
 
-    * `limit` - the maximum number of actions allowed in the window (positive integer)
-    * `interval_ms` - the length of the sliding window in milliseconds (positive integer)
+    * `max_permits` - the maximum number of resources/permits available
+    (positive integer)
+
+    * `time_to_live` - the time to live in units of the time scale (positive
+    integer).
+
+    * `time_scale` - the time scale to use for the time to live see
+    `MscmpSystLimiter.Types.time_scale/0` for more details.
+
+  Note: Unlike time-based algorithms, semaphore capacity is managed explicitly
+  through acquire/release operations rather than automatic time-based refill.
   """
-  @type sliding_window_config() :: nil | :atomics.atomics_ref()
+  @type semaphore_config() :: nil | :atomics.atomics_ref()
+
+  @typedoc """
+  The algorithms which are to be started.
+
+  This includes all the supported algorithms individually, and the special
+  value `:all` which includes all the supported algorithms.
+  """
+  @type start_algorithms() :: :all | [algorithm()]
+
+  @typedoc """
+  The time scale value by which to understand certain time integer values.
+  """
+  @type time_scale() :: :day | :hour | :minute | :second | :millisecond
 
   @typedoc """
   Configuration for the token bucket algorithm.
@@ -161,12 +165,4 @@ defmodule MscmpSystLimiter.Types do
     * `refill_rate` - the number of tokens to add per interval (positive integer)
   """
   @type token_bucket_config() :: nil | :atomics.atomics_ref()
-
-  @typedoc """
-  The algorithms which are to be started.
-
-  This includes all the supported algorithms individually, and the special
-  value `:all` which includes all the supported algorithms.
-  """
-  @type start_algorithms() :: :all | [algorithm()]
 end

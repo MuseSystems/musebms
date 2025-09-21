@@ -25,9 +25,6 @@ defmodule MscmpSystLimiter.Impl.TokenBucket do
   @atomics_refill_rate 5
   @atomics_refill_per_code 6
 
-  @type token_bucket_limiter_instance() ::
-          {:token_bucket, Types.limiter_id(), :atomics.atomics_ref()}
-
   ##############################################################################
   #
   # new
@@ -40,7 +37,7 @@ defmodule MscmpSystLimiter.Impl.TokenBucket do
           counter_id :: Types.counter_id(),
           opts :: Keyword.t()
         ) ::
-          {:ok, token_bucket_limiter_instance()} | ErrorTypes.parsable_error()
+          {:ok, Types.limiter_instance()} | ErrorTypes.parsable_error()
   def new(component, counter_type, counter_id, opts) do
     limiter_id = {component, counter_type, counter_id}
 
@@ -128,7 +125,7 @@ defmodule MscmpSystLimiter.Impl.TokenBucket do
   #
   #
 
-  @spec use(limiter_instance :: token_bucket_limiter_instance(), increment :: pos_integer()) ::
+  @spec use(limiter_instance :: Types.limiter_instance(), increment :: pos_integer()) ::
           {:ok, Types.limiter_result()} | ErrorTypes.parsable_error()
   def use(limiter_instance, increment) when is_integer(increment) and increment > 0 do
     request_time = System.system_time(:millisecond)
@@ -138,6 +135,10 @@ defmodule MscmpSystLimiter.Impl.TokenBucket do
       |> use_limit()
       |> then(&{:ok, &1})
     end
+  end
+
+  def use(_limiter_instance, _increment) do
+    {:error, {:token_bucket_bad_increment, "Increment must be an integer greater than 0."}}
   end
 
   defp use_limit({used_fill, ms_per_token, request_time, limiter_instance}) do
@@ -173,7 +174,7 @@ defmodule MscmpSystLimiter.Impl.TokenBucket do
   # get
   #
   #
-  @spec get(limiter_instance :: token_bucket_limiter_instance()) ::
+  @spec get(limiter_instance :: Types.limiter_instance()) ::
           {:ok, Types.limiter_result()} | ErrorTypes.parsable_error()
   def get(limiter_instance) do
     request_time = System.system_time(:millisecond)
@@ -202,7 +203,7 @@ defmodule MscmpSystLimiter.Impl.TokenBucket do
   # set
   #
   #
-  @spec set(limiter_instance :: token_bucket_limiter_instance(), opts :: Keyword.t()) ::
+  @spec set(limiter_instance :: Types.limiter_instance(), opts :: Keyword.t()) ::
           {:ok, Types.limiter_result()} | ErrorTypes.parsable_error()
   def set(limiter_instance, opts) when is_list(opts) do
     request_time = System.system_time(:millisecond)
@@ -262,7 +263,7 @@ defmodule MscmpSystLimiter.Impl.TokenBucket do
   #
   #
 
-  @spec reset(limiter_instance :: token_bucket_limiter_instance()) ::
+  @spec reset(limiter_instance :: Types.limiter_instance()) ::
           {:ok, Types.limiter_result()} | ErrorTypes.parsable_error()
   def reset(limiter_instance) do
     {_, _, atomics_ref} = limiter_instance

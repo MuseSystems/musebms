@@ -14,31 +14,22 @@ purposes.
 
 The following algorithms have been implemented in this Component:
 
+* **Semaphore**
+
+  This algorithm controls access to a limited number of resources by
+  maintaining a count of available "Permits".  Each request must acquire a
+  Permit before proceeding, and releases it when complete, ensuring that no more
+  than the maximum number of concurrent operations can occur simultaneously.
+
+  The Semaphore algorithm, as implemented here, can support "Fixed Window" style
+  rate limiting as a special case and Semaphore can also work as a counting
+  primitive in "Leaky Bucket" queue processing limiters.
+
 * **Token Bucket**
 
   This algorithm models a bucket which is filled with "usage tokens".  Each
   request consumes a token, and tokens are replenished at a steady rate.  This
   allows for burst traffic while maintaining an overall rate limit.
-
-* **Fixed Window**
-
-  This algorithm divides time into fixed intervals (windows) and tracks the
-  number of requests within each window.  Once the limit for a window is
-  reached, no more requests are allowed until the next window begins.
-
-* **Sliding Window**
-
-  This algorithm tracks requests over a rolling time period rather than fixed
-  intervals.  It provides more accurate rate limiting by continuously
-  evaluating requests against a moving time window, avoiding the burst
-  behavior that can occur at window boundaries in fixed window algorithms.
-
-* **Semaphore**
-
-  This algorithm controls access to a limited number of resources by
-  maintaining a count of available permits.  Each request must acquire a permit
-  before proceeding, and releases it when complete, ensuring that no more than
-  the maximum number of concurrent operations can occur simultaneously.
 
 ## Inspiration for this Component
 
