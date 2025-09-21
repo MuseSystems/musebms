@@ -11,10 +11,16 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule <%= module_name %>Test do
+  @moduledoc false
+
   use ExUnit.Case
+
+  @moduletag :doctest
+  @moduletag :capture_log
+
   doctest <%= module_name %>
 
-  test "greets the world" do
-    assert <%= module_name %>.hello() == :world
+  test "doctest placeholder" do
+    assert true
   end
 end

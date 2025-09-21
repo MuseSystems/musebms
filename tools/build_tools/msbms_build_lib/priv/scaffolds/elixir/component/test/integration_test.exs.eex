@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule IntegrationTest do
+  @moduledoc false
+
   use ExUnit.Case
 
   # Add your integration tests here
@@ -18,6 +20,7 @@ defmodule IntegrationTest do
   # or other components in the application.
 
   @moduletag :integration
+  @moduletag :capture_log
 
   test "placeholder integration test" do
     # Replace this with actual integration tests
