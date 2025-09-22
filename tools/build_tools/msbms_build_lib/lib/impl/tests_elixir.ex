@@ -80,7 +80,7 @@ defmodule MsbmsBuildLib.Impl.TestsElixir do
   defp maybe_run_unit_tests(%{do_test_unit: true}, component_name, component_path) do
     Logger.info("::#{component_name}::running unit tests")
 
-    {output, exit_code} = System.cmd("mix", ["test"], cd: component_path)
+    {output, exit_code} = System.cmd("mix", ["test", "--only", "unit"], cd: component_path)
     Logger.debug(output)
 
     if exit_code == 0 do
