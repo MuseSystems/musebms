@@ -17,6 +17,10 @@ defmodule MscmpSystHierarchy do
              |> String.split("<!-- MDOC !-->")
              |> Enum.fetch!(1)
 
+  use MscmpSystTelemetry,
+    component: :mscmp_syst_hierarchy,
+    categories: [:hierarchy, :enumerations]
+
   alias MscmpSystError.Types.Context, as: ErrorContext
   alias MscmpSystHierarchy.Impl
   alias MscmpSystHierarchy.Types
@@ -79,7 +83,14 @@ defmodule MscmpSystHierarchy do
       nil
   """
   @spec get_hierarchy_type_by_name(Types.hierarchy_type_name()) :: Msdata.SystEnumItems.t() | nil
-  defdelegate get_hierarchy_type_by_name(type_name), to: Impl.Hierarchy
+  def get_hierarchy_type_by_name(type_name) do
+    api_telemetry :enumerations, %{
+      operation: :get_hierarchy_type_by_name,
+      type_name: type_name
+    } do
+      Impl.Hierarchy.get_hierarchy_type_by_name(type_name)
+    end
+  end
 
   ##############################################################################
   #
@@ -195,23 +206,28 @@ defmodule MscmpSystHierarchy do
   @spec list_hierarchy_types(Keyword.t()) ::
           {:ok, [Msdata.SystEnumItems.t()]} | {:error, Mserror.HierarchyError.t()}
   def list_hierarchy_types(opts \\ []) do
-    opts = NimbleOptions.validate!(opts, @list_hierarchy_types_opts)
+    api_telemetry :enumerations, %{
+      operation: :list_hierarchy_types,
+      sorted: opts[:sorted]
+    } do
+      opts = NimbleOptions.validate!(opts, @list_hierarchy_types_opts)
 
-    case Impl.Hierarchy.list_hierarchy_types(opts) do
-      {:ok, list} ->
-        {:ok, list}
+      case Impl.Hierarchy.list_hierarchy_types(opts) do
+        {:ok, list} ->
+          {:ok, list}
 
-      {:error, _} = error ->
-        {:error,
-         Mserror.HierarchyError.new(
-           :enumerations_data,
-           "Failure retrieving Hierarchy Types List.",
-           cause: error,
-           context: %ErrorContext{
-             origin: {__MODULE__, :list_hierarchy_types, 1},
-             parameters: %{opts: opts}
-           }
-         )}
+        {:error, _} = error ->
+          {:error,
+           Mserror.HierarchyError.new(
+             :enumerations_data,
+             "Failure retrieving Hierarchy Types List.",
+             cause: error,
+             context: %ErrorContext{
+               origin: {__MODULE__, :list_hierarchy_types, 1},
+               parameters: %{opts: opts}
+             }
+           )}
+      end
     end
   end
 
@@ -251,7 +267,14 @@ defmodule MscmpSystHierarchy do
   """
   @spec get_hierarchy_state_by_name(Types.hierarchy_state_name()) ::
           Msdata.SystEnumItems.t() | nil
-  defdelegate get_hierarchy_state_by_name(state_name), to: Impl.Hierarchy
+  def get_hierarchy_state_by_name(state_name) do
+    api_telemetry :enumerations, %{
+      operation: :get_hierarchy_state_by_name,
+      state_name: state_name
+    } do
+      Impl.Hierarchy.get_hierarchy_state_by_name(state_name)
+    end
+  end
 
   ##############################################################################
   #
@@ -445,21 +468,26 @@ defmodule MscmpSystHierarchy do
   @spec get_hierarchy_id_by_name(Types.hierarchy_name()) ::
           {:ok, Types.hierarchy_id()} | {:error, Mserror.HierarchyError.t()}
   def get_hierarchy_id_by_name(hierarchy_name) do
-    case Impl.Hierarchy.get_hierarchy_id_by_name(hierarchy_name) do
-      {:ok, id} ->
-        {:ok, id}
+    api_telemetry :hierarchy, %{
+      operation: :get_hierarchy_id_by_name,
+      hierarchy_name: hierarchy_name
+    } do
+      case Impl.Hierarchy.get_hierarchy_id_by_name(hierarchy_name) do
+        {:ok, id} ->
+          {:ok, id}
 
-      {:error, _} = error ->
-        {:error,
-         Mserror.HierarchyError.new(
-           :hierarchy_data,
-           "Failure retrieving Hierarchy ID by internal name.",
-           cause: error,
-           context: %ErrorContext{
-             origin: {__MODULE__, :get_hierarchy_id_by_name, 1},
-             parameters: %{hierarchy_name: hierarchy_name}
-           }
-         )}
+        {:error, _} = error ->
+          {:error,
+           Mserror.HierarchyError.new(
+             :hierarchy_data,
+             "Failure retrieving Hierarchy ID by internal name.",
+             cause: error,
+             context: %ErrorContext{
+               origin: {__MODULE__, :get_hierarchy_id_by_name, 1},
+               parameters: %{hierarchy_name: hierarchy_name}
+             }
+           )}
+      end
     end
   end
 end
