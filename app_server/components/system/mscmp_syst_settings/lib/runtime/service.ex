@@ -16,7 +16,6 @@ defmodule MscmpSystSettings.Runtime.Service do
   use GenServer
 
   alias MscmpSystSettings.Impl
-  alias MscmpSystSettings.Types
 
   ######
   #
@@ -31,37 +30,21 @@ defmodule MscmpSystSettings.Runtime.Service do
 
   ##############################################################################
   #
-  # child_spec
-  #
-  #
-
-  @spec child_spec(Keyword.t()) :: Supervisor.child_spec()
-  def child_spec(opts) do
-    genserver_opts = Keyword.take(opts, [:debug, :timeout, :hibernate_after])
-
-    %{
-      id: __MODULE__,
-      start:
-        {MscmpSystSettings, :start_link,
-         [opts[:service_name], opts[:datastore_context_name], genserver_opts]}
-    }
-  end
-
-  ##############################################################################
-  #
   # start_link
   #
   #
 
-  @spec start_link(Types.service_name(), MscmpSystDb.Types.context_service_name(), Keyword.t()) ::
-          {:ok, pid()} | {:error, term()}
-  def start_link(service_name, datastore_context_name, opts) do
-    opts = Keyword.put(opts, :name, service_name)
+  @spec start_link(Keyword.t()) :: {:ok, pid()} | :ignore | {:error, term()}
+  def start_link(opts) do
+    genserver_opts =
+      [name: opts[:service_name]] ++
+        Keyword.take(opts, [:debug, :timeout, :hibernate_after])
 
-    init_opts = [datastore_context_name: datastore_context_name]
+    init_opts = Keyword.take(opts, [:datastore_context_name])
 
-    case GenServer.start_link(__MODULE__, init_opts, opts) do
+    case GenServer.start_link(__MODULE__, init_opts, genserver_opts) do
       {:ok, pid} -> {:ok, pid}
+      :ignore -> :ignore
       abort_reason -> {:error, {:start_link_error, abort_reason}}
     end
   end
@@ -137,6 +120,15 @@ defmodule MscmpSystSettings.Runtime.Service do
   @impl true
   def handle_call(:get_settings_table, _from, state),
     do: {:reply, state.settings_table_tid, state}
+
+  @impl true
+  def handle_call(:get_runtime_config, _from, state) do
+    runtime_config = %{
+      settings_table: state.settings_table_tid
+    }
+
+    {:reply, runtime_config, state}
+  end
 
   ##############################################################################
   #

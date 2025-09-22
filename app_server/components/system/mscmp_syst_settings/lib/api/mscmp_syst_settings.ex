@@ -17,10 +17,12 @@ defmodule MscmpSystSettings do
              |> String.split("<!-- MDOC !-->")
              |> Enum.fetch!(1)
 
+  use MscmpSystService
+
   alias MscmpSystError.Types.Context, as: ErrorContext
+  alias MscmpSystService.Types, as: ServiceTypes
   alias MscmpSystSettings.Impl
   alias MscmpSystSettings.Runtime
-  alias MscmpSystSettings.Types
 
   ##############################################################################
   #
@@ -29,25 +31,6 @@ defmodule MscmpSystSettings do
   #
 
   option_defs = [
-    debug: [
-      type: :boolean,
-      doc: """
-      If true, the GenServer backing the Settings Service will be started in
-      debug mode.
-      """
-    ],
-    timeout: [
-      type: :timeout,
-      default: :infinity,
-      doc: "Timeout value for the start_link call."
-    ],
-    hibernate_after: [
-      type: :timeout,
-      doc: """
-      If present, the GenServer process awaits any message for the specified
-      time before hibernating.  The timeout value is expressed in Milliseconds.
-      """
-    ],
     datastore_context_name: [
       type:
         {:or,
@@ -56,16 +39,6 @@ defmodule MscmpSystSettings do
       doc: """
       Specifies the name of the Datastore Context to be used by the Settings
       Service.
-      """
-    ],
-    service_name: [
-      type:
-        {:or,
-         [nil, :atom, {:tuple, [{:in, [:via]}, :atom, :any]}, {:tuple, [{:in, [:global]}, :any]}]},
-      type_doc: "`t:GenServer.name/0 or `nil`",
-      doc: """
-      The name to use for the GenServer backing this specific Settings Service
-      instance.
       """
     ]
   ]
@@ -78,12 +51,8 @@ defmodule MscmpSystSettings do
 
   @child_spec_opts NimbleOptions.new!(
                      Keyword.take(option_defs, [
-                       :service_name,
-                       :datastore_context_name,
-                       :debug,
-                       :timeout,
-                       :hibernate_after
-                     ])
+                       :datastore_context_name
+                     ]) ++ @service_option_defs
                    )
 
   @doc section: :service_management
@@ -105,18 +74,19 @@ defmodule MscmpSystSettings do
       ...>   service_name: MyApp.SettingsService,
       ...>   datastore_context_name: MyApp.DatastoreContext)
       %{
-        id: MscmpSystSettings.Runtime.Service,
+        id: MscmpSystSettings,
         start:
           {MscmpSystSettings,
            :start_link,
-           [MyApp.SettingsService, MyApp.DatastoreContext, [timeout: :infinity]]},
+           [[timeout: :infinity, service_name: MyApp.SettingsService, datastore_context_name: MyApp.DatastoreContext]]},
       }
 
   """
+  @impl true
   @spec child_spec(Keyword.t()) :: Supervisor.child_spec()
   def child_spec(opts) do
-    opts = NimbleOptions.validate!(opts, @child_spec_opts)
-    Runtime.Service.child_spec(opts)
+    validated_opts = NimbleOptions.validate!(opts, @child_spec_opts)
+    %{id: __MODULE__, start: {MscmpSystSettings, :start_link, [validated_opts]}}
   end
 
   ##############################################################################
@@ -126,7 +96,9 @@ defmodule MscmpSystSettings do
   #
 
   @start_link_opts NimbleOptions.new!(
-                     Keyword.take(option_defs, [:debug, :timeout, :hibernate_after])
+                     Keyword.take(option_defs, [
+                       :datastore_context_name
+                     ]) ++ @service_option_defs
                    )
 
   @doc section: :service_management
@@ -140,11 +112,6 @@ defmodule MscmpSystSettings do
 
   ## Parameters
 
-    * `service_name` - The name of the Settings Service.
-
-    * `datastore_context_name` - The name of the Datastore Context to be used by
-      the Settings Service.
-
     * `opts` - Options for the Settings Service. See the Options section below
       for more information.
 
@@ -152,30 +119,27 @@ defmodule MscmpSystSettings do
 
   #{NimbleOptions.docs(@start_link_opts)}
   """
-  @spec start_link(Types.service_name(), MscmpSystDb.Types.context_service_name()) ::
-          {:ok, pid()} | {:error, Mserror.SettingsError.t()}
-  @spec start_link(Types.service_name(), MscmpSystDb.Types.context_service_name(), Keyword.t()) ::
-          {:ok, pid()} | {:error, Mserror.SettingsError.t()}
-  def start_link(service_name, datastore_context_name, opts \\ []) do
+  @impl true
+  @spec start_link(Keyword.t()) :: {:ok, pid()} | :ignore | {:error, Mserror.SettingsError.t()}
+  def start_link(opts) do
     validated_opts = NimbleOptions.validate!(opts, @start_link_opts)
 
-    case Runtime.Service.start_link(service_name, datastore_context_name, validated_opts) do
-      {:ok, _} = result ->
-        result
+    case Runtime.Service.start_link(validated_opts) do
+      {:ok, pid} ->
+        {:ok, pid}
 
-      {:error, _} = error ->
+      {:error, reason} ->
         {:error,
-         Mserror.SettingsError.new(:service_management, "Failure starting Settings service.",
-           cause: error,
+         Mserror.SettingsError.new(:service_management, "Failed to start Settings service.",
+           cause: reason,
            context: %ErrorContext{
-             origin: {__MODULE__, :start_link, 3},
-             parameters: %{
-               service_name: service_name,
-               datastore_context_name: datastore_context_name,
-               opts: opts
-             }
+             origin: {__MODULE__, :start_link, 1},
+             parameters: %{opts: validated_opts}
            }
          )}
+
+      :ignore ->
+        :ignore
     end
   end
 
@@ -216,13 +180,18 @@ defmodule MscmpSystSettings do
 
   ## Parameters
 
-    * `settings_service_name` - the canonical name of the specific Settings
+    * `service_name` - the canonical name of the specific Settings
     Service to access.  When this function is called with a non-nil argument,
     calls to Settings related functions will make use of the Settings Service
     specified here.  Setting this value to `nil` will clear the currently
     active Settings Service for the process.  Any calls to Settings related
     functions will fail until a new Settings Service is designated for the
     process using this function with a non-nil argument.
+
+  ## Returns
+
+  Returns the name of the previously set Settings Service name or `nil` if
+  no Settings Service name had been previously set.
 
   ## Examples
 
@@ -238,8 +207,9 @@ defmodule MscmpSystSettings do
       ...> MscmpSystSettings.get_service()
       nil
   """
-  @spec put_service(GenServer.name() | nil) :: GenServer.name() | nil
-  defdelegate put_service(settings_service_name), to: Runtime.ProcessUtils
+  @impl true
+  @spec put_service(ServiceTypes.service_name()) :: ServiceTypes.service_name()
+  defdelegate put_service(service_name), to: Runtime.ProcessUtils
 
   ##############################################################################
   #
@@ -249,12 +219,15 @@ defmodule MscmpSystSettings do
 
   @doc section: :service_management
   @doc """
-  Retrieve the current specific Settings Service name in effect for the process.
+  Retrieves the name of the currently set Settings Service instance.
 
-  This function returns the name of the Settings Service that has been using the
-  `put_service/1` function to override the default Settings Service
-  associated with the Instance Name. If no specific Settings Service name has
-  been set, this function will return `nil`.
+  See `put_service/1` for more information about setting an active Settings
+  Service name.
+
+  ## Returns
+
+  Returns the name of the currently set Settings Service name or `nil` if
+  no Settings Service name has been set.
 
   ## Examples
 
@@ -271,8 +244,45 @@ defmodule MscmpSystSettings do
       ...> MscmpSystSettings.get_service()
       nil
   """
-  @spec get_service() :: atom() | nil
+  @impl true
+  @spec get_service() :: ServiceTypes.service_name()
   defdelegate get_service(), to: Runtime.ProcessUtils
+
+  ##############################################################################
+  #
+  # get_runtime_config
+  #
+  #
+
+  @doc section: :service_management
+  @doc """
+  Retrieves the runtime configuration of a previously started Settings Service.
+
+  Some services need a mechanism to return features such as `:ets` table names
+  which are set at runtime.  This function provides the mechanism by which such
+  runtime configuration can be returned.
+
+  ## Returns
+
+  Returns a map containing the runtime configuration of the currently active
+  Settings Service, or `nil` if no service is currently set.
+
+  ## Examples
+
+    Getting runtime configuration from the current service:
+
+      iex> old_service = MscmpSystSettings.put_service(TestSupport.get_settings_service_name())
+      iex> config = MscmpSystSettings.get_runtime_config()
+      iex> %{settings_table: table_id} = config
+      iex> is_reference(table_id)
+      true
+      iex> MscmpSystSettings.put_service(old_service)
+      iex> :ok
+      :ok
+  """
+  @impl true
+  @spec get_runtime_config() :: map() | nil
+  defdelegate get_runtime_config(), to: Runtime.ProcessUtils
 
   ##############################################################################
   #

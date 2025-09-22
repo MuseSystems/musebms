@@ -13,6 +13,8 @@
 defmodule MscmpSystSettings.Runtime.ProcessUtils do
   @moduledoc false
 
+  alias MscmpSystService.Types, as: ServiceTypes
+
   ##############################################################################
   #
   # get_settings_table
@@ -24,19 +26,31 @@ defmodule MscmpSystSettings.Runtime.ProcessUtils do
 
   ##############################################################################
   #
+  # get_runtime_config
+  #
+  #
+
+  @spec get_runtime_config() :: map() | nil
+  def get_runtime_config, do: Process.get(:"MscmpSystSettings.runtime_config")
+
+  ##############################################################################
+  #
   # put_service
   #
   #
 
-  @spec put_service(GenServer.name() | nil) :: GenServer.name() | nil
+  @spec put_service(ServiceTypes.service_name()) :: ServiceTypes.service_name()
   def put_service(nil) do
     _ = Process.put(:"MscmpSystSettings.table_name", nil)
+    _ = Process.put(:"MscmpSystSettings.runtime_config", nil)
     Process.put(:"MscmpSystSettings.service_name", nil)
   end
 
   def put_service(settings_service_name) do
     settings_table = GenServer.call(settings_service_name, :get_settings_table)
+    runtime_config = GenServer.call(settings_service_name, :get_runtime_config)
     Process.put(:"MscmpSystSettings.table_name", settings_table)
+    Process.put(:"MscmpSystSettings.runtime_config", runtime_config)
     Process.put(:"MscmpSystSettings.service_name", settings_service_name)
   end
 
@@ -46,6 +60,6 @@ defmodule MscmpSystSettings.Runtime.ProcessUtils do
   #
   #
 
-  @spec get_service() :: GenServer.name() | nil
+  @spec get_service() :: ServiceTypes.service_name()
   def get_service, do: Process.get(:"MscmpSystSettings.service_name")
 end
