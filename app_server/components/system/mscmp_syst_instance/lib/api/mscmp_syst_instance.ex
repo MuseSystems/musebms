@@ -17,6 +17,10 @@ defmodule MscmpSystInstance do
              |> String.split("<!-- MDOC !-->")
              |> Enum.fetch!(1)
 
+  use MscmpSystTelemetry,
+    component: :mscmp_syst_instance,
+    categories: [:applications, :instance_types, :owners, :instances]
+
   alias MscmpSystError.Types.Context, as: ErrorContext
   alias MscmpSystInstance.Impl
   alias MscmpSystInstance.Types
@@ -149,19 +153,24 @@ defmodule MscmpSystInstance do
   @spec create_application(Types.application_params()) ::
           {:ok, Msdata.SystApplications.t()} | {:error, Mserror.InstanceError.t()}
   def create_application(application_params) do
-    case Impl.Application.create_application(application_params) do
-      {:ok, application} ->
-        {:ok, application}
+    api_telemetry :applications, %{
+      operation: :create_application,
+      application_name: application_params[:internal_name]
+    } do
+      case Impl.Application.create_application(application_params) do
+        {:ok, application} ->
+          {:ok, application}
 
-      {:error, _} = error ->
-        {:error,
-         Mserror.InstanceError.new(:application_data, "Error creating application",
-           cause: error,
-           context: %ErrorContext{
-             origin: {__MODULE__, :create_application, 1},
-             parameters: %{application_params: application_params}
-           }
-         )}
+        {:error, _} = error ->
+          {:error,
+           Mserror.InstanceError.new(:application_data, "Error creating application",
+             cause: error,
+             context: %ErrorContext{
+               origin: {__MODULE__, :create_application, 1},
+               parameters: %{application_params: application_params}
+             }
+           )}
+      end
     end
   end
 
@@ -220,19 +229,24 @@ defmodule MscmpSystInstance do
           Types.application_params()
         ) :: {:ok, Msdata.SystApplications.t()} | {:error, Mserror.InstanceError.t()}
   def update_application(application, application_params) do
-    case Impl.Application.update_application(application, application_params) do
-      {:ok, application} ->
-        {:ok, application}
+    api_telemetry :applications, %{
+      operation: :update_application,
+      application_name: application_params[:internal_name]
+    } do
+      case Impl.Application.update_application(application, application_params) do
+        {:ok, application} ->
+          {:ok, application}
 
-      {:error, _} = error ->
-        {:error,
-         Mserror.InstanceError.new(:application_data, "Error updating application",
-           cause: error,
-           context: %ErrorContext{
-             origin: {__MODULE__, :update_application, 2},
-             parameters: %{application: application, application_params: application_params}
-           }
-         )}
+        {:error, _} = error ->
+          {:error,
+           Mserror.InstanceError.new(:application_data, "Error updating application",
+             cause: error,
+             context: %ErrorContext{
+               origin: {__MODULE__, :update_application, 2},
+               parameters: %{application: application, application_params: application_params}
+             }
+           )}
+      end
     end
   end
 
@@ -691,19 +705,24 @@ defmodule MscmpSystInstance do
   @spec create_instance_type(Types.instance_type_params()) ::
           {:ok, Msdata.SystEnumItems.t()} | {:error, Mserror.InstanceError.t()}
   def create_instance_type(instance_type_params) do
-    case Impl.InstanceType.create_instance_type(instance_type_params) do
-      {:ok, instance_type} ->
-        {:ok, instance_type}
+    api_telemetry :instance_types, %{
+      operation: :create_instance_type,
+      instance_type_name: instance_type_params[:internal_name]
+    } do
+      case Impl.InstanceType.create_instance_type(instance_type_params) do
+        {:ok, instance_type} ->
+          {:ok, instance_type}
 
-      {:error, _} = error ->
-        {:error,
-         Mserror.InstanceError.new(:instance_type_data, "Error creating instance type",
-           cause: error,
-           context: %ErrorContext{
-             origin: {__MODULE__, :create_instance_type, 1},
-             parameters: %{instance_type_params: instance_type_params}
-           }
-         )}
+        {:error, _} = error ->
+          {:error,
+           Mserror.InstanceError.new(:instance_type_data, "Error creating instance type",
+             cause: error,
+             context: %ErrorContext{
+               origin: {__MODULE__, :create_instance_type, 1},
+               parameters: %{instance_type_params: instance_type_params}
+             }
+           )}
+      end
     end
   end
 
@@ -1124,19 +1143,24 @@ defmodule MscmpSystInstance do
   @spec create_owner(Types.owner_params()) ::
           {:ok, Msdata.SystOwners.t()} | {:error, Mserror.InstanceError.t()}
   def create_owner(owner_params) do
-    case Impl.Owner.create_owner(owner_params) do
-      {:ok, owner} ->
-        {:ok, owner}
+    api_telemetry :owners, %{
+      operation: :create_owner,
+      owner_name: owner_params[:internal_name]
+    } do
+      case Impl.Owner.create_owner(owner_params) do
+        {:ok, owner} ->
+          {:ok, owner}
 
-      {:error, _} = error ->
-        {:error,
-         Mserror.InstanceError.new(:owner_data, "Error creating owner",
-           cause: error,
-           context: %ErrorContext{
-             origin: {__MODULE__, :create_owner, 1},
-             parameters: %{owner_params: owner_params}
-           }
-         )}
+        {:error, _} = error ->
+          {:error,
+           Mserror.InstanceError.new(:owner_data, "Error creating owner",
+             cause: error,
+             context: %ErrorContext{
+               origin: {__MODULE__, :create_owner, 1},
+               parameters: %{owner_params: owner_params}
+             }
+           )}
+      end
     end
   end
 
@@ -1559,19 +1583,25 @@ defmodule MscmpSystInstance do
   @spec create_instance(Types.instance_params()) ::
           {:ok, Msdata.SystInstances.t()} | {:error, Mserror.InstanceError.t()}
   def create_instance(instance_params) do
-    case Impl.Instance.create_instance(instance_params) do
-      {:ok, instance} ->
-        {:ok, instance}
+    api_telemetry :instances, %{
+      operation: :create_instance,
+      instance_name: instance_params[:internal_name],
+      instance_type: instance_params[:instance_type_name]
+    } do
+      case Impl.Instance.create_instance(instance_params) do
+        {:ok, instance} ->
+          {:ok, instance}
 
-      {:error, _} = error ->
-        {:error,
-         Mserror.InstanceError.new(:instance_data, "Error creating instance",
-           cause: error,
-           context: %ErrorContext{
-             origin: {__MODULE__, :create_instance, 1},
-             parameters: %{instance_params: instance_params}
-           }
-         )}
+        {:error, _} = error ->
+          {:error,
+           Mserror.InstanceError.new(:instance_data, "Error creating instance",
+             cause: error,
+             context: %ErrorContext{
+               origin: {__MODULE__, :create_instance, 1},
+               parameters: %{instance_params: instance_params}
+             }
+           )}
+      end
     end
   end
 
@@ -1668,25 +1698,30 @@ defmodule MscmpSystInstance do
   @spec initialize_instance(Types.instance_id(), map(), Keyword.t()) ::
           {:ok, Msdata.SystInstances.t()} | {:error, Mserror.InstanceError.t()}
   def initialize_instance(instance_id, startup_options, opts \\ []) do
-    validated_opts = NimbleOptions.validate!(opts, @initialize_instance_opts)
+    api_telemetry :instances, %{
+      operation: :initialize_instance,
+      instance_id: instance_id
+    } do
+      validated_opts = NimbleOptions.validate!(opts, @initialize_instance_opts)
 
-    case Impl.Instance.initialize_instance(instance_id, startup_options, validated_opts) do
-      {:ok, instance} ->
-        {:ok, instance}
+      case Impl.Instance.initialize_instance(instance_id, startup_options, validated_opts) do
+        {:ok, instance} ->
+          {:ok, instance}
 
-      {:error, _} = error ->
-        {:error,
-         Mserror.InstanceError.new(:instance_data, "Error initializing instance",
-           cause: error,
-           context: %ErrorContext{
-             origin: {__MODULE__, :initialize_instance, 3},
-             parameters: %{
-               instance_id: instance_id,
-               startup_options: startup_options,
-               opts: validated_opts
+        {:error, _} = error ->
+          {:error,
+           Mserror.InstanceError.new(:instance_data, "Error initializing instance",
+             cause: error,
+             context: %ErrorContext{
+               origin: {__MODULE__, :initialize_instance, 3},
+               parameters: %{
+                 instance_id: instance_id,
+                 startup_options: startup_options,
+                 opts: validated_opts
+               }
              }
-           }
-         )}
+           )}
+      end
     end
   end
 
@@ -1861,19 +1896,24 @@ defmodule MscmpSystInstance do
   @spec purge_instance(Types.instance_id() | Msdata.SystInstances.t(), map()) ::
           :ok | {:error, Mserror.InstanceError.t()}
   def purge_instance(instance, startup_options) do
-    case Impl.Instance.purge_instance(instance, startup_options) do
-      :ok ->
-        :ok
+    api_telemetry :instances, %{
+      operation: :purge_instance,
+      instance: instance
+    } do
+      case Impl.Instance.purge_instance(instance, startup_options) do
+        :ok ->
+          :ok
 
-      {:error, _} = error ->
-        {:error,
-         Mserror.InstanceError.new(:instance_data, "Error purging instance",
-           cause: error,
-           context: %ErrorContext{
-             origin: {__MODULE__, :purge_instance, 2},
-             parameters: %{instance: instance, startup_options: startup_options}
-           }
-         )}
+        {:error, _} = error ->
+          {:error,
+           Mserror.InstanceError.new(:instance_data, "Error purging instance",
+             cause: error,
+             context: %ErrorContext{
+               origin: {__MODULE__, :purge_instance, 2},
+               parameters: %{instance: instance, startup_options: startup_options}
+             }
+           )}
+      end
     end
   end
 end
