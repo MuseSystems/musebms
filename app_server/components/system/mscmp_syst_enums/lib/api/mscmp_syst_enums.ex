@@ -33,7 +33,7 @@ defmodule MscmpSystEnums do
     debug: [
       type: :boolean,
       doc: """
-      If true, the GenServer backing the Settings Service will be started in
+      If true, the GenServer backing the Enumerations Service will be started in
       debug mode.
       """
     ],
