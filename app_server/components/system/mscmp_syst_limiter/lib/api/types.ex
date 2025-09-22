@@ -54,7 +54,7 @@ defmodule MscmpSystLimiter.Types do
   structure that defines the limits, intervals, and other parameters specific
   to that algorithm's implementation.
 
-  > #### Treat constituent configs as opaque {: .important}
+  > #### Treat constituent configs as opaque {: .warning}
   >
   > While the constituent configuration types are public due to Elixir module
   > boundary limitations, they are not intended for pattern matching. Use the
@@ -114,7 +114,7 @@ defmodule MscmpSystLimiter.Types do
   @typedoc """
   Configuration for the semaphore algorithm.
 
-  > #### Treat as opaque {: .important}
+  > #### Treat as opaque {: .warning}
   >
   > While this type is public due to Elixir module boundary limitations, the
   > concrete representation is an implementation detail and may change without
@@ -152,7 +152,7 @@ defmodule MscmpSystLimiter.Types do
   @typedoc """
   Configuration for the token bucket algorithm.
 
-  > #### Treat as opaque {: .important}
+  > #### Treat as opaque {: .warning}
   >
   > While this type is public due to Elixir module boundary limitations, the
   > concrete representation is an implementation detail and may change without
