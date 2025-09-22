@@ -1,5 +1,5 @@
-# Source File: doctests_test.exs
-# Location:    musebms/app_server/components/system/mscmp_syst_options/test/doctests_test.exs
+# Source File: options_test_case.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_options/test/support/options_test_case.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,13 +10,15 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule DoctestsTest do
+defmodule OptionsTestCase do
   @moduledoc false
 
-  use OptionsTestCase, async: true
+  use ExUnit.CaseTemplate
 
-  @moduletag :doctest
-  @moduletag :capture_log
-
-  doctest MscmpSystOptions
+  setup do
+    [
+      # Default options file used across tests
+      default_options_path: "testing_options.toml"
+    ]
+  end
 end
