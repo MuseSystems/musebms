@@ -56,7 +56,7 @@ defmodule MscmpSystInstance.Impl.Msdata.SystInstances.Validators do
       :display_name,
       :application_id,
       :instance_type_id,
-      :instance_state_id,
+      :instance_lifecycle_state_id,
       :owner_id,
       :owning_instance_id,
       :dbserver_name,
@@ -96,7 +96,7 @@ defmodule MscmpSystInstance.Impl.Msdata.SystInstances.Validators do
       :internal_name,
       :display_name,
       :instance_type_id,
-      :instance_state_id,
+      :instance_lifecycle_state_id,
       :dbserver_name,
       :instance_code,
       :instance_options
@@ -113,13 +113,15 @@ defmodule MscmpSystInstance.Impl.Msdata.SystInstances.Validators do
     |> validate_required([
       :application_id,
       :instance_type_id,
-      :instance_state_id
+      :instance_lifecycle_state_id
     ])
     |> unique_constraint(:internal_name, name: :syst_instances_internal_name_udx)
     |> unique_constraint(:display_name, name: :syst_instances_display_name_udx)
     |> foreign_key_constraint(:application_id, name: :syst_instances_applications_fk)
     |> foreign_key_constraint(:instance_type_id, name: :syst_instances_enum_instance_type_fk)
-    |> foreign_key_constraint(:instance_state_id, name: :syst_instances_enum_instance_state_fk)
+    |> foreign_key_constraint(:instance_lifecycle_state_id,
+      name: :syst_instances_enum_instance_lifecycle_state_fk
+    )
     |> foreign_key_constraint(:owner_id, name: :syst_instances_owners_fk)
     |> foreign_key_constraint(:owning_instance_id, name: :syst_instances_owning_instance_fk)
     |> check_constraint(:owning_instance_id, name: :syst_instances_self_ownership_chk)
@@ -138,7 +140,7 @@ defmodule MscmpSystInstance.Impl.Msdata.SystInstances.Validators do
     instance_params
     |> resolve_application_id()
     |> resolve_instance_type_id(operation)
-    |> resolve_instance_state_id(operation)
+    |> resolve_instance_lifecycle_state_id(operation)
     |> resolve_owner_id()
     |> resolve_owning_instance_id()
   end
@@ -176,34 +178,36 @@ defmodule MscmpSystInstance.Impl.Msdata.SystInstances.Validators do
 
   defp resolve_instance_type_id(instance_params, _operation), do: instance_params
 
-  defp resolve_instance_state_id(
-         %{instance_state_name: instance_state_name} = instance_params,
+  defp resolve_instance_lifecycle_state_id(
+         %{instance_lifecycle_state_name: instance_lifecycle_state_name} = instance_params,
          _operation
        )
-       when is_binary(instance_state_name) do
-    instance_state = MscmpSystEnums.get_item_by_name("instance_states", instance_state_name)
-    Map.put(instance_params, :instance_state_id, instance_state.id)
+       when is_binary(instance_lifecycle_state_name) do
+    instance_lifecycle_state =
+      MscmpSystEnums.get_item_by_name("instance_lifecycle_states", instance_lifecycle_state_name)
+
+    Map.put(instance_params, :instance_lifecycle_state_id, instance_lifecycle_state.id)
   end
 
-  defp resolve_instance_state_id(
-         %{instance_state_id: instance_state_id} = instance_params,
+  defp resolve_instance_lifecycle_state_id(
+         %{instance_lifecycle_state_id: instance_lifecycle_state_id} = instance_params,
          _operation
        )
-       when is_binary(instance_state_id) do
+       when is_binary(instance_lifecycle_state_id) do
     instance_params
   end
 
-  defp resolve_instance_state_id(instance_params, :insert) do
-    default_instance_state =
+  defp resolve_instance_lifecycle_state_id(instance_params, :insert) do
+    default_instance_lifecycle_state =
       MscmpSystEnums.get_default_item(
-        "instance_states",
-        functional_type_name: "instance_states_uninitialized"
+        "instance_lifecycle_states",
+        functional_type_name: "instance_lifecycle_states_uninitialized"
       )
 
-    Map.put(instance_params, :instance_state_id, default_instance_state.id)
+    Map.put(instance_params, :instance_lifecycle_state_id, default_instance_lifecycle_state.id)
   end
 
-  defp resolve_instance_state_id(instance_params, _operation), do: instance_params
+  defp resolve_instance_lifecycle_state_id(instance_params, _operation), do: instance_params
 
   defp resolve_owner_id(%{owner_name: owner_name} = instance_params)
        when is_binary(owner_name) do

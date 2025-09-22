@@ -17,7 +17,7 @@ SELECT
   , display_name
   , application_id
   , instance_type_id
-  , instance_state_id
+  , instance_lifecycle_state_id
   , owner_id
   , owning_instance_id
   , dbserver_name
@@ -55,14 +55,14 @@ DECLARE
     v_view_config ms_syst_priv.comments_config_apiview;
 
     -- View Columns
-    v_application_id     ms_syst_priv.comments_config_apiview_column;
-    v_instance_type_id   ms_syst_priv.comments_config_apiview_column;
-    v_instance_state_id  ms_syst_priv.comments_config_apiview_column;
-    v_owner_id           ms_syst_priv.comments_config_apiview_column;
-    v_owning_instance_id ms_syst_priv.comments_config_apiview_column;
-    v_dbserver_name      ms_syst_priv.comments_config_apiview_column;
-    v_instance_code      ms_syst_priv.comments_config_apiview_column;
-    v_instance_options   ms_syst_priv.comments_config_apiview_column;
+    v_application_id               ms_syst_priv.comments_config_apiview_column;
+    v_instance_type_id             ms_syst_priv.comments_config_apiview_column;
+    v_instance_lifecycle_state_id  ms_syst_priv.comments_config_apiview_column;
+    v_owner_id                     ms_syst_priv.comments_config_apiview_column;
+    v_owning_instance_id           ms_syst_priv.comments_config_apiview_column;
+    v_dbserver_name                ms_syst_priv.comments_config_apiview_column;
+    v_instance_code                ms_syst_priv.comments_config_apiview_column;
+    v_instance_options             ms_syst_priv.comments_config_apiview_column;
 
 BEGIN
 
@@ -87,8 +87,8 @@ BEGIN
     v_instance_type_id.required    := TRUE;
     v_instance_type_id.user_update := FALSE;
 
-    v_instance_state_id.column_name := 'instance_state_id';
-    v_instance_state_id.required    := TRUE;
+    v_instance_lifecycle_state_id.column_name := 'instance_lifecycle_state_id';
+    v_instance_lifecycle_state_id.required    := TRUE;
 
     v_owner_id.column_name := 'owner_id';
     v_owner_id.required    := TRUE;
@@ -110,7 +110,7 @@ BEGIN
         ARRAY [
               v_application_id
             , v_instance_type_id
-            , v_instance_state_id
+            , v_instance_lifecycle_state_id
             , v_owner_id
             , v_owning_instance_id
             , v_dbserver_name

@@ -34,10 +34,10 @@ CREATE TABLE ms_syst_data.syst_instances
         NOT NULL
         CONSTRAINT syst_instances_enum_instance_type_fk
             REFERENCES ms_syst_data.syst_enum_items (id)
-    ,instance_state_id
+    ,instance_lifecycle_state_id
         uuid
         NOT NULL
-        CONSTRAINT syst_instances_enum_instance_state_fk
+        CONSTRAINT syst_instances_enum_instance_lifecycle_state_fk
             REFERENCES ms_syst_data.syst_enum_items (id)
     ,owner_id
         uuid
@@ -101,17 +101,17 @@ CREATE CONSTRAINT TRIGGER a50_trig_a_u_instance_types_enum_item_check
             ms_syst_priv.trig_a_iu_enum_item_check(
                 'instance_types', 'instance_type_id');
 
-CREATE CONSTRAINT TRIGGER a50_trig_a_i_instance_states_enum_item_check
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_instance_lifecycle_states_enum_item_check
     AFTER INSERT ON ms_syst_data.syst_instances
     FOR EACH ROW EXECUTE PROCEDURE
-        ms_syst_priv.trig_a_iu_enum_item_check('instance_states', 'instance_state_id');
+        ms_syst_priv.trig_a_iu_enum_item_check('instance_lifecycle_states', 'instance_lifecycle_state_id');
 
-CREATE CONSTRAINT TRIGGER a50_trig_a_u_instance_states_enum_item_check
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_instance_lifecycle_states_enum_item_check
     AFTER UPDATE ON ms_syst_data.syst_instances
-    FOR EACH ROW WHEN ( old.instance_state_id != new.instance_state_id)
+    FOR EACH ROW WHEN ( old.instance_lifecycle_state_id != new.instance_lifecycle_state_id)
         EXECUTE PROCEDURE
             ms_syst_priv.trig_a_iu_enum_item_check(
-                'instance_states', 'instance_state_id');
+                'instance_lifecycle_states', 'instance_lifecycle_state_id');
 
 CREATE TRIGGER b50_trig_a_i_syst_instances_create_instance_contexts
     AFTER INSERT ON ms_syst_data.syst_instances
@@ -125,14 +125,14 @@ DECLARE
     v_comments_config ms_syst_priv.comments_config_table;
 
     -- Columns
-    v_application_id     ms_syst_priv.comments_config_table_column;
-    v_instance_type_id   ms_syst_priv.comments_config_table_column;
-    v_instance_state_id  ms_syst_priv.comments_config_table_column;
-    v_owner_id           ms_syst_priv.comments_config_table_column;
-    v_owning_instance_id ms_syst_priv.comments_config_table_column;
-    v_dbserver_name      ms_syst_priv.comments_config_table_column;
-    v_instance_code      ms_syst_priv.comments_config_table_column;
-    v_instance_options   ms_syst_priv.comments_config_table_column;
+    v_application_id               ms_syst_priv.comments_config_table_column;
+    v_instance_type_id             ms_syst_priv.comments_config_table_column;
+    v_instance_lifecycle_state_id  ms_syst_priv.comments_config_table_column;
+    v_owner_id                     ms_syst_priv.comments_config_table_column;
+    v_owning_instance_id           ms_syst_priv.comments_config_table_column;
+    v_dbserver_name                ms_syst_priv.comments_config_table_column;
+    v_instance_code                ms_syst_priv.comments_config_table_column;
+    v_instance_options             ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -160,8 +160,8 @@ $DOC$Indicates the type of the instance.  This can designate instances as being
 production or non-production, or make other functional differences between
 instances created for different reasons based on the assigned instance type.$DOC$;
 
-    v_instance_state_id.column_name := 'instance_state_id';
-    v_instance_state_id.description :=
+    v_instance_lifecycle_state_id.column_name := 'instance_lifecycle_state_id';
+    v_instance_lifecycle_state_id.description :=
 $DOC$Establishes the current life-cycle state of the instance record.  This can
 determine functionality such as if the instance is usable, visible, or if it may
 be purged from the database completely.$DOC$;
@@ -206,7 +206,7 @@ options.$DOC$;
         ARRAY [
               v_application_id
             , v_instance_type_id
-            , v_instance_state_id
+            , v_instance_lifecycle_state_id
             , v_owner_id
             , v_owning_instance_id
             , v_dbserver_name

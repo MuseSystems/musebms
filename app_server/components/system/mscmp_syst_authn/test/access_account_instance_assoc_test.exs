@@ -35,9 +35,10 @@ defmodule AccessAccountInstanceAssocTest do
         from(
           i in Msdata.SystInstances,
           join: o in assoc(i, :owner),
-          join: is in assoc(i, :instance_state),
+          join: is in assoc(i, :instance_lifecycle_state),
           where:
-            o.internal_name == "owner1" and is.internal_name == "instance_states_sysdef_active",
+            o.internal_name == "owner1" and
+              is.internal_name == "instance_lifecycle_states_sysdef_active",
           select: i.id,
           limit: 1
         )
@@ -167,9 +168,10 @@ defmodule AccessAccountInstanceAssocTest do
         from(
           i in Msdata.SystInstances,
           join: o in assoc(i, :owner),
-          join: is in assoc(i, :instance_state),
+          join: is in assoc(i, :instance_lifecycle_state),
           where:
-            o.internal_name == "owner1" and is.internal_name == "instance_states_sysdef_active",
+            o.internal_name == "owner1" and
+              is.internal_name == "instance_lifecycle_states_sysdef_active",
           select: i.id,
           limit: 1
         )

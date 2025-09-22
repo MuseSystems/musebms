@@ -324,8 +324,8 @@ defmodule IntegrationTest do
   end
 
   test "Step 10: Create Instances" do
-    assert %Msdata.SystEnumItems{internal_name: "instance_states_sysdef_uninitialized"} =
-             MscmpSystInstance.get_instance_state_default()
+    assert %Msdata.SystEnumItems{internal_name: "instance_lifecycle_states_sysdef_uninitialized"} =
+             MscmpSystInstance.get_instance_lifecycle_state_default()
 
     new_instance1_params = %{
       internal_name: "app1_owner1",
@@ -412,21 +412,23 @@ defmodule IntegrationTest do
 
       Enum.each(context_states, &assert(%{context: _, state: :ready} = &1))
 
-      assert "instance_states_initialized" =
+      assert "instance_lifecycle_states_initialized" =
                MscmpSystEnums.get_functional_type_by_item_id(
-                 "instance_states",
-                 initialized_instance.instance_state_id
+                 "instance_lifecycle_states",
+                 initialized_instance.instance_lifecycle_state_id
                )
     end)
   end
 
   test "Step 12: Purge Instances" do
-    %Msdata.SystEnumItems{id: purge_instance_state_id} =
-      MscmpSystInstance.get_instance_state_default(:instance_states_purge_eligible)
+    %Msdata.SystEnumItems{id: purge_instance_lifecycle_state_id} =
+      MscmpSystInstance.get_instance_lifecycle_state_default(
+        :instance_lifecycle_states_purge_eligible
+      )
 
-    assert is_binary(purge_instance_state_id)
+    assert is_binary(purge_instance_lifecycle_state_id)
 
-    update_params = %{instance_state_id: purge_instance_state_id}
+    update_params = %{instance_lifecycle_state_id: purge_instance_lifecycle_state_id}
 
     from(i in Msdata.SystInstances)
     |> MscmpSystDb.all()

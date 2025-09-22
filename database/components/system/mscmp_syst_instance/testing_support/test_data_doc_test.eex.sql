@@ -204,7 +204,7 @@ BEGIN
         , display_name
         , application_id
         , instance_type_id
-        , instance_state_id
+        , instance_lifecycle_state_id
         , owner_id
         , instance_code)
     SELECT
@@ -221,13 +221,13 @@ BEGIN
                   ON seit.internal_name = 'instance_types' AND seiit.enum_id = seit.id
        , ms_syst_data.syst_enums seis
              JOIN ms_syst_data.syst_enum_items seiis
-                  ON seis.internal_name = 'instance_states' AND seiis.enum_id = seis.id
+                  ON seis.internal_name = 'instance_lifecycle_states' AND seiis.enum_id = seis.id
     WHERE
         CASE sa.internal_name
             WHEN 'app2' THEN
-                seiis.internal_name = 'instance_states_sysdef_uninitialized'
+                seiis.internal_name = 'instance_lifecycle_states_sysdef_uninitialized'
             WHEN 'app1' THEN
-                seiis.internal_name = 'instance_states_sysdef_active'
+                seiis.internal_name = 'instance_lifecycle_states_sysdef_active'
         END;
 
     UPDATE ms_syst_data.syst_instances upttarget

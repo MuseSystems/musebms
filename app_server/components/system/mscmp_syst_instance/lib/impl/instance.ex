@@ -145,13 +145,13 @@ defmodule MscmpSystInstance.Impl.Instance do
   @spec initialize_instance(Types.instance_id(), startup_options :: map(), opts :: Keyword.t()) ::
           {:ok, Msdata.SystInstances.t()} | {:error, term()}
   def initialize_instance(instance_id, startup_options, opts) do
-    opts = Keyword.merge(opts, get_default_instance_state_ids())
+    opts = Keyword.merge(opts, get_default_instance_lifecycle_state_ids())
     create_datastore_opts = Keyword.take(opts, [:db_shutdown_timeout])
 
     with {:ok, instance} <- db_one(from(i in Msdata.SystInstances, where: i.id == ^instance_id)),
          {:ok, eligible_instance} <- verify_initialization_eligibility(instance),
          {:ok, initializing_instance} <-
-           set_instance_state(eligible_instance, opts[:initializing_state_id]),
+           set_instance_lifecycle_state(eligible_instance, opts[:initializing_state_id]),
          {:ok, datastore_options} <-
            get_instance_datastore_options(initializing_instance.id, startup_options) do
       datastore_options
@@ -161,15 +161,19 @@ defmodule MscmpSystInstance.Impl.Instance do
   end
 
   defp verify_initialization_eligibility(
-         %Msdata.SystInstances{instance_state_id: instance_state_id} = instance
+         %Msdata.SystInstances{instance_lifecycle_state_id: instance_lifecycle_state_id} =
+           instance
        ) do
     functional_type_name =
-      MscmpSystEnums.get_functional_type_by_item_id("instance_states", instance_state_id)
+      MscmpSystEnums.get_functional_type_by_item_id(
+        "instance_lifecycle_states",
+        instance_lifecycle_state_id
+      )
 
     verify_initialization_eligibility(functional_type_name, instance)
   end
 
-  defp verify_initialization_eligibility("instance_states_uninitialized", instance),
+  defp verify_initialization_eligibility("instance_lifecycle_states_uninitialized", instance),
     do: {:ok, instance}
 
   defp verify_initialization_eligibility(state_functional_type, _instance)
@@ -177,14 +181,14 @@ defmodule MscmpSystInstance.Impl.Instance do
        do: {:error, {:ineligible_state, state_functional_type}}
 
   defp process_create_datastore_result({:ok, :ready, _context_states}, instance, _, opts) do
-    set_instance_state(instance, opts[:initialized_state_id])
+    set_instance_lifecycle_state(instance, opts[:initialized_state_id])
   end
 
   defp process_create_datastore_result(error, instance, datastore_options, opts) do
     dbg(%{error: error, instance: instance, datastore_options: datastore_options, opts: opts})
 
     with :ok <- MscmpSystDb.drop_datastore(datastore_options, bypass_stop_datastore: true),
-         {:ok, _} <- set_instance_state(instance, opts[:failed_state_id]) do
+         {:ok, _} <- set_instance_lifecycle_state(instance, opts[:failed_state_id]) do
       {:error, {:datastore_creation_failure, error}}
     else
       error -> raise "Instance creation failure handling failed: #{inspect(error)}"
@@ -193,7 +197,7 @@ defmodule MscmpSystInstance.Impl.Instance do
 
   ##############################################################################
   #
-  # set_instance_state
+  # set_instance_lifecycle_state
   #
   #
 
@@ -201,33 +205,51 @@ defmodule MscmpSystInstance.Impl.Instance do
   #       more formal state machine definition since there are allowed and
   #       disallowed state transitions.  Battle for a different day.
 
-  @spec set_instance_state(Msdata.SystInstances.t(), Types.instance_state_id()) ::
+  @spec set_instance_lifecycle_state(
+          Msdata.SystInstances.t(),
+          Types.instance_lifecycle_state_id()
+        ) ::
           {:ok, Msdata.SystInstances.t()} | {:error, term()}
-  def set_instance_state(instance, instance_state_id) do
+  def set_instance_lifecycle_state(instance, instance_lifecycle_state_id) do
     instance
-    |> Msdata.SystInstances.update_changeset(%{instance_state_id: instance_state_id})
+    |> Msdata.SystInstances.update_changeset(%{
+      instance_lifecycle_state_id: instance_lifecycle_state_id
+    })
     |> MscmpSystDb.update(returning: true)
   end
 
   ##############################################################################
   #
-  # get_default_instance_state_ids
+  # get_default_instance_lifecycle_state_ids
   #
   #
 
-  @spec get_default_instance_state_ids() :: Keyword.t()
-  def get_default_instance_state_ids do
+  @spec get_default_instance_lifecycle_state_ids() :: Keyword.t()
+  def get_default_instance_lifecycle_state_ids do
     initializing_state =
-      Impl.InstanceState.get_instance_state_default(:instance_states_initializing)
+      Impl.InstanceLifecycleState.get_instance_lifecycle_state_default(
+        :instance_lifecycle_states_initializing
+      )
 
-    active_state = Impl.InstanceState.get_instance_state_default(:instance_states_active)
+    active_state =
+      Impl.InstanceLifecycleState.get_instance_lifecycle_state_default(
+        :instance_lifecycle_states_active
+      )
 
-    failed_state = Impl.InstanceState.get_instance_state_default(:instance_states_failed)
+    failed_state =
+      Impl.InstanceLifecycleState.get_instance_lifecycle_state_default(
+        :instance_lifecycle_states_failed
+      )
 
     initialized_state =
-      Impl.InstanceState.get_instance_state_default(:instance_states_initialized)
+      Impl.InstanceLifecycleState.get_instance_lifecycle_state_default(
+        :instance_lifecycle_states_initialized
+      )
 
-    migrating_state = Impl.InstanceState.get_instance_state_default(:instance_states_migrating)
+    migrating_state =
+      Impl.InstanceLifecycleState.get_instance_lifecycle_state_default(
+        :instance_lifecycle_states_migrating
+      )
 
     [
       initializing_state_id: initializing_state.id,
@@ -282,10 +304,10 @@ defmodule MscmpSystInstance.Impl.Instance do
   def get_instance_by_name(instance_name) when is_binary(instance_name) do
     from(
       i in Msdata.SystInstances,
-      join: is in assoc(i, :instance_state),
+      join: is in assoc(i, :instance_lifecycle_state),
       join: isft in assoc(is, :functional_type),
       where: i.internal_name == ^instance_name,
-      preload: [instance_state: {is, functional_type: isft}]
+      preload: [instance_lifecycle_state: {is, functional_type: isft}]
     )
     |> db_one()
   end
@@ -318,10 +340,10 @@ defmodule MscmpSystInstance.Impl.Instance do
     purge_candidate_qry =
       from(
         i in Msdata.SystInstances,
-        join: is in assoc(i, :instance_state),
+        join: is in assoc(i, :instance_lifecycle_state),
         join: isft in assoc(is, :functional_type),
         where: i.id == ^instance_id,
-        preload: [instance_state: {is, functional_type: isft}]
+        preload: [instance_lifecycle_state: {is, functional_type: isft}]
       )
 
     case db_one(purge_candidate_qry) do
@@ -331,14 +353,18 @@ defmodule MscmpSystInstance.Impl.Instance do
   end
 
   def purge_instance(%Msdata.SystInstances{} = instance, startup_options) do
-    functional_type = instance.instance_state.functional_type.internal_name
+    functional_type = instance.instance_lifecycle_state.functional_type.internal_name
     maybe_perform_instance_purge(functional_type, instance, startup_options)
   end
 
   def purge_instance(%Msdata.SystInstances{id: instance_id}, startup_options),
     do: purge_instance(instance_id, startup_options)
 
-  defp maybe_perform_instance_purge("instance_states_purge_eligible", instance, startup_options) do
+  defp maybe_perform_instance_purge(
+         "instance_lifecycle_states_purge_eligible",
+         instance,
+         startup_options
+       ) do
     with {:ok, datastore_options} <- get_instance_datastore_options(instance, startup_options),
          :ok <- MscmpSystDb.drop_datastore(datastore_options, bypass_stop_datastore: true),
          {:ok, _} <- MscmpSystDb.delete(instance) do

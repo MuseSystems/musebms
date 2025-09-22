@@ -261,7 +261,8 @@ defmodule MscmpSystInstance.Application do
   #
 
   @doc """
-  Retrieves the runtime state of the requested Application Instances.
+  Retrieves the lifecycle and runtime states of the requested Application
+  Instances.
 
   ## Parameters
 

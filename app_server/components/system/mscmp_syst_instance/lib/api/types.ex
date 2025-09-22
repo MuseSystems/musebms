@@ -106,77 +106,93 @@ defmodule MscmpSystInstance.Types do
           optional(:instance_code) => binary(),
           optional(:instance_type_id) => Ecto.UUID.t(),
           optional(:instance_type_name) => instance_type_name(),
-          optional(:instance_state_id) => Ecto.UUID.t(),
-          optional(:instance_state_name) => instance_state_name(),
+          optional(:instance_lifecycle_state_id) => Ecto.UUID.t(),
+          optional(:instance_lifecycle_state_name) => instance_lifecycle_state_name(),
           optional(:owner_id) => Ecto.UUID.t(),
           optional(:owner_name) => owner_name(),
           optional(:owning_instance_id) => Ecto.UUID.t(),
           optional(:owning_instance_name) => instance_name()
         }
 
+  @typedoc """
+  The runtime state of an Instance.
+  """
   @type instance_runtime_state() :: :started | :stopped
 
   @typedoc """
   Expresses a specific Instance, its runtime state, and the functional type of
   its runtime state.
+
+  The first element is the Instance name.
+  The second element is the runtime state of the Instance.
+  The third element is the lifecycle functional type of the Instance.
   """
   @type instance_state() ::
-          {instance_name(), {:ok, instance_runtime_state()} | {:error, Mserror.InstanceError.t()}}
+          {
+            instance_name(),
+            {:ok, instance_runtime_state()} | {:error, Mserror.InstanceError.t()},
+            {:ok, instance_lifecycle_state_func_types()} | {:error, Mserror.InstanceError.t()}
+          }
 
   @typedoc """
   Establishes the available Instance state functional types understood by the
   module.
 
-    * `:instance_states_uninitialized` - The Instance definition record has been
-    created, but the corresponding Instance has not been created on the database
-    server and is awaiting processing.
+    * `:instance_lifecycle_states_nonexistent` - The Instance does not exist in
+    the system.
 
-    * `:instance_states_initializing` - The process of creating the Instance has
-    been started.
+    * `:instance_lifecycle_states_uninitialized` - The Instance definition
+    record has been created, but the corresponding Instance has not been created
+    on the database server and is awaiting processing.
 
-    * `:instance_states_initialized` - The Instance Datastore has been
+    * `:instance_lifecycle_states_initializing` - The process of creating the
+    Instance has been started.
+
+    * `:instance_lifecycle_states_initialized` - The Instance Datastore has been
     initialized meaning the Instance Datastore has been created on the database
     server, but has not yet been finalized as being "active".
 
-    * `:instance_states_active` - The Instance is created and usable by users.
+    * `:instance_lifecycle_states_active` - The Instance is created and usable
+    by users.
 
-    * `:instance_states_migrating` - The Instance Datastore is in the process of
-    being updated to the latest version of the schema.
+    * `:instance_lifecycle_states_migrating` - The Instance Datastore is in the
+    process of being updated to the latest version of the schema.
 
-    * `:instance_states_suspended` - The Instance is not available for regular
-    use, though some limited functionality may be available.  The Instance is
-    likely visible to users for this reason.
+    * `:instance_lifecycle_states_suspended` - The Instance is not available for
+    regular use, though some limited functionality may be available.  The
+    Instance is likely visible to users for this reason.
 
-    * `:instance_states_inactive` - The Instance is not available for any use
-    and would not typically be visible to users for any purpose.
+    * `:instance_lifecycle_states_inactive` - The Instance is not available for
+    any use and would not typically be visible to users for any purpose.
 
-    * `:instance_states_failed` - The Instance startup process has failed to
-    start the Instance for some reason and requires intervention.
+    * `:instance_lifecycle_states_failed` - The Instance startup process has
+    failed to start the Instance for some reason and requires intervention.
 
-    * `:instance_states_purge_eligible` - The Instance is not available for any
-      use, not visible to users and subject to be completely deleted from the
-      system at any point in time.
+    * `:instance_lifecycle_states_purge_eligible` - The Instance is not
+    available for any use, not visible to users and subject to be completely
+    deleted from the system at any point in time.
   """
-  @type instance_state_functional_types ::
-          :instance_states_uninitialized
-          | :instance_states_initializing
-          | :instance_states_initialized
-          | :instance_states_active
-          | :instance_states_migrating
-          | :instance_states_suspended
-          | :instance_states_inactive
-          | :instance_states_failed
-          | :instance_states_purge_eligible
+  @type instance_lifecycle_state_func_types ::
+          :instance_lifecycle_states_nonexistent
+          | :instance_lifecycle_states_uninitialized
+          | :instance_lifecycle_states_initializing
+          | :instance_lifecycle_states_initialized
+          | :instance_lifecycle_states_active
+          | :instance_lifecycle_states_migrating
+          | :instance_lifecycle_states_suspended
+          | :instance_lifecycle_states_inactive
+          | :instance_lifecycle_states_failed
+          | :instance_lifecycle_states_purge_eligible
 
   @typedoc """
   The type of the Instance State ID value.
   """
-  @type instance_state_id() :: Ecto.UUID.t()
+  @type instance_lifecycle_state_id() :: Ecto.UUID.t()
 
   @typedoc """
   Type for identifying Instance States by name.
   """
-  @type instance_state_name() :: MscmpSystEnums.Types.enum_item_name()
+  @type instance_lifecycle_state_name() :: MscmpSystEnums.Types.enum_item_name()
 
   @typedoc """
   The required data for maintaining Instance States.
@@ -186,7 +202,7 @@ defmodule MscmpSystInstance.Types do
   `functional_type_name` fields are required.  On updates of an existing
   instance state, those fields are optional.
   """
-  @type instance_state_params :: %{
+  @type instance_lifecycle_state_params :: %{
           optional(:internal_name) => MscmpSystEnums.Types.enum_item_name(),
           optional(:display_name) => String.t(),
           optional(:external_name) => String.t(),
@@ -314,7 +330,7 @@ defmodule MscmpSystInstance.Types do
       not visible to users and subject to be completely deleted from the system
       at any point in time.
   """
-  @type owner_state_functional_types ::
+  @type owner_state_func_types ::
           :owner_states_active
           | :owner_states_suspended
           | :owner_states_inactive

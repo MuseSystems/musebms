@@ -71,7 +71,7 @@ defmodule MscmpSystInstance.Impl.Owner do
   #
   #
 
-  @spec get_owner_state_default(Types.owner_state_functional_types() | nil) ::
+  @spec get_owner_state_default(Types.owner_state_func_types() | nil) ::
           Msdata.SystEnumItems.t()
   def get_owner_state_default(nil), do: MscmpSystEnums.get_default_item("owner_states")
 

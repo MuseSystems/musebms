@@ -27,7 +27,7 @@ defmodule InstanceTest do
 
     assert {:ok,
             %Msdata.SystInstances{
-              instance_state: %Msdata.SystEnumItems{
+              instance_lifecycle_state: %Msdata.SystEnumItems{
                 functional_type: %Msdata.SystEnumFunctionalTypes{}
               }
             }} = MscmpSystInstance.get_instance_by_name(instance_record.internal_name)

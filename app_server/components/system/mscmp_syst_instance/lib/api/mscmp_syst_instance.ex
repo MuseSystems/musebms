@@ -35,53 +35,50 @@ defmodule MscmpSystInstance do
       When true, indicates that application context records should be preloaded.
       """
     ],
-    initializing_state_id: [
+    initializing_lifecycle_state_id: [
       type: :string,
       type_doc: "t:Ecto.UUID.t/0",
       doc: """
-      The record ID value of the Instance State to use to indicate that the
-      record is being initialized.  If this value is not provided the configured
-      default Instance State for the functional type
-      `instance_states_initializing` will be used.
+      The record ID value of the Instance Lifecycle State to use to indicate that the record is
+      being initialized.  If this value is not provided the configured default Instance Lifecycle
+      State for the functional type `instance_lifecycle_states_initializing` will be used.
       """
     ],
-    active_state_id: [
+    active_lifecycle_state_id: [
       type: :string,
       type_doc: "t:Ecto.UUID.t/0",
       doc: """
-      The record ID value of the Instance State to use to indicate that the
-      record is active. If this value is not provided the configured default
-      Instance State for the functional type `instance_states_active` will be used.
+      The record ID value of the Instance Lifecycle State to use to indicate that the record is
+      active. If this value is not provided the configured default Instance Lifecycle State for
+      the functional type `instance_lifecycle_states_active` will be used.
       """
     ],
-    failed_state_id: [
+    failed_lifecycle_state_id: [
       type: :string,
       type_doc: "t:Ecto.UUID.t/0",
       doc: """
-      the record ID value of the Instance State to use to indicate that the
-      record has failed to be initialized.  If this value is not provided the
-      default configured Instance State for the functional type
-      `instance_states_failure` will be used.
+      The record ID value of the Instance Lifecycle State to use to indicate that the record has
+      failed to be initialized.  If this value is not provided the default configured Instance
+      Lifecycle State for the functional type `instance_lifecycle_states_failed` will be used.
       """
     ],
-    initialized_state_id: [
+    initialized_lifecycle_state_id: [
       type: :string,
       type_doc: "t:Ecto.UUID.t/0",
       doc: """
-      the record ID value of the Instance State to use to indicate that the
-      record has successfully been initialized.  If this value is not provided
-      the configured default Instance State for the functional type
-      `instance_states_initialized` will be used.
+      The record ID value of the Instance Lifecycle State to use to indicate that the record has
+      successfully been initialized.  If this value is not provided the configured default
+      Instance Lifecycle State for the functional type `instance_lifecycle_states_initialized`
+      will be used.
       """
     ],
-    migrating_state_id: [
+    migrating_lifecycle_state_id: [
       type: :string,
       type_doc: "t:Ecto.UUID.t/0",
       doc: """
-      The record ID value of the Instance State to use to indicate that the
-      record is in the process of being migrated. If this value is not provided
-      the configured default Instance State for the functional type
-      `instance_states_migrating` will be used.
+      The record ID value of the Instance Lifecycle State to use to indicate that the record is in
+      the process of being migrated. If this value is not provided the configured default Instance
+      Lifecycle State for the functional type `instance_lifecycle_states_migrating` will be used.
       """
     ],
     db_shutdown_timeout: [
@@ -1091,7 +1088,7 @@ defmodule MscmpSystInstance do
       ...>   MscmpSystInstance.get_owner_state_default(:owner_states_inactive)
   """
   @spec get_owner_state_default() :: Msdata.SystEnumItems.t()
-  @spec get_owner_state_default(Types.owner_state_functional_types() | nil) ::
+  @spec get_owner_state_default(Types.owner_state_func_types() | nil) ::
           Msdata.SystEnumItems.t()
   defdelegate get_owner_state_default(functional_type \\ nil), to: Impl.Owner
 
@@ -1399,7 +1396,7 @@ defmodule MscmpSystInstance do
 
   ##############################################################################
   #
-  # get_instance_state_by_name
+  # get_instance_lifecycle_state_by_name
   #
   #
 
@@ -1413,26 +1410,30 @@ defmodule MscmpSystInstance do
 
   ## Parameters
 
-    * `instance_state_name` - the internal name of the Instance State to retrieve.
+    * `instance_lifecycle_state_name` - the internal name of the Instance State to retrieve.
 
   ## Examples
 
   Retrieving an Instance State Enumeration record.
 
-      iex> %Msdata.SystEnumItems{internal_name: "instance_states_sysdef_active"} =
-      ...>   MscmpSystInstance.get_instance_state_by_name("instance_states_sysdef_active")
+      iex> %Msdata.SystEnumItems{internal_name: "instance_lifecycle_states_sysdef_active"} =
+      ...>   MscmpSystInstance.get_instance_lifecycle_state_by_name(
+      ...>     "instance_lifecycle_states_sysdef_active"
+      ...>   )
 
   Trying to retrieve a non-existent Instance State.
 
-      iex> MscmpSystInstance.get_instance_state_by_name("nonexistent_state")
+      iex> MscmpSystInstance.get_instance_lifecycle_state_by_name("nonexistent_state")
       nil
   """
-  @spec get_instance_state_by_name(Types.instance_state_name()) :: Msdata.SystEnumItems.t() | nil
-  defdelegate get_instance_state_by_name(instance_state_name), to: Impl.InstanceState
+  @spec get_instance_lifecycle_state_by_name(Types.instance_lifecycle_state_name()) ::
+          Msdata.SystEnumItems.t() | nil
+  defdelegate get_instance_lifecycle_state_by_name(instance_lifecycle_state_name),
+    to: Impl.InstanceLifecycleState
 
   ##############################################################################
   #
-  # get_instance_state_default
+  # get_instance_lifecycle_state_default
   #
   #
 
@@ -1455,18 +1456,21 @@ defmodule MscmpSystInstance do
 
   Requesting the system default Instance State.
 
-      iex> %Msdata.SystEnumItems{internal_name: "instance_states_sysdef_uninitialized"} =
-      ...>   MscmpSystInstance.get_instance_state_default()
+      iex> %Msdata.SystEnumItems{internal_name: "instance_lifecycle_states_sysdef_uninitialized"} =
+      ...>   MscmpSystInstance.get_instance_lifecycle_state_default()
 
   Requesting the default Instance State for a specific functional type.
 
-      iex> %Msdata.SystEnumItems{internal_name: "instance_states_sysdef_active"} =
-      ...>   MscmpSystInstance.get_instance_state_default(:instance_states_active)
+      iex> %Msdata.SystEnumItems{internal_name: "instance_lifecycle_states_sysdef_active"} =
+      ...>   MscmpSystInstance.get_instance_lifecycle_state_default(
+      ...>     :instance_lifecycle_states_active
+      ...>   )
   """
-  @spec get_instance_state_default() :: Msdata.SystEnumItems.t()
-  @spec get_instance_state_default(Types.instance_state_functional_types() | nil) ::
+  @spec get_instance_lifecycle_state_default() :: Msdata.SystEnumItems.t()
+  @spec get_instance_lifecycle_state_default(Types.instance_lifecycle_state_func_types() | nil) ::
           Msdata.SystEnumItems.t()
-  defdelegate get_instance_state_default(functional_type \\ nil), to: Impl.InstanceState
+  defdelegate get_instance_lifecycle_state_default(functional_type \\ nil),
+    to: Impl.InstanceLifecycleState
 
   ##############################################################################
   #
@@ -1520,17 +1524,17 @@ defmodule MscmpSystInstance do
       Instance record.  This attribute is requires unless the `instance_type_id`
       attribute is provided instead.
 
-      * `instance_state_id` - the record ID of the Instance State in which to
-      create the new Instance record.  This value may be omitted and allowed to
-      default based on the configured default Instance State.  Optionally the
-      Instance State may also be identified by the `instance_state_name`
-      attribute.
+      * `instance_lifecycle_state_id` - the record ID of the Instance Lifecycle
+      State in which to create the new Instance record.  This value may be
+      omitted and allowed to default based on the configured default Instance
+      Lifecycle State.  Optionally the Instance Lifecycle State may also be
+      identified by the `instance_lifecycle_state_name` attribute.
 
-      * `instance_state_name` - the internal name of the Instance State in which
-      to create the new Instance record.  This value may be omitted and allowed
-      to default based on the configured default Instance State.  Optionally the
-      Instance State may also be identified by the `instance_state_id`
-      attribute.
+      * `instance_lifecycle_state_name` - the internal name of the Instance
+      Lifecycle State in which to create the new Instance record.  This value
+      may be omitted and allowed to default based on the configured default
+      Instance Lifecycle State.  Optionally the Instance Lifecycle State may
+      also be identified by the `instance_lifecycle_state_id` attribute.
 
       * `owner_id` - the record ID of the Owner of the Instance.  This
       attribute is required unless the `owner_name` attribute is provided.
@@ -1632,14 +1636,15 @@ defmodule MscmpSystInstance do
   Initializes an uninitialized Instance.
 
   When a new Instance is created in the database, the record is giving an
-  Instance State with a functional type of `instance_states_uninitialized`
-  meaning that the Instance record has been created in the database, but the
-  Instance's own database and associated database roles have not yet been set
-  up.
+  Instance Lifecycle State with a functional type of
+  `instance_lifecycle_states_uninitialized` meaning that the Instance record has
+  been created in the database, but the Instance's own database and associated
+  database roles have not yet been set up.
 
   Initializing an Instance creates its database and its database roles
   ("Datastore" and "Datastore Contexts"). Once initialized, the Instance record
-  is given an Instance State of functional type `instance_states_initialized`.
+  is given an Instance Lifecycle State of functional type
+  `instance_lifecycle_states_initialized`.
 
   Initialized Instances may be started and have their Datastores migrated to the
   current version of the Instance's database.
@@ -1687,26 +1692,29 @@ defmodule MscmpSystInstance do
 
   ##############################################################################
   #
-  # set_instance_state
+  # set_instance_lifecycle_state
   #
   #
 
   @doc section: :instance_data
   @doc """
-  Sets the Instance State of an Instance.
+  Sets the Instance Lifecycle State of an Instance.
 
   ## Parameters
 
     * `instance` - the current `Msdata.SystInstances` struct
     representing the Instance to be updated.
 
-    * `instance_state_id` - The record ID of the new Instance State value into
-    which to place the Instance record.
+    * `instance_lifecycle_state_id` - The record ID of the new Instance
+    Lifecycle State value into which to place the Instance record.
   """
-  @spec set_instance_state(Msdata.SystInstances.t(), Types.instance_state_id()) ::
+  @spec set_instance_lifecycle_state(
+          Msdata.SystInstances.t(),
+          Types.instance_lifecycle_state_id()
+        ) ::
           {:ok, Msdata.SystInstances.t()} | {:error, Mserror.InstanceError.t()}
-  def set_instance_state(instance, instance_state_id) do
-    case Impl.Instance.set_instance_state(instance, instance_state_id) do
+  def set_instance_lifecycle_state(instance, instance_lifecycle_state_id) do
+    case Impl.Instance.set_instance_lifecycle_state(instance, instance_lifecycle_state_id) do
       {:ok, instance} ->
         {:ok, instance}
 
@@ -1715,8 +1723,11 @@ defmodule MscmpSystInstance do
          Mserror.InstanceError.new(:instance_data, "Error setting instance state",
            cause: error,
            context: %ErrorContext{
-             origin: {__MODULE__, :set_instance_state, 2},
-             parameters: %{instance: instance, instance_state_id: instance_state_id}
+             origin: {__MODULE__, :set_instance_lifecycle_state, 2},
+             parameters: %{
+               instance: instance,
+               instance_lifecycle_state_id: instance_lifecycle_state_id
+             }
            }
          )}
     end
@@ -1724,21 +1735,21 @@ defmodule MscmpSystInstance do
 
   ##############################################################################
   #
-  # get_default_instance_state_ids
+  # get_default_instance_lifecycle_state_ids
   #
   #
 
   @doc section: :instance_data
   @doc """
-  Returns a Keyword List of the default values for each Instance State's
-  functional type.
+  Returns a Keyword List of the default values for each Instance Lifecycle
+  State's functional type.
 
-  Instance updating functions that change the Instance State value of the
-  Instance will default to the appropriate Instance State if a specific Instance
-  State value is not provided by the caller.
+  Instance updating functions that change the Instance Lifecycle State value of
+  the Instance will default to the appropriate Instance Lifecycle State if a
+  specific Instance Lifecycle State value is not provided by the caller.
   """
-  @spec get_default_instance_state_ids() :: Keyword.t()
-  defdelegate get_default_instance_state_ids, to: Impl.Instance
+  @spec get_default_instance_lifecycle_state_ids() :: Keyword.t()
+  defdelegate get_default_instance_lifecycle_state_ids, to: Impl.Instance
 
   ##############################################################################
   #
@@ -1832,7 +1843,7 @@ defmodule MscmpSystInstance do
   `Msdata.SystInstances` records from the database.
 
   In order for the purge to be successful, the Instance must be in an Instance
-  State of functional type `instance_states_purge_eligible`.
+  Lifecycle State of functional type `instance_lifecycle_states_purge_eligible`.
 
   > #### Warning {: .warning}
   > Naturally, great care must be taken in the lead up to calling this function

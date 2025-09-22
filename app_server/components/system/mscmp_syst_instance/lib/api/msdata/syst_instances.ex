@@ -32,8 +32,9 @@ defmodule Msdata.SystInstances do
             application: Msdata.SystApplications.t() | Ecto.Association.NotLoaded.t() | nil,
             instance_type_id: Ecto.UUID.t() | nil,
             instance_type: Msdata.SystEnumItems.t() | Ecto.Association.NotLoaded.t() | nil,
-            instance_state_id: Ecto.UUID.t() | nil,
-            instance_state: Msdata.SystEnumItems.t() | Ecto.Association.NotLoaded.t() | nil,
+            instance_lifecycle_state_id: Ecto.UUID.t() | nil,
+            instance_lifecycle_state:
+              Msdata.SystEnumItems.t() | Ecto.Association.NotLoaded.t() | nil,
             owner_id: Ecto.UUID.t() | nil,
             owner: Msdata.SystOwners.t() | Ecto.Association.NotLoaded.t() | nil,
             owning_instance_id: Ecto.UUID.t() | nil,
@@ -68,7 +69,7 @@ defmodule Msdata.SystInstances do
 
     belongs_to(:application, Msdata.SystApplications)
     belongs_to(:instance_type, Msdata.SystEnumItems)
-    belongs_to(:instance_state, Msdata.SystEnumItems)
+    belongs_to(:instance_lifecycle_state, Msdata.SystEnumItems)
     belongs_to(:owner, Msdata.SystOwners)
     belongs_to(:owning_instance, Msdata.SystInstances)
 

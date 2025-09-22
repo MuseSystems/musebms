@@ -21,7 +21,7 @@ BEGIN
         , display_name
         , application_id
         , instance_type_id
-        , instance_state_id
+        , instance_lifecycle_state_id
         , owner_id
         , owning_instance_id
         , dbserver_name
@@ -32,7 +32,7 @@ BEGIN
         , new.display_name
         , new.application_id
         , new.instance_type_id
-        , new.instance_state_id
+        , new.instance_lifecycle_state_id
         , new.owner_id
         , new.owning_instance_id
         , new.dbserver_name

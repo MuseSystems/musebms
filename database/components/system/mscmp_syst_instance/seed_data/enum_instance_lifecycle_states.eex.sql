@@ -1,5 +1,5 @@
--- File:        enum_instance_states.eex.sql
--- Location:    musebms/database/components/system/mscmp_syst_instance/seed_data/enum_instance_states.eex.sql
+-- File:        enum_instance_lifecycle_states.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_instance/seed_data/enum_instance_lifecycle_states.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -16,10 +16,10 @@ BEGIN
 
 CALL
     ms_syst_priv.initialize_enum(
-        p_enum_def => $INIT_ENUM_INSTANCE_STATES$
+        p_enum_def => $INIT_ENUM_INSTANCE_LIFECYCLE_STATES$
         {
-          "internal_name": "instance_states",
-          "display_name": "Instance States",
+          "internal_name": "instance_lifecycle_states",
+          "display_name": "Instance Lifecycle States",
           "syst_description": "Establishes the available states in the life-cycle of a system instance (ms_syst_data.syst_instances) record, including some direction of state related system functionality.",
           "syst_defined": true,
           "user_maintainable": true,
@@ -27,66 +27,84 @@ CALL
           "default_user_options": null,
           "functional_types": [
             {
-              "internal_name": "instance_states_uninitialized",
-              "display_name": "Instance State / Uninitialized",
+              "internal_name": "instance_lifecycle_states_nonexistent",
+              "display_name": "Instance Lifecycle State / Nonexistent",
+              "external_name": "Nonexistent",
+              "syst_description": "The instance does not exist in the system."
+            },
+            {
+              "internal_name": "instance_lifecycle_states_uninitialized",
+              "display_name": "Instance Lifecycle State / Uninitialized",
               "external_name": "Uninitialized",
               "syst_description": "The instance definition record has been created, but the corresponding instance has not been created on the database server and is awaiting processing."
             },
             {
-              "internal_name": "instance_states_initializing",
-              "display_name": "Instance State / Initializing",
+              "internal_name": "instance_lifecycle_states_initializing",
+              "display_name": "Instance Lifecycle State / Initializing",
               "external_name": "Initializing",
               "syst_description": "The process of creating the instance has been started."
             },
             {
-              "internal_name": "instance_states_initialized",
-              "display_name": "Instance State / Initialized",
+              "internal_name": "instance_lifecycle_states_initialized",
+              "display_name": "Instance Lifecycle State / Initialized",
               "external_name": "Initialized",
               "syst_description": "Indicates that the Instance is initialized, but not yet active."
             },
             {
-              "internal_name": "instance_states_active",
-              "display_name": "Instance State / Active",
+              "internal_name": "instance_lifecycle_states_active",
+              "display_name": "Instance Lifecycle State / Active",
               "external_name": "Active",
               "syst_description": "The instance is created and usable by users."
             },
             {
-              "internal_name": "instance_states_migrating",
-              "display_name": "Instance State / Migrating",
+              "internal_name": "instance_lifecycle_states_migrating",
+              "display_name": "Instance Lifecycle State / Migrating",
               "external_name": "Migrating",
               "syst_description": "Indicates that the Instance is being migrated to the most recent application version."
             },
             {
-              "internal_name": "instance_states_suspended",
-              "display_name": "Instance State / Suspended",
+              "internal_name": "instance_lifecycle_states_suspended",
+              "display_name": "Instance Lifecycle State / Suspended",
               "external_name": "Suspended",
               "syst_description": "The instance is not available for regular use, though some limited functionality may be available.  The instance is likely visible to users for this reason."
             },
             {
-              "internal_name": "instance_states_inactive",
-              "display_name": "Instance State / Inactive",
+              "internal_name": "instance_lifecycle_states_inactive",
+              "display_name": "Instance Lifecycle State / Inactive",
               "external_name": "Inactive",
               "syst_description": "The instance is not available for any use and would not typically be visible tp users for any purpose."
             },
             {
-              "internal_name": "instance_states_failed",
-              "display_name": "Instance State / Failed",
+              "internal_name": "instance_lifecycle_states_failed",
+              "display_name": "Instance Lifecycle State / Failed",
               "external_name": "Failed",
               "syst_description": "The instance is in an error state and is not available for use."
             },
             {
-              "internal_name": "instance_states_purge_eligible",
-              "display_name": "Instance State / Purge Eligible",
+              "internal_name": "instance_lifecycle_states_purge_eligible",
+              "display_name": "Instance Lifecycle State / Purge Eligible",
               "external_name": "Purge Eligible",
               "syst_description": "The instance is not available for any use, not visible to users and subject to be completely deleted from the system at any point in time."
             }
           ],
           "enum_items": [
             {
-              "internal_name": "instance_states_sysdef_uninitialized",
-              "display_name": "Instance State / Uninitialized",
+              "internal_name": "instance_lifecycle_states_sysdef_nonexistent",
+              "display_name": "Instance Lifecycle State / Nonexistent",
+              "external_name": "Nonexistent",
+              "functional_type_name": "instance_lifecycle_states_nonexistent",
+              "enum_default": false,
+              "functional_type_default": true,
+              "syst_defined": true,
+              "user_maintainable": true,
+              "syst_description": "The instance does not exist in the system.",
+              "syst_options": {}
+            },
+            {
+              "internal_name": "instance_lifecycle_states_sysdef_uninitialized",
+              "display_name": "Instance Lifecycle State / Uninitialized",
               "external_name": "Uninitialized",
-              "functional_type_name": "instance_states_uninitialized",
+              "functional_type_name": "instance_lifecycle_states_uninitialized",
               "enum_default": true,
               "functional_type_default": true,
               "syst_defined": true,
@@ -95,10 +113,10 @@ CALL
               "syst_options": {}
             },
             {
-              "internal_name": "instance_states_sysdef_initializing",
-              "display_name": "Instance State / Initializing",
+              "internal_name": "instance_lifecycle_states_sysdef_initializing",
+              "display_name": "Instance Lifecycle State / Initializing",
               "external_name": "Initializing",
-              "functional_type_name": "instance_states_initializing",
+              "functional_type_name": "instance_lifecycle_states_initializing",
               "enum_default": false,
               "functional_type_default": true,
               "syst_defined": true,
@@ -107,10 +125,10 @@ CALL
               "syst_options": {}
             },
             {
-              "internal_name": "instance_states_sysdef_initialized",
-              "display_name": "Instance State / Initialized",
+              "internal_name": "instance_lifecycle_states_sysdef_initialized",
+              "display_name": "Instance Lifecycle State / Initialized",
               "external_name": "Initialized",
-              "functional_type_name": "instance_states_initialized",
+              "functional_type_name": "instance_lifecycle_states_initialized",
               "enum_default": false,
               "functional_type_default": true,
               "syst_defined": true,
@@ -119,10 +137,10 @@ CALL
               "syst_options": {}
             },
             {
-              "internal_name": "instance_states_sysdef_active",
-              "display_name": "Instance State / Active",
+              "internal_name": "instance_lifecycle_states_sysdef_active",
+              "display_name": "Instance Lifecycle State / Active",
               "external_name": "Active",
-              "functional_type_name": "instance_states_active",
+              "functional_type_name": "instance_lifecycle_states_active",
               "enum_default": false,
               "functional_type_default": true,
               "syst_defined": true,
@@ -131,10 +149,10 @@ CALL
               "syst_options": {}
             },
             {
-              "internal_name": "instance_states_sysdef_migrating",
-              "display_name": "Instance State / Migrating",
+              "internal_name": "instance_lifecycle_states_sysdef_migrating",
+              "display_name": "Instance Lifecycle State / Migrating",
               "external_name": "Initialized",
-              "functional_type_name": "instance_states_migrating",
+              "functional_type_name": "instance_lifecycle_states_migrating",
               "enum_default": false,
               "functional_type_default": true,
               "syst_defined": true,
@@ -143,10 +161,10 @@ CALL
               "syst_options": {}
             },
             {
-              "internal_name": "instance_states_sysdef_suspended",
-              "display_name": "Instance State / Suspended",
+              "internal_name": "instance_lifecycle_states_sysdef_suspended",
+              "display_name": "Instance Lifecycle State / Suspended",
               "external_name": "Suspended",
-              "functional_type_name": "instance_states_suspended",
+              "functional_type_name": "instance_lifecycle_states_suspended",
               "enum_default": false,
               "functional_type_default": true,
               "syst_defined": true,
@@ -155,10 +173,10 @@ CALL
               "syst_options": {}
             },
             {
-              "internal_name": "instance_states_sysdef_inactive",
-              "display_name": "Instance State / Inactive",
+              "internal_name": "instance_lifecycle_states_sysdef_inactive",
+              "display_name": "Instance Lifecycle State / Inactive",
               "external_name": "Inactive",
-              "functional_type_name": "instance_states_inactive",
+              "functional_type_name": "instance_lifecycle_states_inactive",
               "enum_default": false,
               "functional_type_default": true,
               "syst_defined": true,
@@ -167,10 +185,10 @@ CALL
               "syst_options": {}
             },
             {
-              "internal_name": "instance_states_sysdef_failed",
-              "display_name": "Instance State / Failed",
+              "internal_name": "instance_lifecycle_states_sysdef_failed",
+              "display_name": "Instance Lifecycle State / Failed",
               "external_name": "Inactive",
-              "functional_type_name": "instance_states_failed",
+              "functional_type_name": "instance_lifecycle_states_failed",
               "enum_default": false,
               "functional_type_default": true,
               "syst_defined": true,
@@ -179,10 +197,10 @@ CALL
               "syst_options": {}
             },
             {
-              "internal_name": "instance_states_sysdef_purge_eligible",
-              "display_name": "Instance State / Purge Eligible",
+              "internal_name": "instance_lifecycle_states_sysdef_purge_eligible",
+              "display_name": "Instance Lifecycle State / Purge Eligible",
               "external_name": "Purge Eligible",
-              "functional_type_name": "instance_states_purge_eligible",
+              "functional_type_name": "instance_lifecycle_states_purge_eligible",
               "enum_default": false,
               "functional_type_default": true,
               "syst_defined": true,
@@ -192,7 +210,7 @@ CALL
             }
           ]
         }
-            $INIT_ENUM_INSTANCE_STATES$::jsonb);
+            $INIT_ENUM_INSTANCE_LIFECYCLE_STATES$::jsonb);
 
 END;
 $INIT_ENUM$;

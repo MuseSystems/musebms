@@ -44,11 +44,11 @@ BEGIN
 
     UPDATE ms_syst_data.syst_instances
     SET
-        display_name      = new.display_name
-      , instance_state_id = new.instance_state_id
-      , dbserver_name     = new.dbserver_name
-      , instance_code     = new.instance_code
-      , instance_options  = new.instance_options
+        display_name                = new.display_name
+      , instance_lifecycle_state_id = new.instance_lifecycle_state_id
+      , dbserver_name               = new.dbserver_name
+      , instance_code               = new.instance_code
+      , instance_options            = new.instance_options
     WHERE id = new.id
     RETURNING * INTO new;
 
