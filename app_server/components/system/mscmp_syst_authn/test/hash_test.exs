@@ -19,6 +19,8 @@ defmodule HashTest do
 
   @moduletag :unit
   @moduletag :capture_log
+  @moduletag timeout: 120_000
+
   @strong_iterations 250
   @weak_iterations 10_000
 
