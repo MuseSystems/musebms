@@ -19,6 +19,10 @@ defmodule MscmpSystSettings do
 
   use MscmpSystService
 
+  use MscmpSystTelemetry,
+    component: :mscmp_syst_settings,
+    categories: [:service, :settings]
+
   alias MscmpSystError.Types.Context, as: ErrorContext
   alias MscmpSystService.Types, as: ServiceTypes
   alias MscmpSystSettings.Impl
@@ -122,24 +126,26 @@ defmodule MscmpSystSettings do
   @impl true
   @spec start_link(Keyword.t()) :: {:ok, pid()} | :ignore | {:error, Mserror.SettingsError.t()}
   def start_link(opts) do
-    validated_opts = NimbleOptions.validate!(opts, @start_link_opts)
+    api_telemetry :service, %{service_name: opts[:service_name]} do
+      validated_opts = NimbleOptions.validate!(opts, @start_link_opts)
 
-    case Runtime.Service.start_link(validated_opts) do
-      {:ok, pid} ->
-        {:ok, pid}
+      case Runtime.Service.start_link(validated_opts) do
+        {:ok, pid} ->
+          {:ok, pid}
 
-      {:error, reason} ->
-        {:error,
-         Mserror.SettingsError.new(:service_management, "Failed to start Settings service.",
-           cause: reason,
-           context: %ErrorContext{
-             origin: {__MODULE__, :start_link, 1},
-             parameters: %{opts: validated_opts}
-           }
-         )}
+        {:error, reason} ->
+          {:error,
+           Mserror.SettingsError.new(:service_management, "Failed to start Settings service.",
+             cause: reason,
+             context: %ErrorContext{
+               origin: {__MODULE__, :start_link, 1},
+               parameters: %{opts: validated_opts}
+             }
+           )}
 
-      :ignore ->
-        :ignore
+        :ignore ->
+          :ignore
+      end
     end
   end
 
@@ -331,21 +337,26 @@ defmodule MscmpSystSettings do
   @spec create(MscmpSystSettings.Types.setting_params()) ::
           :ok | {:error, Mserror.SettingsError.t()}
   def create(creation_params) do
-    call_result = GenServer.call(Runtime.ProcessUtils.get_service(), {:create, creation_params})
+    api_telemetry :settings, %{
+      operation: :create,
+      setting_name: creation_params[:internal_name]
+    } do
+      call_result = GenServer.call(Runtime.ProcessUtils.get_service(), {:create, creation_params})
 
-    case call_result do
-      :ok ->
-        :ok
+      case call_result do
+        :ok ->
+          :ok
 
-      {:error, _} = error ->
-        {:error,
-         Mserror.SettingsError.new(:settings_data, "Failure creating setting.",
-           cause: error,
-           context: %ErrorContext{
-             origin: {__MODULE__, :create, 1},
-             parameters: %{creation_params: creation_params}
-           }
-         )}
+        {:error, _} = error ->
+          {:error,
+           Mserror.SettingsError.new(:settings_data, "Failure creating setting.",
+             cause: error,
+             context: %ErrorContext{
+               origin: {__MODULE__, :create, 1},
+               parameters: %{creation_params: creation_params}
+             }
+           )}
+      end
     end
   end
 
@@ -384,28 +395,34 @@ defmodule MscmpSystSettings do
           any()
         ) :: :ok | {:error, Mserror.SettingsError.t()}
   def set_value(setting_name, setting_type, setting_value) do
-    update_params = Map.put_new(%{}, setting_type, setting_value)
+    api_telemetry :settings, %{
+      operation: :set_value,
+      setting_name: setting_name,
+      setting_type: setting_type
+    } do
+      update_params = Map.put_new(%{}, setting_type, setting_value)
 
-    call_result =
-      GenServer.call(Runtime.ProcessUtils.get_service(), {:update, setting_name, update_params})
+      call_result =
+        GenServer.call(Runtime.ProcessUtils.get_service(), {:update, setting_name, update_params})
 
-    case call_result do
-      :ok ->
-        :ok
+      case call_result do
+        :ok ->
+          :ok
 
-      {:error, _} = error ->
-        {:error,
-         Mserror.SettingsError.new(:settings_data, "Failure updating setting.",
-           cause: error,
-           context: %ErrorContext{
-             origin: {__MODULE__, :set_value, 3},
-             parameters: %{
-               setting_name: setting_name,
-               setting_type: setting_type,
-               setting_value: setting_value
+        {:error, _} = error ->
+          {:error,
+           Mserror.SettingsError.new(:settings_data, "Failure updating setting.",
+             cause: error,
+             context: %ErrorContext{
+               origin: {__MODULE__, :set_value, 3},
+               parameters: %{
+                 setting_name: setting_name,
+                 setting_type: setting_type,
+                 setting_value: setting_value
+               }
              }
-           }
-         )}
+           )}
+      end
     end
   end
 
@@ -455,25 +472,31 @@ defmodule MscmpSystSettings do
           MscmpSystSettings.Types.setting_params()
         ) :: :ok | {:error, Mserror.SettingsError.t()}
   def set_values(setting_name, update_params) do
-    call_result =
-      GenServer.call(Runtime.ProcessUtils.get_service(), {:update, setting_name, update_params})
+    api_telemetry :settings, %{
+      operation: :set_values,
+      setting_name: setting_name,
+      update_keys: Map.keys(update_params)
+    } do
+      call_result =
+        GenServer.call(Runtime.ProcessUtils.get_service(), {:update, setting_name, update_params})
 
-    case call_result do
-      :ok ->
-        :ok
+      case call_result do
+        :ok ->
+          :ok
 
-      {:error, _} = error ->
-        {:error,
-         Mserror.SettingsError.new(:settings_data, "Failure updating setting.",
-           cause: error,
-           context: %ErrorContext{
-             origin: {__MODULE__, :set_values, 2},
-             parameters: %{
-               setting_name: setting_name,
-               update_params: update_params
+        {:error, _} = error ->
+          {:error,
+           Mserror.SettingsError.new(:settings_data, "Failure updating setting.",
+             cause: error,
+             context: %ErrorContext{
+               origin: {__MODULE__, :set_values, 2},
+               parameters: %{
+                 setting_name: setting_name,
+                 update_params: update_params
+               }
              }
-           }
-         )}
+           )}
+      end
     end
   end
 
@@ -580,21 +603,26 @@ defmodule MscmpSystSettings do
   @spec delete(MscmpSystSettings.Types.setting_name()) ::
           :ok | {:error, Mserror.SettingsError.t()}
   def delete(setting_name) do
-    call_result = GenServer.call(Runtime.ProcessUtils.get_service(), {:delete, setting_name})
+    api_telemetry :settings, %{
+      operation: :delete,
+      setting_name: setting_name
+    } do
+      call_result = GenServer.call(Runtime.ProcessUtils.get_service(), {:delete, setting_name})
 
-    case call_result do
-      :ok ->
-        :ok
+      case call_result do
+        :ok ->
+          :ok
 
-      {:error, _} = error ->
-        {:error,
-         Mserror.SettingsError.new(:settings_data, "Failure deleting setting.",
-           cause: error,
-           context: %ErrorContext{
-             origin: {__MODULE__, :delete, 1},
-             parameters: %{setting_name: setting_name}
-           }
-         )}
+        {:error, _} = error ->
+          {:error,
+           Mserror.SettingsError.new(:settings_data, "Failure deleting setting.",
+             cause: error,
+             context: %ErrorContext{
+               origin: {__MODULE__, :delete, 1},
+               parameters: %{setting_name: setting_name}
+             }
+           )}
+      end
     end
   end
 
