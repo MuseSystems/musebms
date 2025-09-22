@@ -19,6 +19,10 @@ defmodule MscmpSystLimiter do
 
   use MscmpSystService
 
+  use MscmpSystTelemetry,
+    component: :mscmp_syst_limiter,
+    categories: [:service, :limiter]
+
   import Msutils.Guards, only: [is_reg_atom: 1]
 
   alias MscmpSystError.Types.Context, as: ErrorContext
@@ -130,30 +134,32 @@ defmodule MscmpSystLimiter do
   @impl true
   @spec start_link(Keyword.t()) :: {:ok, pid()} | :ignore | {:error, Mserror.LimiterError.t()}
   def start_link(opts) do
-    validated_opts = NimbleOptions.validate!(opts, @start_link_opts)
+    api_telemetry :service, %{service_name: opts[:service_name]} do
+      validated_opts = NimbleOptions.validate!(opts, @start_link_opts)
 
-    genserver_opts =
-      [name: validated_opts[:service_name]] ++
-        Keyword.take(validated_opts, [:debug, :timeout, :hibernate_after])
+      genserver_opts =
+        [name: validated_opts[:service_name]] ++
+          Keyword.take(validated_opts, [:debug, :timeout, :hibernate_after])
 
-    init_opts = Keyword.take(validated_opts, [:algorithms, :cleanup_interval])
+      init_opts = Keyword.take(validated_opts, [:algorithms, :cleanup_interval])
 
-    case GenServer.start_link(Runtime.Service, init_opts, genserver_opts) do
-      {:ok, pid} ->
-        {:ok, pid}
+      case GenServer.start_link(Runtime.Service, init_opts, genserver_opts) do
+        {:ok, pid} ->
+          {:ok, pid}
 
-      {:error, reason} ->
-        {:error,
-         Mserror.LimiterError.new(:service_management, "Failed to start rate limiting services",
-           cause: reason,
-           context: %ErrorContext{
-             origin: {__MODULE__, :start_link, 1},
-             parameters: %{opts: validated_opts}
-           }
-         )}
+        {:error, reason} ->
+          {:error,
+           Mserror.LimiterError.new(:service_management, "Failed to start rate limiting services",
+             cause: reason,
+             context: %ErrorContext{
+               origin: {__MODULE__, :start_link, 1},
+               parameters: %{opts: validated_opts}
+             }
+           )}
 
-      :ignore ->
-        :ignore
+        :ignore ->
+          :ignore
+      end
     end
   end
 
@@ -493,39 +499,46 @@ defmodule MscmpSystLimiter do
       when algorithm in [:semaphore, :token_bucket] and
              is_reg_atom(component) and is_reg_atom(type) and
              is_binary(id) do
-    validated_opts =
-      case algorithm do
-        :semaphore -> NimbleOptions.validate!(opts, @new_semaphore_opts)
-        :token_bucket -> NimbleOptions.validate!(opts, @new_token_bucket_opts)
-      end
+    api_telemetry :limiter, %{
+      algorithm: algorithm,
+      component: component,
+      type: type,
+      id: id
+    } do
+      validated_opts =
+        case algorithm do
+          :semaphore -> NimbleOptions.validate!(opts, @new_semaphore_opts)
+          :token_bucket -> NimbleOptions.validate!(opts, @new_token_bucket_opts)
+        end
 
-    new_module =
-      case algorithm do
-        :semaphore -> Impl.Semaphore
-        :token_bucket -> Impl.TokenBucket
-      end
+      new_module =
+        case algorithm do
+          :semaphore -> Impl.Semaphore
+          :token_bucket -> Impl.TokenBucket
+        end
 
-    case new_module.new(component, type, id, validated_opts) do
-      {:ok, limiter_instance} ->
-        {:ok, limiter_instance}
+      case new_module.new(component, type, id, validated_opts) do
+        {:ok, limiter_instance} ->
+          {:ok, limiter_instance}
 
-      {:error, _} = error ->
-        {:error,
-         Mserror.LimiterError.new(
-           :limiter_management,
-           "Error establishing new #{algorithm} limiter instance.",
-           parse_error: error,
-           context: %ErrorContext{
-             origin: {__MODULE__, :new, 5},
-             parameters: %{
-               algorithm: algorithm,
-               component: component,
-               type: type,
-               id: id,
-               opts: validated_opts
+        {:error, _} = error ->
+          {:error,
+           Mserror.LimiterError.new(
+             :limiter_management,
+             "Error establishing new #{algorithm} limiter instance.",
+             parse_error: error,
+             context: %ErrorContext{
+               origin: {__MODULE__, :new, 5},
+               parameters: %{
+                 algorithm: algorithm,
+                 component: component,
+                 type: type,
+                 id: id,
+                 opts: validated_opts
+               }
              }
-           }
-         )}
+           )}
+      end
     end
   end
 
@@ -699,30 +712,38 @@ defmodule MscmpSystLimiter do
   @spec use(limiter_instance :: Types.limiter_instance(), increment :: integer()) ::
           {:ok, Types.limiter_result()} | {:error, Mserror.LimiterError.t()}
   def use(limiter_instance, increment) do
-    use_module =
-      case limiter_instance do
-        {:semaphore, _, _} -> Impl.Semaphore
-        {:token_bucket, _, _} -> Impl.TokenBucket
-      end
+    {algorithm, component_type_id, _} = limiter_instance
 
-    case use_module.use(limiter_instance, increment) do
-      {:ok, _} = result ->
-        result
+    api_telemetry :limiter, %{
+      algorithm: algorithm,
+      limiter_key: component_type_id,
+      increment: increment
+    } do
+      use_module =
+        case limiter_instance do
+          {:semaphore, _, _} -> Impl.Semaphore
+          {:token_bucket, _, _} -> Impl.TokenBucket
+        end
 
-      {:error, _} = error ->
-        {:error,
-         Mserror.LimiterError.new(
-           :limiter_management,
-           "Error trying to consume possibly available limiter availability.",
-           parse_error: error,
-           context: %ErrorContext{
-             origin: {__MODULE__, :use, 2},
-             parameters: %{
-               limiter_instance: limiter_instance,
-               increment: increment
+      case use_module.use(limiter_instance, increment) do
+        {:ok, _} = result ->
+          result
+
+        {:error, _} = error ->
+          {:error,
+           Mserror.LimiterError.new(
+             :limiter_management,
+             "Error trying to consume possibly available limiter availability.",
+             parse_error: error,
+             context: %ErrorContext{
+               origin: {__MODULE__, :use, 2},
+               parameters: %{
+                 limiter_instance: limiter_instance,
+                 increment: increment
+               }
              }
-           }
-         )}
+           )}
+      end
     end
   end
 
@@ -858,29 +879,36 @@ defmodule MscmpSystLimiter do
   @spec get(limiter_instance :: Types.limiter_instance()) ::
           {:ok, Types.limiter_result()} | {:error, Mserror.LimiterError.t()}
   def get(limiter_instance) do
-    get_module =
-      case limiter_instance do
-        {:semaphore, _, _} -> Impl.Semaphore
-        {:token_bucket, _, _} -> Impl.TokenBucket
-      end
+    {algorithm, component_type_id, _} = limiter_instance
 
-    case get_module.get(limiter_instance) do
-      {:ok, _} = result ->
-        result
+    api_telemetry :limiter, %{
+      algorithm: algorithm,
+      limiter_key: component_type_id
+    } do
+      get_module =
+        case limiter_instance do
+          {:semaphore, _, _} -> Impl.Semaphore
+          {:token_bucket, _, _} -> Impl.TokenBucket
+        end
 
-      {:error, _} = error ->
-        {:error,
-         Mserror.LimiterError.new(
-           :limiter_management,
-           "Error trying retrieve the current limiter state.",
-           parse_error: error,
-           context: %ErrorContext{
-             origin: {__MODULE__, :get, 1},
-             parameters: %{
-               limiter_instance: limiter_instance
+      case get_module.get(limiter_instance) do
+        {:ok, _} = result ->
+          result
+
+        {:error, _} = error ->
+          {:error,
+           Mserror.LimiterError.new(
+             :limiter_management,
+             "Error trying retrieve the current limiter state.",
+             parse_error: error,
+             context: %ErrorContext{
+               origin: {__MODULE__, :get, 1},
+               parameters: %{
+                 limiter_instance: limiter_instance
+               }
              }
-           }
-         )}
+           )}
+      end
     end
   end
 
@@ -1066,36 +1094,44 @@ defmodule MscmpSystLimiter do
   @spec set(limiter_instance :: Types.limiter_instance(), opts :: Keyword.t()) ::
           {:ok, Types.limiter_result()} | {:error, Mserror.LimiterError.t()}
   def set(limiter_instance, opts) do
-    validated_opts =
-      case limiter_instance do
-        {:semaphore, _, _} -> NimbleOptions.validate!(opts, @set_semaphore_opts)
-        {:token_bucket, _, _} -> NimbleOptions.validate!(opts, @set_token_bucket_opts)
-      end
+    {algorithm, component_type_id, _} = limiter_instance
 
-    set_module =
-      case limiter_instance do
-        {:semaphore, _, _} -> Impl.Semaphore
-        {:token_bucket, _, _} -> Impl.TokenBucket
-      end
+    api_telemetry :limiter, %{
+      algorithm: algorithm,
+      limiter_key: component_type_id,
+      opts_keys: Keyword.keys(opts)
+    } do
+      validated_opts =
+        case limiter_instance do
+          {:semaphore, _, _} -> NimbleOptions.validate!(opts, @set_semaphore_opts)
+          {:token_bucket, _, _} -> NimbleOptions.validate!(opts, @set_token_bucket_opts)
+        end
 
-    case set_module.set(limiter_instance, validated_opts) do
-      {:ok, limiter_result} ->
-        {:ok, limiter_result}
+      set_module =
+        case limiter_instance do
+          {:semaphore, _, _} -> Impl.Semaphore
+          {:token_bucket, _, _} -> Impl.TokenBucket
+        end
 
-      {:error, _} = error ->
-        {:error,
-         Mserror.LimiterError.new(
-           :limiter_management,
-           "Error setting limiter available capacity to explicit value.",
-           parse_error: error,
-           context: %ErrorContext{
-             origin: {__MODULE__, :set, 2},
-             parameters: %{
-               limiter_instance: limiter_instance,
-               opts: validated_opts
+      case set_module.set(limiter_instance, validated_opts) do
+        {:ok, limiter_result} ->
+          {:ok, limiter_result}
+
+        {:error, _} = error ->
+          {:error,
+           Mserror.LimiterError.new(
+             :limiter_management,
+             "Error setting limiter available capacity to explicit value.",
+             parse_error: error,
+             context: %ErrorContext{
+               origin: {__MODULE__, :set, 2},
+               parameters: %{
+                 limiter_instance: limiter_instance,
+                 opts: validated_opts
+               }
              }
-           }
-         )}
+           )}
+      end
     end
   end
 
@@ -1249,29 +1285,36 @@ defmodule MscmpSystLimiter do
   @spec reset(limiter_instance :: Types.limiter_instance()) ::
           {:ok, Types.limiter_result()} | {:error, Mserror.LimiterError.t()}
   def reset(limiter_instance) do
-    reset_module =
-      case limiter_instance do
-        {:semaphore, _, _} -> Impl.Semaphore
-        {:token_bucket, _, _} -> Impl.TokenBucket
-      end
+    {algorithm, component_type_id, _} = limiter_instance
 
-    case reset_module.reset(limiter_instance) do
-      {:ok, limiter_result} ->
-        {:ok, limiter_result}
+    api_telemetry :limiter, %{
+      algorithm: algorithm,
+      limiter_key: component_type_id
+    } do
+      reset_module =
+        case limiter_instance do
+          {:semaphore, _, _} -> Impl.Semaphore
+          {:token_bucket, _, _} -> Impl.TokenBucket
+        end
 
-      {:error, error} ->
-        {:error,
-         Mserror.LimiterError.new(
-           :limiter_management,
-           "Error resetting limiter.",
-           parse_error: error,
-           context: %ErrorContext{
-             origin: {__MODULE__, :reset, 1},
-             parameters: %{
-               limiter_instance: limiter_instance
+      case reset_module.reset(limiter_instance) do
+        {:ok, limiter_result} ->
+          {:ok, limiter_result}
+
+        {:error, error} ->
+          {:error,
+           Mserror.LimiterError.new(
+             :limiter_management,
+             "Error resetting limiter.",
+             parse_error: error,
+             context: %ErrorContext{
+               origin: {__MODULE__, :reset, 1},
+               parameters: %{
+                 limiter_instance: limiter_instance
+               }
              }
-           }
-         )}
+           )}
+      end
     end
   end
 end

@@ -30,6 +30,7 @@ defmodule MscmpSystLimiter.MixProject do
   @msbms_deps [
     :mscmp_syst_error,
     :mscmp_syst_service,
+    :mscmp_syst_telemetry,
     :mscmp_syst_utils
   ]
 
