@@ -17,11 +17,18 @@ defmodule MscmpSystEnums do
              |> String.split("<!-- MDOC !-->")
              |> Enum.fetch!(1)
 
+  use MscmpSystService
+
+  use MscmpSystTelemetry,
+    component: :mscmp_syst_enums,
+    categories: [:service, :enums]
+
   alias MscmpSystEnums.Impl
   alias MscmpSystEnums.Runtime
   alias MscmpSystEnums.Runtime.ProcessUtils
   alias MscmpSystEnums.Types
   alias MscmpSystError.Types.Context, as: ErrorContext
+  alias MscmpSystService.Types, as: ServiceTypes
 
   ##############################################################################
   #
@@ -30,25 +37,6 @@ defmodule MscmpSystEnums do
   #
 
   option_defs = [
-    debug: [
-      type: :boolean,
-      doc: """
-      If true, the GenServer backing the Enumerations Service will be started in
-      debug mode.
-      """
-    ],
-    timeout: [
-      type: :timeout,
-      default: :infinity,
-      doc: "Timeout value for the start_link call."
-    ],
-    hibernate_after: [
-      type: :timeout,
-      doc: """
-      If present, the GenServer process awaits any message for the specified
-      time before hibernating.  The timeout value is expressed in Milliseconds.
-      """
-    ],
     datastore_context_name: [
       type:
         {:or,
@@ -57,16 +45,6 @@ defmodule MscmpSystEnums do
       doc: """
       Specifies the name of the Datastore Context to be used by the Enumerations
       Service.
-      """
-    ],
-    service_name: [
-      type:
-        {:or,
-         [nil, :atom, {:tuple, [{:in, [:via]}, :atom, :any]}, {:tuple, [{:in, [:global]}, :any]}]},
-      type_doc: "`t:GenServer.name/0 or `nil`",
-      doc: """
-      The name to use for the GenServer backing this specific Enumerations
-      Service instance.
       """
     ],
     functional_type_name: [
@@ -85,12 +63,8 @@ defmodule MscmpSystEnums do
 
   @child_spec_opts NimbleOptions.new!(
                      Keyword.take(option_defs, [
-                       :service_name,
-                       :datastore_context_name,
-                       :debug,
-                       :timeout,
-                       :hibernate_after
-                     ])
+                       :datastore_context_name
+                     ]) ++ @service_option_defs
                    )
 
   @doc section: :service_management
@@ -111,18 +85,19 @@ defmodule MscmpSystEnums do
       ...>   service_name: MyApp.EnumsService,
       ...>   datastore_context_name: MyApp.DatastoreContext)
       %{
-        id: MscmpSystEnums.Runtime.Service,
+        id: MscmpSystEnums,
         start:
           {MscmpSystEnums,
            :start_link,
-           [MyApp.EnumsService, MyApp.DatastoreContext, [timeout: :infinity]]},
+           [[timeout: :infinity, service_name: MyApp.EnumsService, datastore_context_name: MyApp.DatastoreContext]]},
       }
 
   """
+  @impl true
   @spec child_spec(Keyword.t()) :: Supervisor.child_spec()
   def child_spec(opts) do
-    opts = NimbleOptions.validate!(opts, @child_spec_opts)
-    Runtime.Service.child_spec(opts)
+    validated_opts = NimbleOptions.validate!(opts, @child_spec_opts)
+    %{id: __MODULE__, start: {MscmpSystEnums, :start_link, [validated_opts]}}
   end
 
   ##############################################################################
@@ -132,7 +107,9 @@ defmodule MscmpSystEnums do
   #
 
   @start_link_opts NimbleOptions.new!(
-                     Keyword.take(option_defs, [:debug, :timeout, :hibernate_after])
+                     Keyword.take(option_defs, [
+                       :datastore_context_name
+                     ]) ++ @service_option_defs
                    )
 
   @doc section: :service_management
@@ -146,42 +123,36 @@ defmodule MscmpSystEnums do
 
   ## Parameters
 
-    * `service_name` - The name to use for the GenServer backing this specific
-      Enumerations Service instance.
-
-    * `datastore_context_name` - The name of the Datastore Context to be used
-      by the Enumerations Service.
-
-    * `opts` - A keyword list of options.
+    * `opts` - Options for the Enumerations Service. See the Options section below
+      for more information.
 
   ## Options
 
     #{NimbleOptions.docs(@start_link_opts)}
   """
-  @spec start_link(Types.service_name(), MscmpSystDb.Types.context_service_name()) ::
-          {:ok, pid()} | {:error, Mserror.EnumsError.t()}
-  @spec start_link(Types.service_name(), MscmpSystDb.Types.context_service_name(), Keyword.t()) ::
-          {:ok, pid()} | {:error, Mserror.EnumsError.t()}
-  def start_link(service_name, datastore_context_name, opts \\ []) do
-    validated_opts = NimbleOptions.validate!(opts, @start_link_opts)
+  @impl true
+  @spec start_link(Keyword.t()) :: {:ok, pid()} | :ignore | {:error, Mserror.EnumsError.t()}
+  def start_link(opts) do
+    api_telemetry :service, %{service_name: opts[:service_name]} do
+      validated_opts = NimbleOptions.validate!(opts, @start_link_opts)
 
-    case Runtime.Service.start_link(service_name, datastore_context_name, validated_opts) do
-      {:ok, pid} ->
-        {:ok, pid}
+      case Runtime.Service.start_link(validated_opts) do
+        {:ok, pid} ->
+          {:ok, pid}
 
-      {:error, _} = error ->
-        {:error,
-         Mserror.EnumsError.new(:service_management, "Failed to start Enumerations Service",
-           cause: error,
-           context: %ErrorContext{
-             origin: {__MODULE__, :start_link, 3},
-             parameters: %{
-               service_name: service_name,
-               datastore_context_name: datastore_context_name,
-               opts: validated_opts
+        {:error, reason} ->
+          {:error,
+           Mserror.EnumsError.new(:service_management, "Failed to start Enumerations Service",
+             cause: reason,
+             context: %ErrorContext{
+               origin: {__MODULE__, :start_link, 1},
+               parameters: %{opts: validated_opts}
              }
-           }
-         )}
+           )}
+
+        :ignore ->
+          :ignore
+      end
     end
   end
 
@@ -193,13 +164,12 @@ defmodule MscmpSystEnums do
 
   @doc section: :service_management
   @doc """
-  Sets the specific Enumeration Service instance which the current process
-  should use.
-
+  Establishes the currently active Enumerations Service instance for the current
+  process.
 
   ## Parameters
 
-    * `enums_service_name` - the name under which the Enumerations Service is
+    * `service_name` - the name under which the Enumerations Service is
       started and by which it may be referenced.  This is any name that may be
       used to reference a GenServer process.  Additionally, this value may be
       set `nil` to clear the currently set Enumerations Service name.
@@ -223,8 +193,9 @@ defmodule MscmpSystEnums do
       ...> MscmpSystEnums.get_service()
       nil
   """
-  @spec put_service(Types.service_name()) :: Types.service_name()
-  defdelegate put_service(enums_service_name), to: ProcessUtils
+  @impl true
+  @spec put_service(ServiceTypes.service_name()) :: ServiceTypes.service_name()
+  defdelegate put_service(service_name), to: ProcessUtils
 
   ##############################################################################
   #
@@ -259,8 +230,45 @@ defmodule MscmpSystEnums do
       ...> MscmpSystEnums.get_service()
       nil
   """
-  @spec get_service() :: Types.service_name()
+  @impl true
+  @spec get_service() :: ServiceTypes.service_name()
   defdelegate get_service(), to: ProcessUtils
+
+  ##############################################################################
+  #
+  # get_runtime_config
+  #
+  #
+
+  @doc section: :service_management
+  @doc """
+  Retrieves the runtime configuration of a previously started Enumerations Service.
+
+  Some services need a mechanism to return features such as `:ets` table names
+  which are set at runtime.  This function provides the mechanism by which such
+  runtime configuration can be returned.
+
+  ## Returns
+
+  Returns a map containing the runtime configuration of the currently active
+  Enumerations Service, or `nil` if no service is currently set.
+
+  ## Examples
+
+    Getting runtime configuration from the current service:
+
+      iex> old_service = MscmpSystEnums.put_service(TestSupport.get_enums_service_name())
+      iex> config = MscmpSystEnums.get_runtime_config()
+      iex> %{enums_table: table_id} = config
+      iex> is_reference(table_id)
+      true
+      iex> MscmpSystEnums.put_service(old_service)
+      iex> :ok
+      :ok
+  """
+  @impl true
+  @spec get_runtime_config() :: map() | nil
+  defdelegate get_runtime_config(), to: ProcessUtils
 
   ##############################################################################
   #
@@ -599,8 +607,14 @@ defmodule MscmpSystEnums do
       :ok
   """
   @spec create(Types.enum_params()) :: :ok | {:error, Mserror.EnumsError.t()}
-  def create(enum_params),
-    do: ProcessUtils.get_service() |> GenServer.call({:create, enum_params})
+  def create(enum_params) do
+    api_telemetry :enums, %{
+      operation: :create,
+      enum_name: enum_params[:internal_name]
+    } do
+      ProcessUtils.get_service() |> GenServer.call({:create, enum_params})
+    end
+  end
 
   ##############################################################################
   #

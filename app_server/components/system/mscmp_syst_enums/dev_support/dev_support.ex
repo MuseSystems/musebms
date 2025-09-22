@@ -28,17 +28,22 @@ defmodule DevSupport do
   @datastore_context_name {:via, Registry, {@registry, @db_support_context_name}}
 
   def start_dev_environment(db_kind \\ :unit_testing) do
-     children =
+    children =
       [
         Registry.child_spec(keys: :unique, name: @registry),
         setup_database(db_kind),
         MscmpSystEnums.child_spec(
-          service_name: @enums_service_name, datastore_context_name: @datastore_context_name )
+          service_name: @enums_service_name,
+          datastore_context_name: @datastore_context_name
+        )
       ]
 
-      {:ok, _pid} =
-        Supervisor.start_link(
-          children, strategy: :one_for_one, name: :"MscmpSystEnums.DevSupportSupervisor")
+    {:ok, _pid} =
+      Supervisor.start_link(
+        children,
+        strategy: :one_for_one,
+        name: :"MscmpSystEnums.DevSupportSupervisor"
+      )
 
     _ = MscmpSystDb.put_datastore_context(@datastore_context_name)
     _ = MscmpSystEnums.put_service(@enums_service_name)
@@ -58,13 +63,13 @@ defmodule DevSupport do
 
     {:ok, _} = load_database(datastore_options, get_datastore_type(db_kind))
 
-    MscmpSystDb.Datastore.child_spec(datastore_options, context_registry: {Registry, @registry} )
+    MscmpSystDb.Datastore.child_spec(datastore_options, context_registry: {Registry, @registry})
   end
 
   defp cleanup_database(db_kind \\ :unit_testing) do
     datastore_options = get_datastore_options()
 
-    :ok = drop_database(datastore_options, context_registry: @registry)
+    :ok = drop_database(datastore_options, context_registry: {Registry, @registry})
 
     File.rm_rf!(Path.join(["priv", "database", get_datastore_type(db_kind)]))
   end

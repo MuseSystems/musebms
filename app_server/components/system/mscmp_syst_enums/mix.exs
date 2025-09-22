@@ -29,6 +29,8 @@ defmodule MscmpSystEnums.MixProject do
 
   @msbms_deps [
     :mscmp_syst_error,
+    :mscmp_syst_service,
+    :mscmp_syst_telemetry,
     :mscmp_syst_utils,
     :mscmp_syst_utils_data,
     :mscmp_syst_db
