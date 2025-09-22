@@ -1061,7 +1061,7 @@ defmodule IntegrationTest do
       )
     end
 
-    assert {:ok, bad_instance_state} =
+    assert {:ok, bad_instance_lifecycle_state} =
              MscmpSystAuthn.authenticate_api_token(
                "unowned_api_token_identity",
                "unowned_api_token_credential",
@@ -1069,7 +1069,7 @@ defmodule IntegrationTest do
                Ecto.UUID.generate()
              )
 
-    assert bad_instance_state.status == :rejected
+    assert bad_instance_lifecycle_state.status == :rejected
 
     assert {:ok, bad_host_state} =
              MscmpSystAuthn.authenticate_api_token(
@@ -1492,7 +1492,7 @@ defmodule IntegrationTest do
       )
     end
 
-    assert {:ok, bad_instance_state} =
+    assert {:ok, bad_instance_lifecycle_state} =
              MscmpSystAuthn.authenticate_api_token(
                "owner1_api_token_identity",
                "owner1_api_token_credential",
@@ -1501,7 +1501,7 @@ defmodule IntegrationTest do
                owning_owner_id: owner1_id
              )
 
-    assert bad_instance_state.status == :rejected
+    assert bad_instance_lifecycle_state.status == :rejected
 
     assert {:ok, bad_host_state} =
              MscmpSystAuthn.authenticate_api_token(
