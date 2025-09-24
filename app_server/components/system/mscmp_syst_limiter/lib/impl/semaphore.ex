@@ -160,9 +160,21 @@ defmodule MscmpSystLimiter.Impl.Semaphore do
   @spec reset(limiter_instance :: Types.limiter_instance()) ::
           {:ok, Types.limiter_result()} | ErrorTypes.parsable_error()
   def reset(limiter_instance) do
-    {_, _, atomics_ref} = limiter_instance
-    max_permits = :atomics.get(atomics_ref, @atomics_max_permits)
-    set(limiter_instance, current_permits: max_permits)
+    request_time = System.system_time(:millisecond)
+
+    with {:ok, refreshed_limiter} <- maybe_recreate_limiter(limiter_instance, request_time),
+         {_, _, atomics_ref} = refreshed_limiter,
+         {:ok, time_scale} <-
+           :atomics.get(atomics_ref, @atomics_time_scale_code) |> Common.decode_time_scale() do
+      max_permits = :atomics.get(atomics_ref, @atomics_max_permits)
+      ttl = :atomics.get(atomics_ref, @atomics_ttl)
+      expiry_time = request_time + ttl * Common.time_scale_to_ms(time_scale)
+
+      :ok = :atomics.put(atomics_ref, @atomics_current_permits, max_permits)
+      :ok = :atomics.put(atomics_ref, @atomics_expiry_time, expiry_time)
+
+      {:ok, {:allow, max_permits, refreshed_limiter}}
+    end
   end
 
   ##############################################################################
