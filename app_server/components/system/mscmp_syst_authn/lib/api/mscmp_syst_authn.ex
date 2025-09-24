@@ -204,23 +204,35 @@ defmodule MscmpSystAuthn do
       selecting an Instance or providing an MFA credential.
       """
     ],
-    identifier_rate_limit: [
-      type: {:tuple, [:pos_integer, :pos_integer]},
-      default: {5, 60_000 * 30},
+    identifier_limit: [
+      type: :map,
+      type_doc: "t:MscmpSystAuthn.Types.rate_limit_config/0",
+      type_spec: quote(do: MscmpSystAuthn.Types.rate_limit_config()),
+      keys: [
+        max_attempts: [required: true, type: :pos_integer],
+        time_window: [required: true, type: :pos_integer],
+        time_scale: [required: true, type: {:in, [:day, :hour, :minute, :second, :millisecond]}]
+      ],
+      default: %{max_attempts: 5, time_window: 30, time_scale: :minute},
       doc: """
       The number of allowed attempts within a given time period to authenticate
-      using any single identifier.  The tuple is of the form: {<attempts>,
-      <milliseconds>}.
+      using any single identifier.
       """
     ],
-    host_ban_rate_limit: [
-      type: {:tuple, [:pos_integer, :pos_integer]},
-      default: {30, 60_000 * 60 * 2},
+    host_limit: [
+      type: :map,
+      type_doc: "t:MscmpSystAuthn.Types.rate_limit_config/0",
+      type_spec: quote(do: MscmpSystAuthn.Types.rate_limit_config()),
+      keys: [
+        max_attempts: [required: true, type: :pos_integer],
+        time_window: [required: true, type: :pos_integer],
+        time_scale: [required: true, type: {:in, [:day, :hour, :minute, :second, :millisecond]}]
+      ],
+      default: %{max_attempts: 30, time_window: 2, time_scale: :hour},
       doc: """
       The number of consecutive failed attempts made from a single host
       permitted during the given time period before that host is added to the
-      "banned hosts" list.  The tuple is of the form:
-      {<attempts>, <milliseconds>}
+      "banned hosts" list.
       """
     ]
   ]
@@ -4246,8 +4258,8 @@ defmodule MscmpSystAuthn do
                                         :owning_owner_id,
                                         :instance_id,
                                         :deadline_minutes,
-                                        :identifier_rate_limit,
-                                        :host_ban_rate_limit
+                                        :identifier_limit,
+                                        :host_limit
                                       ])
                                     )
 
@@ -4369,8 +4381,8 @@ defmodule MscmpSystAuthn do
                                         Keyword.take(option_defs, [
                                           :owning_owner_id,
                                           :deadline_minutes,
-                                          :identifier_rate_limit,
-                                          :host_ban_rate_limit
+                                          :identifier_limit,
+                                          :host_limit
                                         ])
                                       )
 
@@ -4453,8 +4465,8 @@ defmodule MscmpSystAuthn do
                                       Keyword.take(option_defs, [
                                         :owning_owner_id,
                                         :deadline_minutes,
-                                        :identifier_rate_limit,
-                                        :host_ban_rate_limit
+                                        :identifier_limit,
+                                        :host_limit
                                       ])
                                     )
 
@@ -4556,8 +4568,8 @@ defmodule MscmpSystAuthn do
                                  Keyword.take(option_defs, [
                                    :owning_owner_id,
                                    :deadline_minutes,
-                                   :identifier_rate_limit,
-                                   :host_ban_rate_limit
+                                   :identifier_limit,
+                                   :host_limit
                                  ])
                                )
 

@@ -64,7 +64,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
 
   @email_password_operations [
     :check_global_network_rules,
-    :check_identifier_rate_limit,
+    :check_identifier_limit,
     :check_identity,
     :check_credential,
     :check_instance,
@@ -73,14 +73,14 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
 
   @email_password_instance_bypass_operations [
     :check_global_network_rules,
-    :check_identifier_rate_limit,
+    :check_identifier_limit,
     :check_identity,
     :check_credential
   ]
 
   @api_token_operations [
     :check_global_network_rules,
-    :check_identifier_rate_limit,
+    :check_identifier_limit,
     :check_identity,
     :check_credential,
     :check_instance,
@@ -89,21 +89,21 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
 
   @api_token_instance_bypass_operations [
     :check_global_network_rules,
-    :check_identifier_rate_limit,
+    :check_identifier_limit,
     :check_identity,
     :check_credential
   ]
 
   @validation_token_operations [
     :check_global_network_rules,
-    :check_identifier_rate_limit,
+    :check_identifier_limit,
     :check_identity,
     :check_credential
   ]
 
   @recovery_token_operations [
     :check_global_network_rules,
-    :check_identifier_rate_limit,
+    :check_identifier_limit,
     :check_identity,
     :check_credential
   ]
@@ -170,8 +170,8 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   @spec authenticate_email_password(AuthenticationState.t(), Keyword.t()) ::
           {:ok, AuthenticationState.t()}
   def authenticate_email_password(auth_state, opts) do
-    identifier_rate_limit_opts = Keyword.take(opts, [:identifier_rate_limit])
-    host_rate_limit_opts = Keyword.take(opts, [:host_ban_rate_limit])
+    identifier_limit_opts = Keyword.take(opts, [:identifier_limit])
+    host_rate_limit_opts = Keyword.take(opts, [:host_limit])
 
     preliminary_auth_state =
       %{
@@ -182,7 +182,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
       |> maybe_start_email_password_authentication()
       |> confirm_deadline()
       |> confirm_instance_identified()
-      |> confirm_identifier_rate_limit(identifier_rate_limit_opts)
+      |> confirm_identifier_limit(identifier_limit_opts)
       |> confirm_global_network_rules()
       |> confirm_email_identity()
       |> confirm_password_credential()
@@ -195,7 +195,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
       |> confirm_instance_network_rules()
       |> confirm_host_rate_limit(host_rate_limit_opts)
       |> finalize_authentication()
-      |> maybe_reset_rate_limits()
+      |> maybe_reset_limits()
       |> cleanse_auth_state()
       |> then(&{:ok, &1})
     end
@@ -312,13 +312,13 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   @spec authenticate_api_token(AuthenticationState.t(), Keyword.t()) ::
           {:ok, AuthenticationState.t()}
   def authenticate_api_token(auth_state, opts) do
-    identifier_rate_limit_opts = Keyword.take(opts, [:identifier_rate_limit])
-    host_rate_limit_opts = Keyword.take(opts, [:host_ban_rate_limit])
+    identifier_limit_opts = Keyword.take(opts, [:identifier_limit])
+    host_rate_limit_opts = Keyword.take(opts, [:host_limit])
 
     auth_state
     |> struct!(owning_owner_id: auth_state.owning_owner_id || opts[:owning_owner_id])
     |> confirm_deadline()
-    |> confirm_identifier_rate_limit(identifier_rate_limit_opts)
+    |> confirm_identifier_limit(identifier_limit_opts)
     |> confirm_global_network_rules()
     |> confirm_api_token_identity()
     |> confirm_api_token_credential()
@@ -326,7 +326,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     |> confirm_instance_network_rules()
     |> confirm_host_rate_limit(host_rate_limit_opts)
     |> finalize_authentication()
-    |> maybe_reset_rate_limits()
+    |> maybe_reset_limits()
     |> cleanse_auth_state()
     |> then(&{:ok, &1})
   end
@@ -407,19 +407,19 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   @spec authenticate_validation_token(AuthenticationState.t(), Keyword.t()) ::
           {:ok, AuthenticationState.t()}
   def authenticate_validation_token(auth_state, opts) do
-    identifier_rate_limit_opts = Keyword.take(opts, [:identifier_rate_limit])
-    host_rate_limit_opts = Keyword.take(opts, [:host_ban_rate_limit])
+    identifier_limit_opts = Keyword.take(opts, [:identifier_limit])
+    host_rate_limit_opts = Keyword.take(opts, [:host_limit])
 
     auth_state
     |> confirm_deadline()
-    |> confirm_identifier_rate_limit(identifier_rate_limit_opts)
+    |> confirm_identifier_limit(identifier_limit_opts)
     |> confirm_global_network_rules()
     |> confirm_validation_identity()
     |> confirm_validation_credential()
     |> confirm_host_rate_limit(host_rate_limit_opts)
     |> finalize_authentication()
     |> confirm_successful_validation()
-    |> maybe_reset_rate_limits()
+    |> maybe_reset_limits()
     |> cleanse_auth_state()
     |> then(&{:ok, &1})
   end
@@ -505,19 +505,19 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   @spec authenticate_recovery_token(AuthenticationState.t(), Keyword.t()) ::
           {:ok, AuthenticationState.t()} | {:error, term()}
   def authenticate_recovery_token(auth_state, opts) do
-    identifier_rate_limit_opts = Keyword.take(opts, [:identifier_rate_limit])
-    host_rate_limit_opts = Keyword.take(opts, [:host_ban_rate_limit])
+    identifier_limit_opts = Keyword.take(opts, [:identifier_limit])
+    host_rate_limit_opts = Keyword.take(opts, [:host_limit])
 
     auth_state
     |> confirm_deadline()
-    |> confirm_identifier_rate_limit(identifier_rate_limit_opts)
+    |> confirm_identifier_limit(identifier_limit_opts)
     |> confirm_global_network_rules()
     |> confirm_credential_recovery()
     |> confirm_recovery_credential()
     |> confirm_host_rate_limit(host_rate_limit_opts)
     |> finalize_authentication()
     |> confirm_successful_recovery()
-    |> maybe_reset_rate_limits()
+    |> maybe_reset_limits()
     |> cleanse_auth_state()
     |> then(&{:ok, &1})
   rescue
@@ -782,27 +782,35 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     }
   end
 
-  defp confirm_identifier_rate_limit(auth_state, opts) do
-    if :check_identifier_rate_limit in auth_state.pending_operations do
-      auth_state.identifier
-      |> check_identifier_rate_limit(opts)
-      |> process_identifier_rate_limit_result(auth_state)
+  defp confirm_identifier_limit(auth_state, opts) do
+    if :check_identifier_limit in auth_state.pending_operations do
+      auth_state
+      |> check_identifier_limit(opts)
+      |> process_identifier_limit_result(auth_state)
     else
       auth_state
     end
   end
 
-  defp process_identifier_rate_limit_result({:allow, _}, auth_state) do
+  defp process_identifier_limit_result({:allow, _, limiter_instance}, auth_state) do
     auth_state.pending_operations
-    |> List.delete(:check_identifier_rate_limit)
-    |> then(&%AuthenticationState{auth_state | pending_operations: &1})
+    |> List.delete(:check_identifier_limit)
+    |> then(
+      &%AuthenticationState{
+        auth_state
+        | pending_operations: &1,
+          identifier_limiter: limiter_instance
+      }
+    )
   end
 
-  defp process_identifier_rate_limit_result({:deny, _}, auth_state),
-    do: %AuthenticationState{auth_state | status: :rejected_rate_limited, pending_operations: []}
-
-  defp process_identifier_rate_limit_result(_error, _auth_state),
-    do: raise("Error processing Identifier Rate Limit")
+  defp process_identifier_limit_result({:deny, _, limiter_instance}, auth_state),
+    do: %AuthenticationState{
+      auth_state
+      | status: :rejected_limits_exceeded,
+        pending_operations: [],
+        identifier_limiter: limiter_instance
+    }
 
   # Getting to where confirm_host_rate_limit/2 actually performs a host rate
   # limit check means that something earlier has gone wrong and that the
@@ -828,8 +836,8 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     if no_host_bypass do
       # Check is required because the host has implied access rather than
       # explicit trust.
-      auth_state.host_address
-      |> check_host_ban_rate_limit(opts)
+      auth_state
+      |> check_host_limit(opts)
       |> process_host_rate_limit_result(auth_state)
     else
       # Check bypassed because host was explicitly trusted by a network rule.
@@ -837,46 +845,103 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     end
   end
 
-  defp process_host_rate_limit_result({:allow, _}, auth_state), do: auth_state
+  defp process_host_rate_limit_result({:allow, _, limiter_instance}, auth_state) do
+    %AuthenticationState{auth_state | host_limiter: limiter_instance}
+  end
 
-  defp process_host_rate_limit_result({:deny, _}, auth_state) do
+  defp process_host_rate_limit_result({:deny, _, limiter_instance}, auth_state) do
     _ = Impl.NetworkRules.create_disallowed_host(auth_state.host_address)
 
-    %AuthenticationState{auth_state | status: :rejected, pending_operations: []}
+    %AuthenticationState{
+      auth_state
+      | status: :rejected,
+        pending_operations: [],
+        host_limiter: limiter_instance
+    }
   end
 
-  defp process_host_rate_limit_result(_error, _auth_state),
-    do: raise("Error processing Host Rate Limit")
+  defp check_identifier_limit(%AuthenticationState{identifier_limiter: nil} = auth_state, opts) do
+    limiter_instance =
+      new_limiter_instance(:identifier, auth_state.identifier, opts[:identifier_limit])
 
-  defp check_identifier_rate_limit(identifier, opts),
-    do: check_rate_limit(:identifier, identifier, opts[:identifier_rate_limit])
+    auth_state = %AuthenticationState{auth_state | identifier_limiter: limiter_instance}
 
-  defp check_host_ban_rate_limit(host_addr, opts) do
-    check_rate_limit(:host_ban, MscmpSystNetwork.to_string(host_addr), opts[:host_ban_rate_limit])
+    check_identifier_limit(auth_state, opts)
   end
 
-  defp check_rate_limit(counter_type, target, rate_limit) do
-    {attempts, time_window} = rate_limit
+  defp check_identifier_limit(%AuthenticationState{identifier_limiter: limiter_instance}, _opts)
+       when not is_nil(limiter_instance),
+       do: check_limit(limiter_instance)
 
-    MscmpSystLimiter.check_rate(counter_type, target, time_window, attempts)
+  defp check_host_limit(%AuthenticationState{host_limiter: nil} = auth_state, opts) do
+    host_addr_str = MscmpSystNetwork.to_string(auth_state.host_address)
+
+    limiter_instance =
+      new_limiter_instance(:host_ban, host_addr_str, opts[:host_limit])
+
+    auth_state = %AuthenticationState{auth_state | host_limiter: limiter_instance}
+
+    check_host_limit(auth_state, opts)
   end
 
-  defp maybe_reset_rate_limits(%AuthenticationState{status: status} = auth_state)
+  defp check_host_limit(%AuthenticationState{host_limiter: limiter_instance}, _opts) do
+    check_limit(limiter_instance)
+  end
+
+  defp new_limiter_instance(type, id, rate_limit_config) do
+    limiter_opts = [
+      max_permits: rate_limit_config.max_attempts,
+      time_to_live: rate_limit_config.time_window,
+      time_scale: rate_limit_config.time_scale
+    ]
+
+    case MscmpSystLimiter.new(:semaphore, :mscmp_syst_authn, type, id, limiter_opts) do
+      {:ok, limiter_instance} -> limiter_instance
+      error -> raise "Failed creating rate limiting instance. #{inspect(error)}"
+    end
+  end
+
+  defp check_limit(limiter_instance) do
+    case MscmpSystLimiter.use(limiter_instance, 1) do
+      {:ok, result} -> result
+      error -> raise "Failed using authentication rate limit: #{inspect(error)}"
+    end
+  end
+
+  defp maybe_reset_limits(%AuthenticationState{status: status} = auth_state)
        when status in @reset_rate_limit_statuses do
-    _ = reset_identifier_rate_limit(auth_state.identifier)
-    _ = reset_host_ban_rate_limit(auth_state.host_address)
     auth_state
+    |> maybe_reset_identifier_limits()
+    |> maybe_reset_host_limits()
   end
 
-  defp maybe_reset_rate_limits(auth_state), do: auth_state
+  defp maybe_reset_limits(auth_state), do: auth_state
 
-  defp reset_identifier_rate_limit(identifier), do: reset_rate_limit(:identifier, identifier)
+  defp maybe_reset_identifier_limits(%AuthenticationState{identifier_limiter: nil} = auth_state),
+    do: auth_state
 
-  defp reset_host_ban_rate_limit(host_addr),
-    do: reset_rate_limit(:host_ban, MscmpSystNetwork.to_string(host_addr))
+  defp maybe_reset_identifier_limits(%AuthenticationState{} = auth_state) do
+    case MscmpSystLimiter.reset(auth_state.identifier_limiter) do
+      {:ok, {:allow, _, limiter_instance}} ->
+        %AuthenticationState{auth_state | identifier_limiter: limiter_instance}
 
-  defp reset_rate_limit(counter_type, target),
-    do: MscmpSystLimiter.delete_counters(counter_type, target)
+      error ->
+        raise "Failed to reset identifier limiter: #{inspect(error)}"
+    end
+  end
+
+  defp maybe_reset_host_limits(%AuthenticationState{host_limiter: nil} = auth_state),
+    do: auth_state
+
+  defp maybe_reset_host_limits(%AuthenticationState{} = auth_state) do
+    case MscmpSystLimiter.reset(auth_state.host_limiter) do
+      {:ok, {:allow, _, limiter_instance}} ->
+        %AuthenticationState{auth_state | host_limiter: limiter_instance}
+
+      error ->
+        raise "Failed to reset host limiter: #{inspect(error)}"
+    end
+  end
 
   defp finalize_authentication(
          %AuthenticationState{status: :pending, pending_operations: []} = auth_state

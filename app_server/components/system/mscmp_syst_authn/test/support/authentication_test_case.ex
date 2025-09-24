@@ -22,7 +22,8 @@ defmodule AuthenticationTestCase do
           {:via, Registry,
            {MscmpSystAuthn.TestRegistry, TestSupport.get_datastore_context_name()}}
         ),
-      enums_service: MscmpSystEnums.put_service(TestSupport.get_enums_service_name())
+      enums_service: MscmpSystEnums.put_service(TestSupport.get_enums_service_name()),
+      limiter_service: MscmpSystLimiter.put_service(TestSupport.get_limiter_service_name())
     ]
   end
 end

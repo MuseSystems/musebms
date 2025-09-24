@@ -25,11 +25,13 @@ defmodule TestSupport do
 
   use MscmpSystDb.Macros
   use MscmpSystEnums.Macros
+  use MscmpSystLimiter.Macros
 
   alias Mix.Tasks.Builddb
 
   db_devsupport(:test)
   enums_devsupport(:test)
+  limiter_devsupport(:test)
 
   @migration_test_source_root_dir "../../../../database"
   @migration_unit_test_ds_type "mscmp_syst_authn_unit_test"
@@ -41,6 +43,9 @@ defmodule TestSupport do
 
   @spec get_enums_service_name() :: atom()
   def get_enums_service_name, do: @enums_service_name
+
+  @spec get_limiter_service_name() :: atom()
+  def get_limiter_service_name, do: @limiter_service_name
 
   @spec setup_testing_database(:doc_testing | :integration_testing | :unit_testing, Keyword.t()) ::
           Supervisor.child_spec()

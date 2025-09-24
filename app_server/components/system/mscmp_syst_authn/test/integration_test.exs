@@ -440,7 +440,7 @@ defmodule IntegrationTest do
       )
       |> MscmpSystDb.one!()
 
-    assert :rejected_rate_limited =
+    assert :rejected_limits_exceeded =
              violate_validator_rate_limit(
                validator_identity.account_identifier,
                ~i"10.123.123.123",
@@ -1305,7 +1305,7 @@ defmodule IntegrationTest do
   test "Step 3.04: Violate Rate Limit for Owned Access Account Email Identity" do
     {:ok, owner1_id} = MscmpSystInstance.get_owner_id_by_name("owner1")
 
-    assert :rejected_rate_limited =
+    assert :rejected_limits_exceeded =
              violate_email_rate_limit(
                "owned.access.account@MuseSystems.Com",
                ~i"10.123.123.123",
@@ -1315,7 +1315,7 @@ defmodule IntegrationTest do
 
     {:ok, owner2_id} = MscmpSystInstance.get_owner_id_by_name("owner2")
 
-    assert {:ok, %{status: :rejected_rate_limited}} =
+    assert {:ok, %{status: :rejected_limits_exceeded}} =
              MscmpSystAuthn.authenticate_email_password(
                "owned.access.account@musesystems.com",
                Msutils.String.get_random_string(40),
@@ -1323,7 +1323,19 @@ defmodule IntegrationTest do
                owning_owner_id: owner2_id
              )
 
-    _ = MscmpSystLimiter.delete_counters(:identifier, "owned.access.account@musesystems.com")
+    # the following should retrieve the already existing limiter instance
+    {:ok, limiter_instance} =
+      MscmpSystLimiter.new(
+        :semaphore,
+        :mscmp_syst_authn,
+        :identifier,
+        "owned.access.account@musesystems.com",
+        max_permits: 5,
+        time_to_live: 30,
+        time_scale: :minute
+      )
+
+    {:ok, _} = MscmpSystLimiter.reset(limiter_instance)
 
     assert {:ok, %{status: :rejected}} =
              MscmpSystAuthn.authenticate_email_password(

@@ -42,6 +42,7 @@ children =
       service_name: TestSupport.get_enums_service_name(),
       datastore_context_name: datastore_context_name
     ),
+    MscmpSystLimiter.child_spec(service_name: TestSupport.get_limiter_service_name()),
     {DynamicSupervisor, strategy: :one_for_one, name: MscmpSystAuthn.TestingSupervisor}
   ]
 

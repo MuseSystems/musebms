@@ -16,6 +16,7 @@ defmodule MscmpSystAuthn.Types do
   """
 
   alias MscmpSystDb.DbTypes
+  alias MscmpSystLimiter.Types, as: LimiterTypes
 
   #
   # Note that the ordering of typespecs here is alphabetical.
@@ -220,7 +221,7 @@ defmodule MscmpSystAuthn.Types do
   """
   @type authentication_operations() ::
           :check_global_network_rules
-          | :check_identifier_rate_limit
+          | :check_identifier_limit
           | :check_identity
           | :check_credential
           | :check_instance
@@ -252,7 +253,7 @@ defmodule MscmpSystAuthn.Types do
     authentication attempt because the apparent Host IP Address is not allowed
     to authenticate as presented.
 
-    * `:rejected_rate_limited` - the authentication process has rejected the
+    * `:rejected_limits_exceeded` - the authentication process has rejected the
     authentication attempt because the identifier has failed to successfully
     authenticate within the prescribed number of tries within a prescribed
     duration.
@@ -283,7 +284,7 @@ defmodule MscmpSystAuthn.Types do
           :not_started
           | :pending
           | :rejected_host_check
-          | :rejected_rate_limited
+          | :rejected_limits_exceeded
           | :rejected_validation
           | :rejected_identity_expired
           | :rejected_deadline_expired
@@ -778,6 +779,29 @@ defmodule MscmpSystAuthn.Types do
   """
   @type network_rule_precedence() ::
           :disallowed | :global | :instance | :instance_owner | :implied
+
+  @typedoc """
+  Used in setting the rate limitation parameters for allowed identifier or
+  host address failed authentication attempts.
+
+  ## Attributes
+
+    * `max_attempts` - the maximum number of failed attempts which are permitted
+    prior to taking protective actions such as disabling an identifier or host
+    from further attempts.
+
+    * `time_window` - the amount of time in which the allowed attempts are
+    tracked from first attempt to final.  Once the time window has passed, the
+    number of failed attempts to that point will be forgotten.
+
+    * `time_scale` - the unit of time in which the `time_window` value is
+    expressed.
+  """
+  @type rate_limit_config() :: %{
+          required(:max_attempts) => pos_integer(),
+          required(:time_window) => pos_integer(),
+          required(:time_scale) => LimiterTypes.time_scale()
+        }
 
   @typedoc """
   Defines the available parameters for use in creating or updating Owner

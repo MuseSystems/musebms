@@ -24,6 +24,7 @@ defmodule MscmpSystAuthn.Types.AuthenticationState do
   """
 
   alias MscmpSystAuthn.Types
+  alias MscmpSystLimiter.Types, as: LimiterTypes
 
   @enforce_keys [
     :status,
@@ -43,9 +44,11 @@ defmodule MscmpSystAuthn.Types.AuthenticationState do
              :instance_id,
              :identity_type_id,
              :host_address,
+             :host_limiter,
              :applied_network_rule,
              :pending_operations,
              :identifier,
+             :identifier_limiter,
              :owning_owner_id,
              :identity_id,
              :identity,
@@ -58,9 +61,11 @@ defmodule MscmpSystAuthn.Types.AuthenticationState do
     :instance_id,
     :identity_type_id,
     :host_address,
+    :host_limiter,
     :applied_network_rule,
     :pending_operations,
     :identifier,
+    :identifier_limiter,
     :plaintext_credential,
     :owning_owner_id,
     :identity_id,
@@ -98,6 +103,10 @@ defmodule MscmpSystAuthn.Types.AuthenticationState do
     * `host_address` -  the apparent Host IP Address from which the
     authentication attempt originated.
 
+    * `host_limiter` - a reference to the rate limiting counter which tracks
+    the number of allowed consecutive failures prior to the host being banned
+    from authentication attempts.
+
     * `applied_network_rule` - the Network Rule that was applied during the
     authentication attempt.  This value may be `nil` if the evaluation of the
     Network Rules has not yet made.
@@ -108,6 +117,10 @@ defmodule MscmpSystAuthn.Types.AuthenticationState do
 
     * `identifier` - the user supplied account identifier used to identify the
     Access Account.
+
+    * `identifier_limiter` - a reference to the rate limiting counter which
+    tracks the number of allowed authentication attempts for a given account
+    Identifier.
 
     * `plaintext_credential` - the unencrypted, user supplied credential to
     test during the authentication process.  This value will be made `nil` as
@@ -137,9 +150,11 @@ defmodule MscmpSystAuthn.Types.AuthenticationState do
           instance_id: MscmpSystInstance.Types.instance_id() | :bypass | nil,
           identity_type_id: Types.identity_type_id() | nil,
           host_address: Types.host_address(),
+          host_limiter: LimiterTypes.limiter_instance() | nil,
           applied_network_rule: Types.AppliedNetworkRule.t() | nil,
           pending_operations: list(Types.authentication_operations()),
           identifier: Types.account_identifier(),
+          identifier_limiter: LimiterTypes.limiter_instance() | nil,
           plaintext_credential: Types.credential() | nil,
           owning_owner_id: MscmpSystInstance.Types.owner_id() | nil,
           identity_id: Types.identity_id() | nil,
