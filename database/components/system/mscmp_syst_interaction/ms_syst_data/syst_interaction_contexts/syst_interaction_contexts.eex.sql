@@ -14,7 +14,7 @@ CREATE TABLE ms_syst_data.syst_interaction_contexts
 (
      id
         uuid
-        NOT NULL DEFAULT uuid_generate_v7( )
+        NOT NULL DEFAULT uuidv7( )
         CONSTRAINT syst_interaction_contexts_pk PRIMARY KEY
     ,internal_name
         text

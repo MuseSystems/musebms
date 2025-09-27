@@ -14,7 +14,7 @@ CREATE TABLE ms_syst_data.syst_nav_action_groups
 (
      id
         uuid
-        NOT NULL DEFAULT uuid_generate_v7( )
+        NOT NULL DEFAULT uuidv7( )
         CONSTRAINT syst_nav_action_groups_pk PRIMARY KEY
     ,internal_name
         text

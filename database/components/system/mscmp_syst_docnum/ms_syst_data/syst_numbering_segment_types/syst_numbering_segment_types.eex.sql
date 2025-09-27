@@ -17,7 +17,7 @@ CREATE TABLE ms_syst_data.syst_numbering_segment_types
 (
      id
         uuid
-        NOT NULL DEFAULT uuid_generate_v7( )
+        NOT NULL DEFAULT uuidv7( )
         CONSTRAINT syst_numbering_segment_types_pk PRIMARY KEY
     ,internal_name
         text
