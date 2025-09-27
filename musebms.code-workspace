@@ -13,6 +13,10 @@
             "path": "app_server/components/system/mscmp_syst_error"
         },
         {
+            "name": "mscmp_syst_service",
+            "path": "app_server/components/system/mscmp_syst_service"
+        },
+        {
             "name": "mscmp_syst_utils",
             "path": "app_server/components/system/mscmp_syst_utils"
         },
