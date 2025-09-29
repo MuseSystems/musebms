@@ -13,29 +13,7 @@
 DO
 $INIT_DATASTORE$
     BEGIN
-        CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
         CREATE EXTENSION IF NOT EXISTS pgcrypto;
-
-        -- Temporary UUIDv7 extension
-        --
-        -- !!!!! Do not release to production !!!!!
-        --
-        -- TODO: Remove from code at PostgreSQL 18 release.  PostgreSQL 18 is
-        --       expected to have UUIDv7 support.
-
-        IF
-            exists( SELECT TRUE
-                    FROM pg_available_extensions
-                    WHERE name = 'pg_uuidv7' )
-        THEN
-            CREATE EXTENSION IF NOT EXISTS pg_uuidv7;
-        ELSE
-            CREATE OR REPLACE FUNCTION public.uuid_generate_v7( )
-                RETURNS uuid AS
-            $BODY$ SELECT PUBLIC.uuid_generate_v1mc();
-                $BODY$
-                LANGUAGE sql;
-        END IF;
 
         CREATE SCHEMA IF NOT EXISTS <%= migrations_schema %>
         AUTHORIZATION <%= ms_owner %>;
@@ -338,7 +316,7 @@ $DOC$;
         (
              id
                 uuid
-                NOT NULL DEFAULT uuid_generate_v7( )
+                NOT NULL DEFAULT uuidv7( )
                 CONSTRAINT <%= migrations_table %>_pk PRIMARY KEY
             ,release
                 smallint
