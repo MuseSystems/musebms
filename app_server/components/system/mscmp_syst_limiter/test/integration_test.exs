@@ -13,822 +13,1031 @@
 defmodule IntegrationTest do
   @moduledoc false
 
-  use LimiterTestCase, async: false
+  # We're not using LimiterTestCase because all it currently does is call
+  # `MscmpSystLimiter.put_service(TestSupport.get_limiter_service_name())`
+  # and we want to manage the current Process service exlicitly in the tests.
+
+  use ExUnit.Case, async: false
 
   @moduletag :integration
   @moduletag :capture_log
 
-  # Test module names for organizing limiters
-  @test_component_api IntegrationTest.API
-  @test_component_db IntegrationTest.Database
-  @test_component_web IntegrationTest.Web
+  # Testing Names
+  @test_limiter_all Test.Limiter.All
+  @test_limiter_one Test.Limiter.One
+  @test_limiter_custom Test.Limiter.Custom
 
-  describe "Service Management Integration" do
-    test "service lifecycle management works end-to-end", %{limiter_service: original_service} do
-      # Test 1: Start a new service with custom configuration
-      {:ok, custom_service_pid} =
-        MscmpSystLimiter.start_link(
-          service_name: :CustomLimiterService,
-          algorithms: [:token_bucket, :semaphore],
-          cleanup_interval: [token_bucket: 30_000, semaphore: 45_000]
-        )
+  @test_comp_all_1 Test.Component.All_1
+  @test_comp_all_2 Test.Component.All_2
+  @test_comp_one_1 Test.Component.One_1
 
-      assert is_pid(custom_service_pid)
-      assert Process.alive?(custom_service_pid)
+  @test_comp_cust_1 Test.Component.Custom_1
+  @test_comp_cust_2 Test.Component.Custom_2
 
-      # Test 2: Switch to the new service and verify it's active
-      _old_service = MscmpSystLimiter.put_service(:CustomLimiterService)
-      # old_service should be the previously set service (could be nil or the original service)
-      assert MscmpSystLimiter.get_service() == :CustomLimiterService
+  describe "Phase 01 - Service Init & Startup" do
+    test "Step 01.01 - Startup 'All' Limiter/Default Opts" do
+      assert child_spec = MscmpSystLimiter.child_spec(service_name: @test_limiter_all)
 
-      # Test 3: Verify runtime configuration is accessible
-      config = MscmpSystLimiter.get_runtime_config()
-      assert is_map(config)
-      assert Map.has_key?(config, :token_bucket)
-      assert Map.has_key?(config, :semaphore)
+      assert %{id: MscmpSystLimiter, start: {MscmpSystLimiter, :start_link, [opts]}} = child_spec
+      assert {:ok, :infinity} === Keyword.fetch(opts, :timeout)
+      assert {:ok, [all: 60_000]} === Keyword.fetch(opts, :cleanup_interval)
+      assert {:ok, :all} === Keyword.fetch(opts, :algorithms)
+      assert {:ok, @test_limiter_all} === Keyword.fetch(opts, :service_name)
 
-      # Test 4: Create a limiter to verify the service is functional
-      {:ok, test_limiter} =
-        MscmpSystLimiter.new(
-          :token_bucket,
-          @test_component_api,
-          :test_requests,
-          "service_test",
-          bucket_size: 10,
-          refill_rate: 5,
-          refill_per: :second
-        )
+      assert {:ok, pid} =
+               DynamicSupervisor.start_child(
+                 :"MscmpSystLimiter.TestSupportDynSupervisor",
+                 child_spec
+               )
 
-      {:ok, {:allow, capacity, _}} = MscmpSystLimiter.get(test_limiter)
-      assert capacity == 10
-
-      # Test 5: Restore original service
-      restored_service = MscmpSystLimiter.put_service(original_service)
-      assert restored_service == :CustomLimiterService
-      assert MscmpSystLimiter.get_service() == original_service
-
-      # Test 6: Clean up - stop the custom service
-      :ok = GenServer.stop(custom_service_pid)
-      refute Process.alive?(custom_service_pid)
+      assert is_pid(pid)
     end
 
-    test "service switching maintains independent limiter state", %{
-      limiter_service: original_service
-    } do
-      # Start two separate services
-      {:ok, service_a_pid} =
-        MscmpSystLimiter.start_link(service_name: :ServiceA, algorithms: :all)
+    test "Step 01.02 - Validate 'All' Limiter Runtime Config" do
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_all)
+      assert @test_limiter_all === MscmpSystLimiter.get_service()
 
-      {:ok, service_b_pid} =
-        MscmpSystLimiter.start_link(service_name: :ServiceB, algorithms: :all)
+      assert %{
+               semaphore: {semaphore_table, semaphore_cleanup_interval},
+               token_bucket: {token_bucket_table, token_bucket_cleanup_interval}
+             } = MscmpSystLimiter.get_runtime_config()
 
-      # Create limiter in Service A
-      MscmpSystLimiter.put_service(:ServiceA)
+      assert is_reference(semaphore_table)
+      assert 60_000 === semaphore_cleanup_interval
 
-      {:ok, limiter_a} =
-        MscmpSystLimiter.new(
-          :token_bucket,
-          @test_component_api,
-          :isolation_test,
-          "shared_id",
-          bucket_size: 20,
-          refill_rate: 10,
-          refill_per: :second
-        )
+      assert is_reference(token_bucket_table)
+      assert 60_000 === token_bucket_cleanup_interval
 
-      # Consume tokens in Service A
-      {:ok, {:allow, remaining_a, updated_limiter_a}} = MscmpSystLimiter.use(limiter_a, 5)
-      assert remaining_a == 15
-
-      # Switch to Service B and create limiter with same identity
-      MscmpSystLimiter.put_service(:ServiceB)
-
-      {:ok, limiter_b} =
-        MscmpSystLimiter.new(
-          :token_bucket,
-          @test_component_api,
-          :isolation_test,
-          "shared_id",
-          bucket_size: 20,
-          refill_rate: 10,
-          refill_per: :second
-        )
-
-      # Service B should have full tokens (independent state)
-      {:ok, {:allow, capacity_b, _}} = MscmpSystLimiter.get(limiter_b)
-      assert capacity_b == 20
-
-      # Switch back to Service A and verify state is preserved
-      MscmpSystLimiter.put_service(:ServiceA)
-      {:ok, {:allow, capacity_a_check, _}} = MscmpSystLimiter.get(updated_limiter_a)
-      assert capacity_a_check == 15
-
-      # Cleanup
-      MscmpSystLimiter.put_service(original_service)
-      GenServer.stop(service_a_pid)
-      GenServer.stop(service_b_pid)
-    end
-  end
-
-  describe "Token Bucket Integration Workflows" do
-    test "complete token bucket lifecycle with business workflow", %{limiter_service: _service} do
-      # Business Scenario: API rate limiting for user requests
-      user_id = "user_12345"
-
-      # Step 1: Create API rate limiter (100 requests per minute)
-      {:ok, api_limiter} =
-        MscmpSystLimiter.new(
-          :token_bucket,
-          @test_component_api,
-          :user_requests,
-          user_id,
-          bucket_size: 100,
-          refill_rate: 100,
-          refill_per: :minute
-        )
-
-      # Step 2: Verify initial full capacity
-      {:ok, {:allow, initial_capacity, _}} = MscmpSystLimiter.get(api_limiter)
-      assert initial_capacity == 100
-
-      # Step 3: Simulate burst of API requests (within limit)
-      requests_to_make = 80
-      final_limiter = simulate_api_requests(api_limiter, requests_to_make)
-
-      # Step 4: Check remaining capacity
-      {:ok, {:allow, remaining_after_burst, _}} = MscmpSystLimiter.get(final_limiter)
-      assert remaining_after_burst == 20
-
-      # Step 5: Try to exceed limit
-      {:ok, result} = MscmpSystLimiter.use(final_limiter, 30)
-
-      case result do
-        {:deny, retry_after_ms, denied_limiter} ->
-          assert is_integer(retry_after_ms)
-          assert retry_after_ms > 0
-
-          # Step 6: Verify state is still consistent
-          {:ok, {:allow, capacity_after_deny, _}} = MscmpSystLimiter.get(denied_limiter)
-          assert capacity_after_deny == 20
-
-        {:allow, _, _} ->
-          flunk("Expected request to be denied when exceeding bucket capacity")
-      end
-
-      # Step 7: Reset for maintenance scenario
-      {:ok, {:allow, reset_capacity, reset_limiter}} = MscmpSystLimiter.reset(final_limiter)
-      assert reset_capacity == 100
-
-      # Step 8: Verify reset worked by consuming full capacity
-      {:ok, {:allow, final_remaining, _}} = MscmpSystLimiter.use(reset_limiter, 100)
-      assert final_remaining == 0
+      assert @test_limiter_all === MscmpSystLimiter.put_service(nil)
     end
 
-    test "token bucket refill behavior over time simulation", %{limiter_service: _service} do
-      # Create fast-refilling bucket for time-based testing
-      {:ok, fast_limiter} =
-        MscmpSystLimiter.new(
-          :token_bucket,
-          @test_component_api,
-          :fast_refill,
-          "time_test",
-          bucket_size: 10,
-          refill_rate: 10,
-          refill_per: :second
-        )
+    test "Step 01.03 - Startup 'One' Limiter/Single Algorithm" do
+      assert child_spec =
+               MscmpSystLimiter.child_spec(
+                 service_name: @test_limiter_one,
+                 algorithms: [:semaphore]
+               )
 
-      # Consume all tokens
-      {:ok, {:allow, 0, depleted_limiter}} = MscmpSystLimiter.use(fast_limiter, 10)
+      assert %{id: MscmpSystLimiter, start: {MscmpSystLimiter, :start_link, [opts]}} = child_spec
+      assert {:ok, :infinity} === Keyword.fetch(opts, :timeout)
+      assert {:ok, [all: 60_000]} === Keyword.fetch(opts, :cleanup_interval)
+      assert {:ok, [:semaphore]} === Keyword.fetch(opts, :algorithms)
+      assert {:ok, @test_limiter_one} === Keyword.fetch(opts, :service_name)
 
-      # Verify completely depleted
-      {:ok, {:allow, depleted_capacity, _}} = MscmpSystLimiter.get(depleted_limiter)
-      assert depleted_capacity == 0
+      assert {:ok, pid} =
+               DynamicSupervisor.start_child(
+                 :"MscmpSystLimiter.TestSupportDynSupervisor",
+                 child_spec
+               )
 
-      # Wait for partial refill (need to be careful with timing in tests)
-      # Wait slightly over 1 second
-      Process.sleep(1100)
-
-      # Check if tokens have been refilled
-      {:ok, {:allow, refilled_capacity, refilled_limiter}} =
-        MscmpSystLimiter.get(depleted_limiter)
-
-      # Should have refilled most/all tokens
-      assert refilled_capacity >= 8
-
-      # Verify we can consume the refilled tokens
-      {:ok, {:allow, remaining_after_refill, _}} = MscmpSystLimiter.use(refilled_limiter, 5)
-      assert remaining_after_refill >= 3
+      assert is_pid(pid)
     end
 
-    test "multiple token bucket limiters for different resources", %{limiter_service: _service} do
-      user_id = "multi_user_456"
+    test "Step 01.04 - Validate 'One' Limiter Runtime Config" do
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_one)
+      assert @test_limiter_one === MscmpSystLimiter.get_service()
 
-      # Create different types of limiters for the same user
-      {:ok, api_limiter} =
-        MscmpSystLimiter.new(
-          :token_bucket,
-          @test_component_api,
-          :api_calls,
-          user_id,
-          bucket_size: 1000,
-          refill_rate: 100,
-          refill_per: :minute
-        )
+      assert %{
+               semaphore: {semaphore_table, semaphore_cleanup_interval},
+               token_bucket: {token_bucket_table, token_bucket_cleanup_interval}
+             } = MscmpSystLimiter.get_runtime_config()
 
-      {:ok, upload_limiter} =
-        MscmpSystLimiter.new(
-          :token_bucket,
-          @test_component_web,
-          :file_uploads,
-          user_id,
-          bucket_size: 10,
-          refill_rate: 5,
-          refill_per: :hour
-        )
+      assert is_reference(semaphore_table)
+      assert 60_000 === semaphore_cleanup_interval
 
-      {:ok, db_limiter} =
-        MscmpSystLimiter.new(
-          :token_bucket,
-          @test_component_db,
-          :queries,
-          user_id,
-          bucket_size: 500,
-          refill_rate: 100,
-          refill_per: :minute
-        )
+      assert is_nil(token_bucket_table)
+      assert 60_000 === token_bucket_cleanup_interval
 
-      # Use each limiter independently
-      {:ok, {:allow, api_remaining, _}} = MscmpSystLimiter.use(api_limiter, 100)
-      assert api_remaining == 900
-
-      {:ok, {:allow, upload_remaining, _}} = MscmpSystLimiter.use(upload_limiter, 3)
-      assert upload_remaining == 7
-
-      {:ok, {:allow, db_remaining, _}} = MscmpSystLimiter.use(db_limiter, 50)
-      assert db_remaining == 450
-
-      # Verify they maintain independent state
-      {:ok, {:allow, api_check, _}} = MscmpSystLimiter.get(api_limiter)
-      {:ok, {:allow, upload_check, _}} = MscmpSystLimiter.get(upload_limiter)
-      {:ok, {:allow, db_check, _}} = MscmpSystLimiter.get(db_limiter)
-
-      assert api_check == 900
-      assert upload_check == 7
-      assert db_check == 450
+      assert @test_limiter_one === MscmpSystLimiter.put_service(nil)
     end
 
-    test "token bucket explicit capacity management", %{limiter_service: _service} do
-      {:ok, managed_limiter} =
-        MscmpSystLimiter.new(
-          :token_bucket,
-          @test_component_api,
-          :managed_capacity,
-          "admin_test",
-          bucket_size: 50,
-          refill_rate: 25,
-          refill_per: :minute
-        )
+    test "Step 01.05 - Startup 'Custom' Limiter/Specified Options" do
+      assert child_spec =
+               MscmpSystLimiter.child_spec(
+                 service_name: @test_limiter_custom,
+                 algorithms: [:semaphore, :token_bucket],
+                 cleanup_interval: [all: 60_000, semaphore: 15_000, token_bucket: 10_000]
+               )
 
-      # Use some capacity
-      {:ok, {:allow, after_use, used_limiter}} = MscmpSystLimiter.use(managed_limiter, 20)
-      assert after_use == 30
+      assert %{id: MscmpSystLimiter, start: {MscmpSystLimiter, :start_link, [opts]}} = child_spec
+      assert {:ok, :infinity} === Keyword.fetch(opts, :timeout)
+      assert {:ok, cleanup_intervals} = Keyword.fetch(opts, :cleanup_interval)
+      assert {:ok, 60_000} === Keyword.fetch(cleanup_intervals, :all)
+      assert {:ok, 15_000} === Keyword.fetch(cleanup_intervals, :semaphore)
+      assert {:ok, 10_000} === Keyword.fetch(cleanup_intervals, :token_bucket)
+      assert {:ok, algorithms} = Keyword.fetch(opts, :algorithms)
+      assert :semaphore in algorithms
+      assert :token_bucket in algorithms
+      assert {:ok, @test_limiter_custom} === Keyword.fetch(opts, :service_name)
 
-      # Administratively set capacity to specific value
-      {:ok, {:allow, set_capacity, set_limiter}} =
-        MscmpSystLimiter.set(used_limiter, current_fill: 45)
+      assert {:ok, pid} =
+               DynamicSupervisor.start_child(
+                 :"MscmpSystLimiter.TestSupportDynSupervisor",
+                 child_spec
+               )
 
-      assert set_capacity == 45
+      assert is_pid(pid)
+    end
 
-      # Verify the set worked
-      {:ok, {:allow, verified_capacity, _}} = MscmpSystLimiter.get(set_limiter)
-      assert verified_capacity == 45
+    test "Step 01.06 - Validate 'Custom' Limiter Runtime Config" do
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_custom)
+      assert @test_limiter_custom === MscmpSystLimiter.get_service()
 
-      # Reset to full capacity
-      {:ok, {:allow, reset_capacity, reset_limiter}} = MscmpSystLimiter.reset(set_limiter)
-      assert reset_capacity == 50
+      assert %{
+               semaphore: {semaphore_table, semaphore_cleanup_interval},
+               token_bucket: {token_bucket_table, token_bucket_cleanup_interval}
+             } = MscmpSystLimiter.get_runtime_config()
 
-      # Final verification
-      {:ok, {:allow, final_capacity, _}} = MscmpSystLimiter.get(reset_limiter)
-      assert final_capacity == 50
+      assert is_reference(semaphore_table)
+      assert 15_000 === semaphore_cleanup_interval
+
+      assert is_reference(token_bucket_table)
+      assert 10_000 === token_bucket_cleanup_interval
+
+      assert @test_limiter_custom === MscmpSystLimiter.put_service(nil)
     end
   end
 
-  describe "Semaphore Integration Workflows" do
-    test "complete semaphore lifecycle with connection pool workflow", %{
-      limiter_service: _service
-    } do
-      # Business Scenario: Database connection pool management
-      pool_id = "primary_db_pool"
+  describe "Phase 02 - Rate Limiting Operations" do
+    test "Step 02.01 - Create Token Bucket Limiter" do
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_all)
+      assert @test_limiter_all === MscmpSystLimiter.get_service()
 
-      # Step 1: Create semaphore for connection pool (20 connections, 1 hour TTL)
-      {:ok, pool_limiter} =
-        MscmpSystLimiter.new(
-          :semaphore,
-          @test_component_db,
-          :connection_pool,
-          pool_id,
-          max_permits: 20,
-          time_to_live: 1,
-          time_scale: :hour
-        )
+      assert {:ok, limiter} =
+               MscmpSystLimiter.new(
+                 :token_bucket,
+                 @test_comp_all_1,
+                 :token_bucket_test,
+                 "token_bucket_creation_test",
+                 bucket_size: 100,
+                 refill_rate: 10,
+                 refill_per: :second
+               )
 
-      # Step 2: Verify initial full permits
-      {:ok, {:allow, initial_permits, _}} = MscmpSystLimiter.get(pool_limiter)
-      assert initial_permits == 20
+      assert {:token_bucket, {@test_comp_all_1, :token_bucket_test, "token_bucket_creation_test"},
+              _config} = limiter
 
-      # Step 3: Simulate acquiring connections for different operations
-      {:ok, {:allow, after_read_conn, read_limiter}} = MscmpSystLimiter.use(pool_limiter, 5)
-      assert after_read_conn == 15
+      # Verify initial state - should have full bucket
+      assert {:ok, {:allow, capacity, _}} = MscmpSystLimiter.get(limiter)
+      assert 100 === capacity
 
-      {:ok, {:allow, after_write_conn, write_limiter}} = MscmpSystLimiter.use(read_limiter, 3)
-      assert after_write_conn == 12
-
-      {:ok, {:allow, after_batch_conn, batch_limiter}} = MscmpSystLimiter.use(write_limiter, 7)
-      assert after_batch_conn == 5
-
-      # Step 4: Try to acquire more connections than available
-      {:ok, result} = MscmpSystLimiter.use(batch_limiter, 10)
-
-      case result do
-        {:deny, needed_permits, denied_limiter} ->
-          # Need 5 more permits to satisfy request
-          assert needed_permits == 5
-          {:ok, {:allow, capacity_after_deny, _}} = MscmpSystLimiter.get(denied_limiter)
-          assert capacity_after_deny == 5
-
-        {:allow, _, _} ->
-          flunk("Expected request to be denied when exceeding semaphore capacity")
-      end
-
-      # Step 5: Release some connections
-      {:ok, {:allow, after_release, release_limiter}} = MscmpSystLimiter.use(batch_limiter, -8)
-      assert after_release == 13
-
-      # Step 6: Now the previously failed request should succeed
-      {:ok, {:allow, after_large_acquire, _}} = MscmpSystLimiter.use(release_limiter, 10)
-      assert after_large_acquire == 3
-
-      # Step 7: Reset for maintenance scenario
-      {:ok, {:allow, reset_permits, reset_limiter}} = MscmpSystLimiter.reset(release_limiter)
-      assert reset_permits == 20
-
-      # Step 8: Verify reset worked
-      {:ok, {:allow, final_permits, _}} = MscmpSystLimiter.get(reset_limiter)
-      assert final_permits == 20
+      assert @test_limiter_all === MscmpSystLimiter.put_service(nil)
     end
 
-    test "semaphore permit acquisition and release patterns", %{limiter_service: _service} do
-      {:ok, resource_limiter} =
-        MscmpSystLimiter.new(
-          :semaphore,
-          @test_component_api,
-          :worker_threads,
-          "thread_pool_test",
-          max_permits: 10,
-          time_to_live: 30,
-          time_scale: :minute
-        )
+    test "Step 02.02 - Create Semaphore Limiter" do
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_all)
+      assert @test_limiter_all === MscmpSystLimiter.get_service()
 
-      # Pattern 1: Gradual acquisition
-      final_limiter =
-        Enum.reduce(1..7, resource_limiter, fn _, acc_limiter ->
-          {:ok, {:allow, _remaining, updated_limiter}} = MscmpSystLimiter.use(acc_limiter, 1)
-          updated_limiter
-        end)
+      assert {:ok, limiter} =
+               MscmpSystLimiter.new(
+                 :semaphore,
+                 @test_comp_all_2,
+                 :semaphore_test,
+                 "semaphore_creation_test",
+                 max_permits: 20,
+                 time_to_live: 5,
+                 time_scale: :minute
+               )
 
-      {:ok, {:allow, after_gradual, _}} = MscmpSystLimiter.get(final_limiter)
-      assert after_gradual == 3
+      assert {:semaphore, {@test_comp_all_2, :semaphore_test, "semaphore_creation_test"}, _config} =
+               limiter
 
-      # Pattern 2: Bulk release
-      {:ok, {:allow, after_bulk_release, bulk_limiter}} = MscmpSystLimiter.use(final_limiter, -5)
-      assert after_bulk_release == 8
+      # Verify initial state - should have full permits
+      assert {:ok, {:allow, permits, _}} = MscmpSystLimiter.get(limiter)
+      assert 20 === permits
 
-      # Pattern 3: No-op operations (zero increment)
-      {:ok, {:allow, after_noop, noop_limiter}} = MscmpSystLimiter.use(bulk_limiter, 0)
-      assert after_noop == 8
-
-      # Pattern 4: Attempt to over-release (should cap at max_permits)
-      {:ok, {:allow, after_over_release, _}} = MscmpSystLimiter.use(noop_limiter, -15)
-      # Capped at max_permits
-      assert after_over_release == 10
+      assert @test_limiter_all === MscmpSystLimiter.put_service(nil)
     end
 
-    test "multiple semaphore limiters for resource hierarchies", %{limiter_service: _service} do
-      service_id = "microservice_123"
+    test "Step 02.03 - Token Bucket Use Operations" do
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_all)
+      assert @test_limiter_all === MscmpSystLimiter.get_service()
 
-      # Create hierarchical resource limiters
-      {:ok, cpu_limiter} =
-        MscmpSystLimiter.new(
-          :semaphore,
-          @test_component_api,
-          :cpu_cores,
-          service_id,
-          max_permits: 8,
-          time_to_live: 2,
-          time_scale: :hour
-        )
+      # Create token bucket (10 tokens, refill 5 per second)
+      assert {:ok, limiter} =
+               MscmpSystLimiter.new(
+                 :token_bucket,
+                 @test_comp_all_1,
+                 :token_bucket_use_test,
+                 "token_bucket_use_test",
+                 bucket_size: 10,
+                 refill_rate: 5,
+                 refill_per: :second
+               )
 
-      {:ok, memory_limiter} =
-        MscmpSystLimiter.new(
-          :semaphore,
-          @test_component_api,
-          :memory_gb,
-          service_id,
-          max_permits: 16,
-          time_to_live: 2,
-          time_scale: :hour
-        )
+      # Consume 3 tokens - should be allowed
+      assert {:ok, {:allow, remaining, updated_limiter}} = MscmpSystLimiter.use(limiter, 3)
+      assert 7 === remaining
 
-      {:ok, network_limiter} =
-        MscmpSystLimiter.new(
-          :semaphore,
-          @test_component_api,
-          :network_connections,
-          service_id,
-          max_permits: 100,
-          time_to_live: 1,
-          time_scale: :hour
-        )
+      # Consume 5 more tokens - should be allowed
+      assert {:ok, {:allow, remaining, updated_limiter}} =
+               MscmpSystLimiter.use(updated_limiter, 5)
 
-      # Simulate resource allocation for a complex operation
-      {:ok, {:allow, cpu_remaining, cpu_used}} = MscmpSystLimiter.use(cpu_limiter, 4)
-      assert cpu_remaining == 4
+      assert 2 === remaining
 
-      {:ok, {:allow, memory_remaining, memory_used}} = MscmpSystLimiter.use(memory_limiter, 8)
-      assert memory_remaining == 8
+      # Try to consume 5 tokens when only 2 remain - should be denied
+      assert {:ok, {:deny, retry_after_ms, _}} = MscmpSystLimiter.use(updated_limiter, 5)
+      assert is_integer(retry_after_ms) and retry_after_ms > 0
 
-      {:ok, {:allow, network_remaining, network_used}} = MscmpSystLimiter.use(network_limiter, 25)
-      assert network_remaining == 75
-
-      # Verify independent resource tracking
-      {:ok, {:allow, cpu_check, _}} = MscmpSystLimiter.get(cpu_used)
-      {:ok, {:allow, memory_check, _}} = MscmpSystLimiter.get(memory_used)
-      {:ok, {:allow, network_check, _}} = MscmpSystLimiter.get(network_used)
-
-      assert cpu_check == 4
-      assert memory_check == 8
-      assert network_check == 75
-
-      # Simulate operation completion - release resources
-      {:ok, {:allow, cpu_released, _}} = MscmpSystLimiter.use(cpu_used, -4)
-      {:ok, {:allow, memory_released, _}} = MscmpSystLimiter.use(memory_used, -8)
-      {:ok, {:allow, network_released, _}} = MscmpSystLimiter.use(network_used, -25)
-
-      assert cpu_released == 8
-      assert memory_released == 16
-      assert network_released == 100
+      assert @test_limiter_all === MscmpSystLimiter.put_service(nil)
     end
 
-    test "semaphore explicit permit management", %{limiter_service: _service} do
-      {:ok, managed_semaphore} =
-        MscmpSystLimiter.new(
-          :semaphore,
-          @test_component_db,
-          :managed_permits,
-          "admin_test",
-          max_permits: 25,
-          time_to_live: 1,
-          time_scale: :hour
-        )
+    test "Step 02.04 - Semaphore Use Operations" do
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_all)
+      assert @test_limiter_all === MscmpSystLimiter.get_service()
 
-      # Use some permits
-      {:ok, {:allow, after_use, used_limiter}} = MscmpSystLimiter.use(managed_semaphore, 10)
-      assert after_use == 15
+      # Create semaphore (5 permits, 1 hour TTL)
+      assert {:ok, limiter} =
+               MscmpSystLimiter.new(
+                 :semaphore,
+                 @test_comp_all_2,
+                 :semaphore_use_test,
+                 "semaphore_use_test",
+                 max_permits: 5,
+                 time_to_live: 1,
+                 time_scale: :hour
+               )
 
-      # Administratively set permits to specific value
-      {:ok, {:allow, set_permits, set_limiter}} =
-        MscmpSystLimiter.set(used_limiter, current_permits: 20)
+      # Acquire 2 permits - should be allowed
+      assert {:ok, {:allow, remaining, updated_limiter}} = MscmpSystLimiter.use(limiter, 2)
+      assert 3 === remaining
 
-      assert set_permits == 20
+      # Try to acquire 5 permits when only 3 remain - should be denied
+      assert {:ok, {:deny, needed_permits, _}} = MscmpSystLimiter.use(updated_limiter, 5)
+      assert 2 === needed_permits
 
-      # Verify the set worked
-      {:ok, {:allow, verified_permits, _}} = MscmpSystLimiter.get(set_limiter)
-      assert verified_permits == 20
+      # Release 1 permit back to the pool
+      assert {:ok, {:allow, remaining, updated_limiter}} =
+               MscmpSystLimiter.use(updated_limiter, -1)
 
-      # Reset to full permits
-      {:ok, {:allow, reset_permits, reset_limiter}} = MscmpSystLimiter.reset(set_limiter)
-      assert reset_permits == 25
+      assert 4 === remaining
 
-      # Final verification
-      {:ok, {:allow, final_permits, _}} = MscmpSystLimiter.get(reset_limiter)
-      assert final_permits == 25
+      # Now acquire 2 permits - should be allowed
+      assert {:ok, {:allow, remaining, _}} = MscmpSystLimiter.use(updated_limiter, 2)
+      assert 2 === remaining
+
+      assert @test_limiter_all === MscmpSystLimiter.put_service(nil)
+    end
+
+    test "Step 02.05 - Get Operations" do
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_all)
+      assert @test_limiter_all === MscmpSystLimiter.get_service()
+
+      # Test token bucket get
+      assert {:ok, token_limiter} =
+               MscmpSystLimiter.new(
+                 :token_bucket,
+                 @test_comp_all_1,
+                 :token_bucket_get_test,
+                 "token_bucket_get_test",
+                 bucket_size: 10,
+                 refill_rate: 5,
+                 refill_per: :second
+               )
+
+      # Check initial state
+      assert {:ok, {:allow, capacity, _}} = MscmpSystLimiter.get(token_limiter)
+      assert 10 === capacity
+
+      # Consume some tokens
+      assert {:ok, {:allow, remaining, updated_limiter}} = MscmpSystLimiter.use(token_limiter, 3)
+      assert 7 === remaining
+
+      # Check state after consumption
+      assert {:ok, {:allow, current_capacity, _}} = MscmpSystLimiter.get(updated_limiter)
+      assert 7 === current_capacity
+
+      # Test semaphore get
+      assert {:ok, semaphore_limiter} =
+               MscmpSystLimiter.new(
+                 :semaphore,
+                 @test_comp_all_2,
+                 :semaphore_get_test,
+                 "semaphore_get_test",
+                 max_permits: 5,
+                 time_to_live: 1,
+                 time_scale: :hour
+               )
+
+      # Check initial state
+      assert {:ok, {:allow, permits, _}} = MscmpSystLimiter.get(semaphore_limiter)
+      assert 5 === permits
+
+      # Acquire some permits
+      assert {:ok, {:allow, remaining, updated_limiter}} =
+               MscmpSystLimiter.use(semaphore_limiter, 2)
+
+      assert 3 === remaining
+
+      # Check state after acquisition
+      assert {:ok, {:allow, current_permits, _}} = MscmpSystLimiter.get(updated_limiter)
+      assert 3 === current_permits
+
+      assert @test_limiter_all === MscmpSystLimiter.put_service(nil)
+    end
+
+    test "Step 02.06 - Set Operations" do
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_all)
+      assert @test_limiter_all === MscmpSystLimiter.get_service()
+
+      # Test token bucket set
+      assert {:ok, token_limiter} =
+               MscmpSystLimiter.new(
+                 :token_bucket,
+                 @test_comp_all_1,
+                 :token_bucket_set_test,
+                 "token_bucket_set_test",
+                 bucket_size: 10,
+                 refill_rate: 5,
+                 refill_per: :second
+               )
+
+      # Consume some tokens
+      assert {:ok, {:allow, remaining, depleted_limiter}} = MscmpSystLimiter.use(token_limiter, 7)
+      assert 3 === remaining
+
+      # Set bucket to half capacity
+      assert {:ok, {:allow, set_capacity, set_limiter}} =
+               MscmpSystLimiter.set(depleted_limiter, current_fill: 5)
+
+      assert 5 === set_capacity
+
+      # Verify the new capacity is in effect
+      assert {:ok, {:allow, current_capacity, _}} = MscmpSystLimiter.get(set_limiter)
+      assert 5 === current_capacity
+
+      # Test semaphore set
+      assert {:ok, semaphore_limiter} =
+               MscmpSystLimiter.new(
+                 :semaphore,
+                 @test_comp_all_2,
+                 :semaphore_set_test,
+                 "semaphore_set_test",
+                 max_permits: 10,
+                 time_to_live: 1,
+                 time_scale: :hour
+               )
+
+      # Acquire some permits
+      assert {:ok, {:allow, remaining, depleted_limiter}} =
+               MscmpSystLimiter.use(semaphore_limiter, 6)
+
+      assert 4 === remaining
+
+      # Set permits to a specific value
+      assert {:ok, {:allow, set_permits, set_limiter}} =
+               MscmpSystLimiter.set(depleted_limiter, current_permits: 8)
+
+      assert 8 === set_permits
+
+      # Verify the new permit count is in effect
+      assert {:ok, {:allow, current_permits, _}} = MscmpSystLimiter.get(set_limiter)
+      assert 8 === current_permits
+
+      assert @test_limiter_all === MscmpSystLimiter.put_service(nil)
+    end
+
+    test "Step 02.07 - Reset Operations" do
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_all)
+      assert @test_limiter_all === MscmpSystLimiter.get_service()
+
+      # Test token bucket reset
+      assert {:ok, token_limiter} =
+               MscmpSystLimiter.new(
+                 :token_bucket,
+                 @test_comp_all_1,
+                 :token_bucket_reset_test,
+                 "token_bucket_reset_test",
+                 bucket_size: 10,
+                 refill_rate: 5,
+                 refill_per: :second
+               )
+
+      # Consume most tokens
+      assert {:ok, {:allow, remaining, depleted_limiter}} = MscmpSystLimiter.use(token_limiter, 8)
+      assert 2 === remaining
+
+      # Reset the limiter - should restore full capacity
+      assert {:ok, {:allow, reset_capacity, reset_limiter}} =
+               MscmpSystLimiter.reset(depleted_limiter)
+
+      assert 10 === reset_capacity
+
+      # Verify we can now consume the full amount again
+      assert {:ok, {:allow, final_remaining, _}} = MscmpSystLimiter.use(reset_limiter, 8)
+      assert 2 === final_remaining
+
+      # Test semaphore reset
+      assert {:ok, semaphore_limiter} =
+               MscmpSystLimiter.new(
+                 :semaphore,
+                 @test_comp_all_2,
+                 :semaphore_reset_test,
+                 "semaphore_reset_test",
+                 max_permits: 5,
+                 time_to_live: 1,
+                 time_scale: :hour
+               )
+
+      # Acquire most permits
+      assert {:ok, {:allow, remaining, depleted_limiter}} =
+               MscmpSystLimiter.use(semaphore_limiter, 4)
+
+      assert 1 === remaining
+
+      # Reset the semaphore - should restore all permits
+      assert {:ok, {:allow, reset_permits, reset_limiter}} =
+               MscmpSystLimiter.reset(depleted_limiter)
+
+      assert 5 === reset_permits
+
+      # Verify we can now acquire permits again
+      assert {:ok, {:allow, final_remaining, _}} = MscmpSystLimiter.use(reset_limiter, 3)
+      assert 2 === final_remaining
+
+      assert @test_limiter_all === MscmpSystLimiter.put_service(nil)
+    end
+
+    test "Step 02.08 - Limiter Identity and Idempotency" do
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_all)
+      assert @test_limiter_all === MscmpSystLimiter.get_service()
+
+      # Create first limiter
+      assert {:ok, limiter1} =
+               MscmpSystLimiter.new(
+                 :token_bucket,
+                 @test_comp_all_1,
+                 :token_bucket_identity_test,
+                 "token_bucket_identity_test",
+                 bucket_size: 10,
+                 refill_rate: 5,
+                 refill_per: :second
+               )
+
+      # Consume some tokens
+      assert {:ok, {:allow, remaining, _}} = MscmpSystLimiter.use(limiter1, 3)
+      assert 7 === remaining
+
+      # Create limiter with same identity - should return existing limiter
+      assert {:ok, limiter2} =
+               MscmpSystLimiter.new(
+                 :token_bucket,
+                 @test_comp_all_1,
+                 :token_bucket_identity_test,
+                 "token_bucket_identity_test",
+                 bucket_size: 10,
+                 refill_rate: 5,
+                 refill_per: :second
+               )
+
+      # Should have the same state (7 tokens remaining)
+      assert {:ok, {:allow, capacity, _}} = MscmpSystLimiter.get(limiter2)
+      assert 7 === capacity
+
+      # Create limiter with different identity - should be separate
+      assert {:ok, limiter3} =
+               MscmpSystLimiter.new(
+                 :token_bucket,
+                 @test_comp_all_1,
+                 :token_bucket_identity_test_2,
+                 "token_bucket_identity_test_2",
+                 bucket_size: 10,
+                 refill_rate: 5,
+                 refill_per: :second
+               )
+
+      # Should have full capacity (10 tokens)
+      assert {:ok, {:allow, capacity, _}} = MscmpSystLimiter.get(limiter3)
+      assert 10 === capacity
+
+      assert @test_limiter_all === MscmpSystLimiter.put_service(nil)
+    end
+
+    test "Step 02.09 - Cross-Algorithm Operations" do
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_all)
+      assert @test_limiter_all === MscmpSystLimiter.get_service()
+
+      # Create both types of limiters
+      assert {:ok, token_limiter} =
+               MscmpSystLimiter.new(
+                 :token_bucket,
+                 @test_comp_all_1,
+                 :token_bucket_cross_test,
+                 "token_bucket_cross_test",
+                 bucket_size: 10,
+                 refill_rate: 5,
+                 refill_per: :second
+               )
+
+      assert {:ok, semaphore_limiter} =
+               MscmpSystLimiter.new(
+                 :semaphore,
+                 @test_comp_all_2,
+                 :semaphore_cross_test,
+                 "semaphore_cross_test",
+                 max_permits: 5,
+                 time_to_live: 1,
+                 time_scale: :hour
+               )
+
+      # Use both limiters independently
+      assert {:ok, {:allow, token_remaining, updated_token}} =
+               MscmpSystLimiter.use(token_limiter, 3)
+
+      assert 7 === token_remaining
+
+      assert {:ok, {:allow, semaphore_remaining, updated_semaphore}} =
+               MscmpSystLimiter.use(semaphore_limiter, 2)
+
+      assert 3 === semaphore_remaining
+
+      # Verify both limiters maintain their independent state
+      assert {:ok, {:allow, token_capacity, _}} = MscmpSystLimiter.get(updated_token)
+      assert 7 === token_capacity
+
+      assert {:ok, {:allow, semaphore_permits, _}} = MscmpSystLimiter.get(updated_semaphore)
+      assert 3 === semaphore_permits
+
+      # Reset one limiter without affecting the other
+      assert {:ok, {:allow, reset_capacity, _}} = MscmpSystLimiter.reset(updated_token)
+      assert 10 === reset_capacity
+
+      # Other limiter should be unchanged
+      assert {:ok, {:allow, semaphore_permits, _}} = MscmpSystLimiter.get(updated_semaphore)
+      assert 3 === semaphore_permits
+
+      assert @test_limiter_all === MscmpSystLimiter.put_service(nil)
     end
   end
 
-  describe "Mixed Algorithm Integration" do
-    test "coordinated rate limiting with both algorithms", %{limiter_service: _service} do
-      user_id = "coordinated_user_789"
+  describe "Phase 03 - Error Handling & Edge Cases" do
+    test "Step 03.01 - Ensure no service restarts" do
+      assert child_spec =
+               MscmpSystLimiter.child_spec(
+                 service_name: @test_limiter_all,
+                 algorithms: [:semaphore]
+               )
 
-      # Create both types of limiters for comprehensive rate limiting
-      {:ok, request_bucket} =
-        MscmpSystLimiter.new(
-          :token_bucket,
-          @test_component_api,
-          :requests_per_minute,
-          user_id,
-          bucket_size: 60,
-          refill_rate: 60,
-          refill_per: :minute
-        )
+      assert %{id: MscmpSystLimiter, start: {MscmpSystLimiter, :start_link, [opts]}} = child_spec
+      assert {:ok, @test_limiter_all} === Keyword.fetch(opts, :service_name)
 
-      {:ok, concurrent_semaphore} =
-        MscmpSystLimiter.new(
-          :semaphore,
-          @test_component_api,
-          :concurrent_operations,
-          user_id,
-          max_permits: 5,
-          time_to_live: 10,
-          time_scale: :minute
-        )
+      assert {:error, error} =
+               DynamicSupervisor.start_child(
+                 :"MscmpSystLimiter.TestSupportDynSupervisor",
+                 child_spec
+               )
 
-      # Simulate a workflow that requires both rate limiting and concurrency control
-      workflow_results = simulate_coordinated_workflow(request_bucket, concurrent_semaphore, 10)
-
-      # Verify both limiters were properly utilized
-      {final_bucket, final_semaphore, successful_operations} = workflow_results
-
-      {:ok, {:allow, remaining_requests, _}} = MscmpSystLimiter.get(final_bucket)
-      {:ok, {:allow, available_permits, _}} = MscmpSystLimiter.get(final_semaphore)
-
-      # Some requests were consumed
-      assert remaining_requests <= 60
-      # All permits should be released after operations
-      assert available_permits == 5
-      # All operations completed successfully
-      assert successful_operations == 10
+      assert %Mserror.LimiterError{kind: :service_management, cause: {:already_started, _}} =
+               error
     end
 
-    test "algorithm independence verification", %{limiter_service: _service} do
-      shared_id = "independence_test"
+    test "Step 03.02 - Invalid Algorithm in new/5" do
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_all)
+      assert @test_limiter_all === MscmpSystLimiter.get_service()
 
-      # Create limiters with same component/type/id but different algorithms
-      {:ok, bucket_limiter} =
-        MscmpSystLimiter.new(
-          :token_bucket,
-          @test_component_api,
-          :shared_resource,
-          shared_id,
-          bucket_size: 100,
-          refill_rate: 50,
-          refill_per: :minute
-        )
-
-      {:ok, semaphore_limiter} =
-        MscmpSystLimiter.new(
-          :semaphore,
-          @test_component_api,
-          :shared_resource,
-          shared_id,
-          max_permits: 10,
-          time_to_live: 1,
-          time_scale: :hour
-        )
-
-      # Use bucket limiter
-      {:ok, {:allow, bucket_remaining, bucket_used}} = MscmpSystLimiter.use(bucket_limiter, 30)
-      assert bucket_remaining == 70
-
-      # Use semaphore limiter
-      {:ok, {:allow, semaphore_remaining, semaphore_used}} =
-        MscmpSystLimiter.use(semaphore_limiter, 4)
-
-      assert semaphore_remaining == 6
-
-      # Verify they maintain independent state despite shared identity components
-      {:ok, {:allow, bucket_check, _}} = MscmpSystLimiter.get(bucket_used)
-      {:ok, {:allow, semaphore_check, _}} = MscmpSystLimiter.get(semaphore_used)
-
-      assert bucket_check == 70
-      assert semaphore_check == 6
-
-      # Reset one should not affect the other
-      {:ok, {:allow, bucket_reset, _}} = MscmpSystLimiter.reset(bucket_used)
-      {:ok, {:allow, semaphore_after_bucket_reset, _}} = MscmpSystLimiter.get(semaphore_used)
-
-      assert bucket_reset == 100
-      # Unchanged
-      assert semaphore_after_bucket_reset == 6
-    end
-  end
-
-  describe "Error Handling and Edge Cases Integration" do
-    test "invalid parameters result in proper errors", %{limiter_service: _service} do
-      # Test invalid algorithm
       assert_raise FunctionClauseError, fn ->
         MscmpSystLimiter.new(
           :invalid_algorithm,
-          @test_component_api,
-          :test_type,
-          "test_id",
+          @test_comp_all_1,
+          :invalid_algorithm_test,
+          "invalid_algorithm_test",
           bucket_size: 10,
           refill_rate: 5,
           refill_per: :second
         )
       end
 
-      # Test invalid component (not an atom suitable for module names)
-      assert_raise FunctionClauseError, fn ->
-        MscmpSystLimiter.new(
-          :token_bucket,
-          "not_an_atom",
-          :test_type,
-          "test_id",
-          bucket_size: 10,
-          refill_rate: 5,
-          refill_per: :second
-        )
-      end
-
-      # Test invalid type (not an atom)
-      assert_raise FunctionClauseError, fn ->
-        MscmpSystLimiter.new(
-          :token_bucket,
-          @test_component_api,
-          "not_an_atom",
-          "test_id",
-          bucket_size: 10,
-          refill_rate: 5,
-          refill_per: :second
-        )
-      end
-
-      # Test invalid ID (not a binary)
-      assert_raise FunctionClauseError, fn ->
-        MscmpSystLimiter.new(
-          :token_bucket,
-          @test_component_api,
-          :test_type,
-          :not_a_binary,
-          bucket_size: 10,
-          refill_rate: 5,
-          refill_per: :second
-        )
-      end
+      assert @test_limiter_all === MscmpSystLimiter.put_service(nil)
     end
 
-    test "invalid options result in proper validation errors", %{limiter_service: _service} do
-      # Test missing required token bucket options
-      assert_raise NimbleOptions.ValidationError, fn ->
-        MscmpSystLimiter.new(
-          :token_bucket,
-          @test_component_api,
-          :test_type,
-          "test_id",
-          bucket_size: 10
-          # Missing refill_rate and refill_per
-        )
-      end
+    test "Step 03.03 - Invalid Component in new/5" do
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_all)
+      assert @test_limiter_all === MscmpSystLimiter.get_service()
 
-      # Test invalid token bucket values
-      assert_raise NimbleOptions.ValidationError, fn ->
+      assert_raise FunctionClauseError, fn ->
         MscmpSystLimiter.new(
           :token_bucket,
-          @test_component_api,
-          :test_type,
-          "test_id",
-          # Invalid: must be positive
-          bucket_size: 0,
+          "invalid_component",
+          :invalid_component_test,
+          "invalid_component_test",
+          bucket_size: 10,
           refill_rate: 5,
           refill_per: :second
         )
       end
 
-      # Test missing required semaphore options
+      assert @test_limiter_all === MscmpSystLimiter.put_service(nil)
+    end
+
+    test "Step 03.04 - Invalid Type in new/5" do
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_all)
+      assert @test_limiter_all === MscmpSystLimiter.get_service()
+
+      assert_raise FunctionClauseError, fn ->
+        MscmpSystLimiter.new(
+          :token_bucket,
+          @test_comp_all_1,
+          "invalid_type",
+          "invalid_type_test",
+          bucket_size: 10,
+          refill_rate: 5,
+          refill_per: :second
+        )
+      end
+
+      assert @test_limiter_all === MscmpSystLimiter.put_service(nil)
+    end
+
+    test "Step 03.05 - Invalid ID in new/5" do
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_all)
+      assert @test_limiter_all === MscmpSystLimiter.get_service()
+
+      assert_raise FunctionClauseError, fn ->
+        MscmpSystLimiter.new(
+          :token_bucket,
+          @test_comp_all_1,
+          :token_bucket_test,
+          123,
+          bucket_size: 10,
+          refill_rate: 5,
+          refill_per: :second
+        )
+      end
+
+      assert @test_limiter_all === MscmpSystLimiter.put_service(nil)
+    end
+
+    test "Step 03.06 - Missing Required Options in new/5" do
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_all)
+      assert @test_limiter_all === MscmpSystLimiter.get_service()
+
+      # Missing bucket_size for token bucket
+      assert_raise NimbleOptions.ValidationError, fn ->
+        MscmpSystLimiter.new(
+          :token_bucket,
+          @test_comp_all_1,
+          :missing_opts_test,
+          "missing_opts_test",
+          refill_rate: 5,
+          refill_per: :second
+        )
+      end
+
+      # Missing max_permits for semaphore
       assert_raise NimbleOptions.ValidationError, fn ->
         MscmpSystLimiter.new(
           :semaphore,
-          @test_component_api,
-          :test_type,
-          "test_id",
-          max_permits: 10
-          # Missing time_to_live and time_scale
+          @test_comp_all_2,
+          :semaphore_test,
+          "semaphore_missing_opts_test",
+          time_to_live: 5,
+          time_scale: :minute
         )
       end
 
-      # Test invalid semaphore values
+      assert @test_limiter_all === MscmpSystLimiter.put_service(nil)
+    end
+
+    test "Step 03.07 - Invalid Options in new/5" do
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_all)
+      assert @test_limiter_all === MscmpSystLimiter.get_service()
+
+      # Invalid bucket_size (negative)
+      assert_raise NimbleOptions.ValidationError, fn ->
+        MscmpSystLimiter.new(
+          :token_bucket,
+          @test_comp_all_1,
+          :token_bucket_test,
+          "token_bucket_invalid_test",
+          bucket_size: -10,
+          refill_rate: 5,
+          refill_per: :second
+        )
+      end
+
+      # Invalid max_permits (zero)
       assert_raise NimbleOptions.ValidationError, fn ->
         MscmpSystLimiter.new(
           :semaphore,
-          @test_component_api,
-          :test_type,
-          "test_id",
-          # Invalid: must be positive
-          max_permits: -5,
-          time_to_live: 1,
-          time_scale: :hour
+          @test_comp_all_2,
+          :semaphore_test,
+          "semaphore_invalid_permits_test",
+          max_permits: 0,
+          time_to_live: 5,
+          time_scale: :minute
         )
       end
+
+      assert @test_limiter_all === MscmpSystLimiter.put_service(nil)
     end
 
-    test "operations on invalid limiter instances handle gracefully", %{limiter_service: _service} do
-      # Create a valid limiter first
-      {:ok, valid_limiter} =
-        MscmpSystLimiter.new(
-          :token_bucket,
-          @test_component_api,
-          :test_type,
-          "valid_test",
-          bucket_size: 10,
-          refill_rate: 5,
-          refill_per: :second
-        )
+    test "Step 03.08 - Invalid Increment in use/2" do
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_all)
+      assert @test_limiter_all === MscmpSystLimiter.get_service()
 
-      # Test with malformed limiter instance
-      invalid_limiter = {:invalid_algorithm, "bad", "data"}
+      # Create token bucket limiter
+      assert {:ok, limiter} =
+               MscmpSystLimiter.new(
+                 :token_bucket,
+                 @test_comp_all_1,
+                 :token_bucket_test,
+                 "token_bucket_invalid_increment_test",
+                 bucket_size: 10,
+                 refill_rate: 5,
+                 refill_per: :second
+               )
 
-      # These should raise CaseClauseError due to pattern matching failure in the case statements
-      assert_raise CaseClauseError, fn ->
-        MscmpSystLimiter.use(invalid_limiter, 1)
-      end
+      # Token bucket doesn't support negative increments
+      assert {:error, error} = MscmpSystLimiter.use(limiter, -1)
+      assert %Mserror.LimiterError{kind: :limiter_management} = error
 
-      assert_raise CaseClauseError, fn ->
-        MscmpSystLimiter.get(invalid_limiter)
-      end
-
-      assert_raise CaseClauseError, fn ->
-        MscmpSystLimiter.set(invalid_limiter, current_fill: 5)
-      end
-
-      assert_raise CaseClauseError, fn ->
-        MscmpSystLimiter.reset(invalid_limiter)
-      end
-
-      # Valid limiter should still work
-      assert {:ok, {:allow, 10, _}} = MscmpSystLimiter.get(valid_limiter)
+      assert @test_limiter_all === MscmpSystLimiter.put_service(nil)
     end
 
-    test "service unavailable scenarios", %{limiter_service: original_service} do
-      # Test behavior when no service is set
-      MscmpSystLimiter.put_service(nil)
+    test "Step 03.09 - Invalid Options in set/2" do
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_all)
+      assert @test_limiter_all === MscmpSystLimiter.get_service()
 
-      # Should still handle gracefully (likely returning errors)
-      result =
-        MscmpSystLimiter.new(
-          :token_bucket,
-          @test_component_api,
-          :no_service_test,
-          "test_id",
-          bucket_size: 10,
-          refill_rate: 5,
-          refill_per: :second
-        )
+      # Create token bucket limiter
+      assert {:ok, limiter} =
+               MscmpSystLimiter.new(
+                 :token_bucket,
+                 @test_comp_all_1,
+                 :token_bucket_test,
+                 "token_bucket_invalid_set_test",
+                 bucket_size: 10,
+                 refill_rate: 5,
+                 refill_per: :second
+               )
 
-      # Might succeed or fail depending on implementation - just verify it doesn't crash
-      case result do
-        {:ok, _limiter} -> :ok
-        {:error, _error} -> :ok
-      end
+      # Set current_fill to value exceeding bucket_size
+      assert {:error, error} = MscmpSystLimiter.set(limiter, current_fill: 15)
+      assert %Mserror.LimiterError{kind: :limiter_management} = error
 
-      # Restore service
-      MscmpSystLimiter.put_service(original_service)
+      # Create semaphore limiter
+      assert {:ok, semaphore_limiter} =
+               MscmpSystLimiter.new(
+                 :semaphore,
+                 @test_comp_all_2,
+                 :semaphore_test,
+                 "semaphore_invalid_set_test",
+                 max_permits: 5,
+                 time_to_live: 1,
+                 time_scale: :hour
+               )
+
+      # Set current_permits to value exceeding max_permits
+      assert {:error, error} = MscmpSystLimiter.set(semaphore_limiter, current_permits: 10)
+      assert %Mserror.LimiterError{kind: :limiter_management} = error
+
+      assert @test_limiter_all === MscmpSystLimiter.put_service(nil)
+    end
+
+    test "Step 03.10 - Operations Without Active Service" do
+      # Clear any active service
+      assert nil === MscmpSystLimiter.put_service(nil)
+      assert nil === MscmpSystLimiter.get_service()
+
+      # Try to create limiter without active service
+      assert {:error, error} =
+               MscmpSystLimiter.new(
+                 :token_bucket,
+                 @test_comp_all_1,
+                 :token_bucket_test,
+                 "no_service_test",
+                 bucket_size: 10,
+                 refill_rate: 5,
+                 refill_per: :second
+               )
+
+      assert %Mserror.LimiterError{kind: :limiter_management} = error
+    end
+
+    test "Step 03.11 - Edge Case: Zero Increment in Semaphore" do
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_all)
+      assert @test_limiter_all === MscmpSystLimiter.get_service()
+
+      # Create semaphore limiter
+      assert {:ok, limiter} =
+               MscmpSystLimiter.new(
+                 :semaphore,
+                 @test_comp_all_2,
+                 :semaphore_test,
+                 "semaphore_zero_increment_test",
+                 max_permits: 5,
+                 time_to_live: 1,
+                 time_scale: :hour
+               )
+
+      # Zero increment should be a no-op
+      assert {:ok, {:allow, permits, _}} = MscmpSystLimiter.use(limiter, 0)
+      assert 5 === permits
+
+      assert @test_limiter_all === MscmpSystLimiter.put_service(nil)
+    end
+
+    test "Step 03.12 - Edge Case: Boundary Values in set/2" do
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_all)
+      assert @test_limiter_all === MscmpSystLimiter.get_service()
+
+      # Create token bucket limiter
+      assert {:ok, limiter} =
+               MscmpSystLimiter.new(
+                 :token_bucket,
+                 @test_comp_all_1,
+                 :token_bucket_test,
+                 "token_bucket_boundary_test",
+                 bucket_size: 10,
+                 refill_rate: 5,
+                 refill_per: :second
+               )
+
+      # Set to minimum value (0)
+      assert {:ok, {:deny, wait_time, _}} = MscmpSystLimiter.set(limiter, current_fill: 0)
+      assert 200 === wait_time
+
+      # Set to maximum value (bucket_size)
+      assert {:ok, {:allow, capacity, _}} = MscmpSystLimiter.set(limiter, current_fill: 10)
+      assert 10 === capacity
+
+      assert @test_limiter_all === MscmpSystLimiter.put_service(nil)
+    end
+
+    test "Step 03.13 - Concurrent Operations" do
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_all)
+      assert @test_limiter_all === MscmpSystLimiter.get_service()
+
+      # Create semaphore limiter
+      assert {:ok, limiter} =
+               MscmpSystLimiter.new(
+                 :semaphore,
+                 @test_comp_all_2,
+                 :semaphore_test,
+                 "semaphore_concurrent_test",
+                 max_permits: 3,
+                 time_to_live: 1,
+                 time_scale: :hour
+               )
+
+      # Simulate concurrent operations by calling use/2 multiple times
+      # This tests thread safety
+      results =
+        Enum.map(1..5, fn _ ->
+          MscmpSystLimiter.use(limiter, 1)
+        end)
+
+      # Should have some allows and some denies
+      allows =
+        Enum.count(results, fn
+          {:ok, {:allow, _, _}} -> true
+          _ -> false
+        end)
+
+      denies =
+        Enum.count(results, fn
+          {:ok, {:deny, _, _}} -> true
+          _ -> false
+        end)
+
+      assert allows > 0
+      assert denies > 0
+      assert allows + denies === 5
+
+      assert @test_limiter_all === MscmpSystLimiter.put_service(nil)
     end
   end
 
-  # Helper function to simulate multiple API requests
-  defp simulate_api_requests(limiter, 0), do: limiter
+  describe "Phase 04 - Service Shutdown" do
+    test "Step 04.01 - Graceful Service Shutdown" do
+      pid = Process.whereis(@test_limiter_custom)
+      assert is_pid(pid)
 
-  defp simulate_api_requests(limiter, count) when count > 0 do
-    {:ok, {:allow, _remaining, updated_limiter}} = MscmpSystLimiter.use(limiter, 1)
-    simulate_api_requests(updated_limiter, count - 1)
-  end
+      # Set the service as active
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_custom)
+      assert @test_limiter_custom === MscmpSystLimiter.get_service()
 
-  # Helper function to simulate coordinated workflow using both algorithms
-  defp simulate_coordinated_workflow(bucket_limiter, semaphore_limiter, operations_count) do
-    simulate_coordinated_operations(bucket_limiter, semaphore_limiter, operations_count, 0)
-  end
+      assert {:ok, token_limiter} =
+               MscmpSystLimiter.new(
+                 :token_bucket,
+                 @test_comp_cust_1,
+                 :token_bucket_test,
+                 "token_bucket_shutdown_test",
+                 bucket_size: 10,
+                 refill_rate: 5,
+                 refill_per: :second
+               )
 
-  defp simulate_coordinated_operations(bucket_limiter, semaphore_limiter, 0, completed_count) do
-    {bucket_limiter, semaphore_limiter, completed_count}
-  end
+      assert {:ok, semaphore_limiter} =
+               MscmpSystLimiter.new(
+                 :semaphore,
+                 @test_comp_cust_2,
+                 :semaphore_test,
+                 "semaphore_shutdown_test",
+                 max_permits: 5,
+                 time_to_live: 1,
+                 time_scale: :hour
+               )
 
-  defp simulate_coordinated_operations(
-         bucket_limiter,
-         semaphore_limiter,
-         remaining_ops,
-         completed_count
-       ) do
-    # Each operation requires both a token and a permit
-    with {:ok, {:allow, _tokens_remaining, updated_bucket}} <-
-           MscmpSystLimiter.use(bucket_limiter, 1),
-         {:ok, {:allow, _permits_remaining, updated_semaphore}} <-
-           MscmpSystLimiter.use(semaphore_limiter, 1) do
-      # Simulate operation work
-      Process.sleep(10)
+      assert {:ok, {:allow, _, _}} = MscmpSystLimiter.use(token_limiter, 3)
+      assert {:ok, {:allow, _, _}} = MscmpSystLimiter.use(semaphore_limiter, 2)
 
-      # Release the permit (token is consumed)
-      {:ok, {:allow, _permits_after_release, final_semaphore}} =
-        MscmpSystLimiter.use(updated_semaphore, -1)
+      assert :ok =
+               DynamicSupervisor.terminate_child(
+                 :"MscmpSystLimiter.TestSupportDynSupervisor",
+                 pid
+               )
 
-      simulate_coordinated_operations(
-        updated_bucket,
-        final_semaphore,
-        remaining_ops - 1,
-        completed_count + 1
-      )
-    else
-      # If either resource is unavailable, stop the simulation
-      _ -> {bucket_limiter, semaphore_limiter, completed_count}
+      assert false === Process.alive?(pid)
+
+      assert @test_limiter_custom === MscmpSystLimiter.put_service(nil)
+    end
+
+    test "Step 04.02 - Operations After Service Shutdown" do
+      pid = Process.whereis(@test_limiter_one)
+      assert is_pid(pid)
+
+      # Set service as active and create a limiter
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_one)
+
+      assert {:ok, limiter} =
+               MscmpSystLimiter.new(
+                 :semaphore,
+                 @test_comp_one_1,
+                 :semaphore_test,
+                 "semaphore_shutdown_ops_test",
+                 max_permits: 5,
+                 time_to_live: 1,
+                 time_scale: :hour
+               )
+
+      # Shutdown the service
+      assert :ok =
+               DynamicSupervisor.terminate_child(
+                 :"MscmpSystLimiter.TestSupportDynSupervisor",
+                 pid
+               )
+
+      # The LLM originally put tests here to ensure that existing counters were
+      # no longer usable after the services are shut down... not an unreasonable
+      # assumption... but wrong.  Our counters aren't dependent on the service,
+      # only counter creation and renewal is dependent on the service being
+      # alive an active.
+
+      # Clear the service reference
+      assert @test_limiter_one === MscmpSystLimiter.put_service(nil)
+    end
+
+    test "Step 04.03 - Service Restart After Shutdown" do
+      pid = Process.whereis(@test_limiter_all)
+      assert is_pid(pid)
+
+      # Shutdown the service
+      assert :ok =
+               DynamicSupervisor.terminate_child(
+                 :"MscmpSystLimiter.TestSupportDynSupervisor",
+                 pid
+               )
+
+      assert false === Process.alive?(pid)
+
+      # Start the same service again
+      assert child_spec = MscmpSystLimiter.child_spec(service_name: @test_limiter_all)
+
+      assert {:ok, new_pid} =
+               DynamicSupervisor.start_child(
+                 :"MscmpSystLimiter.TestSupportDynSupervisor",
+                 child_spec
+               )
+
+      assert is_pid(new_pid)
+      assert new_pid !== pid
+
+      # Verify the restarted service works
+      assert nil === MscmpSystLimiter.put_service(@test_limiter_all)
+      assert @test_limiter_all === MscmpSystLimiter.get_service()
+
+      assert {:ok, limiter} =
+               MscmpSystLimiter.new(
+                 :token_bucket,
+                 @test_comp_all_1,
+                 :token_bucket_test,
+                 "token_bucket_restart_test",
+                 bucket_size: 10,
+                 refill_rate: 5,
+                 refill_per: :second
+               )
+
+      assert {:ok, {:allow, capacity, _}} = MscmpSystLimiter.get(limiter)
+      assert 10 === capacity
+
+      # Cleanup
+      assert :ok =
+               DynamicSupervisor.terminate_child(
+                 :"MscmpSystLimiter.TestSupportDynSupervisor",
+                 new_pid
+               )
+
+      assert @test_limiter_all === MscmpSystLimiter.put_service(nil)
     end
   end
 end

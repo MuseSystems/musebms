@@ -27,7 +27,8 @@ children = [
     service_name: TestSupport.get_limiter_service_name(),
     algorithms: :all,
     cleanup_interval: [all: 60_000]
-  )
+  ),
+  {DynamicSupervisor, name: :"MscmpSystLimiter.TestSupportDynSupervisor", strategy: :one_for_one}
 ]
 
 {:ok, _pid} =
