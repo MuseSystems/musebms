@@ -129,7 +129,13 @@ defmodule MscmpSystSettings do
     api_telemetry :service, %{service_name: opts[:service_name]} do
       validated_opts = NimbleOptions.validate!(opts, @start_link_opts)
 
-      case Runtime.Service.start_link(validated_opts) do
+      genserver_opts =
+        [name: validated_opts[:service_name]] ++
+          Keyword.take(validated_opts, [:debug, :timeout, :hibernate_after])
+
+      init_opts = Keyword.take(validated_opts, [:datastore_context_name])
+
+      case GenServer.start_link(Runtime.Service, init_opts, genserver_opts) do
         {:ok, pid} ->
           {:ok, pid}
 

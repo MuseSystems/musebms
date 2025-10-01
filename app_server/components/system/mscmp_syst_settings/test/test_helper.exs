@@ -40,7 +40,8 @@ children = [
   MscmpSystSettings.child_spec(
     service_name: TestSupport.get_settings_service_name(),
     datastore_context_name: datastore_context_name
-  )
+  ),
+  {DynamicSupervisor, name: :"MscmpSystSettings.TestSupportDynSupervisor", strategy: :one_for_one}
 ]
 
 {:ok, _pid} =

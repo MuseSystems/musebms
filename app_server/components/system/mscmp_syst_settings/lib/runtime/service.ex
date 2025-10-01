@@ -25,31 +25,6 @@ defmodule MscmpSystSettings.Runtime.Service do
   ######
 
   ##
-  ## Client
-  ##
-
-  ##############################################################################
-  #
-  # start_link
-  #
-  #
-
-  @spec start_link(Keyword.t()) :: {:ok, pid()} | :ignore | {:error, term()}
-  def start_link(opts) do
-    genserver_opts =
-      [name: opts[:service_name]] ++
-        Keyword.take(opts, [:debug, :timeout, :hibernate_after])
-
-    init_opts = Keyword.take(opts, [:datastore_context_name])
-
-    case GenServer.start_link(__MODULE__, init_opts, genserver_opts) do
-      {:ok, pid} -> {:ok, pid}
-      :ignore -> :ignore
-      abort_reason -> {:error, {:start_link_error, abort_reason}}
-    end
-  end
-
-  ##
   ## Server
   ##
 
@@ -71,7 +46,7 @@ defmodule MscmpSystSettings.Runtime.Service do
     {:ok,
      %{
        datastore_context_name: opts[:datastore_context_name],
-       settings_table_tid: settings_table
+       settings_table: settings_table
      }}
   end
 
@@ -85,7 +60,7 @@ defmodule MscmpSystSettings.Runtime.Service do
   def handle_call(:refresh, _from, state) do
     {
       :reply,
-      Impl.Settings.refresh_from_database(state.settings_table_tid),
+      Impl.Settings.refresh_from_database(state.settings_table),
       state
     }
   end
@@ -94,7 +69,7 @@ defmodule MscmpSystSettings.Runtime.Service do
   def handle_call({:create, creation_params}, _from, state) do
     {
       :reply,
-      Impl.Settings.create(state.settings_table_tid, creation_params),
+      Impl.Settings.create(state.settings_table, creation_params),
       state
     }
   end
@@ -103,7 +78,7 @@ defmodule MscmpSystSettings.Runtime.Service do
   def handle_call({:update, setting_name, update_params}, _from, state) do
     {
       :reply,
-      Impl.Settings.update_setting(state.settings_table_tid, setting_name, update_params),
+      Impl.Settings.update_setting(state.settings_table, setting_name, update_params),
       state
     }
   end
@@ -112,23 +87,17 @@ defmodule MscmpSystSettings.Runtime.Service do
   def handle_call({:delete, setting_name}, _from, state) do
     {
       :reply,
-      Impl.Settings.delete(state.settings_table_tid, setting_name),
+      Impl.Settings.delete(state.settings_table, setting_name),
       state
     }
   end
 
   @impl true
   def handle_call(:get_settings_table, _from, state),
-    do: {:reply, state.settings_table_tid, state}
+    do: {:reply, state.settings_table, state}
 
   @impl true
-  def handle_call(:get_runtime_config, _from, state) do
-    runtime_config = %{
-      settings_table: state.settings_table_tid
-    }
-
-    {:reply, runtime_config, state}
-  end
+  def handle_call(:get_runtime_config, _from, state), do: {:reply, state, state}
 
   ##############################################################################
   #
@@ -138,7 +107,7 @@ defmodule MscmpSystSettings.Runtime.Service do
 
   @impl true
   def terminate(_reason, state) do
-    :ets.delete(state.settings_table_tid)
+    :ets.delete(state.settings_table)
     :ok
   end
 end

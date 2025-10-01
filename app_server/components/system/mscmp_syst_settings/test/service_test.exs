@@ -62,4 +62,37 @@ defmodule ServiceTest do
     assert setting_two.setting_integer == 222
     assert setting_two.setting_text == "Test Setting Two Text"
   end
+
+  test "service rejects deletion of system-defined settings" do
+    service_name = TestSupport.get_settings_service_name()
+
+    # test_setting_one is system-defined (syst_defined = TRUE in test data)
+    assert {:error, _} = GenServer.call(service_name, {:delete, "test_setting_one"})
+
+    # Verify the setting still exists
+    settings_table = GenServer.call(service_name, :get_settings_table)
+    assert [{_, _setting}] = :ets.lookup(settings_table, "test_setting_one")
+  end
+
+  test "service handles invalid setting names gracefully" do
+    service_name = TestSupport.get_settings_service_name()
+
+    assert {:error, _} =
+             GenServer.call(
+               service_name,
+               {:update, "nonexistent_setting", %{setting_integer: 42}}
+             )
+
+    assert {:error, _} = GenServer.call(service_name, {:delete, "nonexistent_setting"})
+  end
+
+  test "service provides complete runtime config" do
+    service_name = TestSupport.get_settings_service_name()
+
+    assert %{datastore_context_name: context, settings_table: table} =
+             GenServer.call(service_name, :get_runtime_config)
+
+    assert is_reference(table)
+    assert context != nil
+  end
 end

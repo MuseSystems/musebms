@@ -322,8 +322,6 @@ defmodule SettingsTest do
   end
 
   test "Set/Get setting_integer_range Setting" do
-    # TODO: Note that the range types seem to munge around ranges not already set to be '[)' to be
-    # '[)' via changing values if needed.  I guess this is OK for now, but may be worth revisiting.
     first_change = %{
       setting_integer_range: %MscmpSystDb.DbTypes.IntegerRange{
         lower: 111,
@@ -370,16 +368,11 @@ defmodule SettingsTest do
                second_change
              )
 
-    assert %MscmpSystDb.DbTypes.IntegerRange{
-             lower: 223,
-             lower_inclusive: true,
-             upper: 22_223,
-             upper_inclusive: false
-           } ==
-             MscmpSystSettings.get_value(
-               "test_setting_one",
-               :setting_integer_range
-             )
+    assert MscmpSystDb.DbTypes.test_compare(
+             second_change.setting_integer_range,
+             MscmpSystSettings.get_value("test_setting_one", :setting_integer_range),
+             :eq
+           )
 
     assert :ok =
              MscmpSystSettings.set_value(
@@ -388,16 +381,11 @@ defmodule SettingsTest do
                first_change.setting_integer_range
              )
 
-    assert %MscmpSystDb.DbTypes.IntegerRange{
-             lower: 111,
-             lower_inclusive: true,
-             upper: 11_112,
-             upper_inclusive: false
-           } ==
-             MscmpSystSettings.get_value(
-               "test_setting_one",
-               :setting_integer_range
-             )
+    assert MscmpSystDb.DbTypes.test_compare(
+             first_change.setting_integer_range,
+             MscmpSystSettings.get_value("test_setting_one", :setting_integer_range),
+             :eq
+           )
 
     assert :ok =
              MscmpSystSettings.set_value(
@@ -475,8 +463,6 @@ defmodule SettingsTest do
   end
 
   test "Set/Get setting_decimal_range Setting" do
-    # TODO: Note that the range types seem to munge around ranges not already set to be '[)' to be
-    # '[)' via changing values if needed.  I guess this is OK for now, but may be worth revisiting.
     first_change = %{
       setting_decimal_range: %MscmpSystDb.DbTypes.DecimalRange{
         lower: Decimal.new("111.999"),
@@ -740,18 +726,11 @@ defmodule SettingsTest do
                second_change
              )
 
-    second_change_comparison = %MscmpSystDb.DbTypes.DateRange{
-      lower: ~D[2022-04-13],
-      upper: ~D[2022-04-16],
-      lower_inclusive: true,
-      upper_inclusive: false
-    }
-
-    assert ^second_change_comparison =
-             MscmpSystSettings.get_value(
-               "test_setting_one",
-               :setting_date_range
-             )
+    assert MscmpSystDb.DbTypes.test_compare(
+             second_change.setting_date_range,
+             MscmpSystSettings.get_value("test_setting_one", :setting_date_range),
+             :eq
+           )
 
     assert :ok =
              MscmpSystSettings.set_value(
@@ -760,18 +739,11 @@ defmodule SettingsTest do
                first_change.setting_date_range
              )
 
-    first_change_comparison = %MscmpSystDb.DbTypes.DateRange{
-      lower: ~D[2022-04-13],
-      upper: ~D[2022-04-15],
-      lower_inclusive: true,
-      upper_inclusive: false
-    }
-
-    assert ^first_change_comparison =
-             MscmpSystSettings.get_value(
-               "test_setting_one",
-               :setting_date_range
-             )
+    assert MscmpSystDb.DbTypes.test_compare(
+             first_change.setting_date_range,
+             MscmpSystSettings.get_value("test_setting_one", :setting_date_range),
+             :eq
+           )
 
     assert :ok =
              MscmpSystSettings.set_value(
