@@ -15,26 +15,52 @@ defmodule MscmpSystEnums.Runtime.ProcessUtils do
 
   alias MscmpSystService.Types, as: ServiceTypes
 
+  ##############################################################################
+  #
+  # get_enums_table
+  #
+  #
+
   @spec get_enums_table() :: :ets.table() | nil
-  def get_enums_table, do: Process.get(:"MscmpSystEnums.table_name")
+  def get_enums_table do
+    case Process.get(:"MscmpSystEnums.runtime_config") do
+      %{enums_table: enums_table} -> enums_table
+      _ -> nil
+    end
+  end
+
+  ##############################################################################
+  #
+  # get_runtime_config
+  #
+  #
 
   @spec get_runtime_config() :: map() | nil
   def get_runtime_config, do: Process.get(:"MscmpSystEnums.runtime_config")
 
+  ##############################################################################
+  #
+  # put_service
+  #
+  #
+
   @spec put_service(ServiceTypes.service_name()) :: ServiceTypes.service_name()
   def put_service(nil) do
-    _ = Process.put(:"MscmpSystEnums.table_name", nil)
     _ = Process.put(:"MscmpSystEnums.runtime_config", nil)
     Process.put(:"MscmpSystEnums.service_name", nil)
   end
 
   def put_service(enums_service_name) do
-    enums_table = GenServer.call(enums_service_name, :get_enums_table)
     runtime_config = GenServer.call(enums_service_name, :get_runtime_config)
-    Process.put(:"MscmpSystEnums.table_name", enums_table)
     Process.put(:"MscmpSystEnums.runtime_config", runtime_config)
     Process.put(:"MscmpSystEnums.service_name", enums_service_name)
   end
+
+  ##############################################################################
+  #
+  # get_service
+  #
+  #
 
   @spec get_service() :: ServiceTypes.service_name()
   def get_service, do: Process.get(:"MscmpSystEnums.service_name")

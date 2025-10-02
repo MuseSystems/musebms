@@ -28,7 +28,14 @@ VALUES
     , TRUE
     , FALSE
     , jsonb_build_object( 'key_one', 1, 'key_two', 2, 'key_three',
-                          ARRAY ['test1', 'test2', 'test3']::text[] ) );
+                          ARRAY ['test1', 'test2', 'test3']::text[] ) )
+     ,
+    ( 'test_syst_enum_two'
+    , 'Test System Enum Two'
+    , 'A test of a system enumeration (two) - user maintainable.'
+    , TRUE
+    , TRUE
+    , jsonb_build_object( 'key_a', 'a', 'key_b', 'b' ) );
 
 -- Enum Functional Types
 
@@ -49,7 +56,23 @@ VALUES
     , ( SELECT id
         FROM ms_syst_data.syst_enums
         WHERE internal_name = 'test_syst_enum_one' )
-    , 'Testing Enum One Functional Type Inactive' );
+    , 'Testing Enum One Functional Type Inactive' )
+     ,
+    ( 'enum_two_active'
+    , 'Enum Two/Active'
+    , 'Active'
+    , ( SELECT id
+        FROM ms_syst_data.syst_enums
+        WHERE internal_name = 'test_syst_enum_two' )
+    , 'Testing Enum Two Functional Type Active' )
+     ,
+    ( 'enum_two_inactive'
+    , 'Enum Two/Inactive'
+    , 'Inactive'
+    , ( SELECT id
+        FROM ms_syst_data.syst_enums
+        WHERE internal_name = 'test_syst_enum_two' )
+    , 'Testing Enum Two Functional Type Inactive' );
 
 --  Enum Values: Enum One
 
@@ -143,3 +166,67 @@ VALUES
     , 'Enum One/Active System Description'
     , 1
     , jsonb_build_object( 'key1', 1, 'key2', 'b', 'key3', TRUE ) );
+
+--  Enum Values: Enum Two (User Maintainable System Enum)
+
+INSERT INTO ms_syst_data.syst_enum_items
+    ( internal_name
+    , display_name
+    , external_name
+    , enum_id
+    , functional_type_id
+    , enum_default
+    , functional_type_default
+    , syst_defined
+    , user_maintainable
+    , syst_description
+    , sort_order
+    , syst_options )
+VALUES
+    ( 'enum_two_open'
+    , 'Enum Two/Open'
+    , 'Open'
+    , ( SELECT id
+        FROM ms_syst_data.syst_enums
+        WHERE internal_name = 'test_syst_enum_two' )
+    , ( SELECT id
+        FROM ms_syst_data.syst_enum_functional_types
+        WHERE internal_name = 'enum_two_active' )
+    , TRUE
+    , TRUE
+    , TRUE
+    , TRUE
+    , 'Enum Two/Open System Description'
+    , 1
+    , jsonb_build_object( 'status', 'open' ) );
+
+INSERT INTO ms_syst_data.syst_enum_items
+    ( internal_name
+    , display_name
+    , external_name
+    , enum_id
+    , functional_type_id
+    , enum_default
+    , functional_type_default
+    , syst_defined
+    , user_maintainable
+    , syst_description
+    , sort_order
+    , syst_options )
+VALUES
+    ( 'enum_two_closed'
+    , 'Enum Two/Closed'
+    , 'Closed'
+    , ( SELECT id
+        FROM ms_syst_data.syst_enums
+        WHERE internal_name = 'test_syst_enum_two' )
+    , ( SELECT id
+        FROM ms_syst_data.syst_enum_functional_types
+        WHERE internal_name = 'enum_two_inactive' )
+    , FALSE
+    , TRUE
+    , TRUE
+    , TRUE
+    , 'Enum Two/Closed System Description'
+    , 2
+    , jsonb_build_object( 'status', 'closed' ) );

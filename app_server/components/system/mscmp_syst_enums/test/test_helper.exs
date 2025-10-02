@@ -40,7 +40,8 @@ children = [
   MscmpSystEnums.child_spec(
     service_name: TestSupport.get_enums_service_name(),
     datastore_context_name: datastore_context_name
-  )
+  ),
+  {DynamicSupervisor, name: :"MscmpSystEnums.TestSupportDynSupervisor", strategy: :one_for_one}
 ]
 
 {:ok, _pid} =

@@ -136,7 +136,13 @@ defmodule MscmpSystEnums do
     api_telemetry :service, %{service_name: opts[:service_name]} do
       validated_opts = NimbleOptions.validate!(opts, @start_link_opts)
 
-      case Runtime.Service.start_link(validated_opts) do
+      genserver_opts =
+        [name: validated_opts[:service_name]] ++
+          Keyword.take(validated_opts, [:debug, :timeout, :hibernate_after])
+
+      init_opts = Keyword.take(validated_opts, [:datastore_context_name])
+
+      case GenServer.start_link(Runtime.Service, init_opts, genserver_opts) do
         {:ok, pid} ->
           {:ok, pid}
 
@@ -1051,4 +1057,23 @@ defmodule MscmpSystEnums do
          )}
     end
   end
+
+  ##############################################################################
+  #
+  # terminate_service
+  #
+  #
+
+  @doc section: :service_management
+  @doc """
+  Terminates a running instance of the Enums service.
+
+  ## Examples
+
+      > MscmpSystEnums.terminate_service()
+      :ok
+  """
+  @spec terminate_service() :: :ok
+  def terminate_service,
+    do: Runtime.ProcessUtils.get_service() |> GenServer.stop(:normal)
 end
