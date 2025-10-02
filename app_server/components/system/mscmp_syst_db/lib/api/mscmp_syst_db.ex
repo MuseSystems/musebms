@@ -1515,6 +1515,18 @@ defmodule MscmpSystDb do
                parameters: %{job: job, opts: opts}
              }
            )}
+
+        {:error, _operation, _value, _changes} = error ->
+          {:error,
+           Mserror.DbError.new(
+             :datastore_context,
+             "Failed to execute transaction.",
+             cause: error,
+             context: %ErrorContext{
+               origin: {__MODULE__, :transaction, 2},
+               parameters: %{job: job, opts: opts}
+             }
+           )}
       end
     end
   end
