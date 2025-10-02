@@ -194,7 +194,7 @@ defmodule Msutils.Data do
     external_name: [
       min_external_name_length: [
         type: :pos_integer,
-        default: 6,
+        default: 2,
         doc: "Sets the minimum grapheme length of external_name values."
       ],
       max_external_name_length: [
