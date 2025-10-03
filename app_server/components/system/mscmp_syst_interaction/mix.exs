@@ -12,7 +12,9 @@
 defmodule MscmpSystInteraction.MixProject do
   use Mix.Project
 
-  Code.require_file(Path.expand("../../../../tools/build_tools/build_config/msbms_build_config.exs", __DIR__))
+  Code.require_file(
+    Path.expand("../../../../tools/build_tools/build_config/msbms_build_config.exs", __DIR__)
+  )
 
   @name :mscmp_syst_interaction
   @version "0.1.0"
@@ -27,6 +29,7 @@ defmodule MscmpSystInteraction.MixProject do
 
   @msbms_deps [
     :mscmp_syst_error,
+    :mscmp_syst_service,
     :mscmp_syst_utils,
     :mscmp_syst_utils_data,
     :mscmp_syst_db,
