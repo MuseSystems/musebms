@@ -13,17 +13,17 @@ jobs:
   test_system_components:
     runs-on: ubuntu-latest
     env:
-      MSBMS_BASEDIR: ./app_server/components/system
-      MSBMS_JOBNAME: system-components-${{ matrix.otp }}-${{ matrix.elixir }}
+      MSBMS_JOBNAME: system-components-${{ matrix.otp }}-${{ matrix.elixir }}-pg${{ matrix.postgres }}
 
     strategy:
       matrix:
-        otp: ["26.2.1"]
-        elixir: ["1.16.0"]
+        otp: ["27.3.4.3"]
+        elixir: ["1.18.4"]
+        postgres: ["18"]
 
     services:
       postgres:
-        image: postgres
+        image: postgres:${{ matrix.postgres }}
         env:
           POSTGRES_USER: testing_dba
           POSTGRES_PASSWORD: testing-dba-password
@@ -40,113 +40,224 @@ jobs:
       - name: Checkout repository code
         uses: actions/checkout@v3
 
-      - name: Install Elixir
+      - name: Install Elixir and OTP
         uses: erlef/setup-beam@v1
         with:
           otp-version: ${{ matrix.otp }}
           elixir-version: ${{ matrix.elixir }}
 
-      - name: Initialize Database
-        run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='musesystems-insecure-publicly-known-password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+      - name: Install Hex and Rebar
+        run: |
+          mix local.hex --force
+          mix local.rebar --force
+
+      - name: Install MSBMS Build Tools
+        run: |
+          mix archive.install tools/build_tools/msbms_build_lib-1.1.1.ez --force
+
+      - name: Reset and Initialize Database
+        run: |
+          mix msbms.db.clean --reset \
+            --base-dir . \
+            --db-host localhost \
+            --db-port 5432 \
+            --db-user testing_dba \
+            --db-name postgres \
+            --dbadmin-password musesystems-insecure-publicly-known-password
+        env:
+          PGPASSWORD: testing-dba-password
 
       - name: Run Tests for System Components
         run: |
-          # Make the build script executable
-          chmod +x tools/build_tools/msbms_build.exs
+          mix msbms.elixir.test --all \
+            --base-dir . \
+            --component-file .github/component-lists/system-components.txt
 
-          # Run tests for all system components
-          ./tools/build_tools/msbms_build.exs --base-dir ${{ env.MSBMS_BASEDIR }} --test --ci
+  # test_application_components:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     MSBMS_JOBNAME: application-components-${{ matrix.otp }}-${{ matrix.elixir }}-pg${{ matrix.postgres }}
 
-  test_business_components:
-    runs-on: ubuntu-latest
-    env:
-      MSBMS_BASEDIR: ./app_server/components/business
-      MSBMS_JOBNAME: business-components-${{ matrix.otp }}-${{ matrix.elixir }}
+  #   strategy:
+  #     matrix:
+  #       otp: ["27.3.4.3"]
+  #       elixir: ["1.18.4"]
+  #       postgres: ["18"]
 
-    strategy:
-      matrix:
-        otp: ["26.2.1"]
-        elixir: ["1.16.0"]
+  #   services:
+  #     postgres:
+  #       image: postgres:${{ matrix.postgres }}
+  #       env:
+  #         POSTGRES_USER: testing_dba
+  #         POSTGRES_PASSWORD: testing-dba-password
+  #         POSTGRES_PORT: 5432
+  #       ports:
+  #         - 5432:5432
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
 
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: testing_dba
-          POSTGRES_PASSWORD: testing-dba-password
-          POSTGRES_PORT: 5432
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+  #   steps:
+  #     - name: Checkout repository code
+  #       uses: actions/checkout@v3
 
-    steps:
-      - name: Checkout repository code
-        uses: actions/checkout@v3
+  #     - name: Install Elixir and OTP
+  #       uses: erlef/setup-beam@v1
+  #       with:
+  #         otp-version: ${{ matrix.otp }}
+  #         elixir-version: ${{ matrix.elixir }}
 
-      - name: Install Elixir
-        uses: erlef/setup-beam@v1
-        with:
-          otp-version: ${{ matrix.otp }}
-          elixir-version: ${{ matrix.elixir }}
+  #     - name: Install Hex and Rebar
+  #       run: |
+  #         mix local.hex --force
+  #         mix local.rebar --force
 
-      - name: Initialize Database
-        run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='musesystems-insecure-publicly-known-password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+  #     - name: Install MSBMS Build Tools
+  #       run: |
+  #         mix archive.install tools/build_tools/msbms_build_lib-1.1.1.ez --force
 
-      - name: Run Tests for Business Components
-        run: |
-          # Make the build script executable
-          chmod +x tools/build_tools/msbms_build.exs
+  #     - name: Reset and Initialize Database
+  #       run: |
+  #         mix msbms.db.clean --reset \
+  #           --base-dir . \
+  #           --db-host localhost \
+  #           --db-port 5432 \
+  #           --db-user testing_dba \
+  #           --db-name postgres \
+  #           --dbadmin-password musesystems-insecure-publicly-known-password
+  #       env:
+  #         PGPASSWORD: testing-dba-password
 
-          # Run tests for all business components
-          ./tools/build_tools/msbms_build.exs --base-dir ${{ env.MSBMS_BASEDIR }} --test --ci
+  #     - name: Run Tests for Application Components
+  #       run: |
+  #         mix msbms.elixir.test --all \
+  #           --base-dir . \
+  #           --component-file .github/component-lists/application-components.txt
 
-  test_subsystems:
-    runs-on: ubuntu-latest
-    env:
-      MSBMS_BASEDIR: ./app_server/subsystems
-      MSBMS_JOBNAME: subsystems-${{ matrix.otp }}-${{ matrix.elixir }}
+  # test_applications:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     MSBMS_JOBNAME: applications-${{ matrix.otp }}-${{ matrix.elixir }}-pg${{ matrix.postgres }}
 
-    strategy:
-      matrix:
-        otp: ["26.2.1"]
-        elixir: ["1.16.0"]
+  #   strategy:
+  #     matrix:
+  #       otp: ["27.3.4.3"]
+  #       elixir: ["1.18.4"]
+  #       postgres: ["18"]
 
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: testing_dba
-          POSTGRES_PASSWORD: testing-dba-password
-          POSTGRES_PORT: 5432
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+  #   services:
+  #     postgres:
+  #       image: postgres:${{ matrix.postgres }}
+  #       env:
+  #         POSTGRES_USER: testing_dba
+  #         POSTGRES_PASSWORD: testing-dba-password
+  #         POSTGRES_PORT: 5432
+  #       ports:
+  #         - 5432:5432
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
 
-    steps:
-      - name: Checkout repository code
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout repository code
+  #       uses: actions/checkout@v3
 
-      - name: Install Elixir
-        uses: erlef/setup-beam@v1
-        with:
-          otp-version: ${{ matrix.otp }}
-          elixir-version: ${{ matrix.elixir }}
+  #     - name: Install Elixir and OTP
+  #       uses: erlef/setup-beam@v1
+  #       with:
+  #         otp-version: ${{ matrix.otp }}
+  #         elixir-version: ${{ matrix.elixir }}
 
-      - name: Initialize Database
-        run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='musesystems-insecure-publicly-known-password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+  #     - name: Install Hex and Rebar
+  #       run: |
+  #         mix local.hex --force
+  #         mix local.rebar --force
 
-      - name: Run Tests for Subsystems
-        run: |
-          # Make the build script executable
-          chmod +x tools/build_tools/msbms_build.exs
+  #     - name: Install MSBMS Build Tools
+  #       run: |
+  #         mix archive.install tools/build_tools/msbms_build_lib-1.1.1.ez --force
 
-          # Run tests for all subsystems
-          ./tools/build_tools/msbms_build.exs --base-dir ${{ env.MSBMS_BASEDIR }} --test --ci
+  #     - name: Reset and Initialize Database
+  #       run: |
+  #         mix msbms.db.clean --reset \
+  #           --base-dir . \
+  #           --db-host localhost \
+  #           --db-port 5432 \
+  #           --db-user testing_dba \
+  #           --db-name postgres \
+  #           --dbadmin-password musesystems-insecure-publicly-known-password
+  #       env:
+  #         PGPASSWORD: testing-dba-password
+
+  #     - name: Run Tests for Applications
+  #       run: |
+  #         mix msbms.elixir.test --all \
+  #           --base-dir . \
+  #           --component-file .github/component-lists/applications.txt
+
+  # test_platform:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     MSBMS_JOBNAME: platform-${{ matrix.otp }}-${{ matrix.elixir }}-pg${{ matrix.postgres }}
+
+  #   strategy:
+  #     matrix:
+  #       otp: ["27.3.4.3"]
+  #       elixir: ["1.18.4"]
+  #       postgres: ["18"]
+
+  #   services:
+  #     postgres:
+  #       image: postgres:${{ matrix.postgres }}
+  #       env:
+  #         POSTGRES_USER: testing_dba
+  #         POSTGRES_PASSWORD: testing-dba-password
+  #         POSTGRES_PORT: 5432
+  #       ports:
+  #         - 5432:5432
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
+
+  #   steps:
+  #     - name: Checkout repository code
+  #       uses: actions/checkout@v3
+
+  #     - name: Install Elixir and OTP
+  #       uses: erlef/setup-beam@v1
+  #       with:
+  #         otp-version: ${{ matrix.otp }}
+  #         elixir-version: ${{ matrix.elixir }}
+
+  #     - name: Install Hex and Rebar
+  #       run: |
+  #         mix local.hex --force
+  #         mix local.rebar --force
+
+  #     - name: Install MSBMS Build Tools
+  #       run: |
+  #         mix archive.install tools/build_tools/msbms_build_lib-1.1.1.ez --force
+
+  #     - name: Reset and Initialize Database
+  #       run: |
+  #         mix msbms.db.clean --reset \
+  #           --base-dir . \
+  #           --db-host localhost \
+  #           --db-port 5432 \
+  #           --db-user testing_dba \
+  #           --db-name postgres \
+  #           --dbadmin-password musesystems-insecure-publicly-known-password
+  #       env:
+  #         PGPASSWORD: testing-dba-password
+
+  #     - name: Run Tests for Platform
+  #       run: |
+  #         mix msbms.elixir.test --all \
+  #           --base-dir . \
+  #           --component-file .github/component-lists/platform.txt

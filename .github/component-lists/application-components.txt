@@ -1,0 +1,8 @@
+# Application Components for CI Testing
+# Format: One component name per line
+# Lines starting with # are comments and will be ignored
+
+# TODO: Add application component names here when they are created
+# Examples:
+# msapp_example_app
+

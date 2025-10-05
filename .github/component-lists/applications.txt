@@ -1,0 +1,10 @@
+# Applications (Subsystems) for CI Testing
+# Format: One component name per line
+# Lines starting with # are comments and will be ignored
+
+# Main subsystems
+# mssub_mcp
+# mssub_bms
+
+# TODO: Uncomment and add additional subsystems as needed
+

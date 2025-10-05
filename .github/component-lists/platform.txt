@@ -1,0 +1,9 @@
+# Platform for CI Testing
+# Format: One component name per line
+# Lines starting with # are comments and will be ignored
+
+# Main platform
+# msplatform
+
+# TODO: Uncomment when platform is ready for CI testing
+
