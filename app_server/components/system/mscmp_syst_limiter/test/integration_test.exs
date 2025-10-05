@@ -959,7 +959,7 @@ defmodule IntegrationTest do
       # Set service as active and create a limiter
       assert nil === MscmpSystLimiter.put_service(@test_limiter_one)
 
-      assert {:ok, limiter} =
+      assert {:ok, _limiter} =
                MscmpSystLimiter.new(
                  :semaphore,
                  @test_comp_one_1,
