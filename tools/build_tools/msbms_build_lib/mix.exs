@@ -16,7 +16,7 @@ defmodule MsbmsBuildLib.MixProject do
   Code.require_file(Path.expand("../build_config/msbms_build_config.exs", __DIR__))
 
   @name :msbms_build_lib
-  @version "1.1.1"
+  @version "1.2.0"
 
   @third_party_deps [
     :credo,
@@ -46,6 +46,7 @@ defmodule MsbmsBuildLib.MixProject do
           "Constants Retrieval": &(&1[:section] == :constants_retrieval),
           "Build Cleaning": &(&1[:section] == :build_cleaning),
           "Build Documentation": &(&1[:section] == :build_documentation),
+          "Documentation Generation": &(&1[:section] == :documentation_generation),
           "Dependency Management": &(&1[:section] == :dependency_management),
           "Test Execution": &(&1[:section] == :test_execution),
           "Build Elixir": &(&1[:section] == :build_elixir),

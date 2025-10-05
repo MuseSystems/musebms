@@ -563,6 +563,63 @@ defmodule MsbmsBuildLib do
   # ==============================================================================================
   # ==============================================================================================
   #
+  # Documentation Generation Functions
+  #
+  # ==============================================================================================
+  # ==============================================================================================
+
+  ##############################################################################
+  #
+  # generate_component_list_doc
+  #
+  #
+
+  @doc section: :documentation_generation
+  @doc """
+  Generates the system components list documentation file.
+
+  This function scans all components in the project, extracts their metadata
+  (dependencies, descriptions, documentation links), and generates a formatted
+  markdown file suitable for Hugo/Docsy static site generation.
+
+  ## Parameters
+    * `base_dir` - The base directory path where the project is located
+    * `opts` - Keyword list of options:
+      * `:output_path` - Output file path relative to base_dir
+        (default: "documentation/book/content/en/technical/system-components-list.md")
+      * `:dry_run` - If true, generates content but doesn't write file (default: false)
+
+  ## Returns
+    * `{:ok, output_path}` - Path to the generated file on success (when dry_run is false)
+    * `{:ok, content}` - Generated content as string on success (when dry_run is true)
+    * `{:error, message}` - Error message if generation fails
+
+  ## Examples
+
+      # Generate with default output path
+      MsbmsBuildLib.generate_component_list_doc("/path/to/project")
+
+      # Generate with custom output path
+      MsbmsBuildLib.generate_component_list_doc(
+        "/path/to/project",
+        output_path: "docs/components.md"
+      )
+
+      # Generate without writing file (dry run)
+      {:ok, content} = MsbmsBuildLib.generate_component_list_doc(
+        "/path/to/project",
+        dry_run: true
+      )
+  """
+  @spec generate_component_list_doc(Path.t(), Keyword.t()) ::
+          {:ok, Path.t() | String.t()} | {:error, String.t()}
+  defdelegate generate_component_list_doc(base_dir, opts \\ []),
+    to: Impl.GenCompList,
+    as: :generate
+
+  # ==============================================================================================
+  # ==============================================================================================
+  #
   # Utility Functions
   #
   # ==============================================================================================
