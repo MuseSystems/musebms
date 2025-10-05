@@ -64,26 +64,26 @@ defmodule MsbmsBuildConfig do
   }
 
   @msbms_docs %{
-    mscmp_syst_authn: "documentation/technical/app_server/mscmp_syst_authn",
-    mscmp_syst_db: "documentation/technical/app_server/mscmp_syst_db",
-    mscmp_syst_enums: "documentation/technical/app_server/mscmp_syst_enums",
-    mscmp_syst_error: "documentation/technical/app_server/mscmp_syst_error",
-    mscmp_syst_forms: "documentation/technical/app_server/mscmp_syst_forms",
-    mscmp_syst_hierarchy: "documentation/technical/app_server/mscmp_syst_hierarchy",
-    mscmp_syst_instance: "documentation/technical/app_server/mscmp_syst_instance",
-    mscmp_syst_interaction: "documentation/technical/app_server/mscmp_syst_interaction",
-    mscmp_syst_limiter: "documentation/technical/app_server/mscmp_syst_limiter",
-    mscmp_syst_mcp_perms: "documentation/technical/app_server/mscmp_syst_mcp_perms",
-    mscmp_syst_nav: "documentation/technical/app_server/mscmp_syst_nav",
-    mscmp_syst_network: "documentation/technical/app_server/mscmp_syst_network",
-    mscmp_syst_options: "documentation/technical/app_server/mscmp_syst_options",
-    mscmp_syst_perms: "documentation/technical/app_server/mscmp_syst_perms",
-    mscmp_syst_service: "documentation/technical/app_server/mscmp_syst_service",
-    mscmp_syst_session: "documentation/technical/app_server/mscmp_syst_session",
-    mscmp_syst_settings: "documentation/technical/app_server/mscmp_syst_settings",
-    mscmp_syst_telemetry: "documentation/technical/app_server/mscmp_syst_telemetry",
-    mscmp_syst_utils: "documentation/technical/app_server/mscmp_syst_utils",
-    mscmp_syst_utils_data: "documentation/technical/app_server/mscmp_syst_utils_data"
+    mscmp_syst_authn: "/documentation/technical/app_server/mscmp_syst_authn",
+    mscmp_syst_db: "/documentation/technical/app_server/mscmp_syst_db",
+    mscmp_syst_enums: "/documentation/technical/app_server/mscmp_syst_enums",
+    mscmp_syst_error: "/documentation/technical/app_server/mscmp_syst_error",
+    mscmp_syst_forms: "/documentation/technical/app_server/mscmp_syst_forms",
+    mscmp_syst_hierarchy: "/documentation/technical/app_server/mscmp_syst_hierarchy",
+    mscmp_syst_instance: "/documentation/technical/app_server/mscmp_syst_instance",
+    mscmp_syst_interaction: "/documentation/technical/app_server/mscmp_syst_interaction",
+    mscmp_syst_limiter: "/documentation/technical/app_server/mscmp_syst_limiter",
+    mscmp_syst_mcp_perms: "/documentation/technical/app_server/mscmp_syst_mcp_perms",
+    mscmp_syst_nav: "/documentation/technical/app_server/mscmp_syst_nav",
+    mscmp_syst_network: "/documentation/technical/app_server/mscmp_syst_network",
+    mscmp_syst_options: "/documentation/technical/app_server/mscmp_syst_options",
+    mscmp_syst_perms: "/documentation/technical/app_server/mscmp_syst_perms",
+    mscmp_syst_service: "/documentation/technical/app_server/mscmp_syst_service",
+    mscmp_syst_session: "/documentation/technical/app_server/mscmp_syst_session",
+    mscmp_syst_settings: "/documentation/technical/app_server/mscmp_syst_settings",
+    mscmp_syst_telemetry: "/documentation/technical/app_server/mscmp_syst_telemetry",
+    mscmp_syst_utils: "/documentation/technical/app_server/mscmp_syst_utils",
+    mscmp_syst_utils_data: "/documentation/technical/app_server/mscmp_syst_utils_data"
   }
 
   @all_deps Map.merge(@third_party_deps, @msbms_deps)
@@ -213,7 +213,7 @@ defmodule MsbmsBuildConfig do
   defp process_dep_doc(dep) when is_atom(dep) do
     case @msbms_docs[dep] do
       doc_path when is_binary(doc_path) ->
-        doc_path
+        {dep, doc_path}
 
       _ ->
         raise "Documentation path not found for #{dep}"
