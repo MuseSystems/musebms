@@ -13,6 +13,8 @@ dealing with subnets.
 This Component aims to make it simpler to work with IP addresses, allowing for CIDR notation
 parsing and for the ability to recognize subnets.
 
+<!-- MDESC !-->
+
 > #### Naive IP Address Handling {: .warning}
 >
 > This library exists only to provide some ease in handling IP addresses in some

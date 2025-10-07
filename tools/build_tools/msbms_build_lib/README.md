@@ -6,6 +6,8 @@ MsbmsBuildLib is a comprehensive Elixir build utilities library that provides
 automated build, test, documentation, and maintenance tasks for multi-component
 projects within the Muse Systems Business Management System ecosystem.
 
+<!-- MDESC !-->
+
 ## Overview
 
 This library serves as a centralized toolset for managing complex,

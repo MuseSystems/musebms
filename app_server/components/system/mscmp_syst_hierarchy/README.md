@@ -23,6 +23,8 @@ The Hierarchy features supported by this Component are:
   * Protection of in-use Hierarchy definitions to ensure Hierarchy
   implementation operational consistency.
 
+<!-- MDESC !-->
+
 >#### Important Note {: .warning}
 >
 > While this Component makes certain guarantees about ensuring valid and

@@ -9,7 +9,7 @@ Currently included in these utilities are:
 
 * ETS operations
 
-  Functions wrap some typical ETS operations so that they return standard result 
+  Functions wrap some typical ETS operations so that they return standard result
   tuples.
 
 * Changeset validators
@@ -17,6 +17,7 @@ Currently included in these utilities are:
   Common validation functions which can be used to validate changesets across
   Components.
 
+<!-- MDESC !-->
 
 > #### Note {: .info}
 >

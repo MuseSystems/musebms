@@ -31,6 +31,8 @@ Note that this Component doesn't provide a substantial authorization
 capability.  Authorization needs are left for higher level, Application
 Instance functionality to fulfill.
 
+<!-- MDESC !-->
+
 ## Concepts
 
 Below are listed the conceptual ideas that need to be understood to use this

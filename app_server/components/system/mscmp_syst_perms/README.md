@@ -11,6 +11,8 @@ establish contexts of applicability while keeping a cohesion in permissioning
 capability.  To this end this component provides the core concepts for use in
 any permissioning system using this ecosystem of components.
 
+<!-- MDESC !-->
+
 ## Concepts
 
 Below are the concepts used in formulating the functional design of this

@@ -10,6 +10,8 @@ Component provides simple rate limiting algorithms to allow other, higher level
 Components to implement rate limiting as they might require for their specific
 purposes.
 
+<!-- MDESC !-->
+
 ## Concepts
 
 This Component is organized around basic conceptual ideas and understanding.

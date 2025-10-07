@@ -8,8 +8,10 @@ application.
 A number of persistent services are needed to successfully run the Muse Systems
 Business Management system.  Many of these services may also need to be started
 and run on a per-Instance basis and will thus have many of the same service
-selection requirements between different services.  This module established the
+selection requirements between different services.  This module establishes the
 common patterns that individual services should implement.
+
+<!-- MDESC !-->
 
 For the most part, this Component establishes a Behaviour that other service
 defining Components should implement.  This ensures that any such services can

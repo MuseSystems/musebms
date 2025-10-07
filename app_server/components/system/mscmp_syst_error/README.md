@@ -10,6 +10,8 @@ application. It defines a set of fields that errors should include, such as
 consistent error handling and reporting across different parts of an
 application.
 
+<!-- MDESC !-->
+
 To create a new Error type implemention, you can use the `use MscmpSystError`
 macro in your module.
 

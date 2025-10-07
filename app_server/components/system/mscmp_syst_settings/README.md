@@ -11,6 +11,8 @@ application; for example, in the case of multi-tenancy, each tenant will have
 its own instance of the Setting Service running since each tenant's needs of
 the application may unique.
 
+<!-- MDESC !-->
+
 On startup, the Settings Service creates an in memory cache and populates the
 cache from the database.  Inquiries for settings are then served from the
 cache rather than the database as needed.  Operations which change the

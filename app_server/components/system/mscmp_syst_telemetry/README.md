@@ -9,6 +9,8 @@ This library provides standardized instrumentation and telemetry handling
 capabilities for MuseBMS Components, enabling observability, debugging, and
 monitoring across the system.
 
+<!-- MDESC !-->
+
 ## Core Concepts
 
 ### Components and Categories

@@ -8,6 +8,8 @@ oriented systems.  To achieve this we wrap and extend the popular `Ecto` and
 additional, opinionated abstractions encapsulating the tenant model as it
 relates to development, data access, and runtime concerns.
 
+<!-- MDESC !-->
+
 >#### Important {: .warning}
 >
 > "Database-per-tenant" is not the typical tenancy implementation pattern for
