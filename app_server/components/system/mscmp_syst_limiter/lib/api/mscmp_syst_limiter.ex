@@ -47,7 +47,7 @@ defmodule MscmpSystLimiter do
              {:list, {:in, [:token_bucket, :semaphore]}}
            ]},
         default: :all,
-        type_doc: "t:MscmpSystLimiter.Types.start_algorithms/0",
+        type_doc: "`t:MscmpSystLimiter.Types.start_algorithms/0`",
         type_spec: quote(do: MscmpSystLimiter.Types.start_algorithms()),
         doc: """
         The rate limiting algorithms to start.
@@ -287,7 +287,7 @@ defmodule MscmpSystLimiter do
                            bucket_size: [
                              type: :pos_integer,
                              required: true,
-                             type_doc: "t:pos_integer/0",
+                             type_doc: "`t:pos_integer/0`",
                              type_spec: quote(do: pos_integer()),
                              doc: """
                              The maximum number of tokens the bucket can hold at any one time.
@@ -299,7 +299,7 @@ defmodule MscmpSystLimiter do
                            refill_rate: [
                              type: :pos_integer,
                              required: true,
-                             type_doc: "t:pos_integer/0",
+                             type_doc: "`t:pos_integer/0`",
                              type_spec: quote(do: pos_integer()),
                              doc: """
                              The number of tokens added to the bucket during each refill interval.
@@ -311,7 +311,7 @@ defmodule MscmpSystLimiter do
                            refill_per: [
                              type: {:in, [:day, :hour, :minute, :second, :millisecond]},
                              required: true,
-                             type_doc: "t:MscmpSystLimiter.Types.time_scale/0",
+                             type_doc: "`t:MscmpSystLimiter.Types.time_scale/0`",
                              type_spec: quote(do: MscmpSystLimiter.Types.time_scale()),
                              doc: """
                              The time scale of the refill interval.
@@ -326,7 +326,7 @@ defmodule MscmpSystLimiter do
                         max_permits: [
                           type: :pos_integer,
                           required: true,
-                          type_doc: "t:pos_integer/0",
+                          type_doc: "`t:pos_integer/0`",
                           type_spec: quote(do: pos_integer()),
                           doc: """
                           The maximum capacity of the semaphore.
@@ -339,7 +339,7 @@ defmodule MscmpSystLimiter do
                         time_to_live: [
                           type: :pos_integer,
                           required: true,
-                          type_doc: "t:pos_integer/0",
+                          type_doc: "`t:pos_integer/0`",
                           type_spec: quote(do: pos_integer()),
                           doc: """
                           The amount of time for which a semaphore limiter should be enforced.
@@ -355,7 +355,7 @@ defmodule MscmpSystLimiter do
                         time_scale: [
                           type: {:in, [:day, :hour, :minute, :second, :millisecond]},
                           required: true,
-                          type_doc: "t:MscmpSystLimiter.Types.time_scale/0",
+                          type_doc: "`t:MscmpSystLimiter.Types.time_scale/0`",
                           type_spec: quote(do: MscmpSystLimiter.Types.time_scale()),
                           doc: """
                           Establishes the time unit in which the `time_to_live` is expressed.
@@ -922,7 +922,7 @@ defmodule MscmpSystLimiter do
                         current_permits: [
                           type: :non_neg_integer,
                           required: true,
-                          type_doc: "t:non_neg_integer/0",
+                          type_doc: "`t:non_neg_integer/0`",
                           type_spec: quote(do: non_neg_integer()),
                           doc: """
                           The current number of permits available.
@@ -938,7 +938,7 @@ defmodule MscmpSystLimiter do
                            current_fill: [
                              type: :non_neg_integer,
                              required: true,
-                             type_doc: "t:non_neg_integer/0",
+                             type_doc: "`t:non_neg_integer/0`",
                              type_spec: quote(do: non_neg_integer()),
                              doc: """
                              The current fill of the bucket.

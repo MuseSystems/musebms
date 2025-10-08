@@ -41,7 +41,7 @@ defmodule MscmpSystInstance do
     ],
     initializing_lifecycle_state_id: [
       type: :string,
-      type_doc: "t:Ecto.UUID.t/0",
+      type_doc: "`t:Ecto.UUID.t/0`",
       doc: """
       The record ID value of the Instance Lifecycle State to use to indicate that the record is
       being initialized.  If this value is not provided the configured default Instance Lifecycle
@@ -50,7 +50,7 @@ defmodule MscmpSystInstance do
     ],
     active_lifecycle_state_id: [
       type: :string,
-      type_doc: "t:Ecto.UUID.t/0",
+      type_doc: "`t:Ecto.UUID.t/0`",
       doc: """
       The record ID value of the Instance Lifecycle State to use to indicate that the record is
       active. If this value is not provided the configured default Instance Lifecycle State for
@@ -59,7 +59,7 @@ defmodule MscmpSystInstance do
     ],
     failed_lifecycle_state_id: [
       type: :string,
-      type_doc: "t:Ecto.UUID.t/0",
+      type_doc: "`t:Ecto.UUID.t/0`",
       doc: """
       The record ID value of the Instance Lifecycle State to use to indicate that the record has
       failed to be initialized.  If this value is not provided the default configured Instance
@@ -68,7 +68,7 @@ defmodule MscmpSystInstance do
     ],
     initialized_lifecycle_state_id: [
       type: :string,
-      type_doc: "t:Ecto.UUID.t/0",
+      type_doc: "`t:Ecto.UUID.t/0`",
       doc: """
       The record ID value of the Instance Lifecycle State to use to indicate that the record has
       successfully been initialized.  If this value is not provided the configured default
@@ -78,7 +78,7 @@ defmodule MscmpSystInstance do
     ],
     migrating_lifecycle_state_id: [
       type: :string,
-      type_doc: "t:Ecto.UUID.t/0",
+      type_doc: "`t:Ecto.UUID.t/0`",
       doc: """
       The record ID value of the Instance Lifecycle State to use to indicate that the record is in
       the process of being migrated. If this value is not provided the configured default Instance

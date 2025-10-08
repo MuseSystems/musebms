@@ -37,7 +37,7 @@ defmodule MscmpSystSession do
     ],
     session_name_tokens: [
       type: {:or, [{:list, :any}, {:in, [:alphanum, :mixed_alphanum, :b32e, :b32c]}]},
-      type_doc: "t:Msutils.String.Types.tokens/0",
+      type_doc: "`t:Msutils.String.Types.tokens/0`",
       type_spec: quote(do: Msutils.String.Types.tokens()),
       default: :mixed_alphanum,
       doc: """

@@ -101,7 +101,7 @@ defmodule MscmpSystLimiter.Types do
     remaining allowed actions before hitting the rate limit.
 
   * `{:deny, retry_condition, limiter_instance}`: The action is denied.
-    `retry_condition` is a `non-negative integer representing an algorithm-
+    `retry_condition` is a non-negative integer representing an algorithm-
     specific condition for retrying the action.  In the case of the semaphore
     algorithm, this is the number of permits which would need to be made
     available prior to retrying the action.  For token bucket, this is the
@@ -129,7 +129,7 @@ defmodule MscmpSystLimiter.Types do
     integer).
 
     * `time_scale` - the time scale to use for the time to live see
-    `MscmpSystLimiter.Types.time_scale/0` for more details.
+    `t:MscmpSystLimiter.Types.time_scale/0` for more details.
 
   Note: Unlike time-based algorithms, semaphore capacity is managed explicitly
   through acquire/release operations rather than automatic time-based refill.

@@ -41,7 +41,7 @@ defmodule MscmpSystEnums do
       type:
         {:or,
          [nil, :atom, {:tuple, [{:in, [:via]}, :atom, :any]}, {:tuple, [{:in, [:global]}, :any]}]},
-      type_doc: "`t:GenServer.name/0 or `nil`",
+      type_doc: "`t:GenServer.name/0` or `nil`",
       doc: """
       Specifies the name of the Datastore Context to be used by the Enumerations
       Service.

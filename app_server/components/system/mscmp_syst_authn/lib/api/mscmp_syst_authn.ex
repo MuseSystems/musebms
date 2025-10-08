@@ -107,7 +107,7 @@ defmodule MscmpSystAuthn do
     ],
     credential_tokens: [
       type: {:or, [{:list, :any}, {:in, [:alphanum, :mixed_alphanum, :b32e, :b32c]}]},
-      type_doc: "t:Msutils.String.Types.tokens/0",
+      type_doc: "`t:Msutils.String.Types.tokens/0`",
       type_spec: quote(do: Msutils.String.Types.tokens()),
       default: :mixed_alphanum,
       doc: """
@@ -135,7 +135,7 @@ defmodule MscmpSystAuthn do
     ],
     identity_tokens: [
       type: {:or, [{:list, :any}, {:in, [:alphanum, :mixed_alphanum, :b32e, :b32c]}]},
-      type_doc: "t:Msutils.String.Types.tokens/0",
+      type_doc: "`t:Msutils.String.Types.tokens/0`",
       type_spec: quote(do: Msutils.String.Types.tokens()),
       default: :mixed_alphanum,
       doc: """
@@ -206,7 +206,7 @@ defmodule MscmpSystAuthn do
     ],
     identifier_limit: [
       type: :map,
-      type_doc: "t:MscmpSystAuthn.Types.rate_limit_config/0",
+      type_doc: "`t:MscmpSystAuthn.Types.rate_limit_config/0`",
       type_spec: quote(do: MscmpSystAuthn.Types.rate_limit_config()),
       keys: [
         max_attempts: [required: true, type: :pos_integer],
@@ -221,7 +221,7 @@ defmodule MscmpSystAuthn do
     ],
     host_limit: [
       type: :map,
-      type_doc: "t:MscmpSystAuthn.Types.rate_limit_config/0",
+      type_doc: "`t:MscmpSystAuthn.Types.rate_limit_config/0`",
       type_spec: quote(do: MscmpSystAuthn.Types.rate_limit_config()),
       keys: [
         max_attempts: [required: true, type: :pos_integer],

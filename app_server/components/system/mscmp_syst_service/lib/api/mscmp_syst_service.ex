@@ -146,7 +146,7 @@ defmodule MscmpSystService do
                {:tuple, [{:in, [:global]}, :any]}
              ]},
           required: true,
-          type_doc: "`t:GenServer.name/0 or `nil`",
+          type_doc: "`t:GenServer.name/0` or `nil`",
           doc: """
           The name to use for the GenServer backing this specific Service instance.
           """
