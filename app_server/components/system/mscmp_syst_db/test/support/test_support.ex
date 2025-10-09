@@ -18,7 +18,7 @@ defmodule TestSupport do
 
   @spec cleanup_test_migrations() :: :ok
   def cleanup_test_migrations do
-    File.rm_rf!(get_test_migrations_root_dir())
+    _ = File.rm_rf!(get_test_migrations_root_dir())
     :ok
   end
 end
