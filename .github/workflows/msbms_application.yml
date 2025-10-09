@@ -67,6 +67,12 @@ jobs:
         env:
           PGPASSWORD: testing-dba-password
 
+      - name: Install Dependencies
+        run: |
+          mix msbms.elixir.deps --install \
+            --base-dir . \
+            --component-file .github/component-lists/system-components.txt
+
       - name: Run Tests for System Components
         run: |
           mix msbms.elixir.test --all \
