@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.37.3">
-    <meta name="project" content="msbms_build_lib v1.1.0">
+    <meta name="generator" content="ExDoc v0.38.2">
+    <meta name="project" content="msbms_build_lib v1.2.0">
 
 
-    <title>mix msbms.db.docs — msbms_build_lib v1.1.0</title>
+    <title>mix msbms.db.docs — msbms_build_lib v1.2.0</title>
 
-    <link rel="stylesheet" href="dist/html-elixir-6X3L5KMG.css" />
+    <link rel="stylesheet" href="dist/html-elixir-KV3YOVJ3.css" />
 
-    <script defer src="dist/sidebar_items-E191B637.js"></script>
+    <script defer src="dist/sidebar_items-2DA0BB0B.js"></script>
     <script defer src="docs_config.js"></script>
-    <script defer src="dist/html-ALU6OERS.js"></script>
+    <script defer src="dist/html-DPJLHKSM.js"></script>
 
   </head>
   <body>
@@ -37,7 +37,7 @@
 msbms_build_lib
         </a>
         <div class="sidebar-projectVersion" translate="no">
-          v1.1.0
+          v1.2.0
         </div>
       </div>
     </div>
@@ -76,7 +76,7 @@ msbms_build_lib
   <div class="heading-with-actions top-heading">
     <h1>
       <span translate="no">mix msbms.db.docs</span> 
-      <small class="app-vsn" translate="no">(msbms_build_lib v1.1.0)</small>
+      <small class="app-vsn" translate="no">(msbms_build_lib v1.2.0)</small>
 
     </h1>
 
@@ -86,43 +86,19 @@ msbms_build_lib
     <section id="moduledoc">
 <p>Builds database documentation for MSBMS components.</p><p>This task generates documentation from the database schema and requires
 an active database connection. The database role used must be a member
-of the <code class="inline">ms_syst_documentation</code> group role prior to using this task.</p><p>It calls functions from <a href="MsbmsBuildLib.html"><code class="inline">MsbmsBuildLib</code></a> to perform the actual operations.</p><h2 id="module-command-line-options" class="section-heading">
-  <a href="#module-command-line-options" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Command line options</span>
-</h2>
-<ul><li><code class="inline">--base-dir PATH</code> - Specifies the base directory of the MSBMS project.
+of the <code class="inline">ms_syst_documentation</code> group role prior to using this task.</p><p>It calls functions from <a href="MsbmsBuildLib.html"><code class="inline">MsbmsBuildLib</code></a> to perform the actual operations.</p><h2 id="module-command-line-options" class="section-heading"><a href="#module-command-line-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Command line options</span></h2><ul><li><code class="inline">--base-dir PATH</code> - Specifies the base directory of the MSBMS project.
 Defaults to the current working directory.</li><li><code class="inline">-c NAME</code>, <code class="inline">--component NAME</code> - Specifies a component to operate on.
 Can be provided multiple times.</li><li><code class="inline">--component-file PATH</code> - Specifies a file containing component names
 (one per line, # for comments). Can be combined with <code class="inline">-c</code> options.</li><li><code class="inline">--log-level LEVEL</code> - Sets the logging level (e.g., debug, info, warn, error).
-Defaults to &quot;info&quot;.</li><li><code class="inline">--db-host HOST</code> - Database host (default: localhost).</li><li><code class="inline">--db-port PORT</code> - Database port (default: 5432).</li><li><code class="inline">--db-user USER</code> - Database user (required for DB documentation).</li><li><code class="inline">--db-name DATABASE</code> - Database name (default: postgres).</li></ul><h2 id="module-component-file-format" class="section-heading">
-  <a href="#module-component-file-format" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Component File Format</span>
-</h2>
-<p>Component files support:</p><ul><li>One component name per line</li><li>Comments starting with <code class="inline">#</code> are ignored</li><li>Empty lines are ignored</li><li>Leading/trailing whitespace is trimmed</li></ul><p>Example component file:</p><pre><code class="makeup elixir" translate="no"><span class="c1"># Core components</span><span class="w">
+Defaults to &quot;info&quot;.</li><li><code class="inline">--db-host HOST</code> - Database host (default: localhost).</li><li><code class="inline">--db-port PORT</code> - Database port (default: 5432).</li><li><code class="inline">--db-user USER</code> - Database user (required for DB documentation).</li><li><code class="inline">--db-name DATABASE</code> - Database name (default: postgres).</li></ul><h2 id="module-component-file-format" class="section-heading"><a href="#module-component-file-format" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Component File Format</span></h2><p>Component files support:</p><ul><li>One component name per line</li><li>Comments starting with <code class="inline">#</code> are ignored</li><li>Empty lines are ignored</li><li>Leading/trailing whitespace is trimmed</li></ul><p>Example component file:</p><pre><code class="makeup elixir" translate="no"><span class="c1"># Core components</span><span class="w">
 </span><span class="n">mssub_mcp_common</span><span class="w">
 </span><span class="n">mssub_mcp_types</span><span class="w">
 
 </span><span class="c1"># Optional component</span><span class="w">
-</span><span class="n">ms_logger</span></code></pre><h2 id="module-database-credentials" class="section-heading">
-  <a href="#module-database-credentials" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Database Credentials</span>
-</h2>
-<p>For security reasons, database passwords are not accepted as command line
+</span><span class="n">ms_logger</span></code></pre><h2 id="module-database-credentials" class="section-heading"><a href="#module-database-credentials" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Database Credentials</span></h2><p>For security reasons, database passwords are not accepted as command line
 arguments. Instead, use either a correctly configured <code class="inline">.pgpass</code> file or
 environment variables to pass credentials. See the PostgreSQL documentation
-for more information on either configuration option.</p><h2 id="module-examples" class="section-heading">
-  <a href="#module-examples" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Examples</span>
-</h2>
-<pre><code class="makeup elixir" translate="no"><span class="n">mix</span><span class="w"> </span><span class="n">msbms</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">docs</span><span class="w"> </span><span class="o">--</span><span class="n">db</span><span class="o">-</span><span class="n">user</span><span class="w"> </span><span class="n">postgres</span><span class="w">
+for more information on either configuration option.</p><h2 id="module-examples" class="section-heading"><a href="#module-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="n">mix</span><span class="w"> </span><span class="n">msbms</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">docs</span><span class="w"> </span><span class="o">--</span><span class="n">db</span><span class="o">-</span><span class="n">user</span><span class="w"> </span><span class="n">postgres</span><span class="w">
 </span><span class="n">mix</span><span class="w"> </span><span class="n">msbms</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">docs</span><span class="w"> </span><span class="o">--</span><span class="n">db</span><span class="o">-</span><span class="n">host</span><span class="w"> </span><span class="n">localhost</span><span class="w"> </span><span class="o">--</span><span class="n">db</span><span class="o">-</span><span class="n">user</span><span class="w"> </span><span class="n">myuser</span><span class="w">
 </span><span class="n">mix</span><span class="w"> </span><span class="n">msbms</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">docs</span><span class="w"> </span><span class="o">--</span><span class="n">base</span><span class="o">-</span><span class="n">dir</span><span class="w"> </span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">project</span><span class="w"> </span><span class="o">--</span><span class="n">db</span><span class="o">-</span><span class="n">user</span><span class="w"> </span><span class="n">postgres</span><span class="w"> </span><span class="o">-</span><span class="n">c</span><span class="w"> </span><span class="n">my_app1</span><span class="w">
 </span><span class="n">mix</span><span class="w"> </span><span class="n">msbms</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">docs</span><span class="w"> </span><span class="o">--</span><span class="n">db</span><span class="o">-</span><span class="n">user</span><span class="w"> </span><span class="n">postgres</span><span class="w"> </span><span class="o">--</span><span class="n">component</span><span class="o">-</span><span class="n">file</span><span class="w"> </span><span class="o">.</span><span class="n">ci</span><span class="o">/</span><span class="n">group</span><span class="o">-</span><span class="mi">1</span><span class="o">.</span><span class="n">txt</span><span class="w">
@@ -149,7 +125,7 @@ for more information on either configuration option.</p><h2 id="module-examples"
 
       </div>
 
-        <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/mix/Mix.Task.html#c:run/1"><code class="inline">Mix.Task.run/1</code></a>.</p></div>
+        <div class="summary-synopsis"><p>Callback implementation for <a><code class="inline">Mix.Task.run/1</code></a>.</p></div>
 
     </div>
 
@@ -205,7 +181,7 @@ for more information on either configuration option.</p><h2 id="module-examples"
 
       <p class="built-using">
         Built using
-        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.37.3) for the
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.2) for the
 
           <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

@@ -4,35 +4,22 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.34.2">
+    <meta name="generator" content="ExDoc v0.38.4">
     <meta name="project" content="mscmp_syst_limiter v0.1.0">
 
 
     <title>Mserror.LimiterError — mscmp_syst_limiter v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
 
-    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
-    <script src="dist/sidebar_items-3094E9A1.js"></script>
-    <script src="docs_config.js"></script>
-    <script async src="dist/html-YIPIRHGU.js"></script>
+    <script defer src="dist/sidebar_items-333D80E0.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
 
   </head>
-  <body data-type="modules" class="page-exception">
-    <script>
-
-      try {
-        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
-
-        if (settings.theme === 'dark' ||
-           ((settings.theme === 'system' || settings.theme == null) &&
-             window.matchMedia('(prefers-color-scheme: dark)').matches)
-           ) {
-          document.body.classList.add('dark')
-        }
-      } catch (error) { }
-    </script>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
 
 <div class="body-wrapper">
 
@@ -54,37 +41,13 @@ mscmp_syst_limiter
         </div>
       </div>
     </div>
-    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
-      <li>
-        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
-Pages
-        </button>
-      </li>
-
-        <li>
-          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
-            Modules
-          </button>
-        </li>
-
-
-    </ul>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
   </div>
-
-  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
-    <ul id="extras-full-list" class="full-list"></ul>
-  </div>
-
-    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
-      <ul id="modules-full-list" class="full-list"></ul>
-    </div>
-
-
 </nav>
 
-<main class="content">
-  <output role="status" id="toast"></output>
+<output role="status" id="toast"></output>
 
+<main class="content page-exception" id="main" data-type="modules">
   <div id="content" class="content-inner">
     <div class="top-search">
       <div class="search-settings">
@@ -93,8 +56,8 @@ Pages
             <span class="sr-only">Search documentation of mscmp_syst_limiter</span>
             <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
           </label>
-          <button type="submit" class="search-button" aria-label="Submit Search">
-            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
           </button>
           <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
             <i class="ri-close-line ri-lg" title="Cancel search"></i>
@@ -110,12 +73,14 @@ Pages
     </div>
 
 <div id="top-content">
-  <h1>
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">Mserror.LimiterError</span> <small>exception</small>
+      <small class="app-vsn" translate="no">(mscmp_syst_limiter v0.1.0)</small>
 
-    <span translate="no">Mserror.LimiterError</span> <small>exception</small>
-    <small class="app-vsn" translate="no">(mscmp_syst_limiter v0.1.0)</small>
+    </h1>
 
-  </h1>
+  </div>
 
 
     <section id="moduledoc">
@@ -138,7 +103,7 @@ Pages
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:kinds/0" data-no-tooltip translate="no">kinds()</a>
+        <a href="#t:kinds/0" data-no-tooltip="" translate="no">kinds()</a>
 
       </div>
 
@@ -148,7 +113,7 @@ Pages
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:t/0" data-no-tooltip translate="no">t()</a>
+        <a href="#t:t/0" data-no-tooltip="" translate="no">t()</a>
 
       </div>
 
@@ -164,7 +129,7 @@ Pages
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#new/3" data-no-tooltip translate="no">new(kind, message, opts \\ [])</a>
+        <a href="#new/3" data-no-tooltip="" translate="no">new(kind, message, opts \\ [])</a>
 
       </div>
 
@@ -184,46 +149,44 @@ Pages
       </a>
       <span class="text">Types</span>
     </h1>
+
     <div class="types-list">
 <section class="detail" id="t:kinds/0">
 
   <div class="detail-header">
-    <a href="#t:kinds/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:kinds/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">kinds()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">kinds()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> kinds() :: :delete_counter | :inspect_counter | :check_counter</pre>
+          <pre translate="no"><span class="attribute">@type</span> kinds() ::
+  :reset_limiter | :check_limiter | :limiter_management | :service_management</pre>
 
       </div>
 
-<p>Represents the available Kinds of error allowed by this Error type.</p><h2 id="t:kinds/0-available-kinds" class="section-heading">
-  <a href="#t:kinds/0-available-kinds" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Available Kinds</span>
-</h2>
-<ul><li><code class="inline">:check_counter</code> - Failure checking and incrementing the rate limit.</li><li><code class="inline">:inspect_counter</code> - Failure inspecting the rate limit counter.</li><li><code class="inline">:delete_counter</code> - Failure deleting the rate limit counter.</li></ul>
+<p>Represents the available Kinds of error allowed by this Error type.</p><h2 id="t:kinds/0-available-kinds" class="section-heading"><a href="#t:kinds/0-available-kinds" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Available Kinds</span></h2><ul><li><code class="inline">:service_management</code> - Failure performing a service management operation.</li><li><code class="inline">:limiter_management</code> - Failure managing a rate limiter instance.</li><li><code class="inline">:check_limiter</code> - Failure incrementing or inspecting a rate limiter counter.</li><li><code class="inline">:reset_limiter</code> - Failure resetting a rate limiter counter.</li></ul>
   </section>
 </section>
 <section class="detail" id="t:t/0">
 
   <div class="detail-header">
-    <a href="#t:t/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:t/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">t()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">t()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -235,30 +198,18 @@ Pages
   __mscomponent__: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">module</a>(),
   __mserror__: true,
   cause: <a href="#t:t/0">t</a>() | <a href="https://hexdocs.pm/elixir/Exception.html#t:t/0">Exception.t</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>() | nil,
-  context: <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.Types.Context.html#t:t/0">MscmpSystError.Types.Context.t</a>() | nil,
+  context: <a href="/documentation/technical/app_server/mscmp_syst_error/MscmpSystError.Types.Context.html#t:t/0">MscmpSystError.Types.Context.t</a>() | nil,
   kind: <a href="#t:kinds/0">kinds</a>(),
   message: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()
 }</pre>
 
       </div>
 
-<p>Describes the structure of an error of generated by this exception.</p><p>The <code class="inline">cause</code> attribute allows for errors to be nested.</p><h2 id="t:t/0-attributes" class="section-heading">
-  <a href="#t:t/0-attributes" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Attributes</span>
-</h2>
-<p>The following attributes are those which are set or modified by the
+<p>Describes the structure of an error of generated by this exception.</p><p>The <code class="inline">cause</code> attribute allows for errors to be nested.</p><h2 id="t:t/0-attributes" class="section-heading"><a href="#t:t/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Attributes</span></h2><p>The following attributes are those which are set or modified by the
 user when working with errors.</p><ul><li><p><code class="inline">kind</code> - The kind of error, see <a href="#t:kinds/0"><code class="inline">kinds/0</code></a> for the available Kinds.</p></li><li><p><code class="inline">message</code> - A string describing the error.</p></li><li><p><code class="inline">context</code> - contextual information for better understanding the
 error.  If provided, the context should be of type
-<a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.Types.Context.html#t:t/0"><code class="inline">MscmpSystError.Types.Context.t/0</code></a>.</p></li><li><p><code class="inline">cause</code> - The cause of the error, which can be an exception, an error tuple,
-or any other term.</p></li></ul><h2 id="t:t/0-internal-attributes" class="section-heading">
-  <a href="#t:t/0-internal-attributes" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Internal Attributes</span>
-</h2>
-<p>These attributes have their values set at compile time and are used
+<a href="/documentation/technical/app_server/mscmp_syst_error/MscmpSystError.Types.Context.html#t:t/0"><code class="inline">MscmpSystError.Types.Context.t/0</code></a>.</p></li><li><p><code class="inline">cause</code> - The cause of the error, which can be an exception, an error tuple,
+or any other term.</p></li></ul><h2 id="t:t/0-internal-attributes" class="section-heading"><a href="#t:t/0-internal-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Internal Attributes</span></h2><p>These attributes have their values set at compile time and are used
 internally by the MscmpSystError framework.  They are not to be altered
 by user code.  Reading these attributes in user code is safe, however.</p><ul><li><p><code class="inline">__mserror__</code> - Always true, indicates that this error is compatible
 with the MscmpSystError framework.</p></li><li><p><code class="inline">__mscomponent__</code> - The component that generated the error.</p></li></ul>
@@ -275,19 +226,21 @@ with the MscmpSystError framework.</p></li><li><p><code class="inline">__mscompo
       </a>
       <span class="text">Functions</span>
     </h1>
+
     <div class="functions-list">
 <section class="detail" id="new/3">
 
     <span id="new/2"></span>
 
   <div class="detail-header">
-    <a href="#new/3" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#new/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">new(kind, message, opts \\ [])</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">new(kind, message, opts \\ [])</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -298,28 +251,18 @@ with the MscmpSystError framework.</p></li><li><p><code class="inline">__mscompo
 
       </div>
 
-<p>Creates a new error struct with the given kind, message, and options.</p><h2 id="new/3-parameters" class="section-heading">
-  <a href="#new/3-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">kind</code> - The kind of error, see <a href="#t:kinds/0"><code class="inline">kinds/0</code></a> for the available Kinds.</p></li><li><p><code class="inline">message</code> - A string describing the error.</p></li><li><p><code class="inline">opts</code> - A keyword list of additional options.</p></li></ul><h2 id="new/3-options" class="section-heading">
-  <a href="#new/3-options" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Options</span>
-</h2>
-<ul><li><p><code class="inline">:context</code> - contextual information for better understanding the
+<p>Creates a new error struct with the given kind, message, and options.</p><h2 id="new/3-parameters" class="section-heading"><a href="#new/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">kind</code> - The kind of error, see <a href="#t:kinds/0"><code class="inline">kinds/0</code></a> for the available Kinds.</p></li><li><p><code class="inline">message</code> - A string describing the error.</p></li><li><p><code class="inline">opts</code> - A keyword list of additional options.</p></li></ul><h2 id="new/3-options" class="section-heading"><a href="#new/3-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><p><code class="inline">:context</code> - contextual information for better understanding the
 error.  If provided, the context should be of type
-<a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.Types.Context.html#t:t/0"><code class="inline">MscmpSystError.Types.Context.t/0</code></a>.</p></li><li><p><code class="inline">:cause</code> - The cause of the error, which can be an exception, an error tuple,
-or any other term.</p></li></ul><h2 id="new/3-returns" class="section-heading">
-  <a href="#new/3-returns" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Returns</span>
-</h2>
-<p>Returns a struct of this error type with the error details.</p>
+<a href="/documentation/technical/app_server/mscmp_syst_error/MscmpSystError.Types.Context.html#t:t/0"><code class="inline">MscmpSystError.Types.Context.t/0</code></a>.</p></li><li><p><code class="inline">:cause</code> - The cause of the error, which can be an exception, an error tuple,
+or any other term.</p></li><li><p><code class="inline">:parse_error</code> - An error result conforming with
+<a href="/documentation/technical/app_server/mscmp_syst_error/MscmpSystError.Types.html#t:parsable_error/0"><code class="inline">MscmpSystError.Types.parsable_error/0</code></a> to be parsed overriding
+certain attributes of the exception struct.  When provided the
+<code class="inline">message</code> parameter is treated as a default message which can be
+overridden by a message supplied by the error result provided to this
+option.  The <code class="inline">cause</code> attribute of the exception struct will be set to
+a value derived from this option's value, ignoring the <code class="inline">:cause</code>
+option if provided; typically you would not provide both
+<code class="inline">:parse_error</code> and <code class="inline">:cause</code> in the same call to <a href="#new/3"><code class="inline">new/3</code></a>.</p></li></ul><h2 id="new/3-returns" class="section-heading"><a href="#new/3-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><p>Returns a struct of this error type with the error details.</p>
   </section>
 </section>
 
@@ -343,7 +286,7 @@ or any other term.</p></li></ul><h2 id="new/3-returns" class="section-heading">
 
       <p class="built-using">
         Built using
-        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.34.2) for the
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
 
           <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

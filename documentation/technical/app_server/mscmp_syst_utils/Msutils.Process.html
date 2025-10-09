@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.4">
+    <meta name="project" content="mscmp_syst_utils v0.1.0">
+
+
+    <title>Msutils.Process — mscmp_syst_utils v0.1.0</title>
+
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
+
+    <script defer src="dist/sidebar_items-CCD18D97.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="Msutils.html" class="sidebar-projectName" translate="no">
+mscmp_syst_utils
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-module" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of mscmp_syst_utils</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">Msutils.Process</span> 
+      <small class="app-vsn" translate="no">(mscmp_syst_utils v0.1.0)</small>
+
+    </h1>
+
+  </div>
+
+
+    <section id="moduledoc">
+<p>This module provides utilities for working with processes.</p>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#register/1" data-no-tooltip="" translate="no">register(name)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Registers the current process under the given name.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#register/2" data-no-tooltip="" translate="no">register(registry, name)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Registers the current process under the given registry and name.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#whereis/1" data-no-tooltip="" translate="no">whereis(name)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Looks up a process by its name and returns its PID.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#whereis/2" data-no-tooltip="" translate="no">whereis(registry, name)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Looks up a process by its name and returns its PID.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+
+    <div class="functions-list">
+<section class="detail" id="register/1">
+
+  <div class="detail-header">
+    <a href="#register/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">register(name)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> register(<a href="Msutils.Types.Process.html#t:name/0">Msutils.Types.Process.name</a>()) ::
+  :ok | {:error, <a href="Mserror.ProcessUtilsError.html#t:t/0">Mserror.ProcessUtilsError.t</a>()}</pre>
+
+      </div>
+
+<p>Registers the current process under the given name.</p><p>This function must be called from within the process that is to be registered.
+Attempting to register a process from outside that process will fail.</p><h2 id="register/1-parameters" class="section-heading"><a href="#register/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">name</code> - The name under which to register the current process.</li></ul><h2 id="register/1-returns" class="section-heading"><a href="#register/1-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><ul><li><p><code class="inline">:ok</code> - The process was successfully registered.</p></li><li><p><code class="inline">{:error, %Mserror.ProcessUtilsError{cause: :registration_failed}}</code> -
+If the registration failed.</p></li><li><p><code class="inline">{:error, %Mserror.ProcessUtilsError{cause: :invalid_name}}</code> -
+If the provided name does not comply with <a href="Msutils.Types.Process.html#t:name/0"><code class="inline">Msutils.Types.Process.name/0</code></a>
+naming conventions.</p></li></ul><h2 id="register/1-examples" class="section-heading"><a href="#register/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><p>Register a process locally:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3366702652-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">pid</span><span class="p" data-group-id="3366702652-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Agent</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="3366702652-2">(</span><span class="k" data-group-id="3366702652-3">fn</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">register</span><span class="p" data-group-id="3366702652-4">(</span><span class="ss">:my_process</span><span class="p" data-group-id="3366702652-4">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3366702652-5">%{</span><span class="p" data-group-id="3366702652-5">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="k" data-group-id="3366702652-3">end</span><span class="p" data-group-id="3366702652-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3366702652-6">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="o">^</span><span class="n">pid</span><span class="p" data-group-id="3366702652-6">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">whereis</span><span class="p" data-group-id="3366702652-7">(</span><span class="ss">:my_process</span><span class="p" data-group-id="3366702652-7">)</span></code></pre><p>Register a process globally:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3029748297-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">pid</span><span class="p" data-group-id="3029748297-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Agent</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="3029748297-2">(</span><span class="k" data-group-id="3029748297-3">fn</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">register</span><span class="p" data-group-id="3029748297-4">(</span><span class="p" data-group-id="3029748297-5">{</span><span class="ss">:global</span><span class="p">,</span><span class="w"> </span><span class="ss">:my_global_process</span><span class="p" data-group-id="3029748297-5">}</span><span class="p" data-group-id="3029748297-4">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3029748297-6">%{</span><span class="p" data-group-id="3029748297-6">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="k" data-group-id="3029748297-3">end</span><span class="p" data-group-id="3029748297-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3029748297-7">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="o">^</span><span class="n">pid</span><span class="p" data-group-id="3029748297-7">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">whereis</span><span class="p" data-group-id="3029748297-8">(</span><span class="p" data-group-id="3029748297-9">{</span><span class="ss">:global</span><span class="p">,</span><span class="w"> </span><span class="ss">:my_global_process</span><span class="p" data-group-id="3029748297-9">}</span><span class="p" data-group-id="3029748297-8">)</span></code></pre><p>Register a process via a registry:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3242587198-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">pid</span><span class="p" data-group-id="3242587198-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Agent</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="3242587198-2">(</span><span class="k" data-group-id="3242587198-3">fn</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">register</span><span class="p" data-group-id="3242587198-4">(</span><span class="p" data-group-id="3242587198-5">{</span><span class="ss">:via</span><span class="p">,</span><span class="w"> </span><span class="nc">Registry</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3242587198-6">{</span><span class="nc">MscmpSystUtils.TestRegistry</span><span class="p">,</span><span class="w"> </span><span class="ss">:my_process</span><span class="p" data-group-id="3242587198-6">}</span><span class="p" data-group-id="3242587198-5">}</span><span class="p" data-group-id="3242587198-4">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3242587198-7">%{</span><span class="p" data-group-id="3242587198-7">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="k" data-group-id="3242587198-3">end</span><span class="p" data-group-id="3242587198-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3242587198-8">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="o">^</span><span class="n">pid</span><span class="p" data-group-id="3242587198-8">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">whereis</span><span class="p" data-group-id="3242587198-9">(</span><span class="p" data-group-id="3242587198-10">{</span><span class="ss">:via</span><span class="p">,</span><span class="w"> </span><span class="nc">Registry</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3242587198-11">{</span><span class="nc">MscmpSystUtils.TestRegistry</span><span class="p">,</span><span class="w"> </span><span class="ss">:my_process</span><span class="p" data-group-id="3242587198-11">}</span><span class="p" data-group-id="3242587198-10">}</span><span class="p" data-group-id="3242587198-9">)</span></code></pre><p>Attempt to register with an already taken name:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0140806740-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">pid1</span><span class="p" data-group-id="0140806740-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Agent</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="0140806740-2">(</span><span class="k" data-group-id="0140806740-3">fn</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">register</span><span class="p" data-group-id="0140806740-4">(</span><span class="ss">:taken_name</span><span class="p" data-group-id="0140806740-4">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="0140806740-5">%{</span><span class="p" data-group-id="0140806740-5">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="k" data-group-id="0140806740-3">end</span><span class="p" data-group-id="0140806740-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0140806740-6">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="o">^</span><span class="n">pid1</span><span class="p" data-group-id="0140806740-6">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">whereis</span><span class="p" data-group-id="0140806740-7">(</span><span class="ss">:taken_name</span><span class="p" data-group-id="0140806740-7">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0140806740-8">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="bp">_</span><span class="p" data-group-id="0140806740-8">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Agent</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="0140806740-9">(</span><span class="k" data-group-id="0140806740-10">fn</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="0140806740-11">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="p" data-group-id="0140806740-11">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">register</span><span class="p" data-group-id="0140806740-12">(</span><span class="ss">:taken_name</span><span class="p" data-group-id="0140806740-12">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="0140806740-13">%</span><span class="nc" data-group-id="0140806740-13">Mserror.ProcessUtilsError</span><span class="p" data-group-id="0140806740-13">{</span><span class="ss">kind</span><span class="p">:</span><span class="w"> </span><span class="ss">:registration</span><span class="p">,</span><span class="w"> </span><span class="ss">cause</span><span class="p">:</span><span class="w"> </span><span class="ss">:registration_failed</span><span class="p" data-group-id="0140806740-13">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">error</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="0140806740-14">%{</span><span class="p" data-group-id="0140806740-14">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="k" data-group-id="0140806740-10">end</span><span class="p" data-group-id="0140806740-9">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="register/2">
+
+  <div class="detail-header">
+    <a href="#register/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">register(registry, name)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> register(<a href="Msutils.Types.Process.html#t:registry/0">Msutils.Types.Process.registry</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()) ::
+  :ok | {:error, <a href="Mserror.ProcessUtilsError.html#t:t/0">Mserror.ProcessUtilsError.t</a>()}</pre>
+
+      </div>
+
+<p>Registers the current process under the given registry and name.</p><p>This function must be called from within the process that is to be registered.
+Attempting to register a process from outside that process will fail.</p><p>This function provides a convenient way to register processes when the registry and
+name are known separately at runtime.</p><h2 id="register/2-parameters" class="section-heading"><a href="#register/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">registry</code> - The registry to use for registration.</li><li><code class="inline">name</code> - The name under which to register the current process.</li></ul><h2 id="register/2-returns" class="section-heading"><a href="#register/2-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><ul><li><p><code class="inline">:ok</code> - The process was successfully registered.</p></li><li><p><code class="inline">{:error, %Mserror.ProcessUtilsError{cause: :registration_failed}}</code> -
+If the registration failed.</p></li><li><p><code class="inline">{:error, %Mserror.ProcessUtilsError{cause: :invalid_name}}</code> -
+If the provided registry or name combination is invalid.</p></li></ul><h2 id="register/2-examples" class="section-heading"><a href="#register/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><p>Register a process locally:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="6201358155-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">pid</span><span class="p" data-group-id="6201358155-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Agent</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="6201358155-2">(</span><span class="k" data-group-id="6201358155-3">fn</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">register</span><span class="p" data-group-id="6201358155-4">(</span><span class="ss">:local</span><span class="p">,</span><span class="w"> </span><span class="ss">:my_process</span><span class="p" data-group-id="6201358155-4">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6201358155-5">%{</span><span class="p" data-group-id="6201358155-5">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="k" data-group-id="6201358155-3">end</span><span class="p" data-group-id="6201358155-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="6201358155-6">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="o">^</span><span class="n">pid</span><span class="p" data-group-id="6201358155-6">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">whereis</span><span class="p" data-group-id="6201358155-7">(</span><span class="ss">:local</span><span class="p">,</span><span class="w"> </span><span class="ss">:my_process</span><span class="p" data-group-id="6201358155-7">)</span></code></pre><p>Register a process globally:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7068808765-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">pid</span><span class="p" data-group-id="7068808765-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Agent</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="7068808765-2">(</span><span class="k" data-group-id="7068808765-3">fn</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">register</span><span class="p" data-group-id="7068808765-4">(</span><span class="ss">:global</span><span class="p">,</span><span class="w"> </span><span class="ss">:my_global_process</span><span class="p" data-group-id="7068808765-4">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7068808765-5">%{</span><span class="p" data-group-id="7068808765-5">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="k" data-group-id="7068808765-3">end</span><span class="p" data-group-id="7068808765-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7068808765-6">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="o">^</span><span class="n">pid</span><span class="p" data-group-id="7068808765-6">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">whereis</span><span class="p" data-group-id="7068808765-7">(</span><span class="ss">:global</span><span class="p">,</span><span class="w"> </span><span class="ss">:my_global_process</span><span class="p" data-group-id="7068808765-7">)</span></code></pre><p>Register a process via a registry:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4449034951-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">pid</span><span class="p" data-group-id="4449034951-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Agent</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="4449034951-2">(</span><span class="k" data-group-id="4449034951-3">fn</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">register</span><span class="p" data-group-id="4449034951-4">(</span><span class="p" data-group-id="4449034951-5">{</span><span class="nc">Registry</span><span class="p">,</span><span class="w"> </span><span class="nc">MscmpSystUtils.TestRegistry</span><span class="p" data-group-id="4449034951-5">}</span><span class="p">,</span><span class="w"> </span><span class="ss">:my_process</span><span class="p" data-group-id="4449034951-4">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4449034951-6">%{</span><span class="p" data-group-id="4449034951-6">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="k" data-group-id="4449034951-3">end</span><span class="p" data-group-id="4449034951-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4449034951-7">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="o">^</span><span class="n">pid</span><span class="p" data-group-id="4449034951-7">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">whereis</span><span class="p" data-group-id="4449034951-8">(</span><span class="p" data-group-id="4449034951-9">{</span><span class="nc">Registry</span><span class="p">,</span><span class="w"> </span><span class="nc">MscmpSystUtils.TestRegistry</span><span class="p" data-group-id="4449034951-9">}</span><span class="p">,</span><span class="w"> </span><span class="ss">:my_process</span><span class="p" data-group-id="4449034951-8">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="whereis/1">
+
+  <div class="detail-header">
+    <a href="#whereis/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">whereis(name)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> whereis(<a href="Msutils.Types.Process.html#t:name/0">Msutils.Types.Process.name</a>()) ::
+  {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:error, <a href="Mserror.ProcessUtilsError.html#t:t/0">Mserror.ProcessUtilsError.t</a>()}</pre>
+
+      </div>
+
+<p>Looks up a process by its name and returns its PID.</p><h2 id="whereis/1-parameters" class="section-heading"><a href="#whereis/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">name</code> - The name of the process whose PID is to be retrieved.</li></ul><h2 id="whereis/1-returns" class="section-heading"><a href="#whereis/1-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><ul><li><p><code class="inline">{:ok, pid}</code> - The PID of the process if found.</p></li><li><p><code class="inline">{:error, %Mserror.ProcessUtilsError{cause: :process_not_found}}</code> -
+If the process doesn't exist</p></li><li><p><code class="inline">{:error, %Mserror.ProcessUtilsError{cause: :invalid_name}}</code> -
+If the provided name does not comply with <a href="Msutils.Types.Process.html#t:name/0"><code class="inline">Msutils.Types.Process.name/0</code></a>
+naming conventions.</p></li></ul><h2 id="whereis/1-examples" class="section-heading"><a href="#whereis/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><p>A simple local process name lookup:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1381278209-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">pid</span><span class="p" data-group-id="1381278209-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Agent</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="1381278209-2">(</span><span class="k" data-group-id="1381278209-3">fn</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p" data-group-id="1381278209-4">%{</span><span class="p" data-group-id="1381278209-4">}</span><span class="w"> </span><span class="k" data-group-id="1381278209-3">end</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="ss">:example_local_name</span><span class="p" data-group-id="1381278209-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1381278209-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="o">^</span><span class="n">pid</span><span class="p" data-group-id="1381278209-5">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">whereis</span><span class="p" data-group-id="1381278209-6">(</span><span class="ss">:example_local_name</span><span class="p" data-group-id="1381278209-6">)</span></code></pre><p>A global process name lookup:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8391554692-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">global_pid</span><span class="p" data-group-id="8391554692-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Agent</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="8391554692-2">(</span><span class="k" data-group-id="8391554692-3">fn</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p" data-group-id="8391554692-4">%{</span><span class="p" data-group-id="8391554692-4">}</span><span class="w"> </span><span class="k" data-group-id="8391554692-3">end</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8391554692-5">{</span><span class="ss">:global</span><span class="p">,</span><span class="w"> </span><span class="ss">:example_global_process</span><span class="p" data-group-id="8391554692-5">}</span><span class="p" data-group-id="8391554692-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8391554692-6">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="o">^</span><span class="n">global_pid</span><span class="p" data-group-id="8391554692-6">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">whereis</span><span class="p" data-group-id="8391554692-7">(</span><span class="p" data-group-id="8391554692-8">{</span><span class="ss">:global</span><span class="p">,</span><span class="w"> </span><span class="ss">:example_global_process</span><span class="p" data-group-id="8391554692-8">}</span><span class="p" data-group-id="8391554692-7">)</span></code></pre><p>A via process name lookup:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8662713027-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">via_pid</span><span class="p" data-group-id="8662713027-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Agent</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="8662713027-2">(</span><span class="k" data-group-id="8662713027-3">fn</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p" data-group-id="8662713027-4">%{</span><span class="p" data-group-id="8662713027-4">}</span><span class="w"> </span><span class="k" data-group-id="8662713027-3">end</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8662713027-5">{</span><span class="ss">:via</span><span class="p">,</span><span class="w"> </span><span class="nc">Registry</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8662713027-6">{</span><span class="nc">MscmpSystUtils.TestRegistry</span><span class="p">,</span><span class="w"> </span><span class="ss">:example_via_process</span><span class="p" data-group-id="8662713027-6">}</span><span class="p" data-group-id="8662713027-5">}</span><span class="p" data-group-id="8662713027-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8662713027-7">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="o">^</span><span class="n">via_pid</span><span class="p" data-group-id="8662713027-7">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">whereis</span><span class="p" data-group-id="8662713027-8">(</span><span class="p" data-group-id="8662713027-9">{</span><span class="ss">:via</span><span class="p">,</span><span class="w"> </span><span class="nc">Registry</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8662713027-10">{</span><span class="nc">MscmpSystUtils.TestRegistry</span><span class="p">,</span><span class="w"> </span><span class="ss">:example_via_process</span><span class="p" data-group-id="8662713027-10">}</span><span class="p" data-group-id="8662713027-9">}</span><span class="p" data-group-id="8662713027-8">)</span></code></pre><p>Attempted lookup of a non-existent process:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3576865215-1">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="p" data-group-id="3576865215-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">whereis</span><span class="p" data-group-id="3576865215-2">(</span><span class="ss">:nonexistent_process</span><span class="p" data-group-id="3576865215-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3576865215-3">%</span><span class="nc" data-group-id="3576865215-3">Mserror.ProcessUtilsError</span><span class="p" data-group-id="3576865215-3">{</span><span class="ss">kind</span><span class="p">:</span><span class="w"> </span><span class="ss">:lookup</span><span class="p">,</span><span class="w"> </span><span class="ss">cause</span><span class="p">:</span><span class="w"> </span><span class="ss">:process_not_found</span><span class="p" data-group-id="3576865215-3">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">error</span></code></pre><p>Attempted lookup of an invalid or unsupported process name:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9341197503-1">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="p" data-group-id="9341197503-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">whereis</span><span class="p" data-group-id="9341197503-2">(</span><span class="p" data-group-id="9341197503-3">{</span><span class="ss">:invalid</span><span class="p">,</span><span class="w"> </span><span class="ss">:name</span><span class="p" data-group-id="9341197503-3">}</span><span class="p" data-group-id="9341197503-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9341197503-4">%</span><span class="nc" data-group-id="9341197503-4">Mserror.ProcessUtilsError</span><span class="p" data-group-id="9341197503-4">{</span><span class="ss">kind</span><span class="p">:</span><span class="w"> </span><span class="ss">:lookup</span><span class="p">,</span><span class="w"> </span><span class="ss">cause</span><span class="p">:</span><span class="w"> </span><span class="ss">:invalid_name</span><span class="p" data-group-id="9341197503-4">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">error</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="whereis/2">
+
+  <div class="detail-header">
+    <a href="#whereis/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">whereis(registry, name)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> whereis(<a href="Msutils.Types.Process.html#t:registry/0">Msutils.Types.Process.registry</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()) ::
+  {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:error, <a href="Mserror.ProcessUtilsError.html#t:t/0">Mserror.ProcessUtilsError.t</a>()}</pre>
+
+      </div>
+
+<p>Looks up a process by its name and returns its PID.</p><p>Typically <a href="#whereis/2"><code class="inline">whereis/2</code></a> is called when neither the registry name (or kind) or
+process name are known until runtime.  Since <a href="Msutils.Types.Process.html#t:name/0"><code class="inline">Msutils.Types.Process.name/0</code></a>,
+and likewise <a href="https://hexdocs.pm/elixir/GenServer.html#t:name/0"><code class="inline">GenServer.name/0</code></a>, values vary in construction based on the
+specific kind of registry, this function provides a convenient way to not have
+to worry about the name construction.  If the registry kind is known at
+compile time, then <a href="#whereis/1"><code class="inline">whereis/1</code></a> is preferred as it should be slightly more
+efficient.</p><h2 id="whereis/2-parameters" class="section-heading"><a href="#whereis/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">registry</code> - The registry to use for the lookup.</li><li><code class="inline">name</code> - The name of the process whose PID is to be retrieved.</li></ul><h2 id="whereis/2-returns" class="section-heading"><a href="#whereis/2-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><ul><li><p><code class="inline">{:ok, pid}</code> - The PID of the process if found.</p></li><li><p><code class="inline">{:error, %Mserror.ProcessUtilsError{cause: :process_not_found}}</code> -
+If the process doesn't exist</p></li><li><p><code class="inline">{:error, %Mserror.ProcessUtilsError{cause: :invalid_name}}</code> -
+If the provided name does not comply with <a href="Msutils.Types.Process.html#t:name/0"><code class="inline">Msutils.Types.Process.name/0</code></a>
+naming conventions.</p></li></ul><h2 id="whereis/2-examples" class="section-heading"><a href="#whereis/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><p>A simple local process name lookup:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1710593822-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">pid</span><span class="p" data-group-id="1710593822-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Agent</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="1710593822-2">(</span><span class="k" data-group-id="1710593822-3">fn</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p" data-group-id="1710593822-4">%{</span><span class="p" data-group-id="1710593822-4">}</span><span class="w"> </span><span class="k" data-group-id="1710593822-3">end</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="ss">:example2_local_name</span><span class="p" data-group-id="1710593822-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1710593822-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="o">^</span><span class="n">pid</span><span class="p" data-group-id="1710593822-5">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">whereis</span><span class="p" data-group-id="1710593822-6">(</span><span class="ss">:local</span><span class="p">,</span><span class="w"> </span><span class="ss">:example2_local_name</span><span class="p" data-group-id="1710593822-6">)</span></code></pre><p>A global process name lookup:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1531083869-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">global_pid</span><span class="p" data-group-id="1531083869-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Agent</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="1531083869-2">(</span><span class="k" data-group-id="1531083869-3">fn</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p" data-group-id="1531083869-4">%{</span><span class="p" data-group-id="1531083869-4">}</span><span class="w"> </span><span class="k" data-group-id="1531083869-3">end</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1531083869-5">{</span><span class="ss">:global</span><span class="p">,</span><span class="w"> </span><span class="ss">:example2_global_process</span><span class="p" data-group-id="1531083869-5">}</span><span class="p" data-group-id="1531083869-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1531083869-6">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="o">^</span><span class="n">global_pid</span><span class="p" data-group-id="1531083869-6">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">whereis</span><span class="p" data-group-id="1531083869-7">(</span><span class="ss">:global</span><span class="p">,</span><span class="w"> </span><span class="ss">:example2_global_process</span><span class="p" data-group-id="1531083869-7">)</span></code></pre><p>A via process name lookup:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3224298367-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">via_pid</span><span class="p" data-group-id="3224298367-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Agent</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="3224298367-2">(</span><span class="k" data-group-id="3224298367-3">fn</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p" data-group-id="3224298367-4">%{</span><span class="p" data-group-id="3224298367-4">}</span><span class="w"> </span><span class="k" data-group-id="3224298367-3">end</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3224298367-5">{</span><span class="ss">:via</span><span class="p">,</span><span class="w"> </span><span class="nc">Registry</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3224298367-6">{</span><span class="nc">MscmpSystUtils.TestRegistry</span><span class="p">,</span><span class="w"> </span><span class="ss">:example2_via_process</span><span class="p" data-group-id="3224298367-6">}</span><span class="p" data-group-id="3224298367-5">}</span><span class="p" data-group-id="3224298367-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3224298367-7">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="o">^</span><span class="n">via_pid</span><span class="p" data-group-id="3224298367-7">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">whereis</span><span class="p" data-group-id="3224298367-8">(</span><span class="p" data-group-id="3224298367-9">{</span><span class="nc">Registry</span><span class="p">,</span><span class="w"> </span><span class="nc">MscmpSystUtils.TestRegistry</span><span class="p" data-group-id="3224298367-9">}</span><span class="p">,</span><span class="w"> </span><span class="ss">:example2_via_process</span><span class="p" data-group-id="3224298367-8">)</span></code></pre><p>Attempted lookup of a non-existent process:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1668962341-1">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="p" data-group-id="1668962341-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">whereis</span><span class="p" data-group-id="1668962341-2">(</span><span class="ss">:local</span><span class="p">,</span><span class="w"> </span><span class="ss">:nonexistent_process</span><span class="p" data-group-id="1668962341-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1668962341-3">%</span><span class="nc" data-group-id="1668962341-3">Mserror.ProcessUtilsError</span><span class="p" data-group-id="1668962341-3">{</span><span class="ss">kind</span><span class="p">:</span><span class="w"> </span><span class="ss">:lookup</span><span class="p">,</span><span class="w"> </span><span class="ss">cause</span><span class="p">:</span><span class="w"> </span><span class="ss">:process_not_found</span><span class="p" data-group-id="1668962341-3">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">error</span></code></pre><p>Attempted lookup of an invalid or unsupported process name:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3872000680-1">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="p" data-group-id="3872000680-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Msutils.Process</span><span class="o">.</span><span class="n">whereis</span><span class="p" data-group-id="3872000680-2">(</span><span class="ss">:local</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3872000680-3">{</span><span class="ss">:invalid</span><span class="p">,</span><span class="w"> </span><span class="ss">:name</span><span class="p" data-group-id="3872000680-3">}</span><span class="p" data-group-id="3872000680-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3872000680-4">%</span><span class="nc" data-group-id="3872000680-4">Mserror.ProcessUtilsError</span><span class="p" data-group-id="3872000680-4">{</span><span class="ss">kind</span><span class="p">:</span><span class="w"> </span><span class="ss">:lookup</span><span class="p">,</span><span class="w"> </span><span class="ss">cause</span><span class="p">:</span><span class="w"> </span><span class="ss">:invalid_name</span><span class="p" data-group-id="3872000680-4">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">error</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="mscmp_syst_utils.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
+
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

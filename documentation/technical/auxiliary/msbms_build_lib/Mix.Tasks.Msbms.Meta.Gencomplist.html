@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.2">
+    <meta name="project" content="msbms_build_lib v1.2.0">
+
+
+    <title>mix msbms.meta.gencomplist — msbms_build_lib v1.2.0</title>
+
+    <link rel="stylesheet" href="dist/html-elixir-KV3YOVJ3.css" />
+
+    <script defer src="dist/sidebar_items-2DA0BB0B.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-DPJLHKSM.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="MsbmsBuildLib.html" class="sidebar-projectName" translate="no">
+msbms_build_lib
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v1.2.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-task" id="main" data-type="tasks">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of msbms_build_lib</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">mix msbms.meta.gencomplist</span> 
+      <small class="app-vsn" translate="no">(msbms_build_lib v1.2.0)</small>
+
+    </h1>
+
+  </div>
+
+
+    <section id="moduledoc">
+<p>Generates the system components list documentation file for MSBMS.</p><p>This task scans all components in the project, extracts metadata from their
+<code class="inline">mix.exs</code> and <code class="inline">README.md</code> files, and generates a formatted markdown file
+suitable for Hugo/Docsy static site generation.</p><p>The generated documentation includes:</p><ul><li>Component categorization (Platform, Subsystems, Components)</li><li>Component descriptions from README files</li><li>First-party (MSBMS) dependencies</li><li>Third-party dependencies (runtime only)</li><li>Links to API and database documentation</li></ul><p>It calls functions from <a href="MsbmsBuildLib.html"><code class="inline">MsbmsBuildLib</code></a> to perform the actual operations.</p><h2 id="module-command-line-options" class="section-heading"><a href="#module-command-line-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Command line options</span></h2><ul><li><code class="inline">--base-dir PATH</code> - Specifies the base directory of the MSBMS project.
+Defaults to the current working directory.</li><li><code class="inline">--output PATH</code> - Specifies the output file path relative to base-dir.
+Defaults to &quot;documentation/book/content/en/technical/system-components-list.md&quot;.</li><li><code class="inline">--log-level LEVEL</code> - Sets the logging level (e.g., debug, info, warn, error).
+Defaults to &quot;info&quot;.</li><li><code class="inline">--dry-run</code> - Shows what would be generated without writing the file.</li></ul><h2 id="module-component-discovery" class="section-heading"><a href="#module-component-discovery" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Component Discovery</span></h2><p>The task automatically discovers components by:</p><ul><li>Scanning standard component paths (app_server/components/<em>, app_server/subsystems/</em>, etc.)</li><li>Categorizing by naming convention:<ul><li><code class="inline">mscmp_*</code> → Components</li><li><code class="inline">mssub_*</code> → Subsystems</li><li><code class="inline">msplatform</code> → Platform</li><li><code class="inline">msapp_*</code> → Applications</li></ul></li></ul><h2 id="module-description-extraction" class="section-heading"><a href="#module-description-extraction" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Description Extraction</span></h2><p>Component descriptions are extracted from <code class="inline">README.md</code> files:</p><ul><li>Text after <code class="inline">&lt;!-- MDOC !--&gt;</code> marker</li><li>Stops at <code class="inline">&lt;!-- MDESC !--&gt;</code> marker (if present) or first <code class="inline">##</code> heading (fallback)</li><li>Falls back to first paragraph after title if no MDOC marker found</li></ul><p>To control the description length, add a <code class="inline">&lt;!-- MDESC !--&gt;</code> marker in your README.md
+after the description text you want included in the component listing.</p><h2 id="module-dependency-filtering" class="section-heading"><a href="#module-dependency-filtering" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Dependency Filtering</span></h2><p>Third-party dependencies are filtered to exclude development/test-only dependencies
+(those specified with <code class="inline">:only</code> option in mix.exs).</p><h2 id="module-examples" class="section-heading"><a href="#module-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="c1"># Generate with defaults</span><span class="w">
+</span><span class="n">mix</span><span class="w"> </span><span class="n">msbms</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">gencomplist</span><span class="w">
+
+</span><span class="c1"># Generate with custom output path</span><span class="w">
+</span><span class="n">mix</span><span class="w"> </span><span class="n">msbms</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">gencomplist</span><span class="w"> </span><span class="o">--</span><span class="n">output</span><span class="w"> </span><span class="n">docs</span><span class="o">/</span><span class="n">my</span><span class="o">-</span><span class="n">components</span><span class="o">.</span><span class="n">md</span><span class="w">
+
+</span><span class="c1"># Preview without writing</span><span class="w">
+</span><span class="n">mix</span><span class="w"> </span><span class="n">msbms</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">gencomplist</span><span class="w"> </span><span class="o">--</span><span class="n">dry</span><span class="o">-</span><span class="n">run</span><span class="w">
+
+</span><span class="c1"># Generate with debug logging</span><span class="w">
+</span><span class="n">mix</span><span class="w"> </span><span class="n">msbms</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">gencomplist</span><span class="w"> </span><span class="o">--</span><span class="n">log</span><span class="o">-</span><span class="n">level</span><span class="w"> </span><span class="n">debug</span><span class="w">
+
+</span><span class="c1"># Generate from specific project directory</span><span class="w">
+</span><span class="n">mix</span><span class="w"> </span><span class="n">msbms</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">gencomplist</span><span class="w"> </span><span class="o">--</span><span class="n">base</span><span class="o">-</span><span class="n">dir</span><span class="w"> </span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">musebms</span></code></pre>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#run/1" data-no-tooltip="" translate="no">run(args)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Callback implementation for <a><code class="inline">Mix.Task.run/1</code></a>.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="run/1">
+
+  <div class="detail-header">
+    <a href="#run/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">run(args)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+<p>Callback implementation for <a href="https://hexdocs.pm/mix/Mix.Task.html#c:run/1"><code class="inline">Mix.Task.run/1</code></a>.</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="msbms_build_lib.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.2) for the
+
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

@@ -4,35 +4,22 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.34.2">
+    <meta name="generator" content="ExDoc v0.38.4">
     <meta name="project" content="mscmp_syst_authn v0.1.0">
 
 
     <title>MscmpSystAuthn.Types.AuthenticationState — mscmp_syst_authn v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
 
-    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
-    <script src="dist/sidebar_items-5B1BA76F.js"></script>
-    <script src="docs_config.js"></script>
-    <script async src="dist/html-YIPIRHGU.js"></script>
+    <script defer src="dist/sidebar_items-AEC8F2E7.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
 
   </head>
-  <body data-type="modules" class="page-module">
-    <script>
-
-      try {
-        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
-
-        if (settings.theme === 'dark' ||
-           ((settings.theme === 'system' || settings.theme == null) &&
-             window.matchMedia('(prefers-color-scheme: dark)').matches)
-           ) {
-          document.body.classList.add('dark')
-        }
-      } catch (error) { }
-    </script>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
 
 <div class="body-wrapper">
 
@@ -54,37 +41,13 @@ mscmp_syst_authn
         </div>
       </div>
     </div>
-    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
-      <li>
-        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
-Pages
-        </button>
-      </li>
-
-        <li>
-          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
-            Modules
-          </button>
-        </li>
-
-
-    </ul>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
   </div>
-
-  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
-    <ul id="extras-full-list" class="full-list"></ul>
-  </div>
-
-    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
-      <ul id="modules-full-list" class="full-list"></ul>
-    </div>
-
-
 </nav>
 
-<main class="content">
-  <output role="status" id="toast"></output>
+<output role="status" id="toast"></output>
 
+<main class="content page-module" id="main" data-type="modules">
   <div id="content" class="content-inner">
     <div class="top-search">
       <div class="search-settings">
@@ -93,8 +56,8 @@ Pages
             <span class="sr-only">Search documentation of mscmp_syst_authn</span>
             <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
           </label>
-          <button type="submit" class="search-button" aria-label="Submit Search">
-            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
           </button>
           <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
             <i class="ri-close-line ri-lg" title="Cancel search"></i>
@@ -110,12 +73,14 @@ Pages
     </div>
 
 <div id="top-content">
-  <h1>
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">MscmpSystAuthn.Types.AuthenticationState</span> 
+      <small class="app-vsn" translate="no">(mscmp_syst_authn v0.1.0)</small>
 
-    <span translate="no">MscmpSystAuthn.Types.AuthenticationState</span> 
-    <small class="app-vsn" translate="no">(mscmp_syst_authn v0.1.0)</small>
+    </h1>
 
-  </h1>
+  </div>
 
 
     <section id="moduledoc">
@@ -142,7 +107,7 @@ attempt if the authentication requires intervention to complete successfully.</p
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:t/0" data-no-tooltip translate="no">t()</a>
+        <a href="#t:t/0" data-no-tooltip="" translate="no">t()</a>
 
       </div>
 
@@ -163,17 +128,19 @@ authentication functions.</p></div>
       </a>
       <span class="text">Types</span>
     </h1>
+
     <div class="types-list">
 <section class="detail" id="t:t/0">
 
   <div class="detail-header">
-    <a href="#t:t/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:t/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">t()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">t()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -185,12 +152,14 @@ authentication functions.</p></div>
   applied_network_rule: <a href="MscmpSystAuthn.Types.AppliedNetworkRule.html#t:t/0">MscmpSystAuthn.Types.AppliedNetworkRule.t</a>() | nil,
   deadline: <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>(),
   host_address: <a href="MscmpSystAuthn.Types.html#t:host_address/0">MscmpSystAuthn.Types.host_address</a>(),
+  host_limiter: <a href="/documentation/technical/app_server/mscmp_syst_limiter/MscmpSystLimiter.Types.html#t:limiter_instance/0">MscmpSystLimiter.Types.limiter_instance</a>() | nil,
   identifier: <a href="MscmpSystAuthn.Types.html#t:account_identifier/0">MscmpSystAuthn.Types.account_identifier</a>(),
+  identifier_limiter: <a href="/documentation/technical/app_server/mscmp_syst_limiter/MscmpSystLimiter.Types.html#t:limiter_instance/0">MscmpSystLimiter.Types.limiter_instance</a>() | nil,
   identity: <a href="Msdata.SystIdentities.html#t:t/0">Msdata.SystIdentities.t</a>() | nil,
   identity_id: <a href="MscmpSystAuthn.Types.html#t:identity_id/0">MscmpSystAuthn.Types.identity_id</a>() | nil,
   identity_type_id: <a href="MscmpSystAuthn.Types.html#t:identity_type_id/0">MscmpSystAuthn.Types.identity_type_id</a>() | nil,
-  instance_id: <a href="../../../../documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:instance_id/0">MscmpSystInstance.Types.instance_id</a>() | :bypass | nil,
-  owning_owner_id: <a href="../../../../documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:owner_id/0">MscmpSystInstance.Types.owner_id</a>() | nil,
+  instance_id: <a href="/documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:instance_id/0">MscmpSystInstance.Types.instance_id</a>() | :bypass | nil,
+  owning_owner_id: <a href="/documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:owner_id/0">MscmpSystInstance.Types.owner_id</a>() | nil,
   pending_operations: [<a href="MscmpSystAuthn.Types.html#t:authentication_operations/0">MscmpSystAuthn.Types.authentication_operations</a>()],
   plaintext_credential: <a href="MscmpSystAuthn.Types.html#t:credential/0">MscmpSystAuthn.Types.credential</a>() | nil,
   reset_reason: <a href="MscmpSystAuthn.Types.html#t:credential_reset_reason/0">MscmpSystAuthn.Types.credential_reset_reason</a>() | nil,
@@ -200,13 +169,7 @@ authentication functions.</p></div>
       </div>
 
 <p>The return type describing the result of authentication attempts via the
-authentication functions.</p><h2 id="t:t/0-attributes" class="section-heading">
-  <a href="#t:t/0-attributes" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Attributes</span>
-</h2>
-<ul><li><p><code class="inline">status</code> - the result of the authentication attempt.</p></li><li><p><code class="inline">deadline</code> - the date/time by which the authentication attempt must be
+authentication functions.</p><h2 id="t:t/0-attributes" class="section-heading"><a href="#t:t/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Attributes</span></h2><ul><li><p><code class="inline">status</code> - the result of the authentication attempt.</p></li><li><p><code class="inline">deadline</code> - the date/time by which the authentication attempt must be
 resolved by before being considered expired.  Since the authentication
 process may be interrupted and resumed, it requires that we establish some
 limit by which the process must be completed.  By default this value will be
@@ -218,12 +181,16 @@ special cases, authentication may not be contextually bound to a specific
 Instance.  In this cases, the special value <code class="inline">:bypass</code> can be used it
 indicate that the Instance is not relevant for the authentication.</p></li><li><p><code class="inline">identity_type_id</code> - the record ID referencing the Identity Type used to
 identify the Access Account.</p></li><li><p><code class="inline">host_address</code> -  the apparent Host IP Address from which the
-authentication attempt originated.</p></li><li><p><code class="inline">applied_network_rule</code> - the Network Rule that was applied during the
+authentication attempt originated.</p></li><li><p><code class="inline">host_limiter</code> - a reference to the rate limiting counter which tracks
+the number of allowed consecutive failures prior to the host being banned
+from authentication attempts.</p></li><li><p><code class="inline">applied_network_rule</code> - the Network Rule that was applied during the
 authentication attempt.  This value may be <code class="inline">nil</code> if the evaluation of the
 Network Rules has not yet made.</p></li><li><p><code class="inline">pending_operations</code> - the ordered list of remaining authentication
 operations which must complete successfully prior to the authentication
 being successfully completed.</p></li><li><p><code class="inline">identifier</code> - the user supplied account identifier used to identify the
-Access Account.</p></li><li><p><code class="inline">plaintext_credential</code> - the unencrypted, user supplied credential to
+Access Account.</p></li><li><p><code class="inline">identifier_limiter</code> - a reference to the rate limiting counter which
+tracks the number of allowed authentication attempts for a given account
+Identifier.</p></li><li><p><code class="inline">plaintext_credential</code> - the unencrypted, user supplied credential to
 test during the authentication process.  This value will be made <code class="inline">nil</code> as
 soon as it has been tested or is created <code class="inline">nil</code> for the Account Code
 Authenticator which isn't a true authentication method (it's just a lookup).</p></li><li><p><code class="inline">owning_owner_id</code> - an Owner record ID for the Owner which manages the
@@ -256,7 +223,7 @@ value indicates the reason for the reset.  Available values are defined in
 
       <p class="built-using">
         Built using
-        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.34.2) for the
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
 
           <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

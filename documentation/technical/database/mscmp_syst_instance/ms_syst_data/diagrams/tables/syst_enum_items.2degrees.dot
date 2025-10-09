@@ -8,7 +8,7 @@ digraph "twoDegreesRelationshipsDiagram" {
   "syst_instance_type_applications":"instance_type_id":w -> "syst_enum_items":"id.type":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_instance_type_contexts":"elipses":w -> "syst_instance_type_applications":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_instances":"application_id":w -> "syst_applications":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
-  "syst_instances":"instance_state_id":w -> "syst_enum_items":"id.type":e [arrowhead=none dir=back arrowtail=crowodot];
+  "syst_instances":"instance_lifecycle_state_id":w -> "syst_enum_items":"id.type":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_instances":"instance_type_id":w -> "syst_enum_items":"id.type":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_instances":"owner_id":w -> "syst_owners":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_owners":"owner_state_id":w -> "syst_enum_items":"id.type":e [arrowhead=none dir=back arrowtail=crowodot];

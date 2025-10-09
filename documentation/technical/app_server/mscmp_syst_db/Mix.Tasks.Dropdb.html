@@ -4,35 +4,22 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.34.2">
+    <meta name="generator" content="ExDoc v0.38.4">
     <meta name="project" content="mscmp_syst_db v0.1.0">
 
 
     <title>mix dropdb — mscmp_syst_db v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
 
-    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
-    <script src="dist/sidebar_items-F9E8FB46.js"></script>
-    <script src="docs_config.js"></script>
-    <script async src="dist/html-YIPIRHGU.js"></script>
+    <script defer src="dist/sidebar_items-C325064A.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
 
   </head>
-  <body data-type="tasks" class="page-task">
-    <script>
-
-      try {
-        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
-
-        if (settings.theme === 'dark' ||
-           ((settings.theme === 'system' || settings.theme == null) &&
-             window.matchMedia('(prefers-color-scheme: dark)').matches)
-           ) {
-          document.body.classList.add('dark')
-        }
-      } catch (error) { }
-    </script>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
 
 <div class="body-wrapper">
 
@@ -54,47 +41,13 @@ mscmp_syst_db
         </div>
       </div>
     </div>
-    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
-      <li>
-        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
-Pages
-        </button>
-      </li>
-
-        <li>
-          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
-            Modules
-          </button>
-        </li>
-
-
-        <li>
-          <button id="tasks-list-tab-button" role="tab" data-type="tasks" aria-controls="tasks-tab-panel" aria-selected="false" tabindex="-1">
-            <span translate="no">Mix</span> Tasks
-          </button>
-        </li>
-
-    </ul>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
   </div>
-
-  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
-    <ul id="extras-full-list" class="full-list"></ul>
-  </div>
-
-    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
-      <ul id="modules-full-list" class="full-list"></ul>
-    </div>
-
-
-    <div id="tasks-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="tasks-list-tab-button" hidden>
-      <ul id="tasks-full-list" class="full-list"></ul>
-    </div>
-
 </nav>
 
-<main class="content">
-  <output role="status" id="toast"></output>
+<output role="status" id="toast"></output>
 
+<main class="content page-task" id="main" data-type="tasks">
   <div id="content" class="content-inner">
     <div class="top-search">
       <div class="search-settings">
@@ -103,8 +56,8 @@ Pages
             <span class="sr-only">Search documentation of mscmp_syst_db</span>
             <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
           </label>
-          <button type="submit" class="search-button" aria-label="Submit Search">
-            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
           </button>
           <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
             <i class="ri-close-line ri-lg" title="Cancel search"></i>
@@ -120,30 +73,26 @@ Pages
     </div>
 
 <div id="top-content">
-  <h1>
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">mix dropdb</span> 
+      <small class="app-vsn" translate="no">(mscmp_syst_db v0.1.0)</small>
 
-    <span translate="no">mix dropdb</span> 
-    <small class="app-vsn" translate="no">(mscmp_syst_db v0.1.0)</small>
+    </h1>
 
-  </h1>
+  </div>
 
 
     <section id="moduledoc">
 <p>Drops a previously loaded development supporting Datastore.</p><p>This command takes a number of options many of which match <a href="Mix.Tasks.Loaddb.html"><code class="inline">Mix.Tasks.Loaddb</code></a>.
 Insofar as they have corresponding options, the options used with this Mix
 task should have values which match the command used to create the Datastore;
-failing to do this could cause the drop operation to fail or fail partially.</p><blockquote><h4 class="warning">Usage Note</h4><p>There is nothing stopping you from using this command from dropping any
+failing to do this could cause the drop operation to fail or fail partially.</p><section role="note" class="admonition warning"><h4 class="admonition-title warning">Usage Note</h4><p>There is nothing stopping you from using this command from dropping any
 Datastore in the system and technically it should work.  But the only
 supported use of this command is for dropping development supporting
 databases originally loaded with the <a href="Mix.Tasks.Loaddb.html"><code class="inline">Mix.Tasks.Loaddb</code></a> task.  Any other use
-is at your own risk.</p></blockquote><p>Note that all options other than <code class="inline">--type</code> have default values which match the
-corresponding default values in <code class="inline">Mix.Task.Loaddb</code>.</p><h2 id="module-options" class="section-heading">
-  <a href="#module-options" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Options</span>
-</h2>
-<ul><li><p><code class="inline">--ds-name</code> - The Datastore Name used to identify the Datastore in the
+is at your own risk.</p></section><p>Note that all options other than <code class="inline">--type</code> have default values which match the
+corresponding default values in <code class="inline">Mix.Task.Loaddb</code>.</p><h2 id="module-options" class="section-heading"><a href="#module-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><p><code class="inline">--ds-name</code> - The Datastore Name used to identify the Datastore in the
 application.  Specifically references parts of the supervisory system
 which manage the Datastore Contexts.  This is an optional string
 value which defaults to &quot;ms_devsupport_database&quot;.</p></li><li><p><code class="inline">--db-host</code> - The IP address or resolvable host name of the database
@@ -158,7 +107,7 @@ task.  This value is optional and defaults to &quot;ms_devsupport&quot;.</p></li
 withing the application.  This is an optional string value which defaults
 to &quot;ms_devsupport_context&quot;.</p></li><li><p><code class="inline">--dbadmin-pwd</code> - the password of the <code class="inline">ms_syst_privileged</code> database role
 on the target database.  This is an optional string value which defaults
-to &quot;musesystems.publicly.known.insecure.devsupport.password&quot;.</p></li><li><p><code class="inline">--clean-all</code> - if this switch is set, this task will delete all Datastore
+to &quot;musesystems-insecure-publicly-known-password&quot;.</p></li><li><p><code class="inline">--clean-all</code> - if this switch is set, this task will delete all Datastore
 migration files created for the Component, including those that might not
 be related to the Datastore being dropped.  This is done by simply
 deleting the path directory provided in the <code class="inline">--destination</code> option.  This
@@ -169,7 +118,11 @@ the <code class="inline">--clean</code> option.  This option becomes required if
 switch is set.</p></li><li><p><code class="inline">--destination</code> or <code class="inline">-d</code> - establishes the path in which Datastore
 migrations were built.  This option is only used if either the
 <code class="inline">--clean-all</code> or <code class="inline">--clean</code> options are also set.  This is an optional
-value which defaults to &quot;priv/database&quot;.</p></li></ul>
+value which defaults to &quot;priv/database&quot;.</p></li><li><p><code class="inline">--bypass-stop-datastore</code> or <code class="inline">-b</code> - if this switch is set, this task will
+not try to stop the Datastore Contexts before dropping the database.  This
+is useful if the database was only loaded, but an Elixir application was
+not started; an example of this is when database documentation is
+generated.  This is a boolean switch and defaults to false.</p></li></ul>
     </section>
 
 </div>
@@ -188,7 +141,7 @@ value which defaults to &quot;priv/database&quot;.</p></li></ul>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#drop_database/2" data-no-tooltip translate="no">drop_database(datastore_options, opts)</a>
+        <a href="#drop_database/2" data-no-tooltip="" translate="no">drop_database(datastore_options, opts)</a>
 
       </div>
 
@@ -196,7 +149,7 @@ value which defaults to &quot;priv/database&quot;.</p></li></ul>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_datastore_options/1" data-no-tooltip translate="no">get_datastore_options(opts \\ [])</a>
+        <a href="#get_datastore_options/1" data-no-tooltip="" translate="no">get_datastore_options(opts \\ [])</a>
 
       </div>
 
@@ -204,7 +157,7 @@ value which defaults to &quot;priv/database&quot;.</p></li></ul>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#load_database/2" data-no-tooltip translate="no">load_database(datastore_options, datastore_type)</a>
+        <a href="#load_database/2" data-no-tooltip="" translate="no">load_database(datastore_options, datastore_type)</a>
 
       </div>
 
@@ -212,11 +165,11 @@ value which defaults to &quot;priv/database&quot;.</p></li></ul>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#run/1" data-no-tooltip translate="no">run(args)</a>
+        <a href="#run/1" data-no-tooltip="" translate="no">run(args)</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/mix/Mix.Task.html#c:run/1"><code class="inline">Mix.Task.run/1</code></a>.</p></div>
+        <div class="summary-synopsis"><p>Callback implementation for <a><code class="inline">Mix.Task.run/1</code></a>.</p></div>
 
     </div>
 
@@ -232,17 +185,19 @@ value which defaults to &quot;priv/database&quot;.</p></li></ul>
       </a>
       <span class="text">Functions</span>
     </h1>
+
     <div class="functions-list">
 <section class="detail" id="drop_database/2">
 
   <div class="detail-header">
-    <a href="#drop_database/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#drop_database/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">drop_database(datastore_options, opts)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">drop_database(datastore_options, opts)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -261,13 +216,14 @@ value which defaults to &quot;priv/database&quot;.</p></li></ul>
     <span id="get_datastore_options/0"></span>
 
   <div class="detail-header">
-    <a href="#get_datastore_options/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#get_datastore_options/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">get_datastore_options(opts \\ [])</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_datastore_options(opts \\ [])</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -284,13 +240,14 @@ value which defaults to &quot;priv/database&quot;.</p></li></ul>
 <section class="detail" id="load_database/2">
 
   <div class="detail-header">
-    <a href="#load_database/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#load_database/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">load_database(datastore_options, datastore_type)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">load_database(datastore_options, datastore_type)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -298,7 +255,7 @@ value which defaults to &quot;priv/database&quot;.</p></li></ul>
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> load_database(<a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0">MscmpSystDb.Types.DatastoreOptions.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) ::
-  {:ok, [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()]} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  {:ok, [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()]} | {:error, <a href="Mserror.DbError.html#t:t/0">Mserror.DbError.t</a>()}</pre>
 
       </div>
 
@@ -308,13 +265,14 @@ value which defaults to &quot;priv/database&quot;.</p></li></ul>
 <section class="detail" id="run/1">
 
   <div class="detail-header">
-    <a href="#run/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#run/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">run(args)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">run(args)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -349,7 +307,7 @@ value which defaults to &quot;priv/database&quot;.</p></li></ul>
 
       <p class="built-using">
         Built using
-        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.34.2) for the
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
 
           <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

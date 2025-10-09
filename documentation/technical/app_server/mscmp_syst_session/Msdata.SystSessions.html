@@ -4,46 +4,28 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.31.1">
+    <meta name="generator" content="ExDoc v0.38.4">
     <meta name="project" content="mscmp_syst_session v0.1.0">
 
 
     <title>Msdata.SystSessions — mscmp_syst_session v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-FM2CSD74.css" />
 
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
 
-    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-43PMFBC7.js"></script>
-    <script src="dist/sidebar_items-71527E7A.js"></script>
-
-      <script src="docs_config.js"></script>
-
-    <script async src="dist/html-L4O5OK2K.js"></script>
-
+    <script defer src="dist/sidebar_items-524DD7B0.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
 
   </head>
-  <body data-type="modules" class="page-module">
-    <script>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
 
-      try {
-        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
-
-        if (settings.theme === 'dark' ||
-           ((settings.theme === 'system' || settings.theme == null) &&
-             window.matchMedia('(prefers-color-scheme: dark)').matches)
-           ) {
-          document.body.classList.add('dark')
-        }
-      } catch (error) { }
-    </script>
-
-<div class="main">
+<div class="body-wrapper">
 
 <button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
   <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
 </button>
-
-<div class="background-layer"></div>
 
 <nav id="sidebar" class="sidebar">
 
@@ -59,76 +41,55 @@ mscmp_syst_session
         </div>
       </div>
     </div>
-    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
-      <li>
-        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
-Pages
-        </button>
-      </li>
-
-        <li>
-          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
-            Modules
-          </button>
-        </li>
-
-
-    </ul>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
   </div>
-
-  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
-    <ul id="extras-full-list" class="full-list"></ul>
-  </div>
-
-    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
-      <ul id="modules-full-list" class="full-list"></ul>
-    </div>
-
-
 </nav>
 
-<main class="content">
-  <output role="status" id="toast"></output>
-  <div class="content-outer">
-    <div id="content" class="content-inner">
-      <div class="top-search">
-        <div class="search-settings">
-          <form class="search-bar" action="search.html">
-            <label class="search-label">
-              <span class="sr-only">Search documentation of mscmp_syst_session</span>
-              <input name="q" type="text" class="search-input" placeholder="Search Documentation (press /)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-            </label>
-            <button type="submit" class="search-button" aria-label="Submit Search">
-              <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
-            </button>
-            <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
-              <i class="ri-close-line ri-lg" title="Cancel search"></i>
-            </button>
-          </form>
-          <div class="autocomplete">
-          </div>
-          <button class="icon-settings display-settings">
-            <i class="ri-settings-3-line"></i>
-            <span class="sr-only">Settings</span>
+<output role="status" id="toast"></output>
+
+<main class="content page-module" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of mscmp_syst_session</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
           </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
         </div>
-
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
       </div>
+    </div>
 
-<h1>
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">Msdata.SystSessions</span> 
+      <small class="app-vsn" translate="no">(mscmp_syst_session v0.1.0)</small>
 
-  <span translate="no">Msdata.SystSessions</span> 
-  <small class="app-vsn" translate="no">(mscmp_syst_session v0.1.0)</small>
+        <span class="note">(mscmp_syst_session)</span>
 
-    <span class="note">(mscmp_syst_session)</span>
+    </h1>
 
-</h1>
+  </div>
 
 
-  <section id="moduledoc">
+    <section id="moduledoc">
 <p>User interface session data.</p>
-  </section>
+    </section>
 
+</div>
 
   <section id="summary" class="details-list">
     <h1 class="section-heading">
@@ -144,7 +105,7 @@ Pages
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:t/0" translate="no">t()</a>
+        <a href="#t:t/0" data-no-tooltip="" translate="no">t()</a>
 
       </div>
 
@@ -158,21 +119,22 @@ Pages
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#insert_changeset/1" translate="no">insert_changeset(insert_params)</a>
+        <a href="#insert_changeset/1" data-no-tooltip="" translate="no">insert_changeset(insert_params)</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystSession.Impl.Msdata.SystSessions.Validators.insert_changeset/1</code>.</p></div>
+        <div class="summary-synopsis"><p>Creates a validated <a><code class="inline">Ecto.Changeset</code></a> struct for inserting into the database.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#update_changeset/2" translate="no">update_changeset(session, update_params)</a>
+        <a href="#update_changeset/2" data-no-tooltip="" translate="no">update_changeset(session, update_params)</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystSession.Impl.Msdata.SystSessions.Validators.update_changeset/2</code>.</p></div>
+        <div class="summary-synopsis"><p>Creates a validated <a><code class="inline">Ecto.Changeset</code></a> struct for updating an existing database
+record.</p></div>
 
     </div>
 
@@ -188,17 +150,19 @@ Pages
       </a>
       <span class="text">Types</span>
     </h1>
+
     <div class="types-list">
 <section class="detail" id="t:t/0">
 
   <div class="detail-header">
-    <a href="#t:t/0" class="detail-link" title="Link to this type">
+    <a href="#t:t/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">t()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">t()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -206,7 +170,7 @@ Pages
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@type</span> t() :: %Msdata.SystSessions{
-  __meta__: <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Schema.Metadata.html#t:t/0">Ecto.Schema.Metadata.t</a>(),
+  __meta__: <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.Schema.Metadata.html#t:t/0">Ecto.Schema.Metadata.t</a>(),
   diag_role_created: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
   diag_role_modified: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
   diag_row_version: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil,
@@ -214,7 +178,7 @@ Pages
   diag_timestamp_modified: <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>() | nil,
   diag_update_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil,
   diag_wallclock_modified: <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>() | nil,
-  id: <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | nil,
+  id: <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | nil,
   internal_name: <a href="MscmpSystSession.Types.html#t:session_name/0">MscmpSystSession.Types.session_name</a>() | nil,
   session_data: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>() | nil,
   session_expires: <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>() | nil
@@ -236,40 +200,44 @@ Pages
       </a>
       <span class="text">Functions</span>
     </h1>
+
     <div class="functions-list">
 <section class="detail" id="insert_changeset/1">
 
   <div class="detail-header">
-    <a href="#insert_changeset/1" class="detail-link" title="Link to this function">
+    <a href="#insert_changeset/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">insert_changeset(insert_params)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">insert_changeset(insert_params)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> insert_changeset(<a href="MscmpSystSession.Types.html#t:session_params/0">MscmpSystSession.Types.session_params</a>()) :: <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
+          <pre translate="no"><span class="attribute">@spec</span> insert_changeset(<a href="MscmpSystSession.Types.html#t:session_params/0">MscmpSystSession.Types.session_params</a>()) :: <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
 
       </div>
 
-<p>See <code class="inline">MscmpSystSession.Impl.Msdata.SystSessions.Validators.insert_changeset/1</code>.</p>
+<p>Creates a validated <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.Changeset.html"><code class="inline">Ecto.Changeset</code></a> struct for inserting into the database.</p><h2 id="insert_changeset/1-parameters" class="section-heading"><a href="#insert_changeset/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">insert_params</code> - the initial values with which to populate the new
+record.</li></ul>
   </section>
 </section>
 <section class="detail" id="update_changeset/2">
 
   <div class="detail-header">
-    <a href="#update_changeset/2" class="detail-link" title="Link to this function">
+    <a href="#update_changeset/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">update_changeset(session, update_params)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">update_changeset(session, update_params)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -277,45 +245,45 @@ Pages
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> update_changeset(<a href="#t:t/0">t</a>(), <a href="MscmpSystSession.Types.html#t:session_params/0">MscmpSystSession.Types.session_params</a>()) ::
-  <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
+  <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
 
       </div>
 
-<p>See <code class="inline">MscmpSystSession.Impl.Msdata.SystSessions.Validators.update_changeset/2</code>.</p>
+<p>Creates a validated <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.Changeset.html"><code class="inline">Ecto.Changeset</code></a> struct for updating an existing database
+record.</p><h2 id="update_changeset/2-parameters" class="section-heading"><a href="#update_changeset/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">session</code> - The <a href="Msdata.SystSessions.html"><code class="inline">Msdata.SystSessions</code></a> record to update.</p></li><li><p><code class="inline">update_params</code> - the values with which to update the record.</p></li></ul>
   </section>
 </section>
 
     </div>
   </section>
 
-      <footer class="footer">
-        <p>
+    <footer class="footer">
+      <p>
 
-          <span class="line">
-            <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
-              Search HexDocs
-            </button>
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
 
-              <a href="mscmp_syst_session.epub" title="ePub version">
-                Download ePub version
-              </a>
+            <a href="mscmp_syst_session.epub" title="ePub version">
+              Download ePub version
+            </a>
 
-          </span>
-        </p>
+        </span>
+      </p>
 
-        <p class="built-using">
-          Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.31.1) for the
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
 
-            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
-        </p>
-      </footer>
-    </div>
+      </p>
+
+    </footer>
   </div>
 </main>
 </div>
-
 
   </body>
 </html>

@@ -4,35 +4,22 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.34.2">
+    <meta name="generator" content="ExDoc v0.38.4">
     <meta name="project" content="mscmp_syst_network v0.1.0">
 
 
     <title>MscmpSystNetwork.Protocol — mscmp_syst_network v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
 
-    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
-    <script src="dist/sidebar_items-9491C98B.js"></script>
-    <script src="docs_config.js"></script>
-    <script async src="dist/html-YIPIRHGU.js"></script>
+    <script defer src="dist/sidebar_items-F0030930.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
 
   </head>
-  <body data-type="modules" class="page-protocol">
-    <script>
-
-      try {
-        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
-
-        if (settings.theme === 'dark' ||
-           ((settings.theme === 'system' || settings.theme == null) &&
-             window.matchMedia('(prefers-color-scheme: dark)').matches)
-           ) {
-          document.body.classList.add('dark')
-        }
-      } catch (error) { }
-    </script>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
 
 <div class="body-wrapper">
 
@@ -54,37 +41,13 @@ mscmp_syst_network
         </div>
       </div>
     </div>
-    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
-      <li>
-        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
-Pages
-        </button>
-      </li>
-
-        <li>
-          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
-            Modules
-          </button>
-        </li>
-
-
-    </ul>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
   </div>
-
-  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
-    <ul id="extras-full-list" class="full-list"></ul>
-  </div>
-
-    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
-      <ul id="modules-full-list" class="full-list"></ul>
-    </div>
-
-
 </nav>
 
-<main class="content">
-  <output role="status" id="toast"></output>
+<output role="status" id="toast"></output>
 
+<main class="content page-protocol" id="main" data-type="modules">
   <div id="content" class="content-inner">
     <div class="top-search">
       <div class="search-settings">
@@ -93,8 +56,8 @@ Pages
             <span class="sr-only">Search documentation of mscmp_syst_network</span>
             <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
           </label>
-          <button type="submit" class="search-button" aria-label="Submit Search">
-            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
           </button>
           <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
             <i class="ri-close-line ri-lg" title="Cancel search"></i>
@@ -110,12 +73,14 @@ Pages
     </div>
 
 <div id="top-content">
-  <h1>
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">MscmpSystNetwork.Protocol</span> <small>protocol</small>
+      <small class="app-vsn" translate="no">(mscmp_syst_network v0.1.0)</small>
 
-    <span translate="no">MscmpSystNetwork.Protocol</span> <small>protocol</small>
-    <small class="app-vsn" translate="no">(mscmp_syst_network v0.1.0)</small>
+    </h1>
 
-  </h1>
+  </div>
 
 
     <section id="moduledoc">
@@ -140,7 +105,7 @@ to be useful.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:t/0" data-no-tooltip translate="no">t()</a>
+        <a href="#t:t/0" data-no-tooltip="" translate="no">t()</a>
 
       </div>
 
@@ -156,7 +121,7 @@ to be useful.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_host/1" data-no-tooltip translate="no">get_host(addr_struct)</a>
+        <a href="#get_host/1" data-no-tooltip="" translate="no">get_host(addr_struct)</a>
 
       </div>
 
@@ -164,7 +129,7 @@ to be useful.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_netmask/1" data-no-tooltip translate="no">get_netmask(addr_struct)</a>
+        <a href="#get_netmask/1" data-no-tooltip="" translate="no">get_netmask(addr_struct)</a>
 
       </div>
 
@@ -172,7 +137,7 @@ to be useful.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_network/1" data-no-tooltip translate="no">get_network(addr_struct)</a>
+        <a href="#get_network/1" data-no-tooltip="" translate="no">get_network(addr_struct)</a>
 
       </div>
 
@@ -180,7 +145,7 @@ to be useful.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#host?/1" data-no-tooltip translate="no">host?(addr_struct)</a>
+        <a href="#host?/1" data-no-tooltip="" translate="no">host?(addr_struct)</a>
 
       </div>
 
@@ -188,7 +153,7 @@ to be useful.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#in_network?/2" data-no-tooltip translate="no">in_network?(test_addr, network_addr)</a>
+        <a href="#in_network?/2" data-no-tooltip="" translate="no">in_network?(test_addr, network_addr)</a>
 
       </div>
 
@@ -196,7 +161,7 @@ to be useful.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#in_range?/3" data-no-tooltip translate="no">in_range?(test_addr, low_addr, high_addr)</a>
+        <a href="#in_range?/3" data-no-tooltip="" translate="no">in_range?(test_addr, low_addr, high_addr)</a>
 
       </div>
 
@@ -204,7 +169,7 @@ to be useful.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#network?/1" data-no-tooltip translate="no">network?(addr_struct)</a>
+        <a href="#network?/1" data-no-tooltip="" translate="no">network?(addr_struct)</a>
 
       </div>
 
@@ -212,7 +177,7 @@ to be useful.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#to_string/1" data-no-tooltip translate="no">to_string(addr_struct)</a>
+        <a href="#to_string/1" data-no-tooltip="" translate="no">to_string(addr_struct)</a>
 
       </div>
 
@@ -230,17 +195,19 @@ to be useful.</p>
       </a>
       <span class="text">Types</span>
     </h1>
+
     <div class="types-list">
 <section class="detail" id="t:t/0">
 
   <div class="detail-header">
-    <a href="#t:t/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:t/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">t()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">t()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -265,17 +232,19 @@ to be useful.</p>
       </a>
       <span class="text">Functions</span>
     </h1>
+
     <div class="functions-list">
 <section class="detail" id="get_host/1">
 
   <div class="detail-header">
-    <a href="#get_host/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#get_host/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">get_host(addr_struct)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_host(addr_struct)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -296,13 +265,14 @@ to be useful.</p>
 <section class="detail" id="get_netmask/1">
 
   <div class="detail-header">
-    <a href="#get_netmask/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#get_netmask/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">get_netmask(addr_struct)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_netmask(addr_struct)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -323,13 +293,14 @@ to be useful.</p>
 <section class="detail" id="get_network/1">
 
   <div class="detail-header">
-    <a href="#get_network/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#get_network/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">get_network(addr_struct)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_network(addr_struct)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -350,13 +321,14 @@ to be useful.</p>
 <section class="detail" id="host?/1">
 
   <div class="detail-header">
-    <a href="#host?/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#host?/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">host?(addr_struct)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">host?(addr_struct)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -373,13 +345,14 @@ to be useful.</p>
 <section class="detail" id="in_network?/2">
 
   <div class="detail-header">
-    <a href="#in_network?/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#in_network?/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">in_network?(test_addr, network_addr)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">in_network?(test_addr, network_addr)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -400,13 +373,14 @@ to be useful.</p>
 <section class="detail" id="in_range?/3">
 
   <div class="detail-header">
-    <a href="#in_range?/3" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#in_range?/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">in_range?(test_addr, low_addr, high_addr)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">in_range?(test_addr, low_addr, high_addr)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -433,13 +407,14 @@ to be useful.</p>
 <section class="detail" id="network?/1">
 
   <div class="detail-header">
-    <a href="#network?/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#network?/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">network?(addr_struct)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">network?(addr_struct)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -456,13 +431,14 @@ to be useful.</p>
 <section class="detail" id="to_string/1">
 
   <div class="detail-header">
-    <a href="#to_string/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#to_string/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">to_string(addr_struct)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">to_string(addr_struct)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -497,7 +473,7 @@ to be useful.</p>
 
       <p class="built-using">
         Built using
-        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.34.2) for the
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
 
           <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

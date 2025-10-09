@@ -4,35 +4,22 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.34.2">
+    <meta name="generator" content="ExDoc v0.38.4">
     <meta name="project" content="mscmp_syst_db v0.1.0">
 
 
     <title>MscmpSystDb.DatastoreContext — mscmp_syst_db v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
 
-    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
-    <script src="dist/sidebar_items-F9E8FB46.js"></script>
-    <script src="docs_config.js"></script>
-    <script async src="dist/html-YIPIRHGU.js"></script>
+    <script defer src="dist/sidebar_items-C325064A.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
 
   </head>
-  <body data-type="modules" class="page-module">
-    <script>
-
-      try {
-        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
-
-        if (settings.theme === 'dark' ||
-           ((settings.theme === 'system' || settings.theme == null) &&
-             window.matchMedia('(prefers-color-scheme: dark)').matches)
-           ) {
-          document.body.classList.add('dark')
-        }
-      } catch (error) { }
-    </script>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
 
 <div class="body-wrapper">
 
@@ -54,47 +41,13 @@ mscmp_syst_db
         </div>
       </div>
     </div>
-    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
-      <li>
-        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
-Pages
-        </button>
-      </li>
-
-        <li>
-          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
-            Modules
-          </button>
-        </li>
-
-
-        <li>
-          <button id="tasks-list-tab-button" role="tab" data-type="tasks" aria-controls="tasks-tab-panel" aria-selected="false" tabindex="-1">
-            <span translate="no">Mix</span> Tasks
-          </button>
-        </li>
-
-    </ul>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
   </div>
-
-  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
-    <ul id="extras-full-list" class="full-list"></ul>
-  </div>
-
-    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
-      <ul id="modules-full-list" class="full-list"></ul>
-    </div>
-
-
-    <div id="tasks-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="tasks-list-tab-button" hidden>
-      <ul id="tasks-full-list" class="full-list"></ul>
-    </div>
-
 </nav>
 
-<main class="content">
-  <output role="status" id="toast"></output>
+<output role="status" id="toast"></output>
 
+<main class="content page-module" id="main" data-type="modules">
   <div id="content" class="content-inner">
     <div class="top-search">
       <div class="search-settings">
@@ -103,8 +56,8 @@ Pages
             <span class="sr-only">Search documentation of mscmp_syst_db</span>
             <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
           </label>
-          <button type="submit" class="search-button" aria-label="Submit Search">
-            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
           </button>
           <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
             <i class="ri-close-line ri-lg" title="Cancel search"></i>
@@ -120,12 +73,14 @@ Pages
     </div>
 
 <div id="top-content">
-  <h1>
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">MscmpSystDb.DatastoreContext</span> 
+      <small class="app-vsn" translate="no">(mscmp_syst_db v0.1.0)</small>
 
-    <span translate="no">MscmpSystDb.DatastoreContext</span> 
-    <small class="app-vsn" translate="no">(mscmp_syst_db v0.1.0)</small>
+    </h1>
 
-  </h1>
+  </div>
 
 
     <section id="moduledoc">
@@ -151,7 +106,7 @@ and then restarting a specific Context for maintenance reasons.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#child_spec/3" data-no-tooltip translate="no">child_spec(datastore_options, context, opts \\ [])</a>
+        <a href="#child_spec/3" data-no-tooltip="" translate="no">child_spec(datastore_options, context, opts \\ [])</a>
 
       </div>
 
@@ -161,7 +116,7 @@ and then restarting a specific Context for maintenance reasons.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#start_link/3" data-no-tooltip translate="no">start_link(datastore_options, datastore_context, opts \\ [])</a>
+        <a href="#start_link/3" data-no-tooltip="" translate="no">start_link(datastore_options, datastore_context, opts \\ [])</a>
 
       </div>
 
@@ -181,19 +136,21 @@ and then restarting a specific Context for maintenance reasons.</p>
       </a>
       <span class="text">Functions</span>
     </h1>
+
     <div class="functions-list">
 <section class="detail" id="child_spec/3">
 
     <span id="child_spec/2"></span>
 
   <div class="detail-header">
-    <a href="#child_spec/3" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#child_spec/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">child_spec(datastore_options, context, opts \\ [])</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">child_spec(datastore_options, context, opts \\ [])</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -208,33 +165,16 @@ and then restarting a specific Context for maintenance reasons.</p>
 
       </div>
 
-<p>Returns the Child Specification used to start the DatastoreContext service.</p><h2 id="child_spec/3-parameters" class="section-heading">
-  <a href="#child_spec/3-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">datastore_options</code> - a required Map of values which describe the
+<p>Returns the Child Specification used to start the DatastoreContext service.</p><h2 id="child_spec/3-parameters" class="section-heading"><a href="#child_spec/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">datastore_options</code> - a required Map of values which describe the
 Datastore and Datastore Context related connection options.  See
 <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a> for more.</p></li><li><p><code class="inline">context</code> - the identity of the context as understood by the system.
 The context name is both the identity of the context as an Ecto Repo and
 is also used for the child specification ID value as there is the
 possibility of multiple contexts to start under the Datastore Supervisor
 process.</p></li><li><p><code class="inline">opts</code> - a Keyword List of additional key/value call configurations.  See
-the &quot;Options&quot; section for details.</p></li></ul><h2 id="child_spec/3-options" class="section-heading">
-  <a href="#child_spec/3-options" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Options</span>
-</h2>
-<ul><li><code class="inline">:context_registry</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">module/0</code></a> or <code class="inline">nil</code>) - Specifies the name of a registry to use for registering named Datastore
-Contexts.</li></ul><h2 id="child_spec/3-returns" class="section-heading">
-  <a href="#child_spec/3-returns" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Returns</span>
-</h2>
-<ul><li><a href="https://hexdocs.pm/elixir/Supervisor.html#t:child_spec/0"><code class="inline">Supervisor.child_spec/0</code></a> - The Child Specification for the Datastore
+the &quot;Options&quot; section for details.</p></li></ul><h2 id="child_spec/3-options" class="section-heading"><a href="#child_spec/3-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><code class="inline">:context_registry</code> (<a href="/documentation/technical/app_server/mscmp_syst_utils/Msutils.Types.Process.html#t:registry/0"><code class="inline">Msutils.Types.Process.registry/0</code></a> or <code class="inline">nil</code>) - Specifies the registry to use for registering named Datastore Contexts.
+Can be <code class="inline">:local</code>, <code class="inline">:global</code>, a tuple of <code class="inline">{module(), term()}</code>, or <code class="inline">nil</code>.
+Commonly, this is a tuple of <code class="inline">{Registry, registry_name}</code>.</li></ul><h2 id="child_spec/3-returns" class="section-heading"><a href="#child_spec/3-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><ul><li><a href="https://hexdocs.pm/elixir/Supervisor.html#t:child_spec/0"><code class="inline">Supervisor.child_spec/0</code></a> - The Child Specification for the Datastore
 Context to be started.</li></ul>
   </section>
 </section>
@@ -243,13 +183,14 @@ Context to be started.</li></ul>
     <span id="start_link/2"></span>
 
   <div class="detail-header">
-    <a href="#start_link/3" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#start_link/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">start_link(datastore_options, datastore_context, opts \\ [])</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">start_link(datastore_options, datastore_context, opts \\ [])</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -268,24 +209,13 @@ Context to be started.</li></ul>
 Datastore by the <a href="MscmpSystDb.Datastore.html#start_link/1"><code class="inline">MscmpSystDb.Datastore.start_link/1</code></a> function.
 However there are some cases where starting a Datastore Context independently
 can be desirable, such as the Context was earlier stopped for some reason and
-needs to be started under it's original Datastore Supervisor.</p><h2 id="start_link/3-parameters" class="section-heading">
-  <a href="#start_link/3-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">datastore_options</code> - see the <code class="inline">datastore_options</code> parameter for
+needs to be started under it's original Datastore Supervisor.</p><h2 id="start_link/3-parameters" class="section-heading"><a href="#start_link/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">datastore_options</code> - see the <code class="inline">datastore_options</code> parameter for
 <a href="#child_spec/3"><code class="inline">MscmpSystDb.DatastoreContext.child_spec/3</code></a>.  This option is
 required.</p></li><li><p><code class="inline">datastore_context</code> - a required map describing the Context to be started.
 See <code class="inline">t:MscmpSystDb.Types.datastore_context()</code> for more information.</p></li><li><p><code class="inline">opts</code> - a Keyword List of additional key/value call configurations.  See
-the &quot;Options&quot; section for details.</p></li></ul><h2 id="start_link/3-options" class="section-heading">
-  <a href="#start_link/3-options" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Options</span>
-</h2>
-<ul><li><code class="inline">:context_registry</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">module/0</code></a> or <code class="inline">nil</code>) - Specifies the name of a registry to use for registering named Datastore
-Contexts.</li></ul>
+the &quot;Options&quot; section for details.</p></li></ul><h2 id="start_link/3-options" class="section-heading"><a href="#start_link/3-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><code class="inline">:context_registry</code> (<a href="/documentation/technical/app_server/mscmp_syst_utils/Msutils.Types.Process.html#t:registry/0"><code class="inline">Msutils.Types.Process.registry/0</code></a> or <code class="inline">nil</code>) - Specifies the registry to use for registering named Datastore Contexts.
+Can be <code class="inline">:local</code>, <code class="inline">:global</code>, a tuple of <code class="inline">{module(), term()}</code>, or <code class="inline">nil</code>.
+Commonly, this is a tuple of <code class="inline">{Registry, registry_name}</code>.</li></ul>
   </section>
 </section>
 
@@ -309,7 +239,7 @@ Contexts.</li></ul>
 
       <p class="built-using">
         Built using
-        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.34.2) for the
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
 
           <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_enums" schema="ms_syst" type="PostgreSQL - 16.4 (Ubuntu 16.4-1.pgdg22.04+1)">
+<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_enums" schema="ms_syst" type="PostgreSQL - 18.0 (Ubuntu 18.0-1.pgdg24.04+3)">
    <tables>
       <table name="syst_enum_functional_types" numRows="0" remarks="For those Enumerations requiring Functional Type designation, this table defines&#10;the available types and persists related metadata.  Note that not all&#10;Enumerations require Functional Types.&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;  * `DELETE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - See column comments for applicable restrictions." schema="ms_syst" type="VIEW" viewSql=" SELECT seft.id,&#10;    seft.internal_name,&#10;    seft.display_name,&#10;    seft.external_name,&#10;    se.syst_defined,&#10;    seft.enum_id,&#10;    seft.syst_description,&#10;    seft.user_description,&#10;    seft.diag_timestamp_created,&#10;    seft.diag_role_created,&#10;    seft.diag_timestamp_modified,&#10;    seft.diag_wallclock_modified,&#10;    seft.diag_role_modified,&#10;    seft.diag_row_version,&#10;    seft.diag_update_count&#10;   FROM (ms_syst_data.syst_enum_functional_types seft&#10;     JOIN ms_syst_data.syst_enums se ON ((se.id = seft.enum_id)));">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="true" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: true&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
@@ -92,8 +92,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_d_syst_enum_functional_types'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(old)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -101,7 +99,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM003',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -163,8 +161,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_d_syst_enum_items'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(old)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -172,7 +168,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM003',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -216,8 +212,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_d_syst_enums'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(old)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -225,7 +219,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM003',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -261,13 +255,13 @@ rules and data validation requirements.
 -- muse.information@musesystems.com  :: https://muse.systems
 
 DECLARE
-    var_syst_defined boolean;
+    v_syst_defined boolean;
 BEGIN
-    SELECT syst_defined INTO var_syst_defined
+    SELECT syst_defined INTO v_syst_defined
     FROM ms_syst_data.syst_enums
     WHERE id = new.enum_id;
 
-    IF var_syst_defined THEN
+    IF v_syst_defined THEN
         RAISE EXCEPTION
             USING
                 MESSAGE = 'The functional type creation for the requested ' ||
@@ -275,8 +269,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_i_syst_enum_functional_types'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -284,7 +276,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM003',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -308,7 +300,7 @@ BEGIN
         , internal_name
         , display_name
         , external_name
-        , var_syst_defined
+        , v_syst_defined
         , enum_id
         , syst_description
         , user_description
@@ -362,8 +354,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_i_syst_enum_items'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -371,7 +361,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM003',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -494,8 +484,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_u_syst_enum_functional_types'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -503,7 +491,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM001',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -576,8 +564,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_u_syst_enum_items'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -585,7 +571,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM003',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -612,7 +598,7 @@ END;]]></definition>
          </parameters>
       </routine>
       <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_u_syst_enums()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
-         <comment><![CDATA[Processes incoming API View requests according to globally applicable business 
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
  rules and data validation requirements.
 
 **Trigger Function Details**:
@@ -642,8 +628,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_u_syst_enums'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -651,7 +635,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM003',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;

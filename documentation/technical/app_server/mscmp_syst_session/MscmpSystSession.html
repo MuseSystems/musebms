@@ -4,46 +4,28 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.31.1">
+    <meta name="generator" content="ExDoc v0.38.4">
     <meta name="project" content="mscmp_syst_session v0.1.0">
 
 
     <title>MscmpSystSession — mscmp_syst_session v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-FM2CSD74.css" />
 
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
 
-    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-43PMFBC7.js"></script>
-    <script src="dist/sidebar_items-71527E7A.js"></script>
-
-      <script src="docs_config.js"></script>
-
-    <script async src="dist/html-L4O5OK2K.js"></script>
-
+    <script defer src="dist/sidebar_items-524DD7B0.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
 
   </head>
-  <body data-type="modules" class="page-module">
-    <script>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
 
-      try {
-        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
-
-        if (settings.theme === 'dark' ||
-           ((settings.theme === 'system' || settings.theme == null) &&
-             window.matchMedia('(prefers-color-scheme: dark)').matches)
-           ) {
-          document.body.classList.add('dark')
-        }
-      } catch (error) { }
-    </script>
-
-<div class="main">
+<div class="body-wrapper">
 
 <button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
   <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
 </button>
-
-<div class="background-layer"></div>
 
 <nav id="sidebar" class="sidebar">
 
@@ -59,74 +41,53 @@ mscmp_syst_session
         </div>
       </div>
     </div>
-    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
-      <li>
-        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
-Pages
-        </button>
-      </li>
-
-        <li>
-          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
-            Modules
-          </button>
-        </li>
-
-
-    </ul>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
   </div>
-
-  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
-    <ul id="extras-full-list" class="full-list"></ul>
-  </div>
-
-    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
-      <ul id="modules-full-list" class="full-list"></ul>
-    </div>
-
-
 </nav>
 
-<main class="content">
-  <output role="status" id="toast"></output>
-  <div class="content-outer">
-    <div id="content" class="content-inner">
-      <div class="top-search">
-        <div class="search-settings">
-          <form class="search-bar" action="search.html">
-            <label class="search-label">
-              <span class="sr-only">Search documentation of mscmp_syst_session</span>
-              <input name="q" type="text" class="search-input" placeholder="Search Documentation (press /)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-            </label>
-            <button type="submit" class="search-button" aria-label="Submit Search">
-              <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
-            </button>
-            <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
-              <i class="ri-close-line ri-lg" title="Cancel search"></i>
-            </button>
-          </form>
-          <div class="autocomplete">
-          </div>
-          <button class="icon-settings display-settings">
-            <i class="ri-settings-3-line"></i>
-            <span class="sr-only">Settings</span>
+<output role="status" id="toast"></output>
+
+<main class="content page-module" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of mscmp_syst_session</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
           </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
         </div>
-
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
       </div>
+    </div>
 
-<h1>
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">MscmpSystSession</span> 
+      <small class="app-vsn" translate="no">(mscmp_syst_session v0.1.0)</small>
 
-  <span translate="no">MscmpSystSession</span> 
-  <small class="app-vsn" translate="no">(mscmp_syst_session v0.1.0)</small>
+    </h1>
 
-</h1>
+  </div>
 
 
-  <section id="moduledoc">
-<p>Session Management API &amp; Runtime</p>
-  </section>
+    <section id="moduledoc">
+<p>Session Management API &amp; Runtime</p><!-- MDESC !-->
+    </section>
 
+</div>
 
   <section id="summary" class="details-list">
     <h1 class="section-heading">
@@ -142,7 +103,7 @@ Pages
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#create_session/2" translate="no">create_session(session_data, opts \\ [])</a>
+        <a href="#create_session/2" data-no-tooltip="" translate="no">create_session(session_data, opts \\ [])</a>
 
       </div>
 
@@ -152,7 +113,7 @@ Pages
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#delete_session/1" translate="no">delete_session(session_name)</a>
+        <a href="#delete_session/1" data-no-tooltip="" translate="no">delete_session(session_name)</a>
 
       </div>
 
@@ -162,7 +123,7 @@ Pages
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#generate_session_name/0" translate="no">generate_session_name()</a>
+        <a href="#generate_session_name/1" data-no-tooltip="" translate="no">generate_session_name(opts \\ [])</a>
 
       </div>
 
@@ -173,7 +134,7 @@ session name generation.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_session/2" translate="no">get_session(session_name, opts \\ [])</a>
+        <a href="#get_session/2" data-no-tooltip="" translate="no">get_session(session_name, opts \\ [])</a>
 
       </div>
 
@@ -184,7 +145,7 @@ Expiration.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#purge_expired_sessions/1" translate="no">purge_expired_sessions(opts \\ [])</a>
+        <a href="#purge_expired_sessions/1" data-no-tooltip="" translate="no">purge_expired_sessions(opts \\ [])</a>
 
       </div>
 
@@ -194,7 +155,7 @@ Expiration.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#refresh_session_expiration/2" translate="no">refresh_session_expiration(session_name, opts \\ [])</a>
+        <a href="#refresh_session_expiration/2" data-no-tooltip="" translate="no">refresh_session_expiration(session_name, opts \\ [])</a>
 
       </div>
 
@@ -204,7 +165,7 @@ Expiration.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#update_session/3" translate="no">update_session(session_name, session_data, opts \\ [])</a>
+        <a href="#update_session/3" data-no-tooltip="" translate="no">update_session(session_name, session_data, opts \\ [])</a>
 
       </div>
 
@@ -225,19 +186,21 @@ provided.</p></div>
       </a>
       <span class="text">Session Management</span>
     </h1>
+
     <div class="session-management-list">
 <section class="detail" id="create_session/2">
 
     <span id="create_session/1"></span>
 
   <div class="detail-header">
-    <a href="#create_session/2" class="detail-link" title="Link to this function">
+    <a href="#create_session/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">create_session(session_data, opts \\ [])</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">create_session(session_data, opts \\ [])</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -245,48 +208,36 @@ provided.</p></div>
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> create_session(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
-  {:ok, <a href="MscmpSystSession.Types.html#t:session_name/0">MscmpSystSession.Types.session_name</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  {:ok, <a href="MscmpSystSession.Types.html#t:session_name/0">MscmpSystSession.Types.session_name</a>()}
+  | {:error, <a href="Mserror.SessionError.html#t:t/0">Mserror.SessionError.t</a>()}</pre>
 
       </div>
 
 <p>Creates a new session returning the session name for future reference.</p><p>Using a starting set of data and a expiration period, creates a new Session
 record.  The return value is either a success tuple including the generated
 name of the session record or an error tuple explaining the failure.</p><p>Currently, the Session name is an automatically generated random 96 bytes run
-through base 64 encoding.</p><h2 id="create_session/2-parameters" class="section-heading">
-  <a href="#create_session/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">session_data</code> - the initial Session Data to use in creating the new
+through base 64 encoding.</p><h2 id="create_session/2-parameters" class="section-heading"><a href="#create_session/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">session_data</code> - the initial Session Data to use in creating the new
 Session record in the database.  Currently the expectation is that this
-value will be any arbitrary <a href="https://hexdocs.pm/elixir/Map.html"><code class="inline">Map</code></a>.  This parameter is required.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional parameters.  The available parameters
-are:</p><ul><li><p><code class="inline">session_name</code> - a binary to use for the session name rather than
-letting the system create a random session name.  The default behavior is
-for the system to set the session name using <a href="#generate_session_name/0"><code class="inline">generate_session_name/0</code></a>.</p></li><li><p><code class="inline">expires_after</code> - the number of seconds for which the session will be
-considered valid.  The default value for this setting is 3,600 seconds
-(1 hour).</p></li></ul></li></ul><h2 id="create_session/2-examples" class="section-heading">
-  <a href="#create_session/2-examples" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Examples</span>
-</h2>
-<p>Creating a new Session with the default expiration time.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="5450096314-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">session_name</span><span class="p" data-group-id="5450096314-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystSession</span><span class="o">.</span><span class="n">create_session</span><span class="p" data-group-id="5450096314-2">(</span><span class="p" data-group-id="5450096314-3">%{</span><span class="ss">test</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;test&quot;</span><span class="p" data-group-id="5450096314-3">}</span><span class="p" data-group-id="5450096314-2">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="5450096314-4">(</span><span class="n">session_name</span><span class="p" data-group-id="5450096314-4">)</span><span class="w">
+value will be any arbitrary <a href="https://hexdocs.pm/elixir/Map.html"><code class="inline">Map</code></a>.  This parameter is required.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional parameters.</p></li></ul><h2 id="create_session/2-options" class="section-heading"><a href="#create_session/2-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><p><code class="inline">:session_name</code> (<a href="https://hexdocs.pm/elixir/String.html#t:t/0"><code class="inline">String.t/0</code></a>) - A value to use for the session name rather than letting the system create
+a random session name.  If this value is not provided, it will be
+defaulted with a random value as generated by <a href="#generate_session_name/0"><code class="inline">generate_session_name/0</code></a>.</p></li><li><p><code class="inline">:expires_after</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">non_neg_integer/0</code></a>) - The number of seconds for which the session will be considered valid.  In
+seconds. The default value is <code class="inline">3600</code>.</p></li></ul><h2 id="create_session/2-examples" class="section-heading"><a href="#create_session/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><p>Creating a new Session with the default expiration time.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4065333022-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">session_name</span><span class="p" data-group-id="4065333022-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystSession</span><span class="o">.</span><span class="n">create_session</span><span class="p" data-group-id="4065333022-2">(</span><span class="p" data-group-id="4065333022-3">%{</span><span class="ss">test</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;test&quot;</span><span class="p" data-group-id="4065333022-3">}</span><span class="p" data-group-id="4065333022-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="4065333022-4">(</span><span class="n">session_name</span><span class="p" data-group-id="4065333022-4">)</span><span class="w">
 </span><span class="no">true</span></code></pre>
   </section>
 </section>
 <section class="detail" id="delete_session/1">
 
   <div class="detail-header">
-    <a href="#delete_session/1" class="detail-link" title="Link to this function">
+    <a href="#delete_session/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">delete_session(session_name)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">delete_session(session_name)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -294,60 +245,47 @@ considered valid.  The default value for this setting is 3,600 seconds
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> delete_session(<a href="MscmpSystSession.Types.html#t:session_name/0">MscmpSystSession.Types.session_name</a>()) ::
-  :ok | {:ok, :not_found} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  :ok | {:error, <a href="Mserror.SessionError.html#t:t/0">Mserror.SessionError.t</a>()}</pre>
 
       </div>
 
 <p>Deletes the named Session record from the database.</p><p>This is the de facto method for terminating a session.</p><p>Unlike the other functions in this module which treat expired Session records
 as though they've not been found, deleting an expired Session is permitted and
-will return the same value as deleting an unexpired Session record.</p><h2 id="delete_session/1-parameters" class="section-heading">
-  <a href="#delete_session/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">session_name</code> - the Session Name that was generated by <a href="#create_session/2"><code class="inline">create_session/2</code></a>
-at Session create time.  This argument is required.</li></ul><h2 id="delete_session/1-examples" class="section-heading">
-  <a href="#delete_session/1-examples" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Examples</span>
-</h2>
-<p>Deleting a Session record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSession</span><span class="o">.</span><span class="n">delete_session</span><span class="p" data-group-id="7174227992-1">(</span><span class="s">&quot;example_delete_session&quot;</span><span class="p" data-group-id="7174227992-1">)</span><span class="w">
-</span><span class="ss">:ok</span></code></pre><p>Attempting to delete a nonexistent Session returns the not found value.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSession</span><span class="o">.</span><span class="n">delete_session</span><span class="p" data-group-id="4068937535-1">(</span><span class="s">&quot;nonexistent_session&quot;</span><span class="p" data-group-id="4068937535-1">)</span><span class="w">
-</span><span class="p" data-group-id="4068937535-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="ss">:not_found</span><span class="p" data-group-id="4068937535-2">}</span></code></pre>
+will return the same value as deleting an unexpired Session record.</p><h2 id="delete_session/1-parameters" class="section-heading"><a href="#delete_session/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">session_name</code> - the Session Name that was generated by <a href="#create_session/2"><code class="inline">create_session/2</code></a>
+at Session create time.  This argument is required.</li></ul><h2 id="delete_session/1-examples" class="section-heading"><a href="#delete_session/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><p>Deleting a Session record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSession</span><span class="o">.</span><span class="n">delete_session</span><span class="p" data-group-id="0795046895-1">(</span><span class="s">&quot;example_delete_session&quot;</span><span class="p" data-group-id="0795046895-1">)</span><span class="w">
+</span><span class="ss">:ok</span></code></pre><p>Attempting to delete a nonexistent Session returns the not found value.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="5151599519-1">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5151599519-2">%</span><span class="nc" data-group-id="5151599519-2">Mserror.SessionError</span><span class="p" data-group-id="5151599519-2">{</span><span class="ss">cause</span><span class="p">:</span><span class="w"> </span><span class="ss">:not_found</span><span class="p" data-group-id="5151599519-2">}</span><span class="p" data-group-id="5151599519-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystSession</span><span class="o">.</span><span class="n">delete_session</span><span class="p" data-group-id="5151599519-3">(</span><span class="s">&quot;nonexistent_session&quot;</span><span class="p" data-group-id="5151599519-3">)</span></code></pre>
   </section>
 </section>
-<section class="detail" id="generate_session_name/0">
+<section class="detail" id="generate_session_name/1">
+
+    <span id="generate_session_name/0"></span>
 
   <div class="detail-header">
-    <a href="#generate_session_name/0" class="detail-link" title="Link to this function">
+    <a href="#generate_session_name/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">generate_session_name()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">generate_session_name(opts \\ [])</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> generate_session_name() :: <a href="MscmpSystSession.Types.html#t:session_name/0">MscmpSystSession.Types.session_name</a>()</pre>
+          <pre translate="no"><span class="attribute">@spec</span> generate_session_name(<a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="MscmpSystSession.Types.html#t:session_name/0">MscmpSystSession.Types.session_name</a>()</pre>
 
       </div>
 
 <p>Generates a random Session Name using the current formulation for automatic
 session name generation.</p><p>Currently generated Session Names are strings of 16 random characters using a
-mixed case, alphanumeric character set.</p><h2 id="generate_session_name/0-examples" class="section-heading">
-  <a href="#generate_session_name/0-examples" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Examples</span>
-</h2>
-<p>Generating a random name.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">session_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystSession</span><span class="o">.</span><span class="n">generate_session_name</span><span class="p" data-group-id="4730074870-1">(</span><span class="p" data-group-id="4730074870-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">String</span><span class="o">.</span><span class="n">length</span><span class="p" data-group-id="4730074870-2">(</span><span class="n">session_name</span><span class="p" data-group-id="4730074870-2">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">16</span><span class="w">
+mixed case, alphanumeric character set.</p><h2 id="generate_session_name/1-parameters" class="section-heading"><a href="#generate_session_name/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">opts</code> - A keyword list of options to use for the Session Name generation.</li></ul><h2 id="generate_session_name/1-options" class="section-heading"><a href="#generate_session_name/1-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><p><code class="inline">:session_name_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - The number of characters to use for the session name. The default value is <code class="inline">16</code>.</p></li><li><p><code class="inline">:session_name_tokens</code> (<code class="inline">t:Msutils.String.Types.tokens/0</code>) - Specifies the pre-defined token set or a set of tokens to use for creating
+session names.  If using a custom token set, the set must be expressed as
+an Erlang charlist. The default value is <code class="inline">:mixed_alphanum</code>.</p></li></ul><h2 id="generate_session_name/1-examples" class="section-heading"><a href="#generate_session_name/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><p>Generating a random name.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">session_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystSession</span><span class="o">.</span><span class="n">generate_session_name</span><span class="p" data-group-id="3607413108-1">(</span><span class="p" data-group-id="3607413108-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">String</span><span class="o">.</span><span class="n">length</span><span class="p" data-group-id="3607413108-2">(</span><span class="n">session_name</span><span class="p" data-group-id="3607413108-2">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">16</span><span class="w">
 </span><span class="no">true</span></code></pre>
   </section>
 </section>
@@ -356,13 +294,14 @@ mixed case, alphanumeric character set.</p><h2 id="generate_session_name/0-examp
     <span id="get_session/1"></span>
 
   <div class="detail-header">
-    <a href="#get_session/2" class="detail-link" title="Link to this function">
+    <a href="#get_session/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">get_session(session_name, opts \\ [])</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_session(session_name, opts \\ [])</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -371,33 +310,18 @@ mixed case, alphanumeric character set.</p><h2 id="generate_session_name/0-examp
 
           <pre translate="no"><span class="attribute">@spec</span> get_session(<a href="MscmpSystSession.Types.html#t:session_name/0">MscmpSystSession.Types.session_name</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
   {:ok, <a href="MscmpSystSession.Types.html#t:session_data/0">MscmpSystSession.Types.session_data</a>()}
-  | {:ok, :not_found}
-  | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  | {:error, <a href="Mserror.SessionError.html#t:t/0">Mserror.SessionError.t</a>()}</pre>
 
       </div>
 
 <p>Retrieves the Session Data for the named Session and resets the Session
 Expiration.</p><p>It should be noted that reading a Session will also refresh the expiration of
 that Session's expiration date.</p><p>Trying to retrieve the Session data of an already expired Session results in
-a not found tuple being returned (<code class="inline">{:ok, :not_found}</code>).</p><h2 id="get_session/2-parameters" class="section-heading">
-  <a href="#get_session/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">session_name</code> - the Session Name that was generated by <a href="#create_session/2"><code class="inline">create_session/2</code></a>
-at Session create time.  This argument is required.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional parameters.  The available parameters
-are:</p><ul><li><code class="inline">expires_after</code> - the number of seconds for which the session will be
-considered valid.  The default value for this setting is 3,600 seconds
-(1 hour).</li></ul></li></ul><h2 id="get_session/2-examples" class="section-heading">
-  <a href="#get_session/2-examples" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Examples</span>
-</h2>
-<p>Retrieving a Session and setting the renewed expiration date/time to 30
-minutes from retrieval time.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7636270697-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7636270697-2">%{</span><span class="p" data-group-id="7636270697-2">}</span><span class="p" data-group-id="7636270697-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystSession</span><span class="o">.</span><span class="n">get_session</span><span class="p" data-group-id="7636270697-3">(</span><span class="s">&quot;example_session&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">expires_after</span><span class="p">:</span><span class="w"> </span><span class="mi">1800</span><span class="p" data-group-id="7636270697-3">)</span></code></pre><p>Attempting to retrieve an expired Session returns the not found value.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSession</span><span class="o">.</span><span class="n">get_session</span><span class="p" data-group-id="3532201615-1">(</span><span class="s">&quot;example_expired_session&quot;</span><span class="p" data-group-id="3532201615-1">)</span><span class="w">
-</span><span class="p" data-group-id="3532201615-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="ss">:not_found</span><span class="p" data-group-id="3532201615-2">}</span></code></pre>
+an error type with the <code class="inline">:not_found</code> cause being returned.</p><h2 id="get_session/2-parameters" class="section-heading"><a href="#get_session/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">session_name</code> - the Session Name that was generated by <a href="#create_session/2"><code class="inline">create_session/2</code></a>
+at Session create time.  This argument is required.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional parameters.</p></li></ul><h2 id="get_session/2-options" class="section-heading"><a href="#get_session/2-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><code class="inline">:expires_after</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">non_neg_integer/0</code></a>) - The number of seconds for which the session will be considered valid.  In
+seconds. The default value is <code class="inline">3600</code>.</li></ul><h2 id="get_session/2-examples" class="section-heading"><a href="#get_session/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><p>Retrieving a Session and setting the renewed expiration date/time to 30
+minutes from retrieval time.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3790494063-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3790494063-2">%{</span><span class="p" data-group-id="3790494063-2">}</span><span class="p" data-group-id="3790494063-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystSession</span><span class="o">.</span><span class="n">get_session</span><span class="p" data-group-id="3790494063-3">(</span><span class="s">&quot;example_session&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">expires_after</span><span class="p">:</span><span class="w"> </span><span class="mi">1800</span><span class="p" data-group-id="3790494063-3">)</span></code></pre><p>Attempting to retrieve an expired Session returns the not found value.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0351404940-1">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0351404940-2">%</span><span class="nc" data-group-id="0351404940-2">Mserror.SessionError</span><span class="p" data-group-id="0351404940-2">{</span><span class="ss">cause</span><span class="p">:</span><span class="w"> </span><span class="ss">:not_found</span><span class="p" data-group-id="0351404940-2">}</span><span class="p" data-group-id="0351404940-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystSession</span><span class="o">.</span><span class="n">get_session</span><span class="p" data-group-id="0351404940-3">(</span><span class="s">&quot;example_expired_session&quot;</span><span class="p" data-group-id="0351404940-3">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="purge_expired_sessions/1">
@@ -405,20 +329,21 @@ minutes from retrieval time.</p><pre><code class="makeup elixir" translate="no">
     <span id="purge_expired_sessions/0"></span>
 
   <div class="detail-header">
-    <a href="#purge_expired_sessions/1" class="detail-link" title="Link to this function">
+    <a href="#purge_expired_sessions/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">purge_expired_sessions(opts \\ [])</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">purge_expired_sessions(opts \\ [])</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> purge_expired_sessions(<a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+          <pre translate="no"><span class="attribute">@spec</span> purge_expired_sessions(<a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: :ok | {:error, <a href="Mserror.SessionError.html#t:t/0">Mserror.SessionError.t</a>()}</pre>
 
       </div>
 
@@ -426,16 +351,7 @@ minutes from retrieval time.</p><pre><code class="makeup elixir" translate="no">
 basis in order to keep the system clean of expired Sessions.  The expectations
 are that the purge process may take some time.  Currently, 4 minutes are
 allotted for the running of the process prior to timing out, so a schedule
-more aggressive than once every 5 minutes is not advised.</p><h2 id="purge_expired_sessions/1-parameters" class="section-heading">
-  <a href="#purge_expired_sessions/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">opts</code> - a Keyword List of optional parameters.  The available parameters
-are:</p><ul><li><code class="inline">db_timeout</code> - the number of seconds to allow the database DELETE query
-to run before timing out the transaction.  The default value is 300
-(5 minutes).</li></ul></li></ul>
+more aggressive than once every 5 minutes is not advised.</p><h2 id="purge_expired_sessions/1-parameters" class="section-heading"><a href="#purge_expired_sessions/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">opts</code> - a Keyword List of optional parameters.</li></ul><h2 id="purge_expired_sessions/1-options" class="section-heading"><a href="#purge_expired_sessions/1-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><code class="inline">:db_timeout</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - The number of seconds to wait for a response from the database. The default value is <code class="inline">300</code>.</li></ul>
   </section>
 </section>
 <section class="detail" id="refresh_session_expiration/2">
@@ -443,13 +359,14 @@ to run before timing out the transaction.  The default value is 300
     <span id="refresh_session_expiration/1"></span>
 
   <div class="detail-header">
-    <a href="#refresh_session_expiration/2" class="detail-link" title="Link to this function">
+    <a href="#refresh_session_expiration/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">refresh_session_expiration(session_name, opts \\ [])</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">refresh_session_expiration(session_name, opts \\ [])</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -457,7 +374,7 @@ to run before timing out the transaction.  The default value is 300
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> refresh_session_expiration(<a href="MscmpSystSession.Types.html#t:session_name/0">MscmpSystSession.Types.session_name</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
-  :ok | {:ok, :not_found} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  :ok | {:error, <a href="Mserror.SessionError.html#t:t/0">Mserror.SessionError.t</a>()}</pre>
 
       </div>
 
@@ -465,25 +382,11 @@ to run before timing out the transaction.  The default value is 300
 Session expiration date/time so in many cases there is no need to call this
 function explicitly.  Typically you'd only call this function if you've had
 interaction with the user, but not needed to access the session for some time.</p><p>Trying to refresh the expiration date/time of an already expired Session will
-be treated as a &quot;not found&quot; record.</p><h2 id="refresh_session_expiration/2-parameters" class="section-heading">
-  <a href="#refresh_session_expiration/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">session_name</code> - the Session Name that was generated by <a href="#create_session/2"><code class="inline">create_session/2</code></a>
-at Session create time.  This argument is required.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional parameters.  The available parameters
-are:</p><ul><li><code class="inline">expires_after</code> - the number of seconds for which the session will be
-considered valid.  The default value for this setting is 3,600 seconds
-(1 hour).</li></ul></li></ul><h2 id="refresh_session_expiration/2-examples" class="section-heading">
-  <a href="#refresh_session_expiration/2-examples" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Examples</span>
-</h2>
-<p>Refreshing a Session expiration date/time to 30 minutes from refresh time.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSession</span><span class="o">.</span><span class="n">refresh_session_expiration</span><span class="p" data-group-id="1403240402-1">(</span><span class="s">&quot;example_session&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">expires_after</span><span class="p">:</span><span class="w"> </span><span class="mi">1800</span><span class="p" data-group-id="1403240402-1">)</span><span class="w">
-</span><span class="ss">:ok</span></code></pre><p>Attempting to refresh an already expired Session returns the not found value.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSession</span><span class="o">.</span><span class="n">refresh_session_expiration</span><span class="p" data-group-id="0578031634-1">(</span><span class="s">&quot;example_expired_session&quot;</span><span class="p" data-group-id="0578031634-1">)</span><span class="w">
-</span><span class="p" data-group-id="0578031634-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="ss">:not_found</span><span class="p" data-group-id="0578031634-2">}</span></code></pre>
+be treated as a &quot;not found&quot; record.</p><h2 id="refresh_session_expiration/2-parameters" class="section-heading"><a href="#refresh_session_expiration/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">session_name</code> - the Session Name that was generated by <a href="#create_session/2"><code class="inline">create_session/2</code></a>
+at Session create time.  This argument is required.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional parameters.</p></li></ul><h2 id="refresh_session_expiration/2-options" class="section-heading"><a href="#refresh_session_expiration/2-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><code class="inline">:expires_after</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">non_neg_integer/0</code></a>) - The number of seconds for which the session will be considered valid.  In
+seconds. The default value is <code class="inline">3600</code>.</li></ul><h2 id="refresh_session_expiration/2-examples" class="section-heading"><a href="#refresh_session_expiration/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><p>Refreshing a Session expiration date/time to 30 minutes from refresh time.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSession</span><span class="o">.</span><span class="n">refresh_session_expiration</span><span class="p" data-group-id="5159608941-1">(</span><span class="s">&quot;example_session&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">expires_after</span><span class="p">:</span><span class="w"> </span><span class="mi">1800</span><span class="p" data-group-id="5159608941-1">)</span><span class="w">
+</span><span class="ss">:ok</span></code></pre><p>Attempting to refresh an already expired Session returns the not found value.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1467633826-1">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1467633826-2">%</span><span class="nc" data-group-id="1467633826-2">Mserror.SessionError</span><span class="p" data-group-id="1467633826-2">{</span><span class="ss">cause</span><span class="p">:</span><span class="w"> </span><span class="ss">:not_found</span><span class="p" data-group-id="1467633826-2">}</span><span class="p" data-group-id="1467633826-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystSession</span><span class="o">.</span><span class="n">refresh_session_expiration</span><span class="p" data-group-id="1467633826-3">(</span><span class="s">&quot;example_expired_session&quot;</span><span class="p" data-group-id="1467633826-3">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="update_session/3">
@@ -491,13 +394,14 @@ considered valid.  The default value for this setting is 3,600 seconds
     <span id="update_session/2"></span>
 
   <div class="detail-header">
-    <a href="#update_session/3" class="detail-link" title="Link to this function">
+    <a href="#update_session/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">update_session(session_name, session_data, opts \\ [])</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">update_session(session_name, session_data, opts \\ [])</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -508,72 +412,57 @@ considered valid.  The default value for this setting is 3,600 seconds
   <a href="MscmpSystSession.Types.html#t:session_name/0">MscmpSystSession.Types.session_name</a>(),
   <a href="MscmpSystSession.Types.html#t:session_data/0">MscmpSystSession.Types.session_data</a>(),
   <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
-) :: :ok | {:ok, :not_found} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+) :: :ok | {:error, <a href="Mserror.SessionError.html#t:t/0">Mserror.SessionError.t</a>()}</pre>
 
       </div>
 
 <p>Replaces the Session Data of the named Session record with the Session Data
 provided.</p><p>As with other kinds of interactions with the Session, updating the Session
 data will also update the expiration date/time.</p><p>Attempting to update the Session Data of an already expired Session will
-be treated as attempting to update a not found record.</p><h2 id="update_session/3-parameters" class="section-heading">
-  <a href="#update_session/3-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">session_name</code> - the Session Name that was generated by <a href="#create_session/2"><code class="inline">create_session/2</code></a>
+be treated as attempting to update a not found record.</p><h2 id="update_session/3-parameters" class="section-heading"><a href="#update_session/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">session_name</code> - the Session Name that was generated by <a href="#create_session/2"><code class="inline">create_session/2</code></a>
 at Session create time.  This argument is required.</p></li><li><p><code class="inline">session_data</code> - the updated Session Data which replaces the existing
 Session Data.  Currently the expectation is that this value will be any
-arbitrary <a href="https://hexdocs.pm/elixir/Map.html"><code class="inline">Map</code></a>.  This argument is required.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional parameters.  The available parameters
-are:</p><ul><li><code class="inline">expires_after</code> - the number of seconds for which the session will be
-considered valid.  The default value for this setting is 3,600 seconds
-(1 hour).</li></ul></li></ul><h2 id="update_session/3-examples" class="section-heading">
-  <a href="#update_session/3-examples" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Examples</span>
-</h2>
-<p>Updating a Session with new data and resetting the expiration date/time to
-30 minutes from update time.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSession</span><span class="o">.</span><span class="n">update_session</span><span class="p" data-group-id="7961450724-1">(</span><span class="s">&quot;example_update_session&quot;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7961450724-2">%{</span><span class="ss">updated_key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;updated_value&quot;</span><span class="p" data-group-id="7961450724-2">}</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">expires_after</span><span class="p">:</span><span class="w"> </span><span class="mi">1800</span><span class="p" data-group-id="7961450724-1">)</span><span class="w">
+arbitrary <a href="https://hexdocs.pm/elixir/Map.html"><code class="inline">Map</code></a>.  This argument is required.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional parameters.</p></li></ul><h2 id="update_session/3-options" class="section-heading"><a href="#update_session/3-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><code class="inline">:expires_after</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">non_neg_integer/0</code></a>) - The number of seconds for which the session will be considered valid.  In
+seconds. The default value is <code class="inline">3600</code>.</li></ul><h2 id="update_session/3-examples" class="section-heading"><a href="#update_session/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><p>Updating a Session with new data and resetting the expiration date/time to
+30 minutes from update time.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSession</span><span class="o">.</span><span class="n">update_session</span><span class="p" data-group-id="9486197960-1">(</span><span class="s">&quot;example_update_session&quot;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9486197960-2">%{</span><span class="ss">updated_key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;updated_value&quot;</span><span class="p" data-group-id="9486197960-2">}</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">expires_after</span><span class="p">:</span><span class="w"> </span><span class="mi">1800</span><span class="p" data-group-id="9486197960-1">)</span><span class="w">
 </span><span class="ss">:ok</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSession</span><span class="o">.</span><span class="n">get_session</span><span class="p" data-group-id="7961450724-3">(</span><span class="s">&quot;example_update_session&quot;</span><span class="p" data-group-id="7961450724-3">)</span><span class="w">
-</span><span class="p" data-group-id="7961450724-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7961450724-5">%{</span><span class="s">&quot;updated_key&quot;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="s">&quot;updated_value&quot;</span><span class="p" data-group-id="7961450724-5">}</span><span class="p" data-group-id="7961450724-4">}</span></code></pre><p>Attempting to update an already expired Session returns the not found value.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSession</span><span class="o">.</span><span class="n">update_session</span><span class="p" data-group-id="5386828986-1">(</span><span class="s">&quot;example_expired_session&quot;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5386828986-2">%{</span><span class="ss">updated_key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;updated_value&quot;</span><span class="p" data-group-id="5386828986-2">}</span><span class="p" data-group-id="5386828986-1">)</span><span class="w">
-</span><span class="p" data-group-id="5386828986-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="ss">:not_found</span><span class="p" data-group-id="5386828986-3">}</span></code></pre>
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSession</span><span class="o">.</span><span class="n">get_session</span><span class="p" data-group-id="9486197960-3">(</span><span class="s">&quot;example_update_session&quot;</span><span class="p" data-group-id="9486197960-3">)</span><span class="w">
+</span><span class="p" data-group-id="9486197960-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9486197960-5">%{</span><span class="s">&quot;updated_key&quot;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="s">&quot;updated_value&quot;</span><span class="p" data-group-id="9486197960-5">}</span><span class="p" data-group-id="9486197960-4">}</span></code></pre><p>Attempting to update an already expired Session returns the not found value.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3867772115-1">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3867772115-2">%</span><span class="nc" data-group-id="3867772115-2">Mserror.SessionError</span><span class="p" data-group-id="3867772115-2">{</span><span class="ss">cause</span><span class="p">:</span><span class="w"> </span><span class="ss">:not_found</span><span class="p" data-group-id="3867772115-2">}</span><span class="p" data-group-id="3867772115-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystSession</span><span class="o">.</span><span class="n">update_session</span><span class="p" data-group-id="3867772115-3">(</span><span class="s">&quot;example_expired_session&quot;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3867772115-4">%{</span><span class="ss">updated_key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;updated_value&quot;</span><span class="p" data-group-id="3867772115-4">}</span><span class="p" data-group-id="3867772115-3">)</span></code></pre>
   </section>
 </section>
 
     </div>
   </section>
 
-      <footer class="footer">
-        <p>
+    <footer class="footer">
+      <p>
 
-          <span class="line">
-            <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
-              Search HexDocs
-            </button>
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
 
-              <a href="mscmp_syst_session.epub" title="ePub version">
-                Download ePub version
-              </a>
+            <a href="mscmp_syst_session.epub" title="ePub version">
+              Download ePub version
+            </a>
 
-          </span>
-        </p>
+        </span>
+      </p>
 
-        <p class="built-using">
-          Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.31.1) for the
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
 
-            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
-        </p>
-      </footer>
-    </div>
+      </p>
+
+    </footer>
   </div>
 </main>
 </div>
-
 
   </body>
 </html>

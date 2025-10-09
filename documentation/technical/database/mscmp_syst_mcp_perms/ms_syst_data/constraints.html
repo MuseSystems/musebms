@@ -284,11 +284,11 @@
                                         <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
                                     </tr>
                                     <tr>
-                                        <td>syst_instances_enum_instance_state_fk</td>
+                                        <td>syst_instances_enum_instance_lifecycle_state_fk</td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/syst_instances.html'>syst_instances</a><span>.instance_state_id</span></td>
+                                                    <td><a href='tables/syst_instances.html'>syst_instances</a><span>.instance_lifecycle_state_id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -783,82 +783,82 @@
                                     <tr>
                                         <td><a href='tables/syst_instance_contexts.html'>syst_instance_contexts</a></td>
                                         <td>syst_instance_contexts_db_pool_size_chk</td>
-                                        <td>((db_pool_size &gt;&#61; 0))</td>
+                                        <td>(db_pool_size &gt;&#61; 0)</td>
                                     </tr>
                                     <tr>
                                         <td><a href='tables/syst_instances.html'>syst_instances</a></td>
                                         <td>syst_instances_self_ownership_chk</td>
-                                        <td>(((owning_instance_id IS NULL) OR (owning_instance_id &lt;&gt; id)))</td>
+                                        <td>((owning_instance_id IS NULL) OR (owning_instance_id &lt;&gt; id))</td>
                                     </tr>
                                     <tr>
                                         <td><a href='tables/syst_instance_network_rules.html'>syst_instance_network_rules</a></td>
                                         <td>syst_instance_network_rules_functional_type_chk</td>
-                                        <td>((functional_type &#61; ANY (ARRAY[&#39;allow&#39;::text, &#39;deny&#39;::text])))</td>
+                                        <td>(functional_type &#61; ANY (ARRAY[&#39;allow&#39;::text, &#39;deny&#39;::text]))</td>
                                     </tr>
                                     <tr>
                                         <td><a href='tables/syst_instance_network_rules.html'>syst_instance_network_rules</a></td>
                                         <td>syst_instance_network_rules_host_or_range_chk</td>
-                                        <td>((((ip_host_or_network IS NOT NULL) AND (ip_host_range_lower IS NULL) AND (ip_host_range_upper IS NULL)) OR ((ip_host_or_network IS NULL) AND (ip_host_range_lower IS NOT NULL) AND (ip_host_range_upper IS NOT NULL))))</td>
+                                        <td>(((ip_host_or_network IS NOT NULL) AND (ip_host_range_lower IS NULL) AND (ip_host_range_upper IS NULL)) OR ((ip_host_or_network IS NULL) AND (ip_host_range_lower IS NOT NULL) AND (ip_host_range_upper IS NOT NULL)))</td>
                                     </tr>
                                     <tr>
                                         <td><a href='tables/syst_instance_network_rules.html'>syst_instance_network_rules</a></td>
                                         <td>syst_instance_network_rules_ip_range_family_chk</td>
-                                        <td>((family(ip_host_range_lower) &#61; family(ip_host_range_upper)))</td>
+                                        <td>(family(ip_host_range_lower) &#61; family(ip_host_range_upper))</td>
                                     </tr>
                                     <tr>
                                         <td><a href='tables/syst_perms.html'>syst_perms</a></td>
                                         <td>syst_perms_admin_scope_options_chk</td>
-                                        <td>(((cardinality(admin_scope_options) &gt; 0) AND (admin_scope_options &lt;@ ARRAY[&#39;unused&#39;::text, &#39;deny&#39;::text, &#39;same_user&#39;::text, &#39;same_group&#39;::text, &#39;all&#39;::text])))</td>
+                                        <td>((cardinality(admin_scope_options) &gt; 0) AND (admin_scope_options &lt;@ ARRAY[&#39;unused&#39;::text, &#39;deny&#39;::text, &#39;same_user&#39;::text, &#39;same_group&#39;::text, &#39;all&#39;::text]))</td>
                                     </tr>
                                     <tr>
                                         <td><a href='tables/syst_perms.html'>syst_perms</a></td>
                                         <td>syst_perms_maint_scope_options_chk</td>
-                                        <td>(((cardinality(maint_scope_options) &gt; 0) AND (maint_scope_options &lt;@ ARRAY[&#39;unused&#39;::text, &#39;deny&#39;::text, &#39;same_user&#39;::text, &#39;same_group&#39;::text, &#39;all&#39;::text])))</td>
+                                        <td>((cardinality(maint_scope_options) &gt; 0) AND (maint_scope_options &lt;@ ARRAY[&#39;unused&#39;::text, &#39;deny&#39;::text, &#39;same_user&#39;::text, &#39;same_group&#39;::text, &#39;all&#39;::text]))</td>
                                     </tr>
                                     <tr>
                                         <td><a href='tables/syst_perms.html'>syst_perms</a></td>
                                         <td>syst_perms_ops_scope_options_chk</td>
-                                        <td>(((cardinality(ops_scope_options) &gt; 0) AND (ops_scope_options &lt;@ ARRAY[&#39;unused&#39;::text, &#39;deny&#39;::text, &#39;same_user&#39;::text, &#39;same_group&#39;::text, &#39;all&#39;::text])))</td>
+                                        <td>((cardinality(ops_scope_options) &gt; 0) AND (ops_scope_options &lt;@ ARRAY[&#39;unused&#39;::text, &#39;deny&#39;::text, &#39;same_user&#39;::text, &#39;same_group&#39;::text, &#39;all&#39;::text]))</td>
                                     </tr>
                                     <tr>
                                         <td><a href='tables/syst_perms.html'>syst_perms</a></td>
                                         <td>syst_perms_view_scope_options_chk</td>
-                                        <td>(((cardinality(view_scope_options) &gt; 0) AND (view_scope_options &lt;@ ARRAY[&#39;unused&#39;::text, &#39;deny&#39;::text, &#39;same_user&#39;::text, &#39;same_group&#39;::text, &#39;all&#39;::text])))</td>
+                                        <td>((cardinality(view_scope_options) &gt; 0) AND (view_scope_options &lt;@ ARRAY[&#39;unused&#39;::text, &#39;deny&#39;::text, &#39;same_user&#39;::text, &#39;same_group&#39;::text, &#39;all&#39;::text]))</td>
                                     </tr>
                                     <tr>
                                         <td><a href='tables/syst_instance_type_contexts.html'>syst_instance_type_contexts</a></td>
                                         <td>syst_instance_type_contexts_default_db_pool_size_chk</td>
-                                        <td>((default_db_pool_size &gt;&#61; 0))</td>
+                                        <td>(default_db_pool_size &gt;&#61; 0)</td>
                                     </tr>
                                     <tr>
                                         <td><a href='tables/syst_owner_network_rules.html'>syst_owner_network_rules</a></td>
                                         <td>syst_owner_network_rules_functional_type_chk</td>
-                                        <td>((functional_type &#61; ANY (ARRAY[&#39;allow&#39;::text, &#39;deny&#39;::text])))</td>
+                                        <td>(functional_type &#61; ANY (ARRAY[&#39;allow&#39;::text, &#39;deny&#39;::text]))</td>
                                     </tr>
                                     <tr>
                                         <td><a href='tables/syst_owner_network_rules.html'>syst_owner_network_rules</a></td>
                                         <td>syst_owner_network_rules_host_or_range_chk</td>
-                                        <td>((((ip_host_or_network IS NOT NULL) AND (ip_host_range_lower IS NULL) AND (ip_host_range_upper IS NULL)) OR ((ip_host_or_network IS NULL) AND (ip_host_range_lower IS NOT NULL) AND (ip_host_range_upper IS NOT NULL))))</td>
+                                        <td>(((ip_host_or_network IS NOT NULL) AND (ip_host_range_lower IS NULL) AND (ip_host_range_upper IS NULL)) OR ((ip_host_or_network IS NULL) AND (ip_host_range_lower IS NOT NULL) AND (ip_host_range_upper IS NOT NULL)))</td>
                                     </tr>
                                     <tr>
                                         <td><a href='tables/syst_owner_network_rules.html'>syst_owner_network_rules</a></td>
                                         <td>syst_owner_network_rules_ip_range_family_chk</td>
-                                        <td>((family(ip_host_range_lower) &#61; family(ip_host_range_upper)))</td>
+                                        <td>(family(ip_host_range_lower) &#61; family(ip_host_range_upper))</td>
                                     </tr>
                                     <tr>
                                         <td><a href='tables/syst_global_network_rules.html'>syst_global_network_rules</a></td>
                                         <td>syst_global_network_rules_functional_type_chk</td>
-                                        <td>((functional_type &#61; ANY (ARRAY[&#39;allow&#39;::text, &#39;deny&#39;::text])))</td>
+                                        <td>(functional_type &#61; ANY (ARRAY[&#39;allow&#39;::text, &#39;deny&#39;::text]))</td>
                                     </tr>
                                     <tr>
                                         <td><a href='tables/syst_global_network_rules.html'>syst_global_network_rules</a></td>
                                         <td>syst_global_network_rules_host_or_range_chk</td>
-                                        <td>((((ip_host_or_network IS NOT NULL) AND (ip_host_range_lower IS NULL) AND (ip_host_range_upper IS NULL)) OR ((ip_host_or_network IS NULL) AND (ip_host_range_lower IS NOT NULL) AND (ip_host_range_upper IS NOT NULL))))</td>
+                                        <td>(((ip_host_or_network IS NOT NULL) AND (ip_host_range_lower IS NULL) AND (ip_host_range_upper IS NULL)) OR ((ip_host_or_network IS NULL) AND (ip_host_range_lower IS NOT NULL) AND (ip_host_range_upper IS NOT NULL)))</td>
                                     </tr>
                                     <tr>
                                         <td><a href='tables/syst_global_network_rules.html'>syst_global_network_rules</a></td>
                                         <td>syst_global_network_rules_ip_range_family_chk</td>
-                                        <td>((family(ip_host_range_lower) &#61; family(ip_host_range_upper)))</td>
+                                        <td>(family(ip_host_range_lower) &#61; family(ip_host_range_upper))</td>
                                     </tr>
                                 </tbody>
                             </table>

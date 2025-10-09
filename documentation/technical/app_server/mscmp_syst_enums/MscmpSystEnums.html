@@ -4,35 +4,22 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.34.2">
+    <meta name="generator" content="ExDoc v0.38.4">
     <meta name="project" content="mscmp_syst_enums v0.1.0">
 
 
     <title>MscmpSystEnums — mscmp_syst_enums v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
 
-    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
-    <script src="dist/sidebar_items-D9873E2C.js"></script>
-    <script src="docs_config.js"></script>
-    <script async src="dist/html-YIPIRHGU.js"></script>
+    <script defer src="dist/sidebar_items-8852DB74.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
 
   </head>
-  <body data-type="modules" class="page-module">
-    <script>
-
-      try {
-        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
-
-        if (settings.theme === 'dark' ||
-           ((settings.theme === 'system' || settings.theme == null) &&
-             window.matchMedia('(prefers-color-scheme: dark)').matches)
-           ) {
-          document.body.classList.add('dark')
-        }
-      } catch (error) { }
-    </script>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
 
 <div class="body-wrapper">
 
@@ -54,37 +41,13 @@ mscmp_syst_enums
         </div>
       </div>
     </div>
-    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
-      <li>
-        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
-Pages
-        </button>
-      </li>
-
-        <li>
-          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
-            Modules
-          </button>
-        </li>
-
-
-    </ul>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
   </div>
-
-  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
-    <ul id="extras-full-list" class="full-list"></ul>
-  </div>
-
-    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
-      <ul id="modules-full-list" class="full-list"></ul>
-    </div>
-
-
 </nav>
 
-<main class="content">
-  <output role="status" id="toast"></output>
+<output role="status" id="toast"></output>
 
+<main class="content page-module" id="main" data-type="modules">
   <div id="content" class="content-inner">
     <div class="top-search">
       <div class="search-settings">
@@ -93,8 +56,8 @@ Pages
             <span class="sr-only">Search documentation of mscmp_syst_enums</span>
             <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
           </label>
-          <button type="submit" class="search-button" aria-label="Submit Search">
-            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
           </button>
           <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
             <i class="ri-close-line ri-lg" title="Cancel search"></i>
@@ -110,16 +73,66 @@ Pages
     </div>
 
 <div id="top-content">
-  <h1>
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">MscmpSystEnums</span> 
+      <small class="app-vsn" translate="no">(mscmp_syst_enums v0.1.0)</small>
 
-    <span translate="no">MscmpSystEnums</span> 
-    <small class="app-vsn" translate="no">(mscmp_syst_enums v0.1.0)</small>
+    </h1>
 
-  </h1>
+  </div>
 
 
     <section id="moduledoc">
-<p>A framework for user configurable 'list of values' type functionality.</p>
+<p>A framework for user configurable 'list of values' functionality.</p><p>List of values can serve two purposes in business systems:</p><ol><li><p>Making selections between optional system behaviors for some given entity
+or calculation.</p></li><li><p>Selection of categorization for informational/reporting purposes.</p></li></ol><p>When supporting the first purpose such choices benefit from being well defined
+and closely matched to the functional choices available.  The second purpose,
+however, is often times better served by a finer grained set of selection values
+which are user defined rather than chosen ahead of time by the application
+developer.  This component offers a solution for those cases when these two
+needs diverge, allowing the system developers to create a well defined list of
+choices matched to system capabilities while at the same time allowing users to
+establish a more extensive and nuance set of choices matching their
+informational needs without have to create duplicative fields for a given master
+or transactional data type.</p><!-- MDESC !--><h2 id="module-concepts" class="section-heading"><a href="#module-concepts" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Concepts</span></h2><p>Understanding the following concepts is required for effective use of this
+Component.</p><h3 id="module-enumerations-enum" class="section-heading"><a href="#module-enumerations-enum" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Enumerations (Enum)</span></h3><p>The Enumeration identifies a specific list of values used in the system as well
+as carrying configuration for the Enum.  Configuration points include
+information about if a given Enum was created by the system developers (&quot;System
+Defined&quot;) or is a custom, user defined Enum and to what extent the Enum is
+&quot;User Maintainable&quot;.</p><h3 id="module-functional-types" class="section-heading"><a href="#module-functional-types" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Functional Types</span></h3><p>Enums may optionally have defined &quot;Functional Types&quot; which are intended for
+cases where the Enum provides choices between differing system behaviors.  The
+key idea is that the Functional Types are tightly coupled with the distinct
+behaviors allowed by the system.  Functional types are then assigned to each of
+the available list of value options so that when the user selects a value from
+the list, they are also selecting a Functional Type which the option should
+invoke.</p><p>For an example of Functional Type purpose, consider a system which enables
+certain capabilities when a given master record is either &quot;Active&quot; or
+&quot;Inactive&quot;.  &quot;Active&quot; and &quot;Inactive&quot; would be the Functional Types recognized by
+the system, but for the users of the application more nuanced categorization may
+be desireable.  In this example, perhaps the users want to categorize &quot;Inactive&quot;
+records by inactive for what reason (e.g. &quot;In Progress&quot;, &quot;Cancelled&quot;,
+&quot;Obsolete&quot;).  All of these values are for system behavioral purposes &quot;Inactive&quot;
+but the extended information can help users understand why records have been
+made &quot;Inactive&quot;, perhaps establishing a more complex life-cycle of record
+management.</p><p>If Functional Types have been defined for an Enum, each available value defined
+for the Enum must also be mapped to one of the Enum's Functional Types.</p><h3 id="module-enumeration-item-enum-items" class="section-heading"><a href="#module-enumeration-item-enum-items" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Enumeration Item (Enum Items)</span></h3><p>These are the actual values which, when grouped together, define the available
+values in the list of values which the Enum represents.  Enum Items
+establish the text displayed to the user, whether the Enum Item itself is system
+defined and/or user maintainable, and, if required by the Enum, what Functional
+Type is associated with the Enum Item.</p><p>If a Functional Type assignment is required by the parent Enum, the multiplicity
+of Enum Items to Functional Types is Zero or Many to One.  This means that the
+system doesn't require that all defined Functional Types of an Enum be mapped to
+an Enum Item and that many Enum Items can refer to the same Functional Type.</p><p>Being able to assign multiple Enum Items to the same Functional Type allows for
+the fine grained information capture which might be desired for a particular
+parent record while invoking the same system functionality for multiple options.</p><p>Naturally, if a Functional Type has no associated Enum Items defined, that
+functionality will be unreachable by users of the application.  This can be a
+desirable outcome in some business application scenarios.</p><h2 id="module-technical-implementation" class="section-heading"><a href="#module-technical-implementation" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Technical Implementation</span></h2><p>Enums, Functional Types, and Enum Items are persisted in the database so that
+these configuration are durable.  When the application starts, all of the Enum
+data is loaded into a GenServer backed ETS table.  Processes will read Enums
+data directly from the ETS table as needed.  Changes to the Enums are not
+directly written to the ETS table, but are processed by the GenServer which
+ensures that the changes are updated in the ETS table, but are also persisted to
+the database.</p><p>This design assumes that Enum data is read often, but changed infrequently.</p>
     </section>
 
 </div>
@@ -138,7 +151,7 @@ Pages
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#create_enum/1" data-no-tooltip translate="no">create_enum(enum_params)</a>
+        <a href="#create/1" data-no-tooltip="" translate="no">create(enum_params)</a>
 
       </div>
 
@@ -149,7 +162,7 @@ and enumeration item definitions.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#delete_enum/1" data-no-tooltip translate="no">delete_enum(enum_name)</a>
+        <a href="#delete/1" data-no-tooltip="" translate="no">delete(enum_name)</a>
 
       </div>
 
@@ -160,7 +173,7 @@ enumeration item records.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_enum_syst_defined/1" data-no-tooltip translate="no">get_enum_syst_defined(enum_name)</a>
+        <a href="#get_syst_defined/1" data-no-tooltip="" translate="no">get_syst_defined(enum_name)</a>
 
       </div>
 
@@ -170,7 +183,7 @@ enumeration item records.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_enum_user_maintainable/1" data-no-tooltip translate="no">get_enum_user_maintainable(enum_name)</a>
+        <a href="#get_user_maintainable/1" data-no-tooltip="" translate="no">get_user_maintainable(enum_name)</a>
 
       </div>
 
@@ -181,7 +194,7 @@ otherwise.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_enum_values/1" data-no-tooltip translate="no">get_enum_values(enum_name)</a>
+        <a href="#get_values/1" data-no-tooltip="" translate="no">get_values(enum_name)</a>
 
       </div>
 
@@ -191,7 +204,7 @@ otherwise.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#list_all_enums/0" data-no-tooltip translate="no">list_all_enums()</a>
+        <a href="#list_all/0" data-no-tooltip="" translate="no">list_all()</a>
 
       </div>
 
@@ -201,7 +214,7 @@ otherwise.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#set_enum_values/2" data-no-tooltip translate="no">set_enum_values(enum_name, enum_params)</a>
+        <a href="#set_values/2" data-no-tooltip="" translate="no">set_values(enum_name, enum_params)</a>
 
       </div>
 
@@ -217,7 +230,7 @@ otherwise.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#create_enum_functional_type/2" data-no-tooltip translate="no">create_enum_functional_type(enum_name, functional_type_params)</a>
+        <a href="#create_functional_type/2" data-no-tooltip="" translate="no">create_functional_type(enum_name, functional_type_params)</a>
 
       </div>
 
@@ -227,7 +240,7 @@ otherwise.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#delete_enum_functional_type/2" data-no-tooltip translate="no">delete_enum_functional_type(enum_name, functional_type_name)</a>
+        <a href="#delete_functional_type/2" data-no-tooltip="" translate="no">delete_functional_type(enum_name, functional_type_name)</a>
 
       </div>
 
@@ -237,7 +250,7 @@ otherwise.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_functional_type_by_enum_item_id/2" data-no-tooltip translate="no">get_functional_type_by_enum_item_id(enum_name, enum_item_id)</a>
+        <a href="#get_functional_type_by_item_id/2" data-no-tooltip="" translate="no">get_functional_type_by_item_id(enum_name, enum_item_id)</a>
 
       </div>
 
@@ -248,7 +261,7 @@ record belongs.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#list_enum_functional_types/1" data-no-tooltip translate="no">list_enum_functional_types(enum_name)</a>
+        <a href="#list_functional_types/1" data-no-tooltip="" translate="no">list_functional_types(enum_name)</a>
 
       </div>
 
@@ -259,7 +272,7 @@ enumeration.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#set_enum_functional_type_values/3" data-no-tooltip translate="no">set_enum_functional_type_values(enum_name, functional_type_name, functional_type_params)</a>
+        <a href="#set_functional_type_values/3" data-no-tooltip="" translate="no">set_functional_type_values(enum_name, functional_type_name, functional_type_params)</a>
 
       </div>
 
@@ -275,7 +288,7 @@ enumeration.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#create_enum_item/2" data-no-tooltip translate="no">create_enum_item(enum_name, enum_item_params)</a>
+        <a href="#create_item/2" data-no-tooltip="" translate="no">create_item(enum_name, enum_item_params)</a>
 
       </div>
 
@@ -285,7 +298,7 @@ enumeration.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#delete_enum_item/2" data-no-tooltip translate="no">delete_enum_item(enum_name, enum_item_name)</a>
+        <a href="#delete_item/2" data-no-tooltip="" translate="no">delete_item(enum_name, enum_item_name)</a>
 
       </div>
 
@@ -295,7 +308,7 @@ enumeration.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_default_enum_item/2" data-no-tooltip translate="no">get_default_enum_item(enum_name, opts \\ [])</a>
+        <a href="#get_default_item/2" data-no-tooltip="" translate="no">get_default_item(enum_name, opts \\ [])</a>
 
       </div>
 
@@ -306,7 +319,7 @@ enumeration functional type.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_enum_item_by_id/2" data-no-tooltip translate="no">get_enum_item_by_id(enum_name, enum_item_id)</a>
+        <a href="#get_item_by_id/2" data-no-tooltip="" translate="no">get_item_by_id(enum_name, enum_item_id)</a>
 
       </div>
 
@@ -317,7 +330,7 @@ its id value.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_enum_item_by_name/2" data-no-tooltip translate="no">get_enum_item_by_name(enum_name, enum_item_name)</a>
+        <a href="#get_item_by_name/2" data-no-tooltip="" translate="no">get_item_by_name(enum_name, enum_item_name)</a>
 
       </div>
 
@@ -328,7 +341,7 @@ its name.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#list_enum_items/1" data-no-tooltip translate="no">list_enum_items(enum_name)</a>
+        <a href="#list_items/1" data-no-tooltip="" translate="no">list_items(enum_name)</a>
 
       </div>
 
@@ -339,7 +352,7 @@ enumeration.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#list_sorted_enum_items/1" data-no-tooltip translate="no">list_sorted_enum_items(enum_name)</a>
+        <a href="#list_sorted_items/1" data-no-tooltip="" translate="no">list_sorted_items(enum_name)</a>
 
       </div>
 
@@ -350,7 +363,7 @@ enumeration sorted by their sort_order value.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#set_enum_item_values/3" data-no-tooltip translate="no">set_enum_item_values(enum_name, enum_item_name, enum_item_params)</a>
+        <a href="#set_item_values/3" data-no-tooltip="" translate="no">set_item_values(enum_name, enum_item_name, enum_item_params)</a>
 
       </div>
 
@@ -366,7 +379,7 @@ enumeration sorted by their sort_order value.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#child_spec/1" data-no-tooltip translate="no">child_spec(opts)</a>
+        <a href="#child_spec/1" data-no-tooltip="" translate="no">child_spec(opts)</a>
 
       </div>
 
@@ -376,32 +389,52 @@ enumeration sorted by their sort_order value.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_enums_service/0" data-no-tooltip translate="no">get_enums_service()</a>
+        <a href="#get_runtime_config/0" data-no-tooltip="" translate="no">get_runtime_config()</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>Retrieve the current specific Enumerations Service name in effect for the process.</p></div>
+        <div class="summary-synopsis"><p>Retrieves the runtime configuration of a previously started Enumerations Service.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#put_enums_service/1" data-no-tooltip translate="no">put_enums_service(enums_service_name)</a>
+        <a href="#get_service/0" data-no-tooltip="" translate="no">get_service()</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>An optional method for establishing a specific, named Enumerations Service to
-access by the current process.</p></div>
+        <div class="summary-synopsis"><p>Retrieves the name of the currently set Enumerations Service instance.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#start_link/3" data-no-tooltip translate="no">start_link(service_name, datastore_context_name, opts \\ [])</a>
+        <a href="#put_service/1" data-no-tooltip="" translate="no">put_service(service_name)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Establishes the currently active Enumerations Service instance for the current
+process.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#start_link/1" data-no-tooltip="" translate="no">start_link(opts)</a>
 
       </div>
 
         <div class="summary-synopsis"><p>Starts an instance of the Enumerations Service.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#terminate_service/0" data-no-tooltip="" translate="no">terminate_service()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Terminates a running instance of the Enums service.</p></div>
 
     </div>
 
@@ -417,36 +450,32 @@ access by the current process.</p></div>
       </a>
       <span class="text">Enumerations</span>
     </h1>
+
     <div class="enumerations-list">
-<section class="detail" id="create_enum/1">
+<section class="detail" id="create/1">
 
   <div class="detail-header">
-    <a href="#create_enum/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#create/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">create_enum(enum_params)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">create(enum_params)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> create_enum(<a href="MscmpSystEnums.Types.html#t:enum_params/0">MscmpSystEnums.Types.enum_params</a>()) ::
-  :ok | {:error, <a href="https://hexdocs.pm/mscmp_syst_error/0.1.0/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+          <pre translate="no"><span class="attribute">@spec</span> create(<a href="MscmpSystEnums.Types.html#t:enum_params/0">MscmpSystEnums.Types.enum_params</a>()) ::
+  :ok | {:error, <a href="Mserror.EnumsError.html#t:t/0">Mserror.EnumsError.t</a>()}</pre>
 
       </div>
 
 <p>Create a new user defined enumeration, optionally including functional type
-and enumeration item definitions.</p><h2 id="create_enum/1-parameters" class="section-heading">
-  <a href="#create_enum/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">enum_params</code> - a map containing the enumeration field values used in
+and enumeration item definitions.</p><h2 id="create/1-parameters" class="section-heading"><a href="#create/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">enum_params</code> - a map containing the enumeration field values used in
 creating the user defined enumerations.  If the enumeration's functional
 types and enumeration items are known at enumeration creation time,
 it is recommended to nest values for those records under the
@@ -454,235 +483,184 @@ it is recommended to nest values for those records under the
 documentation for <a href="MscmpSystEnums.Types.html#t:enum_params/0"><code class="inline">MscmpSystEnums.Types.enum_params/0</code></a>,
 <a href="MscmpSystEnums.Types.html#t:enum_functional_type_params/0"><code class="inline">MscmpSystEnums.Types.enum_functional_type_params/0</code></a>, and
 <a href="MscmpSystEnums.Types.html#t:enum_item_params/0"><code class="inline">MscmpSystEnums.Types.enum_item_params/0</code></a> for more information about the
-available and required attributes.</li></ul><h2 id="create_enum/1-examples" class="section-heading">
-  <a href="#create_enum/1-examples" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Examples</span>
-</h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">example_enumeration</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="1442803512-1">%{</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_create_enum&quot;</span><span class="p">,</span><span class="w">
+available and required attributes.</li></ul><h2 id="create/1-examples" class="section-heading"><a href="#create/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">example_enumeration</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8956930670-1">%{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_create&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Create Example Enum&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="ss">user_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Demonstrate enumeration creation.&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="ss">functional_types</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1442803512-2">[</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="1442803512-3">%{</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_create_enum_functional_type&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="ss">functional_types</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8956930670-2">[</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="8956930670-3">%{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_create_functional_type&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Create Example Enum / Functional Type&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">external_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Functional Type&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">user_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Demonstrate Functional Type Creation&quot;</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="1442803512-3">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="1442803512-2">]</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="ss">enum_items</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1442803512-4">[</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="1442803512-5">%{</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_create_enum_item&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="8956930670-3">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="8956930670-2">]</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="ss">enum_items</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8956930670-4">[</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="8956930670-5">%{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_create_item&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Create Example Enum / Enum Item&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">external_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Enum Item&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">user_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Demonstration of enumeration item creation.&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">enum_default</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">functional_type_default</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">functional_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_create_enum_functional_type&quot;</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="1442803512-5">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="1442803512-4">]</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">   </span><span class="p" data-group-id="1442803512-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">create_enum</span><span class="p" data-group-id="1442803512-6">(</span><span class="n">example_enumeration</span><span class="p" data-group-id="1442803512-6">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">functional_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_create_functional_type&quot;</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="8956930670-5">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="8956930670-4">]</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">   </span><span class="p" data-group-id="8956930670-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="8956930670-6">(</span><span class="n">example_enumeration</span><span class="p" data-group-id="8956930670-6">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
-<section class="detail" id="delete_enum/1">
+<section class="detail" id="delete/1">
 
   <div class="detail-header">
-    <a href="#delete_enum/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#delete/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">delete_enum(enum_name)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">delete(enum_name)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> delete_enum(<a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>()) ::
-  :ok | {:error, <a href="https://hexdocs.pm/mscmp_syst_error/0.1.0/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+          <pre translate="no"><span class="attribute">@spec</span> delete(<a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>()) ::
+  :ok | {:error, <a href="Mserror.EnumsError.html#t:t/0">Mserror.EnumsError.t</a>()}</pre>
 
       </div>
 
 <p>Deletes a user defined enumeration and its child functional type and
 enumeration item records.</p><p>You cannot delete a system defined enumeration nor can you delete an
-enumeration that has been referenced in other application data records.</p><h2 id="delete_enum/1-parameters" class="section-heading">
-  <a href="#delete_enum/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">enum_name</code> - the enumeration which is to be deleted by the function.</li></ul>
+enumeration that has been referenced in other application data records.</p><h2 id="delete/1-parameters" class="section-heading"><a href="#delete/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">enum_name</code> - the enumeration which is to be deleted by the function.</li></ul>
   </section>
 </section>
-<section class="detail" id="get_enum_syst_defined/1">
+<section class="detail" id="get_syst_defined/1">
 
   <div class="detail-header">
-    <a href="#get_enum_syst_defined/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#get_syst_defined/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">get_enum_syst_defined(enum_name)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_syst_defined(enum_name)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> get_enum_syst_defined(<a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+          <pre translate="no"><span class="attribute">@spec</span> get_syst_defined(<a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
 
       </div>
 
-<p>Returns true if the requested enumeration is system defined, false otherwise.</p><h2 id="get_enum_syst_defined/1-parameters" class="section-heading">
-  <a href="#get_enum_syst_defined/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">enum_name</code> - the name of the enumeration to test as being system defined.</li></ul><h2 id="get_enum_syst_defined/1-examples" class="section-heading">
-  <a href="#get_enum_syst_defined/1-examples" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Examples</span>
-</h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_enum_syst_defined</span><span class="p" data-group-id="2052763860-1">(</span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="2052763860-1">)</span><span class="w">
+<p>Returns true if the requested enumeration is system defined, false otherwise.</p><h2 id="get_syst_defined/1-parameters" class="section-heading"><a href="#get_syst_defined/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">enum_name</code> - the name of the enumeration to test as being system defined.</li></ul><h2 id="get_syst_defined/1-examples" class="section-heading"><a href="#get_syst_defined/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_syst_defined</span><span class="p" data-group-id="7763571707-1">(</span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="7763571707-1">)</span><span class="w">
 </span><span class="no">false</span></code></pre>
   </section>
 </section>
-<section class="detail" id="get_enum_user_maintainable/1">
+<section class="detail" id="get_user_maintainable/1">
 
   <div class="detail-header">
-    <a href="#get_enum_user_maintainable/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#get_user_maintainable/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">get_enum_user_maintainable(enum_name)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_user_maintainable(enum_name)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> get_enum_user_maintainable(<a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+          <pre translate="no"><span class="attribute">@spec</span> get_user_maintainable(<a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
 
       </div>
 
 <p>Returns true if the requested enumeration is user maintainable, false
-otherwise.</p><h2 id="get_enum_user_maintainable/1-parameters" class="section-heading">
-  <a href="#get_enum_user_maintainable/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">enum_name</code> - the name of the enumeration to test as being user
-maintainable.</li></ul><h2 id="get_enum_user_maintainable/1-examples" class="section-heading">
-  <a href="#get_enum_user_maintainable/1-examples" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Examples</span>
-</h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_enum_user_maintainable</span><span class="p" data-group-id="0497162867-1">(</span><span class="w"> </span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="0497162867-1">)</span><span class="w">
+otherwise.</p><h2 id="get_user_maintainable/1-parameters" class="section-heading"><a href="#get_user_maintainable/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">enum_name</code> - the name of the enumeration to test as being user
+maintainable.</li></ul><h2 id="get_user_maintainable/1-examples" class="section-heading"><a href="#get_user_maintainable/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_user_maintainable</span><span class="p" data-group-id="4385823471-1">(</span><span class="w"> </span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="4385823471-1">)</span><span class="w">
 </span><span class="no">true</span></code></pre>
   </section>
 </section>
-<section class="detail" id="get_enum_values/1">
+<section class="detail" id="get_values/1">
 
   <div class="detail-header">
-    <a href="#get_enum_values/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#get_values/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">get_enum_values(enum_name)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_values(enum_name)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> get_enum_values(<a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>()) :: <a href="Msdata.SystEnums.html#t:t/0">Msdata.SystEnums.t</a>()</pre>
+          <pre translate="no"><span class="attribute">@spec</span> get_values(<a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>()) :: <a href="Msdata.SystEnums.html#t:t/0">Msdata.SystEnums.t</a>()</pre>
 
       </div>
 
-<p>Retrieves all values associated with the requested enumeration.</p><h2 id="get_enum_values/1-parameters" class="section-heading">
-  <a href="#get_enum_values/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">enum_name</code> - the name of the enumeration for which to retrieve values.</li></ul><p>The successful return of this function is an instance of the
-<a href="Msdata.SystEnums.html"><code class="inline">Msdata.SystEnums</code></a> struct containing the values requested.</p><h2 id="get_enum_values/1-examples" class="section-heading">
-  <a href="#get_enum_values/1-examples" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Examples</span>
-</h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_enum_values</span><span class="p" data-group-id="3954279049-1">(</span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="3954279049-1">)</span></code></pre>
+<p>Retrieves all values associated with the requested enumeration.</p><h2 id="get_values/1-parameters" class="section-heading"><a href="#get_values/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">enum_name</code> - the name of the enumeration for which to retrieve values.</li></ul><p>The successful return of this function is an instance of the
+<a href="Msdata.SystEnums.html"><code class="inline">Msdata.SystEnums</code></a> struct containing the values requested.</p><h2 id="get_values/1-examples" class="section-heading"><a href="#get_values/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_values</span><span class="p" data-group-id="6818655958-1">(</span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="6818655958-1">)</span></code></pre>
   </section>
 </section>
-<section class="detail" id="list_all_enums/0">
+<section class="detail" id="list_all/0">
 
   <div class="detail-header">
-    <a href="#list_all_enums/0" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#list_all/0" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">list_all_enums()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">list_all()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> list_all_enums() :: [<a href="Msdata.SystEnums.html#t:t/0">Msdata.SystEnums.t</a>()]</pre>
+          <pre translate="no"><span class="attribute">@spec</span> list_all() :: [<a href="Msdata.SystEnums.html#t:t/0">Msdata.SystEnums.t</a>()]</pre>
 
       </div>
 
 <p>Retrieves all values for all enumerations.</p><p>This function returns all other enumeration metadata, such as the records' IDs,
 descriptions, etc.  Also included is association data for the <code class="inline">enum_items</code>
-field and the <code class="inline">functional_type</code> association of each item.</p><h2 id="list_all_enums/0-examples" class="section-heading">
-  <a href="#list_all_enums/0-examples" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Examples</span>
-</h2>
-<p>  iex&gt; MscmpSystEnums.list_all_enums()</p>
+field and the <code class="inline">functional_type</code> association of each item.</p><h2 id="list_all/0-examples" class="section-heading"><a href="#list_all/0-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><p>  iex&gt; MscmpSystEnums.list_all()</p>
   </section>
 </section>
-<section class="detail" id="set_enum_values/2">
+<section class="detail" id="set_values/2">
 
   <div class="detail-header">
-    <a href="#set_enum_values/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#set_values/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">set_enum_values(enum_name, enum_params)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">set_values(enum_name, enum_params)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> set_enum_values(
-  <a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>(),
-  <a href="MscmpSystEnums.Types.html#t:enum_params/0">MscmpSystEnums.Types.enum_params</a>()
-) ::
-  :ok | {:error, <a href="https://hexdocs.pm/mscmp_syst_error/0.1.0/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+          <pre translate="no"><span class="attribute">@spec</span> set_values(<a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>(), <a href="MscmpSystEnums.Types.html#t:enum_params/0">MscmpSystEnums.Types.enum_params</a>()) ::
+  :ok | {:error, <a href="Mserror.EnumsError.html#t:t/0">Mserror.EnumsError.t</a>()}</pre>
 
       </div>
 
@@ -690,13 +668,7 @@ field and the <code class="inline">functional_type</code> association of each it
 system defined enumeration.</p></li><li><p><code class="inline">display_name</code></p></li><li><p><code class="inline">user_description</code></p></li><li><p><code class="inline">default_user_options</code></p></li></ul><p>Other fields of the <a href="Msdata.SystEnums.html"><code class="inline">Msdata.SystEnums</code></a> data type may not be
 modified via this module.  Also note that only the enumeration value itself
 can be modified.  Changes to functional type or enumeration item records must
-be addressed individually.</p><h2 id="set_enum_values/2-parameters" class="section-heading">
-  <a href="#set_enum_values/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">enum_name</code> - the enumeration which is being modified.</p></li><li><p><code class="inline">enum_params</code> - a map of type <a href="MscmpSystEnums.Types.html#t:enum_params/0"><code class="inline">MscmpSystEnums.Types.enum_params/0</code></a> which
+be addressed individually.</p><h2 id="set_values/2-parameters" class="section-heading"><a href="#set_values/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">enum_name</code> - the enumeration which is being modified.</p></li><li><p><code class="inline">enum_params</code> - a map of type <a href="MscmpSystEnums.Types.html#t:enum_params/0"><code class="inline">MscmpSystEnums.Types.enum_params/0</code></a> which
 establishes the data values which are to be changed.</p></li></ul>
   </section>
 </section>
@@ -711,94 +683,86 @@ establishes the data values which are to be changed.</p></li></ul>
       </a>
       <span class="text">Enumeration Functional Types</span>
     </h1>
+
     <div class="enumeration-functional-types-list">
-<section class="detail" id="create_enum_functional_type/2">
+<section class="detail" id="create_functional_type/2">
 
   <div class="detail-header">
-    <a href="#create_enum_functional_type/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#create_functional_type/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">create_enum_functional_type(enum_name, functional_type_params)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">create_functional_type(enum_name, functional_type_params)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> create_enum_functional_type(
+          <pre translate="no"><span class="attribute">@spec</span> create_functional_type(
   <a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>(),
   <a href="MscmpSystEnums.Types.html#t:enum_functional_type_params/0">MscmpSystEnums.Types.enum_functional_type_params</a>()
-) :: :ok | {:error, <a href="https://hexdocs.pm/mscmp_syst_error/0.1.0/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+) :: :ok | {:error, <a href="Mserror.EnumsError.html#t:t/0">Mserror.EnumsError.t</a>()}</pre>
 
       </div>
 
-<p>Creates a new user defined functional type.</p><p>User defined functional types may only be added to user defined enumerations.</p><h2 id="create_enum_functional_type/2-parameters" class="section-heading">
-  <a href="#create_enum_functional_type/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">enum_name</code> - the Enumeration to which the new functional type will be a
+<p>Creates a new user defined functional type.</p><p>User defined functional types may only be added to user defined enumerations.</p><h2 id="create_functional_type/2-parameters" class="section-heading"><a href="#create_functional_type/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">enum_name</code> - the Enumeration to which the new functional type will be a
 child.</p></li><li><p><code class="inline">functional_type_params</code> - a map of type
 <code class="inline">t:Types.enum_functional_type_params/0</code> which establishes
 the data values for the new functional type.</p></li></ul>
   </section>
 </section>
-<section class="detail" id="delete_enum_functional_type/2">
+<section class="detail" id="delete_functional_type/2">
 
   <div class="detail-header">
-    <a href="#delete_enum_functional_type/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#delete_functional_type/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">delete_enum_functional_type(enum_name, functional_type_name)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">delete_functional_type(enum_name, functional_type_name)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> delete_enum_functional_type(
+          <pre translate="no"><span class="attribute">@spec</span> delete_functional_type(
   <a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>(),
   <a href="MscmpSystEnums.Types.html#t:enum_functional_type_name/0">MscmpSystEnums.Types.enum_functional_type_name</a>()
-) :: :ok | {:error, <a href="https://hexdocs.pm/mscmp_syst_error/0.1.0/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+) :: :ok | {:error, <a href="Mserror.EnumsError.html#t:t/0">Mserror.EnumsError.t</a>()}</pre>
 
       </div>
 
 <p>Deletes a user defined enumeration functional type record.</p><p>You cannot delete a system defined functional type nor can you delete a
-functional type which is still referenced by enumeration item records.</p><h2 id="delete_enum_functional_type/2-parameters" class="section-heading">
-  <a href="#delete_enum_functional_type/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">enum_name</code> - the enumeration which is is the parent of the functional
+functional type which is still referenced by enumeration item records.</p><h2 id="delete_functional_type/2-parameters" class="section-heading"><a href="#delete_functional_type/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">enum_name</code> - the enumeration which is is the parent of the functional
 type to be deleted.</p></li><li><p><code class="inline">enum_functional_type_name</code>- the target functional type of the delete
 operation.</p></li></ul>
   </section>
 </section>
-<section class="detail" id="get_functional_type_by_enum_item_id/2">
+<section class="detail" id="get_functional_type_by_item_id/2">
 
   <div class="detail-header">
-    <a href="#get_functional_type_by_enum_item_id/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#get_functional_type_by_item_id/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">get_functional_type_by_enum_item_id(enum_name, enum_item_id)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_functional_type_by_item_id(enum_name, enum_item_id)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> get_functional_type_by_enum_item_id(
+          <pre translate="no"><span class="attribute">@spec</span> get_functional_type_by_item_id(
   <a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>(),
   <a href="MscmpSystEnums.Types.html#t:enum_item_id/0">MscmpSystEnums.Types.enum_item_id</a>()
 ) :: <a href="MscmpSystEnums.Types.html#t:enum_functional_type_name/0">MscmpSystEnums.Types.enum_functional_type_name</a>()</pre>
@@ -806,94 +770,72 @@ operation.</p></li></ul>
       </div>
 
 <p>Returns the internal name of the functional type to which the given Enum Item
-record belongs.</p><h2 id="get_functional_type_by_enum_item_id/2-parameters" class="section-heading">
-  <a href="#get_functional_type_by_enum_item_id/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">enum_name</code> - the name of the enumeration to which the Enum Item ID
-belongs.</p></li><li><p><code class="inline">enum_item_id</code> - the record ID of the Enum Item record of interest.</p></li></ul><h2 id="get_functional_type_by_enum_item_id/2-example" class="section-heading">
-  <a href="#get_functional_type_by_enum_item_id/2-example" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Example</span>
-</h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">example_enum_item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_enum_item_by_name</span><span class="p" data-group-id="3667312438-1">(</span><span class="w">
+record belongs.</p><h2 id="get_functional_type_by_item_id/2-parameters" class="section-heading"><a href="#get_functional_type_by_item_id/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">enum_name</code> - the name of the enumeration to which the Enum Item ID
+belongs.</p></li><li><p><code class="inline">enum_item_id</code> - the record ID of the Enum Item record of interest.</p></li></ul><h2 id="get_functional_type_by_item_id/2-example" class="section-heading"><a href="#get_functional_type_by_item_id/2-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Example</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">example_enum_item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_item_by_name</span><span class="p" data-group-id="5086876410-1">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;example_enumeration&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;example_enum_item_one&quot;</span><span class="p" data-group-id="3667312438-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_functional_type_by_enum_item_id</span><span class="p" data-group-id="3667312438-2">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;example_enum_item_one&quot;</span><span class="p" data-group-id="5086876410-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_functional_type_by_item_id</span><span class="p" data-group-id="5086876410-2">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;example_enumeration&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="n">example_enum_item</span><span class="o">.</span><span class="n">id</span><span class="p" data-group-id="3667312438-2">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="n">example_enum_item</span><span class="o">.</span><span class="n">id</span><span class="p" data-group-id="5086876410-2">)</span><span class="w">
 </span><span class="s">&quot;example_enum_func_type_1&quot;</span></code></pre>
   </section>
 </section>
-<section class="detail" id="list_enum_functional_types/1">
+<section class="detail" id="list_functional_types/1">
 
   <div class="detail-header">
-    <a href="#list_enum_functional_types/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#list_functional_types/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">list_enum_functional_types(enum_name)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">list_functional_types(enum_name)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> list_enum_functional_types(<a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>()) :: [
+          <pre translate="no"><span class="attribute">@spec</span> list_functional_types(<a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>()) :: [
   <a href="Msdata.SystEnumFunctionalTypes.html#t:t/0">Msdata.SystEnumFunctionalTypes.t</a>()
 ]</pre>
 
       </div>
 
 <p>Returns the list of Enumeration Functional Types associated with the requested
-enumeration.</p><h2 id="list_enum_functional_types/1-parameters" class="section-heading">
-  <a href="#list_enum_functional_types/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">enum_name</code> - the name of the enumeration for which to retrieve the list
+enumeration.</p><h2 id="list_functional_types/1-parameters" class="section-heading"><a href="#list_functional_types/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">enum_name</code> - the name of the enumeration for which to retrieve the list
 of enumeration functional types.</li></ul>
   </section>
 </section>
-<section class="detail" id="set_enum_functional_type_values/3">
+<section class="detail" id="set_functional_type_values/3">
 
   <div class="detail-header">
-    <a href="#set_enum_functional_type_values/3" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#set_functional_type_values/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">set_enum_functional_type_values(enum_name, functional_type_name, functional_type_params)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">set_functional_type_values(enum_name, functional_type_name, functional_type_params)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> set_enum_functional_type_values(
+          <pre translate="no"><span class="attribute">@spec</span> set_functional_type_values(
   <a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>(),
   <a href="MscmpSystEnums.Types.html#t:enum_functional_type_name/0">MscmpSystEnums.Types.enum_functional_type_name</a>(),
   <a href="MscmpSystEnums.Types.html#t:enum_functional_type_params/0">MscmpSystEnums.Types.enum_functional_type_params</a>()
-) :: :ok | {:error, <a href="https://hexdocs.pm/mscmp_syst_error/0.1.0/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+) :: :ok | {:error, <a href="Mserror.EnumsError.html#t:t/0">Mserror.EnumsError.t</a>()}</pre>
 
       </div>
 
 <p>Change the values of an existing enumeration functional type record.</p><p>The following fields may be changed using this function:</p><ul><li><p><code class="inline">internal_name</code> - Note that you cannot change the internal name of a
 system defined functional type.</p></li><li><p><code class="inline">display_name</code></p></li><li><p><code class="inline">external_name</code></p></li><li><p><code class="inline">user_description</code></p></li></ul><p>Other fields of the Msdata.SystEnumFunctionalTypes data type may
-not be modified via this module.</p><h2 id="set_enum_functional_type_values/3-parameters" class="section-heading">
-  <a href="#set_enum_functional_type_values/3-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">enum_name</code>- the enumeration which is parent to the functional type being
+not be modified via this module.</p><h2 id="set_functional_type_values/3-parameters" class="section-heading"><a href="#set_functional_type_values/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">enum_name</code>- the enumeration which is parent to the functional type being
 modified.</p></li><li><p><code class="inline">functional_type_name</code> - the specific functional type which will be
 updated.</p></li><li><p><code class="inline">functional_type_params</code> - a map of type
 <a href="MscmpSystEnums.Types.html#t:enum_functional_type_params/0"><code class="inline">MscmpSystEnums.Types.enum_functional_type_params/0</code></a> which establishes
@@ -911,99 +853,91 @@ the data values which are to be changed.</p></li></ul>
       </a>
       <span class="text">Enumeration items</span>
     </h1>
+
     <div class="enumeration-items-list">
-<section class="detail" id="create_enum_item/2">
+<section class="detail" id="create_item/2">
 
   <div class="detail-header">
-    <a href="#create_enum_item/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#create_item/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">create_enum_item(enum_name, enum_item_params)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">create_item(enum_name, enum_item_params)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> create_enum_item(
+          <pre translate="no"><span class="attribute">@spec</span> create_item(
   <a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>(),
   <a href="MscmpSystEnums.Types.html#t:enum_item_params/0">MscmpSystEnums.Types.enum_item_params</a>()
 ) ::
-  :ok | {:error, <a href="https://hexdocs.pm/mscmp_syst_error/0.1.0/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  :ok | {:error, <a href="Mserror.EnumsError.html#t:t/0">Mserror.EnumsError.t</a>()}</pre>
 
       </div>
 
 <p>Creates a new user defined enumeration item.</p><p>User defined enumeration items may be added to either user defined
 enumerations or system defined enumerations which are also marked user
-maintainable.</p><h2 id="create_enum_item/2-parameters" class="section-heading">
-  <a href="#create_enum_item/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">enum_name</code> -the  enumeration to which the new enumeration item will be a
+maintainable.</p><h2 id="create_item/2-parameters" class="section-heading"><a href="#create_item/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">enum_name</code> -the  enumeration to which the new enumeration item will be a
 child.</p></li><li><p><code class="inline">enum_item_params</code> - a map of type
 <a href="MscmpSystEnums.Types.html#t:enum_item_params/0"><code class="inline">MscmpSystEnums.Types.enum_item_params/0</code></a> which establishes the data
 values for the new enumeration item.</p></li></ul>
   </section>
 </section>
-<section class="detail" id="delete_enum_item/2">
+<section class="detail" id="delete_item/2">
 
   <div class="detail-header">
-    <a href="#delete_enum_item/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#delete_item/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">delete_enum_item(enum_name, enum_item_name)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">delete_item(enum_name, enum_item_name)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> delete_enum_item(
+          <pre translate="no"><span class="attribute">@spec</span> delete_item(
   <a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>(),
   <a href="MscmpSystEnums.Types.html#t:enum_item_name/0">MscmpSystEnums.Types.enum_item_name</a>()
 ) ::
-  :ok | {:error, <a href="https://hexdocs.pm/mscmp_syst_error/0.1.0/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  :ok | {:error, <a href="Mserror.EnumsError.html#t:t/0">Mserror.EnumsError.t</a>()}</pre>
 
       </div>
 
 <p>Deletes a user defined enumeration item record.</p><p>You cannot delete a system defined enumeration item nor can you delete an
-an enumeration item record which has been referenced in application data.</p><h2 id="delete_enum_item/2-parameters" class="section-heading">
-  <a href="#delete_enum_item/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">enum_name</code> - the enumeration which is is the parent of the enumeration
+an enumeration item record which has been referenced in application data.</p><h2 id="delete_item/2-parameters" class="section-heading"><a href="#delete_item/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">enum_name</code> - the enumeration which is is the parent of the enumeration
 item to be deleted.</p></li><li><p><code class="inline">enum_item_name</code> - the target functional type of the delete operation.</p></li></ul>
   </section>
 </section>
-<section class="detail" id="get_default_enum_item/2">
+<section class="detail" id="get_default_item/2">
 
-    <span id="get_default_enum_item/1"></span>
+    <span id="get_default_item/1"></span>
 
   <div class="detail-header">
-    <a href="#get_default_enum_item/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#get_default_item/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">get_default_enum_item(enum_name, opts \\ [])</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_default_item(enum_name, opts \\ [])</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> get_default_enum_item(<a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
+          <pre translate="no"><span class="attribute">@spec</span> get_default_item(<a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
   <a href="Msdata.SystEnumItems.html#t:t/0">Msdata.SystEnumItems.t</a>()</pre>
 
       </div>
@@ -1012,89 +946,67 @@ item to be deleted.</p></li><li><p><code class="inline">enum_item_name</code> - 
 enumeration functional type.</p><p>When no qualifying options are specified, this function will return the
 enumeration item record which is marked as being default for the enumeration.
 If the <code class="inline">functional_type_name</code> option is used, then the function returns the
-record which is marked as default for the functional type.</p><h2 id="get_default_enum_item/2-parameters" class="section-heading">
-  <a href="#get_default_enum_item/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">enum_name</code>- the name of the enumeration for which to retrieve the default
-enumeration item.</p></li><li><p><code class="inline">opts</code> - a keyword list of optional values.</p></li></ul><h2 id="get_default_enum_item/2-options" class="section-heading">
-  <a href="#get_default_enum_item/2-options" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Options</span>
-</h2>
-<ul><li><code class="inline">:functional_type_name</code> (<a href="https://hexdocs.pm/elixir/String.html#t:t/0"><code class="inline">String.t/0</code></a>) - The Internal Name of the Enumeration's Functional Type.</li></ul><h2 id="get_default_enum_item/2-examples" class="section-heading">
-  <a href="#get_default_enum_item/2-examples" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Examples</span>
-</h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="2827243077-1">%</span><span class="nc" data-group-id="2827243077-1">Msdata.SystEnumItems</span><span class="p" data-group-id="2827243077-1">{</span><span class="w">
+record which is marked as default for the functional type.</p><h2 id="get_default_item/2-parameters" class="section-heading"><a href="#get_default_item/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">enum_name</code>- the name of the enumeration for which to retrieve the default
+enumeration item.</p></li><li><p><code class="inline">opts</code> - a keyword list of optional values.</p></li></ul><h2 id="get_default_item/2-options" class="section-heading"><a href="#get_default_item/2-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><code class="inline">:functional_type_name</code> (<a href="https://hexdocs.pm/elixir/String.html#t:t/0"><code class="inline">String.t/0</code></a>) - The Internal Name of the Enumeration's Functional Type.</li></ul><h2 id="get_default_item/2-examples" class="section-heading"><a href="#get_default_item/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3661833206-1">%</span><span class="nc" data-group-id="3661833206-1">Msdata.SystEnumItems</span><span class="p" data-group-id="3661833206-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_enum_item_two&quot;</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="2827243077-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_default_enum_item</span><span class="p" data-group-id="2827243077-2">(</span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="2827243077-2">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="3661833206-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_default_item</span><span class="p" data-group-id="3661833206-2">(</span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="3661833206-2">)</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="2827243077-3">%</span><span class="nc" data-group-id="2827243077-3">Msdata.SystEnumItems</span><span class="p" data-group-id="2827243077-3">{</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3661833206-3">%</span><span class="nc" data-group-id="3661833206-3">Msdata.SystEnumItems</span><span class="p" data-group-id="3661833206-3">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_enum_item_one&quot;</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="2827243077-3">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_default_enum_item</span><span class="p" data-group-id="2827243077-4">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="3661833206-3">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_default_item</span><span class="p" data-group-id="3661833206-4">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="s">&quot;example_enumeration&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="p" data-group-id="2827243077-5">[</span><span class="ss">functional_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_enum_func_type_1&quot;</span><span class="p" data-group-id="2827243077-5">]</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2827243077-4">)</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="p" data-group-id="3661833206-5">[</span><span class="ss">functional_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_enum_func_type_1&quot;</span><span class="p" data-group-id="3661833206-5">]</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3661833206-4">)</span></code></pre>
   </section>
 </section>
-<section class="detail" id="get_enum_item_by_id/2">
+<section class="detail" id="get_item_by_id/2">
 
   <div class="detail-header">
-    <a href="#get_enum_item_by_id/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#get_item_by_id/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">get_enum_item_by_id(enum_name, enum_item_id)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_item_by_id(enum_name, enum_item_id)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> get_enum_item_by_id(<a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>(), <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()) ::
+          <pre translate="no"><span class="attribute">@spec</span> get_item_by_id(<a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>(), <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()) ::
   <a href="Msdata.SystEnumItems.html#t:t/0">Msdata.SystEnumItems.t</a>() | nil</pre>
 
       </div>
 
 <p>Returns an Enumeration Item record from the named Enumeration as identified by
 its id value.</p><p>Other than using a different identifier to locate the enumeration item record,
-this function behaves the same as <code class="inline">get_enum_by_name/2</code>.</p><h2 id="get_enum_item_by_id/2-parameters" class="section-heading">
-  <a href="#get_enum_item_by_id/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">enum_name</code> - the name of the Enumeration that is parent to the target
+this function behaves the same as <code class="inline">get_enum_by_name/2</code>.</p><h2 id="get_item_by_id/2-parameters" class="section-heading"><a href="#get_item_by_id/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">enum_name</code> - the name of the Enumeration that is parent to the target
 Enumeration Item record.</p></li><li><p><code class="inline">enum_item_id</code> - the id value of the Enumeration Item record to return.</p></li></ul>
   </section>
 </section>
-<section class="detail" id="get_enum_item_by_name/2">
+<section class="detail" id="get_item_by_name/2">
 
   <div class="detail-header">
-    <a href="#get_enum_item_by_name/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#get_item_by_name/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">get_enum_item_by_name(enum_name, enum_item_name)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_item_by_name(enum_name, enum_item_name)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> get_enum_item_by_name(
+          <pre translate="no"><span class="attribute">@spec</span> get_item_by_name(
   <a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>(),
   <a href="MscmpSystEnums.Types.html#t:enum_item_name/0">MscmpSystEnums.Types.enum_item_name</a>()
 ) ::
@@ -1103,76 +1015,60 @@ Enumeration Item record.</p></li><li><p><code class="inline">enum_item_id</code>
       </div>
 
 <p>Returns an Enumeration Item record from the named Enumeration as identified by
-its name.</p><h2 id="get_enum_item_by_name/2-parameters" class="section-heading">
-  <a href="#get_enum_item_by_name/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">enum_name</code> - the name of the Enumeration that is parent to the target
-Enumeration Item record.</p></li><li><p><code class="inline">enum_item_name</code> - the name of the Enumeration Item record to return.</p></li></ul><h2 id="get_enum_item_by_name/2-examples" class="section-heading">
-  <a href="#get_enum_item_by_name/2-examples" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Examples</span>
-</h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9952926288-1">%</span><span class="nc" data-group-id="9952926288-1">Msdata.SystEnumItems</span><span class="p" data-group-id="9952926288-1">{</span><span class="w">
+its name.</p><h2 id="get_item_by_name/2-parameters" class="section-heading"><a href="#get_item_by_name/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">enum_name</code> - the name of the Enumeration that is parent to the target
+Enumeration Item record.</p></li><li><p><code class="inline">enum_item_name</code> - the name of the Enumeration Item record to return.</p></li></ul><h2 id="get_item_by_name/2-examples" class="section-heading"><a href="#get_item_by_name/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="6519391089-1">%</span><span class="nc" data-group-id="6519391089-1">Msdata.SystEnumItems</span><span class="p" data-group-id="6519391089-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_enum_item_one&quot;</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="9952926288-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_enum_item_by_name</span><span class="p" data-group-id="9952926288-2">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="6519391089-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_item_by_name</span><span class="p" data-group-id="6519391089-2">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="s">&quot;example_enumeration&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="s">&quot;example_enum_item_one&quot;</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="9952926288-2">)</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6519391089-2">)</span></code></pre>
   </section>
 </section>
-<section class="detail" id="list_enum_items/1">
+<section class="detail" id="list_items/1">
 
   <div class="detail-header">
-    <a href="#list_enum_items/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#list_items/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">list_enum_items(enum_name)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">list_items(enum_name)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> list_enum_items(<a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>()) :: [<a href="Msdata.SystEnumItems.html#t:t/0">Msdata.SystEnumItems.t</a>()]</pre>
+          <pre translate="no"><span class="attribute">@spec</span> list_items(<a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>()) :: [<a href="Msdata.SystEnumItems.html#t:t/0">Msdata.SystEnumItems.t</a>()]</pre>
 
       </div>
 
 <p>Returns the list of Enumeration Items associated with the requested
-enumeration.</p><h2 id="list_enum_items/1-parameters" class="section-heading">
-  <a href="#list_enum_items/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">enum_name</code>- the name of the enumeration for which to retrieve the list of
+enumeration.</p><h2 id="list_items/1-parameters" class="section-heading"><a href="#list_items/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">enum_name</code>- the name of the enumeration for which to retrieve the list of
 enumeration items.</li></ul>
   </section>
 </section>
-<section class="detail" id="list_sorted_enum_items/1">
+<section class="detail" id="list_sorted_items/1">
 
   <div class="detail-header">
-    <a href="#list_sorted_enum_items/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#list_sorted_items/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">list_sorted_enum_items(enum_name)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">list_sorted_items(enum_name)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> list_sorted_enum_items(<a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>()) :: [
+          <pre translate="no"><span class="attribute">@spec</span> list_sorted_items(<a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>()) :: [
   <a href="Msdata.SystEnumItems.html#t:t/0">Msdata.SystEnumItems.t</a>()
 ]</pre>
 
@@ -1180,42 +1076,37 @@ enumeration items.</li></ul>
 
 <p>Returns the list of Enumeration Items associated with the requested
 enumeration sorted by their sort_order value.</p><p>In all other regards this function works the same
-<a href="#list_enum_items/1"><code class="inline">MscmpSystEnums.list_enum_items/1</code></a>.</p>
+<a href="#list_items/1"><code class="inline">MscmpSystEnums.list_items/1</code></a>.</p>
   </section>
 </section>
-<section class="detail" id="set_enum_item_values/3">
+<section class="detail" id="set_item_values/3">
 
   <div class="detail-header">
-    <a href="#set_enum_item_values/3" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#set_item_values/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">set_enum_item_values(enum_name, enum_item_name, enum_item_params)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">set_item_values(enum_name, enum_item_name, enum_item_params)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> set_enum_item_values(
+          <pre translate="no"><span class="attribute">@spec</span> set_item_values(
   <a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>(),
   <a href="MscmpSystEnums.Types.html#t:enum_item_name/0">MscmpSystEnums.Types.enum_item_name</a>(),
   <a href="MscmpSystEnums.Types.html#t:enum_item_params/0">MscmpSystEnums.Types.enum_item_params</a>()
-) :: :ok | {:error, <a href="https://hexdocs.pm/mscmp_syst_error/0.1.0/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+) :: :ok | {:error, <a href="Mserror.EnumsError.html#t:t/0">Mserror.EnumsError.t</a>()}</pre>
 
       </div>
 
 <p>Change the values of an existing enumeration item record.</p><p>The following fields may be changed using this function:</p><ul><li><p><code class="inline">internal_name</code> - Note that you cannot change the internal name of a
 system defined enumeration item.</p></li><li><p><code class="inline">display_name</code></p></li><li><p><code class="inline">external_name</code></p></li><li><p><code class="inline">user_description</code></p></li><li><p><code class="inline">enum_default</code></p></li><li><p><code class="inline">functional_type_default</code></p></li><li><p><code class="inline">sort_order</code></p></li><li><p><code class="inline">user_options</code></p></li></ul><p>Other fields of the Msdata.SystEnumItems data type may not be
-modified via this module.</p><h2 id="set_enum_item_values/3-parameters" class="section-heading">
-  <a href="#set_enum_item_values/3-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">enum_name</code> - the enumeration which is parent to the enumeration item.</p></li><li><p><code class="inline">enum_item_name</code> - the specific enumeration item which will be updated.</p></li><li><p><code class="inline">enum_item_params</code> - a map of type
+modified via this module.</p><h2 id="set_item_values/3-parameters" class="section-heading"><a href="#set_item_values/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">enum_name</code> - the enumeration which is parent to the enumeration item.</p></li><li><p><code class="inline">enum_item_name</code> - the specific enumeration item which will be updated.</p></li><li><p><code class="inline">enum_item_params</code> - a map of type
 <a href="MscmpSystEnums.Types.html#t:enum_item_params/0"><code class="inline">MscmpSystEnums.Types.enum_item_params/0</code></a> which establishes the data values
 which are to be changed.</p></li></ul>
   </section>
@@ -1231,17 +1122,19 @@ which are to be changed.</p></li></ul>
       </a>
       <span class="text">Runtime</span>
     </h1>
+
     <div class="runtime-list">
 <section class="detail" id="child_spec/1">
 
   <div class="detail-header">
-    <a href="#child_spec/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#child_spec/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">child_spec(opts)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">child_spec(opts)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1252,180 +1145,173 @@ which are to be changed.</p></li></ul>
 
       </div>
 
-<p>Returns a child specification for the Enumerations Service.</p><h2 id="child_spec/1-parameters" class="section-heading">
-  <a href="#child_spec/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">opts</code> - A keyword list of options.</li></ul><h2 id="child_spec/1-options" class="section-heading">
-  <a href="#child_spec/1-options" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Options</span>
-</h2>
-<ul><li><p><code class="inline">:debug</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">boolean/0</code></a>) - If true, the GenServer backing the Settings Service will be started in
-debug mode.</p></li><li><p><code class="inline">:timeout</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - Timeout value for the start_link call. The default value is <code class="inline">:infinity</code>.</p></li><li><p><code class="inline">:hibernate_after</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - If present, the GenServer process awaits any message for the specified
-time before hibernating.  The timeout value is expressed in Milliseconds.</p></li><li><p><code class="inline">:datastore_context_name</code> (<code class="inline">t:GenServer.name/0 or</code>nil<code class="inline">) - Specifies the name of the Datastore Context to be used by the Settings Service. *</code>:service_name<code class="inline">(</code>t:GenServer.name/0 or <code class="inline">nil</code>) - The name to use for the GenServer backing this specific Enumerations
-Service instance.</p></li></ul><h2 id="child_spec/1-examples" class="section-heading">
-  <a href="#child_spec/1-examples" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Examples</span>
-</h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">child_spec</span><span class="p" data-group-id="4157191944-1">(</span><span class="w">
+<p>Returns a child specification for the Enumerations Service.</p><h2 id="child_spec/1-parameters" class="section-heading"><a href="#child_spec/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">opts</code> - A keyword list of options.</li></ul><h2 id="child_spec/1-options" class="section-heading"><a href="#child_spec/1-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><p><code class="inline">:datastore_context_name</code> (<a href="https://hexdocs.pm/elixir/GenServer.html#t:name/0"><code class="inline">GenServer.name/0</code></a> or <code class="inline">nil</code>) - Specifies the name of the Datastore Context to be used by the Enumerations
+Service.</p></li><li><p><code class="inline">:debug</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">boolean/0</code></a>) - If true, the GenServer backing the Service will be started in debug mode.</p></li><li><p><code class="inline">:timeout</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - Timeout value for the start_link call. The default value is <code class="inline">:infinity</code>.</p></li><li><p><code class="inline">:hibernate_after</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - If present, the GenServer process awaits any message for the specified
+time before hibernating.  The timeout value is expressed in milliseconds.</p></li><li><p><code class="inline">:service_name</code> (<a href="https://hexdocs.pm/elixir/GenServer.html#t:name/0"><code class="inline">GenServer.name/0</code></a> or <code class="inline">nil</code>) - Required. The name to use for the GenServer backing this specific Service instance.</p></li></ul><h2 id="child_spec/1-examples" class="section-heading"><a href="#child_spec/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">child_spec</span><span class="p" data-group-id="2583910710-1">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">service_name</span><span class="p">:</span><span class="w"> </span><span class="nc">MyApp.EnumsService</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">datastore_context_name</span><span class="p">:</span><span class="w"> </span><span class="nc">MyApp.DatastoreContext</span><span class="p" data-group-id="4157191944-1">)</span><span class="w">
-</span><span class="p" data-group-id="4157191944-2">%{</span><span class="w">
-  </span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="nc">MscmpSystEnums.Runtime.Service</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">datastore_context_name</span><span class="p">:</span><span class="w"> </span><span class="nc">MyApp.DatastoreContext</span><span class="p" data-group-id="2583910710-1">)</span><span class="w">
+</span><span class="p" data-group-id="2583910710-2">%{</span><span class="w">
+  </span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="nc">MscmpSystEnums</span><span class="p">,</span><span class="w">
   </span><span class="ss">start</span><span class="p">:</span><span class="w">
-    </span><span class="p" data-group-id="4157191944-3">{</span><span class="nc">MscmpSystEnums</span><span class="p">,</span><span class="w">
+    </span><span class="p" data-group-id="2583910710-3">{</span><span class="nc">MscmpSystEnums</span><span class="p">,</span><span class="w">
      </span><span class="ss">:start_link</span><span class="p">,</span><span class="w">
-     </span><span class="p" data-group-id="4157191944-4">[</span><span class="nc">MyApp.EnumsService</span><span class="p">,</span><span class="w"> </span><span class="nc">MyApp.DatastoreContext</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4157191944-5">[</span><span class="ss">timeout</span><span class="p">:</span><span class="w"> </span><span class="ss">:infinity</span><span class="p" data-group-id="4157191944-5">]</span><span class="p" data-group-id="4157191944-4">]</span><span class="p" data-group-id="4157191944-3">}</span><span class="p">,</span><span class="w">
-</span><span class="p" data-group-id="4157191944-2">}</span></code></pre>
+     </span><span class="p" data-group-id="2583910710-4">[</span><span class="p" data-group-id="2583910710-5">[</span><span class="ss">timeout</span><span class="p">:</span><span class="w"> </span><span class="ss">:infinity</span><span class="p">,</span><span class="w"> </span><span class="ss">service_name</span><span class="p">:</span><span class="w"> </span><span class="nc">MyApp.EnumsService</span><span class="p">,</span><span class="w"> </span><span class="ss">datastore_context_name</span><span class="p">:</span><span class="w"> </span><span class="nc">MyApp.DatastoreContext</span><span class="p" data-group-id="2583910710-5">]</span><span class="p" data-group-id="2583910710-4">]</span><span class="p" data-group-id="2583910710-3">}</span><span class="p">,</span><span class="w">
+</span><span class="p" data-group-id="2583910710-2">}</span></code></pre>
   </section>
 </section>
-<section class="detail" id="get_enums_service/0">
+<section class="detail" id="get_runtime_config/0">
 
   <div class="detail-header">
-    <a href="#get_enums_service/0" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#get_runtime_config/0" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">get_enums_service()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_runtime_config()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> get_enums_service() :: <a href="MscmpSystEnums.Types.html#t:service_name/0">MscmpSystEnums.Types.service_name</a>()</pre>
+          <pre translate="no"><span class="attribute">@spec</span> get_runtime_config() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>() | nil</pre>
 
       </div>
 
-<p>Retrieve the current specific Enumerations Service name in effect for the process.</p><p>This function returns the name of the Enumerations Service that has been using the
-<a href="#put_enums_service/1"><code class="inline">put_enums_service/1</code></a> function to override the default Enumerations Service
-associated with the Instance Name. If no specific Enumerations Service name has
-been set, this function will return <code class="inline">nil</code>.</p><h2 id="get_enums_service/0-examples" class="section-heading">
-  <a href="#get_enums_service/0-examples" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Examples</span>
-</h2>
-<p>  Retrieving a specific Enumerations Service name:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">put_enums_service</span><span class="p" data-group-id="1677349087-1">(</span><span class="ss">:&quot;MscmpSystEnums.TestSupportService&quot;</span><span class="p" data-group-id="1677349087-1">)</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_enums_service</span><span class="p" data-group-id="1677349087-2">(</span><span class="p" data-group-id="1677349087-2">)</span><span class="w">
-</span><span class="ss">:&quot;MscmpSystEnums.TestSupportService&quot;</span></code></pre><p>  Retrieving a specific Enumerations Service name when no value is currently set
-  for the process:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">put_enums_service</span><span class="p" data-group-id="0255768220-1">(</span><span class="no">nil</span><span class="p" data-group-id="0255768220-1">)</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_enums_service</span><span class="p" data-group-id="0255768220-2">(</span><span class="p" data-group-id="0255768220-2">)</span><span class="w">
-</span><span class="no">nil</span></code></pre>
+<p>Retrieves the runtime configuration of a previously started Enumerations Service.</p><p>Some services need a mechanism to return features such as <code class="inline">:ets</code> table names
+which are set at runtime.  This function provides the mechanism by which such
+runtime configuration can be returned.</p><h2 id="get_runtime_config/0-returns" class="section-heading"><a href="#get_runtime_config/0-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><p>Returns a map containing the runtime configuration of the currently active
+Enumerations Service, or <code class="inline">nil</code> if no service is currently set.</p><h2 id="get_runtime_config/0-examples" class="section-heading"><a href="#get_runtime_config/0-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><p>  Getting runtime configuration from the current service:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">old_service</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="3233526659-1">(</span><span class="nc">TestSupport</span><span class="o">.</span><span class="n">get_enums_service_name</span><span class="p" data-group-id="3233526659-2">(</span><span class="p" data-group-id="3233526659-2">)</span><span class="p" data-group-id="3233526659-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_runtime_config</span><span class="p" data-group-id="3233526659-3">(</span><span class="p" data-group-id="3233526659-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3233526659-4">%{</span><span class="ss">enums_table</span><span class="p">:</span><span class="w"> </span><span class="n">table_id</span><span class="p" data-group-id="3233526659-4">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">config</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_reference</span><span class="p" data-group-id="3233526659-5">(</span><span class="n">table_id</span><span class="p" data-group-id="3233526659-5">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="3233526659-6">(</span><span class="n">old_service</span><span class="p" data-group-id="3233526659-6">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="ss">:ok</span><span class="w">
+</span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
-<section class="detail" id="put_enums_service/1">
+<section class="detail" id="get_service/0">
 
   <div class="detail-header">
-    <a href="#put_enums_service/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#get_service/0" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">put_enums_service(enums_service_name)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_service()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> put_enums_service(<a href="MscmpSystEnums.Types.html#t:service_name/0">MscmpSystEnums.Types.service_name</a>()) ::
-  <a href="MscmpSystEnums.Types.html#t:service_name/0">MscmpSystEnums.Types.service_name</a>()</pre>
+          <pre translate="no"><span class="attribute">@spec</span> get_service() :: <a href="/documentation/technical/app_server/mscmp_syst_service/MscmpSystService.Types.html#t:service_name/0">MscmpSystService.Types.service_name</a>()</pre>
 
       </div>
 
-<p>An optional method for establishing a specific, named Enumerations Service to
-access by the current process.</p><p>In some cases it may be desirable to establish an instance of the Enumerations
-Service outside of the constraints the &quot;Instance Name&quot; as defined by
-<a href="https://hexdocs.pm/mscmp_syst_utils_string/0.1.0/Msutils.String.html"><code class="inline">Msutils.String</code></a>. In such cases, this function can be used to set a current
-Enumerations Service instance for the current process which will access the named
-Enumerations Service directly rather than the Enumerations Service associated with the
-prevailing named Instance.  See <a href="https://hexdocs.pm/mscmp_syst_utils_string/0.1.0/Msutils.String.html"><code class="inline">Msutils.String</code></a> for more about establishing
-an instance identity with a given process.</p><blockquote><h4 class="tip">Limited Use Cases</h4><p>Under most circumstances the correct Enumerations Service instance to access
-will be determined by the prevailing Instance Name as managed by calls to
-<code class="inline">Msutils.String.put_instance_name/1</code> and <code class="inline">Msutils.String.get_instance_name/0</code>,
-meaning that typically calls to <a href="#put_enums_service/1"><code class="inline">put_enums_service/1</code></a> are not necessary.</p><p>The only time this function is required is when an alternative Enumerations
-Service should be accessed or there is no Instance Name to set for the
-process using <code class="inline">Msutils.String.put_instance_name/1</code>.</p></blockquote><h2 id="put_enums_service/1-parameters" class="section-heading">
-  <a href="#put_enums_service/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">enums_service_name</code> - the canonical name of the specific Enumerations
-Service to access.  When this function is called with a non-nil argument,
-calls to Enumerations related functions will make use of the Enumerations Service
-specified here, overriding any Enumerations Service which may be started derived
-from the Instance Name.  Setting this value to <code class="inline">nil</code> will clear the special
-Enumerations Service name and revert to using the Enumerations Service associated
-with the Instance Name, if one has been set.</li></ul><h2 id="put_enums_service/1-examples" class="section-heading">
-  <a href="#put_enums_service/1-examples" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Examples</span>
-</h2>
-<p>  Setting a specific Enumerations Service name:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">put_enums_service</span><span class="p" data-group-id="9270310357-1">(</span><span class="ss">:&quot;MscmpSystEnums.TestSupportService&quot;</span><span class="p" data-group-id="9270310357-1">)</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_enums_service</span><span class="p" data-group-id="9270310357-2">(</span><span class="p" data-group-id="9270310357-2">)</span><span class="w">
-</span><span class="ss">:&quot;MscmpSystEnums.TestSupportService&quot;</span></code></pre><p>  Clearing a previously set specific Service Name:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">put_enums_service</span><span class="p" data-group-id="0063255219-1">(</span><span class="no">nil</span><span class="p" data-group-id="0063255219-1">)</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_enums_service</span><span class="p" data-group-id="0063255219-2">(</span><span class="p" data-group-id="0063255219-2">)</span><span class="w">
+<p>Retrieves the name of the currently set Enumerations Service instance.</p><p>See <a href="#put_service/1"><code class="inline">put_service/1</code></a> for more information about setting an active Enumeration
+Service name.</p><h2 id="get_service/0-returns" class="section-heading"><a href="#get_service/0-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><p>Returns the name of the currently set Enumerations Service name or <code class="inline">nil</code> if
+no Enumerations Service name has been set.</p><h2 id="get_service/0-examples" class="section-heading"><a href="#get_service/0-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><p>  Retrieving a specific Enumerations Service name:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="9681687333-1">(</span><span class="ss">:&quot;MscmpSystEnums.TestSupportService&quot;</span><span class="p" data-group-id="9681687333-1">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_service</span><span class="p" data-group-id="9681687333-2">(</span><span class="p" data-group-id="9681687333-2">)</span><span class="w">
+</span><span class="ss">:&quot;MscmpSystEnums.TestSupportService&quot;</span></code></pre><p>  Retrieving a specific Enumerations Service name when no value is currently
+  set for the process:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="6697244262-1">(</span><span class="no">nil</span><span class="p" data-group-id="6697244262-1">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_service</span><span class="p" data-group-id="6697244262-2">(</span><span class="p" data-group-id="6697244262-2">)</span><span class="w">
 </span><span class="no">nil</span></code></pre>
   </section>
 </section>
-<section class="detail" id="start_link/3">
-
-    <span id="start_link/2"></span>
+<section class="detail" id="put_service/1">
 
   <div class="detail-header">
-    <a href="#start_link/3" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#put_service/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">start_link(service_name, datastore_context_name, opts \\ [])</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">put_service(service_name)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> start_link(
-  <a href="MscmpSystEnums.Types.html#t:service_name/0">MscmpSystEnums.Types.service_name</a>(),
-  <a href="https://hexdocs.pm/mscmp_syst_db/0.1.0/MscmpSystDb.Types.html#t:context_service_name/0">MscmpSystDb.Types.context_service_name</a>(),
-  <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
-) :: {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:error, <a href="https://hexdocs.pm/mscmp_syst_error/0.1.0/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+          <pre translate="no"><span class="attribute">@spec</span> put_service(<a href="/documentation/technical/app_server/mscmp_syst_service/MscmpSystService.Types.html#t:service_name/0">MscmpSystService.Types.service_name</a>()) ::
+  <a href="/documentation/technical/app_server/mscmp_syst_service/MscmpSystService.Types.html#t:service_name/0">MscmpSystService.Types.service_name</a>()</pre>
+
+      </div>
+
+<p>Establishes the currently active Enumerations Service instance for the current
+process.</p><h2 id="put_service/1-parameters" class="section-heading"><a href="#put_service/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">service_name</code> - the name under which the Enumerations Service is
+started and by which it may be referenced.  This is any name that may be
+used to reference a GenServer process.  Additionally, this value may be
+set <code class="inline">nil</code> to clear the currently set Enumerations Service name.</li></ul><h2 id="put_service/1-returns" class="section-heading"><a href="#put_service/1-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><p>Returns the name of the previously set Enumerations Service name or <code class="inline">nil</code> if
+no Enumerations Service name had been previously set.</p><h2 id="put_service/1-examples" class="section-heading"><a href="#put_service/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><p>  Setting a specific Enumerations Service name:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="6159109119-1">(</span><span class="ss">:&quot;MscmpSystEnums.TestSupportService&quot;</span><span class="p" data-group-id="6159109119-1">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_service</span><span class="p" data-group-id="6159109119-2">(</span><span class="p" data-group-id="6159109119-2">)</span><span class="w">
+</span><span class="ss">:&quot;MscmpSystEnums.TestSupportService&quot;</span></code></pre><p>  Clearing a previously set specific Service Name:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="7369084140-1">(</span><span class="no">nil</span><span class="p" data-group-id="7369084140-1">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_service</span><span class="p" data-group-id="7369084140-2">(</span><span class="p" data-group-id="7369084140-2">)</span><span class="w">
+</span><span class="no">nil</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="start_link/1">
+
+  <div class="detail-header">
+    <a href="#start_link/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">start_link(opts)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> start_link(<a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
+  {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | :ignore | {:error, <a href="Mserror.EnumsError.html#t:t/0">Mserror.EnumsError.t</a>()}</pre>
 
       </div>
 
 <p>Starts an instance of the Enumerations Service.</p><p>Starting the service establishes the required processes and pre-populates the
 service cache with data from the database.  Most other functions in this
 module require that the service is started prior to use and will fail if the
-service is not started.</p><h2 id="start_link/3-parameters" class="section-heading">
-  <a href="#start_link/3-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">service_name</code> - The name to use for the GenServer backing this specific
-Enumerations Service instance.</p></li><li><p><code class="inline">datastore_context_name</code> - The name of the Datastore Context to be used
-by the Enumerations Service.</p></li><li><p><code class="inline">opts</code> - A keyword list of options.</p></li></ul><h2 id="start_link/3-options" class="section-heading">
-  <a href="#start_link/3-options" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Options</span>
-</h2>
-<ul><li><p><code class="inline">:debug</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">boolean/0</code></a>) - If true, the GenServer backing the Settings Service will be started in
-debug mode.</p></li><li><p><code class="inline">:timeout</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - Timeout value for the start_link call. The default value is <code class="inline">:infinity</code>.</p></li><li><p><code class="inline">:hibernate_after</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - If present, the GenServer process awaits any message for the specified
-time before hibernating.  The timeout value is expressed in Milliseconds.</p></li></ul>
+service is not started.</p><h2 id="start_link/1-parameters" class="section-heading"><a href="#start_link/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">opts</code> - Options for the Enumerations Service. See the Options section below
+for more information.</li></ul><h2 id="start_link/1-options" class="section-heading"><a href="#start_link/1-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><p><code class="inline">:datastore_context_name</code> (<a href="https://hexdocs.pm/elixir/GenServer.html#t:name/0"><code class="inline">GenServer.name/0</code></a> or <code class="inline">nil</code>) - Specifies the name of the Datastore Context to be used by the Enumerations
+Service.</p></li><li><p><code class="inline">:debug</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">boolean/0</code></a>) - If true, the GenServer backing the Service will be started in debug mode.</p></li><li><p><code class="inline">:timeout</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - Timeout value for the start_link call. The default value is <code class="inline">:infinity</code>.</p></li><li><p><code class="inline">:hibernate_after</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - If present, the GenServer process awaits any message for the specified
+time before hibernating.  The timeout value is expressed in milliseconds.</p></li><li><p><code class="inline">:service_name</code> (<a href="https://hexdocs.pm/elixir/GenServer.html#t:name/0"><code class="inline">GenServer.name/0</code></a> or <code class="inline">nil</code>) - Required. The name to use for the GenServer backing this specific Service instance.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="terminate_service/0">
+
+  <div class="detail-header">
+    <a href="#terminate_service/0" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">terminate_service()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> terminate_service() :: :ok</pre>
+
+      </div>
+
+<p>Terminates a running instance of the Enums service.</p><h2 id="terminate_service/0-examples" class="section-heading"><a href="#terminate_service/0-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="o">&gt;</span><span class="w"> </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">terminate_service</span><span class="p" data-group-id="7619683160-1">(</span><span class="p" data-group-id="7619683160-1">)</span><span class="w">
+</span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
 
@@ -1449,7 +1335,7 @@ time before hibernating.  The timeout value is expressed in Milliseconds.</p></l
 
       <p class="built-using">
         Built using
-        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.34.2) for the
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
 
           <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

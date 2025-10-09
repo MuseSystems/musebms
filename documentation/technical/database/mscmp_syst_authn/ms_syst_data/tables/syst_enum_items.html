@@ -127,7 +127,7 @@
                                     <td>2147483647</td>
                                     <td title=''></td>
                                     <td title=''></td>
-                                    <td>uuid_generate_v7()</td>
+                                    <td>uuidv7()</td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
@@ -151,8 +151,8 @@
                                                 <td class="constraint detail"><span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
-                                                <td title="syst_instances.instance_state_id references syst_enum_items.id via syst_instances_enum_instance_state_fk"><a href='syst_instances.html'>syst_instances</a><span class='relatedKey'>.instance_state_id</span></td>
-                                                <td class="constraint detail">syst_instances_enum_instance_state_fk</td>
+                                                <td title="syst_instances.instance_lifecycle_state_id references syst_enum_items.id via syst_instances_enum_instance_lifecycle_state_fk"><a href='syst_instances.html'>syst_instances</a><span class='relatedKey'>.instance_lifecycle_state_id</span></td>
+                                                <td class="constraint detail">syst_instances_enum_instance_lifecycle_state_fk</td>
                                                 <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                             <tr>

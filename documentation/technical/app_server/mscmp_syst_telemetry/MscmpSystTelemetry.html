@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.4">
+    <meta name="project" content="mscmp_syst_telemetry v0.1.0">
+
+
+    <title>MscmpSystTelemetry — mscmp_syst_telemetry v0.1.0</title>
+
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
+
+    <script defer src="dist/sidebar_items-F845C6D4.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="MscmpSystTelemetry.html" class="sidebar-projectName" translate="no">
+mscmp_syst_telemetry
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-module" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of mscmp_syst_telemetry</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">MscmpSystTelemetry</span> 
+      <small class="app-vsn" translate="no">(mscmp_syst_telemetry v0.1.0)</small>
+
+    </h1>
+
+  </div>
+
+
+    <section id="moduledoc">
+<p>Telemetry recording and handling library for the Muse System Business
+Management System.</p><p>This library provides standardized instrumentation and telemetry handling
+capabilities for MuseBMS Components, enabling observability, debugging, and
+monitoring across the system.</p><!-- MDESC !--><h2 id="module-core-concepts" class="section-heading"><a href="#module-core-concepts" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Core Concepts</span></h2><h3 id="module-components-and-categories" class="section-heading"><a href="#module-components-and-categories" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Components and Categories</span></h3><p>The telemetry system is organized around <strong>Components</strong> and <strong>Categories</strong>:</p><ul><li><strong>Component</strong>: A logical grouping representing a MuseBMS Component
+(e.g., <code class="inline">:mscmp_syst_db</code>, <code class="inline">:mscmp_syst_auth</code>)</li><li><strong>Category</strong>: A functional area within a component
+(e.g., <code class="inline">:database</code>, <code class="inline">:api</code>, <code class="inline">:worker</code>)</li></ul><p>Each component must explicitly define its valid categories when using the library.
+This creates a clear hierarchical structure for telemetry events.</p><h3 id="module-event-kinds" class="section-heading"><a href="#module-event-kinds" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Event Kinds</span></h3><p><strong>Event Kinds</strong> represent the types of telemetry events that can be generated
+and are a cross-cutting concern that applies across all components and
+categories. Unlike components and categories which form a hierarchy, event
+kinds determine the nature and structure of the telemetry event itself.</p><p>The supported event kinds are:</p><ul><li><strong>Log Event Kinds</strong>: <code class="inline">:log_debug</code>, <code class="inline">:log_info</code>, <code class="inline">:log_warn</code>, <code class="inline">:log_error</code></li><li><strong>API Call Event Kinds</strong>: <code class="inline">:api_call_start</code>, <code class="inline">:api_call_stop</code></li></ul><p>Event kinds are independent of the component/category hierarchy and can be
+combined with any valid component/category pair to generate specific telemetry
+events.</p><h3 id="module-event-types" class="section-heading"><a href="#module-event-types" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Event Types</span></h3><p>The library generates telemetry events based on the combination of components,
+categories, and event kinds:</p><ol><li><p><strong>API Call Events</strong>: Timing and metadata for function calls</p><ul><li>Event names: <code class="inline">[component, category, :api_call, :start]</code> and
+<code class="inline">[component, category, :api_call, :stop]</code></li><li>Generated using <a href="#api_telemetry/3"><code class="inline">api_telemetry/3</code></a> macro</li><li>Creates telemetry spans with start/stop events</li></ul></li><li><p><strong>Log Events</strong>: Structured logging at different levels</p><ul><li>Event names: <code class="inline">[component, category, :log_debug|info|warn|error]</code></li><li>Generated using <a href="#log_debug/3"><code class="inline">log_debug/3</code></a>, <a href="#log_info/3"><code class="inline">log_info/3</code></a>, <a href="#log_warn/3"><code class="inline">log_warn/3</code></a>, <a href="#log_error/3"><code class="inline">log_error/3</code></a></li><li>One-time events with message and context</li></ul></li></ol><h3 id="module-event-naming-convention" class="section-heading"><a href="#module-event-naming-convention" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Event Naming Convention</span></h3><p>All telemetry events follow a consistent naming pattern:</p><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="3178763647-1">[</span><span class="n">component_atom</span><span class="p">,</span><span class="w"> </span><span class="n">category_atom</span><span class="p">,</span><span class="w"> </span><span class="n">event_kind_suffix</span><span class="n">...</span><span class="p" data-group-id="3178763647-1">]</span></code></pre><p>Examples:</p><ul><li><code class="inline">[:mscmp_syst_db, :database, :api_call, :start]</code> - Database API call start
+event</li><li><code class="inline">[:mscmp_syst_db, :database, :api_call, :stop]</code> - Database API call stop
+event</li><li><code class="inline">[:mscmp_syst_auth, :api, :log_info]</code> - Authentication API info log</li><li><code class="inline">[:mscmp_syst_worker, :background, :log_error]</code> - Background worker error</li></ul><h3 id="module-handlers" class="section-heading"><a href="#module-handlers" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Handlers</span></h3><p>Handlers are functions that process telemetry events. The library provides:</p><ul><li><strong>Logger Handler</strong>: Routes telemetry events to Elixir's Logger</li></ul><p>Handlers are typically attached at the Platform level for production, but
+Components can attach handlers for development and testing.</p><h2 id="module-usage-patterns" class="section-heading"><a href="#module-usage-patterns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Usage Patterns</span></h2><h3 id="module-setting-up-a-component" class="section-heading"><a href="#module-setting-up-a-component" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Setting Up a Component</span></h3><pre><code class="makeup elixir" translate="no"><span class="kd">defmodule</span><span class="w"> </span><span class="nc">MyComponent</span><span class="w"> </span><span class="k" data-group-id="2089996808-1">do</span><span class="w">
+  </span><span class="kn">use</span><span class="w"> </span><span class="nc">MscmpSystTelemetry</span><span class="p">,</span><span class="w">
+    </span><span class="ss">component</span><span class="p">:</span><span class="w"> </span><span class="ss">:my_component</span><span class="p">,</span><span class="w">
+    </span><span class="ss">categories</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2089996808-2">[</span><span class="ss">:api</span><span class="p">,</span><span class="w"> </span><span class="ss">:database</span><span class="p">,</span><span class="w"> </span><span class="ss">:worker</span><span class="p" data-group-id="2089996808-2">]</span><span class="w">
+
+  </span><span class="c1"># Your component code here</span><span class="w">
+</span><span class="k" data-group-id="2089996808-1">end</span></code></pre><h3 id="module-instrumenting-api-calls" class="section-heading"><a href="#module-instrumenting-api-calls" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Instrumenting API Calls</span></h3><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">create_user</span><span class="p" data-group-id="9839363546-1">(</span><span class="n">user_params</span><span class="p" data-group-id="9839363546-1">)</span><span class="w"> </span><span class="k" data-group-id="9839363546-2">do</span><span class="w">
+  </span><span class="c1"># Safe context - no sensitive data</span><span class="w">
+  </span><span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="9839363546-3">%{</span><span class="ss">user_type</span><span class="p">:</span><span class="w"> </span><span class="n">user_params</span><span class="o">.</span><span class="n">type</span><span class="p">,</span><span class="w"> </span><span class="ss">tenant_id</span><span class="p">:</span><span class="w"> </span><span class="n">user_params</span><span class="o">.</span><span class="n">tenant_id</span><span class="p" data-group-id="9839363546-3">}</span><span class="w">
+
+  </span><span class="n">api_telemetry</span><span class="w"> </span><span class="ss">:api</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="k" data-group-id="9839363546-4">do</span><span class="w">
+    </span><span class="c1"># Your function logic here</span><span class="w">
+    </span><span class="p" data-group-id="9839363546-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">user</span><span class="p" data-group-id="9839363546-5">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Database</span><span class="o">.</span><span class="n">create_user</span><span class="p" data-group-id="9839363546-6">(</span><span class="n">user_params</span><span class="p" data-group-id="9839363546-6">)</span><span class="w">
+    </span><span class="p" data-group-id="9839363546-7">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">user</span><span class="p" data-group-id="9839363546-7">}</span><span class="w">
+  </span><span class="k" data-group-id="9839363546-4">end</span><span class="w">
+</span><span class="k" data-group-id="9839363546-2">end</span></code></pre><h3 id="module-structured-logging" class="section-heading"><a href="#module-structured-logging" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Structured Logging</span></h3><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">process_payment</span><span class="p" data-group-id="6367024721-1">(</span><span class="n">payment_id</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="p" data-group-id="6367024721-1">)</span><span class="w"> </span><span class="k" data-group-id="6367024721-2">do</span><span class="w">
+  </span><span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="6367024721-3">%{</span><span class="ss">payment_id</span><span class="p">:</span><span class="w"> </span><span class="n">payment_id</span><span class="p">,</span><span class="w"> </span><span class="ss">amount_cents</span><span class="p">:</span><span class="w"> </span><span class="n">amount</span><span class="p" data-group-id="6367024721-3">}</span><span class="w">
+
+  </span><span class="n">log_info</span><span class="w"> </span><span class="ss">:api</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Processing payment&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="w">
+
+  </span><span class="k">case</span><span class="w"> </span><span class="nc">PaymentGateway</span><span class="o">.</span><span class="n">charge</span><span class="p" data-group-id="6367024721-4">(</span><span class="n">payment_id</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="p" data-group-id="6367024721-4">)</span><span class="w"> </span><span class="k" data-group-id="6367024721-5">do</span><span class="w">
+    </span><span class="p" data-group-id="6367024721-6">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p" data-group-id="6367024721-6">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+      </span><span class="n">log_info</span><span class="w"> </span><span class="ss">:api</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Payment processed successfully&quot;</span><span class="p">,</span><span class="w">
+        </span><span class="nc">Map</span><span class="o">.</span><span class="n">put</span><span class="p" data-group-id="6367024721-7">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="ss">:transaction_id</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="o">.</span><span class="n">id</span><span class="p" data-group-id="6367024721-7">)</span><span class="w">
+      </span><span class="p" data-group-id="6367024721-8">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p" data-group-id="6367024721-8">}</span><span class="w">
+
+    </span><span class="p" data-group-id="6367024721-9">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="n">reason</span><span class="p" data-group-id="6367024721-9">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+      </span><span class="n">log_error</span><span class="w"> </span><span class="ss">:api</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Payment processing failed&quot;</span><span class="p">,</span><span class="w">
+        </span><span class="nc">Map</span><span class="o">.</span><span class="n">put</span><span class="p" data-group-id="6367024721-10">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="ss">:error_reason</span><span class="p">,</span><span class="w"> </span><span class="n">reason</span><span class="p" data-group-id="6367024721-10">)</span><span class="w">
+      </span><span class="p" data-group-id="6367024721-11">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="n">reason</span><span class="p" data-group-id="6367024721-11">}</span><span class="w">
+  </span><span class="k" data-group-id="6367024721-5">end</span><span class="w">
+</span><span class="k" data-group-id="6367024721-2">end</span></code></pre><h3 id="module-database-operations" class="section-heading"><a href="#module-database-operations" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Database Operations</span></h3><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">fetch_user_data</span><span class="p" data-group-id="8904895378-1">(</span><span class="n">user_id</span><span class="p" data-group-id="8904895378-1">)</span><span class="w"> </span><span class="k" data-group-id="8904895378-2">do</span><span class="w">
+  </span><span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="8904895378-3">%{</span><span class="ss">user_id</span><span class="p">:</span><span class="w"> </span><span class="n">user_id</span><span class="p" data-group-id="8904895378-3">}</span><span class="w">
+
+  </span><span class="n">api_telemetry</span><span class="w"> </span><span class="ss">:database</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="k" data-group-id="8904895378-4">do</span><span class="w">
+    </span><span class="k">case</span><span class="w"> </span><span class="nc">Repo</span><span class="o">.</span><span class="n">get</span><span class="p" data-group-id="8904895378-5">(</span><span class="nc">User</span><span class="p">,</span><span class="w"> </span><span class="n">user_id</span><span class="p" data-group-id="8904895378-5">)</span><span class="w"> </span><span class="k" data-group-id="8904895378-6">do</span><span class="w">
+      </span><span class="no">nil</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="n">log_warn</span><span class="w"> </span><span class="ss">:database</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;User not found&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="w">
+        </span><span class="p" data-group-id="8904895378-7">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="ss">:not_found</span><span class="p" data-group-id="8904895378-7">}</span><span class="w">
+      </span><span class="n">user</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="p" data-group-id="8904895378-8">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">user</span><span class="p" data-group-id="8904895378-8">}</span><span class="w">
+    </span><span class="k" data-group-id="8904895378-6">end</span><span class="w">
+  </span><span class="k" data-group-id="8904895378-4">end</span><span class="w">
+</span><span class="k" data-group-id="8904895378-2">end</span></code></pre><h2 id="module-handler-management" class="section-heading"><a href="#module-handler-management" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Handler Management</span></h2><h3 id="module-development-setup" class="section-heading"><a href="#module-development-setup" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Development Setup</span></h3><p>For development and testing, attach handlers in your component:</p><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">setup_telemetry</span><span class="w"> </span><span class="k" data-group-id="0640348051-1">do</span><span class="w">
+  </span><span class="nc">MscmpSystTelemetry</span><span class="o">.</span><span class="n">attach_logger_handler</span><span class="p" data-group-id="0640348051-2">(</span><span class="w">
+    </span><span class="p" data-group-id="0640348051-3">{</span><span class="nc">MyComponent.Logger</span><span class="p">,</span><span class="w"> </span><span class="ss">:my_component</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p" data-group-id="0640348051-4">(</span><span class="p" data-group-id="0640348051-4">)</span><span class="p" data-group-id="0640348051-3">}</span><span class="p">,</span><span class="w">
+    </span><span class="ss">:my_component</span><span class="p">,</span><span class="w">
+    </span><span class="p" data-group-id="0640348051-5">[</span><span class="ss">:api</span><span class="p">,</span><span class="w"> </span><span class="ss">:database</span><span class="p">,</span><span class="w"> </span><span class="ss">:worker</span><span class="p" data-group-id="0640348051-5">]</span><span class="p">,</span><span class="w">
+    </span><span class="p" data-group-id="0640348051-6">[</span><span class="ss">:log_info</span><span class="p">,</span><span class="w"> </span><span class="ss">:log_warn</span><span class="p">,</span><span class="w"> </span><span class="ss">:log_error</span><span class="p">,</span><span class="w"> </span><span class="ss">:api_call_start</span><span class="p">,</span><span class="w"> </span><span class="ss">:api_call_stop</span><span class="p" data-group-id="0640348051-6">]</span><span class="w">
+  </span><span class="p" data-group-id="0640348051-2">)</span><span class="w">
+</span><span class="k" data-group-id="0640348051-1">end</span></code></pre><h3 id="module-production-setup" class="section-heading"><a href="#module-production-setup" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Production Setup</span></h3><p>In production, handlers are typically managed at the Platform level:</p><pre><code class="makeup elixir" translate="no"><span class="c1"># In your application supervision tree or platform configuration</span><span class="w">
+</span><span class="kd">def</span><span class="w"> </span><span class="nf">attach_component_handlers</span><span class="w"> </span><span class="k" data-group-id="3080522773-1">do</span><span class="w">
+  </span><span class="c1"># Attach handlers for all components</span><span class="w">
+  </span><span class="n">components</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="3080522773-2">[</span><span class="w">
+    </span><span class="p" data-group-id="3080522773-3">{</span><span class="ss">:mscmp_syst_db</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3080522773-4">[</span><span class="ss">:database</span><span class="p">,</span><span class="w"> </span><span class="ss">:api</span><span class="p" data-group-id="3080522773-4">]</span><span class="p" data-group-id="3080522773-3">}</span><span class="p">,</span><span class="w">
+    </span><span class="p" data-group-id="3080522773-5">{</span><span class="ss">:mscmp_syst_auth</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3080522773-6">[</span><span class="ss">:api</span><span class="p">,</span><span class="w"> </span><span class="ss">:worker</span><span class="p" data-group-id="3080522773-6">]</span><span class="p" data-group-id="3080522773-5">}</span><span class="p">,</span><span class="w">
+    </span><span class="p" data-group-id="3080522773-7">{</span><span class="ss">:my_component</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3080522773-8">[</span><span class="ss">:api</span><span class="p">,</span><span class="w"> </span><span class="ss">:database</span><span class="p">,</span><span class="w"> </span><span class="ss">:worker</span><span class="p" data-group-id="3080522773-8">]</span><span class="p" data-group-id="3080522773-7">}</span><span class="w">
+  </span><span class="p" data-group-id="3080522773-2">]</span><span class="w">
+
+  </span><span class="k">for</span><span class="w"> </span><span class="p" data-group-id="3080522773-9">{</span><span class="n">component</span><span class="p">,</span><span class="w"> </span><span class="n">categories</span><span class="p" data-group-id="3080522773-9">}</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">components</span><span class="w"> </span><span class="k" data-group-id="3080522773-10">do</span><span class="w">
+    </span><span class="nc">MscmpSystTelemetry</span><span class="o">.</span><span class="n">attach_logger_handler</span><span class="p" data-group-id="3080522773-11">(</span><span class="w">
+      </span><span class="p" data-group-id="3080522773-12">{</span><span class="nc">MyApp.Logger</span><span class="p">,</span><span class="w"> </span><span class="n">component</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p" data-group-id="3080522773-13">(</span><span class="p" data-group-id="3080522773-13">)</span><span class="p" data-group-id="3080522773-12">}</span><span class="p">,</span><span class="w">
+      </span><span class="n">component</span><span class="p">,</span><span class="w">
+      </span><span class="n">categories</span><span class="p">,</span><span class="w">
+      </span><span class="p" data-group-id="3080522773-14">[</span><span class="ss">:log_warn</span><span class="p">,</span><span class="w"> </span><span class="ss">:log_error</span><span class="p" data-group-id="3080522773-14">]</span><span class="w">  </span><span class="c1"># Production typically logs less verbose</span><span class="w">
+    </span><span class="p" data-group-id="3080522773-11">)</span><span class="w">
+  </span><span class="k" data-group-id="3080522773-10">end</span><span class="w">
+</span><span class="k" data-group-id="3080522773-1">end</span></code></pre><h2 id="module-security-considerations" class="section-heading"><a href="#module-security-considerations" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Security Considerations</span></h2><p><strong>Context Data Safety</strong>: Always ensure that context data passed to telemetry
+functions contains only safe, non-sensitive information. Never include:</p><ul><li>User passwords or tokens</li><li>Personal identifiable information (PII)</li><li>API keys or secrets</li><li>Raw user input</li></ul><p><strong>Safe Context Examples</strong>:</p><pre><code class="makeup elixir" translate="no"><span class="c1"># ✅ Safe - IDs and metadata</span><span class="w">
+</span><span class="p" data-group-id="7616616902-1">%{</span><span class="ss">user_id</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="ss">account_id</span><span class="p">:</span><span class="w"> </span><span class="mi">456</span><span class="p">,</span><span class="w"> </span><span class="ss">action</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;create&quot;</span><span class="p" data-group-id="7616616902-1">}</span><span class="w">
+
+</span><span class="c1"># ✅ Safe - Aggregate data</span><span class="w">
+</span><span class="p" data-group-id="7616616902-2">%{</span><span class="ss">record_count</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="ss">processing_time_ms</span><span class="p">:</span><span class="w"> </span><span class="mi">250</span><span class="p" data-group-id="7616616902-2">}</span><span class="w">
+
+</span><span class="c1"># ❌ Unsafe - Contains sensitive data</span><span class="w">
+</span><span class="p" data-group-id="7616616902-3">%{</span><span class="ss">user_email</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;user@example.com&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;secret123&quot;</span><span class="p" data-group-id="7616616902-3">}</span></code></pre><h2 id="module-event-metadata" class="section-heading"><a href="#module-event-metadata" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Event Metadata</span></h2><p>All telemetry events include standard metadata:</p><ul><li><code class="inline">:module</code> - The module that generated the event</li><li><code class="inline">:function</code> - The function name</li><li><code class="inline">:arity</code> - The function arity</li><li><code class="inline">:context</code> - Developer-provided context data</li><li><code class="inline">:message</code> - Log message (for log events)</li></ul><p>Additional metadata may be added by handlers or the telemetry system itself.</p><h2 id="module-integration-points" class="section-heading"><a href="#module-integration-points" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Integration Points</span></h2><h3 id="module-with-logging" class="section-heading"><a href="#module-with-logging" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">With Logging</span></h3><p>The Logger handler integrates seamlessly with Elixir's Logger, allowing
+telemetry events to appear in standard log outputs while maintaining
+structured metadata.</p><h3 id="module-with-metrics" class="section-heading"><a href="#module-with-metrics" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">With Metrics</span></h3><p>While not implemented in this library, telemetry events can be consumed
+by metrics systems like Prometheus, StatsD, or custom metrics handlers.</p><h3 id="module-with-tracing" class="section-heading"><a href="#module-with-tracing" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">With Tracing</span></h3><p>API call spans can be consumed by distributed tracing systems to provide
+end-to-end request visibility across MuseBMS components.</p>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#__using__/1" data-no-tooltip="" translate="no">__using__(opts)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Sets up the calling module to use MscmpSystTelemetry.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#api_telemetry/3" data-no-tooltip="" translate="no">api_telemetry(category, context, list)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Used to instrument Component API calls.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#attach_logger_handler/4" data-no-tooltip="" translate="no">attach_logger_handler(handler_id, component, categories, event_kinds)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Attaches the MscmpSystTelemetry logger handler to telemetry events.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#detach_logger_handler/1" data-no-tooltip="" translate="no">detach_logger_handler(handler_id)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Detaches the MscmpSystTelemetry logger handler.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#generate_events/3" data-no-tooltip="" translate="no">generate_events(component, categories, event_kinds)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Generates the list of telemetry event names for the given component, categories,
+and event kinds.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#log_debug/3" data-no-tooltip="" translate="no">log_debug(category, message, context)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Logs a <code class="inline">debug</code> event with context via telemetry.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#log_error/3" data-no-tooltip="" translate="no">log_error(category, message, context)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Logs an <code class="inline">error</code> event with context via telemetry.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#log_info/3" data-no-tooltip="" translate="no">log_info(category, message, context)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Logs an <code class="inline">info</code> event with context via telemetry.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#log_warn/3" data-no-tooltip="" translate="no">log_warn(category, message, context)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Logs a <code class="inline">warn</code> event with context via telemetry.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+
+    <div class="functions-list">
+<section class="detail" id="__using__/1">
+
+  <div class="detail-header">
+    <a href="#__using__/1" class="detail-link" data-no-tooltip="" aria-label="Link to this macro">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">__using__(opts)</h1>
+
+        <span class="note">(macro)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> __using__(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) :: <a href="https://hexdocs.pm/elixir/Macro.html#t:t/0">Macro.t</a>()</pre>
+
+      </div>
+
+<p>Sets up the calling module to use MscmpSystTelemetry.</p><h2 id="__using__/1-options" class="section-heading"><a href="#__using__/1-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><code class="inline">:component</code> (atom, required) - The atom identifying the component (e.g., <code class="inline">:mscmp_syst_db</code>).</li><li><code class="inline">:categories</code> (list of atoms, required) - The list of valid categories for this component
+(e.g., <code class="inline">[:database, :api, :worker]</code>). Each component must explicitly define its categories.</li></ul><p>This macro defines <code class="inline">@component</code> and <code class="inline">@categories</code> in the calling module.</p>
+  </section>
+</section>
+<section class="detail" id="api_telemetry/3">
+
+  <div class="detail-header">
+    <a href="#api_telemetry/3" class="detail-link" data-no-tooltip="" aria-label="Link to this macro">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">api_telemetry(category, context, list)</h1>
+
+        <span class="note">(macro)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> api_telemetry(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) :: <a href="https://hexdocs.pm/elixir/Macro.html#t:t/0">Macro.t</a>()</pre>
+
+      </div>
+
+<p>Used to instrument Component API calls.</p><p>The telemetry event names will be <code class="inline">[@component, category, :api_call, :start]</code>
+and <code class="inline">[@component, category, :api_call, :stop]</code>.
+The <code class="inline">context</code> argument is added to the telemetry metadata under the
+<code class="inline">:context</code> key, and the calling module is added under the <code class="inline">:module</code> key.</p><p>It is the developer's responsibility to ensure that the provided <code class="inline">context</code>
+does not contain sensitive information. The context should be a keyword list
+or map containing only data that is safe and useful for telemetry.</p><h2 id="api_telemetry/3-examples" class="section-heading"><a href="#api_telemetry/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">my_api_function</span><span class="p" data-group-id="1730351879-1">(</span><span class="n">user</span><span class="p">,</span><span class="w"> </span><span class="n">account_id</span><span class="p" data-group-id="1730351879-1">)</span><span class="w"> </span><span class="k" data-group-id="1730351879-2">do</span><span class="w">
+  </span><span class="c1"># Provide an explicit map of safe-to-log context.</span><span class="w">
+  </span><span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="1730351879-3">%{</span><span class="ss">user_id</span><span class="p">:</span><span class="w"> </span><span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="ss">account_id</span><span class="p">:</span><span class="w"> </span><span class="n">account_id</span><span class="p" data-group-id="1730351879-3">}</span><span class="w">
+  </span><span class="n">api_telemetry</span><span class="w"> </span><span class="ss">:api</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="k" data-group-id="1730351879-4">do</span><span class="w">
+    </span><span class="c1"># ... function body ...</span><span class="w">
+    </span><span class="p" data-group-id="1730351879-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;result&quot;</span><span class="p" data-group-id="1730351879-5">}</span><span class="w">
+  </span><span class="k" data-group-id="1730351879-4">end</span><span class="w">
+</span><span class="k" data-group-id="1730351879-2">end</span><span class="w">
+
+</span><span class="kd">def</span><span class="w"> </span><span class="nf">my_database_function</span><span class="w"> </span><span class="k" data-group-id="1730351879-6">do</span><span class="w">
+  </span><span class="c1"># For functions where no extra context is needed, pass an empty list.</span><span class="w">
+  </span><span class="n">api_telemetry</span><span class="w"> </span><span class="ss">:database</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1730351879-7">[</span><span class="p" data-group-id="1730351879-7">]</span><span class="w"> </span><span class="k" data-group-id="1730351879-8">do</span><span class="w">
+    </span><span class="c1"># ...</span><span class="w">
+  </span><span class="k" data-group-id="1730351879-8">end</span><span class="w">
+</span><span class="k" data-group-id="1730351879-6">end</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="attach_logger_handler/4">
+
+  <div class="detail-header">
+    <a href="#attach_logger_handler/4" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">attach_logger_handler(handler_id, component, categories, event_kinds)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> attach_logger_handler(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()], [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()]) ::
+  :ok | {:error, <a href="Mserror.TelemetryError.html#t:t/0">Mserror.TelemetryError.t</a>()}</pre>
+
+      </div>
+
+<p>Attaches the MscmpSystTelemetry logger handler to telemetry events.</p><p>This function sets up a handler that will log telemetry events using Elixir's
+<a href="https://hexdocs.pm/logger/Logger.html"><code class="inline">Logger</code></a>. The handler is attached to events that match
+<code class="inline">[component, category, event_kind]</code>.</p><h2 id="attach_logger_handler/4-parameters" class="section-heading"><a href="#attach_logger_handler/4-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">handler_id</code> (term, required) - A unique identifier for this handler.
+Must be unique across all telemetry handlers in the system.</li><li><code class="inline">component</code> (atom, required) - The component atom to listen for events
+from.</li><li><code class="inline">categories</code> (list of atoms, required) - The list of category atoms to
+attach to. Events will be attached for each category in the list. Must be
+non-empty.</li><li><code class="inline">event_kinds</code> (list of atoms, required) - The list of event kinds to
+listen for. Valid values are: <code class="inline">:log_debug</code>, <code class="inline">:log_info</code>, <code class="inline">:log_warn</code>,
+<code class="inline">:log_error</code>, <code class="inline">:api_call_start</code>, <code class="inline">:api_call_stop</code>. Must be non-empty.</li></ul><h2 id="attach_logger_handler/4-example" class="section-heading"><a href="#attach_logger_handler/4-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Example</span></h2><pre><code class="makeup elixir" translate="no"><span class="nc">MscmpSystTelemetry</span><span class="o">.</span><span class="n">attach_logger_handler</span><span class="p" data-group-id="1314857448-1">(</span><span class="w">
+  </span><span class="p" data-group-id="1314857448-2">{</span><span class="nc">MyApp.Logger</span><span class="p">,</span><span class="w"> </span><span class="ss">:my_component</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p" data-group-id="1314857448-3">(</span><span class="p" data-group-id="1314857448-3">)</span><span class="p" data-group-id="1314857448-2">}</span><span class="p">,</span><span class="w">
+  </span><span class="ss">:my_component</span><span class="p">,</span><span class="w">
+  </span><span class="p" data-group-id="1314857448-4">[</span><span class="ss">:database</span><span class="p">,</span><span class="w"> </span><span class="ss">:api</span><span class="p">,</span><span class="w"> </span><span class="ss">:worker</span><span class="p" data-group-id="1314857448-4">]</span><span class="p">,</span><span class="w">
+  </span><span class="p" data-group-id="1314857448-5">[</span><span class="ss">:log_info</span><span class="p">,</span><span class="w"> </span><span class="ss">:log_error</span><span class="p">,</span><span class="w"> </span><span class="ss">:api_call_stop</span><span class="p" data-group-id="1314857448-5">]</span><span class="w">
+</span><span class="p" data-group-id="1314857448-1">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="detach_logger_handler/1">
+
+  <div class="detail-header">
+    <a href="#detach_logger_handler/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">detach_logger_handler(handler_id)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> detach_logger_handler(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()) :: :ok | {:error, <a href="Mserror.TelemetryError.html#t:t/0">Mserror.TelemetryError.t</a>()}</pre>
+
+      </div>
+
+<p>Detaches the MscmpSystTelemetry logger handler.</p><p>The handler_id provided must match the handler_id used when attaching the handler.</p><h2 id="detach_logger_handler/1-parameters" class="section-heading"><a href="#detach_logger_handler/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">handler_id</code> (term, required) - The unique identifier that was used when attaching.</li></ul><h2 id="detach_logger_handler/1-example" class="section-heading"><a href="#detach_logger_handler/1-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Example</span></h2><pre><code class="makeup elixir" translate="no"><span class="nc">MscmpSystTelemetry</span><span class="o">.</span><span class="n">detach_logger_handler</span><span class="p" data-group-id="2705202879-1">(</span><span class="w">
+  </span><span class="p" data-group-id="2705202879-2">{</span><span class="nc">MyApp.Logger</span><span class="p">,</span><span class="w"> </span><span class="ss">:my_component</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p" data-group-id="2705202879-3">(</span><span class="p" data-group-id="2705202879-3">)</span><span class="p" data-group-id="2705202879-2">}</span><span class="w">
+</span><span class="p" data-group-id="2705202879-1">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="generate_events/3">
+
+  <div class="detail-header">
+    <a href="#generate_events/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">generate_events(component, categories, event_kinds)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> generate_events(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()], [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()]) ::
+  {:ok, [[<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()]]} | <a href="Mserror.TelemetryError.html#t:t/0">Mserror.TelemetryError.t</a>()</pre>
+
+      </div>
+
+<p>Generates the list of telemetry event names for the given component, categories,
+and event kinds.</p><p>This function provides the canonical mapping from event kinds to actual telemetry
+event names. It can be used by handlers, external libraries, or for testing to
+determine what events will be generated.</p><p>This function validates the provided event kinds and returns an error if any
+invalid event kinds are provided.</p><h2 id="generate_events/3-parameters" class="section-heading"><a href="#generate_events/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">component</code> (atom, required) - The component atom.</li><li><code class="inline">categories</code> (list of atoms, required) - The list of category atoms. Must
+be non-empty.</li><li><code class="inline">event_kinds</code> (list of atoms, required) - The list of event kinds.
+Valid values are: <code class="inline">:log_debug</code>, <code class="inline">:log_info</code>, <code class="inline">:log_warn</code>, <code class="inline">:log_error</code>,
+<code class="inline">:api_call_start</code>, <code class="inline">:api_call_stop</code>. Must be non-empty.</li></ul><h2 id="generate_events/3-returns" class="section-heading"><a href="#generate_events/3-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><ul><li><code class="inline">{:ok, events}</code> - A tuple containing the list of telemetry event names
+(lists of atoms).</li><li><code class="inline">{:error, reason}</code> - An error tuple if validation fails.</li></ul><h2 id="generate_events/3-example" class="section-heading"><a href="#generate_events/3-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Example</span></h2><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystTelemetry</span><span class="o">.</span><span class="n">generate_events</span><span class="p" data-group-id="8431176669-1">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:my_component</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8431176669-2">[</span><span class="ss">:database</span><span class="p">,</span><span class="w"> </span><span class="ss">:api</span><span class="p" data-group-id="8431176669-2">]</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8431176669-3">[</span><span class="ss">:log_info</span><span class="p">,</span><span class="w"> </span><span class="ss">:api_call_stop</span><span class="p" data-group-id="8431176669-3">]</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="8431176669-1">)</span><span class="w">
+</span><span class="p" data-group-id="8431176669-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8431176669-5">[</span><span class="w">
+  </span><span class="p" data-group-id="8431176669-6">[</span><span class="ss">:my_component</span><span class="p">,</span><span class="w"> </span><span class="ss">:database</span><span class="p">,</span><span class="w"> </span><span class="ss">:log_info</span><span class="p" data-group-id="8431176669-6">]</span><span class="p">,</span><span class="w">
+  </span><span class="p" data-group-id="8431176669-7">[</span><span class="ss">:my_component</span><span class="p">,</span><span class="w"> </span><span class="ss">:database</span><span class="p">,</span><span class="w"> </span><span class="ss">:api_call</span><span class="p">,</span><span class="w"> </span><span class="ss">:stop</span><span class="p" data-group-id="8431176669-7">]</span><span class="p">,</span><span class="w">
+  </span><span class="p" data-group-id="8431176669-8">[</span><span class="ss">:my_component</span><span class="p">,</span><span class="w"> </span><span class="ss">:api</span><span class="p">,</span><span class="w"> </span><span class="ss">:log_info</span><span class="p" data-group-id="8431176669-8">]</span><span class="p">,</span><span class="w">
+  </span><span class="p" data-group-id="8431176669-9">[</span><span class="ss">:my_component</span><span class="p">,</span><span class="w"> </span><span class="ss">:api</span><span class="p">,</span><span class="w"> </span><span class="ss">:api_call</span><span class="p">,</span><span class="w"> </span><span class="ss">:stop</span><span class="p" data-group-id="8431176669-9">]</span><span class="w">
+</span><span class="p" data-group-id="8431176669-5">]</span><span class="p" data-group-id="8431176669-4">}</span><span class="w">
+
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8431176669-10">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8431176669-11">%</span><span class="nc" data-group-id="8431176669-11">Mserror.TelemetryError</span><span class="p" data-group-id="8431176669-11">{</span><span class="p" data-group-id="8431176669-11">}</span><span class="p" data-group-id="8431176669-10">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystTelemetry</span><span class="o">.</span><span class="n">generate_events</span><span class="p" data-group-id="8431176669-12">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">:my_component</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="p" data-group-id="8431176669-13">[</span><span class="ss">:database</span><span class="p" data-group-id="8431176669-13">]</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="p" data-group-id="8431176669-14">[</span><span class="ss">:invalid_event</span><span class="p" data-group-id="8431176669-14">]</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8431176669-12">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="log_debug/3">
+
+  <div class="detail-header">
+    <a href="#log_debug/3" class="detail-link" data-no-tooltip="" aria-label="Link to this macro">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">log_debug(category, message, context)</h1>
+
+        <span class="note">(macro)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> log_debug(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: <a href="https://hexdocs.pm/elixir/Macro.html#t:t/0">Macro.t</a>()</pre>
+
+      </div>
+
+<p>Logs a <code class="inline">debug</code> event with context via telemetry.</p><p>The event name will be <code class="inline">[@component, category, :log_debug]</code>.
+The message and context are passed as metadata, along with the calling module.
+It is the developer's responsibility to ensure that the provided context does
+not contain sensitive information.</p>
+  </section>
+</section>
+<section class="detail" id="log_error/3">
+
+  <div class="detail-header">
+    <a href="#log_error/3" class="detail-link" data-no-tooltip="" aria-label="Link to this macro">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">log_error(category, message, context)</h1>
+
+        <span class="note">(macro)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> log_error(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: <a href="https://hexdocs.pm/elixir/Macro.html#t:t/0">Macro.t</a>()</pre>
+
+      </div>
+
+<p>Logs an <code class="inline">error</code> event with context via telemetry.</p><p>The event name will be <code class="inline">[@component, category, :log_error]</code>.
+The message and context are passed as metadata, along with the calling module.
+It is the developer's responsibility to ensure that the provided context does
+not contain sensitive information.</p>
+  </section>
+</section>
+<section class="detail" id="log_info/3">
+
+  <div class="detail-header">
+    <a href="#log_info/3" class="detail-link" data-no-tooltip="" aria-label="Link to this macro">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">log_info(category, message, context)</h1>
+
+        <span class="note">(macro)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> log_info(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: <a href="https://hexdocs.pm/elixir/Macro.html#t:t/0">Macro.t</a>()</pre>
+
+      </div>
+
+<p>Logs an <code class="inline">info</code> event with context via telemetry.</p><p>The event name will be <code class="inline">[@component, category, :log_info]</code>.
+The message and context are passed as metadata, along with the calling module.
+It is the developer's responsibility to ensure that the provided context does
+not contain sensitive information.</p>
+  </section>
+</section>
+<section class="detail" id="log_warn/3">
+
+  <div class="detail-header">
+    <a href="#log_warn/3" class="detail-link" data-no-tooltip="" aria-label="Link to this macro">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">log_warn(category, message, context)</h1>
+
+        <span class="note">(macro)</span>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> log_warn(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: <a href="https://hexdocs.pm/elixir/Macro.html#t:t/0">Macro.t</a>()</pre>
+
+      </div>
+
+<p>Logs a <code class="inline">warn</code> event with context via telemetry.</p><p>The event name will be <code class="inline">[@component, category, :log_warn]</code>.
+The message and context are passed as metadata, along with the calling module.
+It is the developer's responsibility to ensure that the provided context does
+not contain sensitive information.</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="mscmp_syst_telemetry.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
+
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

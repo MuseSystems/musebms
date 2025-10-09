@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_settings" schema="ms_syst" type="PostgreSQL - 16.4 (Ubuntu 16.4-1.pgdg22.04+1)">
+<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_settings" schema="ms_syst" type="PostgreSQL - 18.0 (Ubuntu 18.0-1.pgdg24.04+3)">
    <tables>
       <table name="syst_settings" numRows="0" remarks="Configuration data which establishes application behaviors, defaults, and&#10;provides a reference center to interested application functionality.&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;  * `DELETE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - See column comments for applicable restrictions." schema="ms_syst" type="VIEW" viewSql=" SELECT id,&#10;    internal_name,&#10;    display_name,&#10;    syst_defined,&#10;    syst_description,&#10;    user_description,&#10;    setting_flag,&#10;    setting_integer,&#10;    setting_integer_range,&#10;    setting_decimal,&#10;    setting_decimal_range,&#10;    setting_interval,&#10;    setting_date,&#10;    setting_date_range,&#10;    setting_time,&#10;    setting_timestamp,&#10;    setting_timestamp_range,&#10;    setting_json,&#10;    setting_text,&#10;    setting_uuid,&#10;    setting_blob,&#10;    diag_timestamp_created,&#10;    diag_role_created,&#10;    diag_timestamp_modified,&#10;    diag_wallclock_modified,&#10;    diag_role_modified,&#10;    diag_row_version,&#10;    diag_update_count&#10;   FROM ms_syst_data.syst_settings;">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="true" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: true&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
@@ -62,8 +62,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_d_syst_settings'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(old)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -71,7 +69,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM003',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -86,7 +84,7 @@ END;]]></definition>
          </parameters>
       </routine>
       <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_i_syst_settings()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
-         <comment><![CDATA[Processes incoming API View requests according to globally applicable business 
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
 rules and data validation requirements.
 
 **Trigger Function Details**:
@@ -190,8 +188,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_u_syst_settings'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -199,7 +195,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM003',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;

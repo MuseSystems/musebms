@@ -127,7 +127,7 @@
                                     <td>2147483647</td>
                                     <td title=''></td>
                                     <td title=''></td>
-                                    <td>uuid_generate_v7()</td>
+                                    <td>uuidv7()</td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
@@ -243,7 +243,7 @@
                                     <td><p>Indicates the type of the instance.  This can designate instances as being production or non-production, or make other functional differences between instances created for different reasons based on the assigned instance type.</p></td>
                                 </tr>
                                 <tr>
-                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="instance_state_id">instance_state_id</span></td>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="instance_lifecycle_state_id">instance_lifecycle_state_id</span></td>
                                     <td>uuid</td>
                                     <td>2147483647</td>
                                     <td title=''></td>
@@ -256,8 +256,8 @@
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
-                                                <td title="syst_instances.instance_state_id references syst_enum_items.id via syst_instances_enum_instance_state_fk"><a href='syst_enum_items.html'>syst_enum_items</a><span class='relatedKey'>.id</span></td>
-                                                <td class="constraint detail">syst_instances_enum_instance_state_fk</td>
+                                                <td title="syst_instances.instance_lifecycle_state_id references syst_enum_items.id via syst_instances_enum_instance_lifecycle_state_fk"><a href='syst_enum_items.html'>syst_enum_items</a><span class='relatedKey'>.id</span></td>
+                                                <td class="constraint detail">syst_instances_enum_instance_lifecycle_state_fk</td>
                                                 <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
@@ -574,7 +574,7 @@
                                 <tbody>
                                 <tr>
                                     <td>syst_instances_self_ownership_chk</td>
-                                    <td>(((owning_instance_id IS NULL) OR (owning_instance_id &lt;&gt; id)))</td>
+                                    <td>((owning_instance_id IS NULL) OR (owning_instance_id &lt;&gt; id))</td>
                                 </tr>
                                 </tbody>
                             </table>

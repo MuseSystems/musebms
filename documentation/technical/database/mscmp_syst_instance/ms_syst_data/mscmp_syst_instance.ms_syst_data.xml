@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_instance" schema="ms_syst_data" type="PostgreSQL - 16.4 (Ubuntu 16.4-1.pgdg22.04+1)">
+<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_instance" schema="ms_syst_data" type="PostgreSQL - 18.0 (Ubuntu 18.0-1.pgdg24.04+3)">
    <tables>
       <table name="syst_application_contexts" remarks="Applications are written with certain security and connection&#10;characteristics in mind which correlate to database roles used by the&#10;application for establishing connections.  This table defines the datastore&#10;contexts the application is expecting so that Instance records can be validated&#10;against the expectations." schema="ms_syst_data" type="TABLE">
-         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+         <column autoUpdated="false" defaultValue="uuidv7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
             <child column="application_context_id" foreignKey="syst_instance_contexts_application_contexts_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_instance_contexts"/>
             <child column="application_context_id" foreignKey="syst_instance_type_contexts_application_contexts_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_instance_type_contexts"/>
          </column>
@@ -33,7 +33,7 @@
          </index>
       </table>
       <table name="syst_applications" remarks="Describes the known applications which is managed by the global database and&#10;authentication infrastructure." schema="ms_syst_data" type="TABLE">
-         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+         <column autoUpdated="false" defaultValue="uuidv7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
             <child column="application_id" foreignKey="syst_application_contexts_applications_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_application_contexts"/>
             <child column="application_id" foreignKey="syst_instance_type_applications_applications_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_instance_type_applications"/>
             <child column="application_id" foreignKey="syst_instances_applications_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_instances"/>
@@ -60,7 +60,7 @@
          </index>
       </table>
       <table name="syst_enum_functional_types" remarks="For those Enumerations requiring Functional Type designation, this table defines&#10;the available types and persists related metadata.  Note that not all&#10;Enumerations require Functional Types." schema="ms_syst_data" type="TABLE">
-         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+         <column autoUpdated="false" defaultValue="uuidv7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
             <child column="functional_type_id" foreignKey="syst_enum_items_enum_functional_type_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_items"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
@@ -90,9 +90,9 @@
          </index>
       </table>
       <table name="syst_enum_items" remarks="The list of values provided by an Enumeration as well as related behavioral and&#10;informational metadata." schema="ms_syst_data" type="TABLE">
-         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+         <column autoUpdated="false" defaultValue="uuidv7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
             <child column="instance_type_id" foreignKey="syst_instance_type_applications_instance_types_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_instance_type_applications"/>
-            <child column="instance_state_id" foreignKey="syst_instances_enum_instance_state_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_instances"/>
+            <child column="instance_lifecycle_state_id" foreignKey="syst_instances_enum_instance_lifecycle_state_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_instances"/>
             <child column="instance_type_id" foreignKey="syst_instances_enum_instance_type_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_instances"/>
             <child column="owner_state_id" foreignKey="syst_owner_owner_states_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_owners"/>
          </column>
@@ -133,7 +133,7 @@
          </index>
       </table>
       <table name="syst_enums" remarks="Enumerates the enumerations known to the system along with additional metadata&#10;useful in applying them appropriately." schema="ms_syst_data" type="TABLE">
-         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+         <column autoUpdated="false" defaultValue="uuidv7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
             <child column="enum_id" foreignKey="syst_enum_functional_types_enum_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_enum_functional_types"/>
             <child column="enum_id" foreignKey="syst_enum_items_enum_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_enum_items"/>
          </column>
@@ -164,7 +164,7 @@
          </index>
       </table>
       <table name="syst_instance_contexts" remarks="Instance specific settings which determine how each Instance connects to the&#10;defined Application Contexts." schema="ms_syst_data" type="TABLE">
-         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="uuidv7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="instance_id" nullable="false" remarks="Identifies the parent Instance for which Instance Contexts are being defined." size="2147483647" type="uuid" typeCode="1111">
             <parent column="id" foreignKey="syst_instance_contexts_instances_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_instances"/>
@@ -189,10 +189,10 @@
          <index name="syst_instance_contexts_internal_name_udx" unique="true">
             <column ascending="true" name="internal_name"/>
          </index>
-         <checkConstraint constraint="((db_pool_size &gt;= 0))" name="syst_instance_contexts_db_pool_size_chk"/>
+         <checkConstraint constraint="(db_pool_size &gt;= 0)" name="syst_instance_contexts_db_pool_size_chk"/>
       </table>
       <table name="syst_instance_type_applications" remarks="A many-to-many relation indicating which Instance Types are usable for each&#10;Application.&#10;&#10;**General Usage**&#10;&#10;Note that creating ms_syst_data.syst_application_contexts records prior to&#10;inserting an Instance Type/Application association into this table is&#10;recommended as default Instance Type Context records can be created&#10;automatically on INSERT into this table so long as the supporting data is&#10;available.  After insert here, manipulations of what Contexts Applications&#10;require must be handled manually." schema="ms_syst_data" type="TABLE">
-         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+         <column autoUpdated="false" defaultValue="uuidv7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
             <child column="instance_type_application_id" foreignKey="syst_instance_type_contexts_inst_type_app_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_instance_type_contexts"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="instance_type_id" nullable="false" remarks="A reference to the Instance Type being associated to an Application." size="2147483647" type="uuid" typeCode="1111">
@@ -218,7 +218,7 @@
          </index>
       </table>
       <table name="syst_instance_type_contexts" remarks="Establishes Instance Type defaults for each of an Application's defined&#10;datastore contexts.&#10;&#10;**General Usage**&#10;&#10;In practice, these records are used in the creation of Instance Context records,&#10;but do not establish a direct relationship; records in this table simply inform&#10;us what Instance Contexts should exist and give us default values to use in&#10;their creation." schema="ms_syst_data" type="TABLE">
-         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="uuidv7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="instance_type_application_id" nullable="false" remarks="The Instance Type/Application association to which the context definition&#10;belongs." size="2147483647" type="uuid" typeCode="1111">
             <parent column="id" foreignKey="syst_instance_type_contexts_inst_type_app_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_instance_type_applications"/>
          </column>
@@ -241,10 +241,10 @@
             <column ascending="true" name="instance_type_application_id"/>
             <column ascending="true" name="application_context_id"/>
          </index>
-         <checkConstraint constraint="((default_db_pool_size &gt;= 0))" name="syst_instance_type_contexts_default_db_pool_size_chk"/>
+         <checkConstraint constraint="(default_db_pool_size &gt;= 0)" name="syst_instance_type_contexts_default_db_pool_size_chk"/>
       </table>
       <table name="syst_instances" remarks="Defines known application instances and provides their configuration settings." schema="ms_syst_data" type="TABLE">
-         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+         <column autoUpdated="false" defaultValue="uuidv7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
             <child column="instance_id" foreignKey="syst_instance_contexts_instances_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_instance_contexts"/>
             <child column="owning_instance_id" foreignKey="syst_instances_owning_instance_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_instances"/>
          </column>
@@ -256,8 +256,8 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="instance_type_id" nullable="false" remarks="Indicates the type of the instance.  This can designate instances as being&#10;production or non-production, or make other functional differences between&#10;instances created for different reasons based on the assigned instance type." size="2147483647" type="uuid" typeCode="1111">
             <parent column="id" foreignKey="syst_instances_enum_instance_type_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_items"/>
          </column>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="instance_state_id" nullable="false" remarks="Establishes the current life-cycle state of the instance record.  This can&#10;determine functionality such as if the instance is usable, visible, or if it may&#10;be purged from the database completely." size="2147483647" type="uuid" typeCode="1111">
-            <parent column="id" foreignKey="syst_instances_enum_instance_state_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_items"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="instance_lifecycle_state_id" nullable="false" remarks="Establishes the current life-cycle state of the instance record.  This can&#10;determine functionality such as if the instance is usable, visible, or if it may&#10;be purged from the database completely." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_instances_enum_instance_lifecycle_state_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_items"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="owner_id" nullable="false" remarks="Identifies the owner of the instance.  The owner is the entity which&#10;commissioned the instance and is the &quot;user&quot; of the instance.  Owners have&#10;nominal management rights over their instances, such as which access accounts&#10;and which credential types are allowed to be used to authenticate to the owner's&#10;instances." size="2147483647" type="uuid" typeCode="1111">
             <parent column="id" foreignKey="syst_instances_owners_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_owners"/>
@@ -285,10 +285,10 @@
          <index name="syst_instances_internal_name_udx" unique="true">
             <column ascending="true" name="internal_name"/>
          </index>
-         <checkConstraint constraint="(((owning_instance_id IS NULL) OR (owning_instance_id &lt;&gt; id)))" name="syst_instances_self_ownership_chk"/>
+         <checkConstraint constraint="((owning_instance_id IS NULL) OR (owning_instance_id &lt;&gt; id))" name="syst_instances_self_ownership_chk"/>
       </table>
       <table name="syst_owners" remarks="Identifies instance owners.  Instance owners are typically the clients which&#10;have commissioned the use of an application instance." schema="ms_syst_data" type="TABLE">
-         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+         <column autoUpdated="false" defaultValue="uuidv7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
             <child column="owner_id" foreignKey="syst_instances_owners_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_instances"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
@@ -545,8 +545,6 @@ BEGIN
                 DETAIL  = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst_data'
                             ,p_proc_name      => 'trig_b_i_syst_enum_functional_type_validate_new_allowed'
-                            ,p_exception_name => 'invalid_functional_type'
-                            ,p_errcode        => 'PM003'
                             ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -554,7 +552,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM003',
+                ERRCODE = 'PM105',
                 SCHEMA  = tg_table_schema,
                 TABLE   = tg_table_name;
 
@@ -655,8 +653,6 @@ BEGIN
                 DETAIL  = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst_data'
                             ,p_proc_name      => 'trig_b_iu_syst_enum_items_validate_functional_types'
-                            ,p_exception_name => 'invalid_functional_type'
-                            ,p_errcode        => 'PM003'
                             ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -664,7 +660,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM003',
+                ERRCODE = 'PM104',
                 SCHEMA  = tg_table_schema,
                 TABLE   = tg_table_name;
 
@@ -708,8 +704,6 @@ BEGIN
                     DETAIL = ms_syst_priv.get_exception_details(
                                  p_proc_schema    => 'ms_syst_data'
                                 ,p_proc_name      => 'trig_b_iud_syst_application_contexts_validate_owner_context'
-                                ,p_exception_name => 'invalid_duplicate'
-                                ,p_errcode        => 'PM008'
                                 ,p_param_data     => to_jsonb(new)
                                 ,p_context_data   =>
                                     jsonb_build_object(
@@ -717,7 +711,7 @@ BEGIN
                                         ,'tg_when',       tg_when
                                         ,'tg_schema',     tg_table_schema
                                         ,'tg_table_name', tg_table_name)),
-                    ERRCODE = 'PM008',
+                    ERRCODE = 'PM106',
                     SCHEMA = tg_table_schema,
                     TABLE = tg_table_name;
         END IF;
@@ -738,8 +732,6 @@ BEGIN
                     DETAIL = ms_syst_priv.get_exception_details(
                                  p_proc_schema    => 'ms_syst'
                                 ,p_proc_name      => 'trig_b_iud_syst_application_contexts_validate_owner_context'
-                                ,p_exception_name => 'invalid_duplicate'
-                                ,p_errcode        => 'PM008'
                                 ,p_param_data     => to_jsonb(new)
                                 ,p_context_data   =>
                                     jsonb_build_object(
@@ -747,7 +739,7 @@ BEGIN
                                         ,'tg_when',       tg_when
                                         ,'tg_schema',     tg_table_schema
                                         ,'tg_table_name', tg_table_name)),
-                    ERRCODE = 'PM008',
+                    ERRCODE = 'PM107',
                     SCHEMA = tg_table_schema,
                     TABLE = tg_table_name;
         END IF;
@@ -774,8 +766,6 @@ BEGIN
                     DETAIL = ms_syst_priv.get_exception_details(
                                  p_proc_schema    => 'ms_syst'
                                 ,p_proc_name      => 'trig_b_iud_syst_application_contexts_validate_owner_context'
-                                ,p_exception_name => 'invalid_duplicate'
-                                ,p_errcode        => 'PM008'
                                 ,p_param_data     => to_jsonb(new)
                                 ,p_context_data   =>
                                     jsonb_build_object(
@@ -783,7 +773,7 @@ BEGIN
                                         ,'tg_when',       tg_when
                                         ,'tg_schema',     tg_table_schema
                                         ,'tg_table_name', tg_table_name)),
-                    ERRCODE = 'PM008',
+                    ERRCODE = 'PM101',
                     SCHEMA = tg_table_schema,
                     TABLE = tg_table_name;
         END IF;
@@ -798,8 +788,6 @@ BEGIN
                     DETAIL = ms_syst_priv.get_exception_details(
                                  p_proc_schema    => 'ms_syst'
                                 ,p_proc_name      => 'trig_b_iud_syst_application_contexts_validate_owner_context'
-                                ,p_exception_name => 'invalid_duplicate'
-                                ,p_errcode        => 'PM008'
                                 ,p_param_data     => to_jsonb(new)
                                 ,p_context_data   =>
                                     jsonb_build_object(
@@ -807,7 +795,7 @@ BEGIN
                                         ,'tg_when',       tg_when
                                         ,'tg_schema',     tg_table_schema
                                         ,'tg_table_name', tg_table_name)),
-                    ERRCODE = 'PM008',
+                    ERRCODE = 'PM107',
                     SCHEMA = tg_table_schema,
                     TABLE = tg_table_name;
         END IF;

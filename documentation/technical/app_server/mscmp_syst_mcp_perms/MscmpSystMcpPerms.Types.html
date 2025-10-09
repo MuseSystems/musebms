@@ -4,46 +4,28 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.31.1">
+    <meta name="generator" content="ExDoc v0.38.4">
     <meta name="project" content="mscmp_syst_mcp_perms v0.1.0">
 
 
     <title>MscmpSystMcpPerms.Types — mscmp_syst_mcp_perms v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-FM2CSD74.css" />
 
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
 
-    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-43PMFBC7.js"></script>
-    <script src="dist/sidebar_items-5001F820.js"></script>
-
-      <script src="docs_config.js"></script>
-
-    <script async src="dist/html-L4O5OK2K.js"></script>
-
+    <script defer src="dist/sidebar_items-17FEFEE6.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
 
   </head>
-  <body data-type="modules" class="page-module">
-    <script>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
 
-      try {
-        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
-
-        if (settings.theme === 'dark' ||
-           ((settings.theme === 'system' || settings.theme == null) &&
-             window.matchMedia('(prefers-color-scheme: dark)').matches)
-           ) {
-          document.body.classList.add('dark')
-        }
-      } catch (error) { }
-    </script>
-
-<div class="main">
+<div class="body-wrapper">
 
 <button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
   <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
 </button>
-
-<div class="background-layer"></div>
 
 <nav id="sidebar" class="sidebar">
 
@@ -59,74 +41,53 @@ mscmp_syst_mcp_perms
         </div>
       </div>
     </div>
-    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
-      <li>
-        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
-Pages
-        </button>
-      </li>
-
-        <li>
-          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
-            Modules
-          </button>
-        </li>
-
-
-    </ul>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
   </div>
-
-  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
-    <ul id="extras-full-list" class="full-list"></ul>
-  </div>
-
-    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
-      <ul id="modules-full-list" class="full-list"></ul>
-    </div>
-
-
 </nav>
 
-<main class="content">
-  <output role="status" id="toast"></output>
-  <div class="content-outer">
-    <div id="content" class="content-inner">
-      <div class="top-search">
-        <div class="search-settings">
-          <form class="search-bar" action="search.html">
-            <label class="search-label">
-              <span class="sr-only">Search documentation of mscmp_syst_mcp_perms</span>
-              <input name="q" type="text" class="search-input" placeholder="Search Documentation (press /)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-            </label>
-            <button type="submit" class="search-button" aria-label="Submit Search">
-              <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
-            </button>
-            <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
-              <i class="ri-close-line ri-lg" title="Cancel search"></i>
-            </button>
-          </form>
-          <div class="autocomplete">
-          </div>
-          <button class="icon-settings display-settings">
-            <i class="ri-settings-3-line"></i>
-            <span class="sr-only">Settings</span>
+<output role="status" id="toast"></output>
+
+<main class="content page-module" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of mscmp_syst_mcp_perms</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
           </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
         </div>
-
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
       </div>
+    </div>
 
-<h1>
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">MscmpSystMcpPerms.Types</span> 
+      <small class="app-vsn" translate="no">(mscmp_syst_mcp_perms v0.1.0)</small>
 
-  <span translate="no">MscmpSystMcpPerms.Types</span> 
-  <small class="app-vsn" translate="no">(mscmp_syst_mcp_perms v0.1.0)</small>
+    </h1>
 
-</h1>
+  </div>
 
 
-  <section id="moduledoc">
+    <section id="moduledoc">
 <p>Types used by the MCP Perms component.</p>
-  </section>
+    </section>
 
+</div>
 
   <section id="summary" class="details-list">
     <h1 class="section-heading">
@@ -142,7 +103,7 @@ Pages
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:access_account_perm_role_params/0" translate="no">access_account_perm_role_params()</a>
+        <a href="#t:access_account_perm_role_params/0" data-no-tooltip="" translate="no">access_account_perm_role_params()</a>
 
       </div>
 
@@ -163,17 +124,19 @@ Permission Role Assigns records.</p></div>
       </a>
       <span class="text">Types</span>
     </h1>
+
     <div class="types-list">
 <section class="detail" id="t:access_account_perm_role_params/0">
 
   <div class="detail-header">
-    <a href="#t:access_account_perm_role_params/0" class="detail-link" title="Link to this type">
+    <a href="#t:access_account_perm_role_params/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">access_account_perm_role_params()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">access_account_perm_role_params()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -181,20 +144,14 @@ Permission Role Assigns records.</p></div>
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@type</span> access_account_perm_role_params() :: %{
-  access_account_id: <a href="../../../../documentation/technical/app_server/mscmp_syst_authn/MscmpSystAuthn.Types.html#t:access_account_id/0">MscmpSystAuthn.Types.access_account_id</a>(),
-  perm_role_id: <a href="../../../../documentation/technical/app_server/mscmp_syst_perms/MscmpSystPerms.Types.html#t:perm_role_id/0">MscmpSystPerms.Types.perm_role_id</a>()
+  access_account_id: <a href="/documentation/technical/app_server/mscmp_syst_authn/MscmpSystAuthn.Types.html#t:access_account_id/0">MscmpSystAuthn.Types.access_account_id</a>(),
+  perm_role_id: <a href="/documentation/technical/app_server/mscmp_syst_perms/MscmpSystPerms.Types.html#t:perm_role_id/0">MscmpSystPerms.Types.perm_role_id</a>()
 }</pre>
 
       </div>
 
 <p>A map defining the data elements required for creating Access Account
-Permission Role Assigns records.</p><h2 id="t:access_account_perm_role_params/0-attributes" class="section-heading">
-  <a href="#t:access_account_perm_role_params/0-attributes" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Attributes</span>
-</h2>
-<ul><li><p><code class="inline">access_account_id</code> - the record ID of the Access Account record being
+Permission Role Assigns records.</p><h2 id="t:access_account_perm_role_params/0-attributes" class="section-heading"><a href="#t:access_account_perm_role_params/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Attributes</span></h2><ul><li><p><code class="inline">access_account_id</code> - the record ID of the Access Account record being
 granted a Permission Role.</p></li><li><p><code class="inline">perm_role_id</code> - the record ID of the Permission Role which is to be
 granted to the identified Access Account.</p></li></ul>
   </section>
@@ -203,34 +160,33 @@ granted to the identified Access Account.</p></li></ul>
     </div>
   </section>
 
-      <footer class="footer">
-        <p>
+    <footer class="footer">
+      <p>
 
-          <span class="line">
-            <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
-              Search HexDocs
-            </button>
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
 
-              <a href="mscmp_syst_mcp_perms.epub" title="ePub version">
-                Download ePub version
-              </a>
+            <a href="mscmp_syst_mcp_perms.epub" title="ePub version">
+              Download ePub version
+            </a>
 
-          </span>
-        </p>
+        </span>
+      </p>
 
-        <p class="built-using">
-          Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.31.1) for the
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
 
-            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
-        </p>
-      </footer>
-    </div>
+      </p>
+
+    </footer>
   </div>
 </main>
 </div>
-
 
   </body>
 </html>

@@ -4,35 +4,22 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.34.2">
+    <meta name="generator" content="ExDoc v0.38.4">
     <meta name="project" content="mscmp_syst_perms v0.1.0">
 
 
     <title>MscmpSystPerms — mscmp_syst_perms v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
 
-    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
-    <script src="dist/sidebar_items-8CD7756D.js"></script>
-    <script src="docs_config.js"></script>
-    <script async src="dist/html-YIPIRHGU.js"></script>
+    <script defer src="dist/sidebar_items-F1A422A8.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
 
   </head>
-  <body data-type="modules" class="page-module">
-    <script>
-
-      try {
-        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
-
-        if (settings.theme === 'dark' ||
-           ((settings.theme === 'system' || settings.theme == null) &&
-             window.matchMedia('(prefers-color-scheme: dark)').matches)
-           ) {
-          document.body.classList.add('dark')
-        }
-      } catch (error) { }
-    </script>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
 
 <div class="body-wrapper">
 
@@ -54,37 +41,13 @@ mscmp_syst_perms
         </div>
       </div>
     </div>
-    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
-      <li>
-        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
-Pages
-        </button>
-      </li>
-
-        <li>
-          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
-            Modules
-          </button>
-        </li>
-
-
-    </ul>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
   </div>
-
-  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
-    <ul id="extras-full-list" class="full-list"></ul>
-  </div>
-
-    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
-      <ul id="modules-full-list" class="full-list"></ul>
-    </div>
-
-
 </nav>
 
-<main class="content">
-  <output role="status" id="toast"></output>
+<output role="status" id="toast"></output>
 
+<main class="content page-module" id="main" data-type="modules">
   <div id="content" class="content-inner">
     <div class="top-search">
       <div class="search-settings">
@@ -93,8 +56,8 @@ Pages
             <span class="sr-only">Search documentation of mscmp_syst_perms</span>
             <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
           </label>
-          <button type="submit" class="search-button" aria-label="Submit Search">
-            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
           </button>
           <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
             <i class="ri-close-line ri-lg" title="Cancel search"></i>
@@ -110,12 +73,14 @@ Pages
     </div>
 
 <div id="top-content">
-  <h1>
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">MscmpSystPerms</span> 
+      <small class="app-vsn" translate="no">(mscmp_syst_perms v0.1.0)</small>
 
-    <span translate="no">MscmpSystPerms</span> 
-    <small class="app-vsn" translate="no">(mscmp_syst_perms v0.1.0)</small>
+    </h1>
 
-  </h1>
+  </div>
 
 
     <section id="moduledoc">
@@ -124,13 +89,7 @@ implementations.</p><p>The principle idea of this component is to organization p
 that higher level components can introduce the concept of user and
 establish contexts of applicability while keeping a cohesion in permissioning
 capability.  To this end this component provides the core concepts for use in
-any permissioning system using this ecosystem of components.</p><h2 id="module-concepts" class="section-heading">
-  <a href="#module-concepts" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Concepts</span>
-</h2>
-<p>Below are the concepts used in formulating the functional design of this
+any permissioning system using this ecosystem of components.</p><!-- MDESC !--><h2 id="module-concepts" class="section-heading"><a href="#module-concepts" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Concepts</span></h2><p>Below are the concepts used in formulating the functional design of this
 component.  While these concepts are generally applicable it's worth keeping
 in mind that any specific implementation of these concepts in an application
 will have its own nuance and details that will have to be understood to properly
@@ -222,13 +181,7 @@ Permission Role Grant may not be changed or deleted nor may new Permission Role
 Grant records be created for that Permission Role.  User defined Permission Role
 parents allow editing Scope assignments to Rights and the addition and removal
 of Permission Role Grant records.</p><p>Naturally, only a single Permission Role Grant record for exist for any
-combination of Permission Role and Permission records.</p><h2 id="module-a-basis-for-permissions" class="section-heading">
-  <a href="#module-a-basis-for-permissions" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">A Basis for Permissions</span>
-</h2>
-<p>As has been stated before, this component provides the basic concepts of what it
+combination of Permission Role and Permission records.</p><h2 id="module-a-basis-for-permissions" class="section-heading"><a href="#module-a-basis-for-permissions" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">A Basis for Permissions</span></h2><p>As has been stated before, this component provides the basic concepts of what it
 means to have Permissions in an application and the general aspects of
 implementing these concepts.  Notably absent is what constitutes a &quot;user&quot;, how
 contexts of applicability are established, or implementations of permission
@@ -265,7 +218,7 @@ they expect to be able to do).</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_effective_perm_grants/2" data-no-tooltip translate="no">get_effective_perm_grants(selector, opts \\ [])</a>
+        <a href="#get_effective_perm_grants/2" data-no-tooltip="" translate="no">get_effective_perm_grants(selector, opts \\ [])</a>
 
       </div>
 
@@ -277,7 +230,7 @@ revocations.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#grant_perm_role/2" data-no-tooltip translate="no">grant_perm_role(selector, perm_role_id)</a>
+        <a href="#grant_perm_role/2" data-no-tooltip="" translate="no">grant_perm_role(selector, perm_role_id)</a>
 
       </div>
 
@@ -287,7 +240,7 @@ revocations.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#list_perm_denials/2" data-no-tooltip translate="no">list_perm_denials(selector, opts \\ [])</a>
+        <a href="#list_perm_denials/2" data-no-tooltip="" translate="no">list_perm_denials(selector, opts \\ [])</a>
 
       </div>
 
@@ -297,7 +250,7 @@ revocations.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#list_perm_grants/2" data-no-tooltip translate="no">list_perm_grants(selector, opts \\ [])</a>
+        <a href="#list_perm_grants/2" data-no-tooltip="" translate="no">list_perm_grants(selector, opts \\ [])</a>
 
       </div>
 
@@ -308,7 +261,7 @@ identified by the <code class="inline">selector</code>, including the Rights/Sco
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#revoke_perm_role/2" data-no-tooltip translate="no">revoke_perm_role(selector, perm_role_id)</a>
+        <a href="#revoke_perm_role/2" data-no-tooltip="" translate="no">revoke_perm_role(selector, perm_role_id)</a>
 
       </div>
 
@@ -324,7 +277,7 @@ identified by the <code class="inline">selector</code>, including the Rights/Sco
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#compare_scopes/2" data-no-tooltip translate="no">compare_scopes(test_scope, standard_scope)</a>
+        <a href="#compare_scopes/2" data-no-tooltip="" translate="no">compare_scopes(test_scope, standard_scope)</a>
 
       </div>
 
@@ -335,7 +288,7 @@ expansiveness of Scope.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#create_perm/1" data-no-tooltip translate="no">create_perm(perm_params)</a>
+        <a href="#create_perm/1" data-no-tooltip="" translate="no">create_perm(perm_params)</a>
 
       </div>
 
@@ -345,7 +298,7 @@ expansiveness of Scope.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#create_perm_role/1" data-no-tooltip translate="no">create_perm_role(perm_role_params)</a>
+        <a href="#create_perm_role/1" data-no-tooltip="" translate="no">create_perm_role(perm_role_params)</a>
 
       </div>
 
@@ -355,7 +308,7 @@ expansiveness of Scope.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#create_perm_role_grant/1" data-no-tooltip translate="no">create_perm_role_grant(perm_role_grant_params)</a>
+        <a href="#create_perm_role_grant/1" data-no-tooltip="" translate="no">create_perm_role_grant(perm_role_grant_params)</a>
 
       </div>
 
@@ -365,7 +318,7 @@ expansiveness of Scope.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#delete_perm/1" data-no-tooltip translate="no">delete_perm(perm)</a>
+        <a href="#delete_perm/1" data-no-tooltip="" translate="no">delete_perm(perm)</a>
 
       </div>
 
@@ -375,7 +328,7 @@ expansiveness of Scope.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#delete_perm_role/1" data-no-tooltip translate="no">delete_perm_role(perm_role)</a>
+        <a href="#delete_perm_role/1" data-no-tooltip="" translate="no">delete_perm_role(perm_role)</a>
 
       </div>
 
@@ -385,7 +338,7 @@ expansiveness of Scope.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#delete_perm_role_grant/1" data-no-tooltip translate="no">delete_perm_role_grant(perm_role_grant)</a>
+        <a href="#delete_perm_role_grant/1" data-no-tooltip="" translate="no">delete_perm_role_grant(perm_role_grant)</a>
 
       </div>
 
@@ -395,7 +348,7 @@ expansiveness of Scope.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_perm_role_id_by_name/2" data-no-tooltip translate="no">get_perm_role_id_by_name(perm_func_type_name, perm_role_name)</a>
+        <a href="#get_perm_role_id_by_name/2" data-no-tooltip="" translate="no">get_perm_role_id_by_name(perm_func_type_name, perm_role_name)</a>
 
       </div>
 
@@ -406,7 +359,7 @@ and Internal Name.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#update_perm/2" data-no-tooltip translate="no">update_perm(perm, perm_params)</a>
+        <a href="#update_perm/2" data-no-tooltip="" translate="no">update_perm(perm, perm_params)</a>
 
       </div>
 
@@ -416,7 +369,7 @@ and Internal Name.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#update_perm_functional_type/2" data-no-tooltip translate="no">update_perm_functional_type(perm_functional_type, perm_functional_type_params)</a>
+        <a href="#update_perm_functional_type/2" data-no-tooltip="" translate="no">update_perm_functional_type(perm_functional_type, perm_functional_type_params)</a>
 
       </div>
 
@@ -426,7 +379,7 @@ and Internal Name.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#update_perm_role/2" data-no-tooltip translate="no">update_perm_role(perm_role, perm_role_params)</a>
+        <a href="#update_perm_role/2" data-no-tooltip="" translate="no">update_perm_role(perm_role, perm_role_params)</a>
 
       </div>
 
@@ -436,7 +389,7 @@ and Internal Name.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#update_perm_role_grant/2" data-no-tooltip translate="no">update_perm_role_grant(perm_role_grant, perm_role_grant_params)</a>
+        <a href="#update_perm_role_grant/2" data-no-tooltip="" translate="no">update_perm_role_grant(perm_role_grant, perm_role_grant_params)</a>
 
       </div>
 
@@ -456,19 +409,21 @@ and Internal Name.</p></div>
       </a>
       <span class="text">Permissions</span>
     </h1>
+
     <div class="permissions-list">
 <section class="detail" id="get_effective_perm_grants/2">
 
     <span id="get_effective_perm_grants/1"></span>
 
   <div class="detail-header">
-    <a href="#get_effective_perm_grants/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#get_effective_perm_grants/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">get_effective_perm_grants(selector, opts \\ [])</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_effective_perm_grants(selector, opts \\ [])</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -478,7 +433,8 @@ and Internal Name.</p></div>
           <pre translate="no"><span class="attribute">@spec</span> get_effective_perm_grants(
   <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">struct</a>(),
   <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
-) :: {:ok, <a href="MscmpSystPerms.Types.html#t:perm_grants/0">MscmpSystPerms.Types.perm_grants</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+) ::
+  {:ok, <a href="MscmpSystPerms.Types.html#t:perm_grants/0">MscmpSystPerms.Types.perm_grants</a>()} | {:error, <a href="Mserror.PermsError.html#t:t/0">Mserror.PermsError.t</a>()}</pre>
 
       </div>
 
@@ -486,37 +442,26 @@ and Internal Name.</p></div>
 identified by the <code class="inline">selector</code> as calculated from all effective grants and
 revocations.</p><p>This function answers the question, &quot;what rights does this user really have?&quot;</p><p>On successful execution, a success tuple is returned including a map of the
 selected Permissions and the Rights/Scopes granted.  Errors will result in the
-return of an error tuple.</p><h2 id="get_effective_perm_grants/2-parameters" class="section-heading">
-  <a href="#get_effective_perm_grants/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
+return of an error tuple.</p><h2 id="get_effective_perm_grants/2-parameters" class="section-heading"><a href="#get_effective_perm_grants/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
 implementation of this function to call and which contains the keys/values
 to use in selecting which Permission and Permission Role Grant records to
 retrieve.  Specific details about what records are involved and how the
 selection return values are determine are implementation specific and will
-be documented on a case-by-case basis.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional parameters which may be provided.</p></li></ul><h2 id="get_effective_perm_grants/2-options" class="section-heading">
-  <a href="#get_effective_perm_grants/2-options" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Options</span>
-</h2>
-<pre><code class="makeup elixir" translate="no"><span class="o">*</span><span class="w"> </span><span class="err">`</span><span class="ss">:permissions</span><span class="err">`</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nc">Optionally</span><span class="w"> </span><span class="n">filters</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">permissions</span><span class="w"> </span><span class="n">returned</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">single</span><span class="w"> </span><span class="n">requested</span></code></pre><p>  permission or a list of permissions.  The special value of <code class="inline">:all</code> will
+be documented on a case-by-case basis.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional parameters which may be provided.</p></li></ul><h2 id="get_effective_perm_grants/2-options" class="section-heading"><a href="#get_effective_perm_grants/2-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><pre><code class="makeup elixir" translate="no"><span class="o">*</span><span class="w"> </span><span class="err">`</span><span class="ss">:permissions</span><span class="err">`</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nc">Optionally</span><span class="w"> </span><span class="n">filters</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">permissions</span><span class="w"> </span><span class="n">returned</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">single</span><span class="w"> </span><span class="n">requested</span></code></pre><p>  permission or a list of permissions.  The special value of <code class="inline">:all</code> will
   return all permissions. The default value is <code class="inline">:all</code>.</p>
   </section>
 </section>
 <section class="detail" id="grant_perm_role/2">
 
   <div class="detail-header">
-    <a href="#grant_perm_role/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#grant_perm_role/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">grant_perm_role(selector, perm_role_id)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">grant_perm_role(selector, perm_role_id)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -526,18 +471,12 @@ be documented on a case-by-case basis.</p></li><li><p><code class="inline">opts<
           <pre translate="no"><span class="attribute">@spec</span> grant_perm_role(
   <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">struct</a>(),
   <a href="MscmpSystPerms.Types.html#t:perm_role_id/0">MscmpSystPerms.Types.perm_role_id</a>()
-) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/Exception.html#t:t/0">Exception.t</a>()}</pre>
 
       </div>
 
 <p>Grants a Permission Role to the given selector.</p><p>On successful execution of the grant, the function will return a simple <code class="inline">:ok</code>.
-On error, an error tuple is returned.</p><h2 id="grant_perm_role/2-parameters" class="section-heading">
-  <a href="#grant_perm_role/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
+On error, an error tuple is returned.</p><h2 id="grant_perm_role/2-parameters" class="section-heading"><a href="#grant_perm_role/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
 implementation of this function to call and which contains the keys/values
 to use as the unique identifier of the user context to which you are
 granting Permission Roles.</p></li><li><p><code class="inline">perm_role_id</code> - the record ID value of the Permission Role record which
@@ -549,13 +488,14 @@ you are granting to the user context identified by the <code class="inline">sele
     <span id="list_perm_denials/1"></span>
 
   <div class="detail-header">
-    <a href="#list_perm_denials/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#list_perm_denials/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">list_perm_denials(selector, opts \\ [])</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">list_perm_denials(selector, opts \\ [])</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -565,7 +505,7 @@ you are granting to the user context identified by the <code class="inline">sele
           <pre translate="no"><span class="attribute">@spec</span> list_perm_denials(
   <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">struct</a>(),
   <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
-) :: {:ok, [<a href="Msdata.SystPerms.html#t:t/0">Msdata.SystPerms.t</a>()] | []} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+) :: {:ok, [<a href="Msdata.SystPerms.html#t:t/0">Msdata.SystPerms.t</a>()] | []} | {:error, <a href="Mserror.PermsError.html#t:t/0">Mserror.PermsError.t</a>()}</pre>
 
       </div>
 
@@ -574,24 +514,12 @@ users as whole roles, but individual Permissions may be explicitly denied from
 users on a Permission by Permission basis.  This function is intended to list
 Permission denials for a user context so that the denials may be managed.</p><p>Some user contexts may not offer explicit Permission denials.  In these cases
 this function should simply return a success tuple containing an empty list as
-the value.</p><h2 id="list_perm_denials/2-parameters" class="section-heading">
-  <a href="#list_perm_denials/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
+the value.</p><h2 id="list_perm_denials/2-parameters" class="section-heading"><a href="#list_perm_denials/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
 implementation of this function to call and which contains the keys/values
 to use in selecting which Permission denial records to retrieve.  Specific
 details about what records are involved and how the selection return values
 are determine are implementation specific and will be documented on a case-
-by-case basis.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional parameters which may be provided.</p></li></ul><h2 id="list_perm_denials/2-options" class="section-heading">
-  <a href="#list_perm_denials/2-options" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Options</span>
-</h2>
-<ul><li><code class="inline">:preload_perms</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">boolean/0</code></a>) - A boolean option which, when <code class="inline">true</code>, will preload the
+by-case basis.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional parameters which may be provided.</p></li></ul><h2 id="list_perm_denials/2-options" class="section-heading"><a href="#list_perm_denials/2-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><code class="inline">:preload_perms</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">boolean/0</code></a>) - A boolean option which, when <code class="inline">true</code>, will preload the
 <a href="Msdata.SystPermRoleGrants.html"><code class="inline">Msdata.SystPermRoleGrants</code></a> <code class="inline">perm</code> data. The default value is <code class="inline">false</code>.</li></ul>
   </section>
 </section>
@@ -600,13 +528,14 @@ by-case basis.</p></li><li><p><code class="inline">opts</code> - a Keyword List 
     <span id="list_perm_grants/1"></span>
 
   <div class="detail-header">
-    <a href="#list_perm_grants/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#list_perm_grants/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">list_perm_grants(selector, opts \\ [])</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">list_perm_grants(selector, opts \\ [])</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -616,7 +545,7 @@ by-case basis.</p></li><li><p><code class="inline">opts</code> - a Keyword List 
           <pre translate="no"><span class="attribute">@spec</span> list_perm_grants(
   <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">struct</a>(),
   <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
-) :: {:ok, [<a href="Msdata.SystPermRoles.html#t:t/0">Msdata.SystPermRoles.t</a>()]} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+) :: {:ok, [<a href="Msdata.SystPermRoles.html#t:t/0">Msdata.SystPermRoles.t</a>()]} | {:error, <a href="Mserror.PermsError.html#t:t/0">Mserror.PermsError.t</a>()}</pre>
 
       </div>
 
@@ -625,37 +554,26 @@ identified by the <code class="inline">selector</code>, including the Rights/Sco
 and what Permissions/Rights/Scopes those roles grant to the user.  This list
 is intended to be descriptive and not directly indicating the effective grants
 applied to the user.  Typical uses of this function are to populate lists of
-Permission Role Grants for the purposes of managing user access.</p><h2 id="list_perm_grants/2-parameters" class="section-heading">
-  <a href="#list_perm_grants/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
+Permission Role Grants for the purposes of managing user access.</p><h2 id="list_perm_grants/2-parameters" class="section-heading"><a href="#list_perm_grants/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
 implementation of this function to call and which contains the keys/values
 to use in selecting which Permission and Permission Role Grant records to
 retrieve.  Specific details about what records are involved and how the
 selection return values are determine are implementation specific and will
-be documented on a case-by-case basis.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional parameters which may be provided.</p></li></ul><h2 id="list_perm_grants/2-options" class="section-heading">
-  <a href="#list_perm_grants/2-options" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Options</span>
-</h2>
-<ul><li><code class="inline">:preload_perms</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">boolean/0</code></a>) - A boolean option which, when <code class="inline">true</code>, will preload the
+be documented on a case-by-case basis.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional parameters which may be provided.</p></li></ul><h2 id="list_perm_grants/2-options" class="section-heading"><a href="#list_perm_grants/2-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><code class="inline">:preload_perms</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">boolean/0</code></a>) - A boolean option which, when <code class="inline">true</code>, will preload the
 <a href="Msdata.SystPermRoleGrants.html"><code class="inline">Msdata.SystPermRoleGrants</code></a> <code class="inline">perm</code> data. The default value is <code class="inline">false</code>.</li></ul>
   </section>
 </section>
 <section class="detail" id="revoke_perm_role/2">
 
   <div class="detail-header">
-    <a href="#revoke_perm_role/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#revoke_perm_role/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">revoke_perm_role(selector, perm_role_id)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">revoke_perm_role(selector, perm_role_id)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -665,21 +583,15 @@ be documented on a case-by-case basis.</p></li><li><p><code class="inline">opts<
           <pre translate="no"><span class="attribute">@spec</span> revoke_perm_role(
   <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">struct</a>(),
   <a href="MscmpSystPerms.Types.html#t:perm_role_id/0">MscmpSystPerms.Types.perm_role_id</a>()
-) :: {:ok, :deleted | :not_found} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/Exception.html#t:t/0">Exception.t</a>()}</pre>
 
       </div>
 
 <p>Revokes a previously granted Permission Role from the given selector.</p><p>On successful execution a success tuple is returned.  If the grant was
-actually deleted this tuple will take the form <code class="inline">{:ok, :deleted}</code>.  If the
-grant was not found for the user context identified by the <code class="inline">selector</code> then the
-<code class="inline">{:ok, :not_found}</code> tuple will be returned.  Any other outcome is an error
-resulting in an error tuple being returned.</p><h2 id="revoke_perm_role/2-parameters" class="section-heading">
-  <a href="#revoke_perm_role/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
+actually deleted this tuple will take the form <code class="inline">:ok</code>.  If the
+grant was not found for the user context identified by the <code class="inline">selector</code> then an
+appropirate error tuple is returned.  Any other outcome is an error
+resulting in an error tuple being returned.</p><h2 id="revoke_perm_role/2-parameters" class="section-heading"><a href="#revoke_perm_role/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
 implementation of this function to call and which contains the keys/values
 to use as the unique identifier of the user context from which you are
 revoking Permission Roles.</p></li><li><p><code class="inline">perm_role_id</code> - the record ID value of the Permission Role record which
@@ -697,17 +609,19 @@ you are revoking from the user context identified by the <code class="inline">se
       </a>
       <span class="text">Data Management</span>
     </h1>
+
     <div class="data-management-list">
 <section class="detail" id="compare_scopes/2">
 
   <div class="detail-header">
-    <a href="#compare_scopes/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#compare_scopes/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">compare_scopes(test_scope, standard_scope)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">compare_scopes(test_scope, standard_scope)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -739,13 +653,14 @@ parameter.</p></li></ul>
 <section class="detail" id="create_perm/1">
 
   <div class="detail-header">
-    <a href="#create_perm/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#create_perm/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">create_perm(perm_params)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">create_perm(perm_params)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -753,32 +668,27 @@ parameter.</p></li></ul>
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> create_perm(<a href="MscmpSystPerms.Types.html#t:perm_params/0">MscmpSystPerms.Types.perm_params</a>()) ::
-  {:ok, <a href="Msdata.SystPerms.html#t:t/0">Msdata.SystPerms.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  {:ok, <a href="Msdata.SystPerms.html#t:t/0">Msdata.SystPerms.t</a>()} | {:error, <a href="Mserror.PermsError.html#t:t/0">Mserror.PermsError.t</a>()}</pre>
 
       </div>
 
 <p>Creates a new user defined Permission record.</p><p>Upon creation this function returns a success tuple in the form
 <code class="inline">{:ok, %Msdata.SystPerms{}}</code> where the struct is the data of the newly created
-record.  On error an error tuple is returned (<code class="inline">{:error, %MscmpSystError{}}</code>).</p><h2 id="create_perm/1-parameters" class="section-heading">
-  <a href="#create_perm/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">perm_params</code> - a map of values which describe the Permission record to
+record.  On error an error tuple is returned (<code class="inline">{:error, %Mserror.PermsError{}}</code>).</p><h2 id="create_perm/1-parameters" class="section-heading"><a href="#create_perm/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">perm_params</code> - a map of values which describe the Permission record to
 create.  For details see <a href="MscmpSystPerms.Types.html#t:perm_params/0"><code class="inline">MscmpSystPerms.Types.perm_params/0</code></a>.</li></ul>
   </section>
 </section>
 <section class="detail" id="create_perm_role/1">
 
   <div class="detail-header">
-    <a href="#create_perm_role/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#create_perm_role/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">create_perm_role(perm_role_params)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">create_perm_role(perm_role_params)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -786,33 +696,28 @@ create.  For details see <a href="MscmpSystPerms.Types.html#t:perm_params/0"><co
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> create_perm_role(<a href="MscmpSystPerms.Types.html#t:perm_role_params/0">MscmpSystPerms.Types.perm_role_params</a>()) ::
-  {:ok, <a href="Msdata.SystPermRoles.html#t:t/0">Msdata.SystPermRoles.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  {:ok, <a href="Msdata.SystPermRoles.html#t:t/0">Msdata.SystPermRoles.t</a>()} | {:error, <a href="Mserror.PermsError.html#t:t/0">Mserror.PermsError.t</a>()}</pre>
 
       </div>
 
 <p>Creates a new user defined Permission Role record.</p><p>On successful record creation this function returns a success tuple in the
 form <code class="inline">{:ok, %Msdata.SystPermRoles{}}</code> where the struct is the data of the
 created record.  On error an error tuple is returned
-(<code class="inline">{:error, %MscmpSystError{}}</code>).</p><h2 id="create_perm_role/1-parameters" class="section-heading">
-  <a href="#create_perm_role/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">perm_role_params</code> - a map describing the new Permission Role record's
+(<code class="inline">{:error, %Mserror.PermsError{}}</code>).</p><h2 id="create_perm_role/1-parameters" class="section-heading"><a href="#create_perm_role/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">perm_role_params</code> - a map describing the new Permission Role record's
 values.  For more about see <a href="MscmpSystPerms.Types.html#t:perm_role_params/0"><code class="inline">MscmpSystPerms.Types.perm_role_params/0</code></a>.</li></ul>
   </section>
 </section>
 <section class="detail" id="create_perm_role_grant/1">
 
   <div class="detail-header">
-    <a href="#create_perm_role_grant/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#create_perm_role_grant/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">create_perm_role_grant(perm_role_grant_params)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">create_perm_role_grant(perm_role_grant_params)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -820,21 +725,15 @@ values.  For more about see <a href="MscmpSystPerms.Types.html#t:perm_role_param
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> create_perm_role_grant(<a href="MscmpSystPerms.Types.html#t:perm_role_grant_params/0">MscmpSystPerms.Types.perm_role_grant_params</a>()) ::
-  {:ok, <a href="Msdata.SystPermRoleGrants.html#t:t/0">Msdata.SystPermRoleGrants.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  {:ok, <a href="Msdata.SystPermRoleGrants.html#t:t/0">Msdata.SystPermRoleGrants.t</a>()} | {:error, <a href="Mserror.PermsError.html#t:t/0">Mserror.PermsError.t</a>()}</pre>
 
       </div>
 
 <p>Creates a new Permission Role Grant to a user defined Permission Role.</p><p>On successful record creation this function returns a success tuple in the
 form <code class="inline">{:ok, %Msdata.SystPermRoleGrants{}}</code> where the struct is the data of the
 created record.  On error an error tuple is returned
-(<code class="inline">{:error, %MscmpSystError{}}</code>).</p><p>New Permission Role Grant records can only be created for parent Permission
-Role records that are not set as being system defined.</p><h2 id="create_perm_role_grant/1-parameters" class="section-heading">
-  <a href="#create_perm_role_grant/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">perm_role_grant_params</code> - a map describing the new Permission Role Grant
+(<code class="inline">{:error, %Mserror.PermsError{}}</code>).</p><p>New Permission Role Grant records can only be created for parent Permission
+Role records that are not set as being system defined.</p><h2 id="create_perm_role_grant/1-parameters" class="section-heading"><a href="#create_perm_role_grant/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">perm_role_grant_params</code> - a map describing the new Permission Role Grant
 record's values.  For more about see
 <a href="MscmpSystPerms.Types.html#t:perm_role_grant_params/0"><code class="inline">MscmpSystPerms.Types.perm_role_grant_params/0</code></a>.</li></ul>
   </section>
@@ -842,13 +741,14 @@ record's values.  For more about see
 <section class="detail" id="delete_perm/1">
 
   <div class="detail-header">
-    <a href="#delete_perm/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#delete_perm/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">delete_perm(perm)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">delete_perm(perm)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -856,33 +756,28 @@ record's values.  For more about see
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> delete_perm(<a href="Msdata.SystPerms.html#t:t/0">Msdata.SystPerms.t</a>() | <a href="MscmpSystPerms.Types.html#t:perm_id/0">MscmpSystPerms.Types.perm_id</a>()) ::
-  {:ok, :deleted | :not_found} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  :ok | {:error, <a href="Mserror.PermsError.html#t:t/0">Mserror.PermsError.t</a>()}</pre>
 
       </div>
 
-<p>Deletes a user defined Permission record.</p><p>On successful deletion of the record this function returns a success tuple in
-the form <code class="inline">{:ok, :deleted}</code>.  If the requested record is not found a success
-tuple in the form <code class="inline">{:ok, :not_found}</code> is returned.  On error an error tuple is
-returned (<code class="inline">{:error, %MscmpSystError{}}</code>).</p><h2 id="delete_perm/1-parameters" class="section-heading">
-  <a href="#delete_perm/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">perm</code> - either a populated <a href="Msdata.SystPerms.html"><code class="inline">Msdata.SystPerms</code></a> struct or the record ID
+<p>Deletes a user defined Permission record.</p><p>On successful deletion of the record this function returns <code class="inline">:ok</code>.  If the
+requested record is not found an error tuple in the form of
+<code class="inline">{:error, %Mserror.PermsError{cause: :not_found}}</code> is returned.  On any other
+error an error tuple is returned (<code class="inline">{:error, %Mserror.PermsError{}}</code>).</p><h2 id="delete_perm/1-parameters" class="section-heading"><a href="#delete_perm/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">perm</code> - either a populated <a href="Msdata.SystPerms.html"><code class="inline">Msdata.SystPerms</code></a> struct or the record ID
 value of the Permission record to delete.</li></ul>
   </section>
 </section>
 <section class="detail" id="delete_perm_role/1">
 
   <div class="detail-header">
-    <a href="#delete_perm_role/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#delete_perm_role/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">delete_perm_role(perm_role)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">delete_perm_role(perm_role)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -890,20 +785,14 @@ value of the Permission record to delete.</li></ul>
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> delete_perm_role(<a href="Msdata.SystPermRoles.html#t:t/0">Msdata.SystPermRoles.t</a>() | <a href="MscmpSystPerms.Types.html#t:perm_role_id/0">MscmpSystPerms.Types.perm_role_id</a>()) ::
-  {:ok, :deleted | :not_found} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  :ok | {:error, <a href="Mserror.PermsError.html#t:t/0">Mserror.PermsError.t</a>()}</pre>
 
       </div>
 
-<p>Deletes user defined Permission Role records.</p><p>On successful deletion of the record this function returns a success tuple in
-the form <code class="inline">{:ok, :deleted}</code>.  If the requested record is not found a success
-tuple in the form <code class="inline">{:ok, :not_found}</code> is returned.  On error an error tuple is
-returned (<code class="inline">{:error, %MscmpSystError{}}</code>).</p><p>System defined Permission Role records may not be deleted using this API.</p><h2 id="delete_perm_role/1-parameters" class="section-heading">
-  <a href="#delete_perm_role/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">perm_role</code> - either the record ID value of the Permission Role record to
+<p>Deletes user defined Permission Role records.</p><p>On successful deletion of the record this function returns <code class="inline">:ok</code>.  If the
+requested record is not found an error tuple in the form of
+<code class="inline">{:error, %Mserror.PermsError{cause: :not_found}}</code> is returned.  On any other
+error an error tuple is returned (<code class="inline">{:error, %Mserror.PermsError{}}</code>).</p><p>System defined Permission Role records may not be deleted using this API.</p><h2 id="delete_perm_role/1-parameters" class="section-heading"><a href="#delete_perm_role/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">perm_role</code> - either the record ID value of the Permission Role record to
 delete or a populated <a href="Msdata.SystPermRoles.html"><code class="inline">Msdata.SystPermRoles</code></a> struct representing the
 Permission Role record.</li></ul>
   </section>
@@ -911,13 +800,14 @@ Permission Role record.</li></ul>
 <section class="detail" id="delete_perm_role_grant/1">
 
   <div class="detail-header">
-    <a href="#delete_perm_role_grant/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#delete_perm_role_grant/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">delete_perm_role_grant(perm_role_grant)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">delete_perm_role_grant(perm_role_grant)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -928,21 +818,15 @@ Permission Role record.</li></ul>
   <a href="Msdata.SystPermRoleGrants.html#t:t/0">Msdata.SystPermRoleGrants.t</a>()
   | <a href="MscmpSystPerms.Types.html#t:perm_role_grant_id/0">MscmpSystPerms.Types.perm_role_grant_id</a>()
 ) ::
-  {:ok, :deleted | :not_found} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  :ok | {:error, <a href="Mserror.PermsError.html#t:t/0">Mserror.PermsError.t</a>()}</pre>
 
       </div>
 
-<p>Deletes the Permission Role Grant records of user defined Permission Roles.</p><p>On successful deletion of the record this function returns a success tuple in
-the form <code class="inline">{:ok, :deleted}</code>.  If the requested record is not found a success
-tuple in the form <code class="inline">{:ok, :not_found}</code> is returned.  On error an error tuple is
-returned (<code class="inline">{:error, %MscmpSystError{}}</code>).</p><p>Permission Role Grant records belonging to System defined Permission Roles may
-not be deleted using this API.</p><h2 id="delete_perm_role_grant/1-parameters" class="section-heading">
-  <a href="#delete_perm_role_grant/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">perm_role_grant</code> - either the record ID value of the Permission Role
+<p>Deletes the Permission Role Grant records of user defined Permission Roles.</p><p>On successful deletion of the record this function returns <code class="inline">:ok</code>.  If the
+requested record is not found an error tuple in the form
+<code class="inline">{:error, %Mserror.PermsError{cause: :not_found}}</code> is returned.  On any other
+error an error tuple is returned (<code class="inline">{:error, %Mserror.PermsError{}}</code>).</p><p>Permission Role Grant records belonging to System defined Permission Roles may
+not be deleted using this API.</p><h2 id="delete_perm_role_grant/1-parameters" class="section-heading"><a href="#delete_perm_role_grant/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">perm_role_grant</code> - either the record ID value of the Permission Role
 Grant record to delete or a populated <a href="Msdata.SystPermRoleGrants.html"><code class="inline">Msdata.SystPermRoleGrants</code></a> struct
 representing the Permission Role Grant record.</li></ul>
   </section>
@@ -950,13 +834,14 @@ representing the Permission Role Grant record.</li></ul>
 <section class="detail" id="get_perm_role_id_by_name/2">
 
   <div class="detail-header">
-    <a href="#get_perm_role_id_by_name/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#get_perm_role_id_by_name/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">get_perm_role_id_by_name(perm_func_type_name, perm_role_name)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_perm_role_id_by_name(perm_func_type_name, perm_role_name)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -966,44 +851,35 @@ representing the Permission Role Grant record.</li></ul>
           <pre translate="no"><span class="attribute">@spec</span> get_perm_role_id_by_name(
   <a href="MscmpSystPerms.Types.html#t:perm_functional_type_name/0">MscmpSystPerms.Types.perm_functional_type_name</a>(),
   <a href="MscmpSystPerms.Types.html#t:perm_role_name/0">MscmpSystPerms.Types.perm_role_name</a>()
-) :: <a href="MscmpSystPerms.Types.html#t:perm_role_id/0">MscmpSystPerms.Types.perm_role_id</a>() | nil | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+) ::
+  {:ok, <a href="MscmpSystPerms.Types.html#t:perm_role_id/0">MscmpSystPerms.Types.perm_role_id</a>()} | {:error, <a href="Mserror.PermsError.html#t:t/0">Mserror.PermsError.t</a>()}</pre>
 
       </div>
 
 <p>Retrieves the Permission Role record ID as found by its functional type name
-and Internal Name.</p><p>The function will either return the record ID of the requested Permission Role
-or <code class="inline">nil</code> of that role was not found.  If an error occurs an error tuple is
-returned.</p><h2 id="get_perm_role_id_by_name/2-parameters" class="section-heading">
-  <a href="#get_perm_role_id_by_name/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">perm_func_type_name</code> - the Internal Name of the Permission Functional Type
+and Internal Name.</p><p>The function will return a success tuple containing the record ID of the
+requested Permission Role if found.  If the requested record is not found an
+error tuple in the form of <code class="inline">{:error, %Mserror.PermsError{cause: :not_found}}</code>
+is returned.  If any other error occurs an error tuple is returned.</p><h2 id="get_perm_role_id_by_name/2-parameters" class="section-heading"><a href="#get_perm_role_id_by_name/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">perm_func_type_name</code> - the Internal Name of the Permission Functional Type
 to which the search should be restricted.  While the Permission Role name
 itself is unique, specifying the Permission Functional Type serves as a check
 that request context is correct.</p></li><li><p><code class="inline">perm_role_name</code> - the Internal Name value of the Permission Role to search
-for.</p></li></ul><h2 id="get_perm_role_id_by_name/2-examples" class="section-heading">
-  <a href="#get_perm_role_id_by_name/2-examples" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Examples</span>
-</h2>
-<p>Retrieve the record ID of a Permission Role record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="c">_perm_role_id</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystPerms</span><span class="o">.</span><span class="n">get_perm_role_id_by_name</span><span class="p" data-group-id="2438121557-1">(</span><span class="s">&quot;func_type_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;perm_role_1&quot;</span><span class="p" data-group-id="2438121557-1">)</span></code></pre><p>Searching for a non-existent record returns <code class="inline">nil</code>.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystPerms</span><span class="o">.</span><span class="n">get_perm_role_id_by_name</span><span class="p" data-group-id="4547156713-1">(</span><span class="s">&quot;func_type_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;nonexistent_role&quot;</span><span class="p" data-group-id="4547156713-1">)</span><span class="w">
-</span><span class="no">nil</span></code></pre>
+for.</p></li></ul><h2 id="get_perm_role_id_by_name/2-examples" class="section-heading"><a href="#get_perm_role_id_by_name/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><p>Retrieve the record ID of a Permission Role record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4756123463-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="c">_perm_role_id</span><span class="p" data-group-id="4756123463-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystPerms</span><span class="o">.</span><span class="n">get_perm_role_id_by_name</span><span class="p" data-group-id="4756123463-2">(</span><span class="s">&quot;func_type_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;perm_role_1&quot;</span><span class="p" data-group-id="4756123463-2">)</span></code></pre><p>Searching for a non-existent record returns error tuple.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9123445711-1">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9123445711-2">%</span><span class="nc" data-group-id="9123445711-2">Mserror.PermsError</span><span class="p" data-group-id="9123445711-2">{</span><span class="ss">cause</span><span class="p">:</span><span class="w"> </span><span class="ss">:not_found</span><span class="p" data-group-id="9123445711-2">}</span><span class="p" data-group-id="9123445711-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystPerms</span><span class="o">.</span><span class="n">get_perm_role_id_by_name</span><span class="p" data-group-id="9123445711-3">(</span><span class="s">&quot;func_type_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;nonexistent_role&quot;</span><span class="p" data-group-id="9123445711-3">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="update_perm/2">
 
   <div class="detail-header">
-    <a href="#update_perm/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#update_perm/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">update_perm(perm, perm_params)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">update_perm(perm, perm_params)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1013,21 +889,15 @@ for.</p></li></ul><h2 id="get_perm_role_id_by_name/2-examples" class="section-he
           <pre translate="no"><span class="attribute">@spec</span> update_perm(
   <a href="MscmpSystPerms.Types.html#t:perm_id/0">MscmpSystPerms.Types.perm_id</a>() | <a href="Msdata.SystPerms.html#t:t/0">Msdata.SystPerms.t</a>(),
   <a href="MscmpSystPerms.Types.html#t:perm_params/0">MscmpSystPerms.Types.perm_params</a>()
-) :: {:ok, <a href="Msdata.SystPerms.html#t:t/0">Msdata.SystPerms.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+) :: {:ok, <a href="Msdata.SystPerms.html#t:t/0">Msdata.SystPerms.t</a>()} | {:error, <a href="Mserror.PermsError.html#t:t/0">Mserror.PermsError.t</a>()}</pre>
 
       </div>
 
 <p>Updates an existing Permission record.</p><p>Upon update this function returns a success tuple in the form
 <code class="inline">{:ok, %Msdata.SystPerms{}}</code> where the struct is the data of the updated
-record.  On error an error tuple is returned (<code class="inline">{:error, %MscmpSystError{}}</code>).</p><p>System defined Permission records only allow the user interface display fields
+record.  On error an error tuple is returned (<code class="inline">{:error, %Mserror.PermsError{}}</code>).</p><p>System defined Permission records only allow the user interface display fields
 to be updated (<code class="inline">display_name</code>, <code class="inline">user_description</code>).  User defined permissions
-allow a broader range of changes.</p><h2 id="update_perm/2-parameters" class="section-heading">
-  <a href="#update_perm/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">perm</code> - either a fully populated <a href="Msdata.SystPerms.html"><code class="inline">Msdata.SystPerms</code></a> struct representing
+allow a broader range of changes.</p><h2 id="update_perm/2-parameters" class="section-heading"><a href="#update_perm/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">perm</code> - either a fully populated <a href="Msdata.SystPerms.html"><code class="inline">Msdata.SystPerms</code></a> struct representing
 the before-update state of the Permission record or the record ID of the
 Permission record to update.</p></li><li><p><code class="inline">perm_params</code> - a map of values which describe the desired update fields
 and their new values.  For details see <a href="MscmpSystPerms.Types.html#t:perm_params/0"><code class="inline">MscmpSystPerms.Types.perm_params/0</code></a>.</p></li></ul>
@@ -1036,13 +906,14 @@ and their new values.  For details see <a href="MscmpSystPerms.Types.html#t:perm
 <section class="detail" id="update_perm_functional_type/2">
 
   <div class="detail-header">
-    <a href="#update_perm_functional_type/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#update_perm_functional_type/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">update_perm_functional_type(perm_functional_type, perm_functional_type_params)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">update_perm_functional_type(perm_functional_type, perm_functional_type_params)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1053,7 +924,8 @@ and their new values.  For details see <a href="MscmpSystPerms.Types.html#t:perm
   <a href="MscmpSystPerms.Types.html#t:perm_functional_type_id/0">MscmpSystPerms.Types.perm_functional_type_id</a>()
   | <a href="Msdata.SystPermFunctionalTypes.html#t:t/0">Msdata.SystPermFunctionalTypes.t</a>(),
   <a href="MscmpSystPerms.Types.html#t:perm_functional_type_params/0">MscmpSystPerms.Types.perm_functional_type_params</a>()
-) :: {:ok, <a href="Msdata.SystPermFunctionalTypes.html#t:t/0">Msdata.SystPermFunctionalTypes.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+) ::
+  {:ok, <a href="Msdata.SystPermFunctionalTypes.html#t:t/0">Msdata.SystPermFunctionalTypes.t</a>()} | {:error, <a href="Mserror.PermsError.html#t:t/0">Mserror.PermsError.t</a>()}</pre>
 
       </div>
 
@@ -1062,13 +934,7 @@ changes are not possible at the application server level.  However the user
 facing <code class="inline">display_name</code> and <code class="inline">user_description</code> fields are available for update.</p><p>On successful update, a success tuple is returned including a copy of the
 updated Permission Functional Type record (<code class="inline">{:ok, &lt;record&gt;}</code>).  On failure
 an error tuple is returned indicating the reason for failure
-(<code class="inline">{:error, reason}</code>).</p><h2 id="update_perm_functional_type/2-parameters" class="section-heading">
-  <a href="#update_perm_functional_type/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">perm_functional_type</code> - a required value which is either the populated
+(<code class="inline">{:error, %Mserror.PermsError{}}</code>).</p><h2 id="update_perm_functional_type/2-parameters" class="section-heading"><a href="#update_perm_functional_type/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">perm_functional_type</code> - a required value which is either the populated
 <a href="Msdata.SystPermFunctionalTypes.html"><code class="inline">Msdata.SystPermFunctionalTypes</code></a> struct or ID value of the record to be
 updated.</p></li><li><p><code class="inline">perm_functional_type_params</code> - a map of values which define the change to
 be made to the database.  For details on which fields may be maintained see
@@ -1078,13 +944,14 @@ be made to the database.  For details on which fields may be maintained see
 <section class="detail" id="update_perm_role/2">
 
   <div class="detail-header">
-    <a href="#update_perm_role/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#update_perm_role/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">update_perm_role(perm_role, perm_role_params)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">update_perm_role(perm_role, perm_role_params)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1094,21 +961,15 @@ be made to the database.  For details on which fields may be maintained see
           <pre translate="no"><span class="attribute">@spec</span> update_perm_role(
   <a href="MscmpSystPerms.Types.html#t:perm_role_id/0">MscmpSystPerms.Types.perm_role_id</a>() | <a href="Msdata.SystPermRoles.html#t:t/0">Msdata.SystPermRoles.t</a>(),
   <a href="MscmpSystPerms.Types.html#t:perm_role_params/0">MscmpSystPerms.Types.perm_role_params</a>()
-) :: {:ok, <a href="Msdata.SystPermRoles.html#t:t/0">Msdata.SystPermRoles.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+) :: {:ok, <a href="Msdata.SystPermRoles.html#t:t/0">Msdata.SystPermRoles.t</a>()} | {:error, <a href="Mserror.PermsError.html#t:t/0">Mserror.PermsError.t</a>()}</pre>
 
       </div>
 
 <p>Updates Permission Role records.</p><p>Upon update this function returns a success tuple in the form
 <code class="inline">{:ok, %Msdata.SystPermRoles{}}</code> where the struct is the data of the updated
-record.  On error an error tuple is returned (<code class="inline">{:error, %MscmpSystError{}}</code>).</p><p>System defined Permission Role records only allow the user interface display
+record.  On error an error tuple is returned (<code class="inline">{:error, %Mserror.PermsError{}}</code>).</p><p>System defined Permission Role records only allow the user interface display
 fields to be updated (<code class="inline">display_name</code>, <code class="inline">user_description</code>).  User defined
-Permission Roles allow a broader range of changes.</p><h2 id="update_perm_role/2-parameters" class="section-heading">
-  <a href="#update_perm_role/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">perm_role</code> - either the record ID of the Permission Role record to update
+Permission Roles allow a broader range of changes.</p><h2 id="update_perm_role/2-parameters" class="section-heading"><a href="#update_perm_role/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">perm_role</code> - either the record ID of the Permission Role record to update
 or a populated <a href="Msdata.SystPermRoles.html"><code class="inline">Msdata.SystPermRoles</code></a> struct representing the pre-update
 version of the record's data.</p></li><li><p><code class="inline">perm_role_params</code> - a map describing the new Permission Role record's
 values.  For more about see <a href="MscmpSystPerms.Types.html#t:perm_role_params/0"><code class="inline">MscmpSystPerms.Types.perm_role_params/0</code></a>.</p></li></ul>
@@ -1117,13 +978,14 @@ values.  For more about see <a href="MscmpSystPerms.Types.html#t:perm_role_param
 <section class="detail" id="update_perm_role_grant/2">
 
   <div class="detail-header">
-    <a href="#update_perm_role_grant/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#update_perm_role_grant/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">update_perm_role_grant(perm_role_grant, perm_role_grant_params)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">update_perm_role_grant(perm_role_grant, perm_role_grant_params)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1133,21 +995,15 @@ values.  For more about see <a href="MscmpSystPerms.Types.html#t:perm_role_param
           <pre translate="no"><span class="attribute">@spec</span> update_perm_role_grant(
   <a href="MscmpSystPerms.Types.html#t:perm_role_grant_id/0">MscmpSystPerms.Types.perm_role_grant_id</a>() | <a href="Msdata.SystPermRoleGrants.html#t:t/0">Msdata.SystPermRoleGrants.t</a>(),
   <a href="MscmpSystPerms.Types.html#t:perm_role_grant_params/0">MscmpSystPerms.Types.perm_role_grant_params</a>()
-) :: {:ok, <a href="Msdata.SystPermRoleGrants.html#t:t/0">Msdata.SystPermRoleGrants.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+) :: {:ok, <a href="Msdata.SystPermRoleGrants.html#t:t/0">Msdata.SystPermRoleGrants.t</a>()} | {:error, <a href="Mserror.PermsError.html#t:t/0">Mserror.PermsError.t</a>()}</pre>
 
       </div>
 
 <p>Updates the Permission Role Grant records of user defined Permission Roles.</p><p>Upon update this function returns a success tuple in the form
 <code class="inline">{:ok, %Msdata.SystPermRoleGrants{}}</code> where the struct is the data of the
 updated record.  On error an error tuple is returned
-(<code class="inline">{:error, %MscmpSystError{}}</code>).</p><p>Permission Role Grant records which are children of system defined Permission
-Roles may not be updated using this API.</p><h2 id="update_perm_role_grant/2-parameters" class="section-heading">
-  <a href="#update_perm_role_grant/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">perm_role_grant</code> - either the record ID of the Permission Role Grant
+(<code class="inline">{:error, %Mserror.PermsError{}}</code>).</p><p>Permission Role Grant records which are children of system defined Permission
+Roles may not be updated using this API.</p><h2 id="update_perm_role_grant/2-parameters" class="section-heading"><a href="#update_perm_role_grant/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">perm_role_grant</code> - either the record ID of the Permission Role Grant
 record to update or a populated <a href="Msdata.SystPermRoleGrants.html"><code class="inline">Msdata.SystPermRoleGrants</code></a> struct
 representing the pre-update version of the record's data.</p></li><li><p><code class="inline">perm_role_grant_params</code> - a map describing the Permission Role Grant
 record values to update.  For more about see
@@ -1175,7 +1031,7 @@ record values to update.  For more about see
 
       <p class="built-using">
         Built using
-        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.34.2) for the
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
 
           <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

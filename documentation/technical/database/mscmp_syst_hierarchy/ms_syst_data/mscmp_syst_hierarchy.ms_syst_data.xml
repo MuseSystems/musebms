@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_hierarchy" schema="ms_syst_data" type="PostgreSQL - 16.4 (Ubuntu 16.4-1.pgdg22.04+1)">
+<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_hierarchy" schema="ms_syst_data" type="PostgreSQL - 18.0 (Ubuntu 18.0-1.pgdg24.04+3)">
    <tables>
       <table name="syst_enum_functional_types" remarks="For those Enumerations requiring Functional Type designation, this table defines&#10;the available types and persists related metadata.  Note that not all&#10;Enumerations require Functional Types." schema="ms_syst_data" type="TABLE">
-         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+         <column autoUpdated="false" defaultValue="uuidv7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
             <child column="functional_type_id" foreignKey="syst_enum_items_enum_functional_type_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_items"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
@@ -31,7 +31,7 @@
          </index>
       </table>
       <table name="syst_enum_items" remarks="The list of values provided by an Enumeration as well as related behavioral and&#10;informational metadata." schema="ms_syst_data" type="TABLE">
-         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+         <column autoUpdated="false" defaultValue="uuidv7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
             <child column="hierarchy_state_id" foreignKey="syst_hierarchies_hierarchy_state_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_hierarchies"/>
             <child column="hierarchy_type_id" foreignKey="syst_hierarchies_hierarchy_type_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_hierarchies"/>
          </column>
@@ -72,7 +72,7 @@
          </index>
       </table>
       <table name="syst_enums" remarks="Enumerates the enumerations known to the system along with additional metadata&#10;useful in applying them appropriately." schema="ms_syst_data" type="TABLE">
-         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+         <column autoUpdated="false" defaultValue="uuidv7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
             <child column="enum_id" foreignKey="syst_enum_functional_types_enum_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_enum_functional_types"/>
             <child column="enum_id" foreignKey="syst_enum_items_enum_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_enum_items"/>
          </column>
@@ -103,7 +103,7 @@
          </index>
       </table>
       <table name="syst_hierarchies" remarks="Establishes a hierarchical template for parent/child relationships to&#10;follow. The `hierarchies` relation creates a type of hierarchy which is linked&#10;to a specific feature or functional area of the application via a record's&#10;`hierarchy_type_id` reference. Hierarchies is also the parent relation of&#10;Hierarchy Items relation (`ms_syst_data.syst_hierarchy_items`)&#10;records where each Hierarchy Items record represents a level of the&#10;hierarchy.&#10;&#10;**General Usage**&#10;&#10;Note that once the Hierarchy is active and in use by Hierarchy implementing&#10;Components, most changes to the Hierarchy records will not be allowed to ensure&#10;the consistency of currently used data." schema="ms_syst_data" type="TABLE">
-         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+         <column autoUpdated="false" defaultValue="uuidv7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
             <child column="hierarchy_id" foreignKey="syst_hierarchy_items_hierarchy_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_hierarchy_items"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
@@ -138,7 +138,7 @@
          </index>
       </table>
       <table name="syst_hierarchy_items" remarks="Hierarchy Item records represent a level in the hierarchy of their parent&#10;Hierarchy.&#10;&#10;**General Usage**&#10;&#10;Each Hierarchy Item record is individually sequenced in its group via the&#10;`hierarchy_depth` column.&#10;&#10;Note that once the Hierarchy is active and in use by Hierarchy implementing&#10;Components, most changes to the Hierarchy Item records will not be allowed to&#10;ensure the consistency of currently used data." schema="ms_syst_data" type="TABLE">
-         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="uuidv7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="external_name" nullable="false" remarks="A non-unique/non-key value used to display to users and external parties where&#10;uniqueness is less of a concern than specific end user presentation." size="2147483647" type="text" typeCode="12"/>
@@ -253,8 +253,6 @@ BEGIN
                 DETAIL  = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_appl_data'
                             ,p_proc_name      => 'trig_b_d_syst_hierarchies_validate_prereqs'
-                            ,p_exception_name => 'invalid_state'
-                            ,p_errcode        => 'PM003'
                             ,p_param_data     => to_jsonb( old )
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -262,7 +260,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM003',
+                ERRCODE = 'PM106',
                 SCHEMA  = tg_table_schema,
                 TABLE   = tg_table_name;
 
@@ -314,8 +312,6 @@ BEGIN
                 DETAIL  = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_appl_data'
                             ,p_proc_name      => 'trig_b_d_syst_hierarchy_items_hierarchy_inactive_check'
-                            ,p_exception_name => 'invalid_state'
-                            ,p_errcode        => 'PM003'
                             ,p_param_data     => to_jsonb( old )
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -323,7 +319,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM003',
+                ERRCODE = 'PM106',
                 SCHEMA  = tg_table_schema,
                 TABLE   = tg_table_name;
 
@@ -387,8 +383,6 @@ BEGIN
                 DETAIL  = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst_data'
                             ,p_proc_name      => 'trig_b_i_syst_enum_functional_type_validate_new_allowed'
-                            ,p_exception_name => 'invalid_functional_type'
-                            ,p_errcode        => 'PM003'
                             ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -396,7 +390,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM003',
+                ERRCODE = 'PM105',
                 SCHEMA  = tg_table_schema,
                 TABLE   = tg_table_name;
 
@@ -488,8 +482,6 @@ BEGIN
                 DETAIL  = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_appl_data'
                             ,p_proc_name      => 'trig_b_i_syst_hierarchies_validate_inactive'
-                            ,p_exception_name => 'invalid_state'
-                            ,p_errcode        => 'PM003'
                             ,p_param_data     => to_jsonb( new )
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -497,7 +489,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM003',
+                ERRCODE = 'PM108',
                 SCHEMA  = tg_table_schema,
                 TABLE   = tg_table_name;
 
@@ -533,11 +525,11 @@ that the Hierarchy is a "structured" Hierarchy are true.
 
 DECLARE
 
-    var_context_data record;
+    v_context_data record;
 
 BEGIN
 
-    SELECT INTO var_context_data
+    SELECT INTO v_context_data
         eft.internal_name = 'hierarchy_states_active' AS is_active
       , ch.structured
     FROM
@@ -549,7 +541,7 @@ BEGIN
     WHERE ch.id = new.hierarchy_id;
 
     CASE
-        WHEN var_context_data.is_active THEN
+        WHEN v_context_data.is_active THEN
 
             RAISE EXCEPTION
                 USING
@@ -560,8 +552,6 @@ BEGIN
                                  p_proc_schema    => 'ms_appl_data'
                                 ,p_proc_name      =>
                                     'trig_b_i_syst_hierarchy_items_hierarchy_prereqs'
-                                ,p_exception_name => 'invalid_state'
-                                ,p_errcode        => 'PM003'
                                 ,p_param_data     => to_jsonb( new )
                                 ,p_context_data   =>
                                     jsonb_build_object(
@@ -569,12 +559,12 @@ BEGIN
                                         ,'tg_when',       tg_when
                                         ,'tg_schema',     tg_table_schema
                                         ,'tg_table_name', tg_table_name)),
-                    ERRCODE = 'PM003',
+                    ERRCODE = 'PM106',
                     SCHEMA  = tg_table_schema,
                     TABLE   = tg_table_name;
 
 
-        WHEN NOT var_context_data.structured THEN
+        WHEN NOT v_context_data.structured THEN
 
             RAISE EXCEPTION
                 USING
@@ -584,8 +574,6 @@ BEGIN
                                  p_proc_schema    => 'ms_appl_data'
                                 ,p_proc_name      =>
                                     'trig_b_i_syst_hierarchy_items_hierarchy_prereqs'
-                                ,p_exception_name => 'invalid_state'
-                                ,p_errcode        => 'PM003'
                                 ,p_param_data     => to_jsonb( new )
                                 ,p_context_data   =>
                                     jsonb_build_object(
@@ -593,7 +581,7 @@ BEGIN
                                         ,'tg_when',       tg_when
                                         ,'tg_schema',     tg_table_schema
                                         ,'tg_table_name', tg_table_name)),
-                    ERRCODE = 'PM003',
+                    ERRCODE = 'PM107',
                     SCHEMA  = tg_table_schema,
                     TABLE   = tg_table_name;
 
@@ -653,8 +641,6 @@ BEGIN
                 DETAIL  = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst_data'
                             ,p_proc_name      => 'trig_b_iu_syst_enum_items_validate_functional_types'
-                            ,p_exception_name => 'invalid_functional_type'
-                            ,p_errcode        => 'PM003'
                             ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -662,7 +648,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM003',
+                ERRCODE = 'PM104',
                 SCHEMA  = tg_table_schema,
                 TABLE   = tg_table_name;
 
@@ -786,7 +772,7 @@ referenced in the data of Hierarchy implementing Components.]]></comment>
 
 DECLARE
 
-    var_context_data record;
+    v_context_data record;
 
 BEGIN
 
@@ -794,7 +780,7 @@ BEGIN
         RETURN new;
     END IF;
 
-    SELECT INTO var_context_data
+    SELECT INTO v_context_data
         eft.internal_name AS new_state_name
     FROM
         ms_syst_data.syst_enum_items ei
@@ -802,7 +788,7 @@ BEGIN
                  ON eft.id = ei.functional_type_id
     WHERE ei.id = new.hierarchy_state_id;
 
-    CASE var_context_data.new_state_name
+    CASE v_context_data.new_state_name
         WHEN 'hierarchy_states_active' THEN
 
             IF NOT ms_syst_priv.is_hierarchy_config_valid( new ) THEN
@@ -817,8 +803,6 @@ BEGIN
                                      p_proc_schema    => 'ms_appl_data'
                                     ,p_proc_name      =>
                                         'trig_b_u_syst_hierarchies_validate_state_change'
-                                    ,p_exception_name => 'invalid_state'
-                                    ,p_errcode        => 'PM003'
                                     ,p_param_data     =>
                                         jsonb_build_object('new', new, 'old', old)
                                     ,p_context_data   =>
@@ -827,7 +811,7 @@ BEGIN
                                             ,'tg_when',       tg_when
                                             ,'tg_schema',     tg_table_schema
                                             ,'tg_table_name', tg_table_name)),
-                        ERRCODE = 'PM003',
+                        ERRCODE = 'PM108',
                         SCHEMA  = tg_table_schema,
                         TABLE   = tg_table_name;
 
@@ -851,8 +835,6 @@ BEGIN
                                      p_proc_schema    => 'ms_appl_data'
                                     ,p_proc_name      =>
                                         'trig_b_u_syst_hierarchies_validate_state_change'
-                                    ,p_exception_name => 'invalid_state'
-                                    ,p_errcode        => 'PM003'
                                     ,p_param_data     =>
                                         jsonb_build_object('new', new, 'old', old)
                                     ,p_context_data   =>
@@ -861,7 +843,7 @@ BEGIN
                                             ,'tg_when',       tg_when
                                             ,'tg_schema',     tg_table_schema
                                             ,'tg_table_name', tg_table_name)),
-                        ERRCODE = 'PM003',
+                        ERRCODE = 'PM108',
                         SCHEMA  = tg_table_schema,
                         TABLE   = tg_table_name;
 
@@ -921,8 +903,6 @@ BEGIN
                                  p_proc_schema    => 'ms_appl_data'
                                 ,p_proc_name      =>
                                     'trig_b_u_syst_hierarchies_validate_structured'
-                                ,p_exception_name => 'invalid_state'
-                                ,p_errcode        => 'PM003'
                                 ,p_param_data     =>
                                     jsonb_build_object('new', new, 'old', old)
                                 ,p_context_data   =>
@@ -931,7 +911,7 @@ BEGIN
                                         ,'tg_when',       tg_when
                                         ,'tg_schema',     tg_table_schema
                                         ,'tg_table_name', tg_table_name)),
-                    ERRCODE = 'PM003',
+                    ERRCODE = 'PM106',
                     SCHEMA  = tg_table_schema,
                     TABLE   = tg_table_name;
 
@@ -951,8 +931,6 @@ BEGIN
                                  p_proc_schema    => 'ms_appl_data'
                                 ,p_proc_name      =>
                                     'trig_b_u_syst_hierarchies_validate_structured'
-                                ,p_exception_name => 'invalid_state'
-                                ,p_errcode        => 'PM003'
                                 ,p_param_data     =>
                                     jsonb_build_object('new', new, 'old', old)
                                 ,p_context_data   =>
@@ -961,7 +939,7 @@ BEGIN
                                         ,'tg_when',       tg_when
                                         ,'tg_schema',     tg_table_schema
                                         ,'tg_table_name', tg_table_name)),
-                    ERRCODE = 'PM003',
+                    ERRCODE = 'PM107',
                     SCHEMA  = tg_table_schema,
                     TABLE   = tg_table_name;
 
@@ -1022,8 +1000,6 @@ BEGIN
                 DETAIL  = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_appl_data'
                             ,p_proc_name      => 'trig_b_d_syst_hierarchy_items_hierarchy_inactive_check'
-                            ,p_exception_name => 'invalid_state'
-                            ,p_errcode        => 'PM003'
                             ,p_param_data     => jsonb_build_object('new', new, 'old', old)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -1031,7 +1007,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM003',
+                ERRCODE = 'PM106',
                 SCHEMA  = tg_table_schema,
                 TABLE   = tg_table_name;
 

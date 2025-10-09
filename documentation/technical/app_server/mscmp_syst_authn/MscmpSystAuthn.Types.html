@@ -4,35 +4,22 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.34.2">
+    <meta name="generator" content="ExDoc v0.38.4">
     <meta name="project" content="mscmp_syst_authn v0.1.0">
 
 
     <title>MscmpSystAuthn.Types — mscmp_syst_authn v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
 
-    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
-    <script src="dist/sidebar_items-5B1BA76F.js"></script>
-    <script src="docs_config.js"></script>
-    <script async src="dist/html-YIPIRHGU.js"></script>
+    <script defer src="dist/sidebar_items-AEC8F2E7.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
 
   </head>
-  <body data-type="modules" class="page-module">
-    <script>
-
-      try {
-        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
-
-        if (settings.theme === 'dark' ||
-           ((settings.theme === 'system' || settings.theme == null) &&
-             window.matchMedia('(prefers-color-scheme: dark)').matches)
-           ) {
-          document.body.classList.add('dark')
-        }
-      } catch (error) { }
-    </script>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
 
 <div class="body-wrapper">
 
@@ -54,37 +41,13 @@ mscmp_syst_authn
         </div>
       </div>
     </div>
-    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
-      <li>
-        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
-Pages
-        </button>
-      </li>
-
-        <li>
-          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
-            Modules
-          </button>
-        </li>
-
-
-    </ul>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
   </div>
-
-  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
-    <ul id="extras-full-list" class="full-list"></ul>
-  </div>
-
-    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
-      <ul id="modules-full-list" class="full-list"></ul>
-    </div>
-
-
 </nav>
 
-<main class="content">
-  <output role="status" id="toast"></output>
+<output role="status" id="toast"></output>
 
+<main class="content page-module" id="main" data-type="modules">
   <div id="content" class="content-inner">
     <div class="top-search">
       <div class="search-settings">
@@ -93,8 +56,8 @@ Pages
             <span class="sr-only">Search documentation of mscmp_syst_authn</span>
             <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
           </label>
-          <button type="submit" class="search-button" aria-label="Submit Search">
-            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
           </button>
           <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
             <i class="ri-close-line ri-lg" title="Cancel search"></i>
@@ -110,12 +73,14 @@ Pages
     </div>
 
 <div id="top-content">
-  <h1>
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">MscmpSystAuthn.Types</span> 
+      <small class="app-vsn" translate="no">(mscmp_syst_authn v0.1.0)</small>
 
-    <span translate="no">MscmpSystAuthn.Types</span> 
-    <small class="app-vsn" translate="no">(mscmp_syst_authn v0.1.0)</small>
+    </h1>
 
-  </h1>
+  </div>
 
 
     <section id="moduledoc">
@@ -138,7 +103,7 @@ Pages
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:access_account_id/0" data-no-tooltip translate="no">access_account_id()</a>
+        <a href="#t:access_account_id/0" data-no-tooltip="" translate="no">access_account_id()</a>
 
       </div>
 
@@ -148,7 +113,7 @@ Pages
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:access_account_instance_assoc_id/0" data-no-tooltip translate="no">access_account_instance_assoc_id()</a>
+        <a href="#t:access_account_instance_assoc_id/0" data-no-tooltip="" translate="no">access_account_instance_assoc_id()</a>
 
       </div>
 
@@ -159,7 +124,7 @@ values.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:access_account_instance_assoc_params/0" data-no-tooltip translate="no">access_account_instance_assoc_params()</a>
+        <a href="#t:access_account_instance_assoc_params/0" data-no-tooltip="" translate="no">access_account_instance_assoc_params()</a>
 
       </div>
 
@@ -170,7 +135,7 @@ Parameters.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:access_account_name/0" data-no-tooltip translate="no">access_account_name()</a>
+        <a href="#t:access_account_name/0" data-no-tooltip="" translate="no">access_account_name()</a>
 
       </div>
 
@@ -180,7 +145,7 @@ Parameters.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:access_account_params/0" data-no-tooltip translate="no">access_account_params()</a>
+        <a href="#t:access_account_params/0" data-no-tooltip="" translate="no">access_account_params()</a>
 
       </div>
 
@@ -190,7 +155,7 @@ Parameters.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:access_account_state_functional_types/0" data-no-tooltip translate="no">access_account_state_functional_types()</a>
+        <a href="#t:access_account_state_functional_types/0" data-no-tooltip="" translate="no">access_account_state_functional_types()</a>
 
       </div>
 
@@ -202,7 +167,7 @@ behavior.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:access_account_state_id/0" data-no-tooltip translate="no">access_account_state_id()</a>
+        <a href="#t:access_account_state_id/0" data-no-tooltip="" translate="no">access_account_state_id()</a>
 
       </div>
 
@@ -212,7 +177,7 @@ behavior.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:access_account_state_name/0" data-no-tooltip translate="no">access_account_state_name()</a>
+        <a href="#t:access_account_state_name/0" data-no-tooltip="" translate="no">access_account_state_name()</a>
 
       </div>
 
@@ -222,7 +187,7 @@ behavior.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:account_identifier/0" data-no-tooltip translate="no">account_identifier()</a>
+        <a href="#t:account_identifier/0" data-no-tooltip="" translate="no">account_identifier()</a>
 
       </div>
 
@@ -232,7 +197,7 @@ behavior.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:authentication_extended_operations/0" data-no-tooltip translate="no">authentication_extended_operations()</a>
+        <a href="#t:authentication_extended_operations/0" data-no-tooltip="" translate="no">authentication_extended_operations()</a>
 
       </div>
 
@@ -244,7 +209,7 @@ flow.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:authentication_operations/0" data-no-tooltip translate="no">authentication_operations()</a>
+        <a href="#t:authentication_operations/0" data-no-tooltip="" translate="no">authentication_operations()</a>
 
       </div>
 
@@ -254,7 +219,7 @@ flow.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:authentication_status/0" data-no-tooltip translate="no">authentication_status()</a>
+        <a href="#t:authentication_status/0" data-no-tooltip="" translate="no">authentication_status()</a>
 
       </div>
 
@@ -264,7 +229,7 @@ flow.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:authenticator_types/0" data-no-tooltip translate="no">authenticator_types()</a>
+        <a href="#t:authenticator_types/0" data-no-tooltip="" translate="no">authenticator_types()</a>
 
       </div>
 
@@ -274,7 +239,7 @@ flow.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:credential/0" data-no-tooltip translate="no">credential()</a>
+        <a href="#t:credential/0" data-no-tooltip="" translate="no">credential()</a>
 
       </div>
 
@@ -284,7 +249,7 @@ flow.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:credential_confirm_result/0" data-no-tooltip translate="no">credential_confirm_result()</a>
+        <a href="#t:credential_confirm_result/0" data-no-tooltip="" translate="no">credential_confirm_result()</a>
 
       </div>
 
@@ -294,7 +259,7 @@ flow.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:credential_confirm_state/0" data-no-tooltip translate="no">credential_confirm_state()</a>
+        <a href="#t:credential_confirm_state/0" data-no-tooltip="" translate="no">credential_confirm_state()</a>
 
       </div>
 
@@ -305,7 +270,7 @@ Credential.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:credential_extended_state/0" data-no-tooltip translate="no">credential_extended_state()</a>
+        <a href="#t:credential_extended_state/0" data-no-tooltip="" translate="no">credential_extended_state()</a>
 
       </div>
 
@@ -316,7 +281,7 @@ confirmation actions.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:credential_id/0" data-no-tooltip translate="no">credential_id()</a>
+        <a href="#t:credential_id/0" data-no-tooltip="" translate="no">credential_id()</a>
 
       </div>
 
@@ -326,7 +291,7 @@ confirmation actions.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:credential_params/0" data-no-tooltip translate="no">credential_params()</a>
+        <a href="#t:credential_params/0" data-no-tooltip="" translate="no">credential_params()</a>
 
       </div>
 
@@ -337,7 +302,7 @@ records.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:credential_reset_reason/0" data-no-tooltip translate="no">credential_reset_reason()</a>
+        <a href="#t:credential_reset_reason/0" data-no-tooltip="" translate="no">credential_reset_reason()</a>
 
       </div>
 
@@ -348,7 +313,7 @@ are required.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:credential_set_failures/0" data-no-tooltip translate="no">credential_set_failures()</a>
+        <a href="#t:credential_set_failures/0" data-no-tooltip="" translate="no">credential_set_failures()</a>
 
       </div>
 
@@ -358,7 +323,7 @@ are required.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:credential_type_functional_types/0" data-no-tooltip translate="no">credential_type_functional_types()</a>
+        <a href="#t:credential_type_functional_types/0" data-no-tooltip="" translate="no">credential_type_functional_types()</a>
 
       </div>
 
@@ -369,7 +334,7 @@ functionality.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:credential_type_id/0" data-no-tooltip translate="no">credential_type_id()</a>
+        <a href="#t:credential_type_id/0" data-no-tooltip="" translate="no">credential_type_id()</a>
 
       </div>
 
@@ -379,7 +344,7 @@ functionality.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:credential_type_name/0" data-no-tooltip translate="no">credential_type_name()</a>
+        <a href="#t:credential_type_name/0" data-no-tooltip="" translate="no">credential_type_name()</a>
 
       </div>
 
@@ -389,7 +354,7 @@ functionality.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:credential_types/0" data-no-tooltip translate="no">credential_types()</a>
+        <a href="#t:credential_types/0" data-no-tooltip="" translate="no">credential_types()</a>
 
       </div>
 
@@ -399,7 +364,7 @@ functionality.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:disallowed_host_id/0" data-no-tooltip translate="no">disallowed_host_id()</a>
+        <a href="#t:disallowed_host_id/0" data-no-tooltip="" translate="no">disallowed_host_id()</a>
 
       </div>
 
@@ -409,7 +374,7 @@ functionality.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:global_network_rule_params/0" data-no-tooltip translate="no">global_network_rule_params()</a>
+        <a href="#t:global_network_rule_params/0" data-no-tooltip="" translate="no">global_network_rule_params()</a>
 
       </div>
 
@@ -420,7 +385,7 @@ Network Rule records.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:host_address/0" data-no-tooltip translate="no">host_address()</a>
+        <a href="#t:host_address/0" data-no-tooltip="" translate="no">host_address()</a>
 
       </div>
 
@@ -430,7 +395,7 @@ Network Rule records.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:identity_id/0" data-no-tooltip translate="no">identity_id()</a>
+        <a href="#t:identity_id/0" data-no-tooltip="" translate="no">identity_id()</a>
 
       </div>
 
@@ -440,7 +405,7 @@ Network Rule records.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:identity_params/0" data-no-tooltip translate="no">identity_params()</a>
+        <a href="#t:identity_params/0" data-no-tooltip="" translate="no">identity_params()</a>
 
       </div>
 
@@ -450,7 +415,7 @@ Network Rule records.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:identity_type_functional_types/0" data-no-tooltip translate="no">identity_type_functional_types()</a>
+        <a href="#t:identity_type_functional_types/0" data-no-tooltip="" translate="no">identity_type_functional_types()</a>
 
       </div>
 
@@ -461,7 +426,7 @@ with different functional responses.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:identity_type_id/0" data-no-tooltip translate="no">identity_type_id()</a>
+        <a href="#t:identity_type_id/0" data-no-tooltip="" translate="no">identity_type_id()</a>
 
       </div>
 
@@ -471,7 +436,7 @@ with different functional responses.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:identity_type_name/0" data-no-tooltip translate="no">identity_type_name()</a>
+        <a href="#t:identity_type_name/0" data-no-tooltip="" translate="no">identity_type_name()</a>
 
       </div>
 
@@ -482,7 +447,7 @@ value.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:identity_types/0" data-no-tooltip translate="no">identity_types()</a>
+        <a href="#t:identity_types/0" data-no-tooltip="" translate="no">identity_types()</a>
 
       </div>
 
@@ -492,7 +457,7 @@ value.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:instance_network_rule_params/0" data-no-tooltip translate="no">instance_network_rule_params()</a>
+        <a href="#t:instance_network_rule_params/0" data-no-tooltip="" translate="no">instance_network_rule_params()</a>
 
       </div>
 
@@ -503,7 +468,7 @@ Network Rule records.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:network_rule_functional_type/0" data-no-tooltip translate="no">network_rule_functional_type()</a>
+        <a href="#t:network_rule_functional_type/0" data-no-tooltip="" translate="no">network_rule_functional_type()</a>
 
       </div>
 
@@ -513,7 +478,7 @@ Network Rule records.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:network_rule_precedence/0" data-no-tooltip translate="no">network_rule_precedence()</a>
+        <a href="#t:network_rule_precedence/0" data-no-tooltip="" translate="no">network_rule_precedence()</a>
 
       </div>
 
@@ -523,7 +488,7 @@ Network Rule records.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:owner_network_rule_params/0" data-no-tooltip translate="no">owner_network_rule_params()</a>
+        <a href="#t:owner_network_rule_params/0" data-no-tooltip="" translate="no">owner_network_rule_params()</a>
 
       </div>
 
@@ -534,7 +499,7 @@ Network Rule records.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:password_rule_params/0" data-no-tooltip translate="no">password_rule_params()</a>
+        <a href="#t:password_rule_params/0" data-no-tooltip="" translate="no">password_rule_params()</a>
 
       </div>
 
@@ -544,11 +509,22 @@ Network Rule records.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:password_rule_violations/0" data-no-tooltip translate="no">password_rule_violations()</a>
+        <a href="#t:password_rule_violations/0" data-no-tooltip="" translate="no">password_rule_violations()</a>
 
       </div>
 
         <div class="summary-synopsis"><p>Defines the known Password Rule violations.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:rate_limit_config/0" data-no-tooltip="" translate="no">rate_limit_config()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Used in setting the rate limitation parameters for allowed identifier or
+host address failed authentication attempts.</p></div>
 
     </div>
 
@@ -564,24 +540,26 @@ Network Rule records.</p></div>
       </a>
       <span class="text">Types</span>
     </h1>
+
     <div class="types-list">
 <section class="detail" id="t:access_account_id/0">
 
   <div class="detail-header">
-    <a href="#t:access_account_id/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:access_account_id/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">access_account_id()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">access_account_id()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> access_account_id() :: <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
+          <pre translate="no"><span class="attribute">@type</span> access_account_id() :: <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
 
       </div>
 
@@ -591,20 +569,21 @@ Network Rule records.</p></div>
 <section class="detail" id="t:access_account_instance_assoc_id/0">
 
   <div class="detail-header">
-    <a href="#t:access_account_instance_assoc_id/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:access_account_instance_assoc_id/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">access_account_instance_assoc_id()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">access_account_instance_assoc_id()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> access_account_instance_assoc_id() :: <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
+          <pre translate="no"><span class="attribute">@type</span> access_account_instance_assoc_id() :: <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
 
       </div>
 
@@ -615,13 +594,14 @@ values.</p>
 <section class="detail" id="t:access_account_instance_assoc_params/0">
 
   <div class="detail-header">
-    <a href="#t:access_account_instance_assoc_params/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:access_account_instance_assoc_params/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">access_account_instance_assoc_params()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">access_account_instance_assoc_params()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -631,8 +611,8 @@ values.</p>
           <pre translate="no"><span class="attribute">@type</span> access_account_instance_assoc_params() :: %{
   optional(:access_account_id) =&gt; <a href="#t:access_account_id/0">access_account_id</a>(),
   optional(:access_account_name) =&gt; <a href="#t:access_account_name/0">access_account_name</a>(),
-  optional(:instance_id) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:instance_id/0">MscmpSystInstance.Types.instance_id</a>(),
-  optional(:instance_name) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:instance_name/0">MscmpSystInstance.Types.instance_name</a>(),
+  optional(:instance_id) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:instance_id/0">MscmpSystInstance.Types.instance_id</a>(),
+  optional(:instance_name) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:instance_name/0">MscmpSystInstance.Types.instance_name</a>(),
   optional(:access_granted) =&gt; <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>(),
   optional(:invitation_issued) =&gt; <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>(),
   optional(:invitation_expires) =&gt; <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>(),
@@ -643,13 +623,7 @@ values.</p>
 
 <p>Defines the expected shape and types of Access Account Instance Association
 Parameters.</p><p>These parameters are passed to the database Changeset functions for tasks such
-as record creation or updating.</p><h2 id="t:access_account_instance_assoc_params/0-attributes" class="section-heading">
-  <a href="#t:access_account_instance_assoc_params/0-attributes" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Attributes</span>
-</h2>
-<ul><li><p><code class="inline">access_account_id</code> - the Access Account record ID which will be
+as record creation or updating.</p><h2 id="t:access_account_instance_assoc_params/0-attributes" class="section-heading"><a href="#t:access_account_instance_assoc_params/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Attributes</span></h2><ul><li><p><code class="inline">access_account_id</code> - the Access Account record ID which will be
 associated with the Instance.</p></li><li><p><code class="inline">access_account_name</code> - an alternate method of identifying an Access
 Account record by using its Internal Name value.  This can be used instead
 of the <code class="inline">access_account_id</code> attribute.</p></li><li><p><code class="inline">instance_id</code> - the record ID of the Instance to which the designated
@@ -672,13 +646,14 @@ then the Access Account holder has not specifically declined the request.</p></l
 <section class="detail" id="t:access_account_name/0">
 
   <div class="detail-header">
-    <a href="#t:access_account_name/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:access_account_name/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">access_account_name()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">access_account_name()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -695,13 +670,14 @@ then the Access Account holder has not specifically declined the request.</p></l
 <section class="detail" id="t:access_account_params/0">
 
   <div class="detail-header">
-    <a href="#t:access_account_params/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:access_account_params/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">access_account_params()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">access_account_params()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -711,8 +687,8 @@ then the Access Account holder has not specifically declined the request.</p></l
           <pre translate="no"><span class="attribute">@type</span> access_account_params() :: %{
   optional(:internal_name) =&gt; <a href="#t:access_account_name/0">access_account_name</a>(),
   optional(:external_name) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  optional(:owning_owner_id) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:owner_id/0">MscmpSystInstance.Types.owner_id</a>(),
-  optional(:owning_owner_name) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:owner_name/0">MscmpSystInstance.Types.owner_name</a>(),
+  optional(:owning_owner_id) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:owner_id/0">MscmpSystInstance.Types.owner_id</a>(),
+  optional(:owning_owner_name) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:owner_name/0">MscmpSystInstance.Types.owner_name</a>(),
   optional(:allow_global_logins) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
   optional(:access_account_state_id) =&gt; <a href="#t:access_account_state_id/0">access_account_state_id</a>(),
   optional(:access_account_state_name) =&gt; <a href="#t:access_account_name/0">access_account_name</a>()
@@ -720,13 +696,7 @@ then the Access Account holder has not specifically declined the request.</p></l
 
       </div>
 
-<p>Defines the shape and expected types of Access Account Changeset parameters.</p><h2 id="t:access_account_params/0-attributes" class="section-heading">
-  <a href="#t:access_account_params/0-attributes" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Attributes</span>
-</h2>
-<ul><li><p><code class="inline">internal_name</code> - a candidate key for the Access Account record. This
+<p>Defines the shape and expected types of Access Account Changeset parameters.</p><h2 id="t:access_account_params/0-attributes" class="section-heading"><a href="#t:access_account_params/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Attributes</span></h2><ul><li><p><code class="inline">internal_name</code> - a candidate key for the Access Account record. This
 value must be unique system wide.</p></li><li><p><code class="inline">external_name</code> - an externally/user visible name of the Access Account.
 This value does not require uniqueness, though care should be exercised in
 contexts where it may be displayed alongside other Access Accounts to avoid
@@ -747,13 +717,14 @@ record ID.</p></li></ul>
 <section class="detail" id="t:access_account_state_functional_types/0">
 
   <div class="detail-header">
-    <a href="#t:access_account_state_functional_types/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:access_account_state_functional_types/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">access_account_state_functional_types()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">access_account_state_functional_types()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -786,20 +757,21 @@ designated as purge eligible are permitted to be deleted from the system.</p></l
 <section class="detail" id="t:access_account_state_id/0">
 
   <div class="detail-header">
-    <a href="#t:access_account_state_id/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:access_account_state_id/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">access_account_state_id()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">access_account_state_id()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> access_account_state_id() :: <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Types.html#t:enum_item_id/0">MscmpSystEnums.Types.enum_item_id</a>()</pre>
+          <pre translate="no"><span class="attribute">@type</span> access_account_state_id() :: <a href="/documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Types.html#t:enum_item_id/0">MscmpSystEnums.Types.enum_item_id</a>()</pre>
 
       </div>
 
@@ -809,20 +781,21 @@ designated as purge eligible are permitted to be deleted from the system.</p></l
 <section class="detail" id="t:access_account_state_name/0">
 
   <div class="detail-header">
-    <a href="#t:access_account_state_name/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:access_account_state_name/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">access_account_state_name()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">access_account_state_name()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> access_account_state_name() :: <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Types.html#t:enum_item_name/0">MscmpSystEnums.Types.enum_item_name</a>()</pre>
+          <pre translate="no"><span class="attribute">@type</span> access_account_state_name() :: <a href="/documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Types.html#t:enum_item_name/0">MscmpSystEnums.Types.enum_item_name</a>()</pre>
 
       </div>
 
@@ -832,13 +805,14 @@ designated as purge eligible are permitted to be deleted from the system.</p></l
 <section class="detail" id="t:account_identifier/0">
 
   <div class="detail-header">
-    <a href="#t:account_identifier/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:account_identifier/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">account_identifier()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">account_identifier()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -858,13 +832,14 @@ short string of random characters.</p>
 <section class="detail" id="t:authentication_extended_operations/0">
 
   <div class="detail-header">
-    <a href="#t:authentication_extended_operations/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:authentication_extended_operations/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">authentication_extended_operations()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">authentication_extended_operations()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -894,13 +869,14 @@ functionality.</p>
 <section class="detail" id="t:authentication_operations/0">
 
   <div class="detail-header">
-    <a href="#t:authentication_operations/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:authentication_operations/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">authentication_operations()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">authentication_operations()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -909,7 +885,7 @@ functionality.</p>
 
           <pre translate="no"><span class="attribute">@type</span> authentication_operations() ::
   :check_global_network_rules
-  | :check_identifier_rate_limit
+  | :check_identifier_limit
   | :check_identity
   | :check_credential
   | :check_instance
@@ -930,13 +906,14 @@ to the authentication process.</p>
 <section class="detail" id="t:authentication_status/0">
 
   <div class="detail-header">
-    <a href="#t:authentication_status/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:authentication_status/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">authentication_status()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">authentication_status()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -947,7 +924,7 @@ to the authentication process.</p>
   :not_started
   | :pending
   | :rejected_host_check
-  | :rejected_rate_limited
+  | :rejected_limits_exceeded
   | :rejected_validation
   | :rejected_identity_expired
   | :rejected_deadline_expired
@@ -967,7 +944,7 @@ a call to an authentication function to return a <code class="inline">:pending</
 state status.  In these cases the authentication has been interrupted and
 requires intervention to proceed.</p></li><li><p><code class="inline">:rejected_host_check</code> - the authentication process has rejected the
 authentication attempt because the apparent Host IP Address is not allowed
-to authenticate as presented.</p></li><li><p><code class="inline">:rejected_rate_limited</code> - the authentication process has rejected the
+to authenticate as presented.</p></li><li><p><code class="inline">:rejected_limits_exceeded</code> - the authentication process has rejected the
 authentication attempt because the identifier has failed to successfully
 authenticate within the prescribed number of tries within a prescribed
 duration.</p></li><li><p><code class="inline">:rejected_validation</code> - the authentication process has rejected the
@@ -988,13 +965,14 @@ and the Access Account is now authenticated for the identified Instance.</p></li
 <section class="detail" id="t:authenticator_types/0">
 
   <div class="detail-header">
-    <a href="#t:authenticator_types/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:authenticator_types/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">authenticator_types()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">authenticator_types()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1015,13 +993,14 @@ combinations of Identity/Credential Types.</p>
 <section class="detail" id="t:credential/0">
 
   <div class="detail-header">
-    <a href="#t:credential/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:credential/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">credential()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">credential()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1038,13 +1017,14 @@ combinations of Identity/Credential Types.</p>
 <section class="detail" id="t:credential_confirm_result/0">
 
   <div class="detail-header">
-    <a href="#t:credential_confirm_result/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:credential_confirm_result/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">credential_confirm_result()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">credential_confirm_result()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1067,13 +1047,14 @@ element will simply be an empty list.</p>
 <section class="detail" id="t:credential_confirm_state/0">
 
   <div class="detail-header">
-    <a href="#t:credential_confirm_state/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:credential_confirm_state/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">credential_confirm_state()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">credential_confirm_state()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1098,13 +1079,14 @@ unconfirmed state without additional details regarding a failure.</p>
 <section class="detail" id="t:credential_extended_state/0">
 
   <div class="detail-header">
-    <a href="#t:credential_extended_state/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:credential_extended_state/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">credential_extended_state()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">credential_extended_state()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1130,20 +1112,21 @@ Credential reset related reasons defined in <a href="#t:credential_reset_reason/
 <section class="detail" id="t:credential_id/0">
 
   <div class="detail-header">
-    <a href="#t:credential_id/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:credential_id/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">credential_id()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">credential_id()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> credential_id() :: <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
+          <pre translate="no"><span class="attribute">@type</span> credential_id() :: <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
 
       </div>
 
@@ -1153,13 +1136,14 @@ Credential reset related reasons defined in <a href="#t:credential_reset_reason/
 <section class="detail" id="t:credential_params/0">
 
   <div class="detail-header">
-    <a href="#t:credential_params/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:credential_params/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">credential_params()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">credential_params()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1178,13 +1162,7 @@ Credential reset related reasons defined in <a href="#t:credential_reset_reason/
       </div>
 
 <p>A type to facilitate data maintenance operations related to Credential
-records.</p><h2 id="t:credential_params/0-attributes" class="section-heading">
-  <a href="#t:credential_params/0-attributes" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Attributes</span>
-</h2>
-<ul><li><p><code class="inline">access_account_id</code> - identifies the Access Account to which the
+records.</p><h2 id="t:credential_params/0-attributes" class="section-heading"><a href="#t:credential_params/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Attributes</span></h2><ul><li><p><code class="inline">access_account_id</code> - identifies the Access Account to which the
 Credential pertains as identified by its record ID.</p></li><li><p><code class="inline">access_account_name</code> - an alternative method of using the Access Account
 internal name to identify the Access Account.</p></li><li><p><code class="inline">credential_type_id</code> - the record ID of the Credential Type which
 classifies the Credential record.</p></li><li><p><code class="inline">credential_type_name</code> - an alternative method of identifying the
@@ -1200,13 +1178,14 @@ the hash.</p></li></ul>
 <section class="detail" id="t:credential_reset_reason/0">
 
   <div class="detail-header">
-    <a href="#t:credential_reset_reason/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:credential_reset_reason/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">credential_reset_reason()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">credential_reset_reason()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1232,13 +1211,14 @@ authentication.</p></li></ul>
 <section class="detail" id="t:credential_set_failures/0">
 
   <div class="detail-header">
-    <a href="#t:credential_set_failures/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:credential_set_failures/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">credential_set_failures()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">credential_set_failures()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1258,13 +1238,14 @@ will describe which specific Password Rules have been violated.</p>
 <section class="detail" id="t:credential_type_functional_types/0">
 
   <div class="detail-header">
-    <a href="#t:credential_type_functional_types/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:credential_type_functional_types/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">credential_type_functional_types()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">credential_type_functional_types()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1298,20 +1279,21 @@ functionality.</p></li></ul>
 <section class="detail" id="t:credential_type_id/0">
 
   <div class="detail-header">
-    <a href="#t:credential_type_id/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:credential_type_id/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">credential_type_id()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">credential_type_id()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> credential_type_id() :: <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Types.html#t:enum_item_id/0">MscmpSystEnums.Types.enum_item_id</a>()</pre>
+          <pre translate="no"><span class="attribute">@type</span> credential_type_id() :: <a href="/documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Types.html#t:enum_item_id/0">MscmpSystEnums.Types.enum_item_id</a>()</pre>
 
       </div>
 
@@ -1321,20 +1303,21 @@ functionality.</p></li></ul>
 <section class="detail" id="t:credential_type_name/0">
 
   <div class="detail-header">
-    <a href="#t:credential_type_name/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:credential_type_name/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">credential_type_name()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">credential_type_name()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> credential_type_name() :: <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Types.html#t:enum_item_name/0">MscmpSystEnums.Types.enum_item_name</a>()</pre>
+          <pre translate="no"><span class="attribute">@type</span> credential_type_name() :: <a href="/documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Types.html#t:enum_item_name/0">MscmpSystEnums.Types.enum_item_name</a>()</pre>
 
       </div>
 
@@ -1344,13 +1327,14 @@ functionality.</p></li></ul>
 <section class="detail" id="t:credential_types/0">
 
   <div class="detail-header">
-    <a href="#t:credential_types/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:credential_types/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">credential_types()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">credential_types()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1374,20 +1358,21 @@ functionality.</p></li></ul>
 <section class="detail" id="t:disallowed_host_id/0">
 
   <div class="detail-header">
-    <a href="#t:disallowed_host_id/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:disallowed_host_id/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">disallowed_host_id()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">disallowed_host_id()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> disallowed_host_id() :: <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
+          <pre translate="no"><span class="attribute">@type</span> disallowed_host_id() :: <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
 
       </div>
 
@@ -1397,13 +1382,14 @@ functionality.</p></li></ul>
 <section class="detail" id="t:global_network_rule_params/0">
 
   <div class="detail-header">
-    <a href="#t:global_network_rule_params/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:global_network_rule_params/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">global_network_rule_params()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">global_network_rule_params()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1413,21 +1399,15 @@ functionality.</p></li></ul>
           <pre translate="no"><span class="attribute">@type</span> global_network_rule_params() :: %{
   optional(:ordering) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>(),
   optional(:functional_type) =&gt; <a href="#t:network_rule_functional_type/0">network_rule_functional_type</a>() | <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  optional(:ip_host_or_network) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>(),
-  optional(:ip_host_range_lower) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>(),
-  optional(:ip_host_range_upper) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>()
+  optional(:ip_host_or_network) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>(),
+  optional(:ip_host_range_lower) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>(),
+  optional(:ip_host_range_upper) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>()
 }</pre>
 
       </div>
 
 <p>Defines the available parameters for use in creating or updating Global
-Network Rule records.</p><h2 id="t:global_network_rule_params/0-attributes" class="section-heading">
-  <a href="#t:global_network_rule_params/0-attributes" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Attributes</span>
-</h2>
-<ul><li><p><code class="inline">ordering</code> - the order in which the new record should apply relative to
+Network Rule records.</p><h2 id="t:global_network_rule_params/0-attributes" class="section-heading"><a href="#t:global_network_rule_params/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Attributes</span></h2><ul><li><p><code class="inline">ordering</code> - the order in which the new record should apply relative to
 other Global Network Rule records.  lower <code class="inline">ordering</code> values take precedence
 over higher <code class="inline">ordering</code> values.  If the <code class="inline">ordering</code> value in the parameters
 matches the <code class="inline">ordering</code> value of an existing Global Network Rule record, the
@@ -1453,20 +1433,21 @@ provided the <code class="inline">ip_host_range_lower</code> attribute must also
 <section class="detail" id="t:host_address/0">
 
   <div class="detail-header">
-    <a href="#t:host_address/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:host_address/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">host_address()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">host_address()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> host_address() :: <a href="../../../../documentation/technical/app_server/mscmp_syst_network/MscmpSystNetwork.Types.html#t:addr_structs/0">MscmpSystNetwork.Types.addr_structs</a>()</pre>
+          <pre translate="no"><span class="attribute">@type</span> host_address() :: <a href="/documentation/technical/app_server/mscmp_syst_network/MscmpSystNetwork.Types.html#t:addr_structs/0">MscmpSystNetwork.Types.addr_structs</a>()</pre>
 
       </div>
 
@@ -1476,20 +1457,21 @@ provided the <code class="inline">ip_host_range_lower</code> attribute must also
 <section class="detail" id="t:identity_id/0">
 
   <div class="detail-header">
-    <a href="#t:identity_id/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:identity_id/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">identity_id()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">identity_id()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> identity_id() :: <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
+          <pre translate="no"><span class="attribute">@type</span> identity_id() :: <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
 
       </div>
 
@@ -1499,13 +1481,14 @@ provided the <code class="inline">ip_host_range_lower</code> attribute must also
 <section class="detail" id="t:identity_params/0">
 
   <div class="detail-header">
-    <a href="#t:identity_params/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:identity_params/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">identity_params()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">identity_params()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1527,13 +1510,7 @@ provided the <code class="inline">ip_host_range_lower</code> attribute must also
 
       </div>
 
-<p>Defines a map of attributes for use in Identity record Changeset processing.</p><h2 id="t:identity_params/0-attributes" class="section-heading">
-  <a href="#t:identity_params/0-attributes" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Attributes</span>
-</h2>
-<ul><li><p><code class="inline">access_account_id</code> - the record ID of the Access Account for which the
+<p>Defines a map of attributes for use in Identity record Changeset processing.</p><h2 id="t:identity_params/0-attributes" class="section-heading"><a href="#t:identity_params/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Attributes</span></h2><ul><li><p><code class="inline">access_account_id</code> - the record ID of the Access Account for which the
 record is being defined.</p></li><li><p><code class="inline">access_account_name</code> - an alternative means of selecting the Access
 Account using its Internal Name value.</p></li><li><p><code class="inline">identity_type_id</code> - the record ID of the Identity Type of the Identity.</p></li><li><p><code class="inline">identity_type_name</code> - an alternative means of selecting the Identity Type
 of the record using the Identity Type Internal Name value.</p></li><li><p><code class="inline">account_identifier</code> - the identifier presented by the Access Account
@@ -1560,13 +1537,14 @@ looking up Identity records.</p></li></ul>
 <section class="detail" id="t:identity_type_functional_types/0">
 
   <div class="detail-header">
-    <a href="#t:identity_type_functional_types/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:identity_type_functional_types/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">identity_type_functional_types()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">identity_type_functional_types()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1596,20 +1574,21 @@ Password Credential recovery.</p></li></ul>
 <section class="detail" id="t:identity_type_id/0">
 
   <div class="detail-header">
-    <a href="#t:identity_type_id/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:identity_type_id/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">identity_type_id()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">identity_type_id()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> identity_type_id() :: <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Types.html#t:enum_item_id/0">MscmpSystEnums.Types.enum_item_id</a>()</pre>
+          <pre translate="no"><span class="attribute">@type</span> identity_type_id() :: <a href="/documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Types.html#t:enum_item_id/0">MscmpSystEnums.Types.enum_item_id</a>()</pre>
 
       </div>
 
@@ -1619,20 +1598,21 @@ Password Credential recovery.</p></li></ul>
 <section class="detail" id="t:identity_type_name/0">
 
   <div class="detail-header">
-    <a href="#t:identity_type_name/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:identity_type_name/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">identity_type_name()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">identity_type_name()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> identity_type_name() :: <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Types.html#t:enum_item_name/0">MscmpSystEnums.Types.enum_item_name</a>()</pre>
+          <pre translate="no"><span class="attribute">@type</span> identity_type_name() :: <a href="/documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Types.html#t:enum_item_name/0">MscmpSystEnums.Types.enum_item_name</a>()</pre>
 
       </div>
 
@@ -1643,13 +1623,14 @@ value.</p>
 <section class="detail" id="t:identity_types/0">
 
   <div class="detail-header">
-    <a href="#t:identity_types/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:identity_types/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">identity_types()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">identity_types()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1671,13 +1652,14 @@ value.</p>
 <section class="detail" id="t:instance_network_rule_params/0">
 
   <div class="detail-header">
-    <a href="#t:instance_network_rule_params/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:instance_network_rule_params/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">instance_network_rule_params()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">instance_network_rule_params()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1686,26 +1668,20 @@ value.</p>
 
           <pre translate="no"><span class="attribute">@type</span> instance_network_rule_params() ::
   %{
-    optional(:instance_id) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:instance_id/0">MscmpSystInstance.Types.instance_id</a>(),
-    optional(:instance_name) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:instance_name/0">MscmpSystInstance.Types.instance_name</a>(),
+    optional(:instance_id) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:instance_id/0">MscmpSystInstance.Types.instance_id</a>(),
+    optional(:instance_name) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:instance_name/0">MscmpSystInstance.Types.instance_name</a>(),
     optional(:ordering) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>(),
     optional(:functional_type) =&gt; <a href="#t:network_rule_functional_type/0">network_rule_functional_type</a>() | <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-    optional(:ip_host_or_network) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>(),
-    optional(:ip_host_range_lower) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>(),
-    optional(:ip_host_range_upper) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>()
+    optional(:ip_host_or_network) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>(),
+    optional(:ip_host_range_lower) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>(),
+    optional(:ip_host_range_upper) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>()
   }
   | nil</pre>
 
       </div>
 
 <p>Defines the available parameters for use in creating or updating Instance
-Network Rule records.</p><h2 id="t:instance_network_rule_params/0-attributes" class="section-heading">
-  <a href="#t:instance_network_rule_params/0-attributes" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Attributes</span>
-</h2>
-<ul><li><p><code class="inline">instance_id</code> - the value of this attribute identifies the Instance for
+Network Rule records.</p><h2 id="t:instance_network_rule_params/0-attributes" class="section-heading"><a href="#t:instance_network_rule_params/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Attributes</span></h2><ul><li><p><code class="inline">instance_id</code> - the value of this attribute identifies the Instance for
 which the Network Rule is being defined.  This value doesn't have to be set
 explicitly when using the <a href="MscmpSystAuthn.html"><code class="inline">MscmpSystAuthn</code></a> module API as the API
 calls set this value based on the function <code class="inline">instance_id</code> parameters they
@@ -1737,13 +1713,14 @@ provided the <code class="inline">ip_host_range_lower</code> attribute must also
 <section class="detail" id="t:network_rule_functional_type/0">
 
   <div class="detail-header">
-    <a href="#t:network_rule_functional_type/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:network_rule_functional_type/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">network_rule_functional_type()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">network_rule_functional_type()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1762,13 +1739,14 @@ from attempting an authentication.</p></li></ul>
 <section class="detail" id="t:network_rule_precedence/0">
 
   <div class="detail-header">
-    <a href="#t:network_rule_precedence/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:network_rule_precedence/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">network_rule_precedence()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">network_rule_precedence()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1801,13 +1779,14 @@ allows any host to attempt authentication.</p></li></ul>
 <section class="detail" id="t:owner_network_rule_params/0">
 
   <div class="detail-header">
-    <a href="#t:owner_network_rule_params/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:owner_network_rule_params/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">owner_network_rule_params()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">owner_network_rule_params()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1815,25 +1794,19 @@ allows any host to attempt authentication.</p></li></ul>
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@type</span> owner_network_rule_params() :: %{
-  optional(:owner_id) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:owner_id/0">MscmpSystInstance.Types.owner_id</a>(),
-  optional(:owner_name) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:owner_name/0">MscmpSystInstance.Types.owner_name</a>(),
+  optional(:owner_id) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:owner_id/0">MscmpSystInstance.Types.owner_id</a>(),
+  optional(:owner_name) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:owner_name/0">MscmpSystInstance.Types.owner_name</a>(),
   optional(:ordering) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>(),
   optional(:functional_type) =&gt; <a href="#t:network_rule_functional_type/0">network_rule_functional_type</a>() | <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  optional(:ip_host_or_network) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>(),
-  optional(:ip_host_range_lower) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>(),
-  optional(:ip_host_range_upper) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>()
+  optional(:ip_host_or_network) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>(),
+  optional(:ip_host_range_lower) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>(),
+  optional(:ip_host_range_upper) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>()
 }</pre>
 
       </div>
 
 <p>Defines the available parameters for use in creating or updating Owner
-Network Rule records.</p><h2 id="t:owner_network_rule_params/0-attributes" class="section-heading">
-  <a href="#t:owner_network_rule_params/0-attributes" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Attributes</span>
-</h2>
-<ul><li><p><code class="inline">owner_id</code> - the value of this attribute identifies the Owner for which
+Network Rule records.</p><h2 id="t:owner_network_rule_params/0-attributes" class="section-heading"><a href="#t:owner_network_rule_params/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Attributes</span></h2><ul><li><p><code class="inline">owner_id</code> - the value of this attribute identifies the Owner for which
 the Network Rule is being defined.  This value doesn't have to be set
 explicitly when using the <a href="MscmpSystAuthn.html"><code class="inline">MscmpSystAuthn</code></a> module API as the API
 calls set this value based on the function <code class="inline">owner_id</code> parameters they
@@ -1865,13 +1838,14 @@ provided the <code class="inline">ip_host_range_lower</code> attribute must also
 <section class="detail" id="t:password_rule_params/0">
 
   <div class="detail-header">
-    <a href="#t:password_rule_params/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:password_rule_params/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">password_rule_params()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">password_rule_params()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1879,10 +1853,10 @@ provided the <code class="inline">ip_host_range_lower</code> attribute must also
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@type</span> password_rule_params() :: %{
-  optional(:owner_id) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:owner_id/0">MscmpSystInstance.Types.owner_id</a>() | nil,
-  optional(:owner_name) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:owner_name/0">MscmpSystInstance.Types.owner_name</a>() | nil,
-  optional(:password_length) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.IntegerRange.html#t:t/0">MscmpSystDb.DbTypes.IntegerRange.t</a>(),
-  optional(:max_age) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Interval.html#t:t/0">MscmpSystDb.DbTypes.Interval.t</a>(),
+  optional(:owner_id) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:owner_id/0">MscmpSystInstance.Types.owner_id</a>() | nil,
+  optional(:owner_name) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:owner_name/0">MscmpSystInstance.Types.owner_name</a>() | nil,
+  optional(:password_length) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.IntegerRange.html#t:t/0">MscmpSystDb.DbTypes.IntegerRange.t</a>(),
+  optional(:max_age) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Interval.html#t:t/0">MscmpSystDb.DbTypes.Interval.t</a>(),
   optional(:require_upper_case) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>(),
   optional(:require_lower_case) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>(),
   optional(:require_numbers) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>(),
@@ -1898,16 +1872,10 @@ provided the <code class="inline">ip_host_range_lower</code> attribute must also
 <p>A map of attributes used to create or update Global and Owner Password Rules.</p><p>Note that only those attributes which are necessary to represent the desired
 rules are required to appear in the parameter submission.  All attributes not
 provided will take on a default value which assumes the specific rule has no
-effect.</p><h2 id="t:password_rule_params/0-attributes" class="section-heading">
-  <a href="#t:password_rule_params/0-attributes" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Attributes</span>
-</h2>
-<ul><li><p><code class="inline">password_length</code> - A value of type <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.IntegerRange.html#t:t/0"><code class="inline">MscmpSystDb.DbTypes.IntegerRange.t/0</code></a>
+effect.</p><h2 id="t:password_rule_params/0-attributes" class="section-heading"><a href="#t:password_rule_params/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Attributes</span></h2><ul><li><p><code class="inline">password_length</code> - A value of type <a href="/documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.IntegerRange.html#t:t/0"><code class="inline">MscmpSystDb.DbTypes.IntegerRange.t/0</code></a>
 describing the password length in terms of the number of characters.  The
 lower bound defines the minimum number of characters a password may have and
-the upper bound is the most characters that can be added to password.</p></li><li><p><code class="inline">max_age</code> - A value of type <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Interval.html#t:t/0"><code class="inline">MscmpSystDb.DbTypes.Interval.t/0</code></a>
+the upper bound is the most characters that can be added to password.</p></li><li><p><code class="inline">max_age</code> - A value of type <a href="/documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Interval.html#t:t/0"><code class="inline">MscmpSystDb.DbTypes.Interval.t/0</code></a>
 which, when added to the <code class="inline">last_updated</code> value of the Password Credential
 record, sets the expiration date of the password.  After the password's age
 has exceeded it's max age, the password must be reset prior to finalizing
@@ -1940,13 +1908,14 @@ available.</p></li></ul>
 <section class="detail" id="t:password_rule_violations/0">
 
   <div class="detail-header">
-    <a href="#t:password_rule_violations/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:password_rule_violations/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">password_rule_violations()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">password_rule_violations()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -1986,6 +1955,40 @@ recently used for this Access Account and another not recently used password
 must be selected.</p></li></ul>
   </section>
 </section>
+<section class="detail" id="t:rate_limit_config/0">
+
+  <div class="detail-header">
+    <a href="#t:rate_limit_config/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">rate_limit_config()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> rate_limit_config() :: %{
+  max_attempts: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>(),
+  time_window: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>(),
+  time_scale: <a href="/documentation/technical/app_server/mscmp_syst_limiter/MscmpSystLimiter.Types.html#t:time_scale/0">MscmpSystLimiter.Types.time_scale</a>()
+}</pre>
+
+      </div>
+
+<p>Used in setting the rate limitation parameters for allowed identifier or
+host address failed authentication attempts.</p><h2 id="t:rate_limit_config/0-attributes" class="section-heading"><a href="#t:rate_limit_config/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Attributes</span></h2><ul><li><p><code class="inline">max_attempts</code> - the maximum number of failed attempts which are permitted
+prior to taking protective actions such as disabling an identifier or host
+from further attempts.</p></li><li><p><code class="inline">time_window</code> - the amount of time in which the allowed attempts are
+tracked from first attempt to final.  Once the time window has passed, the
+number of failed attempts to that point will be forgotten.</p></li><li><p><code class="inline">time_scale</code> - the unit of time in which the <code class="inline">time_window</code> value is
+expressed.</p></li></ul>
+  </section>
+</section>
 
     </div>
   </section>
@@ -2007,7 +2010,7 @@ must be selected.</p></li></ul>
 
       <p class="built-using">
         Built using
-        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.34.2) for the
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
 
           <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

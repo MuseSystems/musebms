@@ -4,35 +4,22 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.34.2">
+    <meta name="generator" content="ExDoc v0.38.4">
     <meta name="project" content="mscmp_syst_instance v0.1.0">
 
 
     <title>MscmpSystInstance.Application — mscmp_syst_instance v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
 
-    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
-    <script src="dist/sidebar_items-3E02365B.js"></script>
-    <script src="docs_config.js"></script>
-    <script async src="dist/html-YIPIRHGU.js"></script>
+    <script defer src="dist/sidebar_items-902CE6CA.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
 
   </head>
-  <body data-type="modules" class="page-behaviour">
-    <script>
-
-      try {
-        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
-
-        if (settings.theme === 'dark' ||
-           ((settings.theme === 'system' || settings.theme == null) &&
-             window.matchMedia('(prefers-color-scheme: dark)').matches)
-           ) {
-          document.body.classList.add('dark')
-        }
-      } catch (error) { }
-    </script>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
 
 <div class="body-wrapper">
 
@@ -54,37 +41,13 @@ mscmp_syst_instance
         </div>
       </div>
     </div>
-    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
-      <li>
-        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
-Pages
-        </button>
-      </li>
-
-        <li>
-          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
-            Modules
-          </button>
-        </li>
-
-
-    </ul>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
   </div>
-
-  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
-    <ul id="extras-full-list" class="full-list"></ul>
-  </div>
-
-    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
-      <ul id="modules-full-list" class="full-list"></ul>
-    </div>
-
-
 </nav>
 
-<main class="content">
-  <output role="status" id="toast"></output>
+<output role="status" id="toast"></output>
 
+<main class="content page-behaviour" id="main" data-type="modules">
   <div id="content" class="content-inner">
     <div class="top-search">
       <div class="search-settings">
@@ -93,8 +56,8 @@ Pages
             <span class="sr-only">Search documentation of mscmp_syst_instance</span>
             <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
           </label>
-          <button type="submit" class="search-button" aria-label="Submit Search">
-            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
           </button>
           <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
             <i class="ri-close-line ri-lg" title="Cancel search"></i>
@@ -110,12 +73,14 @@ Pages
     </div>
 
 <div id="top-content">
-  <h1>
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">MscmpSystInstance.Application</span> <small>behaviour</small>
+      <small class="app-vsn" translate="no">(mscmp_syst_instance v0.1.0)</small>
 
-    <span translate="no">MscmpSystInstance.Application</span> <small>behaviour</small>
-    <small class="app-vsn" translate="no">(mscmp_syst_instance v0.1.0)</small>
+    </h1>
 
-  </h1>
+  </div>
 
 
     <section id="moduledoc">
@@ -139,7 +104,7 @@ compatible Application modules.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#c:child_spec/1" data-no-tooltip translate="no">child_spec(t)</a>
+        <a href="#c:child_spec/1" data-no-tooltip="" translate="no">child_spec(opts)</a>
 
       </div>
 
@@ -149,7 +114,27 @@ compatible Application modules.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#c:get_instance_services/1" data-no-tooltip translate="no">get_instance_services(instance_name)</a>
+        <a href="#c:create_instance/3" data-no-tooltip="" translate="no">create_instance(instance_name, startup_options, opts)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates a new Application Instance.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:delete_instance/3" data-no-tooltip="" translate="no">delete_instance(instance_name, startup_options, opts)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Deletes an existing Application Instance.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_instance_services/1" data-no-tooltip="" translate="no">get_instance_services(instance_name)</a>
 
       </div>
 
@@ -160,17 +145,18 @@ Instance's runtime identifiers for those services.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#c:get_instance_states/1" data-no-tooltip translate="no">get_instance_states(instances)</a>
+        <a href="#c:get_instance_states/1" data-no-tooltip="" translate="no">get_instance_states(instances)</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>Retrieves the runtime state of the requested Application Instances.</p></div>
+        <div class="summary-synopsis"><p>Retrieves the lifecycle and runtime states of the requested Application
+Instances.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#c:get_services/0" data-no-tooltip translate="no">get_services()</a>
+        <a href="#c:get_services/0" data-no-tooltip="" translate="no">get_services()</a>
 
       </div>
 
@@ -180,17 +166,18 @@ Instance's runtime identifiers for those services.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#c:init/3" data-no-tooltip translate="no">init(instances, startup_options, opts)</a>
+        <a href="#c:init/3" data-no-tooltip="" translate="no">init(instances, startup_options, opts)</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>Initializes the Application, its services, and optionally its Instances.</p></div>
+        <div class="summary-synopsis"><p>Initializes the Application, its services, and optionally starts its
+Instances.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#c:put_instance/1" data-no-tooltip translate="no">put_instance(instance_name)</a>
+        <a href="#c:put_instance/1" data-no-tooltip="" translate="no">put_instance(instance_name)</a>
 
       </div>
 
@@ -201,7 +188,7 @@ process.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#c:start_instances/2" data-no-tooltip translate="no">start_instances(instances, startup_options)</a>
+        <a href="#c:start_instances/3" data-no-tooltip="" translate="no">start_instances(instances, startup_options, opts)</a>
 
       </div>
 
@@ -211,7 +198,7 @@ process.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#c:stop/0" data-no-tooltip translate="no">stop()</a>
+        <a href="#c:stop/0" data-no-tooltip="" translate="no">stop()</a>
 
       </div>
 
@@ -221,7 +208,7 @@ process.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#c:stop_instances/1" data-no-tooltip translate="no">stop_instances(instances)</a>
+        <a href="#c:stop_instances/1" data-no-tooltip="" translate="no">stop_instances(instances)</a>
 
       </div>
 
@@ -231,7 +218,7 @@ process.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#c:upgrade_instances/2" data-no-tooltip translate="no">upgrade_instances(instances, startup_options)</a>
+        <a href="#c:upgrade_instances/3" data-no-tooltip="" translate="no">upgrade_instances(instances, startup_options, opts)</a>
 
       </div>
 
@@ -251,40 +238,114 @@ process.</p></div>
       </a>
       <span class="text">Callbacks</span>
     </h1>
+
     <div class="callbacks-list">
 <section class="detail" id="c:child_spec/1">
 
   <div class="detail-header">
-    <a href="#c:child_spec/1" class="detail-link" data-no-tooltip title="Link to this callback">
+    <a href="#c:child_spec/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature" translate="no">child_spec(t)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">child_spec(opts)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@callback</span> child_spec(<a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/elixir/Supervisor.html#t:child_spec/0">Supervisor.child_spec</a>()</pre>
+          <pre translate="no"><span class="attribute">@callback</span> child_spec(opts :: <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/elixir/Supervisor.html#t:child_spec/0">Supervisor.child_spec</a>()</pre>
 
       </div>
 
-<p>Returns the child specification of the Application.</p>
+<p>Returns the child specification of the Application.</p><h2 id="c:child_spec/1-parameters" class="section-heading"><a href="#c:child_spec/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">opts</code> - Miscellaneous options which the specific Application
+  implementation of this Behaviour may define for it's own purposes.</li></ul>
+  </section>
+</section>
+<section class="detail" id="c:create_instance/3">
+
+  <div class="detail-header">
+    <a href="#c:create_instance/3" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">create_instance(instance_name, startup_options, opts)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> create_instance(
+  instance_name :: <a href="MscmpSystInstance.Types.html#t:instance_name/0">MscmpSystInstance.Types.instance_name</a>(),
+  startup_options :: <a href="/documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.Types.html#t:options/0">MscmpSystOptions.Types.options</a>(),
+  opts :: <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
+) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/Exception.html#t:t/0">Exception.t</a>()}</pre>
+
+      </div>
+
+<p>Creates a new Application Instance.</p><h2 id="c:create_instance/3-parameters" class="section-heading"><a href="#c:create_instance/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">instance_name</code> - The name of the Instance to be created.  This name must
+be globally unique amongst Instance Names, including Instances of other
+Applications.  This value is required.</p></li><li><p><code class="inline">startup_options</code> - The startup options which provide database connection
+information for where the Instance and its contexts are to be created.
+See <a href="/documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.html"><code class="inline">MscmpSystOptions</code></a> for more.  This value is required.</p></li><li><p><code class="inline">opts</code> - Miscellaneous options which the specific Application
+implementation of this Behaviour may define for it's own purposes.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="c:delete_instance/3">
+
+  <div class="detail-header">
+    <a href="#c:delete_instance/3" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">delete_instance(instance_name, startup_options, opts)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> delete_instance(
+  instance_name :: <a href="MscmpSystInstance.Types.html#t:instance_name/0">MscmpSystInstance.Types.instance_name</a>(),
+  startup_options :: <a href="/documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.Types.html#t:options/0">MscmpSystOptions.Types.options</a>(),
+  opts :: <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
+) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/Exception.html#t:t/0">Exception.t</a>()}</pre>
+
+      </div>
+
+<p>Deletes an existing Application Instance.</p><p>Note that specific Application implementation may impose requirements such as
+Instances to be deleted must be stopped prior to deletion or that they might
+have attributes such as &quot;purge elegible&quot; flags which must be set prior to
+deletion.  As a behaviour, this callback does not hold any opinions on such
+matters.</p><h2 id="c:delete_instance/3-parameters" class="section-heading"><a href="#c:delete_instance/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">instance_name</code> - The name of the Instance to be created.  This name must
+be globally unique amongst Instance Names, including Instances of other
+Applications.  This value is required.</p></li><li><p><code class="inline">startup_options</code> - The startup options which provide database connection
+information for the Instance and its contexts which are to be deleted.
+See <a href="/documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.html"><code class="inline">MscmpSystOptions</code></a> for more.  This value is required.</p></li><li><p><code class="inline">opts</code> - Miscellaneous options which the specific Application
+implementation of this Behaviour may define for it's own purposes.</p></li></ul>
   </section>
 </section>
 <section class="detail" id="c:get_instance_services/1">
 
   <div class="detail-header">
-    <a href="#c:get_instance_services/1" class="detail-link" data-no-tooltip title="Link to this callback">
+    <a href="#c:get_instance_services/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature" translate="no">get_instance_services(instance_name)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_instance_services(instance_name)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -297,57 +358,48 @@ process.</p></div>
       </div>
 
 <p>Retrieves a mapping of the known Instance services mapped to a specific
-Instance's runtime identifiers for those services.</p><h2 id="c:get_instance_services/1-parameters" class="section-heading">
-  <a href="#c:get_instance_services/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">instance_name</code> - the Instance for which to return service mappings.</li></ul>
+Instance's runtime identifiers for those services.</p><h2 id="c:get_instance_services/1-parameters" class="section-heading"><a href="#c:get_instance_services/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">instance_name</code> - the Instance for which to return service mappings.</li></ul>
   </section>
 </section>
 <section class="detail" id="c:get_instance_states/1">
 
   <div class="detail-header">
-    <a href="#c:get_instance_states/1" class="detail-link" data-no-tooltip title="Link to this callback">
+    <a href="#c:get_instance_states/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature" translate="no">get_instance_states(instances)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_instance_states(instances)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@callback</span> get_instance_states(instances :: <a href="MscmpSystInstance.Types.html#t:target_instances/0">MscmpSystInstance.Types.target_instances</a>()) ::
+          <pre translate="no"><span class="attribute">@callback</span> get_instance_states(instances :: <a href="MscmpSystInstance.Types.html#t:startable_instances/0">MscmpSystInstance.Types.startable_instances</a>()) ::
   [
-    <a href="MscmpSystInstance.Types.html#t:target_instance_result/0">MscmpSystInstance.Types.target_instance_result</a>()
+    <a href="MscmpSystInstance.Types.html#t:instance_state/0">MscmpSystInstance.Types.instance_state</a>()
   ]</pre>
 
       </div>
 
-<p>Retrieves the runtime state of the requested Application Instances.</p><h2 id="c:get_instance_states/1-parameters" class="section-heading">
-  <a href="#c:get_instance_states/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">instances</code> - the desired Instances for which to return the runtime state.</li></ul>
+<p>Retrieves the lifecycle and runtime states of the requested Application
+Instances.</p><h2 id="c:get_instance_states/1-parameters" class="section-heading"><a href="#c:get_instance_states/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">instances</code> - the desired Instances for which to return the runtime state.</li></ul>
   </section>
 </section>
 <section class="detail" id="c:get_services/0">
 
   <div class="detail-header">
-    <a href="#c:get_services/0" class="detail-link" data-no-tooltip title="Link to this callback">
+    <a href="#c:get_services/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature" translate="no">get_services()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_services()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -366,13 +418,14 @@ Registry or PubSub services.</p>
 <section class="detail" id="c:init/3">
 
   <div class="detail-header">
-    <a href="#c:init/3" class="detail-link" data-no-tooltip title="Link to this callback">
+    <a href="#c:init/3" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature" translate="no">init(instances, startup_options, opts)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">init(instances, startup_options, opts)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -380,8 +433,8 @@ Registry or PubSub services.</p>
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@callback</span> init(
-  instances :: <a href="MscmpSystInstance.Types.html#t:target_instances/0">MscmpSystInstance.Types.target_instances</a>(),
-  startup_options :: <a href="../../../../documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.Types.html#t:options/0">MscmpSystOptions.Types.options</a>(),
+  instances :: <a href="MscmpSystInstance.Types.html#t:instances/0">MscmpSystInstance.Types.instances</a>(),
+  startup_options :: <a href="/documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.Types.html#t:options/0">MscmpSystOptions.Types.options</a>(),
   opts :: <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
 ) ::
   {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()}
@@ -389,30 +442,26 @@ Registry or PubSub services.</p>
 
       </div>
 
-<p>Initializes the Application, its services, and optionally its Instances.</p><h2 id="c:init/3-parameters" class="section-heading">
-  <a href="#c:init/3-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">instances</code> - Identifies the Application Instances to start, if
+<p>Initializes the Application, its services, and optionally starts its
+Instances.</p><h2 id="c:init/3-parameters" class="section-heading"><a href="#c:init/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">instances</code> - Identifies the Application Instances to start, if
 any.</p></li><li><p><code class="inline">startup_options</code> - The startup options to use when starting the
 application.  Typically these options will include externally configured
 runtime options such as database connection information.  See
-<a href="../../../../documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.html"><code class="inline">MscmpSystOptions</code></a> for more.</p></li><li><p><code class="inline">opts</code> - Additional options to pass to the Application start process.  The
+<a href="/documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.html"><code class="inline">MscmpSystOptions</code></a> for more.</p></li><li><p><code class="inline">opts</code> - Additional options to pass to the Application start process.  The
 specific options available will vary by Application implementation.</p></li></ul>
   </section>
 </section>
 <section class="detail" id="c:put_instance/1">
 
   <div class="detail-header">
-    <a href="#c:put_instance/1" class="detail-link" data-no-tooltip title="Link to this callback">
+    <a href="#c:put_instance/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature" translate="no">put_instance(instance_name)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">put_instance(instance_name)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -429,33 +478,22 @@ process.</p><p>As Instance may start a number of services, including Datastore C
 (database connections), PubSub services, and so on.  This function will set
 the current the map of services to use for the process in the Process
 Dictionary so that any calls to those services will be in the context of the
-&quot;put&quot; Instance's services.</p><h2 id="c:put_instance/1-parameters" class="section-heading">
-  <a href="#c:put_instance/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">instance_name</code> - the Instance which will service calls for any business
-logic invocation of Instance services.</li></ul><h2 id="c:put_instance/1-returns" class="section-heading">
-  <a href="#c:put_instance/1-returns" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Returns</span>
-</h2>
-<p>The return value is that of the previous Instance set or <code class="inline">nil</code> if no previous
+&quot;put&quot; Instance's services.</p><h2 id="c:put_instance/1-parameters" class="section-heading"><a href="#c:put_instance/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">instance_name</code> - the Instance which will service calls for any business
+logic invocation of Instance services.</li></ul><h2 id="c:put_instance/1-returns" class="section-heading"><a href="#c:put_instance/1-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><p>The return value is that of the previous Instance set or <code class="inline">nil</code> if no previous
 Instance was set.</p>
   </section>
 </section>
-<section class="detail" id="c:start_instances/2">
+<section class="detail" id="c:start_instances/3">
 
   <div class="detail-header">
-    <a href="#c:start_instances/2" class="detail-link" data-no-tooltip title="Link to this callback">
+    <a href="#c:start_instances/3" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature" translate="no">start_instances(instances, startup_options)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">start_instances(instances, startup_options, opts)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -463,36 +501,32 @@ Instance was set.</p>
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@callback</span> start_instances(
-  instances :: <a href="MscmpSystInstance.Types.html#t:target_instances/0">MscmpSystInstance.Types.target_instances</a>(),
-  startup_options :: <a href="../../../../documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.Types.html#t:options/0">MscmpSystOptions.Types.options</a>()
+  instances :: <a href="MscmpSystInstance.Types.html#t:startable_instances/0">MscmpSystInstance.Types.startable_instances</a>(),
+  startup_options :: <a href="/documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.Types.html#t:options/0">MscmpSystOptions.Types.options</a>(),
+  opts :: <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
 ) ::
-  {:ok, [<a href="MscmpSystInstance.Types.html#t:target_instance_result/0">MscmpSystInstance.Types.target_instance_result</a>()]}
-  | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  {:ok, [<a href="MscmpSystInstance.Types.html#t:instance_action_result/0">MscmpSystInstance.Types.instance_action_result</a>()]}
+  | {:error, <a href="https://hexdocs.pm/elixir/Exception.html#t:t/0">Exception.t</a>()}</pre>
 
       </div>
 
-<p>Starts unstarted, but startable, Application Instances.</p><h2 id="c:start_instances/2-parameters" class="section-heading">
-  <a href="#c:start_instances/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">instances</code> - Identifies the Application Instances to start.</p></li><li><p><code class="inline">startup_options</code> - The startup options to use when starting the
+<p>Starts unstarted, but startable, Application Instances.</p><h2 id="c:start_instances/3-parameters" class="section-heading"><a href="#c:start_instances/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">instances</code> - Identifies the Application Instances to start.</p></li><li><p><code class="inline">startup_options</code> - The startup options to use when starting the
 application.  Typically these options will include externally configured
 runtime options such as database connection information.  See
-<a href="../../../../documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.html"><code class="inline">MscmpSystOptions</code></a> for more.</p></li></ul>
+<a href="/documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.html"><code class="inline">MscmpSystOptions</code></a> for more.</p></li></ul>
   </section>
 </section>
 <section class="detail" id="c:stop/0">
 
   <div class="detail-header">
-    <a href="#c:stop/0" class="detail-link" data-no-tooltip title="Link to this callback">
+    <a href="#c:stop/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature" translate="no">stop()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">stop()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -509,44 +543,40 @@ runtime options such as database connection information.  See
 <section class="detail" id="c:stop_instances/1">
 
   <div class="detail-header">
-    <a href="#c:stop_instances/1" class="detail-link" data-no-tooltip title="Link to this callback">
+    <a href="#c:stop_instances/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature" translate="no">stop_instances(instances)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">stop_instances(instances)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@callback</span> stop_instances(instances :: <a href="MscmpSystInstance.Types.html#t:target_instances/0">MscmpSystInstance.Types.target_instances</a>()) ::
-  {:ok, [<a href="MscmpSystInstance.Types.html#t:target_instance_result/0">MscmpSystInstance.Types.target_instance_result</a>()]}
-  | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+          <pre translate="no"><span class="attribute">@callback</span> stop_instances(instances :: <a href="MscmpSystInstance.Types.html#t:startable_instances/0">MscmpSystInstance.Types.startable_instances</a>()) ::
+  {:ok, [<a href="MscmpSystInstance.Types.html#t:instance_action_result/0">MscmpSystInstance.Types.instance_action_result</a>()]}
+  | {:error, <a href="https://hexdocs.pm/elixir/Exception.html#t:t/0">Exception.t</a>()}</pre>
 
       </div>
 
-<p>Stops the identified running Application Instances.</p><h2 id="c:stop_instances/1-parameters" class="section-heading">
-  <a href="#c:stop_instances/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">instances</code> - Identifies the Application Instances to stop.</li></ul>
+<p>Stops the identified running Application Instances.</p><h2 id="c:stop_instances/1-parameters" class="section-heading"><a href="#c:stop_instances/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">instances</code> - Identifies the Application Instances to stop.</li></ul>
   </section>
 </section>
-<section class="detail" id="c:upgrade_instances/2">
+<section class="detail" id="c:upgrade_instances/3">
 
   <div class="detail-header">
-    <a href="#c:upgrade_instances/2" class="detail-link" data-no-tooltip title="Link to this callback">
+    <a href="#c:upgrade_instances/3" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature" translate="no">upgrade_instances(instances, startup_options)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">upgrade_instances(instances, startup_options, opts)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -554,11 +584,12 @@ runtime options such as database connection information.  See
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@callback</span> upgrade_instances(
-  instances :: <a href="MscmpSystInstance.Types.html#t:target_instances/0">MscmpSystInstance.Types.target_instances</a>(),
-  startup_options :: <a href="../../../../documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.Types.html#t:options/0">MscmpSystOptions.Types.options</a>()
+  instances :: <a href="MscmpSystInstance.Types.html#t:startable_instances/0">MscmpSystInstance.Types.startable_instances</a>(),
+  startup_options :: <a href="/documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.Types.html#t:options/0">MscmpSystOptions.Types.options</a>(),
+  opts :: <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
 ) ::
-  {:ok, [<a href="MscmpSystInstance.Types.html#t:target_instance_result/0">MscmpSystInstance.Types.target_instance_result</a>()]}
-  | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  {:ok, [<a href="MscmpSystInstance.Types.html#t:instance_action_result/0">MscmpSystInstance.Types.instance_action_result</a>()]}
+  | {:error, <a href="https://hexdocs.pm/elixir/Exception.html#t:t/0">Exception.t</a>()}</pre>
 
       </div>
 
@@ -566,16 +597,10 @@ runtime options such as database connection information.  See
 prior to initiating the upgrade with this function.</p><p>The upgrade process will apply any new database migrations to each of the
 targeted Instances and then return a list of each Instance's upgrade status.
 Once upgraded, the Instances many be restarted; this process does not attempt
-to restart Instances.</p><h2 id="c:upgrade_instances/2-parameters" class="section-heading">
-  <a href="#c:upgrade_instances/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">instances</code> - Identifies the Application Instances to upgrade.</p></li><li><p><code class="inline">startup_options</code> - The startup options to use when starting the
-application.  Typically these options will include externally configured
-runtime options such as database connection information.  See
-<a href="../../../../documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.html"><code class="inline">MscmpSystOptions</code></a> for more.</p></li></ul>
+to restart Instances.</p><h2 id="c:upgrade_instances/3-parameters" class="section-heading"><a href="#c:upgrade_instances/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">instances</code> - Identifies the Application Instances to upgrade.</p></li><li><p><code class="inline">startup_options</code> - The startup options which provide database connection
+information for the Instance that is to be upgraded.  See
+<a href="/documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.html"><code class="inline">MscmpSystOptions</code></a> for more.  This value is required.</p></li><li><p><code class="inline">opts</code> - Miscellaneous options which the specific Application
+implementation of this Behaviour may define for it's own purposes.</p></li></ul>
   </section>
 </section>
 
@@ -599,7 +624,7 @@ runtime options such as database connection information.  See
 
       <p class="built-using">
         Built using
-        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.34.2) for the
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
 
           <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

@@ -4,35 +4,22 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.34.2">
+    <meta name="generator" content="ExDoc v0.38.4">
     <meta name="project" content="mscmp_syst_limiter v0.1.0">
 
 
     <title>MscmpSystLimiter — mscmp_syst_limiter v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
 
-    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
-    <script src="dist/sidebar_items-3094E9A1.js"></script>
-    <script src="docs_config.js"></script>
-    <script async src="dist/html-YIPIRHGU.js"></script>
+    <script defer src="dist/sidebar_items-333D80E0.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
 
   </head>
-  <body data-type="modules" class="page-module">
-    <script>
-
-      try {
-        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
-
-        if (settings.theme === 'dark' ||
-           ((settings.theme === 'system' || settings.theme == null) &&
-             window.matchMedia('(prefers-color-scheme: dark)').matches)
-           ) {
-          document.body.classList.add('dark')
-        }
-      } catch (error) { }
-    </script>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
 
 <div class="body-wrapper">
 
@@ -54,37 +41,13 @@ mscmp_syst_limiter
         </div>
       </div>
     </div>
-    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
-      <li>
-        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
-Pages
-        </button>
-      </li>
-
-        <li>
-          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
-            Modules
-          </button>
-        </li>
-
-
-    </ul>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
   </div>
-
-  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
-    <ul id="extras-full-list" class="full-list"></ul>
-  </div>
-
-    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
-      <ul id="modules-full-list" class="full-list"></ul>
-    </div>
-
-
 </nav>
 
-<main class="content">
-  <output role="status" id="toast"></output>
+<output role="status" id="toast"></output>
 
+<main class="content page-module" id="main" data-type="modules">
   <div id="content" class="content-inner">
     <div class="top-search">
       <div class="search-settings">
@@ -93,8 +56,8 @@ Pages
             <span class="sr-only">Search documentation of mscmp_syst_limiter</span>
             <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
           </label>
-          <button type="submit" class="search-button" aria-label="Submit Search">
-            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
           </button>
           <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
             <i class="ri-close-line ri-lg" title="Cancel search"></i>
@@ -110,50 +73,66 @@ Pages
     </div>
 
 <div id="top-content">
-  <h1>
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">MscmpSystLimiter</span> 
+      <small class="app-vsn" translate="no">(mscmp_syst_limiter v0.1.0)</small>
 
-    <span translate="no">MscmpSystLimiter</span> 
-    <small class="app-vsn" translate="no">(mscmp_syst_limiter v0.1.0)</small>
+    </h1>
 
-  </h1>
+  </div>
 
 
     <section id="moduledoc">
-<p>API for establishing rate limits for usage of finite system resources.</p><p>Online, multi-user systems can be unintentionally overwhelmed by aggressive
-service calls from external applications and systems or intentionally
-exploited by hostile actors seeking to defeat system protections though such
-actions as brute forcing user credentials or consuming all available computing
-resources of our application.  One approach to mitigating the dangers of
-resource exhaustion or persistent illicit information seeking attempts is to
-reject excessive calls to system services.</p><p>This component limits the rate at which targeted services can be called by
-any one caller to a level which preserves the availability of resources to
-all users of the system, or makes brute force information gathering
-prohibitively time intensive to would be attackers of the system.</p><h2 id="module-third-party-functionality" class="section-heading">
-  <a href="#module-third-party-functionality" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Third Party Functionality</span>
-</h2>
-<p>This version of the <a href="MscmpSystLimiter.html"><code class="inline">MscmpSystLimiter</code></a> component is primarily a wrapper
-around the third party <a href="https://github.com/ExHammer/hammer"><code class="inline">Hammer</code></a> library.
-<a href="MscmpSystLimiter.html"><code class="inline">MscmpSystLimiter</code></a> offers a slightly different API to the wrapped library and
-changes some return values to be more consistent with the Muse Systems Business
-Management System standards and practices.  We also reuse and incorporate some
-of the documentation from these projects into our own documentation as
-appropriate.</p><h2 id="module-concepts" class="section-heading">
-  <a href="#module-concepts" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Concepts</span>
-</h2>
-<p>MscmpSystLimiter implements a <a href="https://en.wikipedia.org/wiki/Token_bucket">&quot;Token Bucket&quot;</a>
-rate limiting algorithm.  In a Token Bucket rate limit, for each user and
-request type a &quot;bucket&quot;, called a &quot;Counter&quot; herein, with a finite
-number of tokens is created.  As requests are made the Counter is checked to
-see if all the tokens are consumed and if not the request is allowed and a
-token consumed.  If there are no tokens available at request time, then the
-request is denied until the Counter expires.</p><p>Over time, expired Counters are periodically deleted by the system.  Both the
-expiry time and the cleanup schedule are configurable.</p>
+<p>API for establishing rate limits for usage of finite system resources.</p><p>Many activities in the system consume available scarce computing resources or
+are otherwise rightfully subject to limitations on usage or consumption.  This
+Component provides simple rate limiting algorithms to allow other, higher level
+Components to implement rate limiting as they might require for their specific
+purposes.</p><!-- MDESC !--><h2 id="module-concepts" class="section-heading"><a href="#module-concepts" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Concepts</span></h2><p>This Component is organized around basic conceptual ideas and understanding.</p><h3 id="module-limiter-instances" class="section-heading"><a href="#module-limiter-instances" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Limiter Instances</span></h3><p>&quot;Limiter Instances&quot; are the objects in this module that represent a utilization
+counter and related configurations as assigned to a specific user of that
+resource.  A Limiter Instance can be thought of as a singleton, with any
+processes representing the same user and rate limited resource all accessing the
+same utilization counter; there are some important caveats to the singleton
+behavior discussed later in this document.</p><p>The process of using <a href="MscmpSystLimiter.html"><code class="inline">MscmpSystLimiter</code></a> follows the basic process of:</p><ol><li><p>Obtain a Limiter Instance by calling <a href="#new/5"><code class="inline">MscmpSystLimiter.new/5</code></a>.  This function
+will either create new Limiter Instance along with its counter or provide a
+Limiter Instance referencing an existing counter if the same user already is
+being rate limited for the same purpose.</p></li><li><p>Use the Limiter Instance when consuming rate limited resources via such API
+calls as <a href="#use/2"><code class="inline">MscmpSystLimiter.use/2</code></a>.</p></li></ol><p>It's worth point out that once a Limiter Instance object is obtained, that
+Limiter Instance can contiue to be used perpetually.  The counters which back
+the Limiter Instance do have a time-to-live and can expire, but this doesn't
+impact the calling functions. For example, trying to use Limiter Instance after
+its counter has expired simply leads to the recreation of the counter behind the
+scenes, sometimes called &quot;refreshing&quot; or &quot;renewing&quot; the Limiter Instance.</p><h3 id="module-algorithms" class="section-heading"><a href="#module-algorithms" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Algorithms</span></h3><p>The following algorithms have been implemented in this Component and can be used
+by any one Limiter Instance:</p><ul><li><p><strong>Semaphore</strong></p><p>This algorithm controls access to a limited number of resources by
+maintaining a count of available &quot;Permits&quot;.  Each request must acquire a
+Permit from a pool of available Permits before proceeding.  If the request is
+made when there are no Permits remaining in the pool, the request is denied.
+If the pool is limiting a renewable resource, such as a pool of database
+connections, the Permit may be returned to the pool by the requestor once the
+limited resource is no longer needed by the requestor.  Otherwise the pool
+represents an exhaustable resource which only renews when the counter expires.</p></li><li><p><strong>Token Bucket</strong></p><p>This algorithm models a bucket which is filled with &quot;usage tokens&quot;.  Each
+request consumes a token, and tokens are replenished at a steady rate.  This
+allows for burst traffic while maintaining an overall rate limit.</p></li></ul><section role="note" class="admonition warning"><h4 class="admonition-title warning">Service Shutdown &amp; Restarts</h4><p>Limiter Instances, the counters specific to an individual user/resource limit,
+are created and renewed by registiering the user with the <a href="MscmpSystLimiter.html"><code class="inline">MscmpSystLimiter</code></a>
+runtime service.  Once created, Limiter Instances are independent of the
+service until their expiry/time to live values are exceeded.</p><p>Shutting down the <a href="MscmpSystLimiter.html"><code class="inline">MscmpSystLimiter</code></a> runtime service therefore does not stop
+existing Limiter Instances from being used, only new Limiter Instances from
+being created and existing Limiter Instances from being renewed.  As such you
+cannot count on the shutting down of the <a href="MscmpSystLimiter.html"><code class="inline">MscmpSystLimiter</code></a> runtime service as
+any sort of indirect off-switch for some other, rate limited service.</p><p>Also, when restarting the <a href="MscmpSystLimiter.html"><code class="inline">MscmpSystLimiter</code></a> service, it is conceivable that
+for a short window some &quot;users&quot; of resources might be allowed up to double
+their allowed consumption of rate limited resources.  In this scenario a first
+process obtains a Limiter Instance on behalf of a user prior to restart, and
+then a second process obtains a second Limiter Instance on behalf of the same
+user after restart; the tracking of Limiter Instances is managed by the
+service and a restart effectively causes the service to lose all memory of the
+first Limiter Instance.  For this issue to manifest it is important that the
+first Limiter Instance has not yet reached its exipry/time to live when the
+restart happens.</p></section><h2 id="module-inspiration-for-this-component" class="section-heading"><a href="#module-inspiration-for-this-component" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Inspiration for this Component</span></h2><p>This Component is inspired by the <a href="https://github.com/ExHammer">ExHammer</a>
+project.  In writing this Component, ExHammer was consistently used as a
+reference implementation for how such general rate limiting algorithms might be
+implemented in Elixir and therefore any similarities between this library and
+ExHammer may be a result of this ExHammer influence.</p>
     </section>
 
 </div>
@@ -165,71 +144,115 @@ expiry time and the cleanup schedule are configurable.</p>
       </a>
       <span class="text">Summary</span>
     </h1>
-<div class="summary-rate-limiter summary">
+<div class="summary-runtime summary">
   <h2>
-    <a href="#rate-limiter">Rate Limiter</a>
+    <a href="#runtime">Runtime</a>
   </h2>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#check_rate/4" data-no-tooltip translate="no">check_rate(counter_type, counter_id, scale_ms, limit)</a>
+        <a href="#child_spec/1" data-no-tooltip="" translate="no">child_spec(opts)</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>Checks if a Counter is within it's permissible rate and increments the Counter
-if it is within it's permissible rate.</p></div>
+        <div class="summary-synopsis"><p>Returns the child specification for starting rate limiting services.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#check_rate_with_increment/5" data-no-tooltip translate="no">check_rate_with_increment(counter_type, counter_id, scale_ms, limit, increment)</a>
+        <a href="#get_runtime_config/0" data-no-tooltip="" translate="no">get_runtime_config()</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>Checks the rate same as <a href="#check_rate/4"><code class="inline">MscmpSystLimiter.check_rate/4</code></a>, but allows for a
-variable increment to be set for the call.</p></div>
+        <div class="summary-synopsis"><p>Retrieves the runtime configuration of a previously started Rate Limiting Service.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#delete_counters/2" data-no-tooltip translate="no">delete_counters(counter_type, counter_id)</a>
+        <a href="#get_service/0" data-no-tooltip="" translate="no">get_service()</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>Deletes a counter from the system.</p></div>
+        <div class="summary-synopsis"><p>Retrieves the name of the currently set Rate Limiting Service instance.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_check_rate_function/3" data-no-tooltip translate="no">get_check_rate_function(counter_type, scale_ms, limit)</a>
+        <a href="#put_service/1" data-no-tooltip="" translate="no">put_service(service_name)</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>Returns an anonymous function to simplify calls to check the rate for a
-specific counter type.</p></div>
+        <div class="summary-synopsis"><p>Establishes a specific running instance of the Rate Limiting Service as the
+current service for the running process which invoked this function.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_counter_name/2" data-no-tooltip translate="no">get_counter_name(counter_type, counter_id)</a>
+        <a href="#start_link/1" data-no-tooltip="" translate="no">start_link(opts)</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>Creates a canonical name for each unique counter.</p></div>
+        <div class="summary-synopsis"><p>Starts a rate limiting service.</p></div>
+
+    </div>
+
+</div>
+<div class="summary-limiter-support summary">
+  <h2>
+    <a href="#limiter-support">Limiter Support</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get/1" data-no-tooltip="" translate="no">get(limiter_instance)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Retrieves the current state of a rate limiter instance without modifying it.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#inspect_counter/4" data-no-tooltip translate="no">inspect_counter(counter_type, counter_id, scale_ms, limit)</a>
+        <a href="#new/5" data-no-tooltip="" translate="no">new(algorithm, component, type, id, opts)</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>Retrieves data about a currently used counter without counting towards the limit.</p></div>
+        <div class="summary-synopsis"><p>Creates a new rate limiter instance for the specified algorithm.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#reset/1" data-no-tooltip="" translate="no">reset(limiter_instance)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Resets a rate limiter instance to its initial state.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#set/2" data-no-tooltip="" translate="no">set(limiter_instance, opts)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Explicitly sets the current available capacity of a rate limiter instance.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#use/2" data-no-tooltip="" translate="no">use(limiter_instance, increment)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Attempts to consume or release capacity from a rate limiter instance.</p></div>
 
     </div>
 
@@ -238,332 +261,719 @@ specific counter type.</p></div>
   </section>
 
 
-  <section id="rate-limiter" class="details-list">
+  <section id="runtime" class="details-list">
     <h1 class="section-heading">
-      <a class="hover-link" href="#rate-limiter">
+      <a class="hover-link" href="#runtime">
         <i class="ri-link-m" aria-hidden="true"></i>
       </a>
-      <span class="text">Rate Limiter</span>
+      <span class="text">Runtime</span>
     </h1>
-    <div class="rate-limiter-list">
-<section class="detail" id="check_rate/4">
+
+    <div class="runtime-list">
+<section class="detail" id="child_spec/1">
 
   <div class="detail-header">
-    <a href="#check_rate/4" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#child_spec/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">check_rate(counter_type, counter_id, scale_ms, limit)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">child_spec(opts)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> check_rate(
-  <a href="MscmpSystLimiter.Types.html#t:counter_type/0">MscmpSystLimiter.Types.counter_type</a>(),
-  <a href="MscmpSystLimiter.Types.html#t:counter_id/0">MscmpSystLimiter.Types.counter_id</a>(),
-  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()
-) ::
-  {:allow, count :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()}
-  | {:deny, limit :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()}
+          <pre translate="no"><span class="attribute">@spec</span> child_spec(<a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/elixir/Supervisor.html#t:child_spec/0">Supervisor.child_spec</a>()</pre>
+
+      </div>
+
+<p>Returns the child specification for starting rate limiting services.</p><h2 id="child_spec/1-parameters" class="section-heading"><a href="#child_spec/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">opts</code> - The options to pass to the rate limiting service.</li></ul><h2 id="child_spec/1-options" class="section-heading"><a href="#child_spec/1-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><code class="inline">:algorithms</code> (<a href="MscmpSystLimiter.Types.html#t:start_algorithms/0"><code class="inline">MscmpSystLimiter.Types.start_algorithms/0</code></a>) - The rate limiting algorithms to start.</li></ul><p>  This includes all the supported algorithms individually, and the special
+  value <code class="inline">:all</code> which starts backends for all the supported algorithms.</p><p>  The default value is <code class="inline">:all</code>.</p><ul><li><p><code class="inline">:cleanup_interval</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">keyword/0</code></a>) - The interval in milliseconds at which to cleanup expired rate limiting
+counters.</p><p>The interval can be specified for all algorithms using the special key
+<code class="inline">:all</code> or for each algorithm individually.  If not specified, the default
+value of 60,000 milliseconds is used.  If you specify the <code class="inline">:all</code> key and
+one or more algorithms specific settings, the interval for the <code class="inline">:all</code>
+value is ignored for the specified algorithms and will only be used as
+the default for the unspecified algorithms.</p><p>The default value is <code class="inline">[all: 60000]</code>.</p><ul><li><p><code class="inline">:all</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - The default value is <code class="inline">60000</code>.</p></li><li><p><code class="inline">:token_bucket</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>)</p></li><li><p><code class="inline">:semaphore</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>)</p></li></ul></li><li><p><code class="inline">:debug</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">boolean/0</code></a>) - If true, the GenServer backing the Service will be started in debug mode.</p></li><li><p><code class="inline">:timeout</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - Timeout value for the start_link call. The default value is <code class="inline">:infinity</code>.</p></li><li><p><code class="inline">:hibernate_after</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - If present, the GenServer process awaits any message for the specified
+time before hibernating.  The timeout value is expressed in milliseconds.</p></li><li><p><code class="inline">:service_name</code> (<a href="https://hexdocs.pm/elixir/GenServer.html#t:name/0"><code class="inline">GenServer.name/0</code></a> or <code class="inline">nil</code>) - Required. The name to use for the GenServer backing this specific Service instance.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="get_runtime_config/0">
+
+  <div class="detail-header">
+    <a href="#get_runtime_config/0" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_runtime_config()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_runtime_config() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>() | nil</pre>
+
+      </div>
+
+<p>Retrieves the runtime configuration of a previously started Rate Limiting Service.</p><p>Some services need a mechanism to return features such as <code class="inline">:ets</code> table names
+which are set at runtime.  This function provides the mechanism by which such
+runtime configuration can be returned.</p><h2 id="get_runtime_config/0-returns" class="section-heading"><a href="#get_runtime_config/0-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><p>Returns a map containing the runtime configuration of the currently active
+Rate Limiting Service, or <code class="inline">nil</code> if no service is currently set.</p><h2 id="get_runtime_config/0-examples" class="section-heading"><a href="#get_runtime_config/0-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><p>  Getting runtime configuration from the current service:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">old_service</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="1444128407-1">(</span><span class="nc">TestSupport</span><span class="o">.</span><span class="n">get_limiter_service_name</span><span class="p" data-group-id="1444128407-2">(</span><span class="p" data-group-id="1444128407-2">)</span><span class="p" data-group-id="1444128407-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">get_runtime_config</span><span class="p" data-group-id="1444128407-3">(</span><span class="p" data-group-id="1444128407-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1444128407-4">%{</span><span class="ss">semaphore</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1444128407-5">{</span><span class="n">table_id</span><span class="p">,</span><span class="w"> </span><span class="bp">_</span><span class="p" data-group-id="1444128407-5">}</span><span class="p" data-group-id="1444128407-4">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">config</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_reference</span><span class="p" data-group-id="1444128407-6">(</span><span class="n">table_id</span><span class="p" data-group-id="1444128407-6">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="1444128407-7">(</span><span class="n">old_service</span><span class="p" data-group-id="1444128407-7">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="ss">:ok</span><span class="w">
+</span><span class="ss">:ok</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_service/0">
+
+  <div class="detail-header">
+    <a href="#get_service/0" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_service()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_service() :: <a href="/documentation/technical/app_server/mscmp_syst_service/MscmpSystService.Types.html#t:service_name/0">MscmpSystService.Types.service_name</a>()</pre>
+
+      </div>
+
+<p>Retrieves the name of the currently set Rate Limiting Service instance.</p><p>See <a href="#put_service/1"><code class="inline">put_service/1</code></a> for more information about setting an active Rate Limiting
+Service name.</p><h2 id="get_service/0-returns" class="section-heading"><a href="#get_service/0-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><p>Returns the name of the currently set Rate Limiting Service name or <code class="inline">nil</code> if
+no Rate Limiting Service name has been set.</p><h2 id="get_service/0-examples" class="section-heading"><a href="#get_service/0-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><p>  Retrieving a specific Rate Limiting Service name:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="3010916459-1">(</span><span class="ss">:&quot;MscmpSystLimiter.TestSupportService&quot;</span><span class="p" data-group-id="3010916459-1">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">get_service</span><span class="p" data-group-id="3010916459-2">(</span><span class="p" data-group-id="3010916459-2">)</span><span class="w">
+</span><span class="ss">:&quot;MscmpSystLimiter.TestSupportService&quot;</span></code></pre><p>  Retrieving a specific Rate Limiting Service name when no value is currently
+  set for the process:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="2910635128-1">(</span><span class="no">nil</span><span class="p" data-group-id="2910635128-1">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">get_service</span><span class="p" data-group-id="2910635128-2">(</span><span class="p" data-group-id="2910635128-2">)</span><span class="w">
+</span><span class="no">nil</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="put_service/1">
+
+  <div class="detail-header">
+    <a href="#put_service/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">put_service(service_name)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> put_service(<a href="/documentation/technical/app_server/mscmp_syst_service/MscmpSystService.Types.html#t:service_name/0">MscmpSystService.Types.service_name</a>()) ::
+  <a href="/documentation/technical/app_server/mscmp_syst_service/MscmpSystService.Types.html#t:service_name/0">MscmpSystService.Types.service_name</a>()</pre>
+
+      </div>
+
+<p>Establishes a specific running instance of the Rate Limiting Service as the
+current service for the running process which invoked this function.</p><h2 id="put_service/1-parameters" class="section-heading"><a href="#put_service/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">service_name</code> - the name under which the Rate Limiting Service is
+started and by which it may be referenced.  This is any name that may be
+used to reference a GenServer process.  Additionally, this value may be
+set <code class="inline">nil</code> to clear the currently set Rate Limiting Service name.</li></ul><h2 id="put_service/1-returns" class="section-heading"><a href="#put_service/1-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><p>Returns the name of the previously set Rate Limiting Service name or <code class="inline">nil</code> if
+no Rate Limiting Service name had been previously set.</p><h2 id="put_service/1-examples" class="section-heading"><a href="#put_service/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><p>  Setting a specific Rate Limiting Service name:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="7846829748-1">(</span><span class="ss">:&quot;MscmpSystLimiter.TestSupportService&quot;</span><span class="p" data-group-id="7846829748-1">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">get_service</span><span class="p" data-group-id="7846829748-2">(</span><span class="p" data-group-id="7846829748-2">)</span><span class="w">
+</span><span class="ss">:&quot;MscmpSystLimiter.TestSupportService&quot;</span></code></pre><p>  Clearing a previously set specific Service Name:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="8266119984-1">(</span><span class="no">nil</span><span class="p" data-group-id="8266119984-1">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">get_service</span><span class="p" data-group-id="8266119984-2">(</span><span class="p" data-group-id="8266119984-2">)</span><span class="w">
+</span><span class="no">nil</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="start_link/1">
+
+  <div class="detail-header">
+    <a href="#start_link/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">start_link(opts)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> start_link(<a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
+  {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | :ignore | {:error, <a href="Mserror.LimiterError.html#t:t/0">Mserror.LimiterError.t</a>()}</pre>
+
+      </div>
+
+<p>Starts a rate limiting service.</p><h2 id="start_link/1-parameters" class="section-heading"><a href="#start_link/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">opts</code> - The options to pass to the rate limiting service.</li></ul><h2 id="start_link/1-options" class="section-heading"><a href="#start_link/1-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><code class="inline">:algorithms</code> (<a href="MscmpSystLimiter.Types.html#t:start_algorithms/0"><code class="inline">MscmpSystLimiter.Types.start_algorithms/0</code></a>) - The rate limiting algorithms to start.</li></ul><p>  This includes all the supported algorithms individually, and the special
+  value <code class="inline">:all</code> which starts backends for all the supported algorithms.</p><p>  The default value is <code class="inline">:all</code>.</p><ul><li><p><code class="inline">:cleanup_interval</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">keyword/0</code></a>) - The interval in milliseconds at which to cleanup expired rate limiting
+counters.</p><p>The interval can be specified for all algorithms using the special key
+<code class="inline">:all</code> or for each algorithm individually.  If not specified, the default
+value of 60,000 milliseconds is used.  If you specify the <code class="inline">:all</code> key and
+one or more algorithms specific settings, the interval for the <code class="inline">:all</code>
+value is ignored for the specified algorithms and will only be used as
+the default for the unspecified algorithms.</p><p>The default value is <code class="inline">[all: 60000]</code>.</p><ul><li><p><code class="inline">:all</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - The default value is <code class="inline">60000</code>.</p></li><li><p><code class="inline">:token_bucket</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>)</p></li><li><p><code class="inline">:semaphore</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>)</p></li></ul></li><li><p><code class="inline">:debug</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">boolean/0</code></a>) - If true, the GenServer backing the Service will be started in debug mode.</p></li><li><p><code class="inline">:timeout</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - Timeout value for the start_link call. The default value is <code class="inline">:infinity</code>.</p></li><li><p><code class="inline">:hibernate_after</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">timeout/0</code></a>) - If present, the GenServer process awaits any message for the specified
+time before hibernating.  The timeout value is expressed in milliseconds.</p></li><li><p><code class="inline">:service_name</code> (<a href="https://hexdocs.pm/elixir/GenServer.html#t:name/0"><code class="inline">GenServer.name/0</code></a> or <code class="inline">nil</code>) - Required. The name to use for the GenServer backing this specific Service instance.</p></li></ul>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="limiter-support" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#limiter-support">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Limiter Support</span>
+    </h1>
+
+    <div class="limiter-support-list">
+<section class="detail" id="get/1">
+
+  <div class="detail-header">
+    <a href="#get/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get(limiter_instance)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get(limiter_instance :: <a href="MscmpSystLimiter.Types.html#t:limiter_instance/0">MscmpSystLimiter.Types.limiter_instance</a>()) ::
+  {:ok, <a href="MscmpSystLimiter.Types.html#t:limiter_result/0">MscmpSystLimiter.Types.limiter_result</a>()}
   | {:error, <a href="Mserror.LimiterError.html#t:t/0">Mserror.LimiterError.t</a>()}</pre>
 
       </div>
 
-<p>Checks if a Counter is within it's permissible rate and increments the Counter
-if it is within it's permissible rate.</p><h2 id="check_rate/4-parameters" class="section-heading">
-  <a href="#check_rate/4-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">counter_type</code> - an atom representing the kind of counter for which the
-rate is being checked.</p></li><li><p><code class="inline">counter_id</code> - the specific Counter ID of the type.  For example if the
-<code class="inline">counter_type</code> is <code class="inline">:user_login</code>, the <code class="inline">counter_id</code> value may be a value like
-<code class="inline">user@email.domain</code> for the user's username.</p></li><li><p><code class="inline">scale_ms</code> - the time in milliseconds of the rate window.  For example,
-for the rate limit of 3 tries in one minute the <code class="inline">scale_ms</code> value is set to
-60,000 milliseconds for one minute.</p></li><li><p><code class="inline">limit</code> - the number of attempts allowed with the <code class="inline">scale_ms</code> duration.  In
-the example of 3 tries in one minute, the <code class="inline">limit</code> value is 3.</p></li></ul><h2 id="check_rate/4-example" class="section-heading">
-  <a href="#check_rate/4-example" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Example</span>
-</h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="0073674256-1">(</span><span class="ss">:check_rate_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="0073674256-1">)</span><span class="w">
-</span><span class="p" data-group-id="0073674256-2">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="0073674256-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="0073674256-3">(</span><span class="ss">:check_rate_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="0073674256-3">)</span><span class="w">
-</span><span class="p" data-group-id="0073674256-4">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="0073674256-4">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="0073674256-5">(</span><span class="ss">:check_rate_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="0073674256-5">)</span><span class="w">
-</span><span class="p" data-group-id="0073674256-6">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="0073674256-6">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="0073674256-7">(</span><span class="ss">:check_rate_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="0073674256-7">)</span><span class="w">
-</span><span class="p" data-group-id="0073674256-8">{</span><span class="ss">:deny</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="0073674256-8">}</span></code></pre>
+<p>Retrieves the current state of a rate limiter instance without modifying it.</p><p>This function allows you to inspect the current capacity and state of a limiter
+without consuming or releasing any resources. It's useful for monitoring,
+logging, or making decisions based on current availability.</p><h2 id="get/1-parameters" class="section-heading"><a href="#get/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">limiter_instance</code> - A limiter instance created with <a href="#new/5"><code class="inline">new/5</code></a>. The instance
+contains all the information needed to identify the specific limiter and
+its configuration.</li></ul><h2 id="get/1-returns" class="section-heading"><a href="#get/1-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><p>Returns <code class="inline">{:ok, limiter_result}</code> on success or <code class="inline">{:error, error}</code> on failure.</p><p>The <code class="inline">limiter_result</code> is a tuple with the following form:</p><ul><li><p><code class="inline">{:allow, current_capacity, limiter_instance}</code> - Returns the current
+available capacity without modifying the limiter state. The
+<code class="inline">current_capacity</code> value represents:</p><ul><li><p><strong>Token Bucket</strong>: The number of tokens currently available in the bucket.</p></li><li><p><strong>Semaphore</strong>: The number of permits currently available for acquisition.</p></li></ul></li></ul><h2 id="get/1-algorithm-specific-behavior" class="section-heading"><a href="#get/1-algorithm-specific-behavior" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Algorithm-Specific Behavior</span></h2><h3 id="get/1-token-bucket" class="section-heading"><a href="#get/1-token-bucket" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Token Bucket</span></h3><p>Returns the current number of tokens in the bucket, taking into account any
+refills that have occurred since the last operation. The bucket is refilled
+up to its maximum capacity based on the configured refill rate and time elapsed.</p><h3 id="get/1-semaphore" class="section-heading"><a href="#get/1-semaphore" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Semaphore</span></h3><p>Returns the current number of available permits. If the semaphore has expired
+(past its time-to-live), it behaves as if newly created with maximum permits
+available.</p><h2 id="get/1-examples" class="section-heading"><a href="#get/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><h3 id="get/1-token-bucket-state-check" class="section-heading"><a href="#get/1-token-bucket-state-check" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Token Bucket State Check</span></h3><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="c1"># First ensure we have a service available for testing</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">old_service</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="1046751904-1">(</span><span class="nc">TestSupport</span><span class="o">.</span><span class="n">get_limiter_service_name</span><span class="p" data-group-id="1046751904-2">(</span><span class="p" data-group-id="1046751904-2">)</span><span class="p" data-group-id="1046751904-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Create a token bucket limiter (10 tokens, refill 5 per second)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1046751904-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">limiter</span><span class="p" data-group-id="1046751904-3">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="1046751904-4">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:token_bucket</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystLimiter.Doctest</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:api_calls</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;user_doctest_get_token_bucket&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">bucket_size</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">refill_rate</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">refill_per</span><span class="p">:</span><span class="w"> </span><span class="ss">:second</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="1046751904-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Check initial state - should have full bucket</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1046751904-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1046751904-6">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="n">capacity</span><span class="p">,</span><span class="w"> </span><span class="c">_limiter</span><span class="p" data-group-id="1046751904-6">}</span><span class="p" data-group-id="1046751904-5">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">get</span><span class="p" data-group-id="1046751904-7">(</span><span class="n">limiter</span><span class="p" data-group-id="1046751904-7">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">capacity</span><span class="w">
+</span><span class="mi">10</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Consume some tokens</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1046751904-8">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1046751904-9">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="n">remaining</span><span class="p">,</span><span class="w"> </span><span class="n">updated_limiter</span><span class="p" data-group-id="1046751904-9">}</span><span class="p" data-group-id="1046751904-8">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="kn">use</span><span class="p" data-group-id="1046751904-10">(</span><span class="n">limiter</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="1046751904-10">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">remaining</span><span class="w">
+</span><span class="mi">7</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Check state after consumption - should show reduced capacity</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1046751904-11">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1046751904-12">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="n">current_capacity</span><span class="p">,</span><span class="w"> </span><span class="c">_limiter</span><span class="p" data-group-id="1046751904-12">}</span><span class="p" data-group-id="1046751904-11">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">get</span><span class="p" data-group-id="1046751904-13">(</span><span class="n">updated_limiter</span><span class="p" data-group-id="1046751904-13">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">current_capacity</span><span class="w">
+</span><span class="mi">7</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Restore previous service</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="1046751904-14">(</span><span class="n">old_service</span><span class="p" data-group-id="1046751904-14">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="ss">:ok</span><span class="w">
+</span><span class="ss">:ok</span></code></pre><h3 id="get/1-semaphore-state-check" class="section-heading"><a href="#get/1-semaphore-state-check" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Semaphore State Check</span></h3><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="c1"># First ensure we have a service available for testing</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">old_service</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="4201090080-1">(</span><span class="nc">TestSupport</span><span class="o">.</span><span class="n">get_limiter_service_name</span><span class="p" data-group-id="4201090080-2">(</span><span class="p" data-group-id="4201090080-2">)</span><span class="p" data-group-id="4201090080-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Create a semaphore limiter (5 permits, 1 hour TTL)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4201090080-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">limiter</span><span class="p" data-group-id="4201090080-3">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="4201090080-4">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:semaphore</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystLimiter.Doctest</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:database_connections</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;pool_doctest_get_semaphore&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">max_permits</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">time_to_live</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">time_scale</span><span class="p">:</span><span class="w"> </span><span class="ss">:hour</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="4201090080-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Check initial state - should have full permits</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4201090080-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4201090080-6">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="n">capacity</span><span class="p">,</span><span class="w"> </span><span class="c">_limiter</span><span class="p" data-group-id="4201090080-6">}</span><span class="p" data-group-id="4201090080-5">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">get</span><span class="p" data-group-id="4201090080-7">(</span><span class="n">limiter</span><span class="p" data-group-id="4201090080-7">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">capacity</span><span class="w">
+</span><span class="mi">5</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Acquire some permits</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4201090080-8">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4201090080-9">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="n">remaining</span><span class="p">,</span><span class="w"> </span><span class="n">updated_limiter</span><span class="p" data-group-id="4201090080-9">}</span><span class="p" data-group-id="4201090080-8">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="kn">use</span><span class="p" data-group-id="4201090080-10">(</span><span class="n">limiter</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="4201090080-10">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">remaining</span><span class="w">
+</span><span class="mi">3</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Check state after acquisition - should show reduced permits</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4201090080-11">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4201090080-12">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="n">current_permits</span><span class="p">,</span><span class="w"> </span><span class="c">_limiter</span><span class="p" data-group-id="4201090080-12">}</span><span class="p" data-group-id="4201090080-11">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">get</span><span class="p" data-group-id="4201090080-13">(</span><span class="n">updated_limiter</span><span class="p" data-group-id="4201090080-13">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">current_permits</span><span class="w">
+</span><span class="mi">3</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Restore previous service</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="4201090080-14">(</span><span class="n">old_service</span><span class="p" data-group-id="4201090080-14">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="ss">:ok</span><span class="w">
+</span><span class="ss">:ok</span></code></pre><h2 id="get/1-error-conditions" class="section-heading"><a href="#get/1-error-conditions" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Error Conditions</span></h2><p>The function returns <code class="inline">{:error, error}</code> in the following cases:</p><ul><li>Invalid limiter instance format</li><li>Internal algorithm errors (storage issues, etc.)</li></ul>
   </section>
 </section>
-<section class="detail" id="check_rate_with_increment/5">
+<section class="detail" id="new/5">
 
   <div class="detail-header">
-    <a href="#check_rate_with_increment/5" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#new/5" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">check_rate_with_increment(counter_type, counter_id, scale_ms, limit, increment)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">new(algorithm, component, type, id, opts)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> check_rate_with_increment(
-  <a href="MscmpSystLimiter.Types.html#t:counter_type/0">MscmpSystLimiter.Types.counter_type</a>(),
-  <a href="MscmpSystLimiter.Types.html#t:counter_id/0">MscmpSystLimiter.Types.counter_id</a>(),
-  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()
+          <pre translate="no"><span class="attribute">@spec</span> new(
+  algorithm :: <a href="MscmpSystLimiter.Types.html#t:algorithm/0">MscmpSystLimiter.Types.algorithm</a>(),
+  component :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">module</a>(),
+  type :: <a href="MscmpSystLimiter.Types.html#t:counter_type/0">MscmpSystLimiter.Types.counter_type</a>(),
+  id :: <a href="MscmpSystLimiter.Types.html#t:counter_id/0">MscmpSystLimiter.Types.counter_id</a>(),
+  opts :: <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
 ) ::
-  {:allow, count :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()}
-  | {:deny, limit :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()}
+  {:ok, <a href="MscmpSystLimiter.Types.html#t:limiter_instance/0">MscmpSystLimiter.Types.limiter_instance</a>()}
   | {:error, <a href="Mserror.LimiterError.html#t:t/0">Mserror.LimiterError.t</a>()}</pre>
 
       </div>
 
-<p>Checks the rate same as <a href="#check_rate/4"><code class="inline">MscmpSystLimiter.check_rate/4</code></a>, but allows for a
-variable increment to be set for the call.</p><h2 id="check_rate_with_increment/5-parameters" class="section-heading">
-  <a href="#check_rate_with_increment/5-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">counter_type</code> - an atom representing the kind of counter for which the
-rate is being checked.</p></li><li><p><code class="inline">counter_id</code> - the specific Counter ID of the type.  For example if the
-<code class="inline">counter_type</code> is <code class="inline">:user_login</code>, the <code class="inline">counter_id</code> value may be a value like
-<code class="inline">user@email.domain</code> for the user's username.</p></li><li><p><code class="inline">scale_ms</code> - the time in milliseconds of the rate window.  For example,
-for the rate limit of 3 tries in one minute the <code class="inline">scale_ms</code> value is set to
-60,000 milliseconds for one minute.</p></li><li><p><code class="inline">limit</code> - the number of attempts allowed with the <code class="inline">scale_ms</code> duration.  In
-the example of 3 tries in one minute, the <code class="inline">limit</code> value is 3.</p></li></ul><h2 id="check_rate_with_increment/5-example" class="section-heading">
-  <a href="#check_rate_with_increment/5-example" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Example</span>
-</h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate_with_increment</span><span class="p" data-group-id="5986733942-1">(</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:check_with_increment</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">60_000</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">10</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">7</span><span class="p" data-group-id="5986733942-1">)</span><span class="w">
-</span><span class="p" data-group-id="5986733942-2">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p" data-group-id="5986733942-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate_with_increment</span><span class="p" data-group-id="5986733942-3">(</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:check_with_increment</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">60_000</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">10</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">2</span><span class="p" data-group-id="5986733942-3">)</span><span class="w">
-</span><span class="p" data-group-id="5986733942-4">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p" data-group-id="5986733942-4">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="5986733942-5">(</span><span class="ss">:check_with_increment</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="5986733942-5">)</span><span class="w">
-</span><span class="p" data-group-id="5986733942-6">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="5986733942-6">}</span></code></pre>
+<p>Creates a new rate limiter instance for the specified algorithm.</p><p>This function creates a new limiter instance that can be used with the rate
+limiting operations (<a href="#use/2"><code class="inline">use/2</code></a>, <a href="#get/1"><code class="inline">get/1</code></a>, <a href="#set/2"><code class="inline">set/2</code></a>, <a href="#reset/1"><code class="inline">reset/1</code></a>). The limiter is
+identified by a combination of component, type, and ID, allowing for
+hierarchical organization of limiters across different parts of an application.</p><h2 id="new/5-parameters" class="section-heading"><a href="#new/5-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">algorithm</code> - The rate limiting algorithm to use. Must be either
+<code class="inline">:token_bucket</code> or <code class="inline">:semaphore</code>.</p></li><li><p><code class="inline">component</code> - A module name that represents the component or subsystem
+creating this limiter. This provides namespace organization and helps
+with debugging and monitoring.</p></li><li><p><code class="inline">type</code> - An atom that categorizes the type of operation being limited.
+Examples might include <code class="inline">:api_calls</code>, <code class="inline">:database_connections</code>, <code class="inline">:file_uploads</code>, etc.</p></li><li><p><code class="inline">id</code> - A string that uniquely identifies this specific limiter within
+the component/type namespace. This allows for per-user, per-resource,
+or other granular limiting.</p></li><li><p><code class="inline">opts</code> - Algorithm-specific configuration options (see Options section below).</p></li></ul><h2 id="new/5-returns" class="section-heading"><a href="#new/5-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><p>Returns <code class="inline">{:ok, limiter_instance}</code> on success or <code class="inline">{:error, error}</code> on failure.</p><p>The <code class="inline">limiter_instance</code> is an opaque data structure that contains all the
+information needed to interact with the specific limiter. This instance
+should be passed to other limiter functions like <a href="#use/2"><code class="inline">use/2</code></a>, <a href="#get/1"><code class="inline">get/1</code></a>, etc.</p><h2 id="new/5-options" class="section-heading"><a href="#new/5-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><p>Each algorithm requires specific options to configure the limiter behavior:</p><h3 id="new/5-semaphore-options" class="section-heading"><a href="#new/5-semaphore-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Semaphore Options:</span></h3><ul><li><code class="inline">:max_permits</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Required. The maximum capacity of the semaphore.</li></ul><p>  This represents the total number of permits/resources available.
+  Positive increments consume permits, negative increments release them.
+  The semaphore starts with full capacity and requires explicit management.</p><ul><li><p><code class="inline">:time_to_live</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Required. The amount of time for which a semaphore limiter should be enforced.</p><p>In units of <code class="inline">time_scale</code>.  The limiter will be maintained from limiter
+creation time to that time plus the time to live; this is the expiry
+time.  After the expiry time expires the limiter will be considered
+&quot;purge-eligible&quot; and will be dropped from the system.  Any <a href="#use/2"><code class="inline">use/2</code></a> calls
+made against an expired limiter cause the limiter to behave as though it
+were newly created with maximum permits available.</p></li><li><p><code class="inline">:time_scale</code> (<a href="MscmpSystLimiter.Types.html#t:time_scale/0"><code class="inline">MscmpSystLimiter.Types.time_scale/0</code></a>) - Required. Establishes the time unit in which the <code class="inline">time_to_live</code> is expressed.</p></li></ul><h3 id="new/5-token-bucket-options" class="section-heading"><a href="#new/5-token-bucket-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Token Bucket Options:</span></h3><ul><li><code class="inline">:bucket_size</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Required. The maximum number of tokens the bucket can hold at any one time.</li></ul><p>  This represents the burst capacity of the limiter. When the bucket is full,
+  no additional tokens can be added until some are consumed.</p><ul><li><p><code class="inline">:refill_rate</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Required. The number of tokens added to the bucket during each refill interval.</p><p>This determines how quickly the bucket refills after tokens are consumed.
+Higher values allow for faster recovery from burst consumption.</p></li><li><p><code class="inline">:refill_per</code> (<a href="MscmpSystLimiter.Types.html#t:time_scale/0"><code class="inline">MscmpSystLimiter.Types.time_scale/0</code></a>) - Required. The time scale of the refill interval.</p><p>This value determines the time period over which the refill rate is
+achieved or more simply: <code class="inline">refill_rate</code> per <code class="inline">refill_per</code>.</p></li></ul><h2 id="new/5-examples" class="section-heading"><a href="#new/5-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><h3 id="new/5-creating-a-token-bucket-limiter" class="section-heading"><a href="#new/5-creating-a-token-bucket-limiter" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Creating a Token Bucket Limiter</span></h3><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="c1"># First ensure we have a service available for testing</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">old_service</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="7604748661-1">(</span><span class="nc">TestSupport</span><span class="o">.</span><span class="n">get_limiter_service_name</span><span class="p" data-group-id="7604748661-2">(</span><span class="p" data-group-id="7604748661-2">)</span><span class="p" data-group-id="7604748661-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Create a token bucket for API rate limiting</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7604748661-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">limiter</span><span class="p" data-group-id="7604748661-3">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="7604748661-4">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:token_bucket</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MyApp.API</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:requests</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;user:123&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">bucket_size</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">refill_rate</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">refill_per</span><span class="p">:</span><span class="w"> </span><span class="ss">:second</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="7604748661-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Verify the limiter was created by checking its initial state</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7604748661-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7604748661-6">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="n">capacity</span><span class="p">,</span><span class="w"> </span><span class="bp">_</span><span class="p" data-group-id="7604748661-6">}</span><span class="p" data-group-id="7604748661-5">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">get</span><span class="p" data-group-id="7604748661-7">(</span><span class="n">limiter</span><span class="p" data-group-id="7604748661-7">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">capacity</span><span class="w">
+</span><span class="mi">100</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Restore previous service</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="7604748661-8">(</span><span class="n">old_service</span><span class="p" data-group-id="7604748661-8">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="ss">:ok</span><span class="w">
+</span><span class="ss">:ok</span></code></pre><h3 id="new/5-creating-a-semaphore-limiter" class="section-heading"><a href="#new/5-creating-a-semaphore-limiter" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Creating a Semaphore Limiter</span></h3><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="c1"># First ensure we have a service available for testing</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">old_service</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="0501091701-1">(</span><span class="nc">TestSupport</span><span class="o">.</span><span class="n">get_limiter_service_name</span><span class="p" data-group-id="0501091701-2">(</span><span class="p" data-group-id="0501091701-2">)</span><span class="p" data-group-id="0501091701-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Create a semaphore for connection pool limiting</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0501091701-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">limiter</span><span class="p" data-group-id="0501091701-3">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="0501091701-4">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:semaphore</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MyApp.Database</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:connections</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;primary_pool&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">max_permits</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">time_to_live</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">time_scale</span><span class="p">:</span><span class="w"> </span><span class="ss">:minute</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="0501091701-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Verify the limiter was created with full permits</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0501091701-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0501091701-6">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="n">permits</span><span class="p">,</span><span class="w"> </span><span class="bp">_</span><span class="p" data-group-id="0501091701-6">}</span><span class="p" data-group-id="0501091701-5">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">get</span><span class="p" data-group-id="0501091701-7">(</span><span class="n">limiter</span><span class="p" data-group-id="0501091701-7">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">permits</span><span class="w">
+</span><span class="mi">20</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Restore previous service</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="0501091701-8">(</span><span class="n">old_service</span><span class="p" data-group-id="0501091701-8">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="ss">:ok</span><span class="w">
+</span><span class="ss">:ok</span></code></pre><h2 id="new/5-limiter-identity" class="section-heading"><a href="#new/5-limiter-identity" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Limiter Identity</span></h2><p>Limiters are uniquely identified by the tuple <code class="inline">{component, type, id}</code>. Creating
+a new limiter with the same identity will either:</p><ul><li>Return the existing limiter if it's still active and valid</li><li>Replace an expired or invalid limiter with a fresh instance</li></ul><p>This allows for idempotent limiter creation and automatic recovery from
+expired state.</p><h2 id="new/5-error-conditions" class="section-heading"><a href="#new/5-error-conditions" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Error Conditions</span></h2><p>The function returns <code class="inline">{:error, error}</code> in the following cases:</p><ul><li>Invalid algorithm name</li><li>Invalid component (must be an atom suitable for module names)</li><li>Invalid type (must be an atom)</li><li>Invalid ID (must be a binary string)</li><li>Invalid or missing required options for the chosen algorithm</li><li>Internal storage or system errors</li></ul>
   </section>
 </section>
-<section class="detail" id="delete_counters/2">
+<section class="detail" id="reset/1">
 
   <div class="detail-header">
-    <a href="#delete_counters/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#reset/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">delete_counters(counter_type, counter_id)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">reset(limiter_instance)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> delete_counters(
-  <a href="MscmpSystLimiter.Types.html#t:counter_type/0">MscmpSystLimiter.Types.counter_type</a>(),
-  <a href="MscmpSystLimiter.Types.html#t:counter_id/0">MscmpSystLimiter.Types.counter_id</a>()
-) ::
-  {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()} | {:error, <a href="Mserror.LimiterError.html#t:t/0">Mserror.LimiterError.t</a>()}</pre>
-
-      </div>
-
-<p>Deletes a counter from the system.</p><h2 id="delete_counters/2-parameters" class="section-heading">
-  <a href="#delete_counters/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">counter_type</code> - an atom representing the kind of counter which is to be
-deleted.</p></li><li><p><code class="inline">counter_id</code> - the specific Counter ID of the type.  For example if the
-<code class="inline">counter_type</code> is <code class="inline">:user_login</code>, the <code class="inline">counter_id</code> value may be a value like
-<code class="inline">user@email.domain</code> for the user's username.</p></li></ul><h2 id="delete_counters/2-example" class="section-heading">
-  <a href="#delete_counters/2-example" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Example</span>
-</h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="7302363273-1">(</span><span class="ss">:delete_test_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="7302363273-1">)</span><span class="w">
-</span><span class="p" data-group-id="7302363273-2">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="7302363273-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">delete_counters</span><span class="p" data-group-id="7302363273-3">(</span><span class="ss">:delete_test_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p" data-group-id="7302363273-3">)</span><span class="w">
-</span><span class="p" data-group-id="7302363273-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="7302363273-4">}</span></code></pre>
-  </section>
-</section>
-<section class="detail" id="get_check_rate_function/3">
-
-  <div class="detail-header">
-    <a href="#get_check_rate_function/3" class="detail-link" data-no-tooltip title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">get_check_rate_function(counter_type, scale_ms, limit)</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@spec</span> get_check_rate_function(
-  <a href="MscmpSystLimiter.Types.html#t:counter_type/0">MscmpSystLimiter.Types.counter_type</a>(),
-  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()
-) ::
-  (counter_id :: <a href="MscmpSystLimiter.Types.html#t:counter_id/0">MscmpSystLimiter.Types.counter_id</a>() -&gt;
-     {:allow, count :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()}
-     | {:deny, limit :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()}
-     | {:error, <a href="Mserror.LimiterError.html#t:t/0">Mserror.LimiterError.t</a>()})</pre>
-
-      </div>
-
-<p>Returns an anonymous function to simplify calls to check the rate for a
-specific counter type.</p><p>The returned function avoids requiring the parameters that are common between
-calls from being constantly supplied.  The only parameter that the returned
-function requires is the <code class="inline">counter_id</code> value of the specific counter of the
-type to test; all other parameters typically required by
-<a href="#check_rate/4"><code class="inline">MscmpSystLimiter.check_rate/4</code></a> are captured by the returned closure.</p><h2 id="get_check_rate_function/3-parameters" class="section-heading">
-  <a href="#get_check_rate_function/3-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">counter_type</code> - an atom representing the kind of counter that the
-returned function will be set to check.</p></li><li><p><code class="inline">scale_ms</code> - the time in milliseconds of the rate window.  For example,
-for the rate limit of 3 tries in one minute the <code class="inline">scale_ms</code> value is set to
-60,000 milliseconds for one minute.</p></li><li><p><code class="inline">limit</code> - the number of attempts allowed with the <code class="inline">scale_ms</code> duration.  In
-the example of 3 tries in one minute, the <code class="inline">limit</code> value is 3.</p></li></ul><h2 id="get_check_rate_function/3-example" class="section-heading">
-  <a href="#get_check_rate_function/3-example" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Example</span>
-</h2>
-<p>Note that The returned anonymous function is equivalent to making a call to
-the more verbose <a href="#check_rate/4"><code class="inline">MscmpSystLimiter.check_rate/4</code></a>:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">my_check_rate_function</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">get_check_rate_function</span><span class="p" data-group-id="0990231953-1">(</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">:example_counter_get_func</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="mi">60_000</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="mi">3</span><span class="p" data-group-id="0990231953-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">my_check_rate_function</span><span class="o">.</span><span class="p" data-group-id="0990231953-2">(</span><span class="s">&quot;id1&quot;</span><span class="p" data-group-id="0990231953-2">)</span><span class="w">
-</span><span class="p" data-group-id="0990231953-3">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="0990231953-3">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="0990231953-4">(</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:example_counter_get_func</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">60_000</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">3</span><span class="p" data-group-id="0990231953-4">)</span><span class="w">
-</span><span class="p" data-group-id="0990231953-5">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="0990231953-5">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">my_check_rate_function</span><span class="o">.</span><span class="p" data-group-id="0990231953-6">(</span><span class="s">&quot;id1&quot;</span><span class="p" data-group-id="0990231953-6">)</span><span class="w">
-</span><span class="p" data-group-id="0990231953-7">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="0990231953-7">}</span></code></pre>
-  </section>
-</section>
-<section class="detail" id="get_counter_name/2">
-
-  <div class="detail-header">
-    <a href="#get_counter_name/2" class="detail-link" data-no-tooltip title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">get_counter_name(counter_type, counter_id)</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@spec</span> get_counter_name(
-  <a href="MscmpSystLimiter.Types.html#t:counter_type/0">MscmpSystLimiter.Types.counter_type</a>(),
-  <a href="MscmpSystLimiter.Types.html#t:counter_id/0">MscmpSystLimiter.Types.counter_id</a>()
-) ::
-  <a href="MscmpSystLimiter.Types.html#t:counter_name/0">MscmpSystLimiter.Types.counter_name</a>()</pre>
-
-      </div>
-
-<p>Creates a canonical name for each unique counter.</p><h2 id="get_counter_name/2-parameters" class="section-heading">
-  <a href="#get_counter_name/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">counter_type</code> - an atom representing the kind of counter being created.</p></li><li><p><code class="inline">counter_id</code> - a value unique to the <code class="inline">counter_type</code> which identifies a
-specific counter.</p></li></ul><h2 id="get_counter_name/2-example" class="section-heading">
-  <a href="#get_counter_name/2-example" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Example</span>
-</h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">get_counter_name</span><span class="p" data-group-id="0589543096-1">(</span><span class="ss">:example_counter_name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;123&quot;</span><span class="p" data-group-id="0589543096-1">)</span><span class="w">
-</span><span class="s">&quot;example_counter_name_123&quot;</span></code></pre>
-  </section>
-</section>
-<section class="detail" id="inspect_counter/4">
-
-  <div class="detail-header">
-    <a href="#inspect_counter/4" class="detail-link" data-no-tooltip title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">inspect_counter(counter_type, counter_id, scale_ms, limit)</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@spec</span> inspect_counter(
-  <a href="MscmpSystLimiter.Types.html#t:counter_type/0">MscmpSystLimiter.Types.counter_type</a>(),
-  <a href="MscmpSystLimiter.Types.html#t:counter_id/0">MscmpSystLimiter.Types.counter_id</a>(),
-  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()
-) ::
-  {:ok,
-   {count :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(), count_remaining :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-    ms_to_next_counter :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(), created_at :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil,
-    updated_at :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil}}
+          <pre translate="no"><span class="attribute">@spec</span> reset(limiter_instance :: <a href="MscmpSystLimiter.Types.html#t:limiter_instance/0">MscmpSystLimiter.Types.limiter_instance</a>()) ::
+  {:ok, <a href="MscmpSystLimiter.Types.html#t:limiter_result/0">MscmpSystLimiter.Types.limiter_result</a>()}
   | {:error, <a href="Mserror.LimiterError.html#t:t/0">Mserror.LimiterError.t</a>()}</pre>
 
       </div>
 
-<p>Retrieves data about a currently used counter without counting towards the limit.</p><h2 id="inspect_counter/4-parameters" class="section-heading">
-  <a href="#inspect_counter/4-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">counter_type</code> - an atom representing the kind of counter which to inspect.</p></li><li><p><code class="inline">counter_id</code> - the specific Counter ID of the type.  For example if the
-<code class="inline">counter_type</code> is <code class="inline">:user_login</code>, the <code class="inline">counter_id</code> value may be a value like
-<code class="inline">user@email.domain</code> for the user's username.</p></li><li><p><code class="inline">scale_ms</code> - the time in milliseconds of the rate window.  For example,
-for the rate limit of 3 tries in one minute the <code class="inline">scale_ms</code> value is set to
-60,000 milliseconds for one minute.</p></li><li><p><code class="inline">limit</code> - the number of attempts allowed with the <code class="inline">scale_ms</code> duration.  In
-the example of 3 tries in one minute, the <code class="inline">limit</code> value is 3.</p></li></ul>
+<p>Resets a rate limiter instance to its initial state.</p><p>This function restores a limiter to its original configuration state, as if it
+were newly created. This is useful for clearing accumulated state, resetting
+counters after maintenance windows, or handling error recovery scenarios.</p><h2 id="reset/1-parameters" class="section-heading"><a href="#reset/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">limiter_instance</code> - A limiter instance created with <a href="#new/5"><code class="inline">new/5</code></a>. The instance
+contains all the information needed to identify the specific limiter and
+its configuration.</li></ul><h2 id="reset/1-returns" class="section-heading"><a href="#reset/1-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><p>Returns <code class="inline">{:ok, limiter_result}</code> on success or <code class="inline">{:error, error}</code> on failure.</p><p>The <code class="inline">limiter_result</code> is a tuple with the following form:</p><ul><li><p><code class="inline">{:allow, initial_capacity, limiter_instance}</code> - The limiter has been
+reset to its initial state. The <code class="inline">initial_capacity</code> value represents:</p><ul><li><p><strong>Token Bucket</strong>: The bucket is filled to its maximum <code class="inline">bucket_size</code>
+capacity with all tokens available.</p></li><li><p><strong>Semaphore</strong>: All permits are available, equal to the <code class="inline">max_permits</code>
+value configured at creation time.</p></li></ul></li></ul><h2 id="reset/1-algorithm-specific-behavior" class="section-heading"><a href="#reset/1-algorithm-specific-behavior" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Algorithm-Specific Behavior</span></h2><h3 id="reset/1-token-bucket" class="section-heading"><a href="#reset/1-token-bucket" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Token Bucket</span></h3><p>Resets the bucket to its maximum capacity (<code class="inline">bucket_size</code>) and updates the
+last refill timestamp to the current time. This effectively gives the limiter
+a fresh start with all tokens immediately available.</p><h3 id="reset/1-semaphore" class="section-heading"><a href="#reset/1-semaphore" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Semaphore</span></h3><p>Resets the semaphore to have all permits available (<code class="inline">max_permits</code>) and
+updates the expiry time based on the current time plus the configured
+<code class="inline">time_to_live</code>. This extends the limiter's lifetime and makes all permits
+available for acquisition.</p><h2 id="reset/1-examples" class="section-heading"><a href="#reset/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><h3 id="reset/1-token-bucket-reset" class="section-heading"><a href="#reset/1-token-bucket-reset" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Token Bucket Reset</span></h3><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="c1"># First ensure we have a service available for testing</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">old_service</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="7212286205-1">(</span><span class="nc">TestSupport</span><span class="o">.</span><span class="n">get_limiter_service_name</span><span class="p" data-group-id="7212286205-2">(</span><span class="p" data-group-id="7212286205-2">)</span><span class="p" data-group-id="7212286205-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Create a token bucket limiter (10 tokens, refill 5 per second)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7212286205-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">limiter</span><span class="p" data-group-id="7212286205-3">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="7212286205-4">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:token_bucket</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystLimiter.Doctest</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:api_calls</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;user_doctest_reset_token_bucket&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">bucket_size</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">refill_rate</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">refill_per</span><span class="p">:</span><span class="w"> </span><span class="ss">:second</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="7212286205-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Consume most tokens</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7212286205-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7212286205-6">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="n">remaining</span><span class="p">,</span><span class="w"> </span><span class="n">depleted_limiter</span><span class="p" data-group-id="7212286205-6">}</span><span class="p" data-group-id="7212286205-5">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="kn">use</span><span class="p" data-group-id="7212286205-7">(</span><span class="n">limiter</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p" data-group-id="7212286205-7">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">remaining</span><span class="w">
+</span><span class="mi">2</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Reset the limiter - should restore full capacity</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7212286205-8">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7212286205-9">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="n">reset_capacity</span><span class="p">,</span><span class="w"> </span><span class="n">reset_limiter</span><span class="p" data-group-id="7212286205-9">}</span><span class="p" data-group-id="7212286205-8">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">reset</span><span class="p" data-group-id="7212286205-10">(</span><span class="n">depleted_limiter</span><span class="p" data-group-id="7212286205-10">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">reset_capacity</span><span class="w">
+</span><span class="mi">10</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Verify we can now consume the full amount again</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7212286205-11">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7212286205-12">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="n">final_remaining</span><span class="p">,</span><span class="w"> </span><span class="c">_final_limiter</span><span class="p" data-group-id="7212286205-12">}</span><span class="p" data-group-id="7212286205-11">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="kn">use</span><span class="p" data-group-id="7212286205-13">(</span><span class="n">reset_limiter</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p" data-group-id="7212286205-13">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">final_remaining</span><span class="w">
+</span><span class="mi">2</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Restore previous service</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="7212286205-14">(</span><span class="n">old_service</span><span class="p" data-group-id="7212286205-14">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="ss">:ok</span><span class="w">
+</span><span class="ss">:ok</span></code></pre><h3 id="reset/1-semaphore-reset" class="section-heading"><a href="#reset/1-semaphore-reset" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Semaphore Reset</span></h3><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="c1"># First ensure we have a service available for testing</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">old_service</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="2532874666-1">(</span><span class="nc">TestSupport</span><span class="o">.</span><span class="n">get_limiter_service_name</span><span class="p" data-group-id="2532874666-2">(</span><span class="p" data-group-id="2532874666-2">)</span><span class="p" data-group-id="2532874666-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Create a semaphore limiter (5 permits, 1 hour TTL)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="2532874666-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">limiter</span><span class="p" data-group-id="2532874666-3">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="2532874666-4">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:semaphore</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystLimiter.Doctest</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:database_connections</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;pool_doctest_reset_semaphore&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">max_permits</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">time_to_live</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">time_scale</span><span class="p">:</span><span class="w"> </span><span class="ss">:hour</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="2532874666-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Acquire most permits</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="2532874666-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2532874666-6">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="n">remaining</span><span class="p">,</span><span class="w"> </span><span class="n">depleted_limiter</span><span class="p" data-group-id="2532874666-6">}</span><span class="p" data-group-id="2532874666-5">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="kn">use</span><span class="p" data-group-id="2532874666-7">(</span><span class="n">limiter</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p" data-group-id="2532874666-7">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">remaining</span><span class="w">
+</span><span class="mi">1</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Reset the semaphore - should restore all permits</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="2532874666-8">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2532874666-9">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="n">reset_permits</span><span class="p">,</span><span class="w"> </span><span class="n">reset_limiter</span><span class="p" data-group-id="2532874666-9">}</span><span class="p" data-group-id="2532874666-8">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">reset</span><span class="p" data-group-id="2532874666-10">(</span><span class="n">depleted_limiter</span><span class="p" data-group-id="2532874666-10">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">reset_permits</span><span class="w">
+</span><span class="mi">5</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Verify we can now acquire permits again</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="2532874666-11">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2532874666-12">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="n">final_remaining</span><span class="p">,</span><span class="w"> </span><span class="c">_final_limiter</span><span class="p" data-group-id="2532874666-12">}</span><span class="p" data-group-id="2532874666-11">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="kn">use</span><span class="p" data-group-id="2532874666-13">(</span><span class="n">reset_limiter</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="2532874666-13">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">final_remaining</span><span class="w">
+</span><span class="mi">2</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Restore previous service</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="2532874666-14">(</span><span class="n">old_service</span><span class="p" data-group-id="2532874666-14">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="ss">:ok</span><span class="w">
+</span><span class="ss">:ok</span></code></pre><h2 id="reset/1-use-cases" class="section-heading"><a href="#reset/1-use-cases" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Use Cases</span></h2><p>This function is particularly useful in the following scenarios:</p><ul><li><p><strong>Maintenance Windows</strong>: Resetting limiters after scheduled maintenance
+to ensure full capacity is available when services resume.</p></li><li><p><strong>Error Recovery</strong>: Clearing accumulated state after resolving issues
+that may have caused unusual consumption patterns.</p></li><li><p><strong>Testing</strong>: Providing a clean slate for test scenarios without needing
+to recreate limiter instances.</p></li><li><p><strong>Administrative Actions</strong>: Allowing operators to manually reset limiters
+in response to operational requirements.</p></li></ul><h2 id="reset/1-error-conditions" class="section-heading"><a href="#reset/1-error-conditions" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Error Conditions</span></h2><p>The function returns <code class="inline">{:error, error}</code> in the following cases:</p><ul><li>Invalid limiter instance format</li><li>Internal algorithm errors (storage issues, etc.)</li></ul>
+  </section>
+</section>
+<section class="detail" id="set/2">
+
+  <div class="detail-header">
+    <a href="#set/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">set(limiter_instance, opts)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> set(
+  limiter_instance :: <a href="MscmpSystLimiter.Types.html#t:limiter_instance/0">MscmpSystLimiter.Types.limiter_instance</a>(),
+  opts :: <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
+) ::
+  {:ok, <a href="MscmpSystLimiter.Types.html#t:limiter_result/0">MscmpSystLimiter.Types.limiter_result</a>()}
+  | {:error, <a href="Mserror.LimiterError.html#t:t/0">Mserror.LimiterError.t</a>()}</pre>
+
+      </div>
+
+<p>Explicitly sets the current available capacity of a rate limiter instance.</p><p>This function allows you to override the current state of a limiter with a
+specific capacity value. This is useful for administrative operations,
+testing scenarios, or implementing custom policies that need to adjust
+limiter capacity based on external conditions.</p><h2 id="set/2-parameters" class="section-heading"><a href="#set/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">limiter_instance</code> - A limiter instance created with <a href="#new/5"><code class="inline">new/5</code></a>. The instance
+contains all the information needed to identify the specific limiter and
+its configuration.</p></li><li><p><code class="inline">opts</code> - Algorithm-specific options that define the new capacity state
+(see Options section below).</p></li></ul><h2 id="set/2-returns" class="section-heading"><a href="#set/2-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><p>Returns <code class="inline">{:ok, limiter_result}</code> on success or <code class="inline">{:error, error}</code> on failure.</p><p>The <code class="inline">limiter_result</code> is a tuple with the following form:</p><ul><li><p><code class="inline">{:allow, set_capacity, limiter_instance}</code> - The limiter capacity has been
+set to the specified value. The <code class="inline">set_capacity</code> reflects the new current
+capacity:</p><ul><li><p><strong>Token Bucket</strong>: The number of tokens now available in the bucket.</p></li><li><p><strong>Semaphore</strong>: The number of permits now available for acquisition.</p></li></ul></li></ul><h2 id="set/2-options" class="section-heading"><a href="#set/2-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><p>Each algorithm requires specific options to set the capacity:</p><h3 id="set/2-semaphore-options" class="section-heading"><a href="#set/2-semaphore-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Semaphore Options:</span></h3><ul><li><code class="inline">:current_permits</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">non_neg_integer/0</code></a>) - Required. The current number of permits available.</li></ul><p>  Overrides the existing number of permits available to value of this
+  option.  Note that the value of this option must be no less than 1 and
+  no more than the <code class="inline">max_permits</code> value established at limiter creation.</p><h3 id="set/2-token-bucket-options" class="section-heading"><a href="#set/2-token-bucket-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Token Bucket Options:</span></h3><ul><li><code class="inline">:current_fill</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">non_neg_integer/0</code></a>) - Required. The current fill of the bucket.</li></ul><p>  Allows the caller to override the number of tokens currently filling
+  the bucket.  This value must be 1 or greater and less than or equal
+  to the <code class="inline">bucket_size</code> value set on limiter creation.</p><h2 id="set/2-algorithm-specific-behavior" class="section-heading"><a href="#set/2-algorithm-specific-behavior" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Algorithm-Specific Behavior</span></h2><h3 id="set/2-token-bucket" class="section-heading"><a href="#set/2-token-bucket" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Token Bucket</span></h3><p>Sets the bucket's current token count to the specified value and updates the
+last refill timestamp to the current time. The new token count must be within
+the bucket's configured capacity (0 to <code class="inline">bucket_size</code>).</p><h3 id="set/2-semaphore" class="section-heading"><a href="#set/2-semaphore" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Semaphore</span></h3><p>Sets the semaphore's current permit count to the specified value. The new
+permit count must be within the semaphore's configured capacity (0 to
+<code class="inline">max_permits</code>). The expiry time is not modified.</p><h2 id="set/2-examples" class="section-heading"><a href="#set/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><h3 id="set/2-setting-token-bucket-capacity" class="section-heading"><a href="#set/2-setting-token-bucket-capacity" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Setting Token Bucket Capacity</span></h3><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="c1"># First ensure we have a service available for testing</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">old_service</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="0055003322-1">(</span><span class="nc">TestSupport</span><span class="o">.</span><span class="n">get_limiter_service_name</span><span class="p" data-group-id="0055003322-2">(</span><span class="p" data-group-id="0055003322-2">)</span><span class="p" data-group-id="0055003322-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Create a token bucket limiter</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0055003322-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">limiter</span><span class="p" data-group-id="0055003322-3">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="0055003322-4">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:token_bucket</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystLimiter.Doctest</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:api_calls</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;user_doctest_set_bucket&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">bucket_size</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">refill_rate</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">refill_per</span><span class="p">:</span><span class="w"> </span><span class="ss">:second</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="0055003322-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Consume some tokens</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0055003322-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0055003322-6">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="n">remaining</span><span class="p">,</span><span class="w"> </span><span class="n">depleted_limiter</span><span class="p" data-group-id="0055003322-6">}</span><span class="p" data-group-id="0055003322-5">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="kn">use</span><span class="p" data-group-id="0055003322-7">(</span><span class="n">limiter</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p" data-group-id="0055003322-7">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">remaining</span><span class="w">
+</span><span class="mi">3</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Explicitly set the bucket to half capacity</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0055003322-8">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0055003322-9">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="n">set_capacity</span><span class="p">,</span><span class="w"> </span><span class="n">set_limiter</span><span class="p" data-group-id="0055003322-9">}</span><span class="p" data-group-id="0055003322-8">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">set</span><span class="p" data-group-id="0055003322-10">(</span><span class="n">depleted_limiter</span><span class="p">,</span><span class="w"> </span><span class="ss">current_fill</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p" data-group-id="0055003322-10">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">set_capacity</span><span class="w">
+</span><span class="mi">5</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Verify the new capacity is in effect</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0055003322-11">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0055003322-12">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="n">current_capacity</span><span class="p">,</span><span class="w"> </span><span class="bp">_</span><span class="p" data-group-id="0055003322-12">}</span><span class="p" data-group-id="0055003322-11">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">get</span><span class="p" data-group-id="0055003322-13">(</span><span class="n">set_limiter</span><span class="p" data-group-id="0055003322-13">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">current_capacity</span><span class="w">
+</span><span class="mi">5</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Restore previous service</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="0055003322-14">(</span><span class="n">old_service</span><span class="p" data-group-id="0055003322-14">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="ss">:ok</span><span class="w">
+</span><span class="ss">:ok</span></code></pre><h3 id="set/2-setting-semaphore-permits" class="section-heading"><a href="#set/2-setting-semaphore-permits" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Setting Semaphore Permits</span></h3><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="c1"># First ensure we have a service available for testing</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">old_service</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="3709913436-1">(</span><span class="nc">TestSupport</span><span class="o">.</span><span class="n">get_limiter_service_name</span><span class="p" data-group-id="3709913436-2">(</span><span class="p" data-group-id="3709913436-2">)</span><span class="p" data-group-id="3709913436-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Create a semaphore limiter</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3709913436-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">limiter</span><span class="p" data-group-id="3709913436-3">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="3709913436-4">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:semaphore</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystLimiter.Doctest</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:database_connections</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;pool_doctest_set_semaphore&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">max_permits</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">time_to_live</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">time_scale</span><span class="p">:</span><span class="w"> </span><span class="ss">:hour</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="3709913436-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Acquire some permits</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3709913436-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3709913436-6">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="n">remaining</span><span class="p">,</span><span class="w"> </span><span class="n">depleted_limiter</span><span class="p" data-group-id="3709913436-6">}</span><span class="p" data-group-id="3709913436-5">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="kn">use</span><span class="p" data-group-id="3709913436-7">(</span><span class="n">limiter</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p" data-group-id="3709913436-7">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">remaining</span><span class="w">
+</span><span class="mi">4</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Explicitly set permits to a specific value</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3709913436-8">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3709913436-9">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="n">set_permits</span><span class="p">,</span><span class="w"> </span><span class="n">set_limiter</span><span class="p" data-group-id="3709913436-9">}</span><span class="p" data-group-id="3709913436-8">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">set</span><span class="p" data-group-id="3709913436-10">(</span><span class="n">depleted_limiter</span><span class="p">,</span><span class="w"> </span><span class="ss">current_permits</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p" data-group-id="3709913436-10">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">set_permits</span><span class="w">
+</span><span class="mi">8</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Verify the new permit count is in effect</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3709913436-11">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3709913436-12">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="n">current_permits</span><span class="p">,</span><span class="w"> </span><span class="bp">_</span><span class="p" data-group-id="3709913436-12">}</span><span class="p" data-group-id="3709913436-11">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">get</span><span class="p" data-group-id="3709913436-13">(</span><span class="n">set_limiter</span><span class="p" data-group-id="3709913436-13">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">current_permits</span><span class="w">
+</span><span class="mi">8</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Restore previous service</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="3709913436-14">(</span><span class="n">old_service</span><span class="p" data-group-id="3709913436-14">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="ss">:ok</span><span class="w">
+</span><span class="ss">:ok</span></code></pre><h2 id="set/2-error-conditions" class="section-heading"><a href="#set/2-error-conditions" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Error Conditions</span></h2><p>The function returns <code class="inline">{:error, error}</code> in the following cases:</p><ul><li>Invalid limiter instance format</li><li>Capacity value outside valid range (e.g., negative values or exceeding
+maximum configured capacity)</li><li>Internal algorithm errors (storage issues, etc.)</li></ul>
+  </section>
+</section>
+<section class="detail" id="use/2">
+
+  <div class="detail-header">
+    <a href="#use/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">use(limiter_instance, increment)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> use(
+  limiter_instance :: <a href="MscmpSystLimiter.Types.html#t:limiter_instance/0">MscmpSystLimiter.Types.limiter_instance</a>(),
+  increment :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()
+) ::
+  {:ok, <a href="MscmpSystLimiter.Types.html#t:limiter_result/0">MscmpSystLimiter.Types.limiter_result</a>()}
+  | {:error, <a href="Mserror.LimiterError.html#t:t/0">Mserror.LimiterError.t</a>()}</pre>
+
+      </div>
+
+<p>Attempts to consume or release capacity from a rate limiter instance.</p><p>This function is the primary mechanism for interacting with active rate limiters.
+It attempts to consume (positive increment) or release (negative increment) the
+specified amount of capacity from the limiter and returns whether the operation
+was allowed or denied.</p><h2 id="use/2-parameters" class="section-heading"><a href="#use/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">limiter_instance</code> - A limiter instance created with <a href="#new/5"><code class="inline">new/5</code></a>. The instance
+contains all the information needed to identify the specific limiter and
+its configuration.</p></li><li><p><code class="inline">increment</code> - An integer representing the amount of capacity to consume
+(positive values) or release (negative values). The behavior depends on
+the algorithm:</p><ul><li><p><strong>Token Bucket</strong>: Must be positive. Represents the number of tokens to
+consume from the bucket.</p></li><li><p><strong>Semaphore</strong>: Can be positive (acquire permits), negative (release
+permits), or zero (no-op). Positive values consume permits, negative
+values release permits back to the pool.</p></li></ul></li></ul><h2 id="use/2-returns" class="section-heading"><a href="#use/2-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><p>Returns <code class="inline">{:ok, limiter_result}</code> on success or <code class="inline">{:error, error}</code> on failure.</p><p>The <code class="inline">limiter_result</code> is a tuple with one of the following forms:</p><ul><li><p><code class="inline">{:allow, remaining_capacity, updated_limiter_instance}</code> - The operation
+was allowed. <code class="inline">remaining_capacity</code> indicates how much capacity remains
+available after this operation.</p></li><li><p><code class="inline">{:deny, retry_condition, updated_limiter_instance}</code> - The operation was
+denied due to insufficient capacity. <code class="inline">retry_condition</code> provides
+algorithm-specific guidance:</p><ul><li><p><strong>Token Bucket</strong>: Number of milliseconds to wait before enough tokens
+are refilled to potentially allow the request.</p></li><li><p><strong>Semaphore</strong>: Number of additional permits that would need to be
+released before this request could be satisfied.</p></li></ul></li></ul><h2 id="use/2-algorithm-specific-behavior" class="section-heading"><a href="#use/2-algorithm-specific-behavior" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Algorithm-Specific Behavior</span></h2><h3 id="use/2-token-bucket" class="section-heading"><a href="#use/2-token-bucket" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Token Bucket</span></h3><p>Consumes tokens from a bucket that refills at a steady rate. Only positive
+increments are allowed.</p><ul><li><p><strong>Allow</strong>: When sufficient tokens are available, they are consumed and
+the remaining token count is returned.</p></li><li><p><strong>Deny</strong>: When insufficient tokens are available, returns the number of
+milliseconds to wait for enough tokens to be refilled.</p></li></ul><h3 id="use/2-semaphore" class="section-heading"><a href="#use/2-semaphore" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Semaphore</span></h3><p>Manages a fixed pool of permits that can be acquired and released explicitly.</p><ul><li><p><strong>Positive increment</strong>: Attempts to acquire the specified number of permits.
+Fails if insufficient permits are available.</p></li><li><p><strong>Negative increment</strong>: Releases permits back to the pool. Cannot exceed
+the maximum permit capacity.</p></li><li><p><strong>Zero increment</strong>: No-op that returns current state without changes.</p></li></ul><h2 id="use/2-examples" class="section-heading"><a href="#use/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Examples</span></h2><h3 id="use/2-token-bucket-usage" class="section-heading"><a href="#use/2-token-bucket-usage" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Token Bucket Usage</span></h3><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="c1"># First ensure we have a service available for testing</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">old_service</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="7479379781-1">(</span><span class="nc">TestSupport</span><span class="o">.</span><span class="n">get_limiter_service_name</span><span class="p" data-group-id="7479379781-2">(</span><span class="p" data-group-id="7479379781-2">)</span><span class="p" data-group-id="7479379781-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Create a token bucket limiter (10 tokens, refill 5 per second)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7479379781-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">limiter</span><span class="p" data-group-id="7479379781-3">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="7479379781-4">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:token_bucket</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystLimiter.Doctest</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:api_calls</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;user_doctest_token_bucket&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">bucket_size</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">refill_rate</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">refill_per</span><span class="p">:</span><span class="w"> </span><span class="ss">:second</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="7479379781-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Consume 3 tokens - allowed</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7479379781-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7479379781-6">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="n">remaining</span><span class="p">,</span><span class="w"> </span><span class="n">updated_limiter</span><span class="p" data-group-id="7479379781-6">}</span><span class="p" data-group-id="7479379781-5">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="kn">use</span><span class="p" data-group-id="7479379781-7">(</span><span class="n">limiter</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="7479379781-7">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">remaining</span><span class="w">
+</span><span class="mi">7</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Try to consume 10 tokens when only 7 remain - denied</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7479379781-8">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7479379781-9">{</span><span class="ss">:deny</span><span class="p">,</span><span class="w"> </span><span class="n">retry_after_ms</span><span class="p">,</span><span class="w"> </span><span class="c">_limiter</span><span class="p" data-group-id="7479379781-9">}</span><span class="p" data-group-id="7479379781-8">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="kn">use</span><span class="p" data-group-id="7479379781-10">(</span><span class="n">updated_limiter</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="7479379781-10">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_integer</span><span class="p" data-group-id="7479379781-11">(</span><span class="n">retry_after_ms</span><span class="p" data-group-id="7479379781-11">)</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">retry_after_ms</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Restore previous service</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="7479379781-12">(</span><span class="n">old_service</span><span class="p" data-group-id="7479379781-12">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="ss">:ok</span><span class="w">
+</span><span class="ss">:ok</span></code></pre><h3 id="use/2-semaphore-usage" class="section-heading"><a href="#use/2-semaphore-usage" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Semaphore Usage</span></h3><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="c1"># First ensure we have a service available for testing</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">old_service</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="8543449214-1">(</span><span class="nc">TestSupport</span><span class="o">.</span><span class="n">get_limiter_service_name</span><span class="p" data-group-id="8543449214-2">(</span><span class="p" data-group-id="8543449214-2">)</span><span class="p" data-group-id="8543449214-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Create a semaphore limiter (5 permits, 1 hour TTL)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8543449214-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">limiter</span><span class="p" data-group-id="8543449214-3">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="8543449214-4">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:semaphore</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystLimiter.Doctest</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:database_connections</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;pool_doctest_semaphore&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">max_permits</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">time_to_live</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">time_scale</span><span class="p">:</span><span class="w"> </span><span class="ss">:hour</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="8543449214-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Acquire 2 permits - allowed</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8543449214-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8543449214-6">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="n">remaining</span><span class="p">,</span><span class="w"> </span><span class="n">updated_limiter</span><span class="p" data-group-id="8543449214-6">}</span><span class="p" data-group-id="8543449214-5">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="kn">use</span><span class="p" data-group-id="8543449214-7">(</span><span class="n">limiter</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="8543449214-7">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">remaining</span><span class="w">
+</span><span class="mi">3</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Try to acquire 5 permits when only 3 remain - denied</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8543449214-8">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8543449214-9">{</span><span class="ss">:deny</span><span class="p">,</span><span class="w"> </span><span class="n">needed_permits</span><span class="p">,</span><span class="w"> </span><span class="c">_limiter</span><span class="p" data-group-id="8543449214-9">}</span><span class="p" data-group-id="8543449214-8">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="kn">use</span><span class="p" data-group-id="8543449214-10">(</span><span class="n">updated_limiter</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p" data-group-id="8543449214-10">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">needed_permits</span><span class="w">
+</span><span class="mi">2</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Release 1 permit back to the pool</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8543449214-11">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8543449214-12">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="n">final_remaining</span><span class="p">,</span><span class="w"> </span><span class="c">_final_limiter</span><span class="p" data-group-id="8543449214-12">}</span><span class="p" data-group-id="8543449214-11">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="kn">use</span><span class="p" data-group-id="8543449214-13">(</span><span class="n">updated_limiter</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p" data-group-id="8543449214-13">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">final_remaining</span><span class="w">
+</span><span class="mi">4</span><span class="w">
+</span><span class="gp unselectable">iex&gt;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># Restore previous service</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">put_service</span><span class="p" data-group-id="8543449214-14">(</span><span class="n">old_service</span><span class="p" data-group-id="8543449214-14">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="ss">:ok</span><span class="w">
+</span><span class="ss">:ok</span></code></pre><h2 id="use/2-error-conditions" class="section-heading"><a href="#use/2-error-conditions" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Error Conditions</span></h2><p>The function returns <code class="inline">{:error, error}</code> in the following cases:</p><ul><li>Invalid limiter instance format</li><li>Internal algorithm errors (storage issues, etc.)</li><li>For token bucket: non-positive increment values</li></ul><h2 id="use/2-thread-safety" class="section-heading"><a href="#use/2-thread-safety" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Thread Safety</span></h2><p>This function is thread-safe and can be called concurrently from multiple
+processes against the same limiter instance. The underlying storage mechanisms
+provide atomic operations to ensure consistent state.</p><h2 id="use/2-performance-notes" class="section-heading"><a href="#use/2-performance-notes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Performance Notes</span></h2><p>This function performs atomic operations against shared storage (ETS tables
+with <code class="inline">:atomics</code> references). Performance is optimized for high-concurrency
+scenarios, but consider the frequency of calls when designing rate limiting
+strategies.</p>
   </section>
 </section>
 
@@ -587,7 +997,7 @@ the example of 3 tries in one minute, the <code class="inline">limit</code> valu
 
       <p class="built-using">
         Built using
-        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.34.2) for the
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
 
           <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

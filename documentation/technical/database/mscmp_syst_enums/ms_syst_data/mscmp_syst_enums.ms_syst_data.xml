@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_enums" schema="ms_syst_data" type="PostgreSQL - 16.4 (Ubuntu 16.4-1.pgdg22.04+1)">
+<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_enums" schema="ms_syst_data" type="PostgreSQL - 18.0 (Ubuntu 18.0-1.pgdg24.04+3)">
    <tables>
       <table name="syst_enum_functional_types" remarks="For those Enumerations requiring Functional Type designation, this table defines&#10;the available types and persists related metadata.  Note that not all&#10;Enumerations require Functional Types." schema="ms_syst_data" type="TABLE">
-         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+         <column autoUpdated="false" defaultValue="uuidv7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
             <child column="functional_type_id" foreignKey="syst_enum_items_enum_functional_type_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_items"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
@@ -31,7 +31,7 @@
          </index>
       </table>
       <table name="syst_enum_items" remarks="The list of values provided by an Enumeration as well as related behavioral and&#10;informational metadata." schema="ms_syst_data" type="TABLE">
-         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="uuidv7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="external_name" nullable="false" remarks="A non-unique/non-key value used to display to users and external parties where&#10;uniqueness is less of a concern than specific end user presentation." size="2147483647" type="text" typeCode="12"/>
@@ -69,7 +69,7 @@
          </index>
       </table>
       <table name="syst_enums" remarks="Enumerates the enumerations known to the system along with additional metadata&#10;useful in applying them appropriately." schema="ms_syst_data" type="TABLE">
-         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+         <column autoUpdated="false" defaultValue="uuidv7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
             <child column="enum_id" foreignKey="syst_enum_functional_types_enum_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_enum_functional_types"/>
             <child column="enum_id" foreignKey="syst_enum_items_enum_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_enum_items"/>
          </column>
@@ -194,8 +194,6 @@ BEGIN
                 DETAIL  = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst_data'
                             ,p_proc_name      => 'trig_b_i_syst_enum_functional_type_validate_new_allowed'
-                            ,p_exception_name => 'invalid_functional_type'
-                            ,p_errcode        => 'PM003'
                             ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -203,7 +201,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM003',
+                ERRCODE = 'PM105',
                 SCHEMA  = tg_table_schema,
                 TABLE   = tg_table_name;
 
@@ -304,8 +302,6 @@ BEGIN
                 DETAIL  = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst_data'
                             ,p_proc_name      => 'trig_b_iu_syst_enum_items_validate_functional_types'
-                            ,p_exception_name => 'invalid_functional_type'
-                            ,p_errcode        => 'PM003'
                             ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -313,7 +309,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM003',
+                ERRCODE = 'PM104',
                 SCHEMA  = tg_table_schema,
                 TABLE   = tg_table_name;
 

@@ -4,35 +4,22 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.34.2">
+    <meta name="generator" content="ExDoc v0.38.4">
     <meta name="project" content="mscmp_syst_authn v0.1.0">
 
 
     <title>Msdata.SystGlobalNetworkRules — mscmp_syst_authn v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
 
-    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
-    <script src="dist/sidebar_items-5B1BA76F.js"></script>
-    <script src="docs_config.js"></script>
-    <script async src="dist/html-YIPIRHGU.js"></script>
+    <script defer src="dist/sidebar_items-AEC8F2E7.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
 
   </head>
-  <body data-type="modules" class="page-module">
-    <script>
-
-      try {
-        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
-
-        if (settings.theme === 'dark' ||
-           ((settings.theme === 'system' || settings.theme == null) &&
-             window.matchMedia('(prefers-color-scheme: dark)').matches)
-           ) {
-          document.body.classList.add('dark')
-        }
-      } catch (error) { }
-    </script>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
 
 <div class="body-wrapper">
 
@@ -54,37 +41,13 @@ mscmp_syst_authn
         </div>
       </div>
     </div>
-    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
-      <li>
-        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
-Pages
-        </button>
-      </li>
-
-        <li>
-          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
-            Modules
-          </button>
-        </li>
-
-
-    </ul>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
   </div>
-
-  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
-    <ul id="extras-full-list" class="full-list"></ul>
-  </div>
-
-    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
-      <ul id="modules-full-list" class="full-list"></ul>
-    </div>
-
-
 </nav>
 
-<main class="content">
-  <output role="status" id="toast"></output>
+<output role="status" id="toast"></output>
 
+<main class="content page-module" id="main" data-type="modules">
   <div id="content" class="content-inner">
     <div class="top-search">
       <div class="search-settings">
@@ -93,8 +56,8 @@ Pages
             <span class="sr-only">Search documentation of mscmp_syst_authn</span>
             <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
           </label>
-          <button type="submit" class="search-button" aria-label="Submit Search">
-            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
           </button>
           <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
             <i class="ri-close-line ri-lg" title="Cancel search"></i>
@@ -110,12 +73,14 @@ Pages
     </div>
 
 <div id="top-content">
-  <h1>
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">Msdata.SystGlobalNetworkRules</span> 
+      <small class="app-vsn" translate="no">(mscmp_syst_authn v0.1.0)</small>
 
-    <span translate="no">Msdata.SystGlobalNetworkRules</span> 
-    <small class="app-vsn" translate="no">(mscmp_syst_authn v0.1.0)</small>
+    </h1>
 
-  </h1>
+  </div>
 
 
     <section id="moduledoc">
@@ -141,7 +106,7 @@ IP address, may or may not attempt to authenticate with the system.</p><p>These 
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:t/0" data-no-tooltip translate="no">t()</a>
+        <a href="#t:t/0" data-no-tooltip="" translate="no">t()</a>
 
       </div>
 
@@ -155,7 +120,7 @@ IP address, may or may not attempt to authenticate with the system.</p><p>These 
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#insert_changeset/1" data-no-tooltip translate="no">insert_changeset(insert_params)</a>
+        <a href="#insert_changeset/1" data-no-tooltip="" translate="no">insert_changeset(insert_params)</a>
 
       </div>
 
@@ -165,7 +130,7 @@ IP address, may or may not attempt to authenticate with the system.</p><p>These 
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#update_changeset/2" data-no-tooltip translate="no">update_changeset(global_network_rule, update_params)</a>
+        <a href="#update_changeset/2" data-no-tooltip="" translate="no">update_changeset(global_network_rule, update_params)</a>
 
       </div>
 
@@ -185,17 +150,19 @@ IP address, may or may not attempt to authenticate with the system.</p><p>These 
       </a>
       <span class="text">Types</span>
     </h1>
+
     <div class="types-list">
 <section class="detail" id="t:t/0">
 
   <div class="detail-header">
-    <a href="#t:t/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:t/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">t()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">t()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -203,7 +170,7 @@ IP address, may or may not attempt to authenticate with the system.</p><p>These 
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@type</span> t() :: %Msdata.SystGlobalNetworkRules{
-  __meta__: <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Schema.Metadata.html#t:t/0">Ecto.Schema.Metadata.t</a>(),
+  __meta__: <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.Schema.Metadata.html#t:t/0">Ecto.Schema.Metadata.t</a>(),
   diag_role_created: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
   diag_role_modified: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
   diag_row_version: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil,
@@ -212,11 +179,11 @@ IP address, may or may not attempt to authenticate with the system.</p><p>These 
   diag_update_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil,
   diag_wallclock_modified: <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>() | nil,
   functional_type: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
-  id: <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | nil,
+  id: <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | nil,
   ip_family: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil,
-  ip_host_or_network: <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>() | nil,
-  ip_host_range_lower: <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>() | nil,
-  ip_host_range_upper: <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>() | nil,
+  ip_host_or_network: <a href="/documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>() | nil,
+  ip_host_range_lower: <a href="/documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>() | nil,
+  ip_host_range_upper: <a href="/documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Inet.html#t:t/0">MscmpSystDb.DbTypes.Inet.t</a>() | nil,
   ordering: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil
 }</pre>
 
@@ -236,17 +203,19 @@ IP address, may or may not attempt to authenticate with the system.</p><p>These 
       </a>
       <span class="text">Functions</span>
     </h1>
+
     <div class="functions-list">
 <section class="detail" id="insert_changeset/1">
 
   <div class="detail-header">
-    <a href="#insert_changeset/1" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#insert_changeset/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">insert_changeset(insert_params)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">insert_changeset(insert_params)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -254,7 +223,7 @@ IP address, may or may not attempt to authenticate with the system.</p><p>These 
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> insert_changeset(<a href="MscmpSystAuthn.Types.html#t:global_network_rule_params/0">MscmpSystAuthn.Types.global_network_rule_params</a>()) ::
-  <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
+  <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
 
       </div>
 
@@ -264,13 +233,14 @@ IP address, may or may not attempt to authenticate with the system.</p><p>These 
 <section class="detail" id="update_changeset/2">
 
   <div class="detail-header">
-    <a href="#update_changeset/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#update_changeset/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">update_changeset(global_network_rule, update_params)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">update_changeset(global_network_rule, update_params)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -278,7 +248,7 @@ IP address, may or may not attempt to authenticate with the system.</p><p>These 
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> update_changeset(<a href="#t:t/0">t</a>(), <a href="MscmpSystAuthn.Types.html#t:global_network_rule_params/0">MscmpSystAuthn.Types.global_network_rule_params</a>()) ::
-  <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
+  <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
 
       </div>
 
@@ -306,7 +276,7 @@ IP address, may or may not attempt to authenticate with the system.</p><p>These 
 
       <p class="built-using">
         Built using
-        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.34.2) for the
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
 
           <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

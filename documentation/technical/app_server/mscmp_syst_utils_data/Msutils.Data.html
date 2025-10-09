@@ -4,35 +4,22 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.34.2">
+    <meta name="generator" content="ExDoc v0.38.4">
     <meta name="project" content="mscmp_syst_utils_data v0.1.0">
 
 
     <title>Msutils.Data — mscmp_syst_utils_data v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
 
-    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
-    <script src="dist/sidebar_items-4F9B5C43.js"></script>
-    <script src="docs_config.js"></script>
-    <script async src="dist/html-YIPIRHGU.js"></script>
+    <script defer src="dist/sidebar_items-79259A69.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
 
   </head>
-  <body data-type="modules" class="page-module">
-    <script>
-
-      try {
-        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
-
-        if (settings.theme === 'dark' ||
-           ((settings.theme === 'system' || settings.theme == null) &&
-             window.matchMedia('(prefers-color-scheme: dark)').matches)
-           ) {
-          document.body.classList.add('dark')
-        }
-      } catch (error) { }
-    </script>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
 
 <div class="body-wrapper">
 
@@ -54,37 +41,13 @@ mscmp_syst_utils_data
         </div>
       </div>
     </div>
-    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
-      <li>
-        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
-Pages
-        </button>
-      </li>
-
-        <li>
-          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
-            Modules
-          </button>
-        </li>
-
-
-    </ul>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
   </div>
-
-  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
-    <ul id="extras-full-list" class="full-list"></ul>
-  </div>
-
-    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
-      <ul id="modules-full-list" class="full-list"></ul>
-    </div>
-
-
 </nav>
 
-<main class="content">
-  <output role="status" id="toast"></output>
+<output role="status" id="toast"></output>
 
+<main class="content page-module" id="main" data-type="modules">
   <div id="content" class="content-inner">
     <div class="top-search">
       <div class="search-settings">
@@ -93,8 +56,8 @@ Pages
             <span class="sr-only">Search documentation of mscmp_syst_utils_data</span>
             <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
           </label>
-          <button type="submit" class="search-button" aria-label="Submit Search">
-            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
           </button>
           <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
             <i class="ri-close-line ri-lg" title="Cancel search"></i>
@@ -110,20 +73,24 @@ Pages
     </div>
 
 <div id="top-content">
-  <h1>
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">Msutils.Data</span> 
+      <small class="app-vsn" translate="no">(mscmp_syst_utils_data v0.1.0)</small>
 
-    <span translate="no">Msutils.Data</span> 
-    <small class="app-vsn" translate="no">(mscmp_syst_utils_data v0.1.0)</small>
+    </h1>
 
-  </h1>
+  </div>
 
 
     <section id="moduledoc">
 <p>This is a set of utilities for working with data which is generally
-useful across components.</p><blockquote><h4 class="info">Note</h4><p><code class="inline">Changeset Validators</code> do not check their <code class="inline">opts</code> parameter for validity.  This
+useful across components.</p><p>Currently included in these utilities are:</p><ul><li><p>ETS operations</p><p>Functions wrap some typical ETS operations so that they return standard result
+tuples.</p></li><li><p>Changeset validators</p><p>Common validation functions which can be used to validate changesets across
+Components.</p></li></ul><!-- MDESC !--><section role="note" class="admonition info"><h4 class="admonition-title info">Note</h4><p><code class="inline">Changeset Validators</code> do not check their <code class="inline">opts</code> parameter for validity.  This
 is expected to be handled by the caller prior to calling these functions.  See
 the <a href="#common_validator_options/1"><code class="inline">Msutils.Data.common_validator_options/1</code></a> macro for more information on
-adding the standard options which can be used to validate changesets.</p></blockquote>
+adding the standard options which can be used to validate changesets.</p></section>
     </section>
 
 </div>
@@ -142,7 +109,7 @@ adding the standard options which can be used to validate changesets.</p></block
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#validate_display_name/2" data-no-tooltip translate="no">validate_display_name(changeset, opts)</a>
+        <a href="#validate_display_name/2" data-no-tooltip="" translate="no">validate_display_name(changeset, opts)</a>
 
       </div>
 
@@ -153,7 +120,7 @@ meets minimum and maximum length requirements.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#validate_external_name/2" data-no-tooltip translate="no">validate_external_name(changeset, opts)</a>
+        <a href="#validate_external_name/2" data-no-tooltip="" translate="no">validate_external_name(changeset, opts)</a>
 
       </div>
 
@@ -164,7 +131,7 @@ meets minimum and maximum length requirements.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#validate_internal_name/2" data-no-tooltip translate="no">validate_internal_name(changeset, opts)</a>
+        <a href="#validate_internal_name/2" data-no-tooltip="" translate="no">validate_internal_name(changeset, opts)</a>
 
       </div>
 
@@ -175,7 +142,7 @@ meets minimum and maximum length requirements.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#validate_syst_defined_changes/2" data-no-tooltip translate="no">validate_syst_defined_changes(changeset, prohibited_fields)</a>
+        <a href="#validate_syst_defined_changes/2" data-no-tooltip="" translate="no">validate_syst_defined_changes(changeset, prohibited_fields)</a>
 
       </div>
 
@@ -186,12 +153,58 @@ the prohibited fields are not changed.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#validate_user_description/2" data-no-tooltip translate="no">validate_user_description(changeset, opts)</a>
+        <a href="#validate_user_description/2" data-no-tooltip="" translate="no">validate_user_description(changeset, opts)</a>
 
       </div>
 
         <div class="summary-synopsis"><p>Changeset validation ensuring that the <code class="inline">user_description</code> field is set if
 required and allowed and meets minimum and maximum length requirements.</p></div>
+
+    </div>
+
+</div>
+<div class="summary-ets-operations summary">
+  <h2>
+    <a href="#ets-operations">Ets Operations</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#ets_delete/2" data-no-tooltip="" translate="no">ets_delete(table, key)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Deletes an entry from an ETS table.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#ets_insert/2" data-no-tooltip="" translate="no">ets_insert(table, data)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Inserts data into an ETS table.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#ets_lookup_element/3" data-no-tooltip="" translate="no">ets_lookup_element(table, key, element_index)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Looks up an element in an ETS table by key and position.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#ets_update_element/3" data-no-tooltip="" translate="no">ets_update_element(table, key, updated_data)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Updates an element in an ETS table.</p></div>
 
     </div>
 
@@ -203,7 +216,7 @@ required and allowed and meets minimum and maximum length requirements.</p></div
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#common_validator_options/1" data-no-tooltip translate="no">common_validator_options(selected_options)</a>
+        <a href="#common_validator_options/1" data-no-tooltip="" translate="no">common_validator_options(selected_options)</a>
 
       </div>
 
@@ -224,181 +237,246 @@ use with the Changeset validation functions from the Msutils.Data module.</p></d
       </a>
       <span class="text">Changeset Validators</span>
     </h1>
+
     <div class="changeset-validators-list">
 <section class="detail" id="validate_display_name/2">
 
   <div class="detail-header">
-    <a href="#validate_display_name/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#validate_display_name/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">validate_display_name(changeset, opts)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">validate_display_name(changeset, opts)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> validate_display_name(<a href="https://hexdocs.pm/ecto/3.12.4/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/ecto/3.12.4/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
+          <pre translate="no"><span class="attribute">@spec</span> validate_display_name(<a href="https://hexdocs.pm/ecto/3.13.3/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
 
       </div>
 
 <p>Changeset validation ensuring that the <code class="inline">display_name</code> field is valid and
-meets minimum and maximum length requirements.</p><h2 id="validate_display_name/2-parameters" class="section-heading">
-  <a href="#validate_display_name/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">changeset</code> - an <a href="https://hexdocs.pm/ecto/3.12.4/Ecto.Changeset.html"><code class="inline">Ecto.Changeset</code></a> struct to be validated.</p></li><li><p><code class="inline">opts</code> - options which configure the validation checks of the functions.</p></li></ul><h2 id="validate_display_name/2-options" class="section-heading">
-  <a href="#validate_display_name/2-options" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Options</span>
-</h2>
-<ul><li><p><code class="inline">:min_display_name_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the minimum grapheme length of display_name values. The default value is <code class="inline">6</code>.</p></li><li><p><code class="inline">:max_display_name_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the maximum grapheme length of display_name values. The default value is <code class="inline">64</code>.</p></li></ul>
+meets minimum and maximum length requirements.</p><h2 id="validate_display_name/2-parameters" class="section-heading"><a href="#validate_display_name/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">changeset</code> - an <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.Changeset.html"><code class="inline">Ecto.Changeset</code></a> struct to be validated.</p></li><li><p><code class="inline">opts</code> - options which configure the validation checks of the functions.</p></li></ul><h2 id="validate_display_name/2-options" class="section-heading"><a href="#validate_display_name/2-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><p><code class="inline">:min_display_name_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the minimum grapheme length of display_name values. The default value is <code class="inline">6</code>.</p></li><li><p><code class="inline">:max_display_name_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the maximum grapheme length of display_name values. The default value is <code class="inline">64</code>.</p></li></ul>
   </section>
 </section>
 <section class="detail" id="validate_external_name/2">
 
   <div class="detail-header">
-    <a href="#validate_external_name/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#validate_external_name/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">validate_external_name(changeset, opts)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">validate_external_name(changeset, opts)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> validate_external_name(<a href="https://hexdocs.pm/ecto/3.12.4/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/ecto/3.12.4/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
+          <pre translate="no"><span class="attribute">@spec</span> validate_external_name(<a href="https://hexdocs.pm/ecto/3.13.3/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
 
       </div>
 
 <p>Changeset validation ensuring that the <code class="inline">external_name</code> field is valid and
-meets minimum and maximum length requirements.</p><h2 id="validate_external_name/2-parameters" class="section-heading">
-  <a href="#validate_external_name/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">changeset</code> - an <a href="https://hexdocs.pm/ecto/3.12.4/Ecto.Changeset.html"><code class="inline">Ecto.Changeset</code></a> struct to be validated.</p></li><li><p><code class="inline">opts</code> - options which configure the validation checks of the functions.</p></li></ul><h2 id="validate_external_name/2-options" class="section-heading">
-  <a href="#validate_external_name/2-options" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Options</span>
-</h2>
-<ul><li><p><code class="inline">:min_external_name_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the minimum grapheme length of external_name values. The default value is <code class="inline">6</code>.</p></li><li><p><code class="inline">:max_external_name_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the maximum grapheme length of external_name values. The default value is <code class="inline">64</code>.</p></li></ul>
+meets minimum and maximum length requirements.</p><h2 id="validate_external_name/2-parameters" class="section-heading"><a href="#validate_external_name/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">changeset</code> - an <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.Changeset.html"><code class="inline">Ecto.Changeset</code></a> struct to be validated.</p></li><li><p><code class="inline">opts</code> - options which configure the validation checks of the functions.</p></li></ul><h2 id="validate_external_name/2-options" class="section-heading"><a href="#validate_external_name/2-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><p><code class="inline">:min_external_name_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the minimum grapheme length of external_name values. The default value is <code class="inline">2</code>.</p></li><li><p><code class="inline">:max_external_name_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the maximum grapheme length of external_name values. The default value is <code class="inline">64</code>.</p></li></ul>
   </section>
 </section>
 <section class="detail" id="validate_internal_name/2">
 
   <div class="detail-header">
-    <a href="#validate_internal_name/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#validate_internal_name/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">validate_internal_name(changeset, opts)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">validate_internal_name(changeset, opts)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> validate_internal_name(<a href="https://hexdocs.pm/ecto/3.12.4/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/ecto/3.12.4/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
+          <pre translate="no"><span class="attribute">@spec</span> validate_internal_name(<a href="https://hexdocs.pm/ecto/3.13.3/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
 
       </div>
 
 <p>Changeset validation ensuring that the <code class="inline">internal_name</code> field is valid and
-meets minimum and maximum length requirements.</p><h2 id="validate_internal_name/2-parameters" class="section-heading">
-  <a href="#validate_internal_name/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">changeset</code> - an <a href="https://hexdocs.pm/ecto/3.12.4/Ecto.Changeset.html"><code class="inline">Ecto.Changeset</code></a> struct to be validated.</p></li><li><p><code class="inline">opts</code> - options which configure the validation checks of the functions.</p></li></ul><h2 id="validate_internal_name/2-options" class="section-heading">
-  <a href="#validate_internal_name/2-options" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Options</span>
-</h2>
-<ul><li><p><code class="inline">:min_internal_name_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the minimum grapheme length of internal_name values. The default value is <code class="inline">6</code>.</p></li><li><p><code class="inline">:max_internal_name_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the maximum grapheme length of internal_name values. The default value is <code class="inline">64</code>.</p></li></ul>
+meets minimum and maximum length requirements.</p><h2 id="validate_internal_name/2-parameters" class="section-heading"><a href="#validate_internal_name/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">changeset</code> - an <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.Changeset.html"><code class="inline">Ecto.Changeset</code></a> struct to be validated.</p></li><li><p><code class="inline">opts</code> - options which configure the validation checks of the functions.</p></li></ul><h2 id="validate_internal_name/2-options" class="section-heading"><a href="#validate_internal_name/2-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><p><code class="inline">:min_internal_name_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the minimum grapheme length of internal_name values. The default value is <code class="inline">6</code>.</p></li><li><p><code class="inline">:max_internal_name_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the maximum grapheme length of internal_name values. The default value is <code class="inline">64</code>.</p></li></ul>
   </section>
 </section>
 <section class="detail" id="validate_syst_defined_changes/2">
 
   <div class="detail-header">
-    <a href="#validate_syst_defined_changes/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#validate_syst_defined_changes/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">validate_syst_defined_changes(changeset, prohibited_fields)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">validate_syst_defined_changes(changeset, prohibited_fields)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> validate_syst_defined_changes(<a href="https://hexdocs.pm/ecto/3.12.4/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>(), [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()]) ::
-  <a href="https://hexdocs.pm/ecto/3.12.4/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
+          <pre translate="no"><span class="attribute">@spec</span> validate_syst_defined_changes(<a href="https://hexdocs.pm/ecto/3.13.3/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>(), [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()]) ::
+  <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
 
       </div>
 
 <p>Changeset validation ensuring that, if the record is set as <code class="inline">syst_defined</code>,
-the prohibited fields are not changed.</p><h2 id="validate_syst_defined_changes/2-parameters" class="section-heading">
-  <a href="#validate_syst_defined_changes/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">changeset</code> - an <a href="https://hexdocs.pm/ecto/3.12.4/Ecto.Changeset.html"><code class="inline">Ecto.Changeset</code></a> struct to be validated.</p></li><li><p><code class="inline">prohibited_fields</code> - a list of field names for which changes are
+the prohibited fields are not changed.</p><h2 id="validate_syst_defined_changes/2-parameters" class="section-heading"><a href="#validate_syst_defined_changes/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">changeset</code> - an <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.Changeset.html"><code class="inline">Ecto.Changeset</code></a> struct to be validated.</p></li><li><p><code class="inline">prohibited_fields</code> - a list of field names for which changes are
 prohibited if the record is set as <code class="inline">syst_defined</code>.</p></li></ul>
   </section>
 </section>
 <section class="detail" id="validate_user_description/2">
 
   <div class="detail-header">
-    <a href="#validate_user_description/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#validate_user_description/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">validate_user_description(changeset, opts)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">validate_user_description(changeset, opts)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> validate_user_description(<a href="https://hexdocs.pm/ecto/3.12.4/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/ecto/3.12.4/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
+          <pre translate="no"><span class="attribute">@spec</span> validate_user_description(<a href="https://hexdocs.pm/ecto/3.13.3/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
 
       </div>
 
 <p>Changeset validation ensuring that the <code class="inline">user_description</code> field is set if
-required and allowed and meets minimum and maximum length requirements.</p><h2 id="validate_user_description/2-parameters" class="section-heading">
-  <a href="#validate_user_description/2-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><p><code class="inline">changeset</code> - an <a href="https://hexdocs.pm/ecto/3.12.4/Ecto.Changeset.html"><code class="inline">Ecto.Changeset</code></a> struct to be validated.</p></li><li><p><code class="inline">opts</code> - options which configure the validation checks of the functions.</p></li></ul><h2 id="validate_user_description/2-options" class="section-heading">
-  <a href="#validate_user_description/2-options" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Options</span>
-</h2>
-<ul><li><p><code class="inline">:min_user_description_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the minimum grapheme length of user_description values. The default value is <code class="inline">6</code>.</p></li><li><p><code class="inline">:max_user_description_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the maximum grapheme length of user_description values. The default value is <code class="inline">1000</code>.</p></li></ul>
+required and allowed and meets minimum and maximum length requirements.</p><h2 id="validate_user_description/2-parameters" class="section-heading"><a href="#validate_user_description/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">changeset</code> - an <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.Changeset.html"><code class="inline">Ecto.Changeset</code></a> struct to be validated.</p></li><li><p><code class="inline">opts</code> - options which configure the validation checks of the functions.</p></li></ul><h2 id="validate_user_description/2-options" class="section-heading"><a href="#validate_user_description/2-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Options</span></h2><ul><li><p><code class="inline">:min_user_description_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the minimum grapheme length of user_description values. The default value is <code class="inline">6</code>.</p></li><li><p><code class="inline">:max_user_description_length</code> (<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pos_integer/0</code></a>) - Sets the maximum grapheme length of user_description values. The default value is <code class="inline">1000</code>.</p></li></ul>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="ets-operations" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#ets-operations">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Ets Operations</span>
+    </h1>
+
+    <div class="ets-operations-list">
+<section class="detail" id="ets_delete/2">
+
+  <div class="detail-header">
+    <a href="#ets_delete/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">ets_delete(table, key)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> ets_delete(<a href="https://www.erlang.org/doc/apps/stdlib/ets.html#t:table/0">:ets.table</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()) :: :ok | {:error, <a href="Mserror.DataUtilsError.html#t:t/0">Mserror.DataUtilsError.t</a>()}</pre>
+
+      </div>
+
+<p>Deletes an entry from an ETS table.</p><p>Wraps the ETS <a href="https://www.erlang.org/doc/apps/stdlib/ets.html#delete/2"><code class="inline">:ets.delete/2</code></a> function.</p><h2 id="ets_delete/2-parameters" class="section-heading"><a href="#ets_delete/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">table</code> - the ETS table to delete from</li><li><code class="inline">key</code> - the key of the entry to delete</li></ul><h2 id="ets_delete/2-returns" class="section-heading"><a href="#ets_delete/2-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><ul><li><code class="inline">:ok</code> - if the deletion was successful</li><li><code class="inline">{:error, Mserror.DataUtilsError.t()}</code> - if there was an error during deletion</li></ul>
+  </section>
+</section>
+<section class="detail" id="ets_insert/2">
+
+  <div class="detail-header">
+    <a href="#ets_insert/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">ets_insert(table, data)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> ets_insert(<a href="https://www.erlang.org/doc/apps/stdlib/ets.html#t:table/0">:ets.table</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()) :: :ok | {:error, <a href="Mserror.DataUtilsError.html#t:t/0">Mserror.DataUtilsError.t</a>()}</pre>
+
+      </div>
+
+<p>Inserts data into an ETS table.</p><p>In this we wrap the ETS <a href="https://www.erlang.org/doc/apps/stdlib/ets.html#insert/2"><code class="inline">:ets.insert/2</code></a> function in a function that returns
+an Mserror.DataUtilsError if there is an error.</p><h2 id="ets_insert/2-parameters" class="section-heading"><a href="#ets_insert/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><p><code class="inline">table</code> - the ETS table to insert the data into.</p></li><li><p><code class="inline">data</code> - the data to insert into the ETS table.</p></li></ul><h2 id="ets_insert/2-returns" class="section-heading"><a href="#ets_insert/2-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><ul><li><p><code class="inline">:ok</code> - if the data was successfully inserted into the ETS table.</p></li><li><p><code class="inline">{:error, Mserror.DataUtilsError.t()}</code> - if there was an error inserting
+the data into the ETS table.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="ets_lookup_element/3">
+
+  <div class="detail-header">
+    <a href="#ets_lookup_element/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">ets_lookup_element(table, key, element_index)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> ets_lookup_element(<a href="https://www.erlang.org/doc/apps/stdlib/ets.html#t:table/0">:ets.table</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>()) ::
+  {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()} | {:error, <a href="Mserror.DataUtilsError.html#t:t/0">Mserror.DataUtilsError.t</a>()}</pre>
+
+      </div>
+
+<p>Looks up an element in an ETS table by key and position.</p><p>Wraps the ETS <a href="https://www.erlang.org/doc/apps/stdlib/ets.html#lookup_element/3"><code class="inline">:ets.lookup_element/3</code></a> function, returning a result tuple.</p><h2 id="ets_lookup_element/3-parameters" class="section-heading"><a href="#ets_lookup_element/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">table</code> - the ETS table to look up the element in</li><li><code class="inline">key</code> - the key to look up</li><li><code class="inline">element_index</code> - the position of the element to return</li></ul><h2 id="ets_lookup_element/3-returns" class="section-heading"><a href="#ets_lookup_element/3-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><ul><li><code class="inline">{:ok, term()}</code> - the element was found at the specified position</li><li><code class="inline">{:error, Mserror.DataUtilsError.t()}</code> - if there was an error during lookup</li></ul>
+  </section>
+</section>
+<section class="detail" id="ets_update_element/3">
+
+  <div class="detail-header">
+    <a href="#ets_update_element/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">ets_update_element(table, key, updated_data)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> ets_update_element(<a href="https://www.erlang.org/doc/apps/stdlib/ets.html#t:table/0">:ets.table</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()) ::
+  :ok | {:error, <a href="Mserror.DataUtilsError.html#t:t/0">Mserror.DataUtilsError.t</a>()}</pre>
+
+      </div>
+
+<p>Updates an element in an ETS table.</p><p>Wraps the ETS <a href="https://www.erlang.org/doc/apps/stdlib/ets.html#update_element/3"><code class="inline">:ets.update_element/3</code></a> function.</p><h2 id="ets_update_element/3-parameters" class="section-heading"><a href="#ets_update_element/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">table</code> - the ETS table to update</li><li><code class="inline">key</code> - the key of the element to update</li><li><code class="inline">updated_data</code> - the new data to set</li></ul><h2 id="ets_update_element/3-returns" class="section-heading"><a href="#ets_update_element/3-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><ul><li><code class="inline">:ok</code> - if the update was successful</li><li><code class="inline">{:error, Mserror.DataUtilsError.t()}</code> - if there was an error during update</li></ul>
   </section>
 </section>
 
@@ -412,19 +490,21 @@ required and allowed and meets minimum and maximum length requirements.</p><h2 i
       </a>
       <span class="text">Functions</span>
     </h1>
+
     <div class="functions-list">
 <section class="detail" id="common_validator_options/1">
 
   <div class="detail-header">
-    <a href="#common_validator_options/1" class="detail-link" data-no-tooltip title="Link to this macro">
+    <a href="#common_validator_options/1" class="detail-link" data-no-tooltip="" aria-label="Link to this macro">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this macro</span>
     </a>
-    <h1 class="signature" translate="no">common_validator_options(selected_options)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">common_validator_options(selected_options)</h1>
+
+        <span class="note">(macro)</span>
 
 
-      <span class="note">(macro)</span>
-
+    </div>
   </div>
 
   <section class="docstring">
@@ -441,20 +521,8 @@ required and allowed and meets minimum and maximum length requirements.</p><h2 i
 <p>Returns a NimbleOptions struct with the requested common validator options for
 use with the Changeset validation functions from the Msutils.Data module.</p><p>The common validator options establish cross-Component standards for data
 limits such as minimum and maximum lengths commonly used data fields.  In many
-ways, these options act as constants for common Changeset validations.</p><h2 id="common_validator_options/1-parameters" class="section-heading">
-  <a href="#common_validator_options/1-parameters" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Parameters</span>
-</h2>
-<ul><li><code class="inline">selected_options</code> - selects the desired options from the common validator
-option definitions.  This is in the form of a list of the desired options.</li></ul><h2 id="common_validator_options/1-select-options" class="section-heading">
-  <a href="#common_validator_options/1-select-options" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Select Options</span>
-</h2>
-<p>  The following are accepted for selected options:</p><ul><li><p><code class="inline">:internal_name</code></p></li><li><p><code class="inline">:display_name</code></p></li><li><p><code class="inline">:external_name</code></p></li><li><p><code class="inline">:user_description</code></p></li></ul>
+ways, these options act as constants for common Changeset validations.</p><h2 id="common_validator_options/1-parameters" class="section-heading"><a href="#common_validator_options/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">selected_options</code> - selects the desired options from the common validator
+option definitions.  This is in the form of a list of the desired options.</li></ul><h2 id="common_validator_options/1-select-options" class="section-heading"><a href="#common_validator_options/1-select-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Select Options</span></h2><p>  The following are accepted for selected options:</p><ul><li><p><code class="inline">:internal_name</code></p></li><li><p><code class="inline">:display_name</code></p></li><li><p><code class="inline">:external_name</code></p></li><li><p><code class="inline">:user_description</code></p></li></ul>
   </section>
 </section>
 
@@ -478,7 +546,7 @@ option definitions.  This is in the form of a list of the desired options.</li><
 
       <p class="built-using">
         Built using
-        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.34.2) for the
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
 
           <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

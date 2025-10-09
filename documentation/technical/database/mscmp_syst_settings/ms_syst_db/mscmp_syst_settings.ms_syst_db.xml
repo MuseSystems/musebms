@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_settings" schema="ms_syst_db" type="PostgreSQL - 16.4 (Ubuntu 16.4-1.pgdg22.04+1)">
+<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_settings" schema="ms_syst_db" type="PostgreSQL - 18.0 (Ubuntu 18.0-1.pgdg24.04+3)">
    <tables>
       <table name="migrations" remarks="Records which database updates have been applied to the system.&#10;&#10;**General Usage**&#10;&#10;Available database migrations are stored in a file system directory where&#10;individual files are named starting with the version number taking a fixed&#10;number of numeric digits.  In the simple case, the migration process will get a&#10;sorted listing of available migrations from the migrations file system directory&#10;and compare the version of the file with the minimum version number not already&#10;checked against the maximum version applied to the database according to this&#10;table.  If the file version is greater, the migration is applied to the&#10;database, otherwise the file is skipped and the version checking process repeats&#10;until there are no more migration files to evaluate.&#10;&#10;Finally, during the migration process, the ms_syst_db.migrations&#10;record is created once the corresponding migration file has been successfully&#10;applied to the database.  Both the migration file and the&#10;ms_syst_db.migrations record should be processed in the same&#10;database transaction." schema="ms_syst_db" type="TABLE">
-         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="uuidv7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="release" nullable="false" remarks="The release number to which the migration applies.  The release number is any&#10;value in the range of 1 to 1295 (01 - ZZ in base36 notation).  Release 00 is a&#10;special value used by the application and should not be used for any other&#10;purpose." size="5" type="int2" typeCode="5"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="version" nullable="false" remarks="The version of the release to which the migration applies.  Version numbers are&#10;subordinate to releases.  The version number is any value in the range of 1 to&#10;1295 (01 - ZZ in base36 notation).  Version 00 is a special value used by the&#10;application and should not be used for any other purpose." size="5" type="int2" typeCode="5"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="update" nullable="false" remarks="The patch, or update, to the release version.  Update numbers are subordinate to&#10;version numbers.  The update number may be any value in the range of 0 to 46655&#10;(000 - ZZZ in base36 notation)." size="10" type="int4" typeCode="4"/>
@@ -22,11 +22,11 @@
          <index name="migrations_migration_version_udx" unique="true">
             <column ascending="true" name="migration_version"/>
          </index>
-         <checkConstraint constraint="(((release)::integer &lt;@ '[1,1296)'::int4range))" name="migrations_release_range_chk"/>
-         <checkConstraint constraint="((sponsor_modification &lt;@ '[0,46656)'::int4range))" name="migrations_sponsor_modification_range_chk"/>
-         <checkConstraint constraint="((sponsor &lt;@ '[0,2176782336)'::int8range))" name="migrations_sponsor_range_chk"/>
-         <checkConstraint constraint="((update &lt;@ '[0,46656)'::int4range))" name="migrations_update_range_chk"/>
-         <checkConstraint constraint="(((version)::integer &lt;@ '[1,1296)'::int4range))" name="migrations_version_range_chk"/>
+         <checkConstraint constraint="((release)::integer &lt;@ '[1,1296)'::int4range)" name="migrations_release_range_chk"/>
+         <checkConstraint constraint="(sponsor_modification &lt;@ '[0,46656)'::int4range)" name="migrations_sponsor_modification_range_chk"/>
+         <checkConstraint constraint="(sponsor &lt;@ '[0,2176782336)'::int8range)" name="migrations_sponsor_range_chk"/>
+         <checkConstraint constraint="(update &lt;@ '[0,46656)'::int4range)" name="migrations_update_range_chk"/>
+         <checkConstraint constraint="((version)::integer &lt;@ '[1,1296)'::int4range)" name="migrations_version_range_chk"/>
       </table>
    </tables>
    <routines>
@@ -140,9 +140,9 @@ defined:
 
         BEGIN
             DECLARE
-                var_jsonb_new        jsonb;
-                var_jsonb_old        jsonb;
-                var_jsonb_final      jsonb;
+                v_jsonb_new        jsonb;
+                v_jsonb_old        jsonb;
+                v_jsonb_final      jsonb;
 
                 bypass_change_fields boolean;
 
@@ -162,10 +162,10 @@ defined:
                 -- Let's turn the new and old records into hstores so we can arbitrarily
                 -- get their columns.  We also need to make the final hstore look a lot
                 -- like NEW.
-                var_jsonb_new := to_jsonb( new );
-                var_jsonb_old := to_jsonb( old );
+                v_jsonb_new := to_jsonb( new );
+                v_jsonb_old := to_jsonb( old );
 
-                var_jsonb_final := var_jsonb_new - ARRAY [ 'diag_timestamp_created'
+                v_jsonb_final := v_jsonb_new - ARRAY [ 'diag_timestamp_created'
                                                         ,'diag_role_created'
                                                         ,'diag_timestamp_modified'
                                                         ,'diag_wallclock_modified'
@@ -176,51 +176,51 @@ defined:
                 -- Now we can get some work done.
                 CASE tg_op
                     WHEN 'INSERT' THEN
-                        var_jsonb_final :=
-                            var_jsonb_final ||
+                        v_jsonb_final :=
+                            v_jsonb_final ||
                             jsonb_build_object( 'diag_timestamp_created', now( ) );
-                        var_jsonb_final :=
-                            var_jsonb_final ||
+                        v_jsonb_final :=
+                            v_jsonb_final ||
                             jsonb_build_object( 'diag_role_created', session_user );
-                        var_jsonb_final :=
-                            var_jsonb_final ||
+                        v_jsonb_final :=
+                            v_jsonb_final ||
                             jsonb_build_object( 'diag_timestamp_modified', now( ) );
-                        var_jsonb_final :=
-                            var_jsonb_final ||
+                        v_jsonb_final :=
+                            v_jsonb_final ||
                             jsonb_build_object( 'diag_wallclock_modified',
                                                 clock_timestamp( ) );
-                        var_jsonb_final :=
-                            var_jsonb_final ||
+                        v_jsonb_final :=
+                            v_jsonb_final ||
                             jsonb_build_object( 'diag_role_modified', session_user );
-                        var_jsonb_final :=
-                            var_jsonb_final ||
+                        v_jsonb_final :=
+                            v_jsonb_final ||
                             jsonb_build_object( 'diag_row_version', 1 );
-                        var_jsonb_final :=
-                            var_jsonb_final ||
+                        v_jsonb_final :=
+                            v_jsonb_final ||
                             jsonb_build_object( 'diag_update_count', 0 );
 
                     WHEN 'UPDATE' THEN
                         IF NOT bypass_change_fields THEN
-                            var_jsonb_final :=
-                                var_jsonb_final ||
+                            v_jsonb_final :=
+                                v_jsonb_final ||
                                 jsonb_build_object( 'diag_timestamp_modified', now( ) );
-                            var_jsonb_final :=
-                                var_jsonb_final ||
+                            v_jsonb_final :=
+                                v_jsonb_final ||
                                 jsonb_build_object( 'diag_wallclock_modified',
                                                     clock_timestamp( ) );
-                            var_jsonb_final :=
-                                var_jsonb_final ||
+                            v_jsonb_final :=
+                                v_jsonb_final ||
                                 jsonb_build_object( 'diag_role_modified', session_user );
-                            var_jsonb_final :=
-                                var_jsonb_final ||
+                            v_jsonb_final :=
+                                v_jsonb_final ||
                                 jsonb_build_object( 'diag_row_version',
-                                                    ( var_jsonb_old -> 'diag_row_version' )::bigint  + 1 );
+                                                    ( v_jsonb_old -> 'diag_row_version' )::bigint  + 1 );
                         END IF;
 
-                        var_jsonb_final :=
-                            var_jsonb_final ||
+                        v_jsonb_final :=
+                            v_jsonb_final ||
                             jsonb_build_object( 'diag_update_count',
-                                                ( var_jsonb_old -> 'diag_update_count' )::bigint  + 1 );
+                                                ( v_jsonb_old -> 'diag_update_count' )::bigint  + 1 );
 
                 ELSE
                     RAISE EXCEPTION
@@ -247,7 +247,7 @@ defined:
                 END CASE;
 
                 -- We've done our jsonb magic, lets actually get a record to return...
-                new := jsonb_populate_record( new, var_jsonb_final );
+                new := jsonb_populate_record( new, v_jsonb_final );
 
                 RETURN new;
 

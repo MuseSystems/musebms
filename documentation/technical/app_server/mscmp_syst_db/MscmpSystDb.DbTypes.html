@@ -4,35 +4,22 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.34.2">
+    <meta name="generator" content="ExDoc v0.38.4">
     <meta name="project" content="mscmp_syst_db v0.1.0">
 
 
     <title>MscmpSystDb.DbTypes — mscmp_syst_db v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
 
-    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
-    <script src="dist/sidebar_items-F9E8FB46.js"></script>
-    <script src="docs_config.js"></script>
-    <script async src="dist/html-YIPIRHGU.js"></script>
+    <script defer src="dist/sidebar_items-C325064A.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
 
   </head>
-  <body data-type="modules" class="page-protocol">
-    <script>
-
-      try {
-        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
-
-        if (settings.theme === 'dark' ||
-           ((settings.theme === 'system' || settings.theme == null) &&
-             window.matchMedia('(prefers-color-scheme: dark)').matches)
-           ) {
-          document.body.classList.add('dark')
-        }
-      } catch (error) { }
-    </script>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
 
 <div class="body-wrapper">
 
@@ -54,47 +41,13 @@ mscmp_syst_db
         </div>
       </div>
     </div>
-    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
-      <li>
-        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
-Pages
-        </button>
-      </li>
-
-        <li>
-          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
-            Modules
-          </button>
-        </li>
-
-
-        <li>
-          <button id="tasks-list-tab-button" role="tab" data-type="tasks" aria-controls="tasks-tab-panel" aria-selected="false" tabindex="-1">
-            <span translate="no">Mix</span> Tasks
-          </button>
-        </li>
-
-    </ul>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
   </div>
-
-  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
-    <ul id="extras-full-list" class="full-list"></ul>
-  </div>
-
-    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
-      <ul id="modules-full-list" class="full-list"></ul>
-    </div>
-
-
-    <div id="tasks-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="tasks-list-tab-button" hidden>
-      <ul id="tasks-full-list" class="full-list"></ul>
-    </div>
-
 </nav>
 
-<main class="content">
-  <output role="status" id="toast"></output>
+<output role="status" id="toast"></output>
 
+<main class="content page-protocol" id="main" data-type="modules">
   <div id="content" class="content-inner">
     <div class="top-search">
       <div class="search-settings">
@@ -103,8 +56,8 @@ Pages
             <span class="sr-only">Search documentation of mscmp_syst_db</span>
             <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
           </label>
-          <button type="submit" class="search-button" aria-label="Submit Search">
-            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
           </button>
           <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
             <i class="ri-close-line ri-lg" title="Cancel search"></i>
@@ -120,12 +73,14 @@ Pages
     </div>
 
 <div id="top-content">
-  <h1>
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">MscmpSystDb.DbTypes</span> <small>protocol</small>
+      <small class="app-vsn" translate="no">(mscmp_syst_db v0.1.0)</small>
 
-    <span translate="no">MscmpSystDb.DbTypes</span> <small>protocol</small>
-    <small class="app-vsn" translate="no">(mscmp_syst_db v0.1.0)</small>
+    </h1>
 
-  </h1>
+  </div>
 
 
     <section id="moduledoc">
@@ -149,7 +104,7 @@ DbTypes implemented in MscmpSystDb.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:t/0" data-no-tooltip translate="no">t()</a>
+        <a href="#t:t/0" data-no-tooltip="" translate="no">t()</a>
 
       </div>
 
@@ -165,7 +120,7 @@ DbTypes implemented in MscmpSystDb.</p>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#compare/2" data-no-tooltip translate="no">compare(left, right)</a>
+        <a href="#compare/2" data-no-tooltip="" translate="no">compare(left, right)</a>
 
       </div>
 
@@ -176,7 +131,7 @@ relationship.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#test_compare/3" data-no-tooltip translate="no">test_compare(left, right, operator)</a>
+        <a href="#test_compare/3" data-no-tooltip="" translate="no">test_compare(left, right, operator)</a>
 
       </div>
 
@@ -197,17 +152,19 @@ supplied by the user returning <code class="inline">true</code> or <code class="
       </a>
       <span class="text">Types</span>
     </h1>
+
     <div class="types-list">
 <section class="detail" id="t:t/0">
 
   <div class="detail-header">
-    <a href="#t:t/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:t/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">t()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">t()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -232,17 +189,19 @@ supplied by the user returning <code class="inline">true</code> or <code class="
       </a>
       <span class="text">Functions</span>
     </h1>
+
     <div class="functions-list">
 <section class="detail" id="compare/2">
 
   <div class="detail-header">
-    <a href="#compare/2" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#compare/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">compare(left, right)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">compare(left, right)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -258,46 +217,47 @@ relationship.</p><h1>Parameters</h1><ul><li><p><code class="inline">left</code> 
 be the left side when used with an infix operator such as <code class="inline">&gt;</code>.</p></li><li><p><code class="inline">right</code> - a range type or base type for use in the comparison which would
 be the right side when used with an infix operator such as <code class="inline">&gt;</code>.</p></li></ul><h1>Examples</h1><p>Comparing two ranges where the left and right overlap, but the left side is
 less than the right (returns &quot;Less Than Overlapping&quot;).</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="1653072547-1">%</span><span class="nc" data-group-id="1653072547-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="1653072547-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8453099828-1">%</span><span class="nc" data-group-id="8453099828-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="8453099828-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="1653072547-1">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8453099828-1">}</span><span class="w">
 </span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="1653072547-2">%</span><span class="nc" data-group-id="1653072547-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="1653072547-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8453099828-2">%</span><span class="nc" data-group-id="8453099828-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="8453099828-2">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="1653072547-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="1653072547-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="1653072547-3">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8453099828-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="8453099828-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="8453099828-3">)</span><span class="w">
 </span><span class="ss">:lto</span></code></pre><p>Comparing a range and a base type value where the range contains the base
 type value (returns &quot;Left Contains Right&quot;).</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6980434378-1">%</span><span class="nc" data-group-id="6980434378-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="6980434378-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7937222283-1">%</span><span class="nc" data-group-id="7937222283-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="7937222283-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6980434378-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="6980434378-2">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p" data-group-id="6980434378-2">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7937222283-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="7937222283-2">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p" data-group-id="7937222283-2">)</span><span class="w">
 </span><span class="ss">:lcr</span></code></pre><p>Comparing interval base types where the left is less than the right (returns
 &quot;Less Than&quot;)</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_interval</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7186120038-1">%</span><span class="nc" data-group-id="7186120038-1">MscmpSystDb.DbTypes.Interval</span><span class="p" data-group-id="7186120038-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4532431462-1">%</span><span class="nc" data-group-id="4532431462-1">MscmpSystDb.DbTypes.Interval</span><span class="p" data-group-id="4532431462-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">days</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7186120038-1">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4532431462-1">}</span><span class="w">
 </span><span class="gp unselectable">iex&gt; </span><span class="n">right_interval</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7186120038-2">%</span><span class="nc" data-group-id="7186120038-2">MscmpSystDb.DbTypes.Interval</span><span class="p" data-group-id="7186120038-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4532431462-2">%</span><span class="nc" data-group-id="4532431462-2">MscmpSystDb.DbTypes.Interval</span><span class="p" data-group-id="4532431462-2">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">months</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7186120038-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="7186120038-3">(</span><span class="n">left_interval</span><span class="p">,</span><span class="w"> </span><span class="n">right_interval</span><span class="p" data-group-id="7186120038-3">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4532431462-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="4532431462-3">(</span><span class="n">left_interval</span><span class="p">,</span><span class="w"> </span><span class="n">right_interval</span><span class="p" data-group-id="4532431462-3">)</span><span class="w">
 </span><span class="ss">:lt</span></code></pre>
   </section>
 </section>
 <section class="detail" id="test_compare/3">
 
   <div class="detail-header">
-    <a href="#test_compare/3" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#test_compare/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">test_compare(left, right, operator)</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">test_compare(left, right, operator)</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -315,34 +275,34 @@ be the left side when used with an infix operator such as <code class="inline">&
 be the right side when used with an infix operator such as <code class="inline">&gt;</code>.</p></li><li><p><code class="inline">operator</code> - the desired operator to test.</p></li></ul><h1>Examples</h1><p>Comparing two ranges where the left and right overlap, but the left side is
 less than the right.  In this case we match the desired &quot;Less Than
 Overlapping&quot; operator resulting in a return value of <code class="inline">true</code>.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7960533197-1">%</span><span class="nc" data-group-id="7960533197-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="7960533197-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4437077459-1">%</span><span class="nc" data-group-id="4437077459-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="4437077459-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7960533197-1">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4437077459-1">}</span><span class="w">
 </span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7960533197-2">%</span><span class="nc" data-group-id="7960533197-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="7960533197-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4437077459-2">%</span><span class="nc" data-group-id="4437077459-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="4437077459-2">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7960533197-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">test_compare</span><span class="p" data-group-id="7960533197-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p">,</span><span class="w"> </span><span class="ss">:lto</span><span class="p" data-group-id="7960533197-3">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4437077459-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">test_compare</span><span class="p" data-group-id="4437077459-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p">,</span><span class="w"> </span><span class="ss">:lto</span><span class="p" data-group-id="4437077459-3">)</span><span class="w">
 </span><span class="no">true</span></code></pre><p>Comparing a range and a base type value where the range contains the base
 type value, but the desired operator is &quot;Greater Than&quot; which does not match
 resulting in a return value of <code class="inline">false</code>.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="9508007908-1">%</span><span class="nc" data-group-id="9508007908-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="9508007908-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="5623289052-1">%</span><span class="nc" data-group-id="5623289052-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="5623289052-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="9508007908-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">test_compare</span><span class="p" data-group-id="9508007908-2">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="ss">:gt</span><span class="p" data-group-id="9508007908-2">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="5623289052-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">test_compare</span><span class="p" data-group-id="5623289052-2">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="ss">:gt</span><span class="p" data-group-id="5623289052-2">)</span><span class="w">
 </span><span class="no">false</span></code></pre><p>Comparing interval base types where the intervals are equal and testing for
 equality resulting a <code class="inline">true</code> result.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_interval</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2681200982-1">%</span><span class="nc" data-group-id="2681200982-1">MscmpSystDb.DbTypes.Interval</span><span class="p" data-group-id="2681200982-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="0012619040-1">%</span><span class="nc" data-group-id="0012619040-1">MscmpSystDb.DbTypes.Interval</span><span class="p" data-group-id="0012619040-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">secs</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2681200982-1">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="0012619040-1">}</span><span class="w">
 </span><span class="gp unselectable">iex&gt; </span><span class="n">right_interval</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2681200982-2">%</span><span class="nc" data-group-id="2681200982-2">MscmpSystDb.DbTypes.Interval</span><span class="p" data-group-id="2681200982-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="0012619040-2">%</span><span class="nc" data-group-id="0012619040-2">MscmpSystDb.DbTypes.Interval</span><span class="p" data-group-id="0012619040-2">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">secs</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2681200982-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">test_compare</span><span class="p" data-group-id="2681200982-3">(</span><span class="n">left_interval</span><span class="p">,</span><span class="w"> </span><span class="n">right_interval</span><span class="p">,</span><span class="w"> </span><span class="ss">:eq</span><span class="p" data-group-id="2681200982-3">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="0012619040-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">test_compare</span><span class="p" data-group-id="0012619040-3">(</span><span class="n">left_interval</span><span class="p">,</span><span class="w"> </span><span class="n">right_interval</span><span class="p">,</span><span class="w"> </span><span class="ss">:eq</span><span class="p" data-group-id="0012619040-3">)</span><span class="w">
 </span><span class="no">true</span></code></pre>
   </section>
 </section>
@@ -367,7 +327,7 @@ equality resulting a <code class="inline">true</code> result.</p><pre><code clas
 
       <p class="built-using">
         Built using
-        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.34.2) for the
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
 
           <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

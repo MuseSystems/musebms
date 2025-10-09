@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.4">
+    <meta name="project" content="mscmp_syst_service v0.1.0">
+
+
+    <title>MscmpSystService — mscmp_syst_service v0.1.0</title>
+
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
+
+    <script defer src="dist/sidebar_items-5A84BD98.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="MscmpSystService.html" class="sidebar-projectName" translate="no">
+mscmp_syst_service
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-behaviour" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of mscmp_syst_service</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">MscmpSystService</span> <small>behaviour</small>
+      <small class="app-vsn" translate="no">(mscmp_syst_service v0.1.0)</small>
+
+    </h1>
+
+  </div>
+
+
+    <section id="moduledoc">
+<p>Establishes a Behaviour and common system or instance service patterns for the
+application.</p><p>A number of persistent services are needed to successfully run the Muse Systems
+Business Management system.  Many of these services may also need to be started
+and run on a per-Instance basis and will thus have many of the same service
+selection requirements between different services.  This module establishes the
+common patterns that individual services should implement.</p><!-- MDESC !--><p>For the most part, this Component establishes a Behaviour that other service
+defining Components should implement.  This ensures that any such services can
+be more readily comprehended as they will implement common service patterns
+across the application.</p><p>To implement this behaviour into a new Service, simply add the
+<code class="inline">use MscmpSystService</code> directive to the top of the Public API module
+implementing the interface.</p><section role="note" class="admonition info"><h4 class="admonition-title info"><code class="inline">use MscmpSystService</code></h4><p>When <code class="inline">use MscmpSystService</code> is called with the required options, it:</p><ol><li><p>Adds the <a href="MscmpSystService.html"><code class="inline">MscmpSystService</code></a> as a module behaviour.</p></li><li><p>Adds the <code class="inline">@service_option_defs</code> module attribute to the module.
+This attribute provides the NimbleOptions schema for standard GenServer
+start options which are passed through to backing GenServer, assuming the
+Service is backed by a GenServer.  Whether any given Service makes use of
+these options is entirely up to the Service implementation.</p></li><li><p>Adds the <code class="inline">@service_option_selections</code> module attribute to the module.
+This attribute provides a pre-assembled list of the NimbleOptions
+selections for the standard GenServer starting options listed above.</p></li></ol></section>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-callbacks summary">
+  <h2>
+    <a href="#callbacks">Callbacks</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:child_spec/1" data-no-tooltip="" translate="no">child_spec(opts)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the child specification of the service.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_runtime_config/0" data-no-tooltip="" translate="no">get_runtime_config()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Retrieves the runtime configuration of a previously started Service.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:get_service/0" data-no-tooltip="" translate="no">get_service()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Retrieves the name of the currently set Service instance.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:put_service/1" data-no-tooltip="" translate="no">put_service(service_name)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Establishes a specific running instance of the Service as the current service
+for the running process which invoked this function.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:start_link/1" data-no-tooltip="" translate="no">start_link(opts)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Starts the Service instance.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="callbacks" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#callbacks">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Callbacks</span>
+    </h1>
+
+    <div class="callbacks-list">
+<section class="detail" id="c:child_spec/1">
+
+  <div class="detail-header">
+    <a href="#c:child_spec/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">child_spec(opts)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> child_spec(opts :: <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/elixir/Supervisor.html#t:child_spec/0">Supervisor.child_spec</a>()</pre>
+
+      </div>
+
+<p>Returns the child specification of the service.</p><h2 id="c:child_spec/1-parameters" class="section-heading"><a href="#c:child_spec/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">opts</code> - A service may define one or more options which govern the startup
+behavior of the service.  Options are specific to Service and may be required
+or optional depending on the needs of the Service.</li></ul>
+  </section>
+</section>
+<section class="detail" id="c:get_runtime_config/0">
+
+  <div class="detail-header">
+    <a href="#c:get_runtime_config/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_runtime_config()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_runtime_config() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+<p>Retrieves the runtime configuration of a previously started Service.</p><p>Some services need a mechanism to return features such as <code class="inline">:ets</code> table names
+which are set at runtime.  This callback provides the mechanism by which such
+runtime configuration can be returned.</p>
+  </section>
+</section>
+<section class="detail" id="c:get_service/0">
+
+  <div class="detail-header">
+    <a href="#c:get_service/0" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_service()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_service() :: <a href="MscmpSystService.Types.html#t:service_name/0">MscmpSystService.Types.service_name</a>()</pre>
+
+      </div>
+
+<p>Retrieves the name of the currently set Service instance.</p><p>See <code class="inline">put_service/1</code> for more information about setting an active Service name.</p><h2 id="c:get_service/0-returns" class="section-heading"><a href="#c:get_service/0-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><p>Returns the name of the currently set Service name or <code class="inline">nil</code> if no Service name
+has been set.</p>
+  </section>
+</section>
+<section class="detail" id="c:put_service/1">
+
+  <div class="detail-header">
+    <a href="#c:put_service/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">put_service(service_name)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> put_service(<a href="MscmpSystService.Types.html#t:service_name/0">MscmpSystService.Types.service_name</a>()) ::
+  <a href="MscmpSystService.Types.html#t:service_name/0">MscmpSystService.Types.service_name</a>()</pre>
+
+      </div>
+
+<p>Establishes a specific running instance of the Service as the current service
+for the running process which invoked this function.</p><h2 id="c:put_service/1-parameters" class="section-heading"><a href="#c:put_service/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">service_name</code> - the name under which the Service is started and by which
+it may be referenced.  This is any name that may be used to reference a
+GenServer process.  Additionally, this value may be set <code class="inline">nil</code> to clear the
+currently set Service name.</li></ul><h2 id="c:put_service/1-returns" class="section-heading"><a href="#c:put_service/1-returns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Returns</span></h2><p>Returns the name of the previously set Service or <code class="inline">nil</code> if no Service name had
+been previously set.</p>
+  </section>
+</section>
+<section class="detail" id="c:start_link/1">
+
+  <div class="detail-header">
+    <a href="#c:start_link/1" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">start_link(opts)</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> start_link(opts :: <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
+  {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | :ignore | {:error, <a href="https://hexdocs.pm/elixir/Exception.html#t:t/0">Exception.t</a>()}</pre>
+
+      </div>
+
+<p>Starts the Service instance.</p><p>This function should start the underlying GenServer process and return the
+appropriate result tuple.</p><section role="note" class="admonition info"><h4 class="admonition-title info"><code class="inline">MscmpSystError</code> Exceptions</h4><p>Typically exceptions passed from an implementing service will be <a href="https://hexdocs.pm/elixir/Exception.html"><code class="inline">Exception</code></a>
+objects which are specifically compatible with <code class="inline">MscmpSystError</code> exceptions.
+Such exceptions are defined by the service implementing module as <code class="inline">Mserror</code>
+Exception specializations.</p></section><h2 id="c:start_link/1-parameters" class="section-heading"><a href="#c:start_link/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Parameters</span></h2><ul><li><code class="inline">opts</code> - Services may define either required or optional parameters which
+govern its startup process.</li></ul>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="mscmp_syst_service.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
+
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

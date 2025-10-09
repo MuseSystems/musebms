@@ -4,35 +4,22 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.34.2">
+    <meta name="generator" content="ExDoc v0.38.4">
     <meta name="project" content="mscmp_syst_limiter v0.1.0">
 
 
     <title>MscmpSystLimiter.Types — mscmp_syst_limiter v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
 
-    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
-    <script src="dist/sidebar_items-3094E9A1.js"></script>
-    <script src="docs_config.js"></script>
-    <script async src="dist/html-YIPIRHGU.js"></script>
+    <script defer src="dist/sidebar_items-333D80E0.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
 
   </head>
-  <body data-type="modules" class="page-module">
-    <script>
-
-      try {
-        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
-
-        if (settings.theme === 'dark' ||
-           ((settings.theme === 'system' || settings.theme == null) &&
-             window.matchMedia('(prefers-color-scheme: dark)').matches)
-           ) {
-          document.body.classList.add('dark')
-        }
-      } catch (error) { }
-    </script>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
 
 <div class="body-wrapper">
 
@@ -54,37 +41,13 @@ mscmp_syst_limiter
         </div>
       </div>
     </div>
-    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
-      <li>
-        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
-Pages
-        </button>
-      </li>
-
-        <li>
-          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
-            Modules
-          </button>
-        </li>
-
-
-    </ul>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
   </div>
-
-  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
-    <ul id="extras-full-list" class="full-list"></ul>
-  </div>
-
-    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
-      <ul id="modules-full-list" class="full-list"></ul>
-    </div>
-
-
 </nav>
 
-<main class="content">
-  <output role="status" id="toast"></output>
+<output role="status" id="toast"></output>
 
+<main class="content page-module" id="main" data-type="modules">
   <div id="content" class="content-inner">
     <div class="top-search">
       <div class="search-settings">
@@ -93,8 +56,8 @@ Pages
             <span class="sr-only">Search documentation of mscmp_syst_limiter</span>
             <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
           </label>
-          <button type="submit" class="search-button" aria-label="Submit Search">
-            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
           </button>
           <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
             <i class="ri-close-line ri-lg" title="Cancel search"></i>
@@ -110,12 +73,14 @@ Pages
     </div>
 
 <div id="top-content">
-  <h1>
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">MscmpSystLimiter.Types</span> 
+      <small class="app-vsn" translate="no">(mscmp_syst_limiter v0.1.0)</small>
 
-    <span translate="no">MscmpSystLimiter.Types</span> 
-    <small class="app-vsn" translate="no">(mscmp_syst_limiter v0.1.0)</small>
+    </h1>
 
-  </h1>
+  </div>
 
 
     <section id="moduledoc">
@@ -138,29 +103,27 @@ Pages
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:counter_id/0" data-no-tooltip translate="no">counter_id()</a>
+        <a href="#t:algorithm/0" data-no-tooltip="" translate="no">algorithm()</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A unique identifier for the specific counter within the requested counter
-type.</p></div>
+        <div class="summary-synopsis"><p>The algorithm to use for the limiter.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:counter_name/0" data-no-tooltip translate="no">counter_name()</a>
+        <a href="#t:counter_id/0" data-no-tooltip="" translate="no">counter_id()</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>The name of the counter which is derived from the counter type and counter
-id values.</p></div>
+        <div class="summary-synopsis"><p>A unique identifier for a specific counter type within a limiter.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:counter_table_name/0" data-no-tooltip translate="no">counter_table_name()</a>
+        <a href="#t:counter_table_name/0" data-no-tooltip="" translate="no">counter_table_name()</a>
 
       </div>
 
@@ -170,11 +133,102 @@ id values.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:counter_type/0" data-no-tooltip translate="no">counter_type()</a>
+        <a href="#t:counter_type/0" data-no-tooltip="" translate="no">counter_type()</a>
 
       </div>
 
         <div class="summary-synopsis"><p>The kind of activity being rate limited.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:limiter_config/0" data-no-tooltip="" translate="no">limiter_config()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Configuration parameters for a rate limiting algorithm.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:limiter_id/0" data-no-tooltip="" translate="no">limiter_id()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>A composite identifier referencing a counter's origin, type, and unique
+identity.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:limiter_instance/0" data-no-tooltip="" translate="no">limiter_instance()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>A reference to a specific limiter instance.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:limiter_name/0" data-no-tooltip="" translate="no">limiter_name()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>The name of the limiter.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:limiter_result/0" data-no-tooltip="" translate="no">limiter_result()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>The result of a rate limit check or increment operation.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:semaphore_config/0" data-no-tooltip="" translate="no">semaphore_config()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Configuration for the semaphore algorithm.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:start_algorithms/0" data-no-tooltip="" translate="no">start_algorithms()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>The algorithms which are to be started.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:time_scale/0" data-no-tooltip="" translate="no">time_scale()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>The time scale value by which to understand certain time integer values.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:token_bucket_config/0" data-no-tooltip="" translate="no">token_bucket_config()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Configuration for the token bucket algorithm.</p></div>
 
     </div>
 
@@ -190,17 +244,43 @@ id values.</p></div>
       </a>
       <span class="text">Types</span>
     </h1>
+
     <div class="types-list">
+<section class="detail" id="t:algorithm/0">
+
+  <div class="detail-header">
+    <a href="#t:algorithm/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">algorithm()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> algorithm() :: :semaphore | :token_bucket</pre>
+
+      </div>
+
+<p>The algorithm to use for the limiter.</p>
+  </section>
+</section>
 <section class="detail" id="t:counter_id/0">
 
   <div class="detail-header">
-    <a href="#t:counter_id/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:counter_id/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">counter_id()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">counter_id()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -211,44 +291,23 @@ id values.</p></div>
 
       </div>
 
-<p>A unique identifier for the specific counter within the requested counter
-type.</p>
-  </section>
-</section>
-<section class="detail" id="t:counter_name/0">
-
-  <div class="detail-header">
-    <a href="#t:counter_name/0" class="detail-link" data-no-tooltip title="Link to this type">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">counter_name()</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@type</span> counter_name() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
-
-      </div>
-
-<p>The name of the counter which is derived from the counter type and counter
-id values.</p>
+<p>A unique identifier for a specific counter type within a limiter.</p><p>This identifier distinguishes between different instances of the same counter
+type. For example, if you have a <code class="inline">:login_attempt</code> counter type, different
+users would have different counter IDs to track their individual login
+attempts separately.</p>
   </section>
 </section>
 <section class="detail" id="t:counter_table_name/0">
 
   <div class="detail-header">
-    <a href="#t:counter_table_name/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:counter_table_name/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">counter_table_name()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">counter_table_name()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -265,13 +324,14 @@ id values.</p>
 <section class="detail" id="t:counter_type/0">
 
   <div class="detail-header">
-    <a href="#t:counter_type/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:counter_type/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">counter_type()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">counter_type()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -283,6 +343,255 @@ id values.</p>
       </div>
 
 <p>The kind of activity being rate limited.</p><p>For example, a counter type might be <code class="inline">:login_attempt</code>.</p>
+  </section>
+</section>
+<section class="detail" id="t:limiter_config/0">
+
+  <div class="detail-header">
+    <a href="#t:limiter_config/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">limiter_config()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> limiter_config() :: <a href="#t:semaphore_config/0">semaphore_config</a>() | <a href="#t:token_bucket_config/0">token_bucket_config</a>()</pre>
+
+      </div>
+
+<p>Configuration parameters for a rate limiting algorithm.</p><p>This type represents the algorithm-specific configuration needed to define
+how a rate limiter should behave. Each algorithm has its own configuration
+structure that defines the limits, intervals, and other parameters specific
+to that algorithm's implementation.</p><section role="note" class="admonition warning"><h4 class="admonition-title warning">Treat constituent configs as opaque</h4><p>While the constituent configuration types are public due to Elixir module
+boundary limitations, they are not intended for pattern matching. Use the
+public API to construct and work with them.</p></section>
+  </section>
+</section>
+<section class="detail" id="t:limiter_id/0">
+
+  <div class="detail-header">
+    <a href="#t:limiter_id/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">limiter_id()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> limiter_id() :: {<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">module</a>(), <a href="#t:counter_type/0">counter_type</a>(), <a href="#t:counter_id/0">counter_id</a>()}</pre>
+
+      </div>
+
+<p>A composite identifier referencing a counter's origin, type, and unique
+identity.</p><p>This acts as the identifier of a specific counter within an assumed algorithm.
+The composite ID provides a methodology for the application to support rate
+limiting across the application while avoiding counter identity conflicts via
+the this structured naming approach.</p>
+  </section>
+</section>
+<section class="detail" id="t:limiter_instance/0">
+
+  <div class="detail-header">
+    <a href="#t:limiter_instance/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">limiter_instance()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> limiter_instance() :: {<a href="#t:algorithm/0">algorithm</a>(), <a href="#t:limiter_id/0">limiter_id</a>(), <a href="#t:limiter_config/0">limiter_config</a>()}</pre>
+
+      </div>
+
+<p>A reference to a specific limiter instance.</p><p>A limiter instance represents a complete rate limiting configuration including
+the algorithm to use and the specific limiter to apply it to. For example, a
+user attempting to make API calls to the system will have a limiter instance
+assigned to their session to ensure that their access is within reasonable
+resource consumption limits. The limiter instance is sufficient to know the
+algorithm, the activity being rate limited, and the user/process engaging in
+the activity.</p>
+  </section>
+</section>
+<section class="detail" id="t:limiter_name/0">
+
+  <div class="detail-header">
+    <a href="#t:limiter_name/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">limiter_name()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> limiter_name() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+<p>The name of the limiter.</p>
+  </section>
+</section>
+<section class="detail" id="t:limiter_result/0">
+
+  <div class="detail-header">
+    <a href="#t:limiter_result/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">limiter_result()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> limiter_result() ::
+  {:allow, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>(), <a href="#t:limiter_instance/0">limiter_instance</a>()}
+  | {:deny, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>(), <a href="#t:limiter_instance/0">limiter_instance</a>()}</pre>
+
+      </div>
+
+<p>The result of a rate limit check or increment operation.</p><p>Returns a tuple indicating whether the action is allowed or denied.</p><ul><li><p><code class="inline">{:allow, remaining_limit, limiter_instance}</code>: The action is allowed.
+<code class="inline">remaining_limit</code> is a non-negative integer representing the number of
+remaining allowed actions before hitting the rate limit.</p></li><li><p><code class="inline">{:deny, retry_condition, limiter_instance}</code>: The action is denied.
+<code class="inline">retry_condition</code> is a non-negative integer representing an algorithm-
+specific condition for retrying the action.  In the case of the semaphore
+algorithm, this is the number of permits which would need to be made
+available prior to retrying the action.  For token bucket, this is the
+number of milliseconds to wait before tokens are added back to the bucket.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="t:semaphore_config/0">
+
+  <div class="detail-header">
+    <a href="#t:semaphore_config/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">semaphore_config()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> semaphore_config() :: nil | <a href="https://www.erlang.org/doc/apps/erts/atomics.html#t:atomics_ref/0">:atomics.atomics_ref</a>()</pre>
+
+      </div>
+
+<p>Configuration for the semaphore algorithm.</p><section role="note" class="admonition warning"><h4 class="admonition-title warning">Treat as opaque</h4><p>While this type is public due to Elixir module boundary limitations, the
+concrete representation is an implementation detail and may change without
+notice. Treat this value as opaque and construct/manage it via the public API.</p></section><p>Conceptually includes:</p><ul><li><p><code class="inline">max_permits</code> - the maximum number of resources/permits available
+(positive integer)</p></li><li><p><code class="inline">time_to_live</code> - the time to live in units of the time scale (positive
+integer).</p></li><li><p><code class="inline">time_scale</code> - the time scale to use for the time to live see
+<a href="#t:time_scale/0"><code class="inline">MscmpSystLimiter.Types.time_scale/0</code></a> for more details.</p></li></ul><p>Note: Unlike time-based algorithms, semaphore capacity is managed explicitly
+through acquire/release operations rather than automatic time-based refill.</p>
+  </section>
+</section>
+<section class="detail" id="t:start_algorithms/0">
+
+  <div class="detail-header">
+    <a href="#t:start_algorithms/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">start_algorithms()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> start_algorithms() :: :all | [<a href="#t:algorithm/0">algorithm</a>()]</pre>
+
+      </div>
+
+<p>The algorithms which are to be started.</p><p>This includes all the supported algorithms individually, and the special
+value <code class="inline">:all</code> which includes all the supported algorithms.</p>
+  </section>
+</section>
+<section class="detail" id="t:time_scale/0">
+
+  <div class="detail-header">
+    <a href="#t:time_scale/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">time_scale()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> time_scale() :: :day | :hour | :minute | :second | :millisecond</pre>
+
+      </div>
+
+<p>The time scale value by which to understand certain time integer values.</p>
+  </section>
+</section>
+<section class="detail" id="t:token_bucket_config/0">
+
+  <div class="detail-header">
+    <a href="#t:token_bucket_config/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">token_bucket_config()</h1>
+
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> token_bucket_config() :: nil | <a href="https://www.erlang.org/doc/apps/erts/atomics.html#t:atomics_ref/0">:atomics.atomics_ref</a>()</pre>
+
+      </div>
+
+<p>Configuration for the token bucket algorithm.</p><section role="note" class="admonition warning"><h4 class="admonition-title warning">Treat as opaque</h4><p>While this type is public due to Elixir module boundary limitations, the
+concrete representation is an implementation detail and may change without
+notice. Treat this value as opaque and construct/manage it via the public API.</p></section><p>Conceptually includes:</p><ul><li><code class="inline">limit</code> - the maximum number of tokens in the bucket (positive integer)</li><li><code class="inline">interval_ms</code> - the interval in milliseconds for refilling tokens (positive integer)</li><li><code class="inline">refill_rate</code> - the number of tokens to add per interval (positive integer)</li></ul>
   </section>
 </section>
 
@@ -306,7 +615,7 @@ id values.</p>
 
       <p class="built-using">
         Built using
-        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.34.2) for the
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
 
           <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

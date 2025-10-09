@@ -4,35 +4,22 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.34.2">
+    <meta name="generator" content="ExDoc v0.38.4">
     <meta name="project" content="mscmp_syst_settings v0.1.0">
 
 
     <title>MscmpSystSettings.Types — mscmp_syst_settings v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
+    <link rel="stylesheet" href="dist/html-elixir-RLZO5U2C.css" />
 
-    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
-    <script src="dist/sidebar_items-A82F2999.js"></script>
-    <script src="docs_config.js"></script>
-    <script async src="dist/html-YIPIRHGU.js"></script>
+    <script defer src="dist/sidebar_items-7F87EBD7.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-Y223O6DN.js"></script>
 
   </head>
-  <body data-type="modules" class="page-module">
-    <script>
-
-      try {
-        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
-
-        if (settings.theme === 'dark' ||
-           ((settings.theme === 'system' || settings.theme == null) &&
-             window.matchMedia('(prefers-color-scheme: dark)').matches)
-           ) {
-          document.body.classList.add('dark')
-        }
-      } catch (error) { }
-    </script>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
 
 <div class="body-wrapper">
 
@@ -54,37 +41,13 @@ mscmp_syst_settings
         </div>
       </div>
     </div>
-    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
-      <li>
-        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
-Pages
-        </button>
-      </li>
-
-        <li>
-          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
-            Modules
-          </button>
-        </li>
-
-
-    </ul>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
   </div>
-
-  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
-    <ul id="extras-full-list" class="full-list"></ul>
-  </div>
-
-    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
-      <ul id="modules-full-list" class="full-list"></ul>
-    </div>
-
-
 </nav>
 
-<main class="content">
-  <output role="status" id="toast"></output>
+<output role="status" id="toast"></output>
 
+<main class="content page-module" id="main" data-type="modules">
   <div id="content" class="content-inner">
     <div class="top-search">
       <div class="search-settings">
@@ -93,8 +56,8 @@ Pages
             <span class="sr-only">Search documentation of mscmp_syst_settings</span>
             <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
           </label>
-          <button type="submit" class="search-button" aria-label="Submit Search">
-            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
           </button>
           <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
             <i class="ri-close-line ri-lg" title="Cancel search"></i>
@@ -110,12 +73,14 @@ Pages
     </div>
 
 <div id="top-content">
-  <h1>
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">MscmpSystSettings.Types</span> 
+      <small class="app-vsn" translate="no">(mscmp_syst_settings v0.1.0)</small>
 
-    <span translate="no">MscmpSystSettings.Types</span> 
-    <small class="app-vsn" translate="no">(mscmp_syst_settings v0.1.0)</small>
+    </h1>
 
-  </h1>
+  </div>
 
 
     <section id="moduledoc">
@@ -138,7 +103,7 @@ Pages
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:service_name/0" data-no-tooltip translate="no">service_name()</a>
+        <a href="#t:service_name/0" data-no-tooltip="" translate="no">service_name()</a>
 
       </div>
 
@@ -148,7 +113,7 @@ Pages
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:setting_name/0" data-no-tooltip translate="no">setting_name()</a>
+        <a href="#t:setting_name/0" data-no-tooltip="" translate="no">setting_name()</a>
 
       </div>
 
@@ -158,7 +123,7 @@ Pages
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:setting_params/0" data-no-tooltip translate="no">setting_params()</a>
+        <a href="#t:setting_params/0" data-no-tooltip="" translate="no">setting_params()</a>
 
       </div>
 
@@ -169,7 +134,7 @@ passing as SystSettings changeset parameters.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:setting_types/0" data-no-tooltip translate="no">setting_types()</a>
+        <a href="#t:setting_types/0" data-no-tooltip="" translate="no">setting_types()</a>
 
       </div>
 
@@ -190,17 +155,19 @@ one setting record may set values for one or more of these types concurrently.</
       </a>
       <span class="text">Types</span>
     </h1>
+
     <div class="types-list">
 <section class="detail" id="t:service_name/0">
 
   <div class="detail-header">
-    <a href="#t:service_name/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:service_name/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">service_name()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">service_name()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -222,13 +189,14 @@ accesses of the service.</p>
 <section class="detail" id="t:setting_name/0">
 
   <div class="detail-header">
-    <a href="#t:setting_name/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:setting_name/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">setting_name()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">setting_name()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -245,13 +213,14 @@ accesses of the service.</p>
 <section class="detail" id="t:setting_params/0">
 
   <div class="detail-header">
-    <a href="#t:setting_params/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:setting_params/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">setting_params()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">setting_params()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -264,18 +233,18 @@ accesses of the service.</p>
   optional(:user_description) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   optional(:setting_flag) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
   optional(:setting_integer) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  optional(:setting_integer_range) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.IntegerRange.html#t:t/0">MscmpSystDb.DbTypes.IntegerRange.t</a>(),
-  optional(:setting_decimal) =&gt; <a href="https://hexdocs.pm/decimal/2.1.1/Decimal.html#t:t/0">Decimal.t</a>(),
-  optional(:setting_decimal_range) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.DecimalRange.html#t:t/0">MscmpSystDb.DbTypes.DecimalRange.t</a>(),
-  optional(:setting_interval) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Interval.html#t:t/0">MscmpSystDb.DbTypes.Interval.t</a>(),
+  optional(:setting_integer_range) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.IntegerRange.html#t:t/0">MscmpSystDb.DbTypes.IntegerRange.t</a>(),
+  optional(:setting_decimal) =&gt; <a href="https://hexdocs.pm/decimal/2.3.0/Decimal.html#t:t/0">Decimal.t</a>(),
+  optional(:setting_decimal_range) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.DecimalRange.html#t:t/0">MscmpSystDb.DbTypes.DecimalRange.t</a>(),
+  optional(:setting_interval) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Interval.html#t:t/0">MscmpSystDb.DbTypes.Interval.t</a>(),
   optional(:setting_date) =&gt; <a href="https://hexdocs.pm/elixir/Date.html#t:t/0">Date.t</a>(),
-  optional(:setting_date_range) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.DateRange.html#t:t/0">MscmpSystDb.DbTypes.DateRange.t</a>(),
+  optional(:setting_date_range) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.DateRange.html#t:t/0">MscmpSystDb.DbTypes.DateRange.t</a>(),
   optional(:setting_time) =&gt; <a href="https://hexdocs.pm/elixir/Time.html#t:t/0">Time.t</a>(),
   optional(:setting_timestamp) =&gt; <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>(),
-  optional(:setting_timestamp_range) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.DateTimeRange.html#t:t/0">MscmpSystDb.DbTypes.DateTimeRange.t</a>(),
+  optional(:setting_timestamp_range) =&gt; <a href="/documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.DateTimeRange.html#t:t/0">MscmpSystDb.DbTypes.DateTimeRange.t</a>(),
   optional(:setting_json) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(),
   optional(:setting_text) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  optional(:setting_uuid) =&gt; <a href="https://hexdocs.pm/ecto/3.12.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>(),
+  optional(:setting_uuid) =&gt; <a href="https://hexdocs.pm/ecto/3.13.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>(),
   optional(:setting_blob) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>()
 }</pre>
 
@@ -288,13 +257,14 @@ passing as SystSettings changeset parameters.</p>
 <section class="detail" id="t:setting_types/0">
 
   <div class="detail-header">
-    <a href="#t:setting_types/0" class="detail-link" data-no-tooltip title="Link to this type">
+    <a href="#t:setting_types/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">setting_types()</h1>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">setting_types()</h1>
 
 
+    </div>
   </div>
 
   <section class="docstring">
@@ -345,7 +315,7 @@ one setting record may set values for one or more of these types concurrently.</
 
       <p class="built-using">
         Built using
-        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.34.2) for the
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.4) for the
 
           <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

@@ -284,11 +284,11 @@
                                         <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
                                     </tr>
                                     <tr>
-                                        <td>syst_instances_enum_instance_state_fk</td>
+                                        <td>syst_instances_enum_instance_lifecycle_state_fk</td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/syst_instances.html'>syst_instances</a><span>.instance_state_id</span></td>
+                                                    <td><a href='tables/syst_instances.html'>syst_instances</a><span>.instance_lifecycle_state_id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -423,17 +423,17 @@
                                     <tr>
                                         <td><a href='tables/syst_instance_type_contexts.html'>syst_instance_type_contexts</a></td>
                                         <td>syst_instance_type_contexts_default_db_pool_size_chk</td>
-                                        <td>((default_db_pool_size &gt;&#61; 0))</td>
+                                        <td>(default_db_pool_size &gt;&#61; 0)</td>
                                     </tr>
                                     <tr>
                                         <td><a href='tables/syst_instances.html'>syst_instances</a></td>
                                         <td>syst_instances_self_ownership_chk</td>
-                                        <td>(((owning_instance_id IS NULL) OR (owning_instance_id &lt;&gt; id)))</td>
+                                        <td>((owning_instance_id IS NULL) OR (owning_instance_id &lt;&gt; id))</td>
                                     </tr>
                                     <tr>
                                         <td><a href='tables/syst_instance_contexts.html'>syst_instance_contexts</a></td>
                                         <td>syst_instance_contexts_db_pool_size_chk</td>
-                                        <td>((db_pool_size &gt;&#61; 0))</td>
+                                        <td>(db_pool_size &gt;&#61; 0)</td>
                                     </tr>
                                 </tbody>
                             </table>

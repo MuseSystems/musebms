@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_authn" schema="ms_syst" type="PostgreSQL - 16.4 (Ubuntu 16.4-1.pgdg22.04+1)">
+<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_authn" schema="ms_syst" type="PostgreSQL - 18.0 (Ubuntu 18.0-1.pgdg24.04+3)">
    <tables>
       <table name="syst_access_account_instance_assocs" numRows="0" remarks="Associates access accounts with the instances for which they are allowed to&#10;authenticate to.  Note that being able to authenticate to an instance is not the&#10;same as having authorized rights within the instance; authorization is handled&#10;by the instance directly.&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;  * `DELETE`" schema="ms_syst" type="VIEW" viewSql=" SELECT id,&#10;    access_account_id,&#10;    instance_id,&#10;    access_granted,&#10;    invitation_issued,&#10;    invitation_expires,&#10;    invitation_declined,&#10;    diag_timestamp_created,&#10;    diag_role_created,&#10;    diag_timestamp_modified,&#10;    diag_wallclock_modified,&#10;    diag_role_modified,&#10;    diag_row_version,&#10;    diag_update_count&#10;   FROM ms_syst_data.syst_access_account_instance_assocs;">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="true" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: true&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
@@ -262,13 +262,13 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="diag_row_version" nullable="true" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="19" type="int8" typeCode="-5"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="diag_update_count" nullable="true" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="19" type="int8" typeCode="-5"/>
       </table>
-      <table name="syst_instances" numRows="0" remarks="Defines known application instances and provides their configuration settings.&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;  * `DELETE`" schema="ms_syst" type="VIEW" viewSql=" SELECT id,&#10;    internal_name,&#10;    display_name,&#10;    application_id,&#10;    instance_type_id,&#10;    instance_state_id,&#10;    owner_id,&#10;    owning_instance_id,&#10;    dbserver_name,&#10;    instance_code,&#10;    instance_options,&#10;    diag_timestamp_created,&#10;    diag_role_created,&#10;    diag_timestamp_modified,&#10;    diag_wallclock_modified,&#10;    diag_role_modified,&#10;    diag_row_version,&#10;    diag_update_count&#10;   FROM ms_syst_data.syst_instances;">
+      <table name="syst_instances" numRows="0" remarks="Defines known application instances and provides their configuration settings.&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;  * `DELETE`" schema="ms_syst" type="VIEW" viewSql=" SELECT id,&#10;    internal_name,&#10;    display_name,&#10;    application_id,&#10;    instance_type_id,&#10;    instance_lifecycle_state_id,&#10;    owner_id,&#10;    owning_instance_id,&#10;    dbserver_name,&#10;    instance_code,&#10;    instance_options,&#10;    diag_timestamp_created,&#10;    diag_role_created,&#10;    diag_timestamp_modified,&#10;    diag_wallclock_modified,&#10;    diag_role_modified,&#10;    diag_row_version,&#10;    diag_update_count&#10;   FROM ms_syst_data.syst_instances;">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="true" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: true&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="true" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: true&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="true" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: true&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="application_id" nullable="true" remarks="Indicates an instance of which application is being described by the record.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="instance_type_id" nullable="true" remarks="Indicates the type of the instance.  This can designate instances as being&#10;production or non-production, or make other functional differences between&#10;instances created for different reasons based on the assigned instance type.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="instance_state_id" nullable="true" remarks="Establishes the current life-cycle state of the instance record.  This can&#10;determine functionality such as if the instance is usable, visible, or if it may&#10;be purged from the database completely.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`" size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="instance_lifecycle_state_id" nullable="true" remarks="Establishes the current life-cycle state of the instance record.  This can&#10;determine functionality such as if the instance is usable, visible, or if it may&#10;be purged from the database completely.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`" size="2147483647" type="uuid" typeCode="1111"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="owner_id" nullable="true" remarks="Identifies the owner of the instance.  The owner is the entity which&#10;commissioned the instance and is the &quot;user&quot; of the instance.  Owners have&#10;nominal management rights over their instances, such as which access accounts&#10;and which credential types are allowed to be used to authenticate to the owner's&#10;instances.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="owning_instance_id" nullable="true" remarks="In some cases, an instance is considered subordinate to another instance.  For&#10;example, consider a production environment and a related sandbox environment.&#10;The existence of the sandbox doesn't have real meaning without being associated&#10;with some sort of production instance where the real work is performed.  This&#10;kind of association becomes clearer in SaaS environments where a primary&#10;instance is contracted for, but other supporting instances, such as a sandbox,&#10;should follow certain account related actions of the primary.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="dbserver_name" nullable="true" remarks="Identifies on which database server the instance is hosted. If empty, no&#10;server has been assigned and the instance is unstartable.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`" size="2147483647" type="text" typeCode="12"/>
@@ -569,8 +569,6 @@ BEGIN
             DETAIL = ms_syst_priv.get_exception_details(
                          p_proc_schema    => 'ms_syst'
                         ,p_proc_name      => 'trig_i_d_syst_applications'
-                        ,p_exception_name => 'invalid_api_view_call'
-                        ,p_errcode        => 'PM008'
                         ,p_param_data     => to_jsonb(new)
                         ,p_context_data   =>
                             jsonb_build_object(
@@ -578,7 +576,7 @@ BEGIN
                                 ,'tg_when',       tg_when
                                 ,'tg_schema',     tg_table_schema
                                 ,'tg_table_name', tg_table_name)),
-            ERRCODE = 'PM008',
+            ERRCODE = 'PM002',
             SCHEMA = tg_table_schema,
             TABLE = tg_table_name;
 
@@ -716,8 +714,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_d_syst_enum_functional_types'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(old)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -725,7 +721,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM003',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -787,8 +783,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_d_syst_enum_items'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(old)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -796,7 +790,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM003',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -840,8 +834,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_d_syst_enums'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(old)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -849,7 +841,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM003',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -934,8 +926,6 @@ BEGIN
             DETAIL = ms_syst_priv.get_exception_details(
                          p_proc_schema    => 'ms_syst'
                         ,p_proc_name      => 'trig_i_d_syst_global_password_rules'
-                        ,p_exception_name => 'invalid_api_view_call'
-                        ,p_errcode        => 'PM008'
                         ,p_param_data     => jsonb_build_object('new', new, 'old', old)
                         ,p_context_data   =>
                             jsonb_build_object(
@@ -943,7 +933,7 @@ BEGIN
                                 ,'tg_when',       tg_when
                                 ,'tg_schema',     tg_table_schema
                                 ,'tg_table_name', tg_table_name)),
-            ERRCODE = 'PM008',
+            ERRCODE = 'PM002',
             SCHEMA = tg_table_schema,
             TABLE = tg_table_name;
 
@@ -1015,8 +1005,6 @@ BEGIN
             DETAIL = ms_syst_priv.get_exception_details(
                          p_proc_schema    => 'ms_syst'
                         ,p_proc_name      => 'trig_i_d_syst_instance_contexts'
-                        ,p_exception_name => 'invalid_api_view_call'
-                        ,p_errcode        => 'PM008'
                         ,p_param_data     => to_jsonb(new)
                         ,p_context_data   =>
                             jsonb_build_object(
@@ -1024,7 +1012,7 @@ BEGIN
                                 ,'tg_when',       tg_when
                                 ,'tg_schema',     tg_table_schema
                                 ,'tg_table_name', tg_table_name)),
-            ERRCODE = 'PM008',
+            ERRCODE = 'PM002',
             SCHEMA = tg_table_schema,
             TABLE = tg_table_name;
 
@@ -1150,8 +1138,6 @@ BEGIN
             DETAIL = ms_syst_priv.get_exception_details(
                          p_proc_schema    => 'ms_syst'
                         ,p_proc_name      => 'trig_i_i_syst_instance_type_contexts'
-                        ,p_exception_name => 'invalid_api_view_call'
-                        ,p_errcode        => 'PM008'
                         ,p_param_data     => to_jsonb(new)
                         ,p_context_data   =>
                             jsonb_build_object(
@@ -1159,7 +1145,7 @@ BEGIN
                                 ,'tg_when',       tg_when
                                 ,'tg_schema',     tg_table_schema
                                 ,'tg_table_name', tg_table_name)),
-            ERRCODE = 'PM008',
+            ERRCODE = 'PM002',
             SCHEMA = tg_table_schema,
             TABLE = tg_table_name;
 
@@ -1320,8 +1306,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_d_syst_owners'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(old)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -1329,7 +1313,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM106',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
 
@@ -1555,7 +1539,7 @@ END;]]></definition>
          </parameters>
       </routine>
       <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_i_syst_credentials()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
-         <comment><![CDATA[Processes incoming API View requests according to globally applicable business 
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
 rules and data validation requirements.
 
 **Trigger Function Details**:
@@ -1601,7 +1585,7 @@ END;]]></definition>
          </parameters>
       </routine>
       <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_i_syst_disallowed_hosts()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
-         <comment><![CDATA[Processes incoming API View requests according to globally applicable business 
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
 rules and data validation requirements.
 
 **Trigger Function Details**:
@@ -1696,13 +1680,13 @@ rules and data validation requirements.
 -- muse.information@musesystems.com  :: https://muse.systems
 
 DECLARE
-    var_syst_defined boolean;
+    v_syst_defined boolean;
 BEGIN
-    SELECT syst_defined INTO var_syst_defined
+    SELECT syst_defined INTO v_syst_defined
     FROM ms_syst_data.syst_enums
     WHERE id = new.enum_id;
 
-    IF var_syst_defined THEN
+    IF v_syst_defined THEN
         RAISE EXCEPTION
             USING
                 MESSAGE = 'The functional type creation for the requested ' ||
@@ -1710,8 +1694,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_i_syst_enum_functional_types'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -1719,7 +1701,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM003',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -1743,7 +1725,7 @@ BEGIN
         , internal_name
         , display_name
         , external_name
-        , var_syst_defined
+        , v_syst_defined
         , enum_id
         , syst_description
         , user_description
@@ -1797,8 +1779,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_i_syst_enum_items'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -1806,7 +1786,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM003',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -1897,7 +1877,7 @@ END;]]></definition>
          </parameters>
       </routine>
       <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_i_syst_global_network_rules()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
-         <comment><![CDATA[Processes incoming API View requests according to globally applicable business 
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
 rules and data validation requirements.
 
 **Trigger Function Details**:
@@ -1947,7 +1927,7 @@ END;]]></definition>
          </parameters>
       </routine>
       <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_i_syst_global_password_rules()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
-         <comment><![CDATA[Processes incoming API View requests according to globally applicable business 
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
 rules and data validation requirements.
 
 **Trigger Function Details**:
@@ -1976,8 +1956,6 @@ BEGIN
             DETAIL = ms_syst_priv.get_exception_details(
                          p_proc_schema    => 'ms_syst'
                         ,p_proc_name      => 'trig_i_i_syst_global_password_rules'
-                        ,p_exception_name => 'invalid_api_view_call'
-                        ,p_errcode        => 'PM008'
                         ,p_param_data     => jsonb_build_object('new', new, 'old', old)
                         ,p_context_data   =>
                             jsonb_build_object(
@@ -1985,7 +1963,7 @@ BEGIN
                                 ,'tg_when',       tg_when
                                 ,'tg_schema',     tg_table_schema
                                 ,'tg_table_name', tg_table_name)),
-            ERRCODE = 'PM008',
+            ERRCODE = 'PM002',
             SCHEMA = tg_table_schema,
             TABLE = tg_table_name;
 
@@ -1995,7 +1973,7 @@ END;]]></definition>
          </parameters>
       </routine>
       <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_i_syst_identities()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
-         <comment><![CDATA[Processes incoming API View requests according to globally applicable business 
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
 rules and data validation requirements.
 
 **Trigger Function Details**:
@@ -2075,8 +2053,6 @@ BEGIN
             DETAIL = ms_syst_priv.get_exception_details(
                          p_proc_schema    => 'ms_syst'
                         ,p_proc_name      => 'trig_i_i_syst_instance_contexts'
-                        ,p_exception_name => 'invalid_api_view_call'
-                        ,p_errcode        => 'PM008'
                         ,p_param_data     => to_jsonb(new)
                         ,p_context_data   =>
                             jsonb_build_object(
@@ -2084,7 +2060,7 @@ BEGIN
                                 ,'tg_when',       tg_when
                                 ,'tg_schema',     tg_table_schema
                                 ,'tg_table_name', tg_table_name)),
-            ERRCODE = 'PM008',
+            ERRCODE = 'PM002',
             SCHEMA = tg_table_schema,
             TABLE = tg_table_name;
 
@@ -2094,7 +2070,7 @@ END;]]></definition>
          </parameters>
       </routine>
       <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_i_syst_instance_network_rules()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
-         <comment><![CDATA[Processes incoming API View requests according to globally applicable business 
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
 rules and data validation requirements.
 
 **Trigger Function Details**:
@@ -2220,8 +2196,6 @@ BEGIN
             DETAIL = ms_syst_priv.get_exception_details(
                          p_proc_schema    => 'ms_syst'
                         ,p_proc_name      => 'trig_i_i_syst_instance_type_contexts'
-                        ,p_exception_name => 'invalid_api_view_call'
-                        ,p_errcode        => 'PM008'
                         ,p_param_data     => to_jsonb(new)
                         ,p_context_data   =>
                             jsonb_build_object(
@@ -2229,7 +2203,7 @@ BEGIN
                                 ,'tg_when',       tg_when
                                 ,'tg_schema',     tg_table_schema
                                 ,'tg_table_name', tg_table_name)),
-            ERRCODE = 'PM008',
+            ERRCODE = 'PM002',
             SCHEMA = tg_table_schema,
             TABLE = tg_table_name;
 
@@ -2266,7 +2240,7 @@ BEGIN
         , display_name
         , application_id
         , instance_type_id
-        , instance_state_id
+        , instance_lifecycle_state_id
         , owner_id
         , owning_instance_id
         , dbserver_name
@@ -2277,7 +2251,7 @@ BEGIN
         , new.display_name
         , new.application_id
         , new.instance_type_id
-        , new.instance_state_id
+        , new.instance_lifecycle_state_id
         , new.owner_id
         , new.owning_instance_id
         , new.dbserver_name
@@ -2514,8 +2488,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_u_syst_access_account_instance_assocs'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => jsonb_build_object('new', new, 'old', old)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -2523,7 +2495,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM001',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -2577,8 +2549,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_u_syst_access_accounts'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => jsonb_build_object('new', new, 'old', old)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -2586,7 +2556,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM001',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -2643,8 +2613,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_u_syst_application_contexts'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -2652,7 +2620,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM001',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -2705,8 +2673,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_u_syst_applications'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     =>
                                 jsonb_build_object('new', to_jsonb(new), 'old', to_jsonb(old))
                             ,p_context_data   =>
@@ -2715,7 +2681,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM001',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -2769,8 +2735,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_u_syst_credentials'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => jsonb_build_object('new', new, 'old', old)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -2778,7 +2742,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM001',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -2828,8 +2792,6 @@ BEGIN
             DETAIL = ms_syst_priv.get_exception_details(
                          p_proc_schema    => 'ms_syst'
                         ,p_proc_name      => 'trig_i_u_syst_disallowed_hosts'
-                        ,p_exception_name => 'invalid_api_view_call'
-                        ,p_errcode        => 'PM008'
                         ,p_param_data     => jsonb_build_object('new', new, 'old', old)
                         ,p_context_data   =>
                             jsonb_build_object(
@@ -2837,7 +2799,7 @@ BEGIN
                                 ,'tg_when',       tg_when
                                 ,'tg_schema',     tg_table_schema
                                 ,'tg_table_name', tg_table_name)),
-            ERRCODE = 'PM008',
+            ERRCODE = 'PM002',
             SCHEMA = tg_table_schema,
             TABLE = tg_table_name;
 
@@ -2876,8 +2838,6 @@ BEGIN
             DETAIL = ms_syst_priv.get_exception_details(
                          p_proc_schema    => 'ms_syst'
                         ,p_proc_name      => 'trig_i_u_syst_disallowed_passwords'
-                        ,p_exception_name => 'invalid_api_view_call'
-                        ,p_errcode        => 'PM008'
                         ,p_param_data     => jsonb_build_object('new', new, 'old', old)
                         ,p_context_data   =>
                             jsonb_build_object(
@@ -2885,7 +2845,7 @@ BEGIN
                                 ,'tg_when',       tg_when
                                 ,'tg_schema',     tg_table_schema
                                 ,'tg_table_name', tg_table_name)),
-            ERRCODE = 'PM008',
+            ERRCODE = 'PM002',
             SCHEMA = tg_table_schema,
             TABLE = tg_table_name;
 
@@ -2927,8 +2887,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_u_syst_enum_functional_types'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -2936,7 +2894,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM001',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -3009,8 +2967,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_u_syst_enum_items'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -3018,7 +2974,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM003',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -3045,7 +3001,7 @@ END;]]></definition>
          </parameters>
       </routine>
       <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_u_syst_enums()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
-         <comment><![CDATA[Processes incoming API View requests according to globally applicable business 
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
  rules and data validation requirements.
 
 **Trigger Function Details**:
@@ -3075,8 +3031,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_u_syst_enums'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -3084,7 +3038,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM003',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -3105,7 +3059,7 @@ END;]]></definition>
          </parameters>
       </routine>
       <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_u_syst_global_network_rules()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
-         <comment><![CDATA[Processes incoming API View requests according to globally applicable business 
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
 rules and data validation requirements.
 
 **Trigger Function Details**:
@@ -3135,8 +3089,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_u_syst_global_network_rules'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => jsonb_build_object('new', new, 'old', old)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -3144,7 +3096,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM001',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -3253,8 +3205,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_u_syst_identities'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => jsonb_build_object('new', new, 'old', old)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -3262,7 +3212,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM002',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -3318,8 +3268,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_u_syst_instance_contexts'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     =>
                                 jsonb_build_object('new', to_jsonb(new), 'old', to_jsonb(old))
                             ,p_context_data   =>
@@ -3328,7 +3276,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM001',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -3382,8 +3330,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_u_syst_instance_network_rules'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => jsonb_build_object('new', new, 'old', old)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -3391,7 +3337,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM001',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -3456,8 +3402,6 @@ BEGIN
             DETAIL = ms_syst_priv.get_exception_details(
                          p_proc_schema    => 'ms_syst'
                         ,p_proc_name      => 'trig_i_u_syst_instance_type_applications'
-                        ,p_exception_name => 'invalid_api_view_call'
-                        ,p_errcode        => 'PM008'
                         ,p_param_data     => to_jsonb(new)
                         ,p_context_data   =>
                             jsonb_build_object(
@@ -3465,7 +3409,7 @@ BEGIN
                                 ,'tg_when',       tg_when
                                 ,'tg_schema',     tg_table_schema
                                 ,'tg_table_name', tg_table_name)),
-            ERRCODE = 'PM008',
+            ERRCODE = 'PM002',
             SCHEMA = tg_table_schema,
             TABLE = tg_table_name;
 
@@ -3508,8 +3452,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_u_syst_instance_type_contexts'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -3517,7 +3459,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM001',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -3571,8 +3513,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_u_syst_instances'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => jsonb_build_object('new', new, 'old', old)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -3580,18 +3520,18 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM001',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
 
     UPDATE ms_syst_data.syst_instances
     SET
-        display_name      = new.display_name
-      , instance_state_id = new.instance_state_id
-      , dbserver_name     = new.dbserver_name
-      , instance_code     = new.instance_code
-      , instance_options  = new.instance_options
+        display_name                = new.display_name
+      , instance_lifecycle_state_id = new.instance_lifecycle_state_id
+      , dbserver_name               = new.dbserver_name
+      , instance_code               = new.instance_code
+      , instance_options            = new.instance_options
     WHERE id = new.id
     RETURNING * INTO new;
 
@@ -3636,8 +3576,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_u_syst_owner_network_rules'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => jsonb_build_object('new', new, 'old', old)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -3645,7 +3583,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM002',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -3712,8 +3650,6 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
                             ,p_proc_name      => 'trig_i_u_syst_owner_password_rules'
-                            ,p_exception_name => 'invalid_api_view_call'
-                            ,p_errcode        => 'PM008'
                             ,p_param_data     => jsonb_build_object('new', new, 'old', old)
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -3721,7 +3657,7 @@ BEGIN
                                     ,'tg_when',       tg_when
                                     ,'tg_schema',     tg_table_schema
                                     ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
+                ERRCODE = 'PM001',
                 SCHEMA = tg_table_schema,
                 TABLE = tg_table_name;
     END IF;
@@ -3815,8 +3751,6 @@ BEGIN
             DETAIL = ms_syst_priv.get_exception_details(
                          p_proc_schema    => 'ms_syst'
                         ,p_proc_name      => 'trig_i_u_syst_password_history'
-                        ,p_exception_name => 'invalid_api_view_call'
-                        ,p_errcode        => 'PM008'
                         ,p_param_data     => jsonb_build_object('new', new, 'old', old)
                         ,p_context_data   =>
                             jsonb_build_object(
@@ -3824,7 +3758,7 @@ BEGIN
                                 ,'tg_when',       tg_when
                                 ,'tg_schema',     tg_table_schema
                                 ,'tg_table_name', tg_table_name)),
-            ERRCODE = 'PM008',
+            ERRCODE = 'PM002',
             SCHEMA = tg_table_schema,
             TABLE = tg_table_name;
 

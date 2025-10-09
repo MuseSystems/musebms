@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_session" schema="ms_syst" type="PostgreSQL - 16.1 (Ubuntu 16.1-1.pgdg22.04+1)">
+<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_session" schema="ms_syst" type="PostgreSQL - 18.0 (Ubuntu 18.0-1.pgdg24.04+3)">
    <tables>
       <table name="syst_sessions" numRows="0" remarks="Database persistence of user interface related session data.&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;  * `DELETE`" schema="ms_syst" type="VIEW" viewSql=" SELECT id,&#10;    internal_name,&#10;    session_data,&#10;    session_expires,&#10;    diag_timestamp_created,&#10;    diag_role_created,&#10;    diag_timestamp_modified,&#10;    diag_wallclock_modified,&#10;    diag_role_modified,&#10;    diag_row_version,&#10;    diag_update_count&#10;   FROM ms_syst_data.syst_sessions;">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="true" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: true&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
@@ -116,8 +116,6 @@ BEGIN
                     DETAIL = ms_syst_priv.get_exception_details(
                                  p_proc_schema    => 'ms_syst'
                                 ,p_proc_name      => 'trig_i_u_syst_sessions'
-                                ,p_exception_name => 'invalid_api_view_call'
-                                ,p_errcode        => 'PM008'
                                 ,p_param_data     => jsonb_build_object('new', new, 'old', old)
                                 ,p_context_data   =>
                                     jsonb_build_object(
@@ -125,7 +123,7 @@ BEGIN
                                         ,'tg_when',       tg_when
                                         ,'tg_schema',     tg_table_schema
                                         ,'tg_table_name', tg_table_name)),
-                    ERRCODE = 'PM008',
+                    ERRCODE = 'PM001',
                     SCHEMA = tg_table_schema,
                     TABLE = tg_table_name;
 
@@ -138,8 +136,6 @@ BEGIN
                     DETAIL = ms_syst_priv.get_exception_details(
                                  p_proc_schema    => 'ms_syst'
                                 ,p_proc_name      => 'trig_i_u_syst_sessions'
-                                ,p_exception_name => 'invalid_api_view_call'
-                                ,p_errcode        => 'PM008'
                                 ,p_param_data     => jsonb_build_object('new', new, 'old', old)
                                 ,p_context_data   =>
                                     jsonb_build_object(
@@ -147,7 +143,7 @@ BEGIN
                                         ,'tg_when',       tg_when
                                         ,'tg_schema',     tg_table_schema
                                         ,'tg_table_name', tg_table_name)),
-                    ERRCODE = 'PM008',
+                    ERRCODE = 'PM002',
                     SCHEMA = tg_table_schema,
                     TABLE = tg_table_name;
 
