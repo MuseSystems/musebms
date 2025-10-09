@@ -67,6 +67,16 @@ jobs:
         env:
           PGPASSWORD: testing-dba-password
 
+      - name: Restore PLT cache
+        id: plt_cache
+        uses: actions/cache/restore@v3
+        with:
+          key: plt-${{ env.MSBMS_JOBNAME }}
+          restore-keys: |
+            plt-${{ env.MSBMS_JOBNAME }}
+          path: |
+            **/priv/plts
+
       - name: Install Dependencies
         run: |
           mix msbms.elixir.deps --install \
@@ -78,6 +88,15 @@ jobs:
           mix msbms.elixir.test --all \
             --base-dir . \
             --component-file .github/component-lists/system-components.txt
+
+      - name: Save PLT cache
+        id: plt_cache_save
+        uses: actions/cache/save@v3
+        if: steps.plt_cache.outputs.cache-hit != 'true'
+        with:
+          key: plt-${{ env.MSBMS_JOBNAME }}
+          path: |
+            **/priv/plts
 
   # test_application_components:
   #   runs-on: ubuntu-latest
