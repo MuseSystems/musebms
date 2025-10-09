@@ -13,6 +13,12 @@
 defmodule MsbmsBuildLib.Impl.GenCompList do
   @moduledoc false
 
+  # TODO: This is mostly LLM generated and the overall code quality is pretty
+  #       poor.  This is not production code in the sense of being part of the
+  #       running application, so it's definitely not critical path... but if
+  #       we find ourselves having to maintain this much we'll probably want to
+  #       clean this up and simplify.
+
   alias MsbmsBuildLib.Impl.Common
 
   require Logger
@@ -431,12 +437,17 @@ defmodule MsbmsBuildLib.Impl.GenCompList do
 
     heading = String.duplicate("#", heading_level)
 
+    formatted_description =
+      component.description
+      |> String.split("\n")
+      |> Enum.map_join("\n", &("    " <> &1))
+
     """
       * #{heading} `#{title}`
 
         #{doc_links}
 
-        #{component.description}
+    #{formatted_description}
 
     #{first_party_deps}
 
@@ -468,7 +479,7 @@ defmodule MsbmsBuildLib.Impl.GenCompList do
   defp generate_first_party_deps(deps) do
     dep_links =
       Enum.map_join(deps, ",\n      ", fn dep ->
-        anchor = String.downcase(dep)
+        anchor = String.downcase(dep) |> String.replace("_", "")
         ~s(<a href="##{anchor}">`#{dep}`</a>)
       end)
 
