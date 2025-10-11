@@ -80,13 +80,16 @@ jobs:
 
       - name: Restore PLT cache
         id: plt_cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache@v4
         with:
-          key: plt-${{ env.MSBMS_JOBNAME }}
+          key: plt-${{ inputs.component-group }}-${{ inputs.otp-version }}-${{ inputs.elixir-version }}
           restore-keys: |
-            plt-${{ env.MSBMS_BASE_NAME }}-
+            plt-${{ inputs.component-group }}-${{ inputs.otp-version }}-
           path: |
-            **/priv/plts
+            app_server/components/**/priv/plts
+            app_server/subsystems/**/priv/plts
+            app_server/platform/**/priv/plts
+          save-always: true
 
       - name: Install Dependencies
         run: |
@@ -123,14 +126,6 @@ jobs:
           mix msbms.elixir.test --dialyzer \
             --base-dir . \
             --component-file .github/component-lists/${{ env.MSBMS_BASE_NAME }}.txt
-
-      - name: Save PLT cache
-        uses: actions/cache/save@v4
-        if: steps.plt_cache.outputs.cache-hit != 'true'
-        with:
-          key: plt-${{ env.MSBMS_JOBNAME }}
-          path: |
-            **/priv/plts
 
       - name: Upload test results
         if: failure()
