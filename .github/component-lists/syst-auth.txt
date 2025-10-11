@@ -1,0 +1,8 @@
+# System Components: Authentication & Authorization Services
+#
+# Generalized application security Components for authenticating users and
+# determining their privileges in the system
+#
+mscmp_syst_authn
+mscmp_syst_perms
+mscmp_syst_mcp_perms
