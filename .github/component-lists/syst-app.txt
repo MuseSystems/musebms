@@ -1,0 +1,7 @@
+# System Components: General Application Services
+#
+# Application level services which generalize to many different applications.
+#
+mscmp_syst_settings
+mscmp_syst_enums
+mscmp_syst_instance

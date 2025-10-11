@@ -1,0 +1,142 @@
+name: Component Test Template
+
+on:
+  workflow_call:
+    inputs:
+      component-group:
+        required: true
+        type: string
+        description: "The component group name (e.g., syst-app, syst-auth)"
+      otp-version:
+        required: false
+        type: string
+        default: "27.3.4.3"
+        description: "OTP/Erlang version"
+      elixir-version:
+        required: false
+        type: string
+        default: "1.18.4"
+        description: "Elixir version"
+      postgres-version:
+        required: false
+        type: string
+        default: "18"
+        description: "PostgreSQL version"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      MIX_ENV: test
+      MSBMS_BASE_NAME: ${{ inputs.component-group }}
+      MSBMS_JOBNAME: ${{ inputs.component-group }}-${{ inputs.otp-version }}-${{ inputs.elixir-version }}-pg${{ inputs.postgres-version }}
+
+    services:
+      postgres:
+        image: postgres:${{ inputs.postgres-version }}
+        env:
+          POSTGRES_USER: testing_dba
+          POSTGRES_PASSWORD: testing-dba-password
+          POSTGRES_PORT: 5432
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Install Elixir and OTP
+        uses: erlef/setup-beam@v1
+        with:
+          otp-version: ${{ inputs.otp-version }}
+          elixir-version: ${{ inputs.elixir-version }}
+
+      - name: Install Hex and Rebar
+        run: |
+          mix local.hex --force
+          mix local.rebar --force
+
+      - name: Install MSBMS Build Tools
+        run: |
+          mix archive.install tools/build_tools/msbms_build_lib-1.2.0.ez --force
+
+      - name: Reset and Initialize Database
+        run: |
+          mix msbms.db.clean --reset \
+            --base-dir . \
+            --db-host localhost \
+            --db-port 5432 \
+            --db-user testing_dba \
+            --db-name postgres \
+            --dbadmin-password musesystems-insecure-publicly-known-password
+        env:
+          PGPASSWORD: testing-dba-password
+
+      - name: Restore PLT cache
+        id: plt_cache
+        uses: actions/cache/restore@v4
+        with:
+          key: plt-${{ env.MSBMS_JOBNAME }}
+          restore-keys: |
+            plt-${{ env.MSBMS_BASE_NAME }}-
+          path: |
+            **/priv/plts
+
+      - name: Install Dependencies
+        run: |
+          mix msbms.elixir.deps --install \
+            --base-dir . \
+            --component-file .github/component-lists/${{ env.MSBMS_BASE_NAME }}.txt
+
+      - name: Run Component Unit Tests
+        run: |
+          mix msbms.elixir.test --unit \
+            --base-dir . \
+            --component-file .github/component-lists/${{ env.MSBMS_BASE_NAME }}.txt
+
+      - name: Run Component Integration Tests
+        run: |
+          mix msbms.elixir.test --integration \
+            --base-dir . \
+            --component-file .github/component-lists/${{ env.MSBMS_BASE_NAME }}.txt
+
+      - name: Run Component Doc Tests
+        run: |
+          mix msbms.elixir.test --doctest \
+            --base-dir . \
+            --component-file .github/component-lists/${{ env.MSBMS_BASE_NAME }}.txt
+
+      - name: Run Component Credo Checks
+        run: |
+          mix msbms.elixir.test --credo \
+            --base-dir . \
+            --component-file .github/component-lists/${{ env.MSBMS_BASE_NAME }}.txt
+
+      - name: Run Component Dialyzer Checks
+        run: |
+          mix msbms.elixir.test --dialyzer \
+            --base-dir . \
+            --component-file .github/component-lists/${{ env.MSBMS_BASE_NAME }}.txt
+
+      - name: Save PLT cache
+        uses: actions/cache/save@v4
+        if: steps.plt_cache.outputs.cache-hit != 'true'
+        with:
+          key: plt-${{ env.MSBMS_JOBNAME }}
+          path: |
+            **/priv/plts
+
+      - name: Upload test results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ env.MSBMS_BASE_NAME }}
+          path: |
+            **/_build/test/lib/*/test-reports/
+          if-no-files-found: ignore

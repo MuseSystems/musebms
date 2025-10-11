@@ -1,0 +1,10 @@
+# System Components: Platform & User Interface Support
+#
+# Generalized functionality for managing user interface related data management,
+# navigation, session management, user form handling, and similar concerns.
+#
+mscmp_syst_session
+mscmp_syst_hierarchy
+# mscmp_syst_nav
+# mscmp_syst_interaction
+# mscmp_syst_forms
