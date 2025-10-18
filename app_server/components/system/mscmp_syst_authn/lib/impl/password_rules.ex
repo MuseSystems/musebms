@@ -258,7 +258,7 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
     rule
     |> Map.from_struct()
     |> then(&struct(PasswordRules, &1))
-    |> then(&%PasswordRules{&1 | access_account_id: access_account_id})
+    |> then(&%PasswordRules{(%PasswordRules{} = &1) | access_account_id: access_account_id})
   end
 
   defp set_required_rule_value(:required_rule_min_length, req_value, rule) do
@@ -403,7 +403,7 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
        do: :std_disabled
 
   defp compare_max_age(_std_max_age, %DbTypes.Interval{months: 0, days: 0, secs: 0, microsecs: 0}),
-    do: :test_disabled
+       do: :test_disabled
 
   defp compare_max_age(std_max_age, test_max_age), do: DbTypes.compare(std_max_age, test_max_age)
 
