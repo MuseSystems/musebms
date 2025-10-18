@@ -44,7 +44,7 @@ defmodule AccessAccountInstanceAssocTest do
         )
         |> MscmpSystDb.one!()
 
-      test_now = DateTime.now!("Etc/UTC")
+      test_now = DateTime.now!("Etc/UTC") |> DateTime.truncate(:second)
 
       assert {:ok, new_record} =
                AccessAccountInstanceAssoc.invite_to_instance(access_account_id, instance_id,
@@ -81,7 +81,7 @@ defmodule AccessAccountInstanceAssocTest do
         )
         |> MscmpSystDb.one!()
 
-      test_now = DateTime.now!("Etc/UTC")
+      test_now = DateTime.now!("Etc/UTC") |> DateTime.truncate(:second)
 
       assert {:ok, new_record} =
                AccessAccountInstanceAssoc.accept_instance_invite(
@@ -115,7 +115,7 @@ defmodule AccessAccountInstanceAssocTest do
         )
         |> MscmpSystDb.one!()
 
-      test_now = DateTime.now!("Etc/UTC")
+      test_now = DateTime.now!("Etc/UTC") |> DateTime.truncate(:second)
 
       assert {:ok, new_record} =
                AccessAccountInstanceAssoc.decline_instance_invite(access_account_id, instance_id)
