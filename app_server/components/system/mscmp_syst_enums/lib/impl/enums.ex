@@ -289,6 +289,10 @@ defmodule MscmpSystEnums.Impl.Enums do
   def create(enum_params),
     do: ProcessUtils.get_enums_table() |> create(enum_params)
 
+  # TODO: Dialyzer check removed due to Elixir 1.19/OTP 28 issue
+  #       If that ever gets correcly addressed, we should remove
+  #       this bypass.
+  @dialyzer {:no_opaque, create: 2}
   @spec create(:ets.table(), Types.enum_params()) :: :ok | {:error, term()}
   def create(enums_table, enum_params)
       when is_atom(enums_table) or is_reference(enums_table) do
