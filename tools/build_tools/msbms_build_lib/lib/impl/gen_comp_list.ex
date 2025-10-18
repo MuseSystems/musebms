@@ -214,9 +214,9 @@ defmodule MsbmsBuildLib.Impl.GenCompList do
   # Filter out dev/test-only dependencies by checking msbms_build_config.exs
   defp filter_runtime_deps(deps) do
     # Known dev/test-only dependencies that shouldn't appear in production docs
-    dev_test_only = MapSet.new(["credo", "dialyxir", "ex_doc", "extrace"])
+    dev_test_only = ["credo", "dialyxir", "ex_doc", "extrace"]
 
-    Enum.reject(deps, &MapSet.member?(dev_test_only, &1))
+    Enum.reject(deps, &(&1 in dev_test_only))
   end
 
   # Extract content between brackets after a variable name
