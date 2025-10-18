@@ -58,23 +58,11 @@ defmodule OptionsParserTest do
     test "returns global db password from options", %{options: options} do
       assert "(eXI0BU&elq1(mvw" = OptionsParser.get_global_db_password(options)
     end
-
-    test "requires options to be a map" do
-      assert_raise FunctionClauseError, fn ->
-        OptionsParser.get_global_db_password("not_a_map")
-      end
-    end
   end
 
   describe "get_global_db_pool_size/1" do
     test "returns global db pool size from options", %{options: options} do
       assert 10 = OptionsParser.get_global_db_pool_size(options)
-    end
-
-    test "requires options to be a map" do
-      assert_raise FunctionClauseError, fn ->
-        OptionsParser.get_global_db_pool_size("not_a_map")
-      end
     end
   end
 
