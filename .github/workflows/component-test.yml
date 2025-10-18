@@ -10,12 +10,12 @@ on:
       otp-version:
         required: false
         type: string
-        default: "27.3.4.3"
+        default: "28.1"
         description: "OTP/Erlang version"
       elixir-version:
         required: false
         type: string
-        default: "1.18.4"
+        default: "1.19"
         description: "Elixir version"
       postgres-version:
         required: false
@@ -64,7 +64,7 @@ jobs:
 
       - name: Install MSBMS Build Tools
         run: |
-          mix archive.install tools/build_tools/msbms_build_lib-1.2.0.ez --force
+          mix archive.install tools/build_tools/msbms_build_lib-1.2.1.ez --force
 
       - name: Reset and Initialize Database
         run: |
