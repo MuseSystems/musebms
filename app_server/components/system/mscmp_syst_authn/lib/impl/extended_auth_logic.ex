@@ -229,13 +229,8 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   end
 
   defp extended_email_password_ops_required?(auth_state) do
-    extended_operations = MapSet.new(@email_password_extended_auth_ops)
-
-    auth_state.pending_operations
-    |> MapSet.new()
-    |> MapSet.intersection(extended_operations)
-    |> MapSet.equal?(MapSet.new([]))
-    |> then(&(&1 == false))
+    extended_ops = MapSet.new(@email_password_extended_auth_ops)
+    Enum.any?(auth_state.pending_operations, &(&1 in extended_ops))
   end
 
   defp confirm_email_identity(auth_state) do
