@@ -116,7 +116,7 @@ defmodule MsbmsBuildConfig do
         # Valid sponsor modification range: 0 - 46_655
         sponsor_modification: 0
       },
-      elixir: "~> 1.18",
+      elixir: "~> 1.19",
       dependencies: @all_deps
     }
   end
