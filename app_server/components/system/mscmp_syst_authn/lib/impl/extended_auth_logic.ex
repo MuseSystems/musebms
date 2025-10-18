@@ -169,7 +169,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
 
   @spec authenticate_email_password(AuthenticationState.t(), Keyword.t()) ::
           {:ok, AuthenticationState.t()}
-  def authenticate_email_password(auth_state, opts) do
+  def authenticate_email_password(%AuthenticationState{} = auth_state, opts) do
     identifier_limit_opts = Keyword.take(opts, [:identifier_limit])
     host_rate_limit_opts = Keyword.take(opts, [:host_limit])
 
@@ -204,12 +204,13 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   defp maybe_start_email_password_authentication(
          %AuthenticationState{status: :not_started} = auth_state
        ) do
-    resolved_ops = resolve_email_password_operations(auth_state)
+    resolved_ops = resolve_email_password_operations(%AuthenticationState{} = auth_state)
 
     %AuthenticationState{auth_state | status: :pending, pending_operations: resolved_ops}
   end
 
-  defp maybe_start_email_password_authentication(auth_state), do: auth_state
+  defp maybe_start_email_password_authentication(%AuthenticationState{} = auth_state),
+    do: auth_state
 
   defp resolve_email_password_operations(%AuthenticationState{instance_id: nil}),
     do: [:require_instance | @email_password_operations]
@@ -223,17 +224,17 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   defp confirm_instance_identified(%AuthenticationState{instance_id: nil} = auth_state),
     do: auth_state
 
-  defp confirm_instance_identified(auth_state) do
+  defp confirm_instance_identified(%AuthenticationState{} = auth_state) do
     new_ops = List.delete(auth_state.pending_operations, :require_instance)
     %AuthenticationState{auth_state | pending_operations: new_ops}
   end
 
-  defp extended_email_password_ops_required?(auth_state) do
+  defp extended_email_password_ops_required?(%AuthenticationState{} = auth_state) do
     extended_ops = MapSet.new(@email_password_extended_auth_ops)
     Enum.any?(auth_state.pending_operations, &(&1 in extended_ops))
   end
 
-  defp confirm_email_identity(auth_state) do
+  defp confirm_email_identity(%AuthenticationState{} = auth_state) do
     if :check_identity in auth_state.pending_operations do
       Impl.Identity.Email.identify_access_account(
         auth_state.identifier,
@@ -249,7 +250,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     end
   end
 
-  defp confirm_password_credential(auth_state) do
+  defp confirm_password_credential(%AuthenticationState{} = auth_state) do
     if :check_credential in auth_state.pending_operations do
       Impl.Credential.Password.confirm_credential(
         auth_state.access_account_id,
@@ -306,7 +307,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
 
   @spec authenticate_api_token(AuthenticationState.t(), Keyword.t()) ::
           {:ok, AuthenticationState.t()}
-  def authenticate_api_token(auth_state, opts) do
+  def authenticate_api_token(%AuthenticationState{} = auth_state, opts) do
     identifier_limit_opts = Keyword.take(opts, [:identifier_limit])
     host_rate_limit_opts = Keyword.take(opts, [:host_limit])
 
@@ -329,7 +330,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   defp resolve_api_token_operations(:bypass), do: @api_token_instance_bypass_operations
   defp resolve_api_token_operations(_), do: @api_token_operations
 
-  defp confirm_api_token_identity(auth_state) do
+  defp confirm_api_token_identity(%AuthenticationState{} = auth_state) do
     if :check_identity in auth_state.pending_operations do
       Impl.Identity.ApiToken.identify_access_account(
         auth_state.identifier,
@@ -344,7 +345,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     end
   end
 
-  defp confirm_api_token_credential(auth_state) do
+  defp confirm_api_token_credential(%AuthenticationState{} = auth_state) do
     if :check_credential in auth_state.pending_operations do
       Impl.Credential.ApiToken.confirm_credential(
         auth_state.access_account_id,
@@ -401,7 +402,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
 
   @spec authenticate_validation_token(AuthenticationState.t(), Keyword.t()) ::
           {:ok, AuthenticationState.t()}
-  def authenticate_validation_token(auth_state, opts) do
+  def authenticate_validation_token(%AuthenticationState{} = auth_state, opts) do
     identifier_limit_opts = Keyword.take(opts, [:identifier_limit])
     host_rate_limit_opts = Keyword.take(opts, [:host_limit])
 
@@ -419,7 +420,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     |> then(&{:ok, &1})
   end
 
-  defp confirm_validation_identity(auth_state) do
+  defp confirm_validation_identity(%AuthenticationState{} = auth_state) do
     if :check_identity in auth_state.pending_operations do
       Impl.Identity.Validation.identify_access_account(
         auth_state.identifier,
@@ -434,7 +435,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     end
   end
 
-  defp confirm_validation_credential(auth_state) do
+  defp confirm_validation_credential(%AuthenticationState{} = auth_state) do
     if :check_credential in auth_state.pending_operations do
       Impl.Credential.Validation.confirm_credential(
         auth_state.access_account_id,
@@ -460,7 +461,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     end
   end
 
-  defp confirm_successful_validation(auth_state), do: auth_state
+  defp confirm_successful_validation(%AuthenticationState{} = auth_state), do: auth_state
 
   ##############################################################################
   #
@@ -499,7 +500,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
 
   @spec authenticate_recovery_token(AuthenticationState.t(), Keyword.t()) ::
           {:ok, AuthenticationState.t()} | {:error, term()}
-  def authenticate_recovery_token(auth_state, opts) do
+  def authenticate_recovery_token(%AuthenticationState{} = auth_state, opts) do
     identifier_limit_opts = Keyword.take(opts, [:identifier_limit])
     host_rate_limit_opts = Keyword.take(opts, [:host_limit])
 
@@ -519,7 +520,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     error -> {:error, {:authenticate_recovery_token, error}}
   end
 
-  defp confirm_credential_recovery(auth_state) do
+  defp confirm_credential_recovery(%AuthenticationState{} = auth_state) do
     if :check_identity in auth_state.pending_operations do
       Impl.Identity.Recovery.identify_access_account(
         auth_state.identifier,
@@ -534,7 +535,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     end
   end
 
-  defp confirm_recovery_credential(auth_state) do
+  defp confirm_recovery_credential(%AuthenticationState{} = auth_state) do
     if :check_credential in auth_state.pending_operations do
       Impl.Credential.Recovery.confirm_credential(
         auth_state.access_account_id,
@@ -560,7 +561,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     end
   end
 
-  defp confirm_successful_recovery(auth_state), do: auth_state
+  defp confirm_successful_recovery(%AuthenticationState{} = auth_state), do: auth_state
 
   ##############################################################################
   #
@@ -586,9 +587,10 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   # assume such an Identity is validated is the purpose of the `validated`
   # parameter in `process_identity/3`.
 
-  defp process_identity(auth_state, identity), do: process_identity(auth_state, identity, false)
+  defp process_identity(%AuthenticationState{} = auth_state, identity),
+    do: process_identity(auth_state, identity, false)
 
-  defp process_identity(auth_state, nil = _identity, _validated) do
+  defp process_identity(%AuthenticationState{} = auth_state, nil = _identity, _validated) do
     Impl.Hash.fake_credential_hash_verify()
 
     %AuthenticationState{
@@ -598,7 +600,11 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     }
   end
 
-  defp process_identity(auth_state, %Msdata.SystIdentities{} = identity, validated) do
+  defp process_identity(
+         %AuthenticationState{} = auth_state,
+         %Msdata.SystIdentities{} = identity,
+         validated
+       ) do
     identity_expired =
       if identity.identity_expires == nil,
         do: false,
@@ -635,7 +641,10 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     }
   end
 
-  defp process_credential_result(auth_state, {:confirmed, cred_ext_state}) do
+  defp process_credential_result(
+         %AuthenticationState{} = auth_state,
+         {:confirmed, cred_ext_state}
+       ) do
     new_ops = List.delete(auth_state.pending_operations, :check_credential)
 
     auth_state
@@ -644,7 +653,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     |> maybe_add_password_reset_operation(cred_ext_state)
   end
 
-  defp process_credential_result(auth_state, {:no_credential, _}) do
+  defp process_credential_result(%AuthenticationState{} = auth_state, {:no_credential, _}) do
     Impl.Hash.fake_credential_hash_verify()
 
     %AuthenticationState{
@@ -654,7 +663,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     }
   end
 
-  defp process_credential_result(auth_state, {:wrong_credential, _}) do
+  defp process_credential_result(%AuthenticationState{} = auth_state, {:wrong_credential, _}) do
     %AuthenticationState{
       auth_state
       | status: :rejected,
@@ -662,7 +671,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     }
   end
 
-  defp maybe_add_mfa_operation(auth_state, cred_ext_state) do
+  defp maybe_add_mfa_operation(%AuthenticationState{} = auth_state, cred_ext_state) do
     if :require_mfa in cred_ext_state do
       %AuthenticationState{
         auth_state
@@ -673,7 +682,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     end
   end
 
-  defp maybe_add_password_reset_operation(auth_state, cred_ext_state) do
+  defp maybe_add_password_reset_operation(%AuthenticationState{} = auth_state, cred_ext_state) do
     cond do
       :reset_forced in cred_ext_state ->
         %AuthenticationState{
@@ -701,15 +710,15 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     end
   end
 
-  defp confirm_instance(auth_state) do
+  defp confirm_instance(%AuthenticationState{} = auth_state) do
     if :check_instance in auth_state.pending_operations do
-      process_check_instance(auth_state)
+      process_check_instance(%AuthenticationState{} = auth_state)
     else
       auth_state
     end
   end
 
-  defp process_check_instance(%{instance_id: nil} = auth_state) do
+  defp process_check_instance(%AuthenticationState{instance_id: nil} = auth_state) do
     %AuthenticationState{
       auth_state
       | status: :rejected,
@@ -717,7 +726,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     }
   end
 
-  defp process_check_instance(auth_state) do
+  defp process_check_instance(%AuthenticationState{} = auth_state) do
     instance_access_granted =
       Impl.AccessAccountInstanceAssoc.instance_access_granted?(
         auth_state.access_account_id,
@@ -732,7 +741,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     end
   end
 
-  defp confirm_global_network_rules(auth_state) do
+  defp confirm_global_network_rules(%AuthenticationState{} = auth_state) do
     if :check_global_network_rules in auth_state.pending_operations do
       with {:ok, net_rule} <-
              Impl.NetworkRules.get_applied_network_rule(auth_state.host_address) do
@@ -743,7 +752,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     end
   end
 
-  defp confirm_instance_network_rules(auth_state) do
+  defp confirm_instance_network_rules(%AuthenticationState{} = auth_state) do
     if :check_instance_network_rules in auth_state.pending_operations do
       with {:ok, net_rule} <-
              Impl.NetworkRules.get_applied_network_rule(
@@ -757,12 +766,20 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     end
   end
 
-  defp process_network_rule_result(%{functional_type: :allow} = net_rule, auth_state, curr_op) do
+  defp process_network_rule_result(
+         %{functional_type: :allow} = net_rule,
+         %AuthenticationState{} = auth_state,
+         curr_op
+       ) do
     new_ops = List.delete(auth_state.pending_operations, curr_op)
     %AuthenticationState{auth_state | applied_network_rule: net_rule, pending_operations: new_ops}
   end
 
-  defp process_network_rule_result(%{functional_type: :deny} = net_rule, auth_state, _curr_op) do
+  defp process_network_rule_result(
+         %{functional_type: :deny} = net_rule,
+         %AuthenticationState{} = auth_state,
+         _curr_op
+       ) do
     # It's possible that an early failure may still want to check the instance
     # network rules, so in those cases, the additional network rule denial here
     # should not supersede the earlier failed status, but should respect it.
@@ -777,17 +794,20 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     }
   end
 
-  defp confirm_identifier_limit(auth_state, opts) do
+  defp confirm_identifier_limit(%AuthenticationState{} = auth_state, opts) do
     if :check_identifier_limit in auth_state.pending_operations do
       auth_state
       |> check_identifier_limit(opts)
-      |> process_identifier_limit_result(auth_state)
+      |> process_identifier_limit_result(%AuthenticationState{} = auth_state)
     else
       auth_state
     end
   end
 
-  defp process_identifier_limit_result({:allow, _, limiter_instance}, auth_state) do
+  defp process_identifier_limit_result(
+         {:allow, _, limiter_instance},
+         %AuthenticationState{} = auth_state
+       ) do
     auth_state.pending_operations
     |> List.delete(:check_identifier_limit)
     |> then(
@@ -799,20 +819,23 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     )
   end
 
-  defp process_identifier_limit_result({:deny, _, limiter_instance}, auth_state),
-    do: %AuthenticationState{
-      auth_state
-      | status: :rejected_limits_exceeded,
-        pending_operations: [],
-        identifier_limiter: limiter_instance
-    }
+  defp process_identifier_limit_result(
+         {:deny, _, limiter_instance},
+         %AuthenticationState{} = auth_state
+       ),
+       do: %AuthenticationState{
+         auth_state
+         | status: :rejected_limits_exceeded,
+           pending_operations: [],
+           identifier_limiter: limiter_instance
+       }
 
   # Getting to where confirm_host_rate_limit/2 actually performs a host rate
   # limit check means that something earlier has gone wrong and that the
   # authentication has already failed.  Even so, a failed host rate check here
   # will explicitly fail the authentication for resiliency's sake.
 
-  defp confirm_host_rate_limit(auth_state, opts) do
+  defp confirm_host_rate_limit(%AuthenticationState{} = auth_state, opts) do
     if :check_host_rate_limit in auth_state.pending_operations do
       new_ops = List.delete(auth_state.pending_operations, :check_host_rate_limit)
 
@@ -824,7 +847,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     end
   end
 
-  defp check_host_rate_limit(auth_state, opts) do
+  defp check_host_rate_limit(%AuthenticationState{} = auth_state, opts) do
     net_rule = auth_state.applied_network_rule
     no_host_bypass = net_rule.precedence == :implied || net_rule.functional_type == :deny
 
@@ -833,18 +856,24 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
       # explicit trust.
       auth_state
       |> check_host_limit(opts)
-      |> process_host_rate_limit_result(auth_state)
+      |> process_host_rate_limit_result(%AuthenticationState{} = auth_state)
     else
       # Check bypassed because host was explicitly trusted by a network rule.
       auth_state
     end
   end
 
-  defp process_host_rate_limit_result({:allow, _, limiter_instance}, auth_state) do
+  defp process_host_rate_limit_result(
+         {:allow, _, limiter_instance},
+         %AuthenticationState{} = auth_state
+       ) do
     %AuthenticationState{auth_state | host_limiter: limiter_instance}
   end
 
-  defp process_host_rate_limit_result({:deny, _, limiter_instance}, auth_state) do
+  defp process_host_rate_limit_result(
+         {:deny, _, limiter_instance},
+         %AuthenticationState{} = auth_state
+       ) do
     _ = Impl.NetworkRules.create_disallowed_host(auth_state.host_address)
 
     %AuthenticationState{
@@ -910,7 +939,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     |> maybe_reset_host_limits()
   end
 
-  defp maybe_reset_limits(auth_state), do: auth_state
+  defp maybe_reset_limits(%AuthenticationState{} = auth_state), do: auth_state
 
   defp maybe_reset_identifier_limits(%AuthenticationState{identifier_limiter: nil} = auth_state),
     do: auth_state
@@ -943,7 +972,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
        ),
        do: %AuthenticationState{auth_state | status: :authenticated}
 
-  defp finalize_authentication(auth_state), do: auth_state
+  defp finalize_authentication(%AuthenticationState{} = auth_state), do: auth_state
 
   # Unlike most other confirm steps where we check to see if the operation is
   # in the pending_operations, for confirm_deadline we always check for any
@@ -966,11 +995,11 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     end
   end
 
-  defp confirm_deadline(auth_state), do: auth_state
+  defp confirm_deadline(%AuthenticationState{} = auth_state), do: auth_state
 
   # The credential clear should have happened at credential validation time, but
   # just in case, do it here, too.
 
-  defp cleanse_auth_state(auth_state),
+  defp cleanse_auth_state(%AuthenticationState{} = auth_state),
     do: %AuthenticationState{auth_state | plaintext_credential: nil, identity: nil}
 end
