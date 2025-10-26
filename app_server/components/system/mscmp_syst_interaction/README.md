@@ -35,6 +35,11 @@ then each individual line would be handled as an individual interaction as
 needed.  Assuming the items list is just informational, however, means that
 managing that data via this framework as an interaction isn't necessary.
 
+Additionally, the framework manages data as presented to the user rather than
+as specific database table records. While managed data will often align with
+database table records, this is because the user-facing representation happens
+to match the database structure, not because the framework requires it.
+
 ## Concepts
 
 To accomplish our goals we set out a theory of interactions which is a theory of
