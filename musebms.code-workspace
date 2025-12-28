@@ -73,6 +73,10 @@
             "path": "app_server/components/system/mscmp_syst_mcp_perms"
         },
         {
+            "name": "mscmp_syst_interaction",
+            "path": "app_server/components/system/mscmp_syst_interaction"
+        },
+        {
             "name": "mscmp_syst_session",
             "path": "app_server/components/system/mscmp_syst_session"
         },
