@@ -57,10 +57,6 @@
             "path": "app_server/components/system/mscmp_syst_hierarchy"
         },
         {
-            "name": "mscmp_syst_nav",
-            "path": "app_server/components/system/mscmp_syst_nav"
-        },
-        {
             "name": "mscmp_syst_instance",
             "path": "app_server/components/system/mscmp_syst_instance"
         },
@@ -77,28 +73,8 @@
             "path": "app_server/components/system/mscmp_syst_mcp_perms"
         },
         {
-            "name": "mscmp_syst_interaction",
-            "path": "app_server/components/system/mscmp_syst_interaction"
-        },
-        {
             "name": "mscmp_syst_session",
             "path": "app_server/components/system/mscmp_syst_session"
-        },
-        {
-            "name": "mscmp_syst_forms",
-            "path": "app_server/components/system/mscmp_syst_forms"
-        },
-        {
-            "name": "mssub_mcp",
-            "path": "app_server/subsystems/mssub_mcp"
-        },
-        {
-            "name": "mssub_bms",
-            "path": "app_server/subsystems/mssub_bms"
-        },
-        {
-            "name": "msplatform",
-            "path": "app_server/platform/msplatform"
         },
         {
             "name": "documentation",
