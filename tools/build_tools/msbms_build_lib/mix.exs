@@ -16,7 +16,7 @@ defmodule MsbmsBuildLib.MixProject do
   Code.require_file(Path.expand("../build_config/msbms_build_config.exs", __DIR__))
 
   @name :msbms_build_lib
-  @version "1.2.1"
+  @version "1.2.2"
 
   @third_party_deps [
     :credo,
