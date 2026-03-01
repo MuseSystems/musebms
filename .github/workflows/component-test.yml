@@ -10,7 +10,7 @@ on:
       otp-version:
         required: false
         type: string
-        default: "28.1"
+        default: "28.3"
         description: "OTP/Erlang version"
       elixir-version:
         required: false

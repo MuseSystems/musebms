@@ -288,7 +288,7 @@ defmodule IntegrationTest do
 
       all_enums = MscmpSystEnums.list_all()
       assert is_list(all_enums)
-      assert length(all_enums) > 0
+      assert all_enums != []
 
       # Verify our test enums are in the list
       assert Enum.any?(all_enums, &(&1.internal_name == "int_test_simple_enum"))

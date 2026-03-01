@@ -112,7 +112,7 @@ defmodule OptionsParserTest do
     test "handles multiple filters", %{options: options} do
       # Should return servers that match any of the provided pools
       result = OptionsParser.list_dbservers(options, ["primary", "demo"])
-      assert length(result) >= 1
+      assert result != []
     end
 
     test "requires options to be a map" do
