@@ -11,6 +11,7 @@
 
 ### Legacy, temporary exclusions, and cruft
 tools/workfiles/*
+tools/expert_workdir/
 
 ### sublime text ###
 **/*.sublime-workspace
