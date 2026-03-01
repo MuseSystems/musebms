@@ -25,8 +25,14 @@ defmodule MsbmsBuildLib.Impl.CleanElixir do
   #
 
   @spec clean_ls(Path.t(), Types.components()) :: :ok | {:error, message :: String.t()}
-  def clean_ls(base_dir, components),
-    do: clean(".elixir_ls", "Elixir Language Server", base_dir, components)
+  def clean_ls(base_dir, components) do
+    with :ok <- clean(".elixir_ls", "Elixir Language Server", base_dir, components),
+         :ok <- clean(".expert", "Elixir Language Server", base_dir, components) do
+      :ok
+    else
+      error -> error
+    end
+  end
 
   ##############################################################################
   #
