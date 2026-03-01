@@ -1,8 +1,8 @@
 {
     "folders": [
         {
-            "name": ".cursor",
-            "path": ".cursor"
+            "name": "expert_workdir",
+            "path": "tools/expert_workdir"
         },
         {
             "name": "database",
