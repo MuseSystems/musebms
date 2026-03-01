@@ -99,6 +99,7 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
 
       insert_params
       |> Map.put(:owner_id, owner_id)
+      # credo:disable-for-next-line
       |> Map.merge(default_rules_map, fn _k, v1, v2 -> if v1 != nil, do: v1, else: v2 end)
       |> Msdata.SystOwnerPasswordRules.insert_changeset()
       |> MscmpSystDb.insert(returning: true)

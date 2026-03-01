@@ -428,7 +428,7 @@ defmodule MscmpSystEnums.Impl.Enums do
   end
 
   defp maybe_get_functional_type_id(functional_types, functional_type_name)
-       when is_list(functional_types) and length(functional_types) > 0 and
+       when is_list(functional_types) and functional_types != [] and
               is_binary(functional_type_name) do
     case Enum.find(functional_types, fn func_type ->
            func_type.internal_name == functional_type_name
@@ -445,7 +445,7 @@ defmodule MscmpSystEnums.Impl.Enums do
   end
 
   defp maybe_get_functional_type_id(functional_types, functional_type_name)
-       when is_list(functional_types) and length(functional_types) > 0 and
+       when is_list(functional_types) and functional_types != [] and
               is_nil(functional_type_name) do
     {:error, {:validation_error, :functional_type_required}}
   end

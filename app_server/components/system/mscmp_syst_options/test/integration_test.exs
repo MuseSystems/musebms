@@ -51,10 +51,10 @@ defmodule IntegrationTest do
 
       # Step 5: Verify server pool and server listing functionality
       available_pools = MscmpSystOptions.list_available_server_pools(options)
-      assert is_list(available_pools) and length(available_pools) > 0
+      assert is_list(available_pools) and available_pools != []
 
       all_servers = MscmpSystOptions.list_dbservers(options)
-      assert is_list(all_servers) and length(all_servers) > 0
+      assert is_list(all_servers) and all_servers != []
       assert Enum.all?(all_servers, &match?(%MscmpSystDb.Types.DbServer{}, &1))
 
       # Step 6: Verify filtered server listing works
@@ -140,7 +140,7 @@ defmodule IntegrationTest do
 
       # Step 1: Get all available pools
       all_pools = MscmpSystOptions.list_available_server_pools(options)
-      assert is_list(all_pools) and length(all_pools) > 0
+      assert is_list(all_pools) and all_pools != []
 
       # Step 2: Get all servers
       all_servers = MscmpSystOptions.list_dbservers(options)
@@ -229,7 +229,7 @@ defmodule IntegrationTest do
         case expected_type do
           :binary -> assert is_binary(result) and String.length(result) > 0
           :integer -> assert is_integer(result) and result > 0
-          :list -> assert is_list(result) and length(result) > 0
+          :list -> assert is_list(result) and result != []
         end
       end
 
@@ -277,7 +277,7 @@ defmodule IntegrationTest do
       # All servers with non-empty pools should be in the filtered union
       servers_with_pools =
         all_servers
-        |> Enum.filter(&(length(&1.server_pools) > 0))
+        |> Enum.filter(&(&1.server_pools != []))
         |> MapSet.new(& &1.server_name)
 
       assert MapSet.equal?(servers_with_pools, filtered_union)
